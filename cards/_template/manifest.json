@@ -1,0 +1,15 @@
+{
+  "id": "_template",
+  "name": "Card Template",
+  "version": "0.1.0",
+  "author": "Tuo nome",
+  "description": "Template di partenza per una nuova card Oikos. Duplicalo, rinomina la cartella e l'id, poi implementa src/Card.jsx.",
+  "sdkVersion": "^1.0.0",
+  "hasSettings": true,
+  "preview": "preview.png",
+  "entry": "dist/_template.js",
+  "settings": "dist/_template.settings.js",
+  "tags": ["template", "demo"],
+  "configVersion": 1,
+  "defaultWidth": "md"
+}

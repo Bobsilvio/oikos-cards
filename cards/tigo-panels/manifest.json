@@ -1,0 +1,15 @@
+{
+  "id": "tigo-panels",
+  "name": "Tigo Panels",
+  "version": "1.0.0",
+  "author": "Oikos",
+  "description": "Monitor real-time ottimizzatori Tigo: griglia celle pulsanti per potenza istantanea di ogni pannello.",
+  "sdkVersion": "^1.0.0",
+  "hasSettings": true,
+  "preview": "preview.png",
+  "entry": "dist/tigo-panels.js",
+  "settings": "dist/tigo-panels.settings.js",
+  "tags": ["solar", "tigo"],
+  "configVersion": 1,
+  "defaultWidth": "lg"
+}

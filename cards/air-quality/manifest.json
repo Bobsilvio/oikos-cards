@@ -1,0 +1,15 @@
+{
+  "id": "air-quality",
+  "name": "Qualità dell'aria",
+  "version": "1.0.0",
+  "author": "Oikos",
+  "description": "Card qualità aria: AQI con zone colorate, classificazione, grafico 24h smooth.",
+  "sdkVersion": "^1.0.0",
+  "hasSettings": true,
+  "preview": "preview.png",
+  "entry": "dist/air-quality.js",
+  "settings": "dist/air-quality.settings.js",
+  "tags": ["aria", "salute"],
+  "configVersion": 1,
+  "defaultWidth": "md"
+}

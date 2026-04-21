@@ -1,0 +1,13 @@
+{
+  "id": "bridge-status",
+  "name": "Bridge Status",
+  "version": "1.0.0",
+  "author": "Oikos",
+  "description": "Card diagnostica che confronta lo stato standalone vs add-on con bridge Oikos ↔ HA.",
+  "sdkVersion": "^1.0.0",
+  "hasSettings": false,
+  "preview": "preview.png",
+  "entry": "dist/bridge-status.js",
+  "tags": ["system", "bridge"],
+  "defaultWidth": "md"
+}

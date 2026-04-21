@@ -1,0 +1,15 @@
+{
+  "id": "irrigation",
+  "name": "Irrigazione",
+  "version": "1.0.0",
+  "author": "Oikos",
+  "description": "Card orto & irrigazione: toggle switch HA, notifiche Alexa/push/Telegram, sensori meteo/temperatura/pioggia.",
+  "sdkVersion": "^1.0.0",
+  "hasSettings": true,
+  "preview": "preview.png",
+  "entry": "dist/irrigation.js",
+  "settings": "dist/irrigation.settings.js",
+  "tags": ["giardino", "irrigazione"],
+  "configVersion": 1,
+  "defaultWidth": "sm"
+}

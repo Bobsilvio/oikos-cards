@@ -1,0 +1,15 @@
+{
+  "id": "mailbox-card",
+  "name": "Cassetta delle Lettere",
+  "version": "1.0.0",
+  "author": "Oikos",
+  "description": "Cassetta delle lettere: notifica animata ad ogni apertura con contatore giornaliero persistente.",
+  "sdkVersion": "^1.0.0",
+  "hasSettings": true,
+  "preview": "preview.png",
+  "entry": "dist/mailbox-card.js",
+  "settings": "dist/mailbox-card.settings.js",
+  "tags": ["casa", "notifiche"],
+  "configVersion": 1,
+  "defaultWidth": "sm"
+}
