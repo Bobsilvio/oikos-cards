@@ -1,16 +1,13 @@
 /**
  * Card Template — struttura minima di una card Oikos.
  *
- * Regole importanti:
- *  - Esporta default il componente principale (diventa l'entry della card).
- *  - Esporta opzionalmente `settings` = componente del pannello impostazioni
- *    (verrà buildato come bundle separato _template.settings.js).
- *  - Usa SOLO gli hook esportati da `@oikos/sdk` (useStyles, useCardConfig,
- *    useSafeHass, getEntities, ecc.) — non importare React direttamente a
- *    parte hook base: `import { useState, useEffect } from 'react'` viene
- *    riscritto dal plugin SDK in accesso a window.__OIKOS_SDK__.
- *  - Niente CSS global, niente fetch verso domini esterni non dichiarati,
- *    niente localStorage con chiavi non prefixate: usa useCardConfig.
+ * Regole:
+ *  - Default export = componente principale (entry della card).
+ *  - Settings panel = file separato src/Settings.jsx (vedi accanto).
+ *  - Import da @oikos/sdk / react / lucide-react vengono riscritti dal
+ *    plugin SDK in accessi a window.__OIKOS_SDK__ al build.
+ *  - Niente CSS global, niente fetch verso domini esterni, niente
+ *    localStorage con chiavi non prefixate: usa useCardConfig.
  */
 import { useState, useEffect } from 'react'
 import { Sparkles } from 'lucide-react'
@@ -40,25 +37,6 @@ export default function TemplateCard({ label = 'Template' }) {
         </button>
       </div>
       {!hass && <div style={{ ...s.label, opacity: .5 }}>HA non connesso</div>}
-    </div>
-  )
-}
-
-// Opzionale: pannello settings. Se non ti serve, elimina l'export e togli
-// `hasSettings` dal manifest.
-export function settings({ config, setConfig }) {
-  const s = useStyles()
-  return (
-    <div style={s.panel}>
-      <label style={s.field}>
-        <span style={s.label}>Counter iniziale</span>
-        <input
-          type="number"
-          value={config.counter ?? 0}
-          onChange={e => setConfig({ ...config, counter: Number(e.target.value) })}
-          style={s.input}
-        />
-      </label>
     </div>
   )
 }

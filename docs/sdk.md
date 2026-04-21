@@ -85,17 +85,51 @@ aumentare la bundle size della card.
 
 ## Settings card
 
-Se il manifest ha `hasSettings: true` e la card esporta `settings`:
+Il pannello impostazioni è un **file separato** `src/Settings.jsx` con
+default export. Se il file esiste, `tools/build-card.mjs` produce un
+bundle distinto `dist/<fsKey>.settings.js` caricato lazy all'apertura
+del pannello.
 
 ```jsx
-export function settings({ config, setConfig }) {
+// src/Settings.jsx
+import { useStyles } from '@oikos/sdk'
+
+export default function MyCardSettings({ config, setConfig }) {
   const s = useStyles()
-  return <div style={s.panel}>…</div>
+  return (
+    <div style={s.panel}>
+      <label style={s.field}>
+        <span style={s.label}>Etichetta</span>
+        <input
+          style={s.input}
+          value={config.label ?? ''}
+          onChange={e => setConfig({ ...config, label: e.target.value })}
+        />
+      </label>
+    </div>
+  )
 }
 ```
 
-Verrà buildato come bundle separato `<fsKey>.settings.js` e caricato lazy
-all'apertura del pannello impostazioni.
+Regole:
+- `setConfig(next)` persiste via `useCardConfig` — nessun bottone "Salva".
+- Non aggiungere `hasSettings` al manifest: è dedotto dalla presenza di
+  `src/Settings.jsx`.
+- Niente `export function settings` dentro `Card.jsx`: il loader carica
+  solo il `default` del bundle Settings separato.
+
+## Librerie esterne (externals)
+
+Oltre a `react` e `lucide-react`, lo SDK espone come externals:
+
+```js
+import * as Recharts from 'recharts'
+import { motion, AnimatePresence } from 'framer-motion'
+```
+
+Gli import sono riscritti dal plugin Vite in accessi diretti a
+`window.__OIKOS_SDK__.recharts` / `.framerMotion`: la card non re-bundla
+queste librerie.
 
 ## Id namespace
 
