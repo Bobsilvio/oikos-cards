@@ -22,7 +22,6 @@ const DEFAULT = {
   suffix:             '',
   displayName:        '',
   iconName:           '',
-  animationLevel:     'full',
   showPopup:          true,
   powerEntity:        '',
   priceKwh:           0.28,
@@ -57,7 +56,7 @@ async function delJSON(path) {
 }
 
 export default function ApplianceSettings({ cardId }) {
-  const [cfg, setCfg] = useCardConfig(cardId ?? 'appliance', DEFAULT, { version: 1 })
+  const [cfg, setCfg] = useCardConfig(cardId ?? 'appliance', DEFAULT, { version: 2 })
   const hass = useSafeHass()
   const update = patch => setCfg({ ...cfg, ...patch })
 
@@ -260,21 +259,6 @@ export default function ApplianceSettings({ cardId }) {
         </Field>
       </Section>
 
-      <Section title="Animazioni">
-        <Field label="Livello">
-          <Pills
-            options={[
-              { value: 'none',      label: 'Nessuna' },
-              { value: 'essential', label: 'Essenziale' },
-              { value: 'full',      label: 'Completa' },
-              { value: 'max',       label: 'Massima' },
-            ]}
-            value={cfg.animationLevel}
-            onChange={v => update({ animationLevel: v })}
-          />
-        </Field>
-      </Section>
-
       <Section title="Popup fine ciclo">
         <Field label="Mostra popup globale sulla dashboard" hint="Visibile da qualunque pagina al termine del ciclo.">
           <Toggle value={cfg.showPopup} onChange={v => update({ showPopup: v })} />
@@ -317,17 +301,24 @@ function PrecheckBanner({ precheck, onRefresh }) {
 }
 
 // Picker che apre il popup di ricerca entità e salva la selezione
-// nel corrispondente input_text.* via HA service (holder pattern package)
+// nel corrispondente input_text.* via HA service (holder pattern package).
+// Optimistic update: mostra subito il valore scelto finché HA non propaga via WS.
 function PackageSourcePicker({ label, holderEntity, hass, filterDomain }) {
-  const current = hass.states[holderEntity]?.state ?? ''
+  const haValue = hass.states[holderEntity]?.state ?? ''
+  const [pending, setPending] = useState(null)
 
-  // Shim config/setConfig per EntityField: la chiave 'v' riceve la selezione,
-  // intercettiamo setConfig per inoltrare la chiamata a HA.
+  useEffect(() => {
+    if (pending !== null && haValue === pending) setPending(null)
+  }, [haValue, pending])
+
+  const current = pending !== null ? pending : haValue
+
   const shimConfig = { v: current }
   const shimSet = (updater) => {
     const next = typeof updater === 'function' ? updater(shimConfig) : updater
     const picked = next?.v ?? ''
     if (picked && picked !== current) {
+      setPending(picked)
       hass.callService('input_text', 'set_value', {
         entity_id: holderEntity,
         value: picked,

@@ -28,7 +28,6 @@ const DEFAULT = {
   suffix:             '',
   displayName:        '',
   iconName:           '',
-  animationLevel:     'full',       // 'none' | 'essential' | 'full' | 'max'
   showPopup:          true,
   powerEntity:        '',           // standalone
   priceKwh:           0.28,
@@ -143,7 +142,6 @@ export default function ApplianceCard({ cardId }) {
   const defaults = useMemo(() => defaultsFor(cfg.suffix), [cfg.suffix])
   const name = cfg.displayName || defaults.name || 'Elettrodomestico'
   const iconName = cfg.iconName || defaults.iconName
-  const animLevel = cfg.animationLevel ?? 'full'
 
   if (!hass) {
     return (
@@ -161,9 +159,9 @@ export default function ApplianceCard({ cardId }) {
 
   return cfg.mode === 'package'
     ? <PackageView hass={hass} cfg={cfg} entities={entities} name={name} iconName={iconName}
-        animLevel={animLevel} styles={s} defaults={defaults} />
+        styles={s} defaults={defaults} />
     : <StandaloneView hass={hass} cfg={cfg} name={name} iconName={iconName}
-        animLevel={animLevel} styles={s} />
+        styles={s} />
 }
 
 function EmptyCard({ name, iconName, message }) {
@@ -248,7 +246,7 @@ function buildBadgeText({ phase, timeRemMin, elapsedMin, powerW }) {
   return parts.join(' · ')
 }
 
-function PackageView({ hass, cfg, entities, name, iconName, animLevel, styles: s, defaults }) {
+function PackageView({ hass, cfg, entities, name, iconName, styles: s, defaults }) {
   const [period, setPeriod] = useState('today')
   const [detailOpen, setDetailOpen] = useState(false)
   const st = hass.states
@@ -292,7 +290,7 @@ function PackageView({ hass, cfg, entities, name, iconName, animLevel, styles: s
       >
         <AnimatedIcon
           phase={phase}
-          level={animLevel}
+          level="max"
           iconName={iconName}
           size={64}
           fillLevel={fillLevel}
@@ -358,7 +356,7 @@ function PackageView({ hass, cfg, entities, name, iconName, animLevel, styles: s
   )
 }
 
-function StandaloneView({ hass, cfg, name, iconName, animLevel, styles: s }) {
+function StandaloneView({ hass, cfg, name, iconName, styles: s }) {
   const powerW = num(hass.states[cfg.powerEntity]?.state, 0)
   const running = powerW > 5
   const defPhase = defaultsFor(cfg.suffix).defaultPhase || 'washing'
@@ -371,7 +369,7 @@ function StandaloneView({ hass, cfg, name, iconName, animLevel, styles: s }) {
       <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
         <AnimatedIcon
           phase={phase}
-          level={animLevel}
+          level="max"
           iconName={iconName}
           size={64}
           fillLevel={0.5}

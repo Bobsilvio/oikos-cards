@@ -904,12 +904,11 @@ function w(o) {
     lastCycle: `input_text.ultimo_ciclo_attivo_elettrodomestici_${e}`
   } : null;
 }
-const { useState: U, useEffect: $ } = window.__OIKOS_SDK__.React, { useCardConfig: O, useSafeHass: W, apiUrl: P, Section: m, Field: l, TextField: X, Pills: N, Toggle: D, EntityField: p, MdiIconPicker: L } = window.__OIKOS_SDK__, { Download: q, Trash2: H, CheckCircle2: R, AlertTriangle: K, RefreshCw: B } = window.__OIKOS_SDK__.icons, j = {
+const { useState: S, useEffect: N } = window.__OIKOS_SDK__.React, { useCardConfig: $, useSafeHass: O, apiUrl: P, Section: p, Field: F, TextField: X, Pills: W, Toggle: D, EntityField: g, MdiIconPicker: q } = window.__OIKOS_SDK__, { Download: H, Trash2: L, CheckCircle2: R, AlertTriangle: K, RefreshCw: B } = window.__OIKOS_SDK__.icons, j = {
   mode: "package",
   suffix: "",
   displayName: "",
   iconName: "",
-  animationLevel: "full",
   showPopup: !0,
   powerEntity: "",
   priceKwh: 0.28,
@@ -936,51 +935,51 @@ async function G(o) {
   return i;
 }
 function Z({ cardId: o }) {
-  const [e, i] = O(o ?? "appliance", j, { version: 1 }), s = W(), r = (n) => i({ ...e, ...n }), [f, v] = U(null), [S, F] = U([]), [d, c] = U(!1), [g, u] = U(null);
-  async function I() {
+  const [e, i] = $(o ?? "appliance", j, { version: 2 }), s = O(), r = (n) => i({ ...e, ...n }), [d, f] = S(null), [I, y] = S([]), [v, u] = S(!1), [m, c] = S(null);
+  async function l() {
     try {
-      const [n, h] = await Promise.all([
+      const [n, U] = await Promise.all([
         z("/api/appliance/precheck", null),
         z("/api/appliance/list", null)
       ]);
-      v(n), F(h.items || []);
+      f(n), y(U.items || []);
     } catch (n) {
-      v({ ok: !1, reason: n.message });
+      f({ ok: !1, reason: n.message });
     }
   }
-  $(() => {
-    I();
+  N(() => {
+    l();
   }, []);
-  const a = String(e.suffix || "").trim().toLowerCase(), y = /^[a-z0-9_]{1,40}$/.test(a), b = S.includes(a);
+  const a = String(e.suffix || "").trim().toLowerCase(), h = /^[a-z0-9_]{1,40}$/.test(a), b = I.includes(a);
   async function C() {
-    if (y) {
-      c(!0), u(null);
+    if (h) {
+      u(!0), c(null);
       try {
         const n = Y(a, e.displayName || x(a).name);
-        await z("/api/appliance/install", { suffix: a, yaml: n }), u({ type: "ok", text: `Package installato in /config/packages/silviosmart_elettrodomestici/${a}.yaml. Riavvia Home Assistant per attivarlo.` }), await I();
+        await z("/api/appliance/install", { suffix: a, yaml: n }), c({ type: "ok", text: `Package installato in /config/packages/silviosmart_elettrodomestici/${a}.yaml. Riavvia Home Assistant per attivarlo.` }), await l();
       } catch (n) {
-        u({ type: "err", text: n.message });
+        c({ type: "err", text: n.message });
       } finally {
-        c(!1);
+        u(!1);
       }
     }
   }
   async function A() {
-    if (y) {
-      c(!0), u(null);
+    if (h) {
+      u(!0), c(null);
       try {
-        await G(`/api/appliance/${a}`), u({ type: "ok", text: `Package ${a}.yaml rimosso. Riavvia HA per completare.` }), await I();
+        await G(`/api/appliance/${a}`), c({ type: "ok", text: `Package ${a}.yaml rimosso. Riavvia HA per completare.` }), await l();
       } catch (n) {
-        u({ type: "err", text: n.message });
+        c({ type: "err", text: n.message });
       } finally {
-        c(!1);
+        u(!1);
       }
     }
   }
   return /* @__PURE__ */ _("div", { style: { display: "flex", flexDirection: "column", gap: 16 }, children: [
-    /* @__PURE__ */ _(m, { title: "Generale", children: [
-      /* @__PURE__ */ t(l, { label: "Modalità", children: /* @__PURE__ */ t(
-        N,
+    /* @__PURE__ */ _(p, { title: "Generale", children: [
+      /* @__PURE__ */ t(F, { label: "Modalità", children: /* @__PURE__ */ t(
+        W,
         {
           options: [
             { value: "package", label: "Package" },
@@ -990,14 +989,14 @@ function Z({ cardId: o }) {
           onChange: (n) => r({ mode: n })
         }
       ) }),
-      /* @__PURE__ */ t(l, { label: "Suffisso HA", hint: "Univoco. Lettere minuscole, cifre, underscore. Es: lavatrice, asciugatrice.", children: /* @__PURE__ */ t(
+      /* @__PURE__ */ t(F, { label: "Suffisso HA", hint: "Univoco. Lettere minuscole, cifre, underscore. Es: lavatrice, asciugatrice.", children: /* @__PURE__ */ t(
         X,
         {
           value: e.suffix,
           onChange: (n) => {
-            const h = String(n || "").trim().toLowerCase().replace(/[^a-z0-9_]/g, ""), E = x(h);
+            const U = String(n || "").trim().toLowerCase().replace(/[^a-z0-9_]/g, ""), E = x(U);
             r({
-              suffix: h,
+              suffix: U,
               displayName: e.displayName || E.name,
               iconName: e.iconName || E.iconName
             });
@@ -1005,9 +1004,9 @@ function Z({ cardId: o }) {
           placeholder: "lavatrice"
         }
       ) }),
-      /* @__PURE__ */ t(l, { label: "Nome visualizzato", children: /* @__PURE__ */ t(X, { value: e.displayName, onChange: (n) => r({ displayName: n }), placeholder: "Lavatrice" }) }),
-      /* @__PURE__ */ t(l, { label: "Icona", hint: "Vuoto = usa l'icona predefinita per il suffisso.", children: /* @__PURE__ */ t(
-        L,
+      /* @__PURE__ */ t(F, { label: "Nome visualizzato", children: /* @__PURE__ */ t(X, { value: e.displayName, onChange: (n) => r({ displayName: n }), placeholder: "Lavatrice" }) }),
+      /* @__PURE__ */ t(F, { label: "Icona", hint: "Vuoto = usa l'icona predefinita per il suffisso.", children: /* @__PURE__ */ t(
+        q,
         {
           value: e.iconName || x(a).iconName,
           onChange: (n) => r({ iconName: n }),
@@ -1015,35 +1014,35 @@ function Z({ cardId: o }) {
         }
       ) })
     ] }),
-    e.mode === "package" && /* @__PURE__ */ _(m, { title: "Package Home Assistant", children: [
-      /* @__PURE__ */ t(J, { precheck: f, onRefresh: I }),
+    e.mode === "package" && /* @__PURE__ */ _(p, { title: "Package Home Assistant", children: [
+      /* @__PURE__ */ t(V, { precheck: d, onRefresh: l }),
       /* @__PURE__ */ _("div", { style: { display: "flex", gap: 8, flexWrap: "wrap" }, children: [
         /* @__PURE__ */ t(
-          V,
+          J,
           {
-            icon: /* @__PURE__ */ t(q, { size: 14 }),
+            icon: /* @__PURE__ */ t(H, { size: 14 }),
             label: b ? "Reinstalla package" : "Installa package",
-            disabled: !y || d,
+            disabled: !h || v,
             onClick: C
           }
         ),
         b && /* @__PURE__ */ t(
           Q,
           {
-            icon: /* @__PURE__ */ t(H, { size: 14 }),
+            icon: /* @__PURE__ */ t(L, { size: 14 }),
             label: "Disinstalla",
-            disabled: d,
+            disabled: v,
             onClick: A
           }
         )
       ] }),
-      g && /* @__PURE__ */ t("div", { style: {
+      m && /* @__PURE__ */ t("div", { style: {
         padding: "8px 10px",
         borderRadius: 8,
-        background: g.type === "ok" ? "rgba(34,197,94,.12)" : "rgba(239,68,68,.12)",
-        color: g.type === "ok" ? "#16a34a" : "#dc2626",
+        background: m.type === "ok" ? "rgba(34,197,94,.12)" : "rgba(239,68,68,.12)",
+        color: m.type === "ok" ? "#16a34a" : "#dc2626",
         fontSize: 12
-      }, children: g.text }),
+      }, children: m.text }),
       /* @__PURE__ */ _("div", { style: { fontSize: 11, opacity: 0.6, marginTop: 4 }, children: [
         "Il template crea tutte le entità con suffisso ",
         /* @__PURE__ */ _("code", { children: [
@@ -1055,7 +1054,7 @@ function Z({ cardId: o }) {
         " in configuration.yaml."
       ] })
     ] }),
-    e.mode === "package" && y && b && s && /* @__PURE__ */ _(m, { title: "Sorgenti (presa smart)", children: [
+    e.mode === "package" && h && b && s && /* @__PURE__ */ _(p, { title: "Sorgenti (presa smart)", children: [
       /* @__PURE__ */ t(
         k,
         {
@@ -1084,9 +1083,9 @@ function Z({ cardId: o }) {
         }
       )
     ] }),
-    e.mode === "standalone" && /* @__PURE__ */ _(m, { title: "Sorgente standalone", children: [
+    e.mode === "standalone" && /* @__PURE__ */ _(p, { title: "Sorgente standalone", children: [
       /* @__PURE__ */ t(
-        p,
+        g,
         {
           label: "Entità potenza (W)",
           field: "powerEntity",
@@ -1094,7 +1093,7 @@ function Z({ cardId: o }) {
           setConfig: i
         }
       ),
-      /* @__PURE__ */ t(l, { label: "Prezzo energia (€/kWh)", children: /* @__PURE__ */ t(
+      /* @__PURE__ */ t(F, { label: "Prezzo energia (€/kWh)", children: /* @__PURE__ */ t(
         X,
         {
           value: String(e.priceKwh ?? 0.28),
@@ -1103,9 +1102,9 @@ function Z({ cardId: o }) {
         }
       ) })
     ] }),
-    /* @__PURE__ */ _(m, { title: "Fase & progresso", hint: "Opzionali: se l'integrazione espone un sensore di fase (wash/spin/dry/finished) e/o tempo rimanente, la card mostra colori e livello acqua corretti.", children: [
+    /* @__PURE__ */ _(p, { title: "Fase & progresso", hint: "Opzionali: se l'integrazione espone un sensore di fase (wash/spin/dry/finished) e/o tempo rimanente, la card mostra colori e livello acqua corretti.", children: [
       /* @__PURE__ */ t(
-        p,
+        g,
         {
           label: "Sensore fase (opzionale)",
           field: "phaseEntity",
@@ -1115,7 +1114,7 @@ function Z({ cardId: o }) {
         }
       ),
       /* @__PURE__ */ t(
-        p,
+        g,
         {
           label: "Tempo rimanente (opzionale)",
           field: "timeRemainingEntity",
@@ -1125,7 +1124,7 @@ function Z({ cardId: o }) {
         }
       ),
       /* @__PURE__ */ t(
-        p,
+        g,
         {
           label: "Percentuale progresso (opzionale)",
           field: "progressEntity",
@@ -1134,7 +1133,7 @@ function Z({ cardId: o }) {
           filterDomain: "sensor"
         }
       ),
-      /* @__PURE__ */ t(l, { label: "Durata max ciclo (min)", hint: "Usata come fallback per stimare il progresso.", children: /* @__PURE__ */ t(
+      /* @__PURE__ */ t(F, { label: "Durata max ciclo (min)", hint: "Usata come fallback per stimare il progresso.", children: /* @__PURE__ */ t(
         X,
         {
           value: String(e.maxCycleMinutes ?? 120),
@@ -1143,23 +1142,10 @@ function Z({ cardId: o }) {
         }
       ) })
     ] }),
-    /* @__PURE__ */ t(m, { title: "Animazioni", children: /* @__PURE__ */ t(l, { label: "Livello", children: /* @__PURE__ */ t(
-      N,
-      {
-        options: [
-          { value: "none", label: "Nessuna" },
-          { value: "essential", label: "Essenziale" },
-          { value: "full", label: "Completa" },
-          { value: "max", label: "Massima" }
-        ],
-        value: e.animationLevel,
-        onChange: (n) => r({ animationLevel: n })
-      }
-    ) }) }),
-    /* @__PURE__ */ t(m, { title: "Popup fine ciclo", children: /* @__PURE__ */ t(l, { label: "Mostra popup globale sulla dashboard", hint: "Visibile da qualunque pagina al termine del ciclo.", children: /* @__PURE__ */ t(D, { value: e.showPopup, onChange: (n) => r({ showPopup: n }) }) }) })
+    /* @__PURE__ */ t(p, { title: "Popup fine ciclo", children: /* @__PURE__ */ t(F, { label: "Mostra popup globale sulla dashboard", hint: "Visibile da qualunque pagina al termine del ciclo.", children: /* @__PURE__ */ t(D, { value: e.showPopup, onChange: (n) => r({ showPopup: n }) }) }) })
   ] });
 }
-function J({ precheck: o, onRefresh: e }) {
+function V({ precheck: o, onRefresh: e }) {
   if (!o) return null;
   if (o.ok)
     return /* @__PURE__ */ _("div", { style: { display: "flex", alignItems: "center", gap: 8, fontSize: 12, color: "#16a34a" }, children: [
@@ -1193,26 +1179,30 @@ function J({ precheck: o, onRefresh: e }) {
   ] });
 }
 function k({ label: o, holderEntity: e, hass: i, filterDomain: s }) {
-  var S;
-  const r = ((S = i.states[e]) == null ? void 0 : S.state) ?? "", f = { v: r };
+  var u;
+  const r = ((u = i.states[e]) == null ? void 0 : u.state) ?? "", [d, f] = S(null);
+  N(() => {
+    d !== null && r === d && f(null);
+  }, [r, d]);
+  const I = d !== null ? d : r, y = { v: I };
   return /* @__PURE__ */ t(
-    p,
+    g,
     {
       label: o,
       field: "v",
-      config: f,
-      setConfig: (F) => {
-        const d = typeof F == "function" ? F(f) : F, c = (d == null ? void 0 : d.v) ?? "";
-        c && c !== r && i.callService("input_text", "set_value", {
+      config: y,
+      setConfig: (m) => {
+        const c = typeof m == "function" ? m(y) : m, l = (c == null ? void 0 : c.v) ?? "";
+        l && l !== I && (f(l), i.callService("input_text", "set_value", {
           entity_id: e,
-          value: c
-        });
+          value: l
+        }));
       },
       filterDomain: s
     }
   );
 }
-function V({ icon: o, label: e, onClick: i, disabled: s }) {
+function J({ icon: o, label: e, onClick: i, disabled: s }) {
   return /* @__PURE__ */ _("button", { onClick: i, disabled: s, style: {
     display: "inline-flex",
     alignItems: "center",
