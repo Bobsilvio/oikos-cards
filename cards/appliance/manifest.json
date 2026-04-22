@@ -1,0 +1,15 @@
+{
+  "id": "appliance",
+  "name": "Elettrodomestico",
+  "version": "0.1.0",
+  "author": "Oikos",
+  "description": "Monitor elettrodomestici: consumo live, costo ciclo, storico giornaliero/settimanale/mensile/annuale, popup globale a fine ciclo, animazioni in funzione. Auto-installa package HA con suffisso dedicato.",
+  "sdkVersion": "^1.0.0",
+  "hasSettings": true,
+  "preview": "preview.png",
+  "entry": "dist/appliance.js",
+  "settings": "dist/appliance.settings.js",
+  "tags": ["casa", "energia", "elettrodomestici", "lavatrice", "asciugatrice", "lavastoviglie"],
+  "configVersion": 1,
+  "defaultWidth": "lg"
+}
