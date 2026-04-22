@@ -1,7 +1,7 @@
 {
   "id": "thermostat",
   "name": "Termostato",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "Oikos",
   "description": "Gauge 270° con gradiente blu→arancione per termostato HA. Slider target, toggle on/off, multi-mode.",
   "sdkVersion": "^1.0.0",

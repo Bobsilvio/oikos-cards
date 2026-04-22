@@ -2,8 +2,8 @@ import { useCardConfig, EntityField, Field, TextField } from '@oikos/sdk'
 
 const DEFAULT_CONFIG = { entityId: '', label: '' }
 
-export default function ThermostatSettings() {
-  const [config, setConfig] = useCardConfig('thermostat', DEFAULT_CONFIG)
+export default function ThermostatSettings({ cardId }) {
+  const [config, setConfig] = useCardConfig(cardId ?? 'thermostat', DEFAULT_CONFIG)
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>

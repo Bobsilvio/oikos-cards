@@ -2,7 +2,7 @@
   "repo": "oikos-cards",
   "version": "0.1.0",
   "sdkVersion": "1.0.0",
-  "updated": "2026-04-21",
+  "updated": "2026-04-22",
   "cards": [
     {
       "id": "air-quality",
@@ -142,7 +142,7 @@
     {
       "id": "thermostat",
       "name": "Termostato",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "author": "Oikos",
       "description": "Gauge 270° con gradiente blu→arancione per termostato HA. Slider target, toggle on/off, multi-mode.",
       "sdkVersion": "^1.0.0",
