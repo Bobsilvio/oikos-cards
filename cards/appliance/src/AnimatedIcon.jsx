@@ -1,26 +1,26 @@
 /**
- * AnimatedIcon — icona elettrodomestico animata durante il ciclo.
+ * AnimatedIcon — badge circolare con animazione diversa per fase.
  *
- * Livelli:
- *   'none'      — statico (icona sola)
- *   'essential' — icona + glow pulse
- *   'full'      — icona + glow + animazione per tipo (default)
- *   'max'       — full + progress ring + particle trail
+ * Fasi:
+ *   washing  → blu,    onda acqua 4s + shake icona + bolle
+ *   spinning → cyan,   onda acqua 2s veloce + spin icona
+ *   drying   → arancio, onda acqua 4s + steam verticale (asciugatrice)
+ *   heating  → rosso,  brace pulsante dal basso + scintille + heat-shimmer icona
+ *   cooling  → azzurro, frost statico + alone freddo + icona con glow
+ *   finished → verde,  onda piena 100% + sparkle
+ *   idle     → grigio, nessuna animazione
  *
- * Tipi: washer (spin), dishwasher (sprays), oven (glow), generic (pulse)
- *
- * Rispetta `prefers-reduced-motion`: in tal caso si ferma a 'essential' max.
+ * Rispetta prefers-reduced-motion (clamp a 'essential').
  */
 import { useMemo } from 'react'
 import { MdiIcon } from '@oikos/sdk'
 
-// Rilevamento reduced-motion senza hook (si rivaluta al re-render)
 function prefersReducedMotion() {
   if (typeof window === 'undefined' || !window.matchMedia) return false
   try { return window.matchMedia('(prefers-reduced-motion: reduce)').matches } catch { return false }
 }
 
-const STYLE_ID = 'oikos-appliance-anim'
+const STYLE_ID = 'oikos-appliance-anim-v4'
 
 function ensureStyles() {
   if (typeof document === 'undefined') return
@@ -28,129 +28,194 @@ function ensureStyles() {
   const style = document.createElement('style')
   style.id = STYLE_ID
   style.textContent = `
-@keyframes oikos-app-pulse { 0%,100% { opacity:.4; transform:scale(1) } 50% { opacity:.8; transform:scale(1.08) } }
-@keyframes oikos-app-spin  { to { transform: rotate(360deg) } }
-@keyframes oikos-app-glow  { 0%,100% { opacity:.25 } 50% { opacity:.7 } }
-@keyframes oikos-app-drip  { 0% { transform: translateY(-6px); opacity:0 } 30% { opacity:.9 } 100% { transform: translateY(20px); opacity:0 } }
-@keyframes oikos-app-heat  { 0%,100% { filter: drop-shadow(0 0 2px #f59e0b) } 50% { filter: drop-shadow(0 0 8px #ef4444) } }
-@keyframes oikos-app-ring  { to { stroke-dashoffset: 0 } }
-.oikos-app-anim-spin  { animation: oikos-app-spin  2.4s linear infinite; transform-origin: center; }
-.oikos-app-anim-pulse { animation: oikos-app-pulse 2s ease-in-out infinite; }
-.oikos-app-anim-heat  { animation: oikos-app-heat  1.8s ease-in-out infinite; }
+@keyframes oikos-app-wave-slow { from { transform: rotate(0deg) } to { transform: rotate(360deg) } }
+@keyframes oikos-app-wave-fast { from { transform: rotate(0deg) } to { transform: rotate(360deg) } }
+@keyframes oikos-app-shake     { 0%,100% { transform: rotate(0deg) } 25% { transform: rotate(5deg) translateY(-1px) } 75% { transform: rotate(-5deg) translateY(1px) } }
+@keyframes oikos-app-spin      { from { transform: rotate(0deg) } to { transform: rotate(360deg) } }
+@keyframes oikos-app-bubbles   { 0% { transform: translateY(10px); opacity: 0 } 50% { opacity: 1 } 100% { transform: translateY(-20px); opacity: 0 } }
+@keyframes oikos-app-steam     { 0% { opacity: 0; transform: translateY(5px) } 50% { opacity: .8 } 100% { opacity: 0; transform: translateY(-10px) } }
+@keyframes oikos-app-sparkle   { 0%,100% { opacity: .3; transform: scale(.9) } 50% { opacity: 1; transform: scale(1.1) } }
+@keyframes oikos-app-halo      { 0%,100% { opacity: .35; transform: scale(1) } 50% { opacity: .55; transform: scale(1.05) } }
+@keyframes oikos-app-ember     { 0%,100% { opacity: .55; transform: translateY(0) scale(1) } 50% { opacity: .95; transform: translateY(-1px) scale(1.06) } }
+@keyframes oikos-app-sparks    { 0% { transform: translateY(8px); opacity: 0 } 40% { opacity: .9 } 100% { transform: translateY(-14px); opacity: 0 } }
+@keyframes oikos-app-heatshim  { 0%,100% { filter: drop-shadow(0 0 2px #ff6f00) translateY(0) } 50% { filter: drop-shadow(0 0 8px #ff3d00) translateY(-0.5px) } }
+@keyframes oikos-app-frost     { 0%,100% { opacity: .7 } 50% { opacity: 1 } }
+@keyframes oikos-app-coolglow  { 0%,100% { filter: drop-shadow(0 0 3px #4fc3f7) } 50% { filter: drop-shadow(0 0 7px #81d4fa) } }
+.oikos-app-wave-slow { animation: oikos-app-wave-slow 4s linear infinite; transform-origin: 50% 50%; }
+.oikos-app-wave-fast { animation: oikos-app-wave-fast 2s linear infinite; transform-origin: 50% 50%; }
+.oikos-app-shake     { animation: oikos-app-shake 1.5s ease-in-out infinite; transform-origin: 50% 60%; }
+.oikos-app-spin      { animation: oikos-app-spin 0.9s linear infinite; transform-origin: 50% 50%; }
+.oikos-app-bubbles   { animation: oikos-app-bubbles 1.2s linear infinite; }
+.oikos-app-steam     { animation: oikos-app-steam 2s ease-in-out infinite; }
+.oikos-app-sparkle   { animation: oikos-app-sparkle 2s ease-in-out infinite; }
+.oikos-app-halo      { animation: oikos-app-halo 2.4s ease-in-out infinite; }
+.oikos-app-ember     { animation: oikos-app-ember 1.6s ease-in-out infinite; }
+.oikos-app-sparks    { animation: oikos-app-sparks 1.4s linear infinite; }
+.oikos-app-heatshim  { animation: oikos-app-heatshim 1.4s ease-in-out infinite; }
+.oikos-app-frost     { animation: oikos-app-frost 3s ease-in-out infinite; }
+.oikos-app-coolglow  { animation: oikos-app-coolglow 3s ease-in-out infinite; }
 `
   document.head.appendChild(style)
 }
 
+export const PHASE_COLORS = {
+  washing:  '#2196f3',
+  spinning: '#00bcd4',
+  drying:   '#ff9800',
+  heating:  '#ef5350',
+  cooling:  '#4fc3f7',
+  finished: '#4caf50',
+  idle:     '#9e9e9e',
+}
+
+// Fasi che usano l'animazione "acqua che sale"
+const WATER_PHASES = new Set(['washing', 'spinning', 'drying', 'finished'])
+
 export default function AnimatedIcon({
-  running = false,
-  type = 'generic',
+  phase = 'idle',
   level = 'full',
-  iconName = 'mdiPowerPlug',
-  size = 56,
-  color = '#3b82f6',
-  progress = null, // 0..1 se disponibile
+  iconName = 'power-plug',
+  size = 64,
+  fillLevel = 0,
 }) {
   useMemo(() => ensureStyles(), [])
-
   const reduced = prefersReducedMotion()
-  const effLevel = reduced && (level === 'full' || level === 'max') ? 'essential' : level
+  const eff = reduced && (level === 'full' || level === 'max') ? 'essential' : level
+  const full = eff === 'full' || eff === 'max'
+  const animate = phase !== 'idle' && eff !== 'none'
 
-  if (!running || effLevel === 'none') {
-    return <IconBlock iconName={iconName} size={size} color={color} halo={false} />
-  }
+  const color = PHASE_COLORS[phase] || PHASE_COLORS.idle
 
-  const useSpin = type === 'washer' && effLevel !== 'essential'
-  const useDrip = type === 'dishwasher' && effLevel !== 'essential'
-  const useHeat = type === 'oven' && effLevel !== 'essential'
-  const showRing = effLevel === 'max' && progress != null
+  // fillLevel effettivo solo per fasi "acqua"
+  const useWater = WATER_PHASES.has(phase)
+  const lvl = !useWater ? 0
+            : phase === 'finished' ? 1
+            : Math.max(0.05, Math.min(0.95, fillLevel))
+  const lvlPct = Math.round(lvl * 100)
 
-  return (
-    <div style={{
-      position: 'relative',
-      width: size, height: size,
-      display: 'flex', alignItems: 'center', justifyContent: 'center',
-    }}>
-      {/* Halo pulse */}
+  // Selezione animazioni
+  let waveCls = '', iconCls = '', overlayCls = '', overlayBg = 'none', baseLayer = null
+
+  if (phase === 'washing') {
+    waveCls    = full ? 'oikos-app-wave-slow' : ''
+    iconCls    = full ? 'oikos-app-shake' : ''
+    overlayCls = full ? 'oikos-app-bubbles' : ''
+    overlayBg  = 'radial-gradient(2px 2px at 20% 80%, white, transparent), radial-gradient(2px 2px at 50% 70%, white, transparent), radial-gradient(1.5px 1.5px at 75% 60%, white, transparent)'
+  } else if (phase === 'spinning') {
+    waveCls    = full ? 'oikos-app-wave-fast' : ''
+    iconCls    = full ? 'oikos-app-spin' : ''
+    overlayBg  = 'radial-gradient(circle, rgba(255,255,255,0.3) 10%, transparent 60%)'
+  } else if (phase === 'drying') {
+    waveCls    = full ? 'oikos-app-wave-slow' : ''
+    overlayCls = full ? 'oikos-app-steam' : ''
+    overlayBg  = 'linear-gradient(0deg, transparent, rgba(255,255,255,0.5), transparent)'
+  } else if (phase === 'finished') {
+    waveCls    = full ? 'oikos-app-wave-slow' : ''
+    overlayCls = full ? 'oikos-app-sparkle' : ''
+    overlayBg  = 'radial-gradient(circle, rgba(255,255,255,0.6) 10%, transparent 60%)'
+  } else if (phase === 'heating') {
+    // Brace pulsante dal basso (layer) + scintille (overlay) + heat shimmer (icona)
+    iconCls    = full ? 'oikos-app-heatshim' : ''
+    overlayCls = full ? 'oikos-app-sparks' : ''
+    overlayBg  = 'radial-gradient(1.5px 1.5px at 25% 60%, #ffd54f, transparent), radial-gradient(1.5px 1.5px at 60% 50%, #ffab40, transparent), radial-gradient(1px 1px at 80% 65%, #ffe082, transparent)'
+    baseLayer = (
       <div
-        className="oikos-app-anim-pulse"
+        className={full ? 'oikos-app-ember' : undefined}
         style={{
-          position: 'absolute', inset: 0, borderRadius: '50%',
-          background: `radial-gradient(circle, ${hexToRgba(color, 0.35)} 0%, transparent 70%)`,
+          position: 'absolute', inset: 0,
+          background: 'radial-gradient(ellipse at 50% 100%, #ff3d00 0%, #ef5350 35%, rgba(239,83,80,0.4) 60%, transparent 80%)',
           pointerEvents: 'none',
         }}
       />
-
-      {/* Progress ring (level max) */}
-      {showRing && <ProgressRing size={size} progress={progress} color={color} />}
-
-      {/* Dishwasher drips */}
-      {useDrip && <Drips color={color} />}
-
-      {/* Icona — può ruotare per washer, riscaldata per oven */}
+    )
+  } else if (phase === 'cooling') {
+    iconCls    = full ? 'oikos-app-coolglow' : ''
+    overlayCls = full ? 'oikos-app-frost' : ''
+    overlayBg  = 'radial-gradient(1.5px 1.5px at 20% 30%, white, transparent), radial-gradient(1.5px 1.5px at 70% 25%, white, transparent), radial-gradient(1px 1px at 45% 65%, white, transparent), radial-gradient(1px 1px at 85% 75%, white, transparent), radial-gradient(1px 1px at 30% 80%, white, transparent)'
+    baseLayer = (
       <div
-        className={useSpin ? 'oikos-app-anim-spin' : useHeat ? 'oikos-app-anim-heat' : undefined}
-        style={{ position: 'relative', zIndex: 2, display: 'flex' }}
-      >
-        <MdiIcon name={iconName} size={Math.round(size * 0.55)} style={{ color }} />
+        style={{
+          position: 'absolute', inset: 0,
+          background: 'radial-gradient(circle at 50% 50%, rgba(129,212,250,0.35) 0%, rgba(79,195,247,0.15) 50%, transparent 80%)',
+          pointerEvents: 'none',
+        }}
+      />
+    )
+  }
+
+  return (
+    <div style={{ position: 'relative', width: size, height: size, flexShrink: 0 }}>
+      {animate && (
+        <div
+          className="oikos-app-halo"
+          style={{
+            position: 'absolute', inset: -4, borderRadius: '50%',
+            background: `radial-gradient(circle, ${hexToRgba(color, 0.35)} 0%, transparent 70%)`,
+            pointerEvents: 'none',
+          }}
+        />
+      )}
+
+      <div style={{
+        position: 'relative',
+        width: size, height: size,
+        borderRadius: '50%',
+        background: 'rgba(255,255,255,0.05)',
+        border: `1px solid ${animate ? color : 'rgba(255,255,255,0.1)'}`,
+        overflow: 'hidden',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        boxShadow: animate ? `0 0 14px ${hexToRgba(color, 0.30)}` : 'none',
+        transition: 'border-color .4s, box-shadow .4s',
+      }}>
+        {/* Base layer (brace/gelo per heating/cooling) */}
+        {baseLayer}
+
+        {/* Wave layer (solo fasi acqua) */}
+        {useWater && lvl > 0 && (
+          <div
+            className={waveCls || undefined}
+            style={{
+              position: 'absolute',
+              left: '-50%', width: '200%', height: '200%',
+              top: `calc(100% - ${lvlPct}%)`,
+              background: hexToRgba(color, 0.6),
+              borderRadius: '40%',
+              transition: 'top 1.2s ease',
+            }}
+          />
+        )}
+
+        {/* Overlay (bolle/steam/sparkle/sparks/frost) */}
+        {overlayBg !== 'none' && (
+          <div
+            className={overlayCls || undefined}
+            style={{
+              position: 'absolute', inset: 0,
+              backgroundImage: overlayBg,
+              backgroundSize: '100% 100%',
+              zIndex: 2,
+              pointerEvents: 'none',
+            }}
+          />
+        )}
+
+        {/* Icona */}
+        <div
+          className={iconCls || undefined}
+          style={{
+            position: 'relative', zIndex: 3, display: 'flex',
+            mixBlendMode: 'overlay',
+          }}
+        >
+          <MdiIcon name={iconName} size={Math.round(size * 0.55)} style={{ color: '#ffffff' }} />
+        </div>
       </div>
     </div>
   )
 }
 
-function IconBlock({ iconName, size, color }) {
-  return (
-    <div style={{
-      width: size, height: size, borderRadius: 14,
-      display: 'flex', alignItems: 'center', justifyContent: 'center',
-      background: 'var(--surface-2, rgba(0,0,0,.04))',
-    }}>
-      <MdiIcon name={iconName} size={Math.round(size * 0.55)} style={{ color: 'var(--text-muted)' }} />
-    </div>
-  )
-}
-
-function ProgressRing({ size, progress, color }) {
-  const stroke = 3
-  const r = (size - stroke) / 2
-  const c = 2 * Math.PI * r
-  const offset = c * (1 - Math.max(0, Math.min(1, progress)))
-  return (
-    <svg
-      width={size} height={size}
-      style={{ position: 'absolute', inset: 0, transform: 'rotate(-90deg)', pointerEvents: 'none' }}
-    >
-      <circle cx={size/2} cy={size/2} r={r} fill="none" stroke={hexToRgba(color, 0.15)} strokeWidth={stroke}/>
-      <circle
-        cx={size/2} cy={size/2} r={r}
-        fill="none" stroke={color} strokeWidth={stroke} strokeLinecap="round"
-        strokeDasharray={c} strokeDashoffset={offset}
-        style={{ transition: 'stroke-dashoffset .6s ease' }}
-      />
-    </svg>
-  )
-}
-
-function Drips({ color }) {
-  return (
-    <>
-      {[0, 0.6, 1.2].map((delay, i) => (
-        <div
-          key={i}
-          style={{
-            position: 'absolute', top: 6, left: `${30 + i * 20}%`,
-            width: 3, height: 3, borderRadius: '50%', background: color,
-            animation: `oikos-app-drip 1.6s ease-in ${delay}s infinite`,
-            opacity: 0.8,
-            pointerEvents: 'none',
-          }}
-        />
-      ))}
-    </>
-  )
-}
-
 function hexToRgba(hex, a) {
-  if (!hex || hex[0] !== '#') return `rgba(59,130,246,${a})`
+  if (!hex || hex[0] !== '#') return `rgba(158,158,158,${a})`
   const h = hex.slice(1)
   const full = h.length === 3 ? h.split('').map(c => c + c).join('') : h
   const n = parseInt(full, 16)

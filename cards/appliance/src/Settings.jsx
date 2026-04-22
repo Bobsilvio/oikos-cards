@@ -10,7 +10,7 @@
 import { useState, useEffect } from 'react'
 import {
   useCardConfig, useSafeHass, apiUrl,
-  Section, Field, TextField, Pills, Toggle, EntityField,
+  Section, Field, TextField, Pills, Toggle, EntityField, MdiIconPicker,
 } from '@oikos/sdk'
 import { Download, Trash2, CheckCircle2, AlertTriangle, RefreshCw } from 'lucide-react'
 import { TEMPLATE_YAML } from './templateYaml'
@@ -18,15 +18,18 @@ import { defaultsFor } from './suffixDefaults'
 import { buildEntities } from './entities'
 
 const DEFAULT = {
-  mode:           'package',
-  suffix:         '',
-  displayName:    '',
-  iconName:       '',
-  animType:       'auto',
-  animationLevel: 'full',
-  showPopup:      true,
-  powerEntity:    '',
-  priceKwh:       0.28,
+  mode:               'package',
+  suffix:             '',
+  displayName:        '',
+  iconName:           '',
+  animationLevel:     'full',
+  showPopup:          true,
+  powerEntity:        '',
+  priceKwh:           0.28,
+  phaseEntity:        '',
+  timeRemainingEntity:'',
+  progressEntity:     '',
+  maxCycleMinutes:    120,
 }
 
 function renderTemplate(suffix, name) {
@@ -134,7 +137,6 @@ export default function ApplianceSettings({ cardId }) {
                 suffix: clean,
                 displayName: cfg.displayName || d.name,
                 iconName:    cfg.iconName    || d.iconName,
-                animType:    cfg.animType === 'auto' ? cfg.animType : cfg.animType,
               })
             }}
             placeholder="lavatrice"
@@ -142,6 +144,13 @@ export default function ApplianceSettings({ cardId }) {
         </Field>
         <Field label="Nome visualizzato">
           <TextField value={cfg.displayName} onChange={v => update({ displayName: v })} placeholder="Lavatrice" />
+        </Field>
+        <Field label="Icona" hint="Vuoto = usa l'icona predefinita per il suffisso.">
+          <MdiIconPicker
+            value={cfg.iconName || defaultsFor(s).iconName}
+            onChange={v => update({ iconName: v })}
+            dark={false}
+          />
         </Field>
       </Section>
 
@@ -185,16 +194,19 @@ export default function ApplianceSettings({ cardId }) {
             label="Sensore potenza (W)"
             holderEntity={buildEntities(s).sourcePowerHolder}
             hass={hass}
+            filterDomain="sensor"
           />
           <PackageSourcePicker
             label="Switch presa (on/off)"
             holderEntity={buildEntities(s).sourceSwitchHolder}
             hass={hass}
+            filterDomain="switch"
           />
           <PackageSourcePicker
             label="Prezzo energia (€/kWh)"
             holderEntity={buildEntities(s).sourcePriceHolder}
             hass={hass}
+            filterDomain="sensor"
           />
         </Section>
       )}
@@ -217,20 +229,38 @@ export default function ApplianceSettings({ cardId }) {
         </Section>
       )}
 
-      <Section title="Animazioni">
-        <Field label="Tipo">
-          <Pills
-            options={[
-              { value: 'auto',       label: 'Auto' },
-              { value: 'washer',     label: 'Lavatrice' },
-              { value: 'dishwasher', label: 'Lavastoviglie' },
-              { value: 'oven',       label: 'Forno' },
-              { value: 'generic',    label: 'Generico' },
-            ]}
-            value={cfg.animType}
-            onChange={v => update({ animType: v })}
+      <Section title="Fase & progresso" hint="Opzionali: se l'integrazione espone un sensore di fase (wash/spin/dry/finished) e/o tempo rimanente, la card mostra colori e livello acqua corretti.">
+        <EntityField
+          label="Sensore fase (opzionale)"
+          field="phaseEntity"
+          config={cfg}
+          setConfig={setCfg}
+          filterDomain="sensor"
+        />
+        <EntityField
+          label="Tempo rimanente (opzionale)"
+          field="timeRemainingEntity"
+          config={cfg}
+          setConfig={setCfg}
+          filterDomain="sensor"
+        />
+        <EntityField
+          label="Percentuale progresso (opzionale)"
+          field="progressEntity"
+          config={cfg}
+          setConfig={setCfg}
+          filterDomain="sensor"
+        />
+        <Field label="Durata max ciclo (min)" hint="Usata come fallback per stimare il progresso.">
+          <TextField
+            value={String(cfg.maxCycleMinutes ?? 120)}
+            onChange={v => update({ maxCycleMinutes: parseInt(String(v).replace(/\D/g, ''), 10) || 120 })}
+            placeholder="120"
           />
         </Field>
+      </Section>
+
+      <Section title="Animazioni">
         <Field label="Livello">
           <Pills
             options={[
@@ -286,43 +316,33 @@ function PrecheckBanner({ precheck, onRefresh }) {
   )
 }
 
-// Picker che salva su input_text.* via HA service (holder pattern package)
-function PackageSourcePicker({ label, holderEntity, hass }) {
+// Picker che apre il popup di ricerca entità e salva la selezione
+// nel corrispondente input_text.* via HA service (holder pattern package)
+function PackageSourcePicker({ label, holderEntity, hass, filterDomain }) {
   const current = hass.states[holderEntity]?.state ?? ''
-  const [val, setVal] = useState(current)
-  const [saving, setSaving] = useState(false)
-  useEffect(() => { setVal(current) }, [current])
 
-  async function apply() {
-    setSaving(true)
-    try {
-      await hass.callService('input_text', 'set_value', {
+  // Shim config/setConfig per EntityField: la chiave 'v' riceve la selezione,
+  // intercettiamo setConfig per inoltrare la chiamata a HA.
+  const shimConfig = { v: current }
+  const shimSet = (updater) => {
+    const next = typeof updater === 'function' ? updater(shimConfig) : updater
+    const picked = next?.v ?? ''
+    if (picked && picked !== current) {
+      hass.callService('input_text', 'set_value', {
         entity_id: holderEntity,
-        value: val,
+        value: picked,
       })
-    } finally { setSaving(false) }
+    }
   }
 
-  const dirty = val !== current
-
   return (
-    <Field label={label} hint={`Salvato in ${holderEntity}`}>
-      <div style={{ display: 'flex', gap: 6 }}>
-        <div style={{ flex: 1 }}>
-          <TextField value={val} onChange={setVal} placeholder="sensor.xxx_power" />
-        </div>
-        <button
-          onClick={apply}
-          disabled={!dirty || saving}
-          style={{
-            padding: '0 12px', borderRadius: 8, border: 'none', cursor: dirty && !saving ? 'pointer' : 'default',
-            background: dirty ? 'var(--accent, #3b82f6)' : 'var(--surface-2, rgba(0,0,0,.06))',
-            color: dirty ? '#fff' : 'var(--text-muted)',
-            fontSize: 12, fontWeight: 600,
-          }}
-        >{saving ? '…' : 'Applica'}</button>
-      </div>
-    </Field>
+    <EntityField
+      label={label}
+      field="v"
+      config={shimConfig}
+      setConfig={shimSet}
+      filterDomain={filterDomain}
+    />
   )
 }
 

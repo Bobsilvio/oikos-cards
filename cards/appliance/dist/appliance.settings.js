@@ -1,4 +1,4 @@
-const { jsxs: a, jsx: t } = window.__OIKOS_SDK__.jsxRuntime, C = `homeassistant:
+const { jsxs: _, jsx: t } = window.__OIKOS_SDK__.jsxRuntime, M = `homeassistant:
   customize:
     package.node_anchors:
       customize: &customize
@@ -839,28 +839,33 @@ automation:
               - service: switch.turn_off
                 target:
                   entity_id: "{{ states('input_text.sensore_switch_{{SUFFIX}}') }}"
-`, P = {
-  lavatrice: { name: "Lavatrice", iconName: "mdiWashingMachine", animType: "washer" },
-  asciugatrice: { name: "Asciugatrice", iconName: "mdiTumbleDryer", animType: "washer" },
-  lavastoviglie: { name: "Lavastoviglie", iconName: "mdiDishwasher", animType: "dishwasher" },
-  forno: { name: "Forno", iconName: "mdiStove", animType: "oven" },
-  microonde: { name: "Microonde", iconName: "mdiMicrowave", animType: "oven" },
-  frigo: { name: "Frigo", iconName: "mdiFridge", animType: "generic" },
-  congelatore: { name: "Congelatore", iconName: "mdiFridgeIndustrial", animType: "generic" },
-  aspirapolvere: { name: "Aspirapolvere", iconName: "mdiRobotVacuum", animType: "generic" },
-  bollitore: { name: "Bollitore", iconName: "mdiKettle", animType: "oven" },
-  tostapane: { name: "Tostapane", iconName: "mdiToaster", animType: "oven" },
-  ferro: { name: "Ferro da stiro", iconName: "mdiIron", animType: "oven" }
+`, T = {
+  lavatrice: { name: "Lavatrice", iconName: "washing-machine", defaultPhase: "washing" },
+  asciugatrice: { name: "Asciugatrice", iconName: "tumble-dryer", defaultPhase: "drying" },
+  lavastoviglie: { name: "Lavastoviglie", iconName: "dishwasher", defaultPhase: "washing" },
+  forno: { name: "Forno", iconName: "stove", defaultPhase: "heating" },
+  microonde: { name: "Microonde", iconName: "microwave", defaultPhase: "heating" },
+  frigo: { name: "Frigo", iconName: "fridge", defaultPhase: "cooling" },
+  congelatore: { name: "Congelatore", iconName: "fridge-industrial", defaultPhase: "cooling" },
+  aspirapolvere: { name: "Aspirapolvere", iconName: "robot-vacuum", defaultPhase: "washing" },
+  bollitore: { name: "Bollitore", iconName: "kettle", defaultPhase: "heating" },
+  tostapane: { name: "Tostapane", iconName: "toaster-oven", defaultPhase: "heating" },
+  ferro: { name: "Ferro da stiro", iconName: "iron", defaultPhase: "heating" },
+  autoclave: { name: "Autoclave", iconName: "water-pump", defaultPhase: "washing" },
+  pompa: { name: "Pompa", iconName: "water-pump", defaultPhase: "washing" },
+  caldaia: { name: "Caldaia", iconName: "water-boiler", defaultPhase: "heating" },
+  condizionatore: { name: "Condizionatore", iconName: "air-conditioner", defaultPhase: "cooling" },
+  scaldabagno: { name: "Scaldabagno", iconName: "water-boiler", defaultPhase: "heating" }
 };
-function T(o) {
+function x(o) {
   const e = String(o || "").trim().toLowerCase();
-  return P[e] ?? {
+  return T[e] ?? {
     name: e ? e[0].toUpperCase() + e.slice(1) : "",
-    iconName: "mdiPowerPlug",
-    animType: "generic"
+    iconName: "power-plug",
+    defaultPhase: "washing"
   };
 }
-function b(o) {
+function w(o) {
   const e = String(o || "").trim().toLowerCase();
   return e ? {
     suffix: e,
@@ -899,80 +904,83 @@ function b(o) {
     lastCycle: `input_text.ultimo_ciclo_attivo_elettrodomestici_${e}`
   } : null;
 }
-const { useState: p, useEffect: E } = window.__OIKOS_SDK__.React, { useCardConfig: $, useSafeHass: O, apiUrl: N, Section: F, Field: c, TextField: X, Pills: x, Toggle: W, EntityField: L } = window.__OIKOS_SDK__, { Download: q, Trash2: H, CheckCircle2: D, AlertTriangle: R, RefreshCw: K } = window.__OIKOS_SDK__.icons, B = {
+const { useState: U, useEffect: $ } = window.__OIKOS_SDK__.React, { useCardConfig: O, useSafeHass: W, apiUrl: P, Section: m, Field: l, TextField: X, Pills: N, Toggle: D, EntityField: p, MdiIconPicker: L } = window.__OIKOS_SDK__, { Download: q, Trash2: H, CheckCircle2: R, AlertTriangle: K, RefreshCw: B } = window.__OIKOS_SDK__.icons, j = {
   mode: "package",
   suffix: "",
   displayName: "",
   iconName: "",
-  animType: "auto",
   animationLevel: "full",
   showPopup: !0,
   powerEntity: "",
-  priceKwh: 0.28
+  priceKwh: 0.28,
+  phaseEntity: "",
+  timeRemainingEntity: "",
+  progressEntity: "",
+  maxCycleMinutes: 120
 };
-function j(o, e) {
-  return C.replace(/\{\{SUFFIX\}\}/g, o).replace(/\{\{NAME\}\}/g, e);
+function Y(o, e) {
+  return M.replace(/\{\{SUFFIX\}\}/g, o).replace(/\{\{NAME\}\}/g, e);
 }
-async function w(o, e) {
-  const s = await fetch(N(o), {
+async function z(o, e) {
+  const i = await fetch(P(o), {
     method: e ? "POST" : "GET",
     headers: e ? { "Content-Type": "application/json" } : {},
     body: e ? JSON.stringify(e) : void 0
-  }), i = await s.json().catch(() => ({}));
-  if (!s.ok) throw new Error(i.error || `HTTP ${s.status}`);
-  return i;
-}
-async function Y(o) {
-  const e = await fetch(N(o), { method: "DELETE" }), s = await e.json().catch(() => ({}));
-  if (!e.ok) throw new Error(s.error || `HTTP ${e.status}`);
+  }), s = await i.json().catch(() => ({}));
+  if (!i.ok) throw new Error(s.error || `HTTP ${i.status}`);
   return s;
 }
-function Q({ cardId: o }) {
-  const [e, s] = $(o ?? "appliance", B, { version: 1 }), i = O(), r = (n) => s({ ...e, ...n }), [S, d] = p(null), [f, h] = p([]), [l, m] = p(!1), [y, u] = p(null);
+async function G(o) {
+  const e = await fetch(P(o), { method: "DELETE" }), i = await e.json().catch(() => ({}));
+  if (!e.ok) throw new Error(i.error || `HTTP ${e.status}`);
+  return i;
+}
+function Z({ cardId: o }) {
+  const [e, i] = O(o ?? "appliance", j, { version: 1 }), s = W(), r = (n) => i({ ...e, ...n }), [f, v] = U(null), [S, F] = U([]), [d, c] = U(!1), [g, u] = U(null);
   async function I() {
     try {
-      const [n, U] = await Promise.all([
-        w("/api/appliance/precheck", null),
-        w("/api/appliance/list", null)
+      const [n, h] = await Promise.all([
+        z("/api/appliance/precheck", null),
+        z("/api/appliance/list", null)
       ]);
-      d(n), h(U.items || []);
+      v(n), F(h.items || []);
     } catch (n) {
-      d({ ok: !1, reason: n.message });
+      v({ ok: !1, reason: n.message });
     }
   }
-  E(() => {
+  $(() => {
     I();
   }, []);
-  const _ = String(e.suffix || "").trim().toLowerCase(), g = /^[a-z0-9_]{1,40}$/.test(_), v = f.includes(_);
+  const a = String(e.suffix || "").trim().toLowerCase(), y = /^[a-z0-9_]{1,40}$/.test(a), b = S.includes(a);
+  async function C() {
+    if (y) {
+      c(!0), u(null);
+      try {
+        const n = Y(a, e.displayName || x(a).name);
+        await z("/api/appliance/install", { suffix: a, yaml: n }), u({ type: "ok", text: `Package installato in /config/packages/silviosmart_elettrodomestici/${a}.yaml. Riavvia Home Assistant per attivarlo.` }), await I();
+      } catch (n) {
+        u({ type: "err", text: n.message });
+      } finally {
+        c(!1);
+      }
+    }
+  }
   async function A() {
-    if (g) {
-      m(!0), u(null);
+    if (y) {
+      c(!0), u(null);
       try {
-        const n = j(_, e.displayName || T(_).name);
-        await w("/api/appliance/install", { suffix: _, yaml: n }), u({ type: "ok", text: `Package installato in /config/packages/silviosmart_elettrodomestici/${_}.yaml. Riavvia Home Assistant per attivarlo.` }), await I();
+        await G(`/api/appliance/${a}`), u({ type: "ok", text: `Package ${a}.yaml rimosso. Riavvia HA per completare.` }), await I();
       } catch (n) {
         u({ type: "err", text: n.message });
       } finally {
-        m(!1);
+        c(!1);
       }
     }
   }
-  async function M() {
-    if (g) {
-      m(!0), u(null);
-      try {
-        await Y(`/api/appliance/${_}`), u({ type: "ok", text: `Package ${_}.yaml rimosso. Riavvia HA per completare.` }), await I();
-      } catch (n) {
-        u({ type: "err", text: n.message });
-      } finally {
-        m(!1);
-      }
-    }
-  }
-  return /* @__PURE__ */ a("div", { style: { display: "flex", flexDirection: "column", gap: 16 }, children: [
-    /* @__PURE__ */ a(F, { title: "Generale", children: [
-      /* @__PURE__ */ t(c, { label: "Modalità", children: /* @__PURE__ */ t(
-        x,
+  return /* @__PURE__ */ _("div", { style: { display: "flex", flexDirection: "column", gap: 16 }, children: [
+    /* @__PURE__ */ _(m, { title: "Generale", children: [
+      /* @__PURE__ */ t(l, { label: "Modalità", children: /* @__PURE__ */ t(
+        N,
         {
           options: [
             { value: "package", label: "Package" },
@@ -982,101 +990,111 @@ function Q({ cardId: o }) {
           onChange: (n) => r({ mode: n })
         }
       ) }),
-      /* @__PURE__ */ t(c, { label: "Suffisso HA", hint: "Univoco. Lettere minuscole, cifre, underscore. Es: lavatrice, asciugatrice.", children: /* @__PURE__ */ t(
+      /* @__PURE__ */ t(l, { label: "Suffisso HA", hint: "Univoco. Lettere minuscole, cifre, underscore. Es: lavatrice, asciugatrice.", children: /* @__PURE__ */ t(
         X,
         {
           value: e.suffix,
           onChange: (n) => {
-            const U = String(n || "").trim().toLowerCase().replace(/[^a-z0-9_]/g, ""), k = T(U);
+            const h = String(n || "").trim().toLowerCase().replace(/[^a-z0-9_]/g, ""), E = x(h);
             r({
-              suffix: U,
-              displayName: e.displayName || k.name,
-              iconName: e.iconName || k.iconName,
-              animType: (e.animType === "auto", e.animType)
+              suffix: h,
+              displayName: e.displayName || E.name,
+              iconName: e.iconName || E.iconName
             });
           },
           placeholder: "lavatrice"
         }
       ) }),
-      /* @__PURE__ */ t(c, { label: "Nome visualizzato", children: /* @__PURE__ */ t(X, { value: e.displayName, onChange: (n) => r({ displayName: n }), placeholder: "Lavatrice" }) })
+      /* @__PURE__ */ t(l, { label: "Nome visualizzato", children: /* @__PURE__ */ t(X, { value: e.displayName, onChange: (n) => r({ displayName: n }), placeholder: "Lavatrice" }) }),
+      /* @__PURE__ */ t(l, { label: "Icona", hint: "Vuoto = usa l'icona predefinita per il suffisso.", children: /* @__PURE__ */ t(
+        L,
+        {
+          value: e.iconName || x(a).iconName,
+          onChange: (n) => r({ iconName: n }),
+          dark: !1
+        }
+      ) })
     ] }),
-    e.mode === "package" && /* @__PURE__ */ a(F, { title: "Package Home Assistant", children: [
-      /* @__PURE__ */ t(G, { precheck: S, onRefresh: I }),
-      /* @__PURE__ */ a("div", { style: { display: "flex", gap: 8, flexWrap: "wrap" }, children: [
+    e.mode === "package" && /* @__PURE__ */ _(m, { title: "Package Home Assistant", children: [
+      /* @__PURE__ */ t(J, { precheck: f, onRefresh: I }),
+      /* @__PURE__ */ _("div", { style: { display: "flex", gap: 8, flexWrap: "wrap" }, children: [
         /* @__PURE__ */ t(
           V,
           {
             icon: /* @__PURE__ */ t(q, { size: 14 }),
-            label: v ? "Reinstalla package" : "Installa package",
-            disabled: !g || l,
-            onClick: A
+            label: b ? "Reinstalla package" : "Installa package",
+            disabled: !y || d,
+            onClick: C
           }
         ),
-        v && /* @__PURE__ */ t(
-          J,
+        b && /* @__PURE__ */ t(
+          Q,
           {
             icon: /* @__PURE__ */ t(H, { size: 14 }),
             label: "Disinstalla",
-            disabled: l,
-            onClick: M
+            disabled: d,
+            onClick: A
           }
         )
       ] }),
-      y && /* @__PURE__ */ t("div", { style: {
+      g && /* @__PURE__ */ t("div", { style: {
         padding: "8px 10px",
         borderRadius: 8,
-        background: y.type === "ok" ? "rgba(34,197,94,.12)" : "rgba(239,68,68,.12)",
-        color: y.type === "ok" ? "#16a34a" : "#dc2626",
+        background: g.type === "ok" ? "rgba(34,197,94,.12)" : "rgba(239,68,68,.12)",
+        color: g.type === "ok" ? "#16a34a" : "#dc2626",
         fontSize: 12
-      }, children: y.text }),
-      /* @__PURE__ */ a("div", { style: { fontSize: 11, opacity: 0.6, marginTop: 4 }, children: [
+      }, children: g.text }),
+      /* @__PURE__ */ _("div", { style: { fontSize: 11, opacity: 0.6, marginTop: 4 }, children: [
         "Il template crea tutte le entità con suffisso ",
-        /* @__PURE__ */ a("code", { children: [
+        /* @__PURE__ */ _("code", { children: [
           "_",
-          _ || "<suffisso>"
+          a || "<suffisso>"
         ] }),
         ". Richiede ",
         /* @__PURE__ */ t("code", { children: "packages: !include_dir_named packages" }),
         " in configuration.yaml."
       ] })
     ] }),
-    e.mode === "package" && g && v && i && /* @__PURE__ */ a(F, { title: "Sorgenti (presa smart)", children: [
+    e.mode === "package" && y && b && s && /* @__PURE__ */ _(m, { title: "Sorgenti (presa smart)", children: [
       /* @__PURE__ */ t(
-        z,
+        k,
         {
           label: "Sensore potenza (W)",
-          holderEntity: b(_).sourcePowerHolder,
-          hass: i
+          holderEntity: w(a).sourcePowerHolder,
+          hass: s,
+          filterDomain: "sensor"
         }
       ),
       /* @__PURE__ */ t(
-        z,
+        k,
         {
           label: "Switch presa (on/off)",
-          holderEntity: b(_).sourceSwitchHolder,
-          hass: i
+          holderEntity: w(a).sourceSwitchHolder,
+          hass: s,
+          filterDomain: "switch"
         }
       ),
       /* @__PURE__ */ t(
-        z,
+        k,
         {
           label: "Prezzo energia (€/kWh)",
-          holderEntity: b(_).sourcePriceHolder,
-          hass: i
+          holderEntity: w(a).sourcePriceHolder,
+          hass: s,
+          filterDomain: "sensor"
         }
       )
     ] }),
-    e.mode === "standalone" && /* @__PURE__ */ a(F, { title: "Sorgente standalone", children: [
+    e.mode === "standalone" && /* @__PURE__ */ _(m, { title: "Sorgente standalone", children: [
       /* @__PURE__ */ t(
-        L,
+        p,
         {
           label: "Entità potenza (W)",
           field: "powerEntity",
           config: e,
-          setConfig: s
+          setConfig: i
         }
       ),
-      /* @__PURE__ */ t(c, { label: "Prezzo energia (€/kWh)", children: /* @__PURE__ */ t(
+      /* @__PURE__ */ t(l, { label: "Prezzo energia (€/kWh)", children: /* @__PURE__ */ t(
         X,
         {
           value: String(e.priceKwh ?? 0.28),
@@ -1085,49 +1103,73 @@ function Q({ cardId: o }) {
         }
       ) })
     ] }),
-    /* @__PURE__ */ a(F, { title: "Animazioni", children: [
-      /* @__PURE__ */ t(c, { label: "Tipo", children: /* @__PURE__ */ t(
-        x,
+    /* @__PURE__ */ _(m, { title: "Fase & progresso", hint: "Opzionali: se l'integrazione espone un sensore di fase (wash/spin/dry/finished) e/o tempo rimanente, la card mostra colori e livello acqua corretti.", children: [
+      /* @__PURE__ */ t(
+        p,
         {
-          options: [
-            { value: "auto", label: "Auto" },
-            { value: "washer", label: "Lavatrice" },
-            { value: "dishwasher", label: "Lavastoviglie" },
-            { value: "oven", label: "Forno" },
-            { value: "generic", label: "Generico" }
-          ],
-          value: e.animType,
-          onChange: (n) => r({ animType: n })
+          label: "Sensore fase (opzionale)",
+          field: "phaseEntity",
+          config: e,
+          setConfig: i,
+          filterDomain: "sensor"
         }
-      ) }),
-      /* @__PURE__ */ t(c, { label: "Livello", children: /* @__PURE__ */ t(
-        x,
+      ),
+      /* @__PURE__ */ t(
+        p,
         {
-          options: [
-            { value: "none", label: "Nessuna" },
-            { value: "essential", label: "Essenziale" },
-            { value: "full", label: "Completa" },
-            { value: "max", label: "Massima" }
-          ],
-          value: e.animationLevel,
-          onChange: (n) => r({ animationLevel: n })
+          label: "Tempo rimanente (opzionale)",
+          field: "timeRemainingEntity",
+          config: e,
+          setConfig: i,
+          filterDomain: "sensor"
+        }
+      ),
+      /* @__PURE__ */ t(
+        p,
+        {
+          label: "Percentuale progresso (opzionale)",
+          field: "progressEntity",
+          config: e,
+          setConfig: i,
+          filterDomain: "sensor"
+        }
+      ),
+      /* @__PURE__ */ t(l, { label: "Durata max ciclo (min)", hint: "Usata come fallback per stimare il progresso.", children: /* @__PURE__ */ t(
+        X,
+        {
+          value: String(e.maxCycleMinutes ?? 120),
+          onChange: (n) => r({ maxCycleMinutes: parseInt(String(n).replace(/\D/g, ""), 10) || 120 }),
+          placeholder: "120"
         }
       ) })
     ] }),
-    /* @__PURE__ */ t(F, { title: "Popup fine ciclo", children: /* @__PURE__ */ t(c, { label: "Mostra popup globale sulla dashboard", hint: "Visibile da qualunque pagina al termine del ciclo.", children: /* @__PURE__ */ t(W, { value: e.showPopup, onChange: (n) => r({ showPopup: n }) }) }) })
+    /* @__PURE__ */ t(m, { title: "Animazioni", children: /* @__PURE__ */ t(l, { label: "Livello", children: /* @__PURE__ */ t(
+      N,
+      {
+        options: [
+          { value: "none", label: "Nessuna" },
+          { value: "essential", label: "Essenziale" },
+          { value: "full", label: "Completa" },
+          { value: "max", label: "Massima" }
+        ],
+        value: e.animationLevel,
+        onChange: (n) => r({ animationLevel: n })
+      }
+    ) }) }),
+    /* @__PURE__ */ t(m, { title: "Popup fine ciclo", children: /* @__PURE__ */ t(l, { label: "Mostra popup globale sulla dashboard", hint: "Visibile da qualunque pagina al termine del ciclo.", children: /* @__PURE__ */ t(D, { value: e.showPopup, onChange: (n) => r({ showPopup: n }) }) }) })
   ] });
 }
-function G({ precheck: o, onRefresh: e }) {
+function J({ precheck: o, onRefresh: e }) {
   if (!o) return null;
   if (o.ok)
-    return /* @__PURE__ */ a("div", { style: { display: "flex", alignItems: "center", gap: 8, fontSize: 12, color: "#16a34a" }, children: [
-      /* @__PURE__ */ t(D, { size: 14 }),
+    return /* @__PURE__ */ _("div", { style: { display: "flex", alignItems: "center", gap: 8, fontSize: 12, color: "#16a34a" }, children: [
+      /* @__PURE__ */ t(R, { size: 14 }),
       /* @__PURE__ */ t("span", { children: "configuration.yaml include la cartella packages — pronto all'install." })
     ] });
-  const s = o.reason === "standalone-mode" ? "Installazione automatica disponibile solo in modalità HA addon. In standalone copia manualmente il template." : o.reason === "no-config" ? "configuration.yaml non trovato." : `Aggiungi al tuo configuration.yaml:
+  const i = o.reason === "standalone-mode" ? "Installazione automatica disponibile solo in modalità HA addon. In standalone copia manualmente il template." : o.reason === "no-config" ? "configuration.yaml non trovato." : `Aggiungi al tuo configuration.yaml:
   homeassistant:
     packages: !include_dir_named packages`;
-  return /* @__PURE__ */ a("div", { style: {
+  return /* @__PURE__ */ _("div", { style: {
     display: "flex",
     alignItems: "flex-start",
     gap: 8,
@@ -1138,8 +1180,8 @@ function G({ precheck: o, onRefresh: e }) {
     fontSize: 12,
     whiteSpace: "pre-line"
   }, children: [
-    /* @__PURE__ */ t(R, { size: 14, style: { flexShrink: 0, marginTop: 2 } }),
-    /* @__PURE__ */ t("div", { style: { flex: 1 }, children: s }),
+    /* @__PURE__ */ t(K, { size: 14, style: { flexShrink: 0, marginTop: 2 } }),
+    /* @__PURE__ */ t("div", { style: { flex: 1 }, children: i }),
     /* @__PURE__ */ t("button", { onClick: e, style: {
       background: "transparent",
       border: "none",
@@ -1147,69 +1189,49 @@ function G({ precheck: o, onRefresh: e }) {
       color: "inherit",
       display: "flex",
       alignItems: "center"
-    }, children: /* @__PURE__ */ t(K, { size: 13 }) })
+    }, children: /* @__PURE__ */ t(B, { size: 13 }) })
   ] });
 }
-function z({ label: o, holderEntity: e, hass: s }) {
-  var m;
-  const i = ((m = s.states[e]) == null ? void 0 : m.state) ?? "", [r, S] = p(i), [d, f] = p(!1);
-  E(() => {
-    S(i);
-  }, [i]);
-  async function h() {
-    f(!0);
-    try {
-      await s.callService("input_text", "set_value", {
-        entity_id: e,
-        value: r
-      });
-    } finally {
-      f(!1);
+function k({ label: o, holderEntity: e, hass: i, filterDomain: s }) {
+  var S;
+  const r = ((S = i.states[e]) == null ? void 0 : S.state) ?? "", f = { v: r };
+  return /* @__PURE__ */ t(
+    p,
+    {
+      label: o,
+      field: "v",
+      config: f,
+      setConfig: (F) => {
+        const d = typeof F == "function" ? F(f) : F, c = (d == null ? void 0 : d.v) ?? "";
+        c && c !== r && i.callService("input_text", "set_value", {
+          entity_id: e,
+          value: c
+        });
+      },
+      filterDomain: s
     }
-  }
-  const l = r !== i;
-  return /* @__PURE__ */ t(c, { label: o, hint: `Salvato in ${e}`, children: /* @__PURE__ */ a("div", { style: { display: "flex", gap: 6 }, children: [
-    /* @__PURE__ */ t("div", { style: { flex: 1 }, children: /* @__PURE__ */ t(X, { value: r, onChange: S, placeholder: "sensor.xxx_power" }) }),
-    /* @__PURE__ */ t(
-      "button",
-      {
-        onClick: h,
-        disabled: !l || d,
-        style: {
-          padding: "0 12px",
-          borderRadius: 8,
-          border: "none",
-          cursor: l && !d ? "pointer" : "default",
-          background: l ? "var(--accent, #3b82f6)" : "var(--surface-2, rgba(0,0,0,.06))",
-          color: l ? "#fff" : "var(--text-muted)",
-          fontSize: 12,
-          fontWeight: 600
-        },
-        children: d ? "…" : "Applica"
-      }
-    )
-  ] }) });
+  );
 }
-function V({ icon: o, label: e, onClick: s, disabled: i }) {
-  return /* @__PURE__ */ a("button", { onClick: s, disabled: i, style: {
+function V({ icon: o, label: e, onClick: i, disabled: s }) {
+  return /* @__PURE__ */ _("button", { onClick: i, disabled: s, style: {
     display: "inline-flex",
     alignItems: "center",
     gap: 6,
     padding: "8px 14px",
     borderRadius: 8,
     border: "none",
-    background: i ? "rgba(0,0,0,.1)" : "var(--accent, #3b82f6)",
-    color: i ? "var(--text-muted)" : "#fff",
+    background: s ? "rgba(0,0,0,.1)" : "var(--accent, #3b82f6)",
+    color: s ? "var(--text-muted)" : "#fff",
     fontSize: 12,
     fontWeight: 600,
-    cursor: i ? "default" : "pointer"
+    cursor: s ? "default" : "pointer"
   }, children: [
     o,
     e
   ] });
 }
-function J({ icon: o, label: e, onClick: s, disabled: i }) {
-  return /* @__PURE__ */ a("button", { onClick: s, disabled: i, style: {
+function Q({ icon: o, label: e, onClick: i, disabled: s }) {
+  return /* @__PURE__ */ _("button", { onClick: i, disabled: s, style: {
     display: "inline-flex",
     alignItems: "center",
     gap: 6,
@@ -1220,12 +1242,12 @@ function J({ icon: o, label: e, onClick: s, disabled: i }) {
     color: "#dc2626",
     fontSize: 12,
     fontWeight: 600,
-    cursor: i ? "default" : "pointer"
+    cursor: s ? "default" : "pointer"
   }, children: [
     o,
     e
   ] });
 }
 export {
-  Q as default
+  Z as default
 };
