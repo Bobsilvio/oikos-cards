@@ -8,6 +8,8 @@ import {
   EntityField as _EntityField,
   Field, Section, TextField, NumberField, Pills,
 } from '@oikos/sdk'
+import { useState } from 'react'
+import { ChevronDown, ChevronRight } from 'lucide-react'
 
 const DEFAULT = {
   label:         '',
@@ -31,11 +33,13 @@ const BADGE_DEFAULT = {
 }
 
 // ── Card compatta per singolo gauge ──────────────────────────────────────────
-function GaugeRow({ gauge, index, total, dark, onChange, onRemove, onMoveUp, onMoveDown }) {
+function GaugeRow({ gauge, index, total, dark, onChange, onRemove, onMoveUp, onMoveDown, defaultOpen }) {
   const set = (k, v) => onChange({ ...gauge, [k]: v })
+  const [open, setOpen] = useState(!!defaultOpen)
 
   const cardBg  = dark ? 'rgba(255,255,255,.04)' : '#f4f6fa'
   const cardBdr = dark ? 'rgba(255,255,255,.09)' : '#dde3ec'
+  const Chevron = open ? ChevronDown : ChevronRight
 
   return (
     <div style={{
@@ -43,12 +47,27 @@ function GaugeRow({ gauge, index, total, dark, onChange, onRemove, onMoveUp, onM
       background: cardBg, padding: '10px 12px',
       display: 'flex', flexDirection: 'column', gap: 8,
     }}>
-      {/* Header riga: icona picker + move + remove */}
+      {/* Header riga: chevron + icona picker + titolo + move + remove */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+        <button
+          onClick={() => setOpen(v => !v)}
+          title={open ? 'Comprimi' : 'Espandi'}
+          style={btnStyle(dark)}
+        >
+          <Chevron size={14}/>
+        </button>
         <MdiIconPicker value={gauge.icon || 'gauge'} onChange={v => set('icon', v)} dark={dark} size={28}/>
-        <span style={{ flex: 1, fontSize: 11, fontWeight: 600, color: 'var(--text-muted)' }}>
-          Gauge {index + 1}{gauge.label ? ` — ${gauge.label}` : ''}
-        </span>
+        <button
+          onClick={() => setOpen(v => !v)}
+          style={{
+            flex: 1, textAlign: 'left', cursor: 'pointer',
+            background: 'transparent', border: 'none', padding: 0,
+            fontSize: 11, fontWeight: 600, color: 'var(--text-muted)',
+            whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
+          }}
+        >
+          Gauge {index + 1}{gauge.label ? ` — ${gauge.label}` : ''}{gauge.entity ? ` · ${gauge.entity}` : ''}
+        </button>
         <div style={{ display: 'flex', gap: 4 }}>
           {index > 0 && (
             <button onClick={onMoveUp} title="Sposta su" style={btnStyle(dark)}>↑</button>
@@ -60,70 +79,76 @@ function GaugeRow({ gauge, index, total, dark, onChange, onRemove, onMoveUp, onM
         </div>
       </div>
 
-      {/* Entità */}
-      <_EntityField
-        label="Entità sensore"
-        field="entity"
-        config={gauge}
-        setConfig={(updater) => onChange(typeof updater === 'function' ? updater(gauge) : updater)}
-        filterDomain="sensor"
-      />
+      {open && (
+        <>
+          {/* Entità */}
+          <_EntityField
+            label="Entità sensore"
+            field="entity"
+            config={gauge}
+            setConfig={(updater) => onChange(typeof updater === 'function' ? updater(gauge) : updater)}
+            filterDomain="sensor"
+          />
 
-      {/* Label opzionale */}
-      <Field label="Etichetta (opzionale)">
-        <TextField value={gauge.label} onChange={v => set('label', v)} placeholder="es. Temperatura"/>
-      </Field>
+          {/* Label opzionale */}
+          <Field label="Etichetta (opzionale)">
+            <TextField value={gauge.label} onChange={v => set('label', v)} placeholder="es. Temperatura"/>
+          </Field>
 
-      {/* Unit + decimali + colore */}
-      <div style={{ display: 'flex', gap: 8 }}>
-        <div style={{ flex: 1 }}>
-          <Field label="Unità">
-            <TextField value={gauge.unit} onChange={v => set('unit', v)} placeholder="es. °C"/>
-          </Field>
-        </div>
-        <div style={{ flex: 1 }}>
-          <Field label="Decimali">
-            <NumberField value={gauge.decimals ?? 1} onChange={v => set('decimals', v)} min={0} max={4}/>
-          </Field>
-        </div>
-        <div style={{ flex: 1 }}>
-          <Field label="Colore">
-            <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
-              <input
-                type="color"
-                value={gauge.color || '#3d8ea0'}
-                onChange={e => set('color', e.target.value)}
-                style={{ width: 36, height: 32, borderRadius: 6, border: '1px solid var(--border-medium)', padding: 2, cursor: 'pointer', background: 'transparent' }}
-              />
-              <code style={{ fontSize: 9, color: 'var(--text-muted)' }}>{gauge.color || '#3d8ea0'}</code>
+          {/* Unit + decimali + colore */}
+          <div style={{ display: 'flex', gap: 8 }}>
+            <div style={{ flex: 1 }}>
+              <Field label="Unità">
+                <TextField value={gauge.unit} onChange={v => set('unit', v)} placeholder="es. °C"/>
+              </Field>
             </div>
-          </Field>
-        </div>
-      </div>
+            <div style={{ flex: 1 }}>
+              <Field label="Decimali">
+                <NumberField value={gauge.decimals ?? 1} onChange={v => set('decimals', v)} min={0} max={4}/>
+              </Field>
+            </div>
+            <div style={{ flex: 1 }}>
+              <Field label="Colore">
+                <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
+                  <input
+                    type="color"
+                    value={gauge.color || '#3d8ea0'}
+                    onChange={e => set('color', e.target.value)}
+                    style={{ width: 36, height: 32, borderRadius: 6, border: '1px solid var(--border-medium)', padding: 2, cursor: 'pointer', background: 'transparent' }}
+                  />
+                  <code style={{ fontSize: 9, color: 'var(--text-muted)' }}>{gauge.color || '#3d8ea0'}</code>
+                </div>
+              </Field>
+            </div>
+          </div>
 
-      {/* Min / Max */}
-      <div style={{ display: 'flex', gap: 8 }}>
-        <div style={{ flex: 1 }}>
-          <Field label="Min">
-            <NumberField value={gauge.min ?? 0} onChange={v => set('min', v)}/>
-          </Field>
-        </div>
-        <div style={{ flex: 1 }}>
-          <Field label="Max">
-            <NumberField value={gauge.max ?? 100} onChange={v => set('max', v)}/>
-          </Field>
-        </div>
-      </div>
+          {/* Min / Max */}
+          <div style={{ display: 'flex', gap: 8 }}>
+            <div style={{ flex: 1 }}>
+              <Field label="Min">
+                <NumberField value={gauge.min ?? 0} onChange={v => set('min', v)}/>
+              </Field>
+            </div>
+            <div style={{ flex: 1 }}>
+              <Field label="Max">
+                <NumberField value={gauge.max ?? 100} onChange={v => set('max', v)}/>
+              </Field>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   )
 }
 
 // ── Card compatta per singolo badge ──────────────────────────────────────────
-function BadgeRow({ badge, index, total, dark, onChange, onRemove, onMoveUp, onMoveDown }) {
+function BadgeRow({ badge, index, total, dark, onChange, onRemove, onMoveUp, onMoveDown, defaultOpen }) {
   const set = (k, v) => onChange({ ...badge, [k]: v })
+  const [open, setOpen] = useState(!!defaultOpen)
 
   const cardBg  = dark ? 'rgba(255,255,255,.04)' : '#f4f6fa'
   const cardBdr = dark ? 'rgba(255,255,255,.09)' : '#dde3ec'
+  const Chevron = open ? ChevronDown : ChevronRight
 
   return (
     <div style={{
@@ -133,10 +158,25 @@ function BadgeRow({ badge, index, total, dark, onChange, onRemove, onMoveUp, onM
     }}>
       {/* Header */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+        <button
+          onClick={() => setOpen(v => !v)}
+          title={open ? 'Comprimi' : 'Espandi'}
+          style={btnStyle(dark)}
+        >
+          <Chevron size={14}/>
+        </button>
         <MdiIconPicker value={badge.icon || 'circle'} onChange={v => set('icon', v)} dark={dark} size={28}/>
-        <span style={{ flex: 1, fontSize: 11, fontWeight: 600, color: 'var(--text-muted)' }}>
-          Badge {index + 1}
-        </span>
+        <button
+          onClick={() => setOpen(v => !v)}
+          style={{
+            flex: 1, textAlign: 'left', cursor: 'pointer',
+            background: 'transparent', border: 'none', padding: 0,
+            fontSize: 11, fontWeight: 600, color: 'var(--text-muted)',
+            whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
+          }}
+        >
+          Badge {index + 1}{badge.entity ? ` · ${badge.entity}` : ''}
+        </button>
         <div style={{ display: 'flex', gap: 4 }}>
           {index > 0 && (
             <button onClick={onMoveUp} title="Sposta su" style={btnStyle(dark)}>↑</button>
@@ -148,55 +188,59 @@ function BadgeRow({ badge, index, total, dark, onChange, onRemove, onMoveUp, onM
         </div>
       </div>
 
-      {/* Entità */}
-      <_EntityField
-        label="Entità"
-        field="entity"
-        config={badge}
-        setConfig={(updater) => onChange(typeof updater === 'function' ? updater(badge) : updater)}
-        filterDomain="sensor"
-      />
+      {open && (
+        <>
+          {/* Entità */}
+          <_EntityField
+            label="Entità"
+            field="entity"
+            config={badge}
+            setConfig={(updater) => onChange(typeof updater === 'function' ? updater(badge) : updater)}
+            filterDomain="sensor"
+          />
 
-      {/* Unità + decimali */}
-      <div style={{ display: 'flex', gap: 8 }}>
-        <div style={{ flex: 1 }}>
-          <Field label="Unità">
-            <TextField value={badge.unit} onChange={v => set('unit', v)} placeholder="es. %"/>
-          </Field>
-        </div>
-        <div style={{ flex: 1 }}>
-          <Field label="Decimali">
-            <NumberField value={badge.decimals ?? 0} onChange={v => set('decimals', v)} min={0} max={4}/>
-          </Field>
-        </div>
-      </div>
-
-      {/* Min / Max / Colore — usati in modalità Mini gauge */}
-      <div style={{ display: 'flex', gap: 8 }}>
-        <div style={{ flex: 1 }}>
-          <Field label="Min">
-            <NumberField value={badge.min ?? 0} onChange={v => set('min', v)}/>
-          </Field>
-        </div>
-        <div style={{ flex: 1 }}>
-          <Field label="Max">
-            <NumberField value={badge.max ?? 100} onChange={v => set('max', v)}/>
-          </Field>
-        </div>
-        <div style={{ flex: 1 }}>
-          <Field label="Colore">
-            <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
-              <input
-                type="color"
-                value={badge.color || '#5b6b85'}
-                onChange={e => set('color', e.target.value)}
-                style={{ width: 36, height: 32, borderRadius: 6, border: '1px solid var(--border-medium)', padding: 2, cursor: 'pointer', background: 'transparent' }}
-              />
-              <code style={{ fontSize: 9, color: 'var(--text-muted)' }}>{badge.color || '#5b6b85'}</code>
+          {/* Unità + decimali */}
+          <div style={{ display: 'flex', gap: 8 }}>
+            <div style={{ flex: 1 }}>
+              <Field label="Unità">
+                <TextField value={badge.unit} onChange={v => set('unit', v)} placeholder="es. %"/>
+              </Field>
             </div>
-          </Field>
-        </div>
-      </div>
+            <div style={{ flex: 1 }}>
+              <Field label="Decimali">
+                <NumberField value={badge.decimals ?? 0} onChange={v => set('decimals', v)} min={0} max={4}/>
+              </Field>
+            </div>
+          </div>
+
+          {/* Min / Max / Colore — usati in modalità Mini gauge */}
+          <div style={{ display: 'flex', gap: 8 }}>
+            <div style={{ flex: 1 }}>
+              <Field label="Min">
+                <NumberField value={badge.min ?? 0} onChange={v => set('min', v)}/>
+              </Field>
+            </div>
+            <div style={{ flex: 1 }}>
+              <Field label="Max">
+                <NumberField value={badge.max ?? 100} onChange={v => set('max', v)}/>
+              </Field>
+            </div>
+            <div style={{ flex: 1 }}>
+              <Field label="Colore">
+                <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
+                  <input
+                    type="color"
+                    value={badge.color || '#5b6b85'}
+                    onChange={e => set('color', e.target.value)}
+                    style={{ width: 36, height: 32, borderRadius: 6, border: '1px solid var(--border-medium)', padding: 2, cursor: 'pointer', background: 'transparent' }}
+                  />
+                  <code style={{ fontSize: 9, color: 'var(--text-muted)' }}>{badge.color || '#5b6b85'}</code>
+                </div>
+              </Field>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   )
 }
@@ -308,6 +352,7 @@ export default function RoomSensorSettings({ cardId }) {
             index={i}
             total={gauges.length}
             dark={dark}
+            defaultOpen={!g.entity}
             onChange={next => updateGauge(i, next)}
             onRemove={() => removeGauge(i)}
             onMoveUp={() => moveGaugeUp(i)}
@@ -419,6 +464,7 @@ export default function RoomSensorSettings({ cardId }) {
               index={i}
               total={badges.length}
               dark={dark}
+              defaultOpen={!b.entity}
               onChange={next => updateBadge(i, next)}
               onRemove={() => removeBadge(i)}
               onMoveUp={() => moveBadgeUp(i)}

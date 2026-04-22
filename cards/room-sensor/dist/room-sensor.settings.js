@@ -1,4 +1,4 @@
-const { jsxs: r, jsx: e, Fragment: I } = window.__OIKOS_SDK__.jsxRuntime, { useDashboard: U, useCardConfig: k, MdiIconPicker: z, EntityField: D, Field: h, Section: f, TextField: C, NumberField: m, Pills: B } = window.__OIKOS_SDK__, L = {
+const { jsxs: r, jsx: e, Fragment: R } = window.__OIKOS_SDK__.jsxRuntime, { useDashboard: K, useCardConfig: $, MdiIconPicker: B, EntityField: G, Field: g, Section: E, TextField: D, NumberField: x, Pills: O } = window.__OIKOS_SDK__, { useState: I } = window.__OIKOS_SDK__.React, { ChevronDown: T, ChevronRight: k } = window.__OIKOS_SDK__.icons, L = {
   label: "",
   icon: "home",
   gauges: [],
@@ -26,127 +26,191 @@ const { jsxs: r, jsx: e, Fragment: I } = window.__OIKOS_SDK__.jsxRuntime, { useD
   max: 100,
   color: "#5b6b85"
 };
-function j({ gauge: n, index: c, total: i, dark: a, onChange: o, onRemove: u, onMoveUp: b, onMoveDown: s }) {
-  const g = (t, v) => o({ ...n, [t]: v });
+function j({ gauge: l, index: s, total: i, dark: a, onChange: o, onRemove: u, onMoveUp: p, onMoveDown: c, defaultOpen: m }) {
+  const h = (n, _) => o({ ...l, [n]: _ }), [y, f] = I(!!m), C = a ? "rgba(255,255,255,.04)" : "#f4f6fa", S = a ? "rgba(255,255,255,.09)" : "#dde3ec", w = y ? T : k;
   return /* @__PURE__ */ r("div", { style: {
     borderRadius: 12,
-    border: `1px solid ${a ? "rgba(255,255,255,.09)" : "#dde3ec"}`,
-    background: a ? "rgba(255,255,255,.04)" : "#f4f6fa",
+    border: `1px solid ${S}`,
+    background: C,
     padding: "10px 12px",
     display: "flex",
     flexDirection: "column",
     gap: 8
   }, children: [
     /* @__PURE__ */ r("div", { style: { display: "flex", alignItems: "center", gap: 8 }, children: [
-      /* @__PURE__ */ e(z, { value: n.icon || "gauge", onChange: (t) => g("icon", t), dark: a, size: 28 }),
-      /* @__PURE__ */ r("span", { style: { flex: 1, fontSize: 11, fontWeight: 600, color: "var(--text-muted)" }, children: [
-        "Gauge ",
-        c + 1,
-        n.label ? ` — ${n.label}` : ""
-      ] }),
+      /* @__PURE__ */ e(
+        "button",
+        {
+          onClick: () => f((n) => !n),
+          title: y ? "Comprimi" : "Espandi",
+          style: v(a),
+          children: /* @__PURE__ */ e(w, { size: 14 })
+        }
+      ),
+      /* @__PURE__ */ e(B, { value: l.icon || "gauge", onChange: (n) => h("icon", n), dark: a, size: 28 }),
+      /* @__PURE__ */ r(
+        "button",
+        {
+          onClick: () => f((n) => !n),
+          style: {
+            flex: 1,
+            textAlign: "left",
+            cursor: "pointer",
+            background: "transparent",
+            border: "none",
+            padding: 0,
+            fontSize: 11,
+            fontWeight: 600,
+            color: "var(--text-muted)",
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            textOverflow: "ellipsis"
+          },
+          children: [
+            "Gauge ",
+            s + 1,
+            l.label ? ` — ${l.label}` : "",
+            l.entity ? ` · ${l.entity}` : ""
+          ]
+        }
+      ),
       /* @__PURE__ */ r("div", { style: { display: "flex", gap: 4 }, children: [
-        c > 0 && /* @__PURE__ */ e("button", { onClick: b, title: "Sposta su", style: y(a), children: "↑" }),
-        c < i - 1 && /* @__PURE__ */ e("button", { onClick: s, title: "Sposta giù", style: y(a), children: "↓" }),
-        /* @__PURE__ */ e("button", { onClick: u, title: "Elimina", style: y(a, !0), children: "✕" })
+        s > 0 && /* @__PURE__ */ e("button", { onClick: p, title: "Sposta su", style: v(a), children: "↑" }),
+        s < i - 1 && /* @__PURE__ */ e("button", { onClick: c, title: "Sposta giù", style: v(a), children: "↓" }),
+        /* @__PURE__ */ e("button", { onClick: u, title: "Elimina", style: v(a, !0), children: "✕" })
       ] })
     ] }),
-    /* @__PURE__ */ e(
-      D,
-      {
-        label: "Entità sensore",
-        field: "entity",
-        config: n,
-        setConfig: (t) => o(typeof t == "function" ? t(n) : t),
-        filterDomain: "sensor"
-      }
-    ),
-    /* @__PURE__ */ e(h, { label: "Etichetta (opzionale)", children: /* @__PURE__ */ e(C, { value: n.label, onChange: (t) => g("label", t), placeholder: "es. Temperatura" }) }),
-    /* @__PURE__ */ r("div", { style: { display: "flex", gap: 8 }, children: [
-      /* @__PURE__ */ e("div", { style: { flex: 1 }, children: /* @__PURE__ */ e(h, { label: "Unità", children: /* @__PURE__ */ e(C, { value: n.unit, onChange: (t) => g("unit", t), placeholder: "es. °C" }) }) }),
-      /* @__PURE__ */ e("div", { style: { flex: 1 }, children: /* @__PURE__ */ e(h, { label: "Decimali", children: /* @__PURE__ */ e(m, { value: n.decimals ?? 1, onChange: (t) => g("decimals", t), min: 0, max: 4 }) }) }),
-      /* @__PURE__ */ e("div", { style: { flex: 1 }, children: /* @__PURE__ */ e(h, { label: "Colore", children: /* @__PURE__ */ r("div", { style: { display: "flex", gap: 6, alignItems: "center" }, children: [
-        /* @__PURE__ */ e(
-          "input",
-          {
-            type: "color",
-            value: n.color || "#3d8ea0",
-            onChange: (t) => g("color", t.target.value),
-            style: { width: 36, height: 32, borderRadius: 6, border: "1px solid var(--border-medium)", padding: 2, cursor: "pointer", background: "transparent" }
-          }
-        ),
-        /* @__PURE__ */ e("code", { style: { fontSize: 9, color: "var(--text-muted)" }, children: n.color || "#3d8ea0" })
-      ] }) }) })
-    ] }),
-    /* @__PURE__ */ r("div", { style: { display: "flex", gap: 8 }, children: [
-      /* @__PURE__ */ e("div", { style: { flex: 1 }, children: /* @__PURE__ */ e(h, { label: "Min", children: /* @__PURE__ */ e(m, { value: n.min ?? 0, onChange: (t) => g("min", t) }) }) }),
-      /* @__PURE__ */ e("div", { style: { flex: 1 }, children: /* @__PURE__ */ e(h, { label: "Max", children: /* @__PURE__ */ e(m, { value: n.max ?? 100, onChange: (t) => g("max", t) }) }) })
+    y && /* @__PURE__ */ r(R, { children: [
+      /* @__PURE__ */ e(
+        G,
+        {
+          label: "Entità sensore",
+          field: "entity",
+          config: l,
+          setConfig: (n) => o(typeof n == "function" ? n(l) : n),
+          filterDomain: "sensor"
+        }
+      ),
+      /* @__PURE__ */ e(g, { label: "Etichetta (opzionale)", children: /* @__PURE__ */ e(D, { value: l.label, onChange: (n) => h("label", n), placeholder: "es. Temperatura" }) }),
+      /* @__PURE__ */ r("div", { style: { display: "flex", gap: 8 }, children: [
+        /* @__PURE__ */ e("div", { style: { flex: 1 }, children: /* @__PURE__ */ e(g, { label: "Unità", children: /* @__PURE__ */ e(D, { value: l.unit, onChange: (n) => h("unit", n), placeholder: "es. °C" }) }) }),
+        /* @__PURE__ */ e("div", { style: { flex: 1 }, children: /* @__PURE__ */ e(g, { label: "Decimali", children: /* @__PURE__ */ e(x, { value: l.decimals ?? 1, onChange: (n) => h("decimals", n), min: 0, max: 4 }) }) }),
+        /* @__PURE__ */ e("div", { style: { flex: 1 }, children: /* @__PURE__ */ e(g, { label: "Colore", children: /* @__PURE__ */ r("div", { style: { display: "flex", gap: 6, alignItems: "center" }, children: [
+          /* @__PURE__ */ e(
+            "input",
+            {
+              type: "color",
+              value: l.color || "#3d8ea0",
+              onChange: (n) => h("color", n.target.value),
+              style: { width: 36, height: 32, borderRadius: 6, border: "1px solid var(--border-medium)", padding: 2, cursor: "pointer", background: "transparent" }
+            }
+          ),
+          /* @__PURE__ */ e("code", { style: { fontSize: 9, color: "var(--text-muted)" }, children: l.color || "#3d8ea0" })
+        ] }) }) })
+      ] }),
+      /* @__PURE__ */ r("div", { style: { display: "flex", gap: 8 }, children: [
+        /* @__PURE__ */ e("div", { style: { flex: 1 }, children: /* @__PURE__ */ e(g, { label: "Min", children: /* @__PURE__ */ e(x, { value: l.min ?? 0, onChange: (n) => h("min", n) }) }) }),
+        /* @__PURE__ */ e("div", { style: { flex: 1 }, children: /* @__PURE__ */ e(g, { label: "Max", children: /* @__PURE__ */ e(x, { value: l.max ?? 100, onChange: (n) => h("max", n) }) }) })
+      ] })
     ] })
   ] });
 }
-function K({ badge: n, index: c, total: i, dark: a, onChange: o, onRemove: u, onMoveUp: b, onMoveDown: s }) {
-  const g = (t, v) => o({ ...n, [t]: v });
+function P({ badge: l, index: s, total: i, dark: a, onChange: o, onRemove: u, onMoveUp: p, onMoveDown: c, defaultOpen: m }) {
+  const h = (n, _) => o({ ...l, [n]: _ }), [y, f] = I(!!m), C = a ? "rgba(255,255,255,.04)" : "#f4f6fa", S = a ? "rgba(255,255,255,.09)" : "#dde3ec", w = y ? T : k;
   return /* @__PURE__ */ r("div", { style: {
     borderRadius: 12,
-    border: `1px solid ${a ? "rgba(255,255,255,.09)" : "#dde3ec"}`,
-    background: a ? "rgba(255,255,255,.04)" : "#f4f6fa",
+    border: `1px solid ${S}`,
+    background: C,
     padding: "10px 12px",
     display: "flex",
     flexDirection: "column",
     gap: 8
   }, children: [
     /* @__PURE__ */ r("div", { style: { display: "flex", alignItems: "center", gap: 8 }, children: [
-      /* @__PURE__ */ e(z, { value: n.icon || "circle", onChange: (t) => g("icon", t), dark: a, size: 28 }),
-      /* @__PURE__ */ r("span", { style: { flex: 1, fontSize: 11, fontWeight: 600, color: "var(--text-muted)" }, children: [
-        "Badge ",
-        c + 1
-      ] }),
+      /* @__PURE__ */ e(
+        "button",
+        {
+          onClick: () => f((n) => !n),
+          title: y ? "Comprimi" : "Espandi",
+          style: v(a),
+          children: /* @__PURE__ */ e(w, { size: 14 })
+        }
+      ),
+      /* @__PURE__ */ e(B, { value: l.icon || "circle", onChange: (n) => h("icon", n), dark: a, size: 28 }),
+      /* @__PURE__ */ r(
+        "button",
+        {
+          onClick: () => f((n) => !n),
+          style: {
+            flex: 1,
+            textAlign: "left",
+            cursor: "pointer",
+            background: "transparent",
+            border: "none",
+            padding: 0,
+            fontSize: 11,
+            fontWeight: 600,
+            color: "var(--text-muted)",
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            textOverflow: "ellipsis"
+          },
+          children: [
+            "Badge ",
+            s + 1,
+            l.entity ? ` · ${l.entity}` : ""
+          ]
+        }
+      ),
       /* @__PURE__ */ r("div", { style: { display: "flex", gap: 4 }, children: [
-        c > 0 && /* @__PURE__ */ e("button", { onClick: b, title: "Sposta su", style: y(a), children: "↑" }),
-        c < i - 1 && /* @__PURE__ */ e("button", { onClick: s, title: "Sposta giù", style: y(a), children: "↓" }),
-        /* @__PURE__ */ e("button", { onClick: u, title: "Elimina", style: y(a, !0), children: "✕" })
+        s > 0 && /* @__PURE__ */ e("button", { onClick: p, title: "Sposta su", style: v(a), children: "↑" }),
+        s < i - 1 && /* @__PURE__ */ e("button", { onClick: c, title: "Sposta giù", style: v(a), children: "↓" }),
+        /* @__PURE__ */ e("button", { onClick: u, title: "Elimina", style: v(a, !0), children: "✕" })
       ] })
     ] }),
-    /* @__PURE__ */ e(
-      D,
-      {
-        label: "Entità",
-        field: "entity",
-        config: n,
-        setConfig: (t) => o(typeof t == "function" ? t(n) : t),
-        filterDomain: "sensor"
-      }
-    ),
-    /* @__PURE__ */ r("div", { style: { display: "flex", gap: 8 }, children: [
-      /* @__PURE__ */ e("div", { style: { flex: 1 }, children: /* @__PURE__ */ e(h, { label: "Unità", children: /* @__PURE__ */ e(C, { value: n.unit, onChange: (t) => g("unit", t), placeholder: "es. %" }) }) }),
-      /* @__PURE__ */ e("div", { style: { flex: 1 }, children: /* @__PURE__ */ e(h, { label: "Decimali", children: /* @__PURE__ */ e(m, { value: n.decimals ?? 0, onChange: (t) => g("decimals", t), min: 0, max: 4 }) }) })
-    ] }),
-    /* @__PURE__ */ r("div", { style: { display: "flex", gap: 8 }, children: [
-      /* @__PURE__ */ e("div", { style: { flex: 1 }, children: /* @__PURE__ */ e(h, { label: "Min", children: /* @__PURE__ */ e(m, { value: n.min ?? 0, onChange: (t) => g("min", t) }) }) }),
-      /* @__PURE__ */ e("div", { style: { flex: 1 }, children: /* @__PURE__ */ e(h, { label: "Max", children: /* @__PURE__ */ e(m, { value: n.max ?? 100, onChange: (t) => g("max", t) }) }) }),
-      /* @__PURE__ */ e("div", { style: { flex: 1 }, children: /* @__PURE__ */ e(h, { label: "Colore", children: /* @__PURE__ */ r("div", { style: { display: "flex", gap: 6, alignItems: "center" }, children: [
-        /* @__PURE__ */ e(
-          "input",
-          {
-            type: "color",
-            value: n.color || "#5b6b85",
-            onChange: (t) => g("color", t.target.value),
-            style: { width: 36, height: 32, borderRadius: 6, border: "1px solid var(--border-medium)", padding: 2, cursor: "pointer", background: "transparent" }
-          }
-        ),
-        /* @__PURE__ */ e("code", { style: { fontSize: 9, color: "var(--text-muted)" }, children: n.color || "#5b6b85" })
-      ] }) }) })
+    y && /* @__PURE__ */ r(R, { children: [
+      /* @__PURE__ */ e(
+        G,
+        {
+          label: "Entità",
+          field: "entity",
+          config: l,
+          setConfig: (n) => o(typeof n == "function" ? n(l) : n),
+          filterDomain: "sensor"
+        }
+      ),
+      /* @__PURE__ */ r("div", { style: { display: "flex", gap: 8 }, children: [
+        /* @__PURE__ */ e("div", { style: { flex: 1 }, children: /* @__PURE__ */ e(g, { label: "Unità", children: /* @__PURE__ */ e(D, { value: l.unit, onChange: (n) => h("unit", n), placeholder: "es. %" }) }) }),
+        /* @__PURE__ */ e("div", { style: { flex: 1 }, children: /* @__PURE__ */ e(g, { label: "Decimali", children: /* @__PURE__ */ e(x, { value: l.decimals ?? 0, onChange: (n) => h("decimals", n), min: 0, max: 4 }) }) })
+      ] }),
+      /* @__PURE__ */ r("div", { style: { display: "flex", gap: 8 }, children: [
+        /* @__PURE__ */ e("div", { style: { flex: 1 }, children: /* @__PURE__ */ e(g, { label: "Min", children: /* @__PURE__ */ e(x, { value: l.min ?? 0, onChange: (n) => h("min", n) }) }) }),
+        /* @__PURE__ */ e("div", { style: { flex: 1 }, children: /* @__PURE__ */ e(g, { label: "Max", children: /* @__PURE__ */ e(x, { value: l.max ?? 100, onChange: (n) => h("max", n) }) }) }),
+        /* @__PURE__ */ e("div", { style: { flex: 1 }, children: /* @__PURE__ */ e(g, { label: "Colore", children: /* @__PURE__ */ r("div", { style: { display: "flex", gap: 6, alignItems: "center" }, children: [
+          /* @__PURE__ */ e(
+            "input",
+            {
+              type: "color",
+              value: l.color || "#5b6b85",
+              onChange: (n) => h("color", n.target.value),
+              style: { width: 36, height: 32, borderRadius: 6, border: "1px solid var(--border-medium)", padding: 2, cursor: "pointer", background: "transparent" }
+            }
+          ),
+          /* @__PURE__ */ e("code", { style: { fontSize: 9, color: "var(--text-muted)" }, children: l.color || "#5b6b85" })
+        ] }) }) })
+      ] })
     ] })
   ] });
 }
-function y(n, c = !1) {
+function v(l, s = !1) {
   return {
     width: 26,
     height: 26,
     borderRadius: 7,
     cursor: "pointer",
-    border: `1px solid ${n ? "rgba(255,255,255,.1)" : "var(--border-medium)"}`,
-    background: c ? n ? "rgba(239,68,68,.12)" : "rgba(239,68,68,.07)" : n ? "rgba(255,255,255,.06)" : "rgba(0,0,0,.04)",
-    color: c ? "#ef4444" : "var(--text-muted)",
+    border: `1px solid ${l ? "rgba(255,255,255,.1)" : "var(--border-medium)"}`,
+    background: s ? l ? "rgba(239,68,68,.12)" : "rgba(239,68,68,.07)" : l ? "rgba(255,255,255,.06)" : "rgba(0,0,0,.04)",
+    color: s ? "#ef4444" : "var(--text-muted)",
     fontSize: 11,
     fontWeight: 700,
     display: "flex",
@@ -155,17 +219,17 @@ function y(n, c = !1) {
     padding: 0
   };
 }
-function x(n, c, i) {
-  const a = [...n], [o] = a.splice(c, 1);
+function z(l, s, i) {
+  const a = [...l], [o] = a.splice(s, 1);
   return a.splice(i, 0, o), a;
 }
-function M({ label: n, value: c, onChange: i, gauges: a, dark: o }) {
-  const u = a.filter((s) => s.entity);
-  return u.length ? /* @__PURE__ */ e(h, { label: n, children: /* @__PURE__ */ r(
+function A({ label: l, value: s, onChange: i, gauges: a, dark: o }) {
+  const u = a.filter((c) => c.entity);
+  return u.length ? /* @__PURE__ */ e(g, { label: l, children: /* @__PURE__ */ r(
     "select",
     {
-      value: c || "",
-      onChange: (s) => i(s.target.value),
+      value: s || "",
+      onChange: (c) => i(c.target.value),
       style: {
         background: "var(--bg-primary)",
         border: "1px solid var(--border-medium)",
@@ -177,47 +241,48 @@ function M({ label: n, value: c, onChange: i, gauges: a, dark: o }) {
         width: "100%",
         boxSizing: "border-box"
       },
-      onFocus: (s) => s.target.style.borderColor = "var(--amber-border)",
-      onBlur: (s) => s.target.style.borderColor = "var(--border-medium)",
+      onFocus: (c) => c.target.style.borderColor = "var(--amber-border)",
+      onBlur: (c) => c.target.style.borderColor = "var(--border-medium)",
       children: [
         /* @__PURE__ */ e("option", { value: "", children: "Automatico (primo gauge)" }),
-        u.map((s, g) => /* @__PURE__ */ e("option", { value: s.entity, children: s.label || s.entity }, g))
+        u.map((c, m) => /* @__PURE__ */ e("option", { value: c.entity, children: c.label || c.entity }, m))
       ]
     }
   ) }) : null;
 }
-function O({ cardId: n }) {
-  const { dark: c } = U(), [i, a] = k(n, L), o = (l, d) => a((p) => ({ ...p, [l]: d })), u = i.gauges ?? [], b = i.badges ?? [], s = i.displayMode !== "flow", g = s && (i.rightSection === "badges" || i.rightSection === "minigauge"), S = (l, d) => o("gauges", u.map((p, E) => E === l ? d : p)), w = (l) => o("gauges", u.filter((d, p) => p !== l)), t = () => o("gauges", [...u, { ...N }]), v = (l) => o("gauges", x(u, l, l - 1)), _ = (l) => o("gauges", x(u, l, l + 1)), R = (l, d) => o("badges", b.map((p, E) => E === l ? d : p)), G = (l) => o("badges", b.filter((d, p) => p !== l)), T = () => o("badges", [...b, { ...W }]), A = (l) => o("badges", x(b, l, l - 1)), F = (l) => o("badges", x(b, l, l + 1));
+function H({ cardId: l }) {
+  const { dark: s } = K(), [i, a] = $(l, L), o = (t, d) => a((b) => ({ ...b, [t]: d })), u = i.gauges ?? [], p = i.badges ?? [], c = i.displayMode !== "flow", m = c && (i.rightSection === "badges" || i.rightSection === "minigauge"), h = (t, d) => o("gauges", u.map((b, M) => M === t ? d : b)), y = (t) => o("gauges", u.filter((d, b) => b !== t)), f = () => o("gauges", [...u, { ...N }]), C = (t) => o("gauges", z(u, t, t - 1)), S = (t) => o("gauges", z(u, t, t + 1)), w = (t, d) => o("badges", p.map((b, M) => M === t ? d : b)), n = (t) => o("badges", p.filter((d, b) => b !== t)), _ = () => o("badges", [...p, { ...W }]), F = (t) => o("badges", z(p, t, t - 1)), U = (t) => o("badges", z(p, t, t + 1));
   return /* @__PURE__ */ r("div", { style: { display: "flex", flexDirection: "column", gap: 14 }, children: [
-    /* @__PURE__ */ r(f, { title: "Stanza", children: [
-      /* @__PURE__ */ e(h, { label: "Nome (opzionale)", children: /* @__PURE__ */ e(C, { value: i.label, onChange: (l) => o("label", l), placeholder: "usa friendly_name da HA" }) }),
-      /* @__PURE__ */ e(h, { label: "Icona", children: /* @__PURE__ */ e(z, { value: i.icon ?? "home", onChange: (l) => o("icon", l), dark: c, size: 32 }) })
+    /* @__PURE__ */ r(E, { title: "Stanza", children: [
+      /* @__PURE__ */ e(g, { label: "Nome (opzionale)", children: /* @__PURE__ */ e(D, { value: i.label, onChange: (t) => o("label", t), placeholder: "usa friendly_name da HA" }) }),
+      /* @__PURE__ */ e(g, { label: "Icona", children: /* @__PURE__ */ e(B, { value: i.icon ?? "home", onChange: (t) => o("icon", t), dark: s, size: 32 }) })
     ] }),
-    /* @__PURE__ */ r(f, { title: "Gauge", children: [
+    /* @__PURE__ */ r(E, { title: "Gauge", children: [
       u.length === 0 && /* @__PURE__ */ e("div", { style: {
         fontSize: 11,
         color: "var(--text-muted)",
         fontStyle: "italic",
         padding: "6px 0"
       }, children: "Nessun gauge configurato. Aggiungine uno." }),
-      u.map((l, d) => /* @__PURE__ */ e(
+      u.map((t, d) => /* @__PURE__ */ e(
         j,
         {
-          gauge: l,
+          gauge: t,
           index: d,
           total: u.length,
-          dark: c,
-          onChange: (p) => S(d, p),
-          onRemove: () => w(d),
-          onMoveUp: () => v(d),
-          onMoveDown: () => _(d)
+          dark: s,
+          defaultOpen: !t.entity,
+          onChange: (b) => h(d, b),
+          onRemove: () => y(d),
+          onMoveUp: () => C(d),
+          onMoveDown: () => S(d)
         },
         d
       )),
       /* @__PURE__ */ e(
         "button",
         {
-          onClick: t,
+          onClick: f,
           style: {
             padding: "7px 14px",
             borderRadius: 8,
@@ -230,22 +295,22 @@ function O({ cardId: n }) {
             color: "var(--text-muted)",
             transition: "all .12s"
           },
-          onMouseEnter: (l) => {
-            l.currentTarget.style.borderColor = "var(--amber-border)", l.currentTarget.style.color = "var(--amber)";
+          onMouseEnter: (t) => {
+            t.currentTarget.style.borderColor = "var(--amber-border)", t.currentTarget.style.color = "var(--amber)";
           },
-          onMouseLeave: (l) => {
-            l.currentTarget.style.borderColor = "var(--border-medium)", l.currentTarget.style.color = "var(--text-muted)";
+          onMouseLeave: (t) => {
+            t.currentTarget.style.borderColor = "var(--border-medium)", t.currentTarget.style.color = "var(--text-muted)";
           },
           children: "+ Aggiungi gauge"
         }
       )
     ] }),
-    /* @__PURE__ */ r(f, { title: "Visualizzazione", children: [
-      /* @__PURE__ */ e(h, { label: "Stile principale", children: /* @__PURE__ */ e(
-        B,
+    /* @__PURE__ */ r(E, { title: "Visualizzazione", children: [
+      /* @__PURE__ */ e(g, { label: "Stile principale", children: /* @__PURE__ */ e(
+        O,
         {
           value: i.displayMode ?? "gauge",
-          onChange: (l) => o("displayMode", l),
+          onChange: (t) => o("displayMode", t),
           options: [
             { value: "gauge", label: "Gauge" },
             { value: "flow", label: "Flow" }
@@ -253,20 +318,20 @@ function O({ cardId: n }) {
         }
       ) }),
       i.displayMode === "flow" && /* @__PURE__ */ e(
-        M,
+        A,
         {
           label: "Entità per il grafico flow",
           value: i.flowEntity,
-          onChange: (l) => o("flowEntity", l),
+          onChange: (t) => o("flowEntity", t),
           gauges: u,
-          dark: c
+          dark: s
         }
       ),
-      s && /* @__PURE__ */ e(h, { label: "Sezione destra", children: /* @__PURE__ */ e(
-        B,
+      c && /* @__PURE__ */ e(g, { label: "Sezione destra", children: /* @__PURE__ */ e(
+        O,
         {
           value: i.rightSection ?? "none",
-          onChange: (l) => o("rightSection", l),
+          onChange: (t) => o("rightSection", t),
           options: [
             { value: "none", label: "Nessuna" },
             { value: "badges", label: "Badge" },
@@ -275,24 +340,24 @@ function O({ cardId: n }) {
           ]
         }
       ) }),
-      s && i.rightSection === "history" && /* @__PURE__ */ r(I, { children: [
+      c && i.rightSection === "history" && /* @__PURE__ */ r(R, { children: [
         /* @__PURE__ */ e(
-          M,
+          A,
           {
             label: "Entità per lo storico",
             value: i.historyEntity,
-            onChange: (l) => o("historyEntity", l),
+            onChange: (t) => o("historyEntity", t),
             gauges: u,
-            dark: c
+            dark: s
           }
         ),
-        /* @__PURE__ */ e(h, { label: "Colore barre", children: /* @__PURE__ */ r("div", { style: { display: "flex", gap: 8, alignItems: "center" }, children: [
+        /* @__PURE__ */ e(g, { label: "Colore barre", children: /* @__PURE__ */ r("div", { style: { display: "flex", gap: 8, alignItems: "center" }, children: [
           /* @__PURE__ */ e(
             "input",
             {
               type: "color",
               value: i.chartColor ?? "#e07060",
-              onChange: (l) => o("chartColor", l.target.value),
+              onChange: (t) => o("chartColor", t.target.value),
               style: { width: 36, height: 32, borderRadius: 6, border: "1px solid var(--border-medium)", padding: 2, cursor: "pointer", background: "transparent" }
             }
           ),
@@ -300,31 +365,32 @@ function O({ cardId: n }) {
         ] }) })
       ] })
     ] }),
-    g && /* @__PURE__ */ r(f, { title: i.rightSection === "minigauge" ? "Mini gauge (batteria, segnale…)" : "Badge", children: [
-      b.length === 0 && /* @__PURE__ */ e("div", { style: {
+    m && /* @__PURE__ */ r(E, { title: i.rightSection === "minigauge" ? "Mini gauge (batteria, segnale…)" : "Badge", children: [
+      p.length === 0 && /* @__PURE__ */ e("div", { style: {
         fontSize: 11,
         color: "var(--text-muted)",
         fontStyle: "italic",
         padding: "6px 0"
       }, children: "Nessun badge configurato. Aggiungine uno." }),
-      b.map((l, d) => /* @__PURE__ */ e(
-        K,
+      p.map((t, d) => /* @__PURE__ */ e(
+        P,
         {
-          badge: l,
+          badge: t,
           index: d,
-          total: b.length,
-          dark: c,
-          onChange: (p) => R(d, p),
-          onRemove: () => G(d),
-          onMoveUp: () => A(d),
-          onMoveDown: () => F(d)
+          total: p.length,
+          dark: s,
+          defaultOpen: !t.entity,
+          onChange: (b) => w(d, b),
+          onRemove: () => n(d),
+          onMoveUp: () => F(d),
+          onMoveDown: () => U(d)
         },
         d
       )),
       /* @__PURE__ */ e(
         "button",
         {
-          onClick: T,
+          onClick: _,
           style: {
             padding: "7px 14px",
             borderRadius: 8,
@@ -337,11 +403,11 @@ function O({ cardId: n }) {
             color: "var(--text-muted)",
             transition: "all .12s"
           },
-          onMouseEnter: (l) => {
-            l.currentTarget.style.borderColor = "var(--amber-border)", l.currentTarget.style.color = "var(--amber)";
+          onMouseEnter: (t) => {
+            t.currentTarget.style.borderColor = "var(--amber-border)", t.currentTarget.style.color = "var(--amber)";
           },
-          onMouseLeave: (l) => {
-            l.currentTarget.style.borderColor = "var(--border-medium)", l.currentTarget.style.color = "var(--text-muted)";
+          onMouseLeave: (t) => {
+            t.currentTarget.style.borderColor = "var(--border-medium)", t.currentTarget.style.color = "var(--text-muted)";
           },
           children: "+ Aggiungi badge"
         }
@@ -350,5 +416,5 @@ function O({ cardId: n }) {
   ] });
 }
 export {
-  O as default
+  H as default
 };
