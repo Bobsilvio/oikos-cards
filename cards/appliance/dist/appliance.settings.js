@@ -1,33 +1,21 @@
-const { jsxs: a, jsx: t } = window.__OIKOS_SDK__.jsxRuntime, M = `homeassistant:
+const { jsxs: a, jsx: t } = window.__OIKOS_SDK__.jsxRuntime, C = `homeassistant:
   customize:
     package.node_anchors:
       customize: &customize
-        package: 'Centro Controllo Elettrodomestici 4.5'
-        author: 'DomHouse.it'
-        reference: 'WebSite: www.domhouse.it'
-        #Modificato da silviosmart
+        package: 'Elettrodomestici Oikos'
 
 #Cercare _1 e sostituire con {{NAME}}
 #Cercare 1 e sostituire con {{NAME}}
 
-####################################################
-#                                                  #
-#                 INPUT TEXT                       #
-#                                                  #
-####################################################
-
 input_text:
-  # Prezzo energia
   sensore_prezzo_energia_{{SUFFIX}}:
     name: Sensore Prezzo Energia
     icon: mdi:currency-eur
 
-  # Sensore consumo
   sensore_consumo_{{SUFFIX}}:
     name: Sensore di Consumo {{NAME}}
     icon: mdi:database
 
-  # Sensore switch
   sensore_switch_{{SUFFIX}}:
     name: Sensore Switch {{NAME}}
     icon: mdi:database
@@ -50,90 +38,49 @@ input_text:
 
   data_reset_sensori_elettrodomestici_{{SUFFIX}}:
 
-  ####################################################
-
   nome_elettrodomestico_{{SUFFIX}}:
-
-  ####################################################
 
   messaggio_elettrodomestico_{{SUFFIX}}:
 
-  ####################################################
-
   ultimo_ciclo_attivo_elettrodomestici_{{SUFFIX}}:
-
-  ####################################################
-  ####################################################
 
   lunedi_elettrodomestici_cicli_{{SUFFIX}}:
   lunedi_elettrodomestici_tempo_{{SUFFIX}}:
 
-  ####################################################
-
   martedi_elettrodomestici_cicli_{{SUFFIX}}:
   martedi_elettrodomestici_tempo_{{SUFFIX}}:
-
-  ####################################################
 
   mercoledi_elettrodomestici_cicli_{{SUFFIX}}:
   mercoledi_elettrodomestici_tempo_{{SUFFIX}}:
 
-  ####################################################
-
   giovedi_elettrodomestici_cicli_{{SUFFIX}}:
   giovedi_elettrodomestici_tempo_{{SUFFIX}}:
-
-  ####################################################
 
   venerdi_elettrodomestici_cicli_{{SUFFIX}}:
   venerdi_elettrodomestici_tempo_{{SUFFIX}}:
 
-  ####################################################
-
   sabato_elettrodomestici_cicli_{{SUFFIX}}:
   sabato_elettrodomestici_tempo_{{SUFFIX}}:
 
-  ####################################################
-
   domenica_elettrodomestici_cicli_{{SUFFIX}}:
   domenica_elettrodomestici_tempo_{{SUFFIX}}:
-
-####################################################
-#                                                  #
-#               INPUT BOOLEAN                      #
-#                                                  #
-####################################################
 
 input_boolean:
   switch_elettrodomestici_{{SUFFIX}}:
     name: Switch Elettrodomestici
     icon: mdi:flash
 
-  ####################################################
-
   durata_ciclo_attivo_elettrodomestici_{{SUFFIX}}:
     name: Ciclo Attivo Elettrodomestici
-
-  ####################################################
 
   notify_push_elettrodomestici_{{SUFFIX}}:
     name: Notifica Push
 
-  ####################################################
-
   notify_alexa_elettrodomestici_{{SUFFIX}}:
     name: Notifica Alexa
 
-  ####################################################
-
   notify_google_elettrodomestici_{{SUFFIX}}:
     name: Notifica Google
-
-####################################################
-#                                                  #
-#               INPUT NUMBER                       #
-#                                                  #
-####################################################
 
 input_number:
   soglia_lavoro_elettrodomestici_w_{{SUFFIX}}:
@@ -163,8 +110,6 @@ input_number:
     unit_of_measurement: "s"
     mode: box
 
-  ####################################################
-
   lunedi_elettrodomestici_consumo_{{SUFFIX}}:
     icon: mdi:counter
     min: 0
@@ -178,8 +123,6 @@ input_number:
     max: 999999
     mode: box
     unit_of_measurement: "€"
-
-  ####################################################
 
   martedi_elettrodomestici_consumo_{{SUFFIX}}:
     icon: mdi:counter
@@ -195,8 +138,6 @@ input_number:
     mode: box
     unit_of_measurement: "€"
 
-  ####################################################
-
   mercoledi_elettrodomestici_consumo_{{SUFFIX}}:
     icon: mdi:counter
     min: 0
@@ -210,8 +151,6 @@ input_number:
     max: 999999
     mode: box
     unit_of_measurement: "€"
-
-  ####################################################
 
   giovedi_elettrodomestici_consumo_{{SUFFIX}}:
     icon: mdi:counter
@@ -227,8 +166,6 @@ input_number:
     mode: box
     unit_of_measurement: "€"
 
-  ####################################################
-
   venerdi_elettrodomestici_consumo_{{SUFFIX}}:
     icon: mdi:counter
     min: 0
@@ -242,8 +179,6 @@ input_number:
     max: 999999
     mode: box
     unit_of_measurement: "€"
-
-  ####################################################
 
   sabato_elettrodomestici_consumo_{{SUFFIX}}:
     icon: mdi:counter
@@ -259,8 +194,6 @@ input_number:
     mode: box
     unit_of_measurement: "€"
 
-  ####################################################
-
   domenica_elettrodomestici_consumo_{{SUFFIX}}:
     icon: mdi:counter
     min: 0
@@ -275,15 +208,7 @@ input_number:
     mode: box
     unit_of_measurement: "€"
 
-####################################################
-#                                                  #
-#                UTILITY METER                     #
-#                                                  #
-####################################################
-
 utility_meter:
-
-  # Tempo
   elettrodomestici_tempo_oggi_{{SUFFIX}}:
     source: sensor.time_on_elettrodomestici_{{SUFFIX}}
     cycle: daily
@@ -296,9 +221,6 @@ utility_meter:
     source: sensor.time_on_elettrodomestici_{{SUFFIX}}
     cycle: yearly
 
-  ####################################################
-
-  # Cicli
   cicli_oggi_elettrodomestici_{{SUFFIX}}:
     source: counter.cicli_funzionamento_elettrodomestici_totale_{{SUFFIX}}
     cycle: daily
@@ -311,9 +233,6 @@ utility_meter:
     source: counter.cicli_funzionamento_elettrodomestici_totale_{{SUFFIX}}
     cycle: yearly
 
-  ####################################################
-
-  # Consumi KWh
   energy_oggi_elettrodomestici_{{SUFFIX}}:
     source: sensor.w_kwh_elettrodomestici_{{SUFFIX}}
     cycle: daily
@@ -326,12 +245,6 @@ utility_meter:
     source: sensor.w_kwh_elettrodomestici_{{SUFFIX}}
     cycle: yearly
 
-####################################################
-#                                                  #
-#                     SENSOR                       #
-#                                                  #
-####################################################
-
 sensor:
   - platform: integration
     unique_id: w_kwh_elettrodomestici_{{SUFFIX}}
@@ -340,12 +253,6 @@ sensor:
     unit_prefix: k
     method: left
     round: 2
-
-####################################################
-#                                                  #
-#                    TEMPLATE                      #
-#                                                  #
-####################################################
 
 template:
   - binary_sensor:
@@ -357,8 +264,6 @@ template:
              else 'off' }}
         delay_off: "00:{{ '%02d' % states('input_number.tempo_innesco_elettrodomestici_m_{{SUFFIX}}')|int(0) }}:00"
         delay_on: "00:00:{{ '%02d' % states('input_number.avvio_ritardato_conteggio_elettrodomestici_s_{{SUFFIX}}')|int(0) }}"
-
-  ####################################################
 
   - trigger:
       - platform: state
@@ -379,8 +284,6 @@ template:
       - name: Fine Ciclo Elettrodomestici {{NAME}}
         state: "{{ now().strftime('%d/%m/%Y %H:%M') }}"
 
-  ####################################################
-
   - trigger:
       - platform: state
         entity_id: input_boolean.durata_ciclo_attivo_elettrodomestici_{{SUFFIX}}
@@ -389,8 +292,6 @@ template:
     sensor:
       - name: Tempo Riavvio {{NAME}}
         state: "{{ as_timestamp(now()) }}"
-
-  ####################################################
 
   - sensor:
       - unique_id: potenza_elettrodomestici_w_{{SUFFIX}}
@@ -546,23 +447,11 @@ template:
             {% set prezzo = states('sensor.prezzo_energia_dinamico_{{SUFFIX}}') | float(0) %}
             {{ (state_attr('sensor.energy_anno_elettrodomestici_{{SUFFIX}}', 'last_period') | float(0) * prezzo) | round(2, 'common', 0) }}
 
-####################################################
-#                                                  #
-#                   COUNTER                        #
-#                                                  #
-####################################################
-
 counter:
   cicli_funzionamento_elettrodomestici_totale_{{SUFFIX}}:
     name: Cicli Funzionamento Elettrodomestici Totale
     initial: 0
     step: 1
-
-####################################################
-#                                                  #
-#                     GROUP                        #
-#                                                  #
-####################################################
 
 group:
   notifiche_elettrodomestici_{{SUFFIX}}:
@@ -573,37 +462,21 @@ group:
       - automation.elettrodomestici_off_automatico_{{SUFFIX}}
       - input_boolean.switch_elettrodomestici_{{SUFFIX}}
 
-####################################################
-#                                                  #
-#                  INPUT DATETIME                  #
-#                                                  #
-####################################################
-
 input_datetime:
   orario_inizio_notifiche_elettrodomestici_{{SUFFIX}}:
     name: Orario Inizio Notifiche Elettrodomestici
     has_date: false
     has_time: true
 
-  ####################################################
-
   orario_fine_notifiche_elettrodomestici_{{SUFFIX}}:
     name: Orario Fine Notifiche Elettrodomestici
     has_date: false
     has_time: true
 
-  ####################################################
-
   elettrodomestici_off_{{SUFFIX}}:
     name: Elettrodomestici Off
     has_date: false
     has_time: true
-
-####################################################
-#                                                  #
-#                       SCRIPT                     #
-#                                                  #
-####################################################
 
 script:
   reset_sensori_elettrodomestici_{{SUFFIX}}:
@@ -674,12 +547,6 @@ script:
           entity_id:
             - counter.cicli_funzionamento_elettrodomestici_totale_{{SUFFIX}}
 
-####################################################
-#                                                  #
-#                     AUTOMAZIONI                  #
-#                                                  #
-####################################################
-
 automation:
   - alias: Automazioni Elettrodomestici {{NAME}}
     id: Automazioni Elettrodomestici {{NAME}}
@@ -720,14 +587,11 @@ automation:
         id: controllo_ciclo_{{SUFFIX}}
 
     action:
-      ####################################################
-      # Incremento 7 Giorni Statistiche
       - choose:
           - conditions:
               - condition: trigger
                 id: incremento_sensori_7_giorni_elettrodomestici_{{SUFFIX}}
             sequence:
-              # Cicli
               - service: input_text.set_value
                 target:
                   entity_id: >
@@ -743,7 +607,6 @@ automation:
                 data:
                   value: "{{ states('sensor.cicli_oggi_elettrodomestici_{{SUFFIX}}') }}"
 
-              # Tempo
               - service: input_text.set_value
                 target:
                   entity_id: >
@@ -759,7 +622,6 @@ automation:
                 data:
                   value: "{{ state_attr('sensor.time_on_elettrodomestici_{{SUFFIX}}','Oggi') }}"
 
-              # Consumo
               - service: input_number.set_value
                 target:
                   entity_id: >
@@ -775,7 +637,6 @@ automation:
                 data:
                   value: "{{ states('sensor.energy_oggi_elettrodomestici_{{SUFFIX}}') }}"
 
-              # Costi
               - service: input_number.set_value
                 target:
                   entity_id: >
@@ -791,8 +652,6 @@ automation:
                 data:
                   value: "{{ state_attr('sensor.time_on_elettrodomestici_{{SUFFIX}}','costo_consumo_giornaliero_elettrodomestici_{{SUFFIX}}') }}"
 
-      ####################################################
-      # Switch & Boolean OFF
       - choose:
           - alias: SWITCH E BOOLEAN OFF
             conditions:
@@ -806,8 +665,6 @@ automation:
                 target:
                   entity_id: input_boolean.switch_elettrodomestici_{{SUFFIX}}
 
-      ####################################################
-      # Switch & Boolean ON
       - choose:
           - alias: SWITCH E BOOLEAN ON
             conditions:
@@ -821,8 +678,6 @@ automation:
                 target:
                   entity_id: input_boolean.switch_elettrodomestici_{{SUFFIX}}
 
-      ####################################################
-      # Controllo Ciclo
       - choose:
           - conditions:
               - condition: trigger
@@ -833,8 +688,6 @@ automation:
                 target:
                   entity_id: input_boolean.durata_ciclo_attivo_elettrodomestici_{{SUFFIX}}
 
-      ####################################################
-      # Inizio Ciclo
       - choose:
           - conditions:
               - condition: trigger
@@ -844,8 +697,6 @@ automation:
                 target:
                   entity_id: input_boolean.durata_ciclo_attivo_elettrodomestici_{{SUFFIX}}
 
-      ####################################################
-      # Fine Ciclo
       - choose:
           - conditions:
               - condition: trigger
@@ -869,11 +720,7 @@ automation:
                 target:
                   entity_id: input_boolean.durata_ciclo_attivo_elettrodomestici_{{SUFFIX}}
 
-      ####################################################
-      # Fine Ciclo GOOGLE / ALEXA / CELLULARE
       - parallel:
-          ####################################################
-          # Fine Ciclo GOOGLE
           - choose:
               - conditions:
                   - condition: template
@@ -897,8 +744,6 @@ automation:
                         {{ states('input_text.messaggio_elettrodomestico_{{SUFFIX}}') }} in
                         {{ state_attr('sensor.time_on_elettrodomestici_{{SUFFIX}}', 'tempo_ciclo_elettrodomestici_{{SUFFIX}}') }}
 
-          ####################################################
-          # Fine Ciclo ALEXA
           - choose:
               - conditions:
                   - condition: template
@@ -925,8 +770,6 @@ automation:
                         {{ states('input_text.messaggio_elettrodomestico_{{SUFFIX}}') }} in
                         {{ state_attr('sensor.time_on_elettrodomestici_{{SUFFIX}}','tempo_ciclo_elettrodomestici_{{SUFFIX}}') }}
 
-          ####################################################
-          # Fine Ciclo CELLULARE
           - choose:
               - conditions:
                   - condition: template
@@ -974,8 +817,6 @@ automation:
                         💰 Spesi: {{ state_attr('sensor.time_on_elettrodomestici_{{SUFFIX}}', 'costo_ciclo_elettrodomestici_{{SUFFIX}}') }} €
                       title: "{{ states('input_text.nome_elettrodomestico_{{SUFFIX}}') }}"
 
-  ####################################################
-
   - alias: Elettrodomestici OFF Automatico {{NAME}}
     id: Elettrodomestici OFF Automatico {{NAME}}
     trigger:
@@ -984,8 +825,6 @@ automation:
         id: elettrodomestici_automatico_off_{{SUFFIX}}
     condition: []
     action:
-      ####################################################
-      # Elettrodomestici Auto OFF
       - choose:
           - conditions:
               - condition: trigger
@@ -1013,7 +852,7 @@ automation:
   tostapane: { name: "Tostapane", iconName: "mdiToaster", animType: "oven" },
   ferro: { name: "Ferro da stiro", iconName: "mdiIron", animType: "oven" }
 };
-function E(o) {
+function T(o) {
   const e = String(o || "").trim().toLowerCase();
   return P[e] ?? {
     name: e ? e[0].toUpperCase() + e.slice(1) : "",
@@ -1060,7 +899,7 @@ function b(o) {
     lastCycle: `input_text.ultimo_ciclo_attivo_elettrodomestici_${e}`
   } : null;
 }
-const { useState: p, useEffect: k } = window.__OIKOS_SDK__.React, { useCardConfig: O, useSafeHass: L, apiUrl: N, Section: F, Field: c, TextField: X, Pills: x, Toggle: $, EntityField: W } = window.__OIKOS_SDK__, { Download: R, Trash2: D, CheckCircle2: H, AlertTriangle: q, RefreshCw: K } = window.__OIKOS_SDK__.icons, B = {
+const { useState: p, useEffect: E } = window.__OIKOS_SDK__.React, { useCardConfig: $, useSafeHass: O, apiUrl: N, Section: F, Field: c, TextField: X, Pills: x, Toggle: W, EntityField: L } = window.__OIKOS_SDK__, { Download: q, Trash2: H, CheckCircle2: D, AlertTriangle: R, RefreshCw: K } = window.__OIKOS_SDK__.icons, B = {
   mode: "package",
   suffix: "",
   displayName: "",
@@ -1071,8 +910,8 @@ const { useState: p, useEffect: k } = window.__OIKOS_SDK__.React, { useCardConfi
   powerEntity: "",
   priceKwh: 0.28
 };
-function G(o, e) {
-  return M.replace(/\{\{SUFFIX\}\}/g, o).replace(/\{\{NAME\}\}/g, e);
+function j(o, e) {
+  return C.replace(/\{\{SUFFIX\}\}/g, o).replace(/\{\{NAME\}\}/g, e);
 }
 async function w(o, e) {
   const s = await fetch(N(o), {
@@ -1088,8 +927,8 @@ async function Y(o) {
   if (!e.ok) throw new Error(s.error || `HTTP ${e.status}`);
   return s;
 }
-function Z({ cardId: o }) {
-  const [e, s] = O(o ?? "appliance", B, { version: 1 }), i = L(), r = (n) => s({ ...e, ...n }), [S, d] = p(null), [f, h] = p([]), [l, m] = p(!1), [y, u] = p(null);
+function Q({ cardId: o }) {
+  const [e, s] = $(o ?? "appliance", B, { version: 1 }), i = O(), r = (n) => s({ ...e, ...n }), [S, d] = p(null), [f, h] = p([]), [l, m] = p(!1), [y, u] = p(null);
   async function I() {
     try {
       const [n, U] = await Promise.all([
@@ -1101,15 +940,15 @@ function Z({ cardId: o }) {
       d({ ok: !1, reason: n.message });
     }
   }
-  k(() => {
+  E(() => {
     I();
   }, []);
   const _ = String(e.suffix || "").trim().toLowerCase(), g = /^[a-z0-9_]{1,40}$/.test(_), v = f.includes(_);
-  async function C() {
+  async function A() {
     if (g) {
       m(!0), u(null);
       try {
-        const n = G(_, e.displayName || E(_).name);
+        const n = j(_, e.displayName || T(_).name);
         await w("/api/appliance/install", { suffix: _, yaml: n }), u({ type: "ok", text: `Package installato in /config/packages/silviosmart_elettrodomestici/${_}.yaml. Riavvia Home Assistant per attivarlo.` }), await I();
       } catch (n) {
         u({ type: "err", text: n.message });
@@ -1118,7 +957,7 @@ function Z({ cardId: o }) {
       }
     }
   }
-  async function A() {
+  async function M() {
     if (g) {
       m(!0), u(null);
       try {
@@ -1148,11 +987,11 @@ function Z({ cardId: o }) {
         {
           value: e.suffix,
           onChange: (n) => {
-            const U = String(n || "").trim().toLowerCase().replace(/[^a-z0-9_]/g, ""), T = E(U);
+            const U = String(n || "").trim().toLowerCase().replace(/[^a-z0-9_]/g, ""), k = T(U);
             r({
               suffix: U,
-              displayName: e.displayName || T.name,
-              iconName: e.iconName || T.iconName,
+              displayName: e.displayName || k.name,
+              iconName: e.iconName || k.iconName,
               animType: (e.animType === "auto", e.animType)
             });
           },
@@ -1162,24 +1001,24 @@ function Z({ cardId: o }) {
       /* @__PURE__ */ t(c, { label: "Nome visualizzato", children: /* @__PURE__ */ t(X, { value: e.displayName, onChange: (n) => r({ displayName: n }), placeholder: "Lavatrice" }) })
     ] }),
     e.mode === "package" && /* @__PURE__ */ a(F, { title: "Package Home Assistant", children: [
-      /* @__PURE__ */ t(j, { precheck: S, onRefresh: I }),
+      /* @__PURE__ */ t(G, { precheck: S, onRefresh: I }),
       /* @__PURE__ */ a("div", { style: { display: "flex", gap: 8, flexWrap: "wrap" }, children: [
         /* @__PURE__ */ t(
           V,
           {
-            icon: /* @__PURE__ */ t(R, { size: 14 }),
+            icon: /* @__PURE__ */ t(q, { size: 14 }),
             label: v ? "Reinstalla package" : "Installa package",
             disabled: !g || l,
-            onClick: C
+            onClick: A
           }
         ),
         v && /* @__PURE__ */ t(
           J,
           {
-            icon: /* @__PURE__ */ t(D, { size: 14 }),
+            icon: /* @__PURE__ */ t(H, { size: 14 }),
             label: "Disinstalla",
             disabled: l,
-            onClick: A
+            onClick: M
           }
         )
       ] }),
@@ -1229,7 +1068,7 @@ function Z({ cardId: o }) {
     ] }),
     e.mode === "standalone" && /* @__PURE__ */ a(F, { title: "Sorgente standalone", children: [
       /* @__PURE__ */ t(
-        W,
+        L,
         {
           label: "Entità potenza (W)",
           field: "powerEntity",
@@ -1275,14 +1114,14 @@ function Z({ cardId: o }) {
         }
       ) })
     ] }),
-    /* @__PURE__ */ t(F, { title: "Popup fine ciclo", children: /* @__PURE__ */ t(c, { label: "Mostra popup globale sulla dashboard", hint: "Visibile da qualunque pagina al termine del ciclo.", children: /* @__PURE__ */ t($, { value: e.showPopup, onChange: (n) => r({ showPopup: n }) }) }) })
+    /* @__PURE__ */ t(F, { title: "Popup fine ciclo", children: /* @__PURE__ */ t(c, { label: "Mostra popup globale sulla dashboard", hint: "Visibile da qualunque pagina al termine del ciclo.", children: /* @__PURE__ */ t(W, { value: e.showPopup, onChange: (n) => r({ showPopup: n }) }) }) })
   ] });
 }
-function j({ precheck: o, onRefresh: e }) {
+function G({ precheck: o, onRefresh: e }) {
   if (!o) return null;
   if (o.ok)
     return /* @__PURE__ */ a("div", { style: { display: "flex", alignItems: "center", gap: 8, fontSize: 12, color: "#16a34a" }, children: [
-      /* @__PURE__ */ t(H, { size: 14 }),
+      /* @__PURE__ */ t(D, { size: 14 }),
       /* @__PURE__ */ t("span", { children: "configuration.yaml include la cartella packages — pronto all'install." })
     ] });
   const s = o.reason === "standalone-mode" ? "Installazione automatica disponibile solo in modalità HA addon. In standalone copia manualmente il template." : o.reason === "no-config" ? "configuration.yaml non trovato." : `Aggiungi al tuo configuration.yaml:
@@ -1299,7 +1138,7 @@ function j({ precheck: o, onRefresh: e }) {
     fontSize: 12,
     whiteSpace: "pre-line"
   }, children: [
-    /* @__PURE__ */ t(q, { size: 14, style: { flexShrink: 0, marginTop: 2 } }),
+    /* @__PURE__ */ t(R, { size: 14, style: { flexShrink: 0, marginTop: 2 } }),
     /* @__PURE__ */ t("div", { style: { flex: 1 }, children: s }),
     /* @__PURE__ */ t("button", { onClick: e, style: {
       background: "transparent",
@@ -1314,7 +1153,7 @@ function j({ precheck: o, onRefresh: e }) {
 function z({ label: o, holderEntity: e, hass: s }) {
   var m;
   const i = ((m = s.states[e]) == null ? void 0 : m.state) ?? "", [r, S] = p(i), [d, f] = p(!1);
-  k(() => {
+  E(() => {
     S(i);
   }, [i]);
   async function h() {
@@ -1388,5 +1227,5 @@ function J({ icon: o, label: e, onClick: s, disabled: i }) {
   ] });
 }
 export {
-  Z as default
+  Q as default
 };
