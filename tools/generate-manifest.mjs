@@ -47,6 +47,18 @@ function collectCards() {
     const preview  = join(dir, 'preview.png')
     const thumb    = join(dir, 'preview-thumb.png')
 
+    // Scansiona preview aggiuntive: preview-2.{png,gif}, preview-3.{png,gif}, …
+    // Si ferma al primo "buco" nella numerazione.
+    const previews = []
+    if (existsSync(preview)) previews.push(`cards/${name}/preview.png`)
+    for (let i = 2; i < 20; i++) {
+      const png = join(dir, `preview-${i}.png`)
+      const gif = join(dir, `preview-${i}.gif`)
+      if (existsSync(png)) previews.push(`cards/${name}/preview-${i}.png`)
+      else if (existsSync(gif)) previews.push(`cards/${name}/preview-${i}.gif`)
+      else break
+    }
+
     if (!existsSync(distJs)) {
       console.warn(`⚠  ${mf.id}: dist/${key}.js non trovato (hai buildato?)`)
     }
@@ -64,6 +76,7 @@ function collectCards() {
       settings:    existsSync(distSet) ? `cards/${name}/dist/${key}.settings.js` : null,
       manifest:    `cards/${name}/manifest.json`,
       preview:     existsSync(preview) ? `cards/${name}/preview.png` : null,
+      previews:    previews.length > 0 ? previews : null,
       thumbnail:   existsSync(thumb)   ? `cards/${name}/preview-thumb.png` : null,
       tags:        mf.tags ?? [],
     })

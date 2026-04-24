@@ -2,7 +2,7 @@
   "repo": "oikos-cards",
   "version": "0.1.0",
   "sdkVersion": "1.0.0",
-  "updated": "2026-04-22",
+  "updated": "2026-04-24",
   "cards": [
     {
       "id": "air-quality",
@@ -17,10 +17,35 @@
       "settings": "cards/air-quality/dist/air-quality.settings.js",
       "manifest": "cards/air-quality/manifest.json",
       "preview": null,
+      "previews": null,
       "thumbnail": null,
       "tags": [
         "aria",
         "salute"
+      ]
+    },
+    {
+      "id": "appliance",
+      "name": "Elettrodomestico",
+      "version": "0.2.15",
+      "author": "Oikos",
+      "description": "Monitor elettrodomestici: consumo live, costo ciclo, storico giornaliero/settimanale/mensile/annuale, popup globale a fine ciclo, animazioni in funzione. Auto-installa package HA con suffisso dedicato.",
+      "sdkVersion": "^1.0.0",
+      "hasSettings": true,
+      "path": "cards/appliance",
+      "entry": "cards/appliance/dist/appliance.js",
+      "settings": "cards/appliance/dist/appliance.settings.js",
+      "manifest": "cards/appliance/manifest.json",
+      "preview": null,
+      "previews": null,
+      "thumbnail": null,
+      "tags": [
+        "casa",
+        "energia",
+        "elettrodomestici",
+        "lavatrice",
+        "asciugatrice",
+        "lavastoviglie"
       ]
     },
     {
@@ -36,6 +61,7 @@
       "settings": null,
       "manifest": "cards/bridge-status/manifest.json",
       "preview": null,
+      "previews": null,
       "thumbnail": null,
       "tags": [
         "system",
@@ -55,6 +81,7 @@
       "settings": null,
       "manifest": "cards/clock/manifest.json",
       "preview": null,
+      "previews": null,
       "thumbnail": null,
       "tags": [
         "time",
@@ -73,8 +100,11 @@
       "entry": "cards/irrigation/dist/irrigation.js",
       "settings": "cards/irrigation/dist/irrigation.settings.js",
       "manifest": "cards/irrigation/manifest.json",
-      "preview": null,
-      "thumbnail": null,
+      "preview": "cards/irrigation/preview.png",
+      "previews": [
+        "cards/irrigation/preview.png"
+      ],
+      "thumbnail": "cards/irrigation/preview-thumb.png",
       "tags": [
         "giardino",
         "irrigazione"
@@ -92,8 +122,11 @@
       "entry": "cards/mailbox-card/dist/mailbox-card.js",
       "settings": "cards/mailbox-card/dist/mailbox-card.settings.js",
       "manifest": "cards/mailbox-card/manifest.json",
-      "preview": null,
-      "thumbnail": null,
+      "preview": "cards/mailbox-card/preview.png",
+      "previews": [
+        "cards/mailbox-card/preview.png"
+      ],
+      "thumbnail": "cards/mailbox-card/preview-thumb.png",
       "tags": [
         "casa",
         "notifiche"
@@ -112,6 +145,7 @@
       "settings": "cards/person/dist/person.settings.js",
       "manifest": "cards/person/manifest.json",
       "preview": null,
+      "previews": null,
       "thumbnail": null,
       "tags": [
         "famiglia",
@@ -122,7 +156,7 @@
     {
       "id": "room-sensor",
       "name": "Room Sensor",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "author": "Oikos",
       "description": "Card sensore stanza: gauge multipli, flow chart storico, badge numerici, mini-gauge batteria/segnale.",
       "sdkVersion": "^1.0.0",
@@ -131,8 +165,12 @@
       "entry": "cards/room-sensor/dist/room-sensor.js",
       "settings": "cards/room-sensor/dist/room-sensor.settings.js",
       "manifest": "cards/room-sensor/manifest.json",
-      "preview": null,
-      "thumbnail": null,
+      "preview": "cards/room-sensor/preview.png",
+      "previews": [
+        "cards/room-sensor/preview.png",
+        "cards/room-sensor/preview-2.png"
+      ],
+      "thumbnail": "cards/room-sensor/preview-thumb.png",
       "tags": [
         "casa",
         "sensor",
@@ -151,8 +189,11 @@
       "entry": "cards/thermostat/dist/thermostat.js",
       "settings": "cards/thermostat/dist/thermostat.settings.js",
       "manifest": "cards/thermostat/manifest.json",
-      "preview": null,
-      "thumbnail": null,
+      "preview": "cards/thermostat/preview.png",
+      "previews": [
+        "cards/thermostat/preview.png"
+      ],
+      "thumbnail": "cards/thermostat/preview-thumb.png",
       "tags": [
         "casa",
         "climate"
@@ -170,8 +211,11 @@
       "entry": "cards/tigo-panels/dist/tigo-panels.js",
       "settings": "cards/tigo-panels/dist/tigo-panels.settings.js",
       "manifest": "cards/tigo-panels/manifest.json",
-      "preview": null,
-      "thumbnail": null,
+      "preview": "cards/tigo-panels/preview.png",
+      "previews": [
+        "cards/tigo-panels/preview.png"
+      ],
+      "thumbnail": "cards/tigo-panels/preview-thumb.png",
       "tags": [
         "solar",
         "tigo"
@@ -190,6 +234,7 @@
       "settings": "cards/vacuum/dist/vacuum.settings.js",
       "manifest": "cards/vacuum/manifest.json",
       "preview": null,
+      "previews": null,
       "thumbnail": null,
       "tags": [
         "casa",
@@ -209,8 +254,11 @@
       "entry": "cards/yesterday/dist/yesterday.js",
       "settings": "cards/yesterday/dist/yesterday.settings.js",
       "manifest": "cards/yesterday/manifest.json",
-      "preview": null,
-      "thumbnail": null,
+      "preview": "cards/yesterday/preview.png",
+      "previews": [
+        "cards/yesterday/preview.png"
+      ],
+      "thumbnail": "cards/yesterday/preview-thumb.png",
       "tags": [
         "energia",
         "fotovoltaico",
