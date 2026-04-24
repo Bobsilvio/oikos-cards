@@ -15,19 +15,22 @@
  * Se `cfg.phaseEntity` è impostato, la fase è derivata dal suo stato.
  * Altrimenti: running→washing, fineCiclo recente→finished, else→idle.
  */
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect, useRef } from 'react'
 import { useStyles, useCardConfig, useSafeHass, MdiIcon } from '@oikos/sdk'
-import { AlertTriangle } from 'lucide-react'
+import { AlertTriangle, BarChart3 } from 'lucide-react'
 import { buildEntities, attrKey } from './entities'
 import { defaultsFor } from './suffixDefaults'
 import AnimatedIcon, { PHASE_COLORS } from './AnimatedIcon'
 import DetailModal from './DetailModal'
+import StatsModal from './StatsModal'
+import EndCyclePopup from './EndCyclePopup'
 
 const DEFAULT = {
   mode:               'package',
   suffix:             '',
   displayName:        '',
   iconName:           '',
+  accentColor:        '',           // override colore fase (hex); vuoto = automatico
   showPopup:          true,
   powerEntity:        '',           // standalone
   priceKwh:           0.28,
@@ -72,16 +75,6 @@ function num(v, d = 0) {
   return Number.isFinite(n) ? n : d
 }
 
-function fmtMoney(v) {
-  const n = num(v, 0)
-  return '€ ' + n.toFixed(2).replace('.', ',')
-}
-
-function fmtKwh(v) {
-  const n = num(v, 0)
-  return n.toFixed(2).replace('.', ',') + ' kWh'
-}
-
 function fmtW(v) {
   return Math.round(num(v, 0)) + 'W'
 }
@@ -121,12 +114,49 @@ function hexToRgba(hex, a) {
   return `rgba(${r},${g},${b},${a})`
 }
 
+// Parse timestamp HA in vari formati (ISO, "DD/MM/YYYY HH:MM[:SS]", "DD-MM-YYYY HH:MM").
+// Il sensor.fine_ciclo_* espone la data in formato italiano, non ISO.
+function parseHaTimestamp(raw) {
+  if (!raw) return null
+  const s = String(raw).trim().replace(/^terminato\s+/i, '')
+  // ISO first
+  const iso = Date.parse(s)
+  if (Number.isFinite(iso)) return new Date(iso)
+  // DD/MM/YYYY HH:MM[:SS] o DD-MM-YYYY HH:MM[:SS]
+  const m = s.match(/^(\d{1,2})[\/\-\.](\d{1,2})[\/\-\.](\d{2,4})(?:[\sT]+(\d{1,2}):(\d{2})(?::(\d{2}))?)?/)
+  if (m) {
+    const [, dd, mm, yy, hh='0', mi='0', se='0'] = m
+    const year = yy.length === 2 ? 2000 + parseInt(yy, 10) : parseInt(yy, 10)
+    const d = new Date(year, parseInt(mm, 10) - 1, parseInt(dd, 10),
+                       parseInt(hh, 10), parseInt(mi, 10), parseInt(se, 10))
+    if (!Number.isNaN(d.getTime())) return d
+  }
+  return null
+}
+
 // fineCiclo recente? (entro 60 min)
 function isRecent(fineCiclo) {
-  if (!fineCiclo) return false
-  const t = Date.parse(fineCiclo)
-  if (!Number.isFinite(t)) return false
-  return (Date.now() - t) < 60 * 60 * 1000
+  const d = parseHaTimestamp(fineCiclo)
+  if (!d) return false
+  return (Date.now() - d.getTime()) < 60 * 60 * 1000
+}
+
+// Format relativo italiano: "oggi alle 11:55", "ieri alle 11:55", "8 gen alle 11:55".
+const MESI_IT = ['gen','feb','mar','apr','mag','giu','lug','ago','set','ott','nov','dic']
+function fmtFineCiclo(raw) {
+  const d = parseHaTimestamp(raw)
+  if (!d) return String(raw || '').replace(/^terminato\s+/i, '')
+  const now = new Date()
+  const sameDay = d.toDateString() === now.toDateString()
+  const yesterday = new Date(now); yesterday.setDate(now.getDate() - 1)
+  const isYesterday = d.toDateString() === yesterday.toDateString()
+  const hh = String(d.getHours()).padStart(2, '0')
+  const mi = String(d.getMinutes()).padStart(2, '0')
+  if (sameDay) return `oggi alle ${hh}:${mi}`
+  if (isYesterday) return `ieri alle ${hh}:${mi}`
+  const sameYear = d.getFullYear() === now.getFullYear()
+  const datePart = `${d.getDate()} ${MESI_IT[d.getMonth()]}` + (sameYear ? '' : ` ${d.getFullYear()}`)
+  return `${datePart} alle ${hh}:${mi}`
 }
 
 export default function ApplianceCard({ cardId }) {
@@ -159,7 +189,7 @@ export default function ApplianceCard({ cardId }) {
 
   return cfg.mode === 'package'
     ? <PackageView hass={hass} cfg={cfg} entities={entities} name={name} iconName={iconName}
-        styles={s} defaults={defaults} />
+        styles={s} defaults={defaults} cardId={cardId} />
     : <StandaloneView hass={hass} cfg={cfg} name={name} iconName={iconName}
         styles={s} />
 }
@@ -180,7 +210,7 @@ function EmptyCard({ name, iconName, message }) {
   )
 }
 
-function computePhaseAndProgress({ hass, cfg, entities, running, fineCiclo, defaultPhase }) {
+function computePhaseAndProgress({ hass, cfg, entities, running, fineCiclo, defaultPhase, powerW }) {
   const st = hass.states
   let phase = null
 
@@ -189,10 +219,23 @@ function computePhaseAndProgress({ hass, cfg, entities, running, fineCiclo, defa
     phase = matchPhase(st[cfg.phaseEntity].state)
   }
 
-  // 2. Fallback da running/fineCiclo + tipologia (defaultPhase)
+  // 2. Fallback da running/fineCiclo + tipologia (defaultPhase).
+  //    Se autoPhaseByPower è attivo, le due soglie min/max definiscono:
+  //      powerW < min  → 'idle' (anche se running)
+  //      powerW > max  → 'heating' (colore caldo)
+  //      altrimenti   → defaultPhase del suffisso
   if (!phase) {
-    if (running) phase = defaultPhase || 'washing'
-    else if (isRecent(fineCiclo)) phase = 'finished'
+    if (running) {
+      if (cfg.autoPhaseByPower && Number.isFinite(powerW)) {
+        const minW = num(cfg.powerMinW, 5)
+        const maxW = num(cfg.powerMaxW, 500)
+        if (powerW < minW) phase = 'idle'
+        else if (powerW > maxW) phase = 'heating'
+        else phase = defaultPhase || 'washing'
+      } else {
+        phase = defaultPhase || 'washing'
+      }
+    } else if (isRecent(fineCiclo)) phase = 'finished'
     else phase = 'idle'
   }
 
@@ -246,9 +289,14 @@ function buildBadgeText({ phase, timeRemMin, elapsedMin, powerW }) {
   return parts.join(' · ')
 }
 
-function PackageView({ hass, cfg, entities, name, iconName, styles: s, defaults }) {
-  const [period, setPeriod] = useState('today')
+const ACK_PREFIX = 'oikos-appliance-ack-'
+const SNOOZE_PREFIX = 'oikos-appliance-snooze-'
+
+function PackageView({ hass, cfg, entities, name, iconName, styles: s, defaults, cardId }) {
   const [detailOpen, setDetailOpen] = useState(false)
+  const [statsOpen, setStatsOpen] = useState(false)
+  const [popupOpen, setPopupOpen] = useState(false)
+  const prevRunningRef = useRef(null)
   const st = hass.states
 
   const running = st[entities.running]?.state === 'on'
@@ -259,21 +307,61 @@ function PackageView({ hass, cfg, entities, name, iconName, styles: s, defaults 
   const fineCiclo = st[entities.fineCiclo]?.state
 
   const { phase, progress, timeRemMin, elapsedMin } = computePhaseAndProgress({
-    hass, cfg, entities, running, fineCiclo, defaultPhase: defaults.defaultPhase,
+    hass, cfg, entities, running, fineCiclo, defaultPhase: defaults.defaultPhase, powerW,
   })
 
-  const color = PHASE_COLORS[phase]
+  // L'override si applica solo durante le fasi attive: idle resta grigio,
+  // finished resta verde (hanno un significato semantico forte).
+  const basePhaseColor = PHASE_COLORS[phase]
+  const color = cfg.accentColor && phase !== 'idle' && phase !== 'finished'
+    ? cfg.accentColor
+    : basePhaseColor
   const badgeText = buildBadgeText({ phase, timeRemMin, elapsedMin, powerW })
   const fillLevel = progress / 100
 
+  // Popup fine ciclo: trigger sulla transizione running true→false.
+  // L'ack è persistito per (cardId, fineCiclo-timestamp) così non riappare
+  // finché non arriva un nuovo ciclo.
+  const fineCicloDate = useMemo(() => parseHaTimestamp(fineCiclo), [fineCiclo])
+  const ackKey = cardId && fineCicloDate
+    ? `${ACK_PREFIX}${cardId}-${fineCicloDate.getTime()}`
+    : null
+  const snoozeKey = cardId ? `${SNOOZE_PREFIX}${cardId}` : null
+
+  useEffect(() => {
+    const prev = prevRunningRef.current
+    prevRunningRef.current = running
+    if (prev !== true || running !== false) return
+    if (!cfg.showPopup) return
+    if (!ackKey) return
+    try {
+      if (localStorage.getItem(ackKey)) return
+      if (snoozeKey) {
+        const until = parseInt(localStorage.getItem(snoozeKey) || '0', 10)
+        if (until && Date.now() < until) return
+      }
+    } catch {}
+    setPopupOpen(true)
+  }, [running, cfg.showPopup, ackKey, snoozeKey])
+
+  const handleAck = () => {
+    try { if (ackKey) localStorage.setItem(ackKey, String(Date.now())) } catch {}
+    setPopupOpen(false)
+  }
+  const handleSnooze = () => {
+    try { if (snoozeKey) localStorage.setItem(snoozeKey, String(Date.now() + 60 * 60 * 1000)) } catch {}
+    setPopupOpen(false)
+  }
+
+  const fineCicloFmt = fmtFineCiclo(fineCiclo)
   const subtitle = phase === 'idle'
-    ? (fineCiclo ? `Terminato ${fineCiclo}` : 'In standby')
+    ? (fineCicloFmt ? `Terminato ${fineCicloFmt}` : 'In standby')
     : phase === 'finished'
-      ? (fineCiclo ? `Terminato ${fineCiclo}` : 'Terminato')
+      ? (fineCicloFmt ? `Terminato ${fineCicloFmt}` : 'Terminato')
       : phase === 'washing' ? 'In lavaggio'
       : phase === 'spinning' ? 'In centrifuga'
       : phase === 'drying' ? 'In asciugatura'
-      : phase === 'heating' ? 'In riscaldamento'
+      : phase === 'heating' ? (defaults.runningLabel || 'In riscaldamento')
       : phase === 'cooling' ? 'In raffreddamento'
       : 'In funzione'
 
@@ -282,77 +370,90 @@ function PackageView({ hass, cfg, entities, name, iconName, styles: s, defaults 
       {detailOpen && (
         <DetailModal hass={hass} cfg={cfg} entities={entities} name={name} onClose={() => setDetailOpen(false)} />
       )}
+      {statsOpen && (
+        <StatsModal hass={hass} cfg={cfg} entities={entities} name={name} onClose={() => setStatsOpen(false)} />
+      )}
+
+      <EndCyclePopup
+        open={popupOpen}
+        onClose={() => setPopupOpen(false)}
+        onAck={handleAck}
+        onSnooze={handleSnooze}
+        name={name}
+        iconName={iconName}
+        accent={cfg.accentColor || PHASE_COLORS.finished}
+        finishedAt={fineCicloDate}
+        cycleTime={cycleTime}
+        cycleEnergy={cycleEnergy}
+        cycleCost={cycleCost}
+      />
 
       {/* HERO */}
-      <div
-        style={{ display: 'flex', alignItems: 'center', gap: 14, cursor: 'pointer' }}
-        onClick={() => setDetailOpen(true)}
-      >
-        <AnimatedIcon
-          phase={phase}
-          level="max"
-          iconName={iconName}
-          size={64}
-          fillLevel={fillLevel}
-        />
-        <div style={{ flex: 1, minWidth: 0 }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+        <div
+          style={{ cursor: 'pointer' }}
+          onClick={() => setDetailOpen(true)}
+        >
+          <AnimatedIcon
+            phase={phase}
+            level="max"
+            iconName={iconName}
+            size={64}
+            fillLevel={fillLevel}
+            colorOverride={color}
+          />
+        </div>
+        <div
+          style={{ flex: 1, minWidth: 0, cursor: 'pointer' }}
+          onClick={() => setDetailOpen(true)}
+        >
           <div style={{
             ...s.title,
             whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
           }}>{name}</div>
-          <div style={{ ...s.label, opacity: 0.7, fontSize: 12 }}>{subtitle}</div>
+          <div style={{ ...s.label, opacity: 0.7, fontSize: 12, marginBottom: 4 }}>{subtitle}</div>
+
+          {/* Chip inline live durante il ciclo */}
+          {phase !== 'idle' && phase !== 'finished' && (
+            <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginTop: 2 }}>
+              {cycleTime && <InlineChip color={color} icon="⏱" value={cycleTime} />}
+              {cycleEnergy && <InlineChip color={color} icon="⚡" value={cycleEnergy} />}
+              {cycleCost && <InlineChip color={color} icon="€" value={cycleCost} />}
+            </div>
+          )}
         </div>
-        <Badge color={color} text={badgeText} />
-      </div>
-
-      {/* LIVE ROW (durante ciclo) */}
-      {phase !== 'idle' && phase !== 'finished' && (
-        <div style={{
-          display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8,
-          marginTop: 12, padding: '10px 12px',
-          background: 'var(--surface-2, rgba(0,0,0,.04))',
-          borderRadius: 10,
-        }}>
-          <LiveCell label="Durata" value={cycleTime ?? '—'} />
-          <LiveCell label="Consumo" value={cycleEnergy ?? '—'} />
-          <LiveCell label="Costo" value={cycleCost ? `€ ${cycleCost}` : '—'} />
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 6 }}>
+          <Badge color={color} text={badgeText} />
+          <StatsButton color={color} onClick={() => setStatsOpen(true)} />
         </div>
-      )}
-
-      {/* PERIOD PILLS */}
-      <div style={{ display: 'flex', gap: 6, marginTop: 12 }}>
-        {[
-          ['today', 'Oggi'],
-          ['yesterday', 'Ieri'],
-          ['month', 'Mese'],
-          ['year', 'Anno'],
-        ].map(([key, label]) => (
-          <button
-            key={key}
-            onClick={() => setPeriod(key)}
-            style={{
-              flex: 1,
-              padding: '6px 4px',
-              borderRadius: 8,
-              border: 'none',
-              cursor: 'pointer',
-              fontSize: 11, fontWeight: 600,
-              background: period === key ? 'var(--accent, #3b82f6)' : 'var(--surface-2, rgba(0,0,0,.05))',
-              color: period === key ? '#fff' : 'var(--text-primary)',
-              transition: 'all .15s',
-            }}
-          >
-            {label}
-          </button>
-        ))}
       </div>
-
-      {/* PERIOD STATS */}
-      <PeriodStats period={period} hass={hass} entities={entities} suffix={cfg.suffix} />
 
       {/* BOTTOM PROGRESS BAR */}
       <ProgressBar color={color} progress={progress} />
     </div>
+  )
+}
+
+function StatsButton({ color, onClick }) {
+  return (
+    <button
+      onClick={onClick}
+      title="Statistiche"
+      style={{
+        display: 'inline-flex', alignItems: 'center', gap: 4,
+        padding: '3px 8px',
+        borderRadius: 10,
+        background: 'transparent',
+        color,
+        border: `1px solid ${color}55`,
+        cursor: 'pointer',
+        fontSize: 10, fontWeight: 600,
+        textTransform: 'uppercase',
+        letterSpacing: 0.4,
+      }}
+    >
+      <BarChart3 size={12}/> Statistiche
+    </button>
   )
 }
 
@@ -432,67 +533,21 @@ function ProgressBar({ color, progress }) {
   )
 }
 
-function PeriodStats({ period, hass, entities, suffix }) {
-  const data = pickPeriod(period, hass, entities, suffix)
-  return (
-    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8, marginTop: 8 }}>
-      <StatCell label="Energia" value={data.energy != null ? fmtKwh(data.energy) : '—'} />
-      <StatCell label="Costo" value={data.cost != null ? fmtMoney(data.cost) : '—'} />
-      <StatCell label="Cicli" value={data.cycles != null ? Math.round(data.cycles) : '—'} />
-    </div>
-  )
-}
-
-function LiveCell({ label, value }) {
-  return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-      <div style={{ fontSize: 10, opacity: 0.6, textTransform: 'uppercase', letterSpacing: 0.5 }}>{label}</div>
-      <div style={{ fontSize: 13, fontWeight: 700, fontFamily: 'JetBrains Mono, monospace' }}>{value}</div>
-    </div>
-  )
-}
-
-function StatCell({ label, value }) {
+function InlineChip({ color, icon, value }) {
   return (
     <div style={{
-      padding: '8px 10px', borderRadius: 8,
-      background: 'var(--surface-2, rgba(0,0,0,.04))',
-      display: 'flex', flexDirection: 'column', gap: 2,
+      display: 'inline-flex', alignItems: 'center', gap: 4,
+      padding: '2px 8px',
+      borderRadius: 999,
+      background: hexToRgba(color, 0.1),
+      border: `1px solid ${hexToRgba(color, 0.25)}`,
+      fontSize: 11, fontWeight: 600,
+      fontFamily: 'JetBrains Mono, ui-monospace, monospace',
+      color,
+      whiteSpace: 'nowrap',
     }}>
-      <div style={{ fontSize: 10, opacity: 0.6 }}>{label}</div>
-      <div style={{ fontSize: 13, fontWeight: 700, fontFamily: 'JetBrains Mono, monospace' }}>{value}</div>
+      <span style={{ fontFamily: 'system-ui, sans-serif' }}>{icon}</span>
+      <span>{value}</span>
     </div>
   )
-}
-
-function pickPeriod(period, hass, entities, suffix) {
-  const st = hass.states
-  const timeOn = st[entities.timeOn]?.attributes ?? {}
-  switch (period) {
-    case 'today':
-      return {
-        energy: num(st[entities.energyToday]?.state),
-        cost:   num(timeOn[attrKey('dailyCost', suffix)]),
-        cycles: num(st[entities.cyclesToday]?.state),
-      }
-    case 'yesterday':
-      return {
-        energy: num(st[entities.energyToday]?.attributes?.last_period),
-        cost:   num(timeOn[attrKey('yesterdayCost', suffix)]),
-        cycles: num(st[entities.cyclesToday]?.attributes?.last_period),
-      }
-    case 'month':
-      return {
-        energy: num(st[entities.energyMonth]?.state),
-        cost:   num(timeOn[attrKey('monthlyCost', suffix)]),
-        cycles: num(st[entities.cyclesMonth]?.state),
-      }
-    case 'year':
-      return {
-        energy: num(st[entities.energyYear]?.state),
-        cost:   num(timeOn[attrKey('yearlyCost', suffix)]),
-        cycles: num(st[entities.cyclesYear]?.state),
-      }
-  }
-  return { energy: null, cost: null, cycles: null }
 }

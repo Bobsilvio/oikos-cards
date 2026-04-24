@@ -51,6 +51,15 @@ export function buildEntities(suffix) {
     displayName:    `input_text.nome_elettrodomestico_${s}`,
     message:        `input_text.messaggio_elettrodomestico_${s}`,
     lastCycle:      `input_text.ultimo_ciclo_attivo_elettrodomestici_${s}`,
+
+    // ── Notifiche fine ciclo ──────────────────────────────────────────────
+    mediaGoogle:    `input_text.media_player_google_${s}`,
+    mediaAlexa:     `input_text.media_player_alexa_${s}`,
+    notifyDevice1:  `input_text.notify_device_${s}`,
+    notifyDevice2:  `input_text.notify_device2_${s}`,
+    notifyGoogle:   `input_boolean.notify_google_elettrodomestici_${s}`,
+    notifyAlexa:    `input_boolean.notify_alexa_elettrodomestici_${s}`,
+    notifyPush:     `input_boolean.notify_push_elettrodomestici_${s}`,
   }
 }
 

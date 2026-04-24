@@ -20,7 +20,7 @@ function prefersReducedMotion() {
   try { return window.matchMedia('(prefers-reduced-motion: reduce)').matches } catch { return false }
 }
 
-const STYLE_ID = 'oikos-appliance-anim-v4'
+const STYLE_ID = 'oikos-appliance-anim-v5'
 
 function ensureStyles() {
   if (typeof document === 'undefined') return
@@ -41,6 +41,8 @@ function ensureStyles() {
 @keyframes oikos-app-heatshim  { 0%,100% { filter: drop-shadow(0 0 2px #ff6f00) translateY(0) } 50% { filter: drop-shadow(0 0 8px #ff3d00) translateY(-0.5px) } }
 @keyframes oikos-app-frost     { 0%,100% { opacity: .7 } 50% { opacity: 1 } }
 @keyframes oikos-app-coolglow  { 0%,100% { filter: drop-shadow(0 0 3px #4fc3f7) } 50% { filter: drop-shadow(0 0 7px #81d4fa) } }
+@keyframes oikos-app-wobble    { 0%,100% { transform: rotate(0deg) } 25% { transform: rotate(3deg) } 75% { transform: rotate(-3deg) } }
+@keyframes oikos-app-breathe   { 0%,100% { transform: scale(1) } 50% { transform: scale(1.035) } }
 .oikos-app-wave-slow { animation: oikos-app-wave-slow 4s linear infinite; transform-origin: 50% 50%; }
 .oikos-app-wave-fast { animation: oikos-app-wave-fast 2s linear infinite; transform-origin: 50% 50%; }
 .oikos-app-shake     { animation: oikos-app-shake 1.5s ease-in-out infinite; transform-origin: 50% 60%; }
@@ -54,6 +56,8 @@ function ensureStyles() {
 .oikos-app-heatshim  { animation: oikos-app-heatshim 1.4s ease-in-out infinite; }
 .oikos-app-frost     { animation: oikos-app-frost 3s ease-in-out infinite; }
 .oikos-app-coolglow  { animation: oikos-app-coolglow 3s ease-in-out infinite; }
+.oikos-app-wobble    { animation: oikos-app-wobble 2.8s ease-in-out infinite; transform-origin: 50% 50%; }
+.oikos-app-breathe   { animation: oikos-app-breathe 2.6s ease-in-out infinite; transform-origin: 50% 50%; }
 `
   document.head.appendChild(style)
 }
@@ -77,46 +81,55 @@ export default function AnimatedIcon({
   iconName = 'power-plug',
   size = 64,
   fillLevel = 0,
+  colorOverride = '',
 }) {
   useMemo(() => ensureStyles(), [])
   const reduced = prefersReducedMotion()
   const eff = reduced && (level === 'full' || level === 'max') ? 'essential' : level
   const full = eff === 'full' || eff === 'max'
-  const animate = phase !== 'idle' && eff !== 'none'
+  // Fasi "attive": il ciclo è realmente in corso → halo + animazioni.
+  // finished/idle sono stati statici: niente smoke-halo né rotazioni.
+  const isActive = phase !== 'idle' && phase !== 'finished'
+  const animate = isActive && eff !== 'none'
 
-  const color = PHASE_COLORS[phase] || PHASE_COLORS.idle
+  const color = (colorOverride && phase !== 'idle' && phase !== 'finished')
+    ? colorOverride
+    : (PHASE_COLORS[phase] || PHASE_COLORS.idle)
 
-  // fillLevel effettivo solo per fasi "acqua"
-  const useWater = WATER_PHASES.has(phase)
-  const lvl = !useWater ? 0
-            : phase === 'finished' ? 1
-            : Math.max(0.05, Math.min(0.95, fillLevel))
+  // fillLevel effettivo solo per fasi "acqua" ATTIVE
+  const useWater = WATER_PHASES.has(phase) && isActive
+  const lvl = !useWater ? 0 : Math.max(0.05, Math.min(0.95, fillLevel))
   const lvlPct = Math.round(lvl * 100)
 
   // Selezione animazioni
   let waveCls = '', iconCls = '', overlayCls = '', overlayBg = 'none', baseLayer = null
+  // containerCls anima l'INTERO cerchio (wobble/breathe) — dà la sensazione
+  // che tutto il badge si muova, non solo i pattern interni.
+  let containerCls = ''
 
   if (phase === 'washing') {
-    waveCls    = full ? 'oikos-app-wave-slow' : ''
-    iconCls    = full ? 'oikos-app-shake' : ''
-    overlayCls = full ? 'oikos-app-bubbles' : ''
-    overlayBg  = 'radial-gradient(2px 2px at 20% 80%, white, transparent), radial-gradient(2px 2px at 50% 70%, white, transparent), radial-gradient(1.5px 1.5px at 75% 60%, white, transparent)'
+    waveCls      = full ? 'oikos-app-wave-slow' : ''
+    iconCls      = full ? 'oikos-app-shake' : ''
+    overlayCls   = full ? 'oikos-app-bubbles' : ''
+    overlayBg    = 'radial-gradient(2px 2px at 20% 80%, white, transparent), radial-gradient(2px 2px at 50% 70%, white, transparent), radial-gradient(1.5px 1.5px at 75% 60%, white, transparent)'
+    containerCls = full ? 'oikos-app-wobble' : ''
   } else if (phase === 'spinning') {
     waveCls    = full ? 'oikos-app-wave-fast' : ''
     iconCls    = full ? 'oikos-app-spin' : ''
     overlayBg  = 'radial-gradient(circle, rgba(255,255,255,0.3) 10%, transparent 60%)'
   } else if (phase === 'drying') {
-    waveCls    = full ? 'oikos-app-wave-slow' : ''
-    overlayCls = full ? 'oikos-app-steam' : ''
-    overlayBg  = 'linear-gradient(0deg, transparent, rgba(255,255,255,0.5), transparent)'
+    waveCls      = full ? 'oikos-app-wave-slow' : ''
+    overlayCls   = full ? 'oikos-app-steam' : ''
+    overlayBg    = 'linear-gradient(0deg, transparent, rgba(255,255,255,0.5), transparent)'
+    containerCls = full ? 'oikos-app-breathe' : ''
   } else if (phase === 'finished') {
-    waveCls    = full ? 'oikos-app-wave-slow' : ''
-    overlayCls = full ? 'oikos-app-sparkle' : ''
-    overlayBg  = 'radial-gradient(circle, rgba(255,255,255,0.6) 10%, transparent 60%)'
+    // Stato calmo: nessuna animazione, solo colore verde per indicare "done".
+    // Niente halo, wave o sparkle — il ciclo è finito, la card deve stare ferma.
   } else if (phase === 'heating') {
     // Brace pulsante dal basso (layer) + scintille (overlay) + heat shimmer (icona)
-    iconCls    = full ? 'oikos-app-heatshim' : ''
-    overlayCls = full ? 'oikos-app-sparks' : ''
+    iconCls      = full ? 'oikos-app-heatshim' : ''
+    overlayCls   = full ? 'oikos-app-sparks' : ''
+    containerCls = full ? 'oikos-app-breathe' : ''
     overlayBg  = 'radial-gradient(1.5px 1.5px at 25% 60%, #ffd54f, transparent), radial-gradient(1.5px 1.5px at 60% 50%, #ffab40, transparent), radial-gradient(1px 1px at 80% 65%, #ffe082, transparent)'
     baseLayer = (
       <div
@@ -156,17 +169,20 @@ export default function AnimatedIcon({
         />
       )}
 
-      <div style={{
-        position: 'relative',
-        width: size, height: size,
-        borderRadius: '50%',
-        background: 'rgba(255,255,255,0.05)',
-        border: `1px solid ${animate ? color : 'rgba(255,255,255,0.1)'}`,
-        overflow: 'hidden',
-        display: 'flex', alignItems: 'center', justifyContent: 'center',
-        boxShadow: animate ? `0 0 14px ${hexToRgba(color, 0.30)}` : 'none',
-        transition: 'border-color .4s, box-shadow .4s',
-      }}>
+      <div
+        className={containerCls || undefined}
+        style={{
+          position: 'relative',
+          width: size, height: size,
+          borderRadius: '50%',
+          background: phase === 'finished' ? hexToRgba(color, 0.12) : 'rgba(255,255,255,0.05)',
+          border: `1px solid ${phase === 'idle' ? 'rgba(255,255,255,0.1)' : color}`,
+          overflow: 'hidden',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          boxShadow: animate ? `0 0 14px ${hexToRgba(color, 0.30)}` : 'none',
+          transition: 'border-color .4s, box-shadow .4s, background .4s',
+        }}
+      >
         {/* Base layer (brace/gelo per heating/cooling) */}
         {baseLayer}
 
@@ -199,15 +215,20 @@ export default function AnimatedIcon({
           />
         )}
 
-        {/* Icona */}
+        {/* Icona — niente mix-blend: su sfondi chiari il bianco "overlay" spariva.
+            Uso un colore pieno con drop-shadow per dare profondità anche senza blend. */}
         <div
           className={iconCls || undefined}
           style={{
             position: 'relative', zIndex: 3, display: 'flex',
-            mixBlendMode: 'overlay',
+            filter: isActive ? `drop-shadow(0 1px 2px ${hexToRgba(color, 0.6)})` : 'none',
           }}
         >
-          <MdiIcon name={iconName} size={Math.round(size * 0.55)} style={{ color: '#ffffff' }} />
+          <MdiIcon
+            name={iconName}
+            size={Math.round(size * 0.55)}
+            style={{ color: phase === 'idle' ? 'var(--text-muted, #9e9e9e)' : color }}
+          />
         </div>
       </div>
     </div>
