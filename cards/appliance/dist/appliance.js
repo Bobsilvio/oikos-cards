@@ -1,5 +1,5 @@
 const { jsxs: u, jsx: i } = window.__OIKOS_SDK__.jsxRuntime;
-function xe(t) {
+function ve(t) {
   const e = String(t || "").trim().toLowerCase();
   return e ? {
     suffix: e,
@@ -46,7 +46,7 @@ function xe(t) {
     notifyPush: `input_boolean.notify_push_elettrodomestici_${e}`
   } : null;
 }
-const _e = {
+const ke = {
   cycleTime: "tempo_ciclo_elettrodomestici_{suffix}",
   today: "Oggi",
   month: "Mese",
@@ -64,9 +64,9 @@ const _e = {
   prevYearCost: "costo_consumo_anno_precedente_elettrodomestici_{suffix}"
 };
 function $(t, e) {
-  return (_e[t] ?? "").replace("{suffix}", e);
+  return (ke[t] ?? "").replace("{suffix}", e);
 }
-const ve = {
+const we = {
   lavatrice: { name: "Lavatrice", iconName: "washing-machine", defaultPhase: "washing" },
   asciugatrice: { name: "Asciugatrice", iconName: "tumble-dryer", defaultPhase: "drying" },
   lavastoviglie: { name: "Lavastoviglie", iconName: "dishwasher", defaultPhase: "washing" },
@@ -85,16 +85,16 @@ const ve = {
   condizionatore: { name: "Condizionatore", iconName: "air-conditioner", defaultPhase: "cooling" },
   scaldabagno: { name: "Scaldabagno", iconName: "water-boiler", defaultPhase: "heating" }
 };
-function se(t) {
+function ce(t) {
   const e = String(t || "").trim().toLowerCase();
-  return ve[e] ?? {
+  return we[e] ?? {
     name: e ? e[0].toUpperCase() + e.slice(1) : "",
     iconName: "power-plug",
     defaultPhase: "washing"
   };
 }
-const { useMemo: ke } = window.__OIKOS_SDK__.React, { MdiIcon: we } = window.__OIKOS_SDK__;
-function Se() {
+const { useMemo: Se } = window.__OIKOS_SDK__.React, { MdiIcon: $e } = window.__OIKOS_SDK__;
+function Ie() {
   if (typeof window > "u" || !window.matchMedia) return !1;
   try {
     return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -102,11 +102,11 @@ function Se() {
     return !1;
   }
 }
-const ie = "oikos-appliance-anim-v5";
-function $e() {
-  if (typeof document > "u" || document.getElementById(ie)) return;
+const ae = "oikos-appliance-anim-v5";
+function Ce() {
+  if (typeof document > "u" || document.getElementById(ae)) return;
   const t = document.createElement("style");
-  t.id = ie, t.textContent = `
+  t.id = ae, t.textContent = `
 @keyframes oikos-app-wave-slow { from { transform: rotate(0deg) } to { transform: rotate(360deg) } }
 @keyframes oikos-app-wave-fast { from { transform: rotate(0deg) } to { transform: rotate(360deg) } }
 @keyframes oikos-app-shake     { 0%,100% { transform: rotate(0deg) } 25% { transform: rotate(5deg) translateY(-1px) } 75% { transform: rotate(-5deg) translateY(1px) } }
@@ -147,8 +147,8 @@ const D = {
   cooling: "#4fc3f7",
   finished: "#4caf50",
   idle: "#9e9e9e"
-}, Ie = /* @__PURE__ */ new Set(["washing", "spinning", "drying", "finished"]);
-function le({
+}, Me = /* @__PURE__ */ new Set(["washing", "spinning", "drying", "finished"]);
+function de({
   phase: t = "idle",
   level: e = "full",
   iconName: n = "power-plug",
@@ -156,10 +156,10 @@ function le({
   fillLevel: l = 0,
   colorOverride: s = ""
 }) {
-  ke(() => $e(), []);
-  const c = Se() && (e === "full" || e === "max") ? "essential" : e, a = c === "full" || c === "max", f = t !== "idle" && t !== "finished", h = f && c !== "none", p = s && t !== "idle" && t !== "finished" ? s : D[t] || D.idle, y = Ie.has(t) && f, b = y ? Math.max(0.05, Math.min(0.95, l)) : 0, v = Math.round(b * 100);
-  let m = "", d = "", w = "", k = "none", M = null, I = "";
-  return t === "washing" ? (m = a ? "oikos-app-wave-slow" : "", d = a ? "oikos-app-shake" : "", w = a ? "oikos-app-bubbles" : "", k = "radial-gradient(2px 2px at 20% 80%, white, transparent), radial-gradient(2px 2px at 50% 70%, white, transparent), radial-gradient(1.5px 1.5px at 75% 60%, white, transparent)", I = a ? "oikos-app-wobble" : "") : t === "spinning" ? (m = a ? "oikos-app-wave-fast" : "", d = a ? "oikos-app-spin" : "", k = "radial-gradient(circle, rgba(255,255,255,0.3) 10%, transparent 60%)") : t === "drying" ? (m = a ? "oikos-app-wave-slow" : "", w = a ? "oikos-app-steam" : "", k = "linear-gradient(0deg, transparent, rgba(255,255,255,0.5), transparent)", I = a ? "oikos-app-breathe" : "") : t === "finished" || (t === "heating" ? (d = a ? "oikos-app-heatshim" : "", w = a ? "oikos-app-sparks" : "", I = a ? "oikos-app-breathe" : "", k = "radial-gradient(1.5px 1.5px at 25% 60%, #ffd54f, transparent), radial-gradient(1.5px 1.5px at 60% 50%, #ffab40, transparent), radial-gradient(1px 1px at 80% 65%, #ffe082, transparent)", M = /* @__PURE__ */ i(
+  Se(() => Ce(), []);
+  const c = Ie() && (e === "full" || e === "max") ? "essential" : e, a = c === "full" || c === "max", f = t !== "idle" && t !== "finished", h = f && c !== "none", p = s && t !== "idle" && t !== "finished" ? s : D[t] || D.idle, y = Me.has(t) && f, b = y ? Math.max(0.05, Math.min(0.95, l)) : 0, _ = Math.round(b * 100);
+  let m = "", d = "", k = "", v = "none", M = null, I = "";
+  return t === "washing" ? (m = a ? "oikos-app-wave-slow" : "", d = a ? "oikos-app-shake" : "", k = a ? "oikos-app-bubbles" : "", v = "radial-gradient(2px 2px at 20% 80%, white, transparent), radial-gradient(2px 2px at 50% 70%, white, transparent), radial-gradient(1.5px 1.5px at 75% 60%, white, transparent)", I = a ? "oikos-app-wobble" : "") : t === "spinning" ? (m = a ? "oikos-app-wave-fast" : "", d = a ? "oikos-app-spin" : "", v = "radial-gradient(circle, rgba(255,255,255,0.3) 10%, transparent 60%)") : t === "drying" ? (m = a ? "oikos-app-wave-slow" : "", k = a ? "oikos-app-steam" : "", v = "linear-gradient(0deg, transparent, rgba(255,255,255,0.5), transparent)", I = a ? "oikos-app-breathe" : "") : t === "finished" || (t === "heating" ? (d = a ? "oikos-app-heatshim" : "", k = a ? "oikos-app-sparks" : "", I = a ? "oikos-app-breathe" : "", v = "radial-gradient(1.5px 1.5px at 25% 60%, #ffd54f, transparent), radial-gradient(1.5px 1.5px at 60% 50%, #ffab40, transparent), radial-gradient(1px 1px at 80% 65%, #ffe082, transparent)", M = /* @__PURE__ */ i(
     "div",
     {
       className: a ? "oikos-app-ember" : void 0,
@@ -170,7 +170,7 @@ function le({
         pointerEvents: "none"
       }
     }
-  )) : t === "cooling" && (d = a ? "oikos-app-coolglow" : "", w = a ? "oikos-app-frost" : "", k = "radial-gradient(1.5px 1.5px at 20% 30%, white, transparent), radial-gradient(1.5px 1.5px at 70% 25%, white, transparent), radial-gradient(1px 1px at 45% 65%, white, transparent), radial-gradient(1px 1px at 85% 75%, white, transparent), radial-gradient(1px 1px at 30% 80%, white, transparent)", M = /* @__PURE__ */ i(
+  )) : t === "cooling" && (d = a ? "oikos-app-coolglow" : "", k = a ? "oikos-app-frost" : "", v = "radial-gradient(1.5px 1.5px at 20% 30%, white, transparent), radial-gradient(1.5px 1.5px at 70% 25%, white, transparent), radial-gradient(1px 1px at 45% 65%, white, transparent), radial-gradient(1px 1px at 85% 75%, white, transparent), radial-gradient(1px 1px at 30% 80%, white, transparent)", M = /* @__PURE__ */ i(
     "div",
     {
       style: {
@@ -223,21 +223,21 @@ function le({
                 left: "-50%",
                 width: "200%",
                 height: "200%",
-                top: `calc(100% - ${v}%)`,
+                top: `calc(100% - ${_}%)`,
                 background: R(p, 0.6),
                 borderRadius: "40%",
                 transition: "top 1.2s ease"
               }
             }
           ),
-          k !== "none" && /* @__PURE__ */ i(
+          v !== "none" && /* @__PURE__ */ i(
             "div",
             {
-              className: w || void 0,
+              className: k || void 0,
               style: {
                 position: "absolute",
                 inset: 0,
-                backgroundImage: k,
+                backgroundImage: v,
                 backgroundSize: "100% 100%",
                 zIndex: 2,
                 pointerEvents: "none"
@@ -255,7 +255,7 @@ function le({
                 filter: f ? `drop-shadow(0 1px 2px ${R(p, 0.6)})` : "none"
               },
               children: /* @__PURE__ */ i(
-                we,
+                $e,
                 {
                   name: n,
                   size: Math.round(o * 0.55),
@@ -274,34 +274,34 @@ function R(t, e) {
   const n = t.slice(1), o = n.length === 3 ? n.split("").map((a) => a + a).join("") : n, l = parseInt(o, 16), s = l >> 16 & 255, r = l >> 8 & 255, c = l & 255;
   return `rgba(${s},${r},${c},${e})`;
 }
-const { X: Ce } = window.__OIKOS_SDK__.icons, Me = ["lunedi", "martedi", "mercoledi", "giovedi", "venerdi", "sabato", "domenica"], Te = ["Lun", "Mar", "Mer", "Gio", "Ven", "Sab", "Dom"];
-function _(t, e = 0) {
+const { X: Te } = window.__OIKOS_SDK__.icons, Ee = ["lunedi", "martedi", "mercoledi", "giovedi", "venerdi", "sabato", "domenica"], ze = ["Lun", "Mar", "Mer", "Gio", "Ven", "Sab", "Dom"];
+function x(t, e = 0) {
   const n = parseFloat(t);
   return Number.isFinite(n) ? n : e;
 }
-function oe(t) {
-  return "€ " + _(t, 0).toFixed(2).replace(".", ",");
+function re(t) {
+  return "€ " + x(t, 0).toFixed(2).replace(".", ",");
 }
-function Ee(t) {
-  return _(t, 0).toFixed(2).replace(".", ",") + " kWh";
+function Ne(t) {
+  return x(t, 0).toFixed(2).replace(".", ",") + " kWh";
 }
-function Ne({ hass: t, cfg: e, entities: n, name: o, onClose: l }) {
-  var b, v, m, d, w, k, M, I, E, x;
-  const s = e.suffix, r = t.states, c = ((b = r[n.timeOn]) == null ? void 0 : b.attributes) ?? {}, a = Me.map((g, C) => {
-    var N, F, T;
+function Pe({ hass: t, cfg: e, entities: n, name: o, onClose: l }) {
+  var b, _, m, d, k, v, M, I, E, w;
+  const s = e.suffix, r = t.states, c = ((b = r[n.timeOn]) == null ? void 0 : b.attributes) ?? {}, a = Ee.map((g, C) => {
+    var z, F, T;
     return {
-      label: Te[C],
-      cycles: _((N = r[`input_text.${g}_elettrodomestici_cicli_${s}`]) == null ? void 0 : N.state),
-      kwh: _((F = r[`input_number.${g}_elettrodomestici_consumo_${s}`]) == null ? void 0 : F.state),
-      cost: _((T = r[`input_number.${g}_elettrodomestici_costo_${s}`]) == null ? void 0 : T.state)
+      label: ze[C],
+      cycles: x((z = r[`input_text.${g}_elettrodomestici_cicli_${s}`]) == null ? void 0 : z.state),
+      kwh: x((F = r[`input_number.${g}_elettrodomestici_consumo_${s}`]) == null ? void 0 : F.state),
+      cost: x((T = r[`input_number.${g}_elettrodomestici_costo_${s}`]) == null ? void 0 : T.state)
     };
   }), f = Math.max(...a.map((g) => g.kwh), 0.1), h = [
-    { label: "Oggi", energy: _((v = r[n.energyToday]) == null ? void 0 : v.state), cost: _(c[$("dailyCost", s)]) },
-    { label: "Ieri", energy: _((d = (m = r[n.energyToday]) == null ? void 0 : m.attributes) == null ? void 0 : d.last_period), cost: _(c[$("yesterdayCost", s)]) },
-    { label: "Mese", energy: _((w = r[n.energyMonth]) == null ? void 0 : w.state), cost: _(c[$("monthlyCost", s)]) },
-    { label: "Mese precedente", energy: _((M = (k = r[n.energyMonth]) == null ? void 0 : k.attributes) == null ? void 0 : M.last_period), cost: _(c[$("prevMonthCost", s)]) },
-    { label: "Anno", energy: _((I = r[n.energyYear]) == null ? void 0 : I.state), cost: _(c[$("yearlyCost", s)]) },
-    { label: "Anno precedente", energy: _((x = (E = r[n.energyYear]) == null ? void 0 : E.attributes) == null ? void 0 : x.last_period), cost: _(c[$("prevYearCost", s)]) }
+    { label: "Oggi", energy: x((_ = r[n.energyToday]) == null ? void 0 : _.state), cost: x(c[$("dailyCost", s)]) },
+    { label: "Ieri", energy: x((d = (m = r[n.energyToday]) == null ? void 0 : m.attributes) == null ? void 0 : d.last_period), cost: x(c[$("yesterdayCost", s)]) },
+    { label: "Mese", energy: x((k = r[n.energyMonth]) == null ? void 0 : k.state), cost: x(c[$("monthlyCost", s)]) },
+    { label: "Mese precedente", energy: x((M = (v = r[n.energyMonth]) == null ? void 0 : v.attributes) == null ? void 0 : M.last_period), cost: x(c[$("prevMonthCost", s)]) },
+    { label: "Anno", energy: x((I = r[n.energyYear]) == null ? void 0 : I.state), cost: x(c[$("yearlyCost", s)]) },
+    { label: "Anno precedente", energy: x((w = (E = r[n.energyYear]) == null ? void 0 : E.attributes) == null ? void 0 : w.last_period), cost: x(c[$("prevYearCost", s)]) }
   ], p = a.reduce((g, C) => g + C.cycles, 0), y = a.reduce((g, C) => g + C.cost, 0);
   return /* @__PURE__ */ i(
     "div",
@@ -347,7 +347,7 @@ function Ne({ hass: t, cfg: e, entities: n, name: o, onClose: l }) {
                   color: "var(--text-muted)",
                   padding: 4
                 },
-                children: /* @__PURE__ */ i(Ce, { size: 18 })
+                children: /* @__PURE__ */ i(Te, { size: 18 })
               }
             ),
             /* @__PURE__ */ i("div", { style: { fontSize: 20, fontWeight: 700, marginBottom: 4 }, children: o }),
@@ -355,12 +355,12 @@ function Ne({ hass: t, cfg: e, entities: n, name: o, onClose: l }) {
             /* @__PURE__ */ u("div", { style: { marginBottom: 22 }, children: [
               /* @__PURE__ */ i("div", { style: { fontSize: 11, fontWeight: 700, color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: 0.5, marginBottom: 10 }, children: "Consumo 7 giorni" }),
               /* @__PURE__ */ i("div", { style: { display: "grid", gridTemplateColumns: "repeat(7,1fr)", gap: 6, alignItems: "end", height: 120 }, children: a.map((g, C) => {
-                const N = Math.max(2, g.kwh / f * 100);
+                const z = Math.max(2, g.kwh / f * 100);
                 return /* @__PURE__ */ u("div", { style: { display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }, children: [
                   /* @__PURE__ */ i("div", { style: { fontSize: 9, color: "var(--text-muted)", fontVariantNumeric: "tabular-nums" }, children: g.kwh > 0 ? g.kwh.toFixed(1) : "" }),
                   /* @__PURE__ */ i("div", { style: {
                     width: "100%",
-                    height: `${N}%`,
+                    height: `${z}%`,
                     background: "var(--accent, #3b82f6)",
                     borderRadius: "4px 4px 0 0",
                     opacity: g.kwh > 0 ? 1 : 0.2,
@@ -382,7 +382,7 @@ function Ne({ hass: t, cfg: e, entities: n, name: o, onClose: l }) {
                 ] }),
                 /* @__PURE__ */ u("span", { children: [
                   "Costo settimana: ",
-                  /* @__PURE__ */ i("strong", { style: { color: "var(--text-primary)" }, children: oe(y) })
+                  /* @__PURE__ */ i("strong", { style: { color: "var(--text-primary)" }, children: re(y) })
                 ] })
               ] })
             ] }),
@@ -394,8 +394,8 @@ function Ne({ hass: t, cfg: e, entities: n, name: o, onClose: l }) {
                 background: "var(--surface-2, rgba(0,0,0,.04))"
               }, children: [
                 /* @__PURE__ */ i("div", { style: { fontSize: 10, color: "var(--text-muted)" }, children: g.label }),
-                /* @__PURE__ */ i("div", { style: { fontSize: 14, fontWeight: 700, fontFamily: "JetBrains Mono, monospace" }, children: oe(g.cost) }),
-                /* @__PURE__ */ i("div", { style: { fontSize: 11, opacity: 0.7, fontFamily: "JetBrains Mono, monospace" }, children: Ee(g.energy) })
+                /* @__PURE__ */ i("div", { style: { fontSize: 14, fontWeight: 700, fontFamily: "JetBrains Mono, monospace" }, children: re(g.cost) }),
+                /* @__PURE__ */ i("div", { style: { fontSize: 11, opacity: 0.7, fontFamily: "JetBrains Mono, monospace" }, children: Ne(g.energy) })
               ] }, C)) })
             ] })
           ]
@@ -404,19 +404,19 @@ function Ne({ hass: t, cfg: e, entities: n, name: o, onClose: l }) {
     }
   );
 }
-const { useState: ze } = window.__OIKOS_SDK__.React, { X: Oe } = window.__OIKOS_SDK__.icons;
+const { useState: Oe } = window.__OIKOS_SDK__.React, { X: Re } = window.__OIKOS_SDK__.icons;
 function S(t, e = 0) {
   const n = parseFloat(t);
   return Number.isFinite(n) ? n : e;
 }
-function Pe(t) {
+function De(t) {
   return "€ " + S(t, 0).toFixed(2).replace(".", ",");
 }
-function Re(t) {
+function Fe(t) {
   return S(t, 0).toFixed(2).replace(".", ",") + " kWh";
 }
-function De(t, e, n, o) {
-  var r, c, a, f, h, p, y, b, v, m, d;
+function Ae(t, e, n, o) {
+  var r, c, a, f, h, p, y, b, _, m, d;
   const l = e.states, s = ((r = l[n.timeOn]) == null ? void 0 : r.attributes) ?? {};
   switch (t) {
     case "today":
@@ -435,7 +435,7 @@ function De(t, e, n, o) {
       return {
         energy: S((b = l[n.energyMonth]) == null ? void 0 : b.state),
         cost: S(s[$("monthlyCost", o)]),
-        cycles: S((v = l[n.cyclesMonth]) == null ? void 0 : v.state)
+        cycles: S((_ = l[n.cyclesMonth]) == null ? void 0 : _.state)
       };
     case "year":
       return {
@@ -446,8 +446,8 @@ function De(t, e, n, o) {
   }
   return { energy: null, cost: null, cycles: null };
 }
-function Fe({ hass: t, cfg: e, entities: n, name: o, onClose: l }) {
-  const [s, r] = ze("today"), c = De(s, t, n, e.suffix);
+function We({ hass: t, cfg: e, entities: n, name: o, onClose: l }) {
+  const [s, r] = Oe("today"), c = Ae(s, t, n, e.suffix);
   return /* @__PURE__ */ i(
     "div",
     {
@@ -490,7 +490,7 @@ function Fe({ hass: t, cfg: e, entities: n, name: o, onClose: l }) {
                   color: "var(--text-muted)",
                   padding: 4
                 },
-                children: /* @__PURE__ */ i(Oe, { size: 18 })
+                children: /* @__PURE__ */ i(Re, { size: 18 })
               }
             ),
             /* @__PURE__ */ i("div", { style: { fontSize: 18, fontWeight: 700, marginBottom: 4 }, children: o }),
@@ -521,9 +521,9 @@ function Fe({ hass: t, cfg: e, entities: n, name: o, onClose: l }) {
               a
             )) }),
             /* @__PURE__ */ u("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8 }, children: [
-              /* @__PURE__ */ i(K, { label: "Energia", value: c.energy != null ? Re(c.energy) : "—" }),
-              /* @__PURE__ */ i(K, { label: "Costo", value: c.cost != null ? Pe(c.cost) : "—" }),
-              /* @__PURE__ */ i(K, { label: "Cicli", value: c.cycles != null ? Math.round(c.cycles) : "—" })
+              /* @__PURE__ */ i(L, { label: "Energia", value: c.energy != null ? Fe(c.energy) : "—" }),
+              /* @__PURE__ */ i(L, { label: "Costo", value: c.cost != null ? De(c.cost) : "—" }),
+              /* @__PURE__ */ i(L, { label: "Cicli", value: c.cycles != null ? Math.round(c.cycles) : "—" })
             ] })
           ]
         }
@@ -531,7 +531,7 @@ function Fe({ hass: t, cfg: e, entities: n, name: o, onClose: l }) {
     }
   );
 }
-function K({ label: t, value: e }) {
+function L({ label: t, value: e }) {
   return /* @__PURE__ */ u("div", { style: {
     padding: "10px 12px",
     borderRadius: 10,
@@ -544,11 +544,11 @@ function K({ label: t, value: e }) {
     /* @__PURE__ */ i("div", { style: { fontSize: 14, fontWeight: 700, fontFamily: "JetBrains Mono, monospace" }, children: e })
   ] });
 }
-const { useEffect: B, useRef: Ae, useState: mt } = window.__OIKOS_SDK__.React, { createPortal: We } = window.__OIKOS_SDK__.ReactDOM, { MdiIcon: Ye } = window.__OIKOS_SDK__, ae = "oikos-appliance-endcycle-v1";
-function Ke() {
-  if (typeof document > "u" || document.getElementById(ae)) return;
+const { useEffect: j, useRef: Ye, useState: ht } = window.__OIKOS_SDK__.React, { createPortal: Be } = window.__OIKOS_SDK__.ReactDOM, { MdiIcon: Ke } = window.__OIKOS_SDK__, se = "oikos-appliance-endcycle-v1";
+function Le() {
+  if (typeof document > "u" || document.getElementById(se)) return;
   const t = document.createElement("style");
-  t.id = ae, t.textContent = `
+  t.id = se, t.textContent = `
 @keyframes oikos-ec-backdrop { from { opacity: 0 } to { opacity: 1 } }
 @keyframes oikos-ec-card     { from { transform: translateY(40px) scale(.88); opacity: 0 } to { transform: translateY(0) scale(1); opacity: 1 } }
 @keyframes oikos-ec-badge    { 0% { transform: translateX(-50%) scale(0) } 70% { transform: translateX(-50%) scale(1.12) } 100% { transform: translateX(-50%) scale(1) } }
@@ -557,7 +557,7 @@ function Ke() {
 @keyframes oikos-ec-confetti { 0% { transform: translateY(0) rotate(0); opacity: 0 } 20% { opacity: 1 } 100% { transform: translateY(-80vh) rotate(540deg); opacity: 0 } }
 `, document.head.appendChild(t);
 }
-const Be = Array.from({ length: 16 }, (t, e) => ({
+const je = Array.from({ length: 16 }, (t, e) => ({
   id: e,
   left: 4 + e * 6.8 % 92,
   delay: e * 0.32 % 2.4,
@@ -565,12 +565,12 @@ const Be = Array.from({ length: 16 }, (t, e) => ({
   size: 8 + e * 3 % 10,
   color: ["#f59e0b", "#ef4444", "#3b82f6", "#22c55e", "#ec4899"][e % 5]
 }));
-function Le(t) {
+function He(t) {
   if (!t) return "—";
   const e = (/* @__PURE__ */ new Date()).toDateString() === t.toDateString(), n = t.toLocaleTimeString("it-IT", { hour: "2-digit", minute: "2-digit" });
   return e ? `Oggi alle ${n}` : t.toLocaleDateString("it-IT", { day: "numeric", month: "short" }) + ` alle ${n}`;
 }
-function je({
+function Xe({
   open: t,
   onClose: e,
   onAck: n,
@@ -585,25 +585,25 @@ function je({
   dark: p = !1,
   autoDismissSec: y = 0
 }) {
-  Ke();
-  const b = Ae(null);
-  if (B(() => {
+  Le();
+  const b = Ye(null);
+  if (j(() => {
     if (!t || !y) return;
     const d = b.current;
     d && (d.style.animation = "none", d.offsetWidth, d.style.animation = `oikos-ec-progress ${y}s linear forwards`);
-  }, [t, y]), B(() => {
+  }, [t, y]), j(() => {
     if (!t || !y) return;
     const d = setTimeout(() => e == null ? void 0 : e(), y * 1e3);
     return () => clearTimeout(d);
-  }, [t, y, e]), B(() => {
+  }, [t, y, e]), j(() => {
     if (!t) return;
-    const d = (w) => {
-      w.key === "Escape" && (e == null || e());
+    const d = (k) => {
+      k.key === "Escape" && (e == null || e());
     };
     return window.addEventListener("keydown", d), () => window.removeEventListener("keydown", d);
   }, [t, e]), !t || typeof document > "u") return null;
-  const v = p ? "#0e111a" : "#ffffff", m = [];
-  return a && m.push(["⏱", a]), f != null && m.push(["⚡", `${Number(f).toFixed(2)} kWh`]), h != null && m.push(["€", `${Number(h).toFixed(2)}`]), We(
+  const _ = p ? "#0e111a" : "#ffffff", m = [];
+  return a && m.push(["⏱", a]), f != null && m.push(["⚡", `${Number(f).toFixed(2)} kWh`]), h != null && m.push(["€", `${Number(h).toFixed(2)}`]), Be(
     /* @__PURE__ */ u(
       "div",
       {
@@ -621,7 +621,7 @@ function je({
           animation: "oikos-ec-backdrop .25s ease-out"
         },
         children: [
-          /* @__PURE__ */ i("div", { style: { position: "fixed", inset: 0, pointerEvents: "none", overflow: "hidden" }, children: Be.map((d) => /* @__PURE__ */ i(
+          /* @__PURE__ */ i("div", { style: { position: "fixed", inset: 0, pointerEvents: "none", overflow: "hidden" }, children: je.map((d) => /* @__PURE__ */ i(
             "div",
             {
               style: {
@@ -644,7 +644,7 @@ function je({
               onClick: (d) => d.stopPropagation(),
               style: {
                 width: "min(380px, 92vw)",
-                background: v,
+                background: _,
                 borderRadius: 28,
                 padding: "56px 28px 28px",
                 textAlign: "center",
@@ -665,7 +665,7 @@ function je({
                       height: 88,
                       borderRadius: "50%",
                       background: `linear-gradient(145deg, ${r}, ${r}bb)`,
-                      boxShadow: `0 8px 32px ${r}60, 0 0 0 4px ${v}`,
+                      boxShadow: `0 8px 32px ${r}60, 0 0 0 4px ${_}`,
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
@@ -676,7 +676,7 @@ function je({
                       animation: "oikos-ec-icon 2.4s ease-in-out infinite",
                       transformOrigin: "50% 60%",
                       display: "flex"
-                    }, children: /* @__PURE__ */ i(Ye, { name: s || "check-circle", size: 40, style: { color: "#fff" } }) })
+                    }, children: /* @__PURE__ */ i(Ke, { name: s || "check-circle", size: 40, style: { color: "#fff" } }) })
                   }
                 ),
                 y > 0 && /* @__PURE__ */ i(
@@ -750,7 +750,7 @@ function je({
                 }, children: [
                   /* @__PURE__ */ i("span", { style: { fontSize: 14 }, children: "🏁" }),
                   /* @__PURE__ */ i("span", { children: "Terminato:" }),
-                  /* @__PURE__ */ i("strong", { style: { color: "var(--text-primary, #0f172a)", fontWeight: 700 }, children: Le(c) })
+                  /* @__PURE__ */ i("strong", { style: { color: "var(--text-primary, #0f172a)", fontWeight: 700 }, children: He(c) })
                 ] }),
                 m.length > 0 && /* @__PURE__ */ i("div", { style: {
                   display: "flex",
@@ -758,7 +758,7 @@ function je({
                   justifyContent: "center",
                   marginBottom: 22,
                   flexWrap: "wrap"
-                }, children: m.map(([d, w], k) => /* @__PURE__ */ u("span", { style: {
+                }, children: m.map(([d, k], v) => /* @__PURE__ */ u("span", { style: {
                   fontSize: 12,
                   fontWeight: 700,
                   padding: "6px 10px",
@@ -770,8 +770,8 @@ function je({
                   gap: 5
                 }, children: [
                   /* @__PURE__ */ i("span", { style: { opacity: 0.7 }, children: d }),
-                  w
-                ] }, k)) }),
+                  k
+                ] }, v)) }),
                 /* @__PURE__ */ i(
                   "button",
                   {
@@ -820,7 +820,7 @@ function je({
     document.body
   );
 }
-const { useState: L, useMemo: H, useEffect: He, useRef: Xe } = window.__OIKOS_SDK__.React, { useStyles: ce, useCardConfig: Ge, useSafeHass: Ue, MdiIcon: Je } = window.__OIKOS_SDK__, { AlertTriangle: Ve, BarChart3: Ze } = window.__OIKOS_SDK__.icons, qe = {
+const { useState: H, useMemo: G, useEffect: Ge, useRef: Ue } = window.__OIKOS_SDK__.React, { useStyles: pe, useCardConfig: Je, useSafeHass: Ve, MdiIcon: Ze } = window.__OIKOS_SDK__, { AlertTriangle: qe, BarChart3: Qe } = window.__OIKOS_SDK__.icons, et = {
   mode: "package",
   suffix: "",
   displayName: "",
@@ -839,7 +839,7 @@ const { useState: L, useMemo: H, useEffect: He, useRef: Xe } = window.__OIKOS_SD
   progressEntity: "",
   // sensor con percentuale 0..100
   maxCycleMinutes: 120
-}, Qe = {
+}, tt = {
   washing: ["wash", "washing", "rinse", "rinsing", "pre-wash", "prewash", "soak", "on", "running", "start", "started"],
   spinning: ["spin", "spinning", "centrifuga"],
   drying: ["dry", "drying", "asciugatura"],
@@ -847,7 +847,7 @@ const { useState: L, useMemo: H, useEffect: He, useRef: Xe } = window.__OIKOS_SD
   cooling: ["cool", "cooling", "cold", "chill", "raffreddamento"],
   finished: ["finished", "complete", "completed", "end", "done", "terminato"],
   idle: ["idle", "off", "standby", "unknown", "unavailable", "", "none"]
-}, et = {
+}, nt = {
   washing: "LAVAGGIO",
   spinning: "CENTRIFUGA",
   drying: "ASCIUGATURA",
@@ -856,21 +856,21 @@ const { useState: L, useMemo: H, useEffect: He, useRef: Xe } = window.__OIKOS_SD
   finished: "TERMINATO",
   idle: "IN STANDBY"
 };
-function tt(t) {
+function it(t) {
   if (!t) return null;
   const e = String(t).trim().toLowerCase();
-  for (const [n, o] of Object.entries(Qe))
+  for (const [n, o] of Object.entries(tt))
     if (o.includes(e)) return n;
   return null;
 }
-function z(t, e = 0) {
+function N(t, e = 0) {
   const n = parseFloat(t);
   return Number.isFinite(n) ? n : e;
 }
-function nt(t) {
-  return Math.round(z(t, 0)) + "W";
+function ot(t) {
+  return Math.round(N(t, 0)) + "W";
 }
-function re(t) {
+function le(t) {
   if (t == null || t === "") return null;
   const e = String(t).trim();
   if (e.includes("-") && e.includes(":")) {
@@ -885,7 +885,7 @@ function re(t) {
   const n = parseFloat(e);
   return Number.isFinite(n) ? Math.max(0, Math.round(n)) : null;
 }
-function it(t) {
+function at(t) {
   if (!Number.isFinite(t) || t < 0) return "";
   const e = Math.floor(t / 60), n = t % 60;
   return `${e}H ${String(n).padStart(2, "0")}M`;
@@ -895,7 +895,7 @@ function W(t, e) {
   const n = t.slice(1), o = n.length === 3 ? n.split("").map((a) => a + a).join("") : n, l = parseInt(o, 16), s = l >> 16 & 255, r = l >> 8 & 255, c = l & 255;
   return `rgba(${s},${r},${c},${e})`;
 }
-function X(t) {
+function U(t) {
   if (!t) return null;
   const e = String(t).trim().replace(/^terminato\s+/i, ""), n = Date.parse(e);
   if (Number.isFinite(n)) return new Date(n);
@@ -913,13 +913,13 @@ function X(t) {
   }
   return null;
 }
-function ot(t) {
-  const e = X(t);
+function rt(t) {
+  const e = U(t);
   return e ? Date.now() - e.getTime() < 60 * 60 * 1e3 : !1;
 }
-const at = ["gen", "feb", "mar", "apr", "mag", "giu", "lug", "ago", "set", "ott", "nov", "dic"];
-function rt(t) {
-  const e = X(t);
+const st = ["gen", "feb", "mar", "apr", "mag", "giu", "lug", "ago", "set", "ott", "nov", "dic"];
+function lt(t) {
+  const e = U(t);
   if (!e) return String(t || "").replace(/^terminato\s+/i, "");
   const n = /* @__PURE__ */ new Date(), o = e.toDateString() === n.toDateString(), l = new Date(n);
   l.setDate(n.getDate() - 1);
@@ -927,15 +927,15 @@ function rt(t) {
   if (o) return `oggi alle ${r}:${c}`;
   if (s) return `ieri alle ${r}:${c}`;
   const a = e.getFullYear() === n.getFullYear();
-  return `${`${e.getDate()} ${at[e.getMonth()]}` + (a ? "" : ` ${e.getFullYear()}`)} alle ${r}:${c}`;
+  return `${`${e.getDate()} ${st[e.getMonth()]}` + (a ? "" : ` ${e.getFullYear()}`)} alle ${r}:${c}`;
 }
-function gt({ cardId: t }) {
-  const e = ce(), n = Ue(), [o] = Ge(t ?? "appliance", qe, { version: 2 }), l = H(
-    () => o.mode === "package" && o.suffix ? xe(o.suffix) : null,
+function yt({ cardId: t }) {
+  const e = pe(), n = Ve(), [o] = Je(t ?? "appliance", et, { version: 2 }), l = G(
+    () => o.mode === "package" && o.suffix ? ve(o.suffix) : null,
     [o.mode, o.suffix]
-  ), s = H(() => se(o.suffix), [o.suffix]), r = o.displayName || s.name || "Elettrodomestico", c = o.iconName || s.iconName;
-  return n ? !o.suffix && o.mode === "package" ? /* @__PURE__ */ i(st, { name: r, iconName: c, message: "Configura il suffisso e installa il package nei Settings." }) : o.mode === "package" ? /* @__PURE__ */ i(
-    pt,
+  ), s = G(() => ce(o.suffix), [o.suffix]), r = o.displayName || s.name || "Elettrodomestico", c = o.iconName || s.iconName;
+  return n ? !o.suffix && o.mode === "package" ? /* @__PURE__ */ i(ct, { name: r, iconName: c, message: "Configura il suffisso e installa il package nei Settings." }) : o.mode === "package" ? /* @__PURE__ */ i(
+    ft,
     {
       hass: n,
       cfg: o,
@@ -947,7 +947,7 @@ function gt({ cardId: t }) {
       cardId: t
     }
   ) : /* @__PURE__ */ i(
-    ft,
+    gt,
     {
       hass: n,
       cfg: o,
@@ -957,45 +957,45 @@ function gt({ cardId: t }) {
     }
   ) : /* @__PURE__ */ i("div", { style: e.card, children: /* @__PURE__ */ i("div", { style: { ...e.label, opacity: 0.6 }, children: "HA non connesso" }) });
 }
-function st({ name: t, iconName: e, message: n }) {
+function ct({ name: t, iconName: e, message: n }) {
   var l, s;
-  const o = ce();
+  const o = pe();
   return /* @__PURE__ */ u("div", { style: o.card, children: [
     /* @__PURE__ */ u("div", { style: { display: "flex", alignItems: "center", gap: 10 }, children: [
-      /* @__PURE__ */ i(Je, { name: e, size: 24 }),
+      /* @__PURE__ */ i(Ze, { name: e, size: 24 }),
       /* @__PURE__ */ i("div", { style: o.title, children: t })
     ] }),
     /* @__PURE__ */ u("div", { style: { display: "flex", alignItems: "center", gap: 8, marginTop: 10, opacity: 0.75 }, children: [
-      /* @__PURE__ */ i(Ve, { size: 14, color: (s = (l = o.tokens) == null ? void 0 : l.color) == null ? void 0 : s.amber }),
+      /* @__PURE__ */ i(qe, { size: 14, color: (s = (l = o.tokens) == null ? void 0 : l.color) == null ? void 0 : s.amber }),
       /* @__PURE__ */ i("div", { style: o.label, children: n })
     ] })
   ] });
 }
-function lt({ hass: t, cfg: e, entities: n, running: o, fineCiclo: l, defaultPhase: s, powerW: r }) {
-  var b, v;
+function dt({ hass: t, cfg: e, entities: n, running: o, fineCiclo: l, defaultPhase: s, powerW: r }) {
+  var b, _;
   const c = t.states;
   let a = null;
-  if (e.phaseEntity && c[e.phaseEntity] && (a = tt(c[e.phaseEntity].state)), !a)
+  if (e.phaseEntity && c[e.phaseEntity] && (a = it(c[e.phaseEntity].state)), !a)
     if (o)
       if (e.autoPhaseByPower && Number.isFinite(r)) {
-        const m = z(e.powerMinW, 5), d = z(e.powerMaxW, 500);
+        const m = N(e.powerMinW, 5), d = N(e.powerMaxW, 500);
         r < m ? a = "idle" : r > d ? a = "heating" : a = s || "washing";
       } else
         a = s || "washing";
-    else ot(l) ? a = "finished" : a = "idle";
+    else rt(l) ? a = "finished" : a = "idle";
   let f = null;
   if (e.progressEntity && c[e.progressEntity]) {
     const m = parseFloat(c[e.progressEntity].state);
     Number.isFinite(m) && (f = Math.max(0, Math.min(100, m)));
   }
   let h = null;
-  e.timeRemainingEntity && c[e.timeRemainingEntity] && (h = re(c[e.timeRemainingEntity].state));
+  e.timeRemainingEntity && c[e.timeRemainingEntity] && (h = le(c[e.timeRemainingEntity].state));
   let p = null;
   if (n) {
-    const m = (v = (b = c[n.timeOn]) == null ? void 0 : b.attributes) == null ? void 0 : v[$("cycleTime", e.suffix)];
-    p = re(m);
+    const m = (_ = (b = c[n.timeOn]) == null ? void 0 : b.attributes) == null ? void 0 : _[$("cycleTime", e.suffix)];
+    p = le(m);
   }
-  const y = Math.max(1, z(e.maxCycleMinutes, 120));
+  const y = Math.max(1, N(e.maxCycleMinutes, 120));
   return f == null && (Number.isFinite(h) ? f = Math.max(5, Math.min(100, (y - h) / y * 100)) : Number.isFinite(p) ? f = Math.max(5, Math.min(95, p / y * 100)) : f = a === "finished" ? 100 : a === "idle" ? 0 : 40), {
     phase: a,
     progress: f,
@@ -1003,67 +1003,76 @@ function lt({ hass: t, cfg: e, entities: n, running: o, fineCiclo: l, defaultPha
     elapsedMin: Number.isFinite(p) ? p : null
   };
 }
-function de({ phase: t, timeRemMin: e, elapsedMin: n, powerW: o }) {
-  const l = et[t] || "IN STANDBY";
+function ue({ phase: t, timeRemMin: e, elapsedMin: n, powerW: o }) {
+  const l = nt[t] || "IN STANDBY";
   if (t === "idle") return l;
   const s = [l], r = Number.isFinite(e) ? e : Number.isFinite(n) ? n : null;
-  return r != null && s.push(it(r)), o > 0 && s.push(nt(o)), s.join(" · ");
+  return r != null && s.push(at(r)), o > 0 && s.push(ot(o)), s.join(" · ");
 }
-const ct = "oikos-appliance-ack-", dt = "oikos-appliance-snooze-";
-function pt({ hass: t, cfg: e, entities: n, name: o, iconName: l, styles: s, defaults: r, cardId: c }) {
-  var G, U, J, V, Z, q, Q, ee, te;
-  const [a, f] = L(!1), [h, p] = L(!1), [y, b] = L(!1), v = Xe(null), m = t.states, d = ((G = m[n.running]) == null ? void 0 : G.state) === "on", w = z((U = m[n.power]) == null ? void 0 : U.state, 0), k = (V = (J = m[n.timeOn]) == null ? void 0 : J.attributes) == null ? void 0 : V[$("cycleEnergy", e.suffix)], M = (q = (Z = m[n.timeOn]) == null ? void 0 : Z.attributes) == null ? void 0 : q[$("cycleCost", e.suffix)], I = (ee = (Q = m[n.timeOn]) == null ? void 0 : Q.attributes) == null ? void 0 : ee[$("cycleTime", e.suffix)], E = (te = m[n.fineCiclo]) == null ? void 0 : te.state, { phase: x, progress: g, timeRemMin: C, elapsedMin: N } = lt({
+const pt = "oikos-appliance-ack-", ut = "oikos-appliance-snooze-";
+function ft({ hass: t, cfg: e, entities: n, name: o, iconName: l, styles: s, defaults: r, cardId: c }) {
+  var J, V, Z, q, Q, ee, te, ne, ie;
+  const [a, f] = H(!1), [h, p] = H(!1), [y, b] = H(!1), _ = Ue(null), m = t.states, d = ((J = m[n.running]) == null ? void 0 : J.state) === "on", k = N((V = m[n.power]) == null ? void 0 : V.state, 0), v = (q = (Z = m[n.timeOn]) == null ? void 0 : Z.attributes) == null ? void 0 : q[$("cycleEnergy", e.suffix)], M = (ee = (Q = m[n.timeOn]) == null ? void 0 : Q.attributes) == null ? void 0 : ee[$("cycleCost", e.suffix)], I = (ne = (te = m[n.timeOn]) == null ? void 0 : te.attributes) == null ? void 0 : ne[$("cycleTime", e.suffix)], E = (ie = m[n.fineCiclo]) == null ? void 0 : ie.state, { phase: w, progress: g, timeRemMin: C, elapsedMin: z } = dt({
     hass: t,
     cfg: e,
     entities: n,
     running: d,
     fineCiclo: E,
     defaultPhase: r.defaultPhase,
-    powerW: w
-  }), F = D[x], T = e.accentColor && x !== "idle" && x !== "finished" ? e.accentColor : F, fe = de({ phase: x, timeRemMin: C, elapsedMin: N, powerW: w }), me = g / 100, Y = H(() => X(E), [E]), O = c && Y ? `${ct}${c}-${Y.getTime()}` : null, P = c ? `${dt}${c}` : null;
-  He(() => {
-    const be = v.current;
-    if (v.current = d, !(be !== !0 || d !== !1) && e.showPopup && O) {
+    powerW: k
+  }), F = D[w], T = e.accentColor && w !== "idle" && w !== "finished" ? e.accentColor : F, ge = ue({ phase: w, timeRemMin: C, elapsedMin: z, powerW: k }), he = g / 100, Y = G(() => U(E), [E]), P = c && Y ? `${pt}${c}-${Y.getTime()}` : null, O = c ? `${ut}${c}` : null;
+  Ge(() => {
+    const _e = _.current;
+    if (_.current = d, !(_e !== !0 || d !== !1) && e.showPopup && P) {
       try {
-        if (localStorage.getItem(O)) return;
-        if (P) {
-          const ne = parseInt(localStorage.getItem(P) || "0", 10);
-          if (ne && Date.now() < ne) return;
+        if (localStorage.getItem(P)) return;
+        if (O) {
+          const oe = parseInt(localStorage.getItem(O) || "0", 10);
+          if (oe && Date.now() < oe) return;
         }
       } catch {
       }
       b(!0);
     }
-  }, [d, e.showPopup, O, P]);
-  const ge = () => {
+  }, [d, e.showPopup, P, O]);
+  const ye = () => {
     try {
-      O && localStorage.setItem(O, String(Date.now()));
+      P && localStorage.setItem(P, String(Date.now()));
     } catch {
     }
     b(!1);
-  }, he = () => {
+  }, be = () => {
     try {
-      P && localStorage.setItem(P, String(Date.now() + 60 * 60 * 1e3));
+      O && localStorage.setItem(O, String(Date.now() + 60 * 60 * 1e3));
     } catch {
     }
     b(!1);
-  }, A = rt(E), ye = x === "idle" ? A ? `Terminato ${A}` : "In standby" : x === "finished" ? A ? `Terminato ${A}` : "Terminato" : x === "washing" ? "In lavaggio" : x === "spinning" ? "In centrifuga" : x === "drying" ? "In asciugatura" : x === "heating" ? r.runningLabel || "In riscaldamento" : x === "cooling" ? "In raffreddamento" : "In funzione";
+  }, A = lt(E), B = {
+    washing: "In lavaggio",
+    spinning: "In centrifuga",
+    drying: "In asciugatura",
+    heating: "In riscaldamento",
+    cooling: "In raffreddamento"
+  };
+  let K;
+  w === "heating" ? K = r.defaultPhase === "heating" ? r.runningLabel || B.heating : B[r.defaultPhase] || "In funzione" : K = B[w] || "In funzione";
+  const xe = w === "idle" ? A ? `Terminato ${A}` : "In standby" : w === "finished" ? A ? `Terminato ${A}` : "Terminato" : K;
   return /* @__PURE__ */ u("div", { style: { ...s.card, position: "relative", overflow: "hidden", paddingBottom: 14 }, children: [
-    a && /* @__PURE__ */ i(Ne, { hass: t, cfg: e, entities: n, name: o, onClose: () => f(!1) }),
-    h && /* @__PURE__ */ i(Fe, { hass: t, cfg: e, entities: n, name: o, onClose: () => p(!1) }),
+    a && /* @__PURE__ */ i(Pe, { hass: t, cfg: e, entities: n, name: o, onClose: () => f(!1) }),
+    h && /* @__PURE__ */ i(We, { hass: t, cfg: e, entities: n, name: o, onClose: () => p(!1) }),
     /* @__PURE__ */ i(
-      je,
+      Xe,
       {
         open: y,
         onClose: () => b(!1),
-        onAck: ge,
-        onSnooze: he,
+        onAck: ye,
+        onSnooze: be,
         name: o,
         iconName: l,
         accent: e.accentColor || D.finished,
         finishedAt: Y,
         cycleTime: I,
-        cycleEnergy: k,
+        cycleEnergy: v,
         cycleCost: M
       }
     ),
@@ -1074,13 +1083,13 @@ function pt({ hass: t, cfg: e, entities: n, name: o, iconName: l, styles: s, def
           style: { cursor: "pointer" },
           onClick: () => f(!0),
           children: /* @__PURE__ */ i(
-            le,
+            de,
             {
-              phase: x,
+              phase: w,
               level: "max",
               iconName: l,
               size: 64,
-              fillLevel: me,
+              fillLevel: he,
               colorOverride: T
             }
           )
@@ -1098,24 +1107,24 @@ function pt({ hass: t, cfg: e, entities: n, name: o, iconName: l, styles: s, def
               overflow: "hidden",
               textOverflow: "ellipsis"
             }, children: o }),
-            /* @__PURE__ */ i("div", { style: { ...s.label, opacity: 0.7, fontSize: 12, marginBottom: 4 }, children: ye }),
-            x !== "idle" && x !== "finished" && /* @__PURE__ */ u("div", { style: { display: "flex", gap: 6, flexWrap: "wrap", marginTop: 2 }, children: [
-              I && /* @__PURE__ */ i(j, { color: T, icon: "⏱", value: I }),
-              k && /* @__PURE__ */ i(j, { color: T, icon: "⚡", value: k }),
-              M && /* @__PURE__ */ i(j, { color: T, icon: "€", value: M })
+            /* @__PURE__ */ i("div", { style: { ...s.label, opacity: 0.7, fontSize: 12, marginBottom: 4 }, children: xe }),
+            w !== "idle" && w !== "finished" && /* @__PURE__ */ u("div", { style: { display: "flex", gap: 6, flexWrap: "wrap", marginTop: 2 }, children: [
+              I && /* @__PURE__ */ i(X, { color: T, icon: "⏱", value: I }),
+              v && /* @__PURE__ */ i(X, { color: T, icon: "⚡", value: v }),
+              M && /* @__PURE__ */ i(X, { color: T, icon: "€", value: M })
             ] })
           ]
         }
       ),
       /* @__PURE__ */ u("div", { style: { display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 6 }, children: [
-        /* @__PURE__ */ i(pe, { color: T, text: fe }),
-        /* @__PURE__ */ i(ut, { color: T, onClick: () => p(!0) })
+        /* @__PURE__ */ i(fe, { color: T, text: ge }),
+        /* @__PURE__ */ i(mt, { color: T, onClick: () => p(!0) })
       ] })
     ] }),
-    /* @__PURE__ */ i(ue, { color: T, progress: g })
+    /* @__PURE__ */ i(me, { color: T, progress: g })
   ] });
 }
-function ut({ color: t, onClick: e }) {
+function mt({ color: t, onClick: e }) {
   return /* @__PURE__ */ u(
     "button",
     {
@@ -1137,19 +1146,19 @@ function ut({ color: t, onClick: e }) {
         letterSpacing: 0.4
       },
       children: [
-        /* @__PURE__ */ i(Ze, { size: 12 }),
+        /* @__PURE__ */ i(Qe, { size: 12 }),
         " Statistiche"
       ]
     }
   );
 }
-function ft({ hass: t, cfg: e, name: n, iconName: o, styles: l }) {
+function gt({ hass: t, cfg: e, name: n, iconName: o, styles: l }) {
   var p;
-  const s = z((p = t.states[e.powerEntity]) == null ? void 0 : p.state, 0), r = s > 5, c = se(e.suffix).defaultPhase || "washing", a = r ? c : "idle", f = D[a], h = de({ phase: a, timeRemMin: null, elapsedMin: null, powerW: s });
+  const s = N((p = t.states[e.powerEntity]) == null ? void 0 : p.state, 0), r = s > 5, c = ce(e.suffix).defaultPhase || "washing", a = r ? c : "idle", f = D[a], h = ue({ phase: a, timeRemMin: null, elapsedMin: null, powerW: s });
   return /* @__PURE__ */ u("div", { style: { ...l.card, position: "relative", overflow: "hidden", paddingBottom: 14 }, children: [
     /* @__PURE__ */ u("div", { style: { display: "flex", alignItems: "center", gap: 14 }, children: [
       /* @__PURE__ */ i(
-        le,
+        de,
         {
           phase: a,
           level: "max",
@@ -1165,7 +1174,7 @@ function ft({ hass: t, cfg: e, name: n, iconName: o, styles: l }) {
           " · modalità standalone"
         ] })
       ] }),
-      /* @__PURE__ */ i(pe, { color: f, text: h })
+      /* @__PURE__ */ i(fe, { color: f, text: h })
     ] }),
     /* @__PURE__ */ i("div", { style: {
       marginTop: 10,
@@ -1175,10 +1184,10 @@ function ft({ hass: t, cfg: e, name: n, iconName: o, styles: l }) {
       fontSize: 11,
       opacity: 0.75
     }, children: 'Modalità standalone: attiva modalità "Package" nei Settings per storico, costi e popup.' }),
-    /* @__PURE__ */ i(ue, { color: f, progress: r ? 50 : 0 })
+    /* @__PURE__ */ i(me, { color: f, progress: r ? 50 : 0 })
   ] });
 }
-function pe({ color: t, text: e }) {
+function fe({ color: t, text: e }) {
   return /* @__PURE__ */ i("div", { style: {
     padding: "3px 10px",
     borderRadius: 12,
@@ -1193,7 +1202,7 @@ function pe({ color: t, text: e }) {
     fontFamily: "JetBrains Mono, ui-monospace, monospace"
   }, children: e });
 }
-function ue({ color: t, progress: e }) {
+function me({ color: t, progress: e }) {
   const n = Math.max(0, Math.min(100, e));
   return n <= 0 ? null : /* @__PURE__ */ i("div", { style: {
     position: "absolute",
@@ -1211,7 +1220,7 @@ function ue({ color: t, progress: e }) {
     borderRadius: "0 2px 2px 0"
   } }) });
 }
-function j({ color: t, icon: e, value: n }) {
+function X({ color: t, icon: e, value: n }) {
   return /* @__PURE__ */ u("div", { style: {
     display: "inline-flex",
     alignItems: "center",
@@ -1231,5 +1240,5 @@ function j({ color: t, icon: e, value: n }) {
   ] });
 }
 export {
-  gt as default
+  yt as default
 };

@@ -354,16 +354,31 @@ function PackageView({ hass, cfg, entities, name, iconName, styles: s, defaults,
   }
 
   const fineCicloFmt = fmtFineCiclo(fineCiclo)
+  // Per gli elettrodomestici NON termici (lavatrice, asciugatrice, ecc.) la
+  // fase 'heating' può essere generata da `autoPhaseByPower` quando assorbono
+  // più di maxW: è solo un segnale visivo (colore caldo). In quei casi il
+  // sottotitolo deve restare quello naturale dell'elettrodomestico, non
+  // "In riscaldamento" — che ha senso solo per forno/bollitore/ecc.
+  const PHASE_LABELS = {
+    washing: 'In lavaggio',
+    spinning: 'In centrifuga',
+    drying: 'In asciugatura',
+    heating: 'In riscaldamento',
+    cooling: 'In raffreddamento',
+  }
+  let runningSubtitle
+  if (phase === 'heating') {
+    runningSubtitle = defaults.defaultPhase === 'heating'
+      ? (defaults.runningLabel || PHASE_LABELS.heating)
+      : (PHASE_LABELS[defaults.defaultPhase] || 'In funzione')
+  } else {
+    runningSubtitle = PHASE_LABELS[phase] || 'In funzione'
+  }
   const subtitle = phase === 'idle'
     ? (fineCicloFmt ? `Terminato ${fineCicloFmt}` : 'In standby')
     : phase === 'finished'
       ? (fineCicloFmt ? `Terminato ${fineCicloFmt}` : 'Terminato')
-      : phase === 'washing' ? 'In lavaggio'
-      : phase === 'spinning' ? 'In centrifuga'
-      : phase === 'drying' ? 'In asciugatura'
-      : phase === 'heating' ? (defaults.runningLabel || 'In riscaldamento')
-      : phase === 'cooling' ? 'In raffreddamento'
-      : 'In funzione'
+      : runningSubtitle
 
   return (
     <div style={{ ...s.card, position: 'relative', overflow: 'hidden', paddingBottom: 14 }}>
