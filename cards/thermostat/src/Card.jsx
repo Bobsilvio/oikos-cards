@@ -144,6 +144,12 @@ export default function ThermostatCard({ cardId }) {
 
   const id = config.entityId
 
+  const step = id ? (getAttr(id, 'target_temp_step') ?? 0.5) : 0.5
+  const applyTemp = useCallback(t => {
+    if (t == null || !id) return
+    callService('climate', 'set_temperature', id, { temperature: parseFloat((Math.round(t / step) * step).toFixed(1)) })
+  }, [id, callService, step])
+
   if (!id) return (
     <div style={{
       borderRadius: 20, minHeight: 240,
@@ -164,7 +170,6 @@ export default function ThermostatCard({ cardId }) {
   const hvacAction = getAttr(id, 'hvac_action')
   const minT       = getAttr(id, 'min_temp')         ?? 15
   const maxT       = getAttr(id, 'max_temp')         ?? 30
-  const step       = getAttr(id, 'target_temp_step') ?? 0.5
   const hvacModes  = getAttr(id, 'hvac_modes')       ?? ['heat', 'off']
   const name       = config.label || getAttr(id, 'friendly_name') || id
 
@@ -176,10 +181,6 @@ export default function ThermostatCard({ cardId }) {
   const LABELS     = { heat: 'Caldo', cool: 'Freddo', auto: 'Auto', heat_cool: 'H+C', fan_only: 'Ventola', dry: 'Asciuga' }
 
   const setMode   = m => callService('climate', 'set_hvac_mode', id, { hvac_mode: m })
-  const applyTemp = useCallback(t => {
-    if (t == null) return
-    callService('climate', 'set_temperature', id, { temperature: parseFloat((Math.round(t / step) * step).toFixed(1)) })
-  }, [id, callService, step])
 
   const togglePower = () => isOff ? setMode(modesActive[0] ?? 'heat') : setMode('off')
 
