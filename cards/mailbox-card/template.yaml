@@ -1,5 +1,5 @@
 # oikos:package_id: posta
-# oikos:package_version: 1.1.3
+# oikos:package_version: 1.1.4
 ################################################################################
 # Posta Smart — Package Home Assistant
 # Author: Oikos
@@ -52,56 +52,47 @@ input_text:
     name: "📭 Sensore cassetta (entity_id)"
     icon: mdi:mailbox-up
     max: 100
-    initial: ""
 
   sm_posta_battery_sensor:
     name: "🪫 Sensore batteria cassetta (entity_id)"
     icon: mdi:battery-alert
     max: 100
-    initial: ""
 
   sm_posta_push_devices:
     name: "📱 Mobile_app per push (CSV)"
     icon: mdi:cellphone-message
     max: 255
-    initial: ""
 
   sm_posta_alexa_target:
     name: "🔊 Alexa media_player per annuncio (opz)"
     icon: mdi:speaker-wireless
     max: 100
-    initial: ""
 
   sm_posta_telegram_service:
     name: "💬 Telegram notify service (opz)"
     icon: mdi:send
     max: 100
-    initial: ""
 
   # ── Messaggi personalizzabili (lascia vuoto per usare i default) ────────────
   sm_posta_msg_push_title:
     name: "📲 Titolo push (vuoto = default)"
     icon: mdi:format-title
     max: 100
-    initial: ""
 
   sm_posta_msg_push_body:
     name: "📲 Corpo push (vuoto = default)"
     icon: mdi:message-text
     max: 200
-    initial: ""
 
   sm_posta_msg_alexa:
     name: "🔊 Messaggio Alexa (vuoto = default)"
     icon: mdi:message-text-outline
     max: 200
-    initial: ""
 
   sm_posta_msg_telegram:
     name: "💬 Messaggio Telegram (vuoto = default)"
     icon: mdi:message-outline
     max: 255
-    initial: ""
 
 ################################################################################
 #                          INPUT_BOOLEAN (toggle UI)                           #

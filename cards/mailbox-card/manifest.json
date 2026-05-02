@@ -1,7 +1,7 @@
 {
   "id": "mailbox-card",
   "name": "Cassetta delle Lettere",
-  "version": "1.8.9",
+  "version": "1.8.10",
   "author": "Oikos",
   "description": "Cassetta delle lettere: contatore giornaliero + popup elaborato self-contained con buste volanti (funziona anche quando la dashboard è chiusa, via watcher auto-registrato). Compatibile con package HA «Posta Smart» per notifiche push iPhone, statistiche giornaliere/mensili/annuali, digest serale e auto-spegnimento.",
   "sdkVersion": "^1.1.0",
