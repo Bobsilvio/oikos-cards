@@ -1,0 +1,16 @@
+node_modules/
+.DS_Store
+*.log
+.env
+.env.local
+.vscode/
+.idea/
+
+# ZIP di pack-card.mjs (artifact, ricreati al volo). Sostituiti dagli asset
+# della GitHub Release prodotti dalla CI.
+dist-cards/
+
+# I bundle .js delle card (cards/*/dist/) restano committati: servono come
+# fallback se la CI non gira e per la Release storica.
+# Se non li vuoi in git, decommenta:
+# cards/*/dist/

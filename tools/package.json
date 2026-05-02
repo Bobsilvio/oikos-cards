@@ -1,0 +1,14 @@
+{
+  "name": "oikos-cards-tools",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Build tools per card community Oikos (vite-plugin-oikos-sdk + build-card.mjs)",
+  "scripts": {
+    "build": "node build-card.mjs"
+  },
+  "devDependencies": {
+    "vite": "^5.3.0",
+    "@vitejs/plugin-react": "^4.3.0"
+  }
+}

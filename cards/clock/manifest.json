@@ -1,0 +1,12 @@
+{
+  "id": "clock",
+  "name": "Clock",
+  "version": "1.0.0",
+  "author": "Oikos",
+  "description": "Orologio digitale con ticks counter. Dimostra useCardConfig e useStyles.",
+  "sdkVersion": "^1.0.0",
+  "hasSettings": false,
+  "preview": "preview.png",
+  "entry": "dist/clock.js",
+  "tags": ["time", "demo"]
+}
