@@ -80,6 +80,17 @@ export default function ApplianceEndCyclePopup({ data, cfg, onClose }) {
   const cycleEnergy = data.cycleEnergy
   const cycleCost   = data.cycleCost
 
+  const endTitle = data.endKind === 'cooking'
+    ? 'Cottura completata! 🍳'
+    : data.endKind === 'cycle'
+      ? 'Ciclo completato! 🎉'
+      : 'Pronto! ✓'
+  const endVerb = data.endKind === 'cooking'
+    ? 'ha terminato la cottura.'
+    : data.endKind === 'cycle'
+      ? 'ha terminato il ciclo.'
+      : 'ha terminato.'
+
   const summaryChips = []
   if (cycleTime) summaryChips.push(['⏱', cycleTime])
   if (cycleEnergy != null && cycleEnergy !== '') {
@@ -155,10 +166,10 @@ export default function ApplianceEndCyclePopup({ data, cfg, onClose }) {
           </div>
         </div>
 
-        {/* Barra progresso auto-dismiss (wrapper che clippa lungo la curva del bordo) */}
+        {/* Barra progresso auto-dismiss (wrapper alto come il radius per clippare gli angoli) */}
         <div
           style={{
-            position: 'absolute', top: 0, left: 0, right: 0, height: 3,
+            position: 'absolute', top: 0, left: 0, right: 0, height: 28,
             borderRadius: '28px 28px 0 0',
             overflow: 'hidden',
             pointerEvents: 'none',
@@ -167,7 +178,7 @@ export default function ApplianceEndCyclePopup({ data, cfg, onClose }) {
           <div
             ref={progressRef}
             style={{
-              width: '100%', height: '100%',
+              width: '100%', height: 3,
               background: `linear-gradient(90deg, ${accent}, ${accent}66)`,
               transformOrigin: 'left',
             }}
@@ -195,7 +206,7 @@ export default function ApplianceEndCyclePopup({ data, cfg, onClose }) {
           color: 'var(--text-primary, #0f172a)',
           marginBottom: 6,
         }}>
-          Ciclo completato! 🎉
+          {endTitle}
         </div>
 
         {/* Sottotitolo */}
@@ -204,7 +215,7 @@ export default function ApplianceEndCyclePopup({ data, cfg, onClose }) {
           color: 'var(--text-muted, #64748b)',
           marginBottom: 24,
         }}>
-          <strong style={{ color: accent, fontWeight: 800 }}>{name}</strong> ha terminato il ciclo.
+          <strong style={{ color: accent, fontWeight: 800 }}>{name}</strong> {endVerb}
         </div>
 
         {/* Chip terminato */}

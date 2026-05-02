@@ -842,17 +842,17 @@ automation:
                 target:
                   entity_id: "{{ states('input_text.sensore_switch_{{SUFFIX}}') }}"
 `, z = {
-  lavatrice: { name: "Lavatrice", iconName: "washing-machine", defaultPhase: "washing" },
-  asciugatrice: { name: "Asciugatrice", iconName: "tumble-dryer", defaultPhase: "drying" },
-  lavastoviglie: { name: "Lavastoviglie", iconName: "dishwasher", defaultPhase: "washing" },
-  forno: { name: "Forno", iconName: "stove", defaultPhase: "heating", runningLabel: "In cottura" },
-  pianocottura: { name: "Piano cottura", iconName: "pot-steam", defaultPhase: "heating", runningLabel: "In cottura", aliases: ["piano", "piano_cottura", "piastra", "fornello"] },
-  microonde: { name: "Microonde", iconName: "microwave", defaultPhase: "heating", runningLabel: "In cottura" },
-  tostapane: { name: "Tostapane", iconName: "toaster-oven", defaultPhase: "heating", runningLabel: "In cottura" },
+  lavatrice: { name: "Lavatrice", iconName: "washing-machine", defaultPhase: "washing", endKind: "cycle" },
+  asciugatrice: { name: "Asciugatrice", iconName: "tumble-dryer", defaultPhase: "drying", endKind: "cycle" },
+  lavastoviglie: { name: "Lavastoviglie", iconName: "dishwasher", defaultPhase: "washing", endKind: "cycle" },
+  forno: { name: "Forno", iconName: "stove", defaultPhase: "heating", runningLabel: "In cottura", endKind: "cooking" },
+  pianocottura: { name: "Piano cottura", iconName: "pot-steam", defaultPhase: "heating", runningLabel: "In cottura", endKind: "cooking", aliases: ["piano", "piano_cottura", "piastra", "fornello"] },
+  microonde: { name: "Microonde", iconName: "microwave", defaultPhase: "heating", runningLabel: "In cottura", endKind: "cooking" },
+  tostapane: { name: "Tostapane", iconName: "toaster-oven", defaultPhase: "heating", runningLabel: "In cottura", endKind: "cooking" },
   frigo: { name: "Frigo", iconName: "fridge", defaultPhase: "cooling" },
   congelatore: { name: "Congelatore", iconName: "fridge-industrial", defaultPhase: "cooling" },
-  aspirapolvere: { name: "Aspirapolvere", iconName: "robot-vacuum", defaultPhase: "washing" },
-  bollitore: { name: "Bollitore", iconName: "kettle", defaultPhase: "heating" },
+  aspirapolvere: { name: "Aspirapolvere", iconName: "robot-vacuum", defaultPhase: "washing", endKind: "cycle" },
+  bollitore: { name: "Bollitore", iconName: "kettle", defaultPhase: "heating", endKind: "cooking" },
   ferro: { name: "Ferro da stiro", iconName: "iron", defaultPhase: "heating" },
   autoclave: { name: "Autoclave", iconName: "water-pump", defaultPhase: "washing", runningLabel: "In funzione" },
   pompa: { name: "Pompa", iconName: "water-pump", defaultPhase: "washing", runningLabel: "In funzione" },
@@ -915,7 +915,7 @@ function b(i) {
     notifyPush: `input_boolean.notify_push_elettrodomestici_${e}`
   } : null;
 }
-const { useState: v, useEffect: k } = window.__OIKOS_SDK__.React, { useCardConfig: q, useSafeHass: H, Section: U, Field: h, TextField: X, Pills: V, Toggle: W, EntityField: N, MdiIconPicker: K, MdiIcon: R, usePackageInstaller: G, useHaText: j } = window.__OIKOS_SDK__, { Download: Y, Trash2: J, CheckCircle2: Q, AlertTriangle: Z, RefreshCw: ee, Plus: te, ArrowUpCircle: ne } = window.__OIKOS_SDK__.icons, oe = "silviosmart_elettrodomestici";
+const { useState: v, useEffect: k } = window.__OIKOS_SDK__.React, { useCardConfig: K, useSafeHass: q, Section: U, Field: h, TextField: X, Pills: H, Toggle: W, EntityField: N, MdiIconPicker: V, MdiIcon: R, usePackageInstaller: G, useHaText: j } = window.__OIKOS_SDK__, { Download: Y, Trash2: J, CheckCircle2: Q, AlertTriangle: Z, RefreshCw: ee, Plus: te, ArrowUpCircle: ne } = window.__OIKOS_SDK__.icons, oe = "silviosmart_elettrodomestici";
 function ie({ cfg: i, update: e, suffix: l }) {
   const o = l ? `input_text.sensore_prezzo_energia_${l}` : null, [r, n, c] = j(o || ""), _ = i.mode === "package", a = _ && c ? r : i.priceKwh != null ? String(i.priceKwh) : "", F = (u) => {
     _ && c && n(u);
@@ -980,7 +980,7 @@ const ae = [
   maxCycleMinutes: 120
 };
 function ue({ cardId: i }) {
-  const [e, l] = q(i ?? "appliance", se, { version: 2 }), o = H(), r = (s) => l({ ...e, ...s }), n = String(e.suffix || "").trim().toLowerCase(), c = /^[a-z0-9_]{1,40}$/.test(n), _ = e.displayName || (c ? C(n).name : ""), a = G({
+  const [e, l] = K(i ?? "appliance", se, { version: 2 }), o = q(), r = (s) => l({ ...e, ...s }), n = String(e.suffix || "").trim().toLowerCase(), c = /^[a-z0-9_]{1,40}$/.test(n), _ = e.displayName || (c ? C(n).name : ""), a = G({
     name: c ? n : "",
     yaml: B,
     subdir: oe,
@@ -1005,7 +1005,7 @@ function ue({ cardId: i }) {
   return /* @__PURE__ */ d("div", { style: { display: "flex", flexDirection: "column", gap: 16 }, children: [
     /* @__PURE__ */ d(U, { title: "Generale", children: [
       /* @__PURE__ */ t(h, { label: "Modalità", children: /* @__PURE__ */ t(
-        V,
+        H,
         {
           options: [
             { value: "package", label: "Package" },
@@ -1040,7 +1040,7 @@ function ue({ cardId: i }) {
       ),
       /* @__PURE__ */ t(h, { label: "Nome visualizzato", children: /* @__PURE__ */ t(X, { value: e.displayName, onChange: (s) => r({ displayName: s }), placeholder: "Lavatrice" }) }),
       /* @__PURE__ */ t(h, { label: "Icona", hint: "Vuoto = usa l'icona predefinita per il suffisso.", children: /* @__PURE__ */ t(
-        K,
+        V,
         {
           value: e.iconName || C(n).iconName,
           onChange: (s) => r({ iconName: s }),

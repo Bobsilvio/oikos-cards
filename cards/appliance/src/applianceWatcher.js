@@ -6,6 +6,7 @@
  */
 import { registerCardWatcher } from '@oikos/sdk'
 import ApplianceEndCyclePopup from './EndCyclePopup'
+import { defaultsFor } from './suffixDefaults'
 
 function scanAppliance(cfg) {
   if (!cfg || cfg.mode !== 'package') return false
@@ -56,6 +57,7 @@ registerCardWatcher({
       suffix:   s,
       name:     cfg.displayName || s,
       iconName: cfg.iconName || 'mdiPowerPlug',
+      endKind:  defaultsFor(s).endKind,
       finishedAt,
       cycleTime, cycleEnergy, cycleCost,
     }
