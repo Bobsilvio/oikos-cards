@@ -9,9 +9,10 @@
 import { useState, useEffect, useCallback } from 'react'
 import { motion } from 'framer-motion'
 import { Mail, MailOpen, Clock, RefreshCw, Bell, BarChart3 } from 'lucide-react'
-import { useDashboard, useCardConfig } from '@oikos/sdk'
+import { useDashboard, useCardConfig, usePackageInstaller } from '@oikos/sdk'
 import MailboxStatsModal from './StatsModal'
 import './mailboxWatcher'    // ← auto-registra il watcher globale
+import POSTA_TEMPLATE_YAML from '../template.yaml?raw'
 
 const DEFAULT_CONFIG = {
   entityId: '',
@@ -41,6 +42,7 @@ function loadLast(cardId) {
 export default function MailboxCard({ cardId }) {
   const { dark, editMode, getState, callService, haStates } = useDashboard()
   const [config] = useCardConfig(cardId, DEFAULT_CONFIG)
+  usePackageInstaller({ name: 'posta', yaml: POSTA_TEMPLATE_YAML })
 
   // Auto-detect del nuovo sensore "posta_da_ritirare" introdotto col package.
   // Quando esiste è la fonte primaria della card (= pezzi attualmente in
