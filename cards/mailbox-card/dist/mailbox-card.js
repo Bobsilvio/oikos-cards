@@ -1,4 +1,4 @@
-const { jsx: n, jsxs: l, Fragment: rt } = window.__OIKOS_SDK__.jsxRuntime, { useEffect: lt } = window.__OIKOS_SDK__.React, { createPortal: st } = window.__OIKOS_SDK__.ReactDOM, { motion: j, AnimatePresence: ct } = window.__OIKOS_SDK__.framerMotion, { X: dt, BarChart3: ut, Calendar: F, Trophy: pt, Clock: mt, Battery: gt, Mail: ft } = window.__OIKOS_SDK__.icons, { useDashboard: yt, getOverlayRoot: _t } = window.__OIKOS_SDK__, O = {
+const { jsx: n, jsxs: l, Fragment: rt } = window.__OIKOS_SDK__.jsxRuntime, { useEffect: lt } = window.__OIKOS_SDK__.React, { createPortal: st } = window.__OIKOS_SDK__.ReactDOM, { motion: j, AnimatePresence: ct } = window.__OIKOS_SDK__.framerMotion, { X: dt, BarChart3: ut, Calendar: F, Trophy: pt, Clock: mt, Battery: gt, Mail: ft } = window.__OIKOS_SDK__.icons, { useDashboard: yt, getOverlayRoot: _t } = window.__OIKOS_SDK__, D = {
   oggi: "sensor.conteggio_aperture_posta_giornaliere_lettura",
   mese: "sensor.conteggio_aperture_posta_mensili_lettura",
   anno: "sensor.conteggio_aperture_posta_annuali_lettura",
@@ -70,10 +70,10 @@ function bt({ cfg: t, onClose: e }) {
     };
     return window.addEventListener("keydown", r), () => window.removeEventListener("keydown", r);
   }, [e]);
-  const d = T(i, O.oggi) ?? 0, s = T(i, O.mese) ?? 0, u = T(i, O.anno) ?? 0, c = T(i, O.record) ?? 0, v = i(O.giornoTop), p = parseFloat(i(O.inAttesaH) ?? 0) || 0, b = T(i, O.battery), D = i(O.postaPres) === "on", h = ht.map(([r, w]) => ({
+  const d = T(i, D.oggi) ?? 0, s = T(i, D.mese) ?? 0, u = T(i, D.anno) ?? 0, c = T(i, D.record) ?? 0, v = i(D.giornoTop), p = parseFloat(i(D.inAttesaH) ?? 0) || 0, b = T(i, D.battery), S = i(D.postaPres) === "on", h = ht.map(([r, w]) => ({
     key: r,
     label: w,
-    count: T(i, O[r]) ?? 0
+    count: T(i, D[r]) ?? 0
   })), z = Math.max(...h.map((r) => r.count), 1), m = (r) => r <= 0 ? "—" : r < 1 ? `${Math.round(r * 60)}min` : r < 24 ? `${r.toFixed(1)}h` : `${Math.floor(r / 24)}g ${Math.round(r % 24)}h`;
   return st(
     /* @__PURE__ */ n(ct, { children: /* @__PURE__ */ n(
@@ -134,8 +134,8 @@ function bt({ cfg: t, onClose: e }) {
                 /* @__PURE__ */ l("div", { style: { flex: 1 }, children: [
                   /* @__PURE__ */ n("div", { style: { fontSize: 15, fontWeight: 800, color: "var(--text-primary)" }, children: "Statistiche Posta" }),
                   /* @__PURE__ */ l("div", { style: { fontSize: 11, color: "var(--text-muted)" }, children: [
-                    D ? "C'è posta in attesa" : "Cassetta vuota",
-                    D && p > 0 && ` · da ${m(p)}`
+                    S ? "C'è posta in attesa" : "Cassetta vuota",
+                    S && p > 0 && ` · da ${m(p)}`
                   ] })
                 ] }),
                 /* @__PURE__ */ n(
@@ -211,7 +211,7 @@ function bt({ cfg: t, onClose: e }) {
                     marginBottom: 10
                   }, children: "Distribuzione per giorno" }),
                   /* @__PURE__ */ n("div", { style: { display: "flex", gap: 6, alignItems: "flex-end", height: 120 }, children: h.map((r) => {
-                    const w = r.count / z, $ = r.count === z && r.count > 0;
+                    const w = r.count / z, k = r.count === z && r.count > 0;
                     return /* @__PURE__ */ l("div", { style: {
                       flex: 1,
                       display: "flex",
@@ -239,8 +239,8 @@ function bt({ cfg: t, onClose: e }) {
                               width: "100%",
                               minHeight: 2,
                               borderRadius: 6,
-                              background: $ ? o : a ? `${o}40` : `${o}55`,
-                              border: `1px solid ${$ ? o : "transparent"}`
+                              background: k ? o : a ? `${o}40` : `${o}55`,
+                              border: `1px solid ${k ? o : "transparent"}`
                             }
                           }
                         )
@@ -248,12 +248,12 @@ function bt({ cfg: t, onClose: e }) {
                       /* @__PURE__ */ n("div", { style: {
                         fontSize: 10,
                         fontWeight: 700,
-                        color: $ ? o : "var(--text-muted)"
+                        color: k ? o : "var(--text-muted)"
                       }, children: r.label })
                     ] }, r.key);
                   }) })
                 ] }),
-                D && p > 6 && /* @__PURE__ */ l("div", { style: {
+                S && p > 6 && /* @__PURE__ */ l("div", { style: {
                   display: "flex",
                   alignItems: "center",
                   gap: 8,
@@ -293,7 +293,7 @@ function nt(t, e) {
 function vt(t, e) {
   localStorage.setItem(M(t, "last"), e.toISOString());
 }
-const { useState: wt, useEffect: St, useCallback: Y } = window.__OIKOS_SDK__.React, { createPortal: It } = window.__OIKOS_SDK__.ReactDOM, { motion: x, AnimatePresence: $t } = window.__OIKOS_SDK__.framerMotion, { Mail: kt, X: Ot } = window.__OIKOS_SDK__.icons, { useDashboard: Ct, getOverlayRoot: Dt } = window.__OIKOS_SDK__, q = "input_boolean.posta_presente", zt = Array.from({ length: 14 }, (t, e) => ({
+const { useState: wt, useEffect: St, useCallback: Y } = window.__OIKOS_SDK__.React, { createPortal: It } = window.__OIKOS_SDK__.ReactDOM, { motion: x, AnimatePresence: $t } = window.__OIKOS_SDK__.framerMotion, { Mail: kt, X: Ot } = window.__OIKOS_SDK__.icons, { useDashboard: Dt, getOverlayRoot: Ct } = window.__OIKOS_SDK__, q = "input_boolean.posta_presente", zt = Array.from({ length: 14 }, (t, e) => ({
   id: e,
   left: 4 + e * 6.8 % 92,
   delay: e * 0.38 % 4,
@@ -326,21 +326,21 @@ function Rt() {
   );
 }
 function Et({ data: t, cfg: e, cardId: a, onClose: i }) {
-  var L, k;
-  const { dark: o, getState: d, callService: s, haStates: u } = Ct(), c = (e == null ? void 0 : e.accentColor) || "#f59e0b", v = (e == null ? void 0 : e.autoDismiss) ?? 10, p = ((L = u == null ? void 0 : u["sensor.posta_da_ritirare_lettura"]) == null ? void 0 : L.state) ?? ((k = u == null ? void 0 : u["input_number.sm_posta_da_ritirare"]) == null ? void 0 : k.state), b = !!(u != null && u[q]), h = (p != null && p !== "unknown" && p !== "unavailable" ? parseInt(p, 10) || 0 : null) ?? (t == null ? void 0 : t.count) ?? 0, z = t != null && t.lastArrival ? new Date(t.lastArrival) : null, m = (f) => {
+  var L, O;
+  const { dark: o, getState: d, callService: s, haStates: u } = Dt(), c = (e == null ? void 0 : e.accentColor) || "#f59e0b", v = (e == null ? void 0 : e.autoDismiss) ?? 10, p = ((L = u == null ? void 0 : u["sensor.posta_da_ritirare_lettura"]) == null ? void 0 : L.state) ?? ((O = u == null ? void 0 : u["input_number.sm_posta_da_ritirare"]) == null ? void 0 : O.state), b = !!(u != null && u[q]), S = p != null && p !== "unknown" && p !== "unavailable" ? parseInt(p, 10) || 0 : null, h = S != null && S > 0 ? S : (t == null ? void 0 : t.count) ?? 0, z = t != null && t.lastArrival ? new Date(t.lastArrival) : null, m = (f) => {
     if (!f) return "—";
-    const S = (/* @__PURE__ */ new Date()).toDateString() === f.toDateString(), W = f.toLocaleTimeString("it-IT", { hour: "2-digit", minute: "2-digit" });
-    return S ? `Oggi alle ${W}` : f.toLocaleDateString("it-IT", { day: "numeric", month: "short" }) + ` alle ${W}`;
+    const I = (/* @__PURE__ */ new Date()).toDateString() === f.toDateString(), W = f.toLocaleTimeString("it-IT", { hour: "2-digit", minute: "2-digit" });
+    return I ? `Oggi alle ${W}` : f.toLocaleDateString("it-IT", { day: "numeric", month: "short" }) + ` alle ${W}`;
   }, [r, w] = wt(0);
   St(() => {
     if (h <= 0) return;
     let f = 0;
-    const S = setInterval(() => {
-      f++, w(f), f >= h && clearInterval(S);
+    const I = setInterval(() => {
+      f++, w(f), f >= h && clearInterval(I);
     }, Math.max(60, 400 / h));
-    return () => clearInterval(S);
+    return () => clearInterval(I);
   }, [h]);
-  const $ = (f = {}) => {
+  const k = (f = {}) => {
     try {
       window.dispatchEvent(new CustomEvent(`oikos-mailbox-update-${a}`, { detail: f }));
     } catch {
@@ -353,7 +353,7 @@ function Et({ data: t, cfg: e, cardId: a, onClose: i }) {
         });
       } catch {
       }
-    nt(a, 0), $({ count: 0 }), i == null || i();
+    nt(a, 0), k({ count: 0 }), i == null || i();
   }, [a, i, b, s]), P = Y(() => {
     try {
       window.dispatchEvent(new CustomEvent("oikos-mailbox-snooze", {
@@ -587,7 +587,7 @@ function Et({ data: t, cfg: e, cardId: a, onClose: i }) {
         }
       ) })
     ] }),
-    Dt()
+    Ct()
   );
 }
 const { registerCardWatcher: At } = window.__OIKOS_SDK__, G = /* @__PURE__ */ new Map();
@@ -670,11 +670,11 @@ function et(t) {
 }
 function Xt({ cardId: t }) {
   var V, Z;
-  const { dark: e, editMode: a, getState: i, callService: o, haStates: d } = Nt(), [s] = Ht(t, jt), u = ((V = d == null ? void 0 : d["sensor.posta_da_ritirare_lettura"]) == null ? void 0 : V.state) ?? ((Z = d == null ? void 0 : d["input_number.sm_posta_da_ritirare"]) == null ? void 0 : Z.state), c = u != null && u !== "unknown" && u !== "unavailable", v = c ? parseInt(u, 10) || 0 : null, p = !!(s.entityIdCount || s.entityIdLast || c), b = s.entityIdCount ? i(s.entityIdCount) : null, D = b != null && b !== "unknown" && b !== "unavailable" ? parseInt(b, 10) || 0 : null, h = s.entityIdLast ? i(s.entityIdLast) : null, z = h && h !== "unknown" && h !== "unavailable" ? new Date(h) : null, m = s.entityId ? d == null ? void 0 : d[s.entityId] : null, [r, w] = N(() => tt(t)), [$, A] = N(() => et(t)), [P, L] = N(!1);
+  const { dark: e, editMode: a, getState: i, callService: o, haStates: d } = Nt(), [s] = Ht(t, jt), u = ((V = d == null ? void 0 : d["sensor.posta_da_ritirare_lettura"]) == null ? void 0 : V.state) ?? ((Z = d == null ? void 0 : d["input_number.sm_posta_da_ritirare"]) == null ? void 0 : Z.state), c = u != null && u !== "unknown" && u !== "unavailable", v = c ? parseInt(u, 10) || 0 : null, p = !!(s.entityIdCount || s.entityIdLast || c), b = s.entityIdCount ? i(s.entityIdCount) : null, S = b != null && b !== "unknown" && b !== "unavailable" ? parseInt(b, 10) || 0 : null, h = s.entityIdLast ? i(s.entityIdLast) : null, z = h && h !== "unknown" && h !== "unavailable" ? new Date(h) : null, m = s.entityId ? d == null ? void 0 : d[s.entityId] : null, [r, w] = N(() => tt(t)), [k, A] = N(() => et(t)), [P, L] = N(!1);
   X(() => {
     if ((m == null ? void 0 : m.state) === "on" && (m != null && m.last_changed)) {
       const y = new Date(m.last_changed);
-      if (!$ || y.getTime() !== $.getTime()) {
+      if (!k || y.getTime() !== k.getTime()) {
         A(y);
         try {
           localStorage.setItem(E(t, "last"), y.toISOString());
@@ -683,10 +683,10 @@ function Xt({ cardId: t }) {
       }
     }
   }, [m == null ? void 0 : m.state, m == null ? void 0 : m.last_changed, t]);
-  const k = c ? v : p && D != null ? D : r, f = c ? "IN CASSETTA" : "LETTERE OGGI", S = p && z ? z : $, [W, H] = N(!1), U = !!i("input_number.conteggio_aperture_posta_mensili");
+  const O = c ? v : p && S != null ? S : r, f = c ? "IN CASSETTA" : "LETTERE OGGI", I = p && z ? z : k, [W, H] = N(!1), U = !!i("input_number.conteggio_aperture_posta_mensili");
   X(() => {
-    const y = (I) => {
-      const C = I.detail || {};
+    const y = ($) => {
+      const C = $.detail || {};
       p || (C.count != null && w(C.count), C.lastArrival && A(new Date(C.lastArrival))), typeof C.hasNew == "boolean" && L(C.hasNew);
     };
     return window.addEventListener(`oikos-mailbox-update-${t}`, y), () => window.removeEventListener(`oikos-mailbox-update-${t}`, y);
@@ -700,26 +700,26 @@ function Xt({ cardId: t }) {
           watcherId: "mailbox",
           cardId: t,
           data: {
-            count: k || 0,
-            lastArrival: S ? S.toISOString() : (/* @__PURE__ */ new Date()).toISOString()
+            count: O || 0,
+            lastArrival: I ? I.toISOString() : (/* @__PURE__ */ new Date()).toISOString()
           }
         }
       }));
     } catch {
     }
-  }, [t, k, S]), ot = J(() => {
+  }, [t, O, I]), ot = J(() => {
     var y;
     if (L(!1), d != null && d["input_boolean.posta_presente"])
       try {
-        const I = o == null ? void 0 : o("input_boolean", "turn_off", "input_boolean.posta_presente");
-        Promise.resolve(I).catch(() => {
+        const $ = o == null ? void 0 : o("input_boolean", "turn_off", "input_boolean.posta_presente");
+        Promise.resolve($).catch(() => {
         });
       } catch {
       }
     else if (p && ((y = s.entityIdCount) != null && y.startsWith("sensor."))) {
-      const I = s.entityIdCount.replace(/^sensor\./, "input_number.").replace(/_lettura$/, "");
+      const $ = s.entityIdCount.replace(/^sensor\./, "input_number.").replace(/_lettura$/, "");
       try {
-        const C = o == null ? void 0 : o("input_number", "set_value", I, { value: 0 });
+        const C = o == null ? void 0 : o("input_number", "set_value", $, { value: 0 });
         Promise.resolve(C).catch(() => {
         });
       } catch {
@@ -767,7 +767,7 @@ function Xt({ cardId: t }) {
         textTransform: "uppercase",
         letterSpacing: ".06em"
       }, children: s.label }),
-      S && /* @__PURE__ */ l(
+      I && /* @__PURE__ */ l(
         R.button,
         {
           initial: { scale: 0 },
@@ -814,7 +814,7 @@ function Xt({ cardId: t }) {
           children: /* @__PURE__ */ n(Q, { size: 13 })
         }
       ),
-      k > 0 && /* @__PURE__ */ n(
+      O > 0 && /* @__PURE__ */ n(
         "button",
         {
           onClick: ot,
@@ -847,18 +847,18 @@ function Xt({ cardId: t }) {
               letterSpacing: "-2px",
               lineHeight: 1,
               fontVariantNumeric: "tabular-nums",
-              textShadow: k > 0 ? `0 0 30px ${g}50` : "none"
+              textShadow: O > 0 ? `0 0 30px ${g}50` : "none"
             },
-            children: k
+            children: O
           },
-          k
+          O
         )
       ] }),
       /* @__PURE__ */ l("div", { style: { paddingBottom: 6 }, children: [
         /* @__PURE__ */ n("div", { style: { fontSize: 10, fontWeight: 700, color: "var(--text-muted)", marginBottom: 4 }, children: "ULTIMA CONSEGNA" }),
         /* @__PURE__ */ l("div", { style: { display: "flex", alignItems: "center", gap: 5 }, children: [
           /* @__PURE__ */ n(Pt, { size: 12, style: { color: "var(--text-muted)" } }),
-          /* @__PURE__ */ n("span", { style: { fontSize: 14, fontWeight: 700, color: "var(--text-primary)" }, children: at(S) })
+          /* @__PURE__ */ n("span", { style: { fontSize: 14, fontWeight: 700, color: "var(--text-primary)" }, children: at(I) })
         ] }),
         !s.entityId && !a && /* @__PURE__ */ n("div", { style: { fontSize: 10, color: "var(--text-muted)", marginTop: 4, fontStyle: "italic" }, children: "⚙️ Configura il sensore nelle impostazioni" })
       ] })
@@ -885,9 +885,9 @@ function Xt({ cardId: t }) {
             ["Mese", i("sensor.conteggio_aperture_posta_mensili_lettura") ?? i("input_number.conteggio_aperture_posta_mensili")],
             ["Anno", i("sensor.conteggio_aperture_posta_annuali_lettura") ?? i("input_number.conteggio_aperture_posta_annuali")],
             ["Record", i("input_number.sm_posta_record_giornaliero")]
-          ].map(([y, I]) => /* @__PURE__ */ l("div", { style: { display: "flex", flexDirection: "column", alignItems: "center", minWidth: 0 }, children: [
+          ].map(([y, $]) => /* @__PURE__ */ l("div", { style: { display: "flex", flexDirection: "column", alignItems: "center", minWidth: 0 }, children: [
             /* @__PURE__ */ n("span", { style: { fontSize: 9, fontWeight: 800, letterSpacing: ".06em", textTransform: "uppercase" }, children: y }),
-            /* @__PURE__ */ n("span", { style: { fontSize: 13, fontWeight: 800, color: "var(--text-primary)", fontVariantNumeric: "tabular-nums", lineHeight: 1.1 }, children: I == null || I === "unknown" || I === "unavailable" ? "—" : parseInt(I, 10) || 0 })
+            /* @__PURE__ */ n("span", { style: { fontSize: 13, fontWeight: 800, color: "var(--text-primary)", fontVariantNumeric: "tabular-nums", lineHeight: 1.1 }, children: $ == null || $ === "unknown" || $ === "unavailable" ? "—" : parseInt($, 10) || 0 })
           ] }, y)),
           /* @__PURE__ */ n(Q, { size: 11, style: { flexShrink: 0 } })
         ]

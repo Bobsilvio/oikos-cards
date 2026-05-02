@@ -60,7 +60,10 @@ export default function MailboxPopup({ data, cfg, cardId, onClose }) {
     ? (parseInt(inMailboxLive, 10) || 0)
     : null
 
-  const count        = liveCount ?? data?.count ?? 0
+  // liveCount=0 significa che il package HA non ha ancora incrementato il contatore
+  // (input_number.sm_posta_da_ritirare a 0), non che non ci sia posta.
+  // In quel caso usiamo data.count dall'evento watcher come fallback.
+  const count        = (liveCount != null && liveCount > 0) ? liveCount : (data?.count ?? 0)
   const lastArrival  = data?.lastArrival ? new Date(data.lastArrival) : null
 
   const fmtDateTime = d => {
