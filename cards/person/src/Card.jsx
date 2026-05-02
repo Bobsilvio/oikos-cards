@@ -122,66 +122,24 @@ function Avatar({ pictureUrl, name, color, size, dark, uid, isHome }) {
   )
 }
 
-// ─── Mappa OSM full-width sotto la card con maschere UI OSM ─────────────────
-// L'iframe occupa TUTTA la card; la sfumatura nel container la copre a
-// sinistra. Le maschere coprono i controlli zoom OSM (top-right) e il
-// footer attribution (Segnala / © / Donazione / Condizioni — alto ~55px).
-function MapBackground({ lat, lon, name, dark, cardBg, zoomLevel = 0.004 }) {
+// ─── Mappa Google Maps full-width (iframe embed, no API key) ─────────────────
+function MapBackground({ lat, lon, name, dark, zoomLevel = 15 }) {
   if (lat == null || lon == null) return null
-  const d = zoomLevel
-  const src = `https://www.openstreetmap.org/export/embed.html?bbox=${lon-d},${lat-d},${lon+d},${lat+d}&layer=mapnik&marker=${lat},${lon}`
+  const src = `https://maps.google.com/maps?q=${lat},${lon}&z=${zoomLevel}&output=embed`
   return (
-    <>
-      <iframe
-        src={src}
-        title={`Posizione ${name}`}
-        style={{
-          position: 'absolute', inset: 0,
-          width: '100%', height: '100%',
-          border: 'none', display: 'block',
-          filter: dark ? 'saturate(.75) brightness(.7)' : 'saturate(.9)',
-          // Scale 1.3x + translate sposta footer OSM e controlli zoom
-          // FUORI dal viewport visibile della card.
-          //  • translateX(+12%) → marker più a destra (fuori dalla sfumatura)
-          //  • translateY(-9%)  → spinge il footer OSM oltre il bottom card
-          transform: 'scale(1.3) translate(12%, -9%)',
-          transformOrigin: 'center center',
-        }}
-        loading="lazy"
-        referrerPolicy="no-referrer"
-      />
-
-      {/* Maschera bottom safety net: anche se il transform fallisse,
-          il footer "Segnala/©/Donazione" sparisce sotto questa fascia
-          sfumata (alta 60px, fade da bg pieno → trasparente) */}
-      <div aria-hidden style={{
-        position: 'absolute', bottom: 0, left: 0, right: 0,
-        height: 60,
-        background: `linear-gradient(180deg, transparent 0%, ${cardBg} 60%, ${cardBg} 100%)`,
-        pointerEvents: 'none',
-        zIndex: 4,
-      }}/>
-
-      {/* Maschera top-right: nasconde controlli zoom OSM se ancora visibili */}
-      <div aria-hidden style={{
-        position: 'absolute', top: 0, right: 0,
-        width: 50, height: 110,
-        background: `linear-gradient(225deg, ${cardBg} 30%, transparent 90%)`,
-        pointerEvents: 'none',
-        zIndex: 4,
-      }}/>
-
-      {/* Attribution minimale leggale (richiesta dai TOS OSM) */}
-      <div style={{
-        position: 'absolute', bottom: 6, right: 8,
-        fontSize: 9, color: dark ? 'rgba(255,255,255,.55)' : 'rgba(0,0,0,.55)',
-        pointerEvents: 'none', zIndex: 6,
-        fontFamily: 'system-ui,-apple-system,sans-serif',
-        textShadow: dark ? '0 1px 2px rgba(0,0,0,.5)' : '0 1px 2px rgba(255,255,255,.5)',
-      }}>
-        © OSM
-      </div>
-    </>
+    <iframe
+      src={src}
+      title={`Posizione ${name}`}
+      style={{
+        position: 'absolute', inset: 0,
+        width: '100%', height: '100%',
+        border: 'none', display: 'block',
+        filter: dark ? 'saturate(.75) brightness(.65)' : 'saturate(.9)',
+      }}
+      loading="lazy"
+      referrerPolicy="no-referrer"
+      allowFullScreen
+    />
   )
 }
 
@@ -269,7 +227,7 @@ export default function PersonCard({ cardId }) {
           overflow: 'hidden',
           borderRadius: 20,
         }}>
-          <MapBackground lat={lat} lon={lon} name={name} dark={dark} cardBg={bg}/>
+          <MapBackground lat={lat} lon={lon} name={name} dark={dark}/>
         </div>
       )}
 
