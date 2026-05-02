@@ -1,5 +1,5 @@
-const { jsxs: t, jsx: n } = window.__OIKOS_SDK__.jsxRuntime, v = `# oikos:package_id: posta
-# oikos:package_version: 1.1.1
+const { jsxs: a, jsx: n } = window.__OIKOS_SDK__.jsxRuntime, y = `# oikos:package_id: posta
+# oikos:package_version: 1.1.2
 ################################################################################
 # Posta Smart — Package Home Assistant
 # Author: Oikos
@@ -51,6 +51,12 @@ input_text:
   sm_posta_sensor:
     name: "📭 Sensore cassetta (entity_id)"
     icon: mdi:mailbox-up
+    max: 100
+    initial: ""
+
+  sm_posta_battery_sensor:
+    name: "🪫 Sensore batteria cassetta (entity_id)"
+    icon: mdi:battery-alert
     max: 100
     initial: ""
 
@@ -366,18 +372,25 @@ template:
             {{ giorni | dictsort(false, 'value') | reverse | first | first }}
           {% endif %}
 
-      # ── Battery level del sensore (proxy per ridondanza) ───────────────────
+      # ── Battery level del sensore ──────────────────────────────────────────
+      # Priorità: sensore batteria dedicato (sm_posta_battery_sensor).
+      # Fallback: attributo battery_level del sensore principale (legacy).
       - unique_id: sm_posta_sensore_battery
         object_id: sm_posta_sensore_battery
         name: "Batteria sensore cassetta"
         unit_of_measurement: "%"
         device_class: battery
         state: >
-          {% set s = states('input_text.sm_posta_sensor') %}
-          {% if s and s != '' %}
-            {{ state_attr(s, 'battery_level') | float(none) }}
+          {% set bsensor = states('input_text.sm_posta_battery_sensor') %}
+          {% if bsensor and bsensor not in ['', 'unknown', 'unavailable'] %}
+            {{ states(bsensor) | float(none) }}
           {% else %}
-            {{ none }}
+            {% set s = states('input_text.sm_posta_sensor') %}
+            {% if s and s != '' %}
+              {{ state_attr(s, 'battery_level') | float(none) }}
+            {% else %}
+              {{ none }}
+            {% endif %}
           {% endif %}
 
 ################################################################################
@@ -829,12 +842,18 @@ automation:
         state: 'on'
       - condition: template
         value_template: >
-          {% set s = states('input_text.sm_posta_sensor') %}
-          {% if not s or s == '' %} false
-          {% else %}
-            {% set b = state_attr(s, 'battery_level') | float(none) %}
-            {% set t = states('input_number.sm_posta_low_battery_threshold') | float(20) %}
+          {% set bsensor = states('input_text.sm_posta_battery_sensor') %}
+          {% set t = states('input_number.sm_posta_low_battery_threshold') | float(20) %}
+          {% if bsensor and bsensor not in ['', 'unknown', 'unavailable'] %}
+            {% set b = states(bsensor) | float(none) %}
             {{ b is not none and b < t }}
+          {% else %}
+            {% set s = states('input_text.sm_posta_sensor') %}
+            {% if not s or s == '' %} false
+            {% else %}
+              {% set b = state_attr(s, 'battery_level') | float(none) %}
+              {{ b is not none and b < t }}
+            {% endif %}
           {% endif %}
       - condition: template
         value_template: "{{ states('input_text.sm_posta_push_devices') != '' }}"
@@ -855,34 +874,35 @@ automation:
                 data:
                   tag: oikos-mailbox-battery
                   group: mailbox-battery
-`, { useEffect: h } = window.__OIKOS_SDK__.React, { useCardConfig: x, EntityField: g, Field: d, Section: m, TextField: y, Slider: A, ColorCircles: k, ACCENT_COLORS: S, SettingsRow: u, Toggle: w, useHaText: b, useHaBool: z, usePackageInstaller: T } = window.__OIKOS_SDK__, { Eye: I, Download: C, CheckCircle2: P, AlertTriangle: O, Trash2: E, ArrowUpCircle: N } = window.__OIKOS_SDK__.icons, H = {
+`, { useEffect: f } = window.__OIKOS_SDK__.React, { useCardConfig: x, EntityField: c, Field: p, Section: u, TextField: k, Slider: A, ColorCircles: S, ACCENT_COLORS: w, SettingsRow: g, Toggle: z, useHaText: b, useHaBool: T, usePackageInstaller: I } = window.__OIKOS_SDK__, { Eye: P, Download: C, CheckCircle2: E, AlertTriangle: O, Trash2: H, ArrowUpCircle: N } = window.__OIKOS_SDK__.icons, R = {
   entityId: "",
   entityIdCount: "",
   entityIdLast: "",
+  batteryEntity: "",
   label: "Cassetta delle Lettere",
   autoDismiss: 10,
   accentColor: "#ef4444",
   popupEnabled: !0
 };
-function p({ entityId: r, label: i, hint: l }) {
-  const [o, e, s] = z(r);
-  return /* @__PURE__ */ n(u, { label: i, hint: l, children: /* @__PURE__ */ n(
+function _({ entityId: l, label: t, hint: s }) {
+  const [o, e, r] = T(l);
+  return /* @__PURE__ */ n(g, { label: t, hint: s, children: /* @__PURE__ */ n(
     "button",
     {
-      onClick: () => s && e(!o),
-      disabled: !s,
+      onClick: () => r && e(!o),
+      disabled: !r,
       style: {
         width: 44,
         height: 24,
         borderRadius: 99,
         background: o ? "var(--amber)" : "var(--bg-secondary)",
         border: `1px solid ${o ? "var(--amber-border)" : "var(--border-medium)"}`,
-        cursor: s ? "pointer" : "not-allowed",
-        opacity: s ? 1 : 0.4,
+        cursor: r ? "pointer" : "not-allowed",
+        opacity: r ? 1 : 0.4,
         position: "relative",
         transition: "all .15s"
       },
-      title: s ? "" : `Entità ${r} non trovata su HA`,
+      title: r ? "" : `Entità ${l} non trovata su HA`,
       children: /* @__PURE__ */ n("span", { style: {
         position: "absolute",
         top: 2,
@@ -897,15 +917,15 @@ function p({ entityId: r, label: i, hint: l }) {
     }
   ) });
 }
-function _({ entityId: r, label: i, hint: l, placeholder: o }) {
-  const [e, s, a] = b(r);
-  return /* @__PURE__ */ n(d, { label: i, hint: l, children: /* @__PURE__ */ n(
+function d({ entityId: l, label: t, hint: s, placeholder: o }) {
+  const [e, r, m] = b(l);
+  return /* @__PURE__ */ n(p, { label: t, hint: s, children: /* @__PURE__ */ n(
     "input",
     {
       type: "text",
       value: e || "",
-      onChange: (c) => s(c.target.value),
-      disabled: !a,
+      onChange: (i) => r(i.target.value),
+      disabled: !m,
       placeholder: o,
       style: {
         width: "100%",
@@ -916,38 +936,40 @@ function _({ entityId: r, label: i, hint: l, placeholder: o }) {
         background: "var(--bg-primary)",
         color: "var(--text-primary)",
         outline: "none",
-        opacity: a ? 1 : 0.4
+        opacity: m ? 1 : 0.4
       },
-      title: a ? "" : `Entità ${r} non trovata su HA`
+      title: m ? "" : `Entità ${l} non trovata su HA`
     }
   ) });
 }
-function R({ cardId: r }) {
-  const [i, l] = x(r, H), o = (a, c) => l((f) => ({ ...f, [a]: c })), e = T({ name: "posta", yaml: v }), [, s] = b("input_text.sm_posta_sensor");
-  return h(() => {
-    i.entityId && s(i.entityId);
-  }, [i.entityId]), /* @__PURE__ */ t("div", { style: { display: "flex", flexDirection: "column", gap: 14 }, children: [
-    /* @__PURE__ */ t(m, { title: "Generale", collapsible: !0, children: [
-      /* @__PURE__ */ n(d, { label: "Etichetta", children: /* @__PURE__ */ n(
-        y,
+function q({ cardId: l }) {
+  const [t, s] = x(l, R), o = (i, v) => s((h) => ({ ...h, [i]: v })), e = I({ name: "posta", yaml: y }), [, r] = b("input_text.sm_posta_sensor"), [, m] = b("input_text.sm_posta_battery_sensor");
+  return f(() => {
+    t.entityId && r(t.entityId);
+  }, [t.entityId]), f(() => {
+    m(t.batteryEntity || "");
+  }, [t.batteryEntity]), /* @__PURE__ */ a("div", { style: { display: "flex", flexDirection: "column", gap: 14 }, children: [
+    /* @__PURE__ */ a(u, { title: "Generale", collapsible: !0, children: [
+      /* @__PURE__ */ n(p, { label: "Etichetta", children: /* @__PURE__ */ n(
+        k,
         {
-          value: i.label,
-          onChange: (a) => o("label", a),
+          value: t.label,
+          onChange: (i) => o("label", i),
           placeholder: "Cassetta delle Lettere"
         }
       ) }),
-      /* @__PURE__ */ n(d, { label: "Sensore cassetta", hint: "Si attiva quando l'entità passa allo stato «on»", children: /* @__PURE__ */ n(
-        g,
+      /* @__PURE__ */ n(p, { label: "Sensore cassetta", hint: "Si attiva quando l'entità passa allo stato «on»", children: /* @__PURE__ */ n(
+        c,
         {
           field: "entityId",
-          config: i,
-          setConfig: l,
+          config: t,
+          setConfig: s,
           filterDomain: "binary_sensor"
         }
       ) })
     ] }),
-    /* @__PURE__ */ t(m, { title: "Conteggio (package HA «Posta Smart»)", collapsible: !0, defaultOpen: !1, children: [
-      /* @__PURE__ */ t("div", { style: {
+    /* @__PURE__ */ a(u, { title: "Conteggio (package HA «Posta Smart»)", collapsible: !0, defaultOpen: !1, children: [
+      /* @__PURE__ */ a("div", { style: {
         fontSize: 11,
         lineHeight: 1.5,
         padding: "8px 10px",
@@ -959,27 +981,27 @@ function R({ cardId: r }) {
         /* @__PURE__ */ n("b", { children: "posta.yaml" }),
         " su Home Assistant, configura qui i sensori che HA aggiorna lato server (l'increment funziona anche con la dashboard chiusa). Se lasci vuoto, il conteggio resta in locale al browser."
       ] }),
-      /* @__PURE__ */ n(d, { label: "Sensore posta da ritirare", hint: "Es. sensor.posta_da_ritirare_lettura — posta attualmente in cassetta (si azzera al ritiro)", children: /* @__PURE__ */ n(
-        g,
+      /* @__PURE__ */ n(p, { label: "Sensore posta da ritirare", hint: "Es. sensor.posta_da_ritirare_lettura — posta attualmente in cassetta (si azzera al ritiro)", children: /* @__PURE__ */ n(
+        c,
         {
           field: "entityIdCount",
-          config: i,
-          setConfig: l,
+          config: t,
+          setConfig: s,
           filterDomain: "sensor"
         }
       ) }),
-      /* @__PURE__ */ n(d, { label: "Sensore ultima imbucata", hint: "Es. sensor.ultima_apertura_cassetta (timestamp)", children: /* @__PURE__ */ n(
-        g,
+      /* @__PURE__ */ n(p, { label: "Sensore ultima imbucata", hint: "Es. sensor.ultima_apertura_cassetta (timestamp)", children: /* @__PURE__ */ n(
+        c,
         {
           field: "entityIdLast",
-          config: i,
-          setConfig: l,
+          config: t,
+          setConfig: s,
           filterDomain: "sensor"
         }
       ) })
     ] }),
-    /* @__PURE__ */ t(m, { title: "Package Home Assistant", collapsible: !0, defaultOpen: !1, children: [
-      /* @__PURE__ */ t("div", { style: {
+    /* @__PURE__ */ a(u, { title: "Package Home Assistant", collapsible: !0, defaultOpen: !1, children: [
+      /* @__PURE__ */ a("div", { style: {
         fontSize: 11,
         lineHeight: 1.5,
         padding: "8px 10px",
@@ -997,7 +1019,7 @@ function R({ cardId: r }) {
         /* @__PURE__ */ n("code", { children: "configuration.yaml" }),
         "."
       ] }),
-      e.updateAvailable && /* @__PURE__ */ t("div", { style: {
+      e.updateAvailable && /* @__PURE__ */ a("div", { style: {
         display: "flex",
         alignItems: "center",
         gap: 10,
@@ -1007,9 +1029,9 @@ function R({ cardId: r }) {
         border: "1px solid rgba(16,185,129,.4)"
       }, children: [
         /* @__PURE__ */ n(N, { size: 18, style: { color: "#10b981", flexShrink: 0 } }),
-        /* @__PURE__ */ t("div", { style: { flex: 1, fontSize: 12, color: "var(--text-primary)" }, children: [
+        /* @__PURE__ */ a("div", { style: { flex: 1, fontSize: 12, color: "var(--text-primary)" }, children: [
           /* @__PURE__ */ n("div", { style: { fontWeight: 700 }, children: "Aggiornamento package disponibile" }),
-          /* @__PURE__ */ t("div", { style: { fontSize: 10, color: "var(--text-muted)", marginTop: 2 }, children: [
+          /* @__PURE__ */ a("div", { style: { fontSize: 10, color: "var(--text-muted)", marginTop: 2 }, children: [
             "Installato v",
             e.installedVersion,
             " → Nuova v",
@@ -1035,12 +1057,12 @@ function R({ cardId: r }) {
         )
       ] }),
       /* @__PURE__ */ n(
-        u,
+        g,
         {
           label: e.checking ? "Stato package: controllo…" : e.installed ? `Package installato${e.installedVersion ? ` · v${e.installedVersion}` : ""}` : "Package non installato",
           hint: e.installed ? "/config/packages/posta.yaml" : void 0,
-          children: /* @__PURE__ */ t("div", { style: { display: "flex", gap: 6 }, children: [
-            /* @__PURE__ */ t(
+          children: /* @__PURE__ */ a("div", { style: { display: "flex", gap: 6 }, children: [
+            /* @__PURE__ */ a(
               "button",
               {
                 onClick: e.install,
@@ -1065,7 +1087,7 @@ function R({ cardId: r }) {
                 ]
               }
             ),
-            e.installed && /* @__PURE__ */ t(
+            e.installed && /* @__PURE__ */ a(
               "button",
               {
                 onClick: e.uninstall,
@@ -1083,7 +1105,7 @@ function R({ cardId: r }) {
                   color: "var(--red, #dc2626)"
                 },
                 children: [
-                  /* @__PURE__ */ n(E, { size: 12 }),
+                  /* @__PURE__ */ n(H, { size: 12 }),
                   " Disinstalla"
                 ]
               }
@@ -1091,7 +1113,7 @@ function R({ cardId: r }) {
           ] })
         }
       ),
-      e.msg && /* @__PURE__ */ t("div", { style: {
+      e.msg && /* @__PURE__ */ a("div", { style: {
         display: "flex",
         alignItems: "flex-start",
         gap: 8,
@@ -1103,12 +1125,12 @@ function R({ cardId: r }) {
         border: `1px solid ${e.msg.type === "ok" ? "var(--green-border, #bbf7d0)" : "var(--red-border, #fecaca)"}`,
         color: e.msg.type === "ok" ? "var(--green, #15803d)" : "var(--red, #b91c1c)"
       }, children: [
-        e.msg.type === "ok" ? /* @__PURE__ */ n(P, { size: 14, style: { flexShrink: 0, marginTop: 1 } }) : /* @__PURE__ */ n(O, { size: 14, style: { flexShrink: 0, marginTop: 1 } }),
+        e.msg.type === "ok" ? /* @__PURE__ */ n(E, { size: 14, style: { flexShrink: 0, marginTop: 1 } }) : /* @__PURE__ */ n(O, { size: 14, style: { flexShrink: 0, marginTop: 1 } }),
         /* @__PURE__ */ n("span", { children: e.msg.text })
       ] })
     ] }),
-    /* @__PURE__ */ t(m, { title: "Notifiche (package HA «Posta Smart»)", collapsible: !0, defaultOpen: !1, children: [
-      /* @__PURE__ */ t("div", { style: {
+    /* @__PURE__ */ a(u, { title: "Notifiche (package HA «Posta Smart»)", collapsible: !0, defaultOpen: !1, children: [
+      /* @__PURE__ */ a("div", { style: {
         fontSize: 11,
         lineHeight: 1.5,
         padding: "8px 10px",
@@ -1121,7 +1143,7 @@ function R({ cardId: r }) {
         " non è installato su HA."
       ] }),
       /* @__PURE__ */ n(
-        p,
+        _,
         {
           entityId: "input_boolean.sm_posta_avvisi_attivi",
           label: "Avvisi posta abilitati",
@@ -1130,14 +1152,14 @@ function R({ cardId: r }) {
       ),
       /* @__PURE__ */ n("div", { style: { fontSize: 10, fontWeight: 800, letterSpacing: ".06em", textTransform: "uppercase", color: "var(--text-muted)", marginTop: 4 }, children: "📱 Push (mobile_app)" }),
       /* @__PURE__ */ n(
-        p,
+        _,
         {
           entityId: "input_boolean.sm_posta_notify_push",
           label: "Notifica push"
         }
       ),
       /* @__PURE__ */ n(
-        _,
+        d,
         {
           entityId: "input_text.sm_posta_push_devices",
           label: "Mobile_app destinatari (CSV)",
@@ -1146,7 +1168,7 @@ function R({ cardId: r }) {
         }
       ),
       /* @__PURE__ */ n(
-        _,
+        d,
         {
           entityId: "input_text.sm_posta_msg_push_title",
           label: "Titolo notifica push",
@@ -1155,7 +1177,7 @@ function R({ cardId: r }) {
         }
       ),
       /* @__PURE__ */ n(
-        _,
+        d,
         {
           entityId: "input_text.sm_posta_msg_push_body",
           label: "Corpo notifica push",
@@ -1165,14 +1187,14 @@ function R({ cardId: r }) {
       ),
       /* @__PURE__ */ n("div", { style: { fontSize: 10, fontWeight: 800, letterSpacing: ".06em", textTransform: "uppercase", color: "var(--text-muted)", marginTop: 4 }, children: "🔊 Alexa" }),
       /* @__PURE__ */ n(
-        p,
+        _,
         {
           entityId: "input_boolean.sm_posta_notify_alexa",
           label: "Annuncio Alexa"
         }
       ),
       /* @__PURE__ */ n(
-        _,
+        d,
         {
           entityId: "input_text.sm_posta_alexa_target",
           label: "Media player Alexa",
@@ -1181,7 +1203,7 @@ function R({ cardId: r }) {
         }
       ),
       /* @__PURE__ */ n(
-        _,
+        d,
         {
           entityId: "input_text.sm_posta_msg_alexa",
           label: "Messaggio annuncio",
@@ -1191,14 +1213,14 @@ function R({ cardId: r }) {
       ),
       /* @__PURE__ */ n("div", { style: { fontSize: 10, fontWeight: 800, letterSpacing: ".06em", textTransform: "uppercase", color: "var(--text-muted)", marginTop: 4 }, children: "💬 Telegram" }),
       /* @__PURE__ */ n(
-        p,
+        _,
         {
           entityId: "input_boolean.sm_posta_notify_telegram",
           label: "Notifica Telegram"
         }
       ),
       /* @__PURE__ */ n(
-        _,
+        d,
         {
           entityId: "input_text.sm_posta_telegram_service",
           label: "Service Telegram",
@@ -1207,7 +1229,7 @@ function R({ cardId: r }) {
         }
       ),
       /* @__PURE__ */ n(
-        _,
+        d,
         {
           entityId: "input_text.sm_posta_msg_telegram",
           label: "Messaggio Telegram",
@@ -1217,7 +1239,7 @@ function R({ cardId: r }) {
       ),
       /* @__PURE__ */ n("div", { style: { fontSize: 10, fontWeight: 800, letterSpacing: ".06em", textTransform: "uppercase", color: "var(--text-muted)", marginTop: 4 }, children: "⚙ Comportamenti" }),
       /* @__PURE__ */ n(
-        p,
+        _,
         {
           entityId: "input_boolean.sm_posta_digest_serale",
           label: "Digest serale (ore 20:00)",
@@ -1225,7 +1247,7 @@ function R({ cardId: r }) {
         }
       ),
       /* @__PURE__ */ n(
-        p,
+        _,
         {
           entityId: "input_boolean.sm_posta_auto_spegnimento_24h",
           label: "Auto-spegnimento dopo 24h",
@@ -1233,35 +1255,44 @@ function R({ cardId: r }) {
         }
       ),
       /* @__PURE__ */ n(
-        p,
+        _,
         {
           entityId: "input_boolean.sm_posta_notify_ritirata",
           label: "Notifica famiglia quando ritirata"
         }
       ),
       /* @__PURE__ */ n(
-        p,
+        _,
         {
           entityId: "input_boolean.sm_posta_low_battery_alert",
           label: "Avviso batteria bassa sensore"
         }
-      )
-    ] }),
-    /* @__PURE__ */ t(m, { title: "Popup", collapsible: !0, children: [
-      /* @__PURE__ */ n(u, { label: "Mostra popup", hint: "Disabilita per ricevere solo la notifica campanella senza popup", children: /* @__PURE__ */ n(
-        w,
+      ),
+      /* @__PURE__ */ n(p, { label: "Sensore batteria", hint: "Es. sensor.sensore_posta_batteria — espone il livello % della batteria", children: /* @__PURE__ */ n(
+        c,
         {
-          value: i.popupEnabled !== !1,
-          onChange: (a) => o("popupEnabled", a)
+          field: "batteryEntity",
+          config: t,
+          setConfig: s,
+          filterDomain: "sensor"
+        }
+      ) })
+    ] }),
+    /* @__PURE__ */ a(u, { title: "Popup", collapsible: !0, children: [
+      /* @__PURE__ */ n(g, { label: "Mostra popup", hint: "Disabilita per ricevere solo la notifica campanella senza popup", children: /* @__PURE__ */ n(
+        z,
+        {
+          value: t.popupEnabled !== !1,
+          onChange: (i) => o("popupEnabled", i)
         }
       ) }),
-      /* @__PURE__ */ n(u, { label: "Anteprima popup", hint: "Apre il popup per vedere l'aspetto", children: /* @__PURE__ */ t(
+      /* @__PURE__ */ n(g, { label: "Anteprima popup", hint: "Apre il popup per vedere l'aspetto", children: /* @__PURE__ */ a(
         "button",
         {
           onClick: () => window.dispatchEvent(new CustomEvent("oikos-card-watcher-preview", {
             detail: {
               watcherId: "mailbox",
-              cardId: r,
+              cardId: l,
               data: { count: 3, lastArrival: (/* @__PURE__ */ new Date()).toISOString() }
             }
           })),
@@ -1279,35 +1310,35 @@ function R({ cardId: r }) {
             color: "var(--text-muted)"
           },
           children: [
-            /* @__PURE__ */ n(I, { size: 12 }),
+            /* @__PURE__ */ n(P, { size: 12 }),
             " Anteprima"
           ]
         }
       ) }),
-      /* @__PURE__ */ n(d, { label: "Chiusura automatica", children: /* @__PURE__ */ n(
+      /* @__PURE__ */ n(p, { label: "Chiusura automatica", children: /* @__PURE__ */ n(
         A,
         {
-          value: i.autoDismiss,
-          onChange: (a) => o("autoDismiss", a),
+          value: t.autoDismiss,
+          onChange: (i) => o("autoDismiss", i),
           min: 0,
           max: 30,
           step: 1,
           leftLabel: "Manuale",
           rightLabel: "30s",
-          format: (a) => a === 0 ? "Manuale" : `${a}s`
+          format: (i) => i === 0 ? "Manuale" : `${i}s`
         }
       ) }),
-      /* @__PURE__ */ n(d, { label: "Colore accento", children: /* @__PURE__ */ n(
-        k,
+      /* @__PURE__ */ n(p, { label: "Colore accento", children: /* @__PURE__ */ n(
+        S,
         {
-          value: i.accentColor,
-          onChange: (a) => o("accentColor", a),
-          colors: S
+          value: t.accentColor,
+          onChange: (i) => o("accentColor", i),
+          colors: w
         }
       ) })
     ] })
   ] });
 }
 export {
-  R as default
+  q as default
 };

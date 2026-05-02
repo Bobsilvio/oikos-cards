@@ -11,6 +11,7 @@ const DEFAULT_CONFIG = {
   entityId:        '',
   entityIdCount:   '',
   entityIdLast:    '',
+  batteryEntity:   '',
   label:           'Cassetta delle Lettere',
   autoDismiss:     10,
   accentColor:     '#ef4444',
@@ -74,12 +75,14 @@ export default function MailboxCardSettings({ cardId }) {
   const set = (k, v) => setConfig(p => ({ ...p, [k]: v }))
   const pkg = usePackageInstaller({ name: 'posta', yaml: POSTA_TEMPLATE_YAML })
 
-  // Sincronizza il sensore selezionato in input_text.sm_posta_sensor,
-  // che il package HA usa per sapere quale entità monitorare.
-  const [, setHaSensor] = useHaText('input_text.sm_posta_sensor')
+  const [, setHaSensor]  = useHaText('input_text.sm_posta_sensor')
+  const [, setHaBattery] = useHaText('input_text.sm_posta_battery_sensor')
   useEffect(() => {
     if (config.entityId) setHaSensor(config.entityId)
   }, [config.entityId])
+  useEffect(() => {
+    setHaBattery(config.batteryEntity || '')
+  }, [config.batteryEntity])
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
@@ -335,6 +338,14 @@ export default function MailboxCardSettings({ cardId }) {
           entityId="input_boolean.sm_posta_low_battery_alert"
           label="Avviso batteria bassa sensore"
         />
+        <Field label="Sensore batteria" hint="Es. sensor.sensore_posta_batteria — espone il livello % della batteria">
+          <EntityField
+            field="batteryEntity"
+            config={config}
+            setConfig={setConfig}
+            filterDomain="sensor"
+          />
+        </Field>
       </Section>
 
       <Section title="Popup" collapsible>

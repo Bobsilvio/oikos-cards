@@ -1,5 +1,5 @@
 # oikos:package_id: posta
-# oikos:package_version: 1.1.1
+# oikos:package_version: 1.1.2
 ################################################################################
 # Posta Smart — Package Home Assistant
 # Author: Oikos
@@ -51,6 +51,12 @@ input_text:
   sm_posta_sensor:
     name: "📭 Sensore cassetta (entity_id)"
     icon: mdi:mailbox-up
+    max: 100
+    initial: ""
+
+  sm_posta_battery_sensor:
+    name: "🪫 Sensore batteria cassetta (entity_id)"
+    icon: mdi:battery-alert
     max: 100
     initial: ""
 
@@ -366,18 +372,25 @@ template:
             {{ giorni | dictsort(false, 'value') | reverse | first | first }}
           {% endif %}
 
-      # ── Battery level del sensore (proxy per ridondanza) ───────────────────
+      # ── Battery level del sensore ──────────────────────────────────────────
+      # Priorità: sensore batteria dedicato (sm_posta_battery_sensor).
+      # Fallback: attributo battery_level del sensore principale (legacy).
       - unique_id: sm_posta_sensore_battery
         object_id: sm_posta_sensore_battery
         name: "Batteria sensore cassetta"
         unit_of_measurement: "%"
         device_class: battery
         state: >
-          {% set s = states('input_text.sm_posta_sensor') %}
-          {% if s and s != '' %}
-            {{ state_attr(s, 'battery_level') | float(none) }}
+          {% set bsensor = states('input_text.sm_posta_battery_sensor') %}
+          {% if bsensor and bsensor not in ['', 'unknown', 'unavailable'] %}
+            {{ states(bsensor) | float(none) }}
           {% else %}
-            {{ none }}
+            {% set s = states('input_text.sm_posta_sensor') %}
+            {% if s and s != '' %}
+              {{ state_attr(s, 'battery_level') | float(none) }}
+            {% else %}
+              {{ none }}
+            {% endif %}
           {% endif %}
 
 ################################################################################
@@ -829,12 +842,18 @@ automation:
         state: 'on'
       - condition: template
         value_template: >
-          {% set s = states('input_text.sm_posta_sensor') %}
-          {% if not s or s == '' %} false
-          {% else %}
-            {% set b = state_attr(s, 'battery_level') | float(none) %}
-            {% set t = states('input_number.sm_posta_low_battery_threshold') | float(20) %}
+          {% set bsensor = states('input_text.sm_posta_battery_sensor') %}
+          {% set t = states('input_number.sm_posta_low_battery_threshold') | float(20) %}
+          {% if bsensor and bsensor not in ['', 'unknown', 'unavailable'] %}
+            {% set b = states(bsensor) | float(none) %}
             {{ b is not none and b < t }}
+          {% else %}
+            {% set s = states('input_text.sm_posta_sensor') %}
+            {% if not s or s == '' %} false
+            {% else %}
+              {% set b = state_attr(s, 'battery_level') | float(none) %}
+              {{ b is not none and b < t }}
+            {% endif %}
           {% endif %}
       - condition: template
         value_template: "{{ states('input_text.sm_posta_push_devices') != '' }}"
