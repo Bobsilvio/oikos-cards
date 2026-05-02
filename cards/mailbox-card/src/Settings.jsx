@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import {
   useCardConfig, EntityField,
-  Field, Section, TextField, Slider, ColorCircles, ACCENT_COLORS, SettingsRow,
+  Field, Section, TextField, Slider, ColorCircles, ACCENT_COLORS, SettingsRow, Toggle,
   useHaText, useHaBool, usePackageInstaller,
 } from '@oikos/sdk'
 import { Eye, Download, CheckCircle2, AlertTriangle, Trash2, ArrowUpCircle } from 'lucide-react'
@@ -14,6 +14,7 @@ const DEFAULT_CONFIG = {
   label:           'Cassetta delle Lettere',
   autoDismiss:     10,
   accentColor:     '#ef4444',
+  popupEnabled:    true,
 }
 
 // ─── Toggle inline (riusabile per tutti i toggle del package HA) ─────────────
@@ -99,6 +100,12 @@ export default function MailboxCardSettings({ cardId }) {
             filterDomain="binary_sensor"
           />
         </Field>
+        <SettingsRow label="Mostra popup" hint="Disabilita per ricevere solo la notifica campanella senza popup">
+          <Toggle
+            value={config.popupEnabled !== false}
+            onChange={v => set('popupEnabled', v)}
+          />
+        </SettingsRow>
       </Section>
 
       <Section title="Conteggio (package HA «Posta Smart»)">
@@ -111,7 +118,7 @@ export default function MailboxCardSettings({ cardId }) {
           qui i sensori che HA aggiorna lato server (l'increment funziona anche con
           la dashboard chiusa). Se lasci vuoto, il conteggio resta in locale al browser.
         </div>
-        <Field label="Sensore conteggio giornaliero" hint="Es. sensor.conteggio_aperture_posta_giornaliere_lettura">
+        <Field label="Sensore posta da ritirare" hint="Es. sensor.posta_da_ritirare_lettura — posta attualmente in cassetta (si azzera al ritiro)">
           <EntityField
             field="entityIdCount"
             config={config}

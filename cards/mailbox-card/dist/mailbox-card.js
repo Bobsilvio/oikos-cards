@@ -1,4 +1,4 @@
-const { jsx: n, jsxs: l, Fragment: rt } = window.__OIKOS_SDK__.jsxRuntime, { useEffect: lt } = window.__OIKOS_SDK__.React, { createPortal: st } = window.__OIKOS_SDK__.ReactDOM, { motion: j, AnimatePresence: ct } = window.__OIKOS_SDK__.framerMotion, { X: dt, BarChart3: ut, Calendar: F, Trophy: pt, Clock: mt, Battery: gt, Mail: ft } = window.__OIKOS_SDK__.icons, { useDashboard: yt, getOverlayRoot: _t } = window.__OIKOS_SDK__, D = {
+const { jsx: i, jsxs: l, Fragment: rt } = window.__OIKOS_SDK__.jsxRuntime, { useEffect: lt } = window.__OIKOS_SDK__.React, { createPortal: st } = window.__OIKOS_SDK__.ReactDOM, { motion: j, AnimatePresence: dt } = window.__OIKOS_SDK__.framerMotion, { X: ct, BarChart3: ut, Calendar: F, Trophy: pt, Clock: mt, Battery: gt, Mail: ft } = window.__OIKOS_SDK__.icons, { useDashboard: yt, getOverlayRoot: _t } = window.__OIKOS_SDK__, D = {
   oggi: "sensor.conteggio_aperture_posta_giornaliere_lettura",
   mese: "sensor.conteggio_aperture_posta_mensili_lettura",
   anno: "sensor.conteggio_aperture_posta_annuali_lettura",
@@ -16,7 +16,7 @@ const { jsx: n, jsxs: l, Fragment: rt } = window.__OIKOS_SDK__.jsxRuntime, { use
   ven: "input_number.sm_posta_giorno_ven",
   sab: "input_number.sm_posta_giorno_sab",
   dom: "input_number.sm_posta_giorno_dom"
-}, ht = [
+}, bt = [
   ["lun", "Lun"],
   ["mar", "Mar"],
   ["mer", "Mer"],
@@ -28,24 +28,24 @@ const { jsx: n, jsxs: l, Fragment: rt } = window.__OIKOS_SDK__.jsxRuntime, { use
 function T(t, e) {
   const a = t(e);
   if (a == null || a === "unknown" || a === "unavailable") return null;
-  const i = parseInt(a, 10);
-  return Number.isFinite(i) ? i : null;
+  const n = parseInt(a, 10);
+  return Number.isFinite(n) ? n : null;
 }
-function K({ icon: t, label: e, value: a, accent: i, highlight: o }) {
+function K({ icon: t, label: e, value: a, accent: n, highlight: o }) {
   return /* @__PURE__ */ l("div", { style: {
     flex: 1,
     padding: "10px 12px",
     borderRadius: 12,
-    background: o ? `${i}15` : "var(--bg-secondary)",
-    border: `1px solid ${o ? `${i}50` : "var(--border-medium)"}`,
+    background: o ? `${n}15` : "var(--bg-secondary)",
+    border: `1px solid ${o ? `${n}50` : "var(--border-medium)"}`,
     display: "flex",
     flexDirection: "column",
     gap: 4,
     minWidth: 0
   }, children: [
     /* @__PURE__ */ l("div", { style: { display: "flex", alignItems: "center", gap: 5 }, children: [
-      /* @__PURE__ */ n(t, { size: 11, style: { color: o ? i : "var(--text-muted)" } }),
-      /* @__PURE__ */ n("span", { style: {
+      /* @__PURE__ */ i(t, { size: 11, style: { color: o ? n : "var(--text-muted)" } }),
+      /* @__PURE__ */ i("span", { style: {
         fontSize: 9,
         fontWeight: 800,
         letterSpacing: ".06em",
@@ -53,30 +53,30 @@ function K({ icon: t, label: e, value: a, accent: i, highlight: o }) {
         color: "var(--text-muted)"
       }, children: e })
     ] }),
-    /* @__PURE__ */ n("div", { style: {
+    /* @__PURE__ */ i("div", { style: {
       fontSize: 18,
       fontWeight: 800,
-      color: o ? i : "var(--text-primary)",
+      color: o ? n : "var(--text-primary)",
       fontVariantNumeric: "tabular-nums",
       lineHeight: 1
     }, children: a ?? "—" })
   ] });
 }
-function bt({ cfg: t, onClose: e }) {
-  const { dark: a, getState: i } = yt(), o = (t == null ? void 0 : t.accentColor) || "#ef4444";
+function ht({ cfg: t, onClose: e }) {
+  const { dark: a, getState: n } = yt(), o = (t == null ? void 0 : t.accentColor) || "#ef4444";
   lt(() => {
     const r = (w) => {
       w.key === "Escape" && (e == null || e());
     };
     return window.addEventListener("keydown", r), () => window.removeEventListener("keydown", r);
   }, [e]);
-  const d = T(i, D.oggi) ?? 0, s = T(i, D.mese) ?? 0, u = T(i, D.anno) ?? 0, c = T(i, D.record) ?? 0, v = i(D.giornoTop), p = parseFloat(i(D.inAttesaH) ?? 0) || 0, b = T(i, D.battery), S = i(D.postaPres) === "on", h = ht.map(([r, w]) => ({
+  const c = T(n, D.oggi) ?? 0, s = T(n, D.mese) ?? 0, u = T(n, D.anno) ?? 0, d = T(n, D.record) ?? 0, v = n(D.giornoTop), p = parseFloat(n(D.inAttesaH) ?? 0) || 0, h = T(n, D.battery), S = n(D.postaPres) === "on", b = bt.map(([r, w]) => ({
     key: r,
     label: w,
-    count: T(i, D[r]) ?? 0
-  })), z = Math.max(...h.map((r) => r.count), 1), m = (r) => r <= 0 ? "—" : r < 1 ? `${Math.round(r * 60)}min` : r < 24 ? `${r.toFixed(1)}h` : `${Math.floor(r / 24)}g ${Math.round(r % 24)}h`;
+    count: T(n, D[r]) ?? 0
+  })), z = Math.max(...b.map((r) => r.count), 1), m = (r) => r <= 0 ? "—" : r < 1 ? `${Math.round(r * 60)}min` : r < 24 ? `${r.toFixed(1)}h` : `${Math.floor(r / 24)}g ${Math.round(r % 24)}h`;
   return st(
-    /* @__PURE__ */ n(ct, { children: /* @__PURE__ */ n(
+    /* @__PURE__ */ i(dt, { children: /* @__PURE__ */ i(
       j.div,
       {
         initial: { opacity: 0 },
@@ -121,7 +121,7 @@ function bt({ cfg: t, onClose: e }) {
                 padding: "16px 18px",
                 borderBottom: `1px solid ${a ? "rgba(255,255,255,.06)" : "#f1f5f9"}`
               }, children: [
-                /* @__PURE__ */ n("div", { style: {
+                /* @__PURE__ */ i("div", { style: {
                   width: 36,
                   height: 36,
                   borderRadius: 10,
@@ -130,15 +130,15 @@ function bt({ cfg: t, onClose: e }) {
                   justifyContent: "center",
                   background: `${o}18`,
                   color: o
-                }, children: /* @__PURE__ */ n(ut, { size: 18 }) }),
+                }, children: /* @__PURE__ */ i(ut, { size: 18 }) }),
                 /* @__PURE__ */ l("div", { style: { flex: 1 }, children: [
-                  /* @__PURE__ */ n("div", { style: { fontSize: 15, fontWeight: 800, color: "var(--text-primary)" }, children: "Statistiche Posta" }),
+                  /* @__PURE__ */ i("div", { style: { fontSize: 15, fontWeight: 800, color: "var(--text-primary)" }, children: "Statistiche Posta" }),
                   /* @__PURE__ */ l("div", { style: { fontSize: 11, color: "var(--text-muted)" }, children: [
                     S ? "C'è posta in attesa" : "Cassetta vuota",
                     S && p > 0 && ` · da ${m(p)}`
                   ] })
                 ] }),
-                /* @__PURE__ */ n(
+                /* @__PURE__ */ i(
                   "button",
                   {
                     onClick: e,
@@ -154,7 +154,7 @@ function bt({ cfg: t, onClose: e }) {
                       alignItems: "center",
                       justifyContent: "center"
                     },
-                    children: /* @__PURE__ */ n(dt, { size: 15 })
+                    children: /* @__PURE__ */ i(ct, { size: 15 })
                   }
                 )
               ] }),
@@ -166,22 +166,22 @@ function bt({ cfg: t, onClose: e }) {
                 gap: 14
               }, children: [
                 /* @__PURE__ */ l("div", { style: { display: "flex", gap: 8 }, children: [
-                  /* @__PURE__ */ n(K, { icon: ft, label: "Oggi", value: d, accent: o, highlight: d > 0 }),
-                  /* @__PURE__ */ n(K, { icon: F, label: "Mese", value: s, accent: o }),
-                  /* @__PURE__ */ n(K, { icon: F, label: "Anno", value: u, accent: o })
+                  /* @__PURE__ */ i(K, { icon: ft, label: "Oggi", value: c, accent: o, highlight: c > 0 }),
+                  /* @__PURE__ */ i(K, { icon: F, label: "Mese", value: s, accent: o }),
+                  /* @__PURE__ */ i(K, { icon: F, label: "Anno", value: u, accent: o })
                 ] }),
                 /* @__PURE__ */ l("div", { style: { display: "flex", gap: 8, flexWrap: "wrap" }, children: [
-                  /* @__PURE__ */ n(
+                  /* @__PURE__ */ i(
                     K,
                     {
                       icon: pt,
                       label: "Record",
-                      value: c > 0 ? `${c}` : null,
+                      value: d > 0 ? `${d}` : null,
                       accent: o,
-                      highlight: d >= c && d > 0
+                      highlight: c >= d && c > 0
                     }
                   ),
-                  /* @__PURE__ */ n(
+                  /* @__PURE__ */ i(
                     K,
                     {
                       icon: F,
@@ -190,19 +190,19 @@ function bt({ cfg: t, onClose: e }) {
                       accent: o
                     }
                   ),
-                  b != null && /* @__PURE__ */ n(
+                  h != null && /* @__PURE__ */ i(
                     K,
                     {
                       icon: gt,
                       label: "Batteria",
-                      value: `${b}%`,
+                      value: `${h}%`,
                       accent: o,
-                      highlight: b <= 20
+                      highlight: h <= 20
                     }
                   )
                 ] }),
                 /* @__PURE__ */ l("div", { children: [
-                  /* @__PURE__ */ n("div", { style: {
+                  /* @__PURE__ */ i("div", { style: {
                     fontSize: 10,
                     fontWeight: 800,
                     letterSpacing: ".06em",
@@ -210,7 +210,7 @@ function bt({ cfg: t, onClose: e }) {
                     color: "var(--text-muted)",
                     marginBottom: 10
                   }, children: "Distribuzione per giorno" }),
-                  /* @__PURE__ */ n("div", { style: { display: "flex", gap: 6, alignItems: "flex-end", height: 120 }, children: h.map((r) => {
+                  /* @__PURE__ */ i("div", { style: { display: "flex", gap: 6, alignItems: "flex-end", height: 120 }, children: b.map((r) => {
                     const w = r.count / z, k = r.count === z && r.count > 0;
                     return /* @__PURE__ */ l("div", { style: {
                       flex: 1,
@@ -221,7 +221,7 @@ function bt({ cfg: t, onClose: e }) {
                       height: "100%"
                     }, children: [
                       /* @__PURE__ */ l("div", { style: { flex: 1, width: "100%", display: "flex", flexDirection: "column", justifyContent: "flex-end" }, children: [
-                        /* @__PURE__ */ n("div", { style: {
+                        /* @__PURE__ */ i("div", { style: {
                           fontSize: 10,
                           fontWeight: 700,
                           color: "var(--text-primary)",
@@ -229,12 +229,12 @@ function bt({ cfg: t, onClose: e }) {
                           marginBottom: 2,
                           fontVariantNumeric: "tabular-nums"
                         }, children: r.count }),
-                        /* @__PURE__ */ n(
+                        /* @__PURE__ */ i(
                           j.div,
                           {
                             initial: { height: 0 },
                             animate: { height: `${w * 90}%` },
-                            transition: { delay: 0.05 * h.indexOf(r), duration: 0.35, ease: "easeOut" },
+                            transition: { delay: 0.05 * b.indexOf(r), duration: 0.35, ease: "easeOut" },
                             style: {
                               width: "100%",
                               minHeight: 2,
@@ -245,7 +245,7 @@ function bt({ cfg: t, onClose: e }) {
                           }
                         )
                       ] }),
-                      /* @__PURE__ */ n("div", { style: {
+                      /* @__PURE__ */ i("div", { style: {
                         fontSize: 10,
                         fontWeight: 700,
                         color: k ? o : "var(--text-muted)"
@@ -264,7 +264,7 @@ function bt({ cfg: t, onClose: e }) {
                   color: "var(--amber, #b45309)",
                   fontSize: 12
                 }, children: [
-                  /* @__PURE__ */ n(mt, { size: 14 }),
+                  /* @__PURE__ */ i(mt, { size: 14 }),
                   /* @__PURE__ */ l("span", { children: [
                     "Posta in cassetta da oltre ",
                     m(p),
@@ -305,7 +305,7 @@ const { useState: wt, useEffect: St, useCallback: Y } = window.__OIKOS_SDK__.Rea
 function Rt() {
   return (
     // z-index 10000 = sopra il backdrop blur (9999) ma il modal card sale a 10001
-    /* @__PURE__ */ n("div", { style: { position: "fixed", inset: 0, pointerEvents: "none", overflow: "hidden", zIndex: 1e4 }, children: zt.map((t) => /* @__PURE__ */ n(
+    /* @__PURE__ */ i("div", { style: { position: "fixed", inset: 0, pointerEvents: "none", overflow: "hidden", zIndex: 1e4 }, children: zt.map((t) => /* @__PURE__ */ i(
       x.div,
       {
         initial: { y: "108vh", opacity: 0, rotate: t.rot },
@@ -325,55 +325,55 @@ function Rt() {
     )) })
   );
 }
-function Et({ data: t, cfg: e, cardId: a, onClose: i }) {
+function Et({ data: t, cfg: e, cardId: a, onClose: n }) {
   var L, O;
-  const { dark: o, getState: d, callService: s, haStates: u } = Dt(), c = (e == null ? void 0 : e.accentColor) || "#f59e0b", v = (e == null ? void 0 : e.autoDismiss) ?? 10, p = ((L = u == null ? void 0 : u["sensor.posta_da_ritirare_lettura"]) == null ? void 0 : L.state) ?? ((O = u == null ? void 0 : u["input_number.sm_posta_da_ritirare"]) == null ? void 0 : O.state), b = !!(u != null && u[q]), S = p != null && p !== "unknown" && p !== "unavailable" ? parseInt(p, 10) || 0 : null, h = S != null && S > 0 ? S : (t == null ? void 0 : t.count) ?? 0, z = t != null && t.lastArrival ? new Date(t.lastArrival) : null, m = (f) => {
+  const { dark: o, getState: c, callService: s, haStates: u } = Dt(), d = (e == null ? void 0 : e.accentColor) || "#f59e0b", v = (e == null ? void 0 : e.autoDismiss) ?? 10, p = ((L = u == null ? void 0 : u["sensor.posta_da_ritirare_lettura"]) == null ? void 0 : L.state) ?? ((O = u == null ? void 0 : u["input_number.sm_posta_da_ritirare"]) == null ? void 0 : O.state), h = !!(u != null && u[q]), S = p != null && p !== "unknown" && p !== "unavailable" ? parseInt(p, 10) || 0 : null, b = S != null && S > 0 ? S : (t == null ? void 0 : t.count) ?? 0, z = t != null && t.lastArrival ? new Date(t.lastArrival) : null, m = (f) => {
     if (!f) return "—";
     const I = (/* @__PURE__ */ new Date()).toDateString() === f.toDateString(), W = f.toLocaleTimeString("it-IT", { hour: "2-digit", minute: "2-digit" });
     return I ? `Oggi alle ${W}` : f.toLocaleDateString("it-IT", { day: "numeric", month: "short" }) + ` alle ${W}`;
   }, [r, w] = wt(0);
   St(() => {
-    if (h <= 0) return;
+    if (b <= 0) return;
     let f = 0;
     const I = setInterval(() => {
-      f++, w(f), f >= h && clearInterval(I);
-    }, Math.max(60, 400 / h));
+      f++, w(f), f >= b && clearInterval(I);
+    }, Math.max(60, 400 / b));
     return () => clearInterval(I);
-  }, [h]);
+  }, [b]);
   const k = (f = {}) => {
     try {
       window.dispatchEvent(new CustomEvent(`oikos-mailbox-update-${a}`, { detail: f }));
     } catch {
     }
   }, A = Y(() => {
-    if (b)
+    if (h)
       try {
         const f = s == null ? void 0 : s("input_boolean", "turn_off", q);
         Promise.resolve(f).catch(() => {
         });
       } catch {
       }
-    nt(a, 0), k({ count: 0 }), i == null || i();
-  }, [a, i, b, s]), P = Y(() => {
+    nt(a, 0), k({ count: 0 }), n == null || n();
+  }, [a, n, h, s]), P = Y(() => {
     try {
       window.dispatchEvent(new CustomEvent("oikos-mailbox-snooze", {
         detail: { cardId: a, data: t, ms: 60 * 60 * 1e3 }
       }));
     } catch {
     }
-    i == null || i();
-  }, [a, t, i]);
+    n == null || n();
+  }, [a, t, n]);
   return It(
     /* @__PURE__ */ l(rt, { children: [
-      /* @__PURE__ */ n(Rt, {}),
-      /* @__PURE__ */ n($t, { children: /* @__PURE__ */ n(
+      /* @__PURE__ */ i(Rt, {}),
+      /* @__PURE__ */ i($t, { children: /* @__PURE__ */ i(
         x.div,
         {
           initial: { opacity: 0 },
           animate: { opacity: 1 },
           exit: { opacity: 0 },
           transition: { duration: 0.3 },
-          onClick: i,
+          onClick: n,
           style: {
             position: "fixed",
             inset: 0,
@@ -402,14 +402,14 @@ function Et({ data: t, cfg: e, cardId: a, onClose: i }) {
                 paddingLeft: 28,
                 paddingRight: 28,
                 textAlign: "center",
-                boxShadow: `0 0 0 1px ${c}30, 0 40px 100px rgba(0,0,0,.55), 0 0 60px ${c}22`,
+                boxShadow: `0 0 0 1px ${d}30, 0 40px 100px rgba(0,0,0,.55), 0 0 60px ${d}22`,
                 position: "relative",
                 overflow: "visible",
                 zIndex: 10001
                 // sopra le buste volanti (10000)
               },
               children: [
-                /* @__PURE__ */ n(
+                /* @__PURE__ */ i(
                   x.div,
                   {
                     initial: { scale: 0, y: 20 },
@@ -423,46 +423,46 @@ function Et({ data: t, cfg: e, cardId: a, onClose: i }) {
                       width: 88,
                       height: 88,
                       borderRadius: "50%",
-                      background: `linear-gradient(145deg, ${c}, ${c}bb)`,
-                      boxShadow: `0 8px 32px ${c}60, 0 0 0 4px ${o ? "#0e111a" : "#fff"}`,
+                      background: `linear-gradient(145deg, ${d}, ${d}bb)`,
+                      boxShadow: `0 8px 32px ${d}60, 0 0 0 4px ${o ? "#0e111a" : "#fff"}`,
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
                       zIndex: 1
                     },
-                    children: /* @__PURE__ */ n(
+                    children: /* @__PURE__ */ i(
                       x.div,
                       {
                         animate: { rotate: [-8, 8, -8], y: [0, -4, 0] },
                         transition: { duration: 2.4, repeat: 1 / 0, ease: "easeInOut" },
-                        children: /* @__PURE__ */ n(kt, { size: 36, color: "#fff", strokeWidth: 1.8 })
+                        children: /* @__PURE__ */ i(kt, { size: 36, color: "#fff", strokeWidth: 1.8 })
                       }
                     )
                   }
                 ),
-                v > 0 && /* @__PURE__ */ n(
+                v > 0 && /* @__PURE__ */ i(
                   x.div,
                   {
                     initial: { scaleX: 1 },
                     animate: { scaleX: 0 },
                     transition: { duration: v, ease: "linear" },
-                    onAnimationComplete: i,
+                    onAnimationComplete: n,
                     style: {
                       position: "absolute",
                       top: 0,
                       left: 0,
                       right: 0,
                       height: 3,
-                      background: `linear-gradient(90deg, ${c}, ${c}66)`,
+                      background: `linear-gradient(90deg, ${d}, ${d}66)`,
                       transformOrigin: "left",
                       borderRadius: "28px 28px 0 0"
                     }
                   }
                 ),
-                /* @__PURE__ */ n(
+                /* @__PURE__ */ i(
                   "button",
                   {
-                    onClick: i,
+                    onClick: n,
                     style: {
                       position: "absolute",
                       top: 14,
@@ -478,10 +478,10 @@ function Et({ data: t, cfg: e, cardId: a, onClose: i }) {
                       alignItems: "center",
                       justifyContent: "center"
                     },
-                    children: /* @__PURE__ */ n(Ot, { size: 14 })
+                    children: /* @__PURE__ */ i(Ot, { size: 14 })
                   }
                 ),
-                /* @__PURE__ */ n(
+                /* @__PURE__ */ i(
                   x.div,
                   {
                     initial: { opacity: 0, y: 8 },
@@ -501,7 +501,7 @@ function Et({ data: t, cfg: e, cardId: a, onClose: i }) {
                     children: [
                       "Ci sono",
                       " ",
-                      /* @__PURE__ */ n(x.span, { style: { fontWeight: 800, color: c }, children: r }, r),
+                      /* @__PURE__ */ i(x.span, { style: { fontWeight: 800, color: d }, children: r }, r),
                       " ",
                       r === 1 ? "lettera" : "lettere",
                       " nella cassetta!"
@@ -528,13 +528,13 @@ function Et({ data: t, cfg: e, cardId: a, onClose: i }) {
                       border: `1px solid ${o ? "rgba(255,255,255,.06)" : "#f1f5f9"}`
                     },
                     children: [
-                      /* @__PURE__ */ n("span", { style: { fontSize: 16 }, children: "✉️" }),
-                      /* @__PURE__ */ n("span", { children: "Ultima consegna:" }),
-                      /* @__PURE__ */ n("strong", { style: { color: "var(--text-primary)", fontWeight: 700 }, children: m(z) })
+                      /* @__PURE__ */ i("span", { style: { fontSize: 16 }, children: "✉️" }),
+                      /* @__PURE__ */ i("span", { children: "Ultima consegna:" }),
+                      /* @__PURE__ */ i("strong", { style: { color: "var(--text-primary)", fontWeight: 700 }, children: m(z) })
                     ]
                   }
                 ),
-                /* @__PURE__ */ n(
+                /* @__PURE__ */ i(
                   x.button,
                   {
                     initial: { opacity: 0, y: 8 },
@@ -548,19 +548,19 @@ function Et({ data: t, cfg: e, cardId: a, onClose: i }) {
                       padding: "14px 0",
                       borderRadius: 16,
                       cursor: "pointer",
-                      background: `linear-gradient(135deg, ${c} 0%, ${c}cc 100%)`,
+                      background: `linear-gradient(135deg, ${d} 0%, ${d}cc 100%)`,
                       border: "none",
                       color: "#fff",
                       fontSize: 15,
                       fontWeight: 800,
-                      boxShadow: `0 8px 28px ${c}48`,
+                      boxShadow: `0 8px 28px ${d}48`,
                       letterSpacing: ".02em",
                       marginBottom: 12
                     },
                     children: "✓ Posta Ritirata"
                   }
                 ),
-                /* @__PURE__ */ n(
+                /* @__PURE__ */ i(
                   x.button,
                   {
                     initial: { opacity: 0 },
@@ -593,7 +593,7 @@ function Et({ data: t, cfg: e, cardId: a, onClose: i }) {
 const { registerCardWatcher: At } = window.__OIKOS_SDK__, G = /* @__PURE__ */ new Map();
 function Tt() {
   typeof window > "u" || window.__OIKOS_MAILBOX_SNOOZE_BOUND__ || (window.__OIKOS_MAILBOX_SNOOZE_BOUND__ = !0, window.addEventListener("oikos-mailbox-snooze", (t) => {
-    const { cardId: e, data: a, ms: i } = t.detail || {};
+    const { cardId: e, data: a, ms: n } = t.detail || {};
     if (!e) return;
     clearTimeout(G.get(e));
     const o = setTimeout(() => {
@@ -604,7 +604,7 @@ function Tt() {
       } catch {
       }
       G.delete(e);
-    }, i || 60 * 60 * 1e3);
+    }, n || 60 * 60 * 1e3);
     G.set(e, o);
   }));
 }
@@ -612,9 +612,9 @@ Tt();
 const B = /* @__PURE__ */ new Map();
 function Kt(t, e = 18e4) {
   if (!t) return !1;
-  const a = B.get(t), i = Date.now();
-  return a && i - a < e ? !0 : (B.set(t, i), setTimeout(() => {
-    B.get(t) === i && B.delete(t);
+  const a = B.get(t), n = Date.now();
+  return a && n - a < e ? !0 : (B.set(t, n), setTimeout(() => {
+    B.get(t) === n && B.delete(t);
   }, 6e5), !1);
 }
 At({
@@ -622,23 +622,27 @@ At({
   cardType: ["mailbox-card", "mailbox"],
   // community manifest + legacy
   watch: (t) => (t == null ? void 0 : t.entityId) || null,
-  detect: ({ prev: t, current: e, cardId: a, cfg: i, haStates: o }) => {
+  detect: ({ prev: t, current: e, cardId: a, cfg: n, haStates: o }) => {
     var v;
-    if (!a || t === e || e !== "on" || t !== "off" && t !== void 0 && t !== null && t !== "unknown" && t !== "unavailable" || Kt(i == null ? void 0 : i.entityId)) return null;
-    const d = /* @__PURE__ */ new Date(), s = !!(i != null && i.entityIdCount || i != null && i.entityIdLast);
-    let u, c;
+    if (!a || t === e || e !== "on" || t !== "off" && t !== void 0 && t !== null && t !== "unknown" && t !== "unavailable" || Kt(n == null ? void 0 : n.entityId)) return null;
+    const c = /* @__PURE__ */ new Date(), s = !!(n != null && n.entityIdCount || n != null && n.entityIdLast);
+    let u, d;
     if (s) {
-      const p = i != null && i.entityIdCount ? (v = o == null ? void 0 : o[i.entityIdCount]) == null ? void 0 : v.state : null;
-      u = (p && p !== "unknown" && p !== "unavailable" && parseInt(p, 10) || 0) + 1, c = d.toISOString();
+      const p = n != null && n.entityIdCount ? (v = o == null ? void 0 : o[n.entityIdCount]) == null ? void 0 : v.state : null;
+      u = (p && p !== "unknown" && p !== "unavailable" && parseInt(p, 10) || 0) + 1, d = c.toISOString();
     } else
-      u = xt(a) + 1, nt(a, u), vt(a, d), c = d.toISOString();
+      u = xt(a) + 1, nt(a, u), vt(a, c), d = c.toISOString();
     try {
       window.dispatchEvent(new CustomEvent(`oikos-mailbox-update-${a}`, {
-        detail: { count: u, lastArrival: c, hasNew: !0 }
+        detail: { count: u, lastArrival: d, hasNew: !0 }
       }));
     } catch {
     }
-    return { count: u, lastArrival: c };
+    return {
+      count: u,
+      lastArrival: d,
+      skipPopup: (n == null ? void 0 : n.popupEnabled) === !1
+    };
   },
   dedupKey: (t, e, a) => `oikos-mailbox-popup-${(e == null ? void 0 : e.entityId) || a}-${t.lastArrival}`,
   notify: (t, e) => ({
@@ -670,7 +674,7 @@ function et(t) {
 }
 function Xt({ cardId: t }) {
   var V, Z;
-  const { dark: e, editMode: a, getState: i, callService: o, haStates: d } = Nt(), [s] = Ht(t, jt), u = ((V = d == null ? void 0 : d["sensor.posta_da_ritirare_lettura"]) == null ? void 0 : V.state) ?? ((Z = d == null ? void 0 : d["input_number.sm_posta_da_ritirare"]) == null ? void 0 : Z.state), c = u != null && u !== "unknown" && u !== "unavailable", v = c ? parseInt(u, 10) || 0 : null, p = !!(s.entityIdCount || s.entityIdLast || c), b = s.entityIdCount ? i(s.entityIdCount) : null, S = b != null && b !== "unknown" && b !== "unavailable" ? parseInt(b, 10) || 0 : null, h = s.entityIdLast ? i(s.entityIdLast) : null, z = h && h !== "unknown" && h !== "unavailable" ? new Date(h) : null, m = s.entityId ? d == null ? void 0 : d[s.entityId] : null, [r, w] = N(() => tt(t)), [k, A] = N(() => et(t)), [P, L] = N(!1);
+  const { dark: e, editMode: a, getState: n, callService: o, haStates: c } = Nt(), [s] = Ht(t, jt), u = ((V = c == null ? void 0 : c["sensor.posta_da_ritirare_lettura"]) == null ? void 0 : V.state) ?? ((Z = c == null ? void 0 : c["input_number.sm_posta_da_ritirare"]) == null ? void 0 : Z.state), d = u != null && u !== "unknown" && u !== "unavailable", v = d ? parseInt(u, 10) || 0 : null, p = !!(s.entityIdCount || s.entityIdLast || d), h = s.entityIdCount ? n(s.entityIdCount) : null, S = h != null && h !== "unknown" && h !== "unavailable" ? parseInt(h, 10) || 0 : null, b = s.entityIdLast ? n(s.entityIdLast) : null, z = b && b !== "unknown" && b !== "unavailable" ? new Date(b) : null, m = s.entityId ? c == null ? void 0 : c[s.entityId] : null, [r, w] = N(() => tt(t)), [k, A] = N(() => et(t)), [P, L] = N(!1);
   X(() => {
     if ((m == null ? void 0 : m.state) === "on" && (m != null && m.last_changed)) {
       const y = new Date(m.last_changed);
@@ -683,7 +687,7 @@ function Xt({ cardId: t }) {
       }
     }
   }, [m == null ? void 0 : m.state, m == null ? void 0 : m.last_changed, t]);
-  const O = c ? v : p && S != null ? S : r, f = c ? "IN CASSETTA" : "LETTERE OGGI", I = p && z ? z : k, [W, H] = N(!1), U = !!i("input_number.conteggio_aperture_posta_mensili");
+  const O = d ? v : p && S != null ? S : r, f = d ? "IN CASSETTA" : "LETTERE OGGI", I = p && z ? z : k, [W, H] = N(!1), U = !!n("input_number.conteggio_aperture_posta_mensili");
   X(() => {
     const y = ($) => {
       const C = $.detail || {};
@@ -693,7 +697,7 @@ function Xt({ cardId: t }) {
   }, [t, p]), X(() => {
     w(tt(t)), A(et(t));
   }, [t]);
-  const g = s.accentColor || "#f59e0b", _ = (s.entityId ? i(s.entityId) : null) === "on", it = J(() => {
+  const g = s.accentColor || "#f59e0b", _ = (s.entityId ? n(s.entityId) : null) === "on", it = J(() => {
     try {
       window.dispatchEvent(new CustomEvent("oikos-card-watcher-preview", {
         detail: {
@@ -709,7 +713,7 @@ function Xt({ cardId: t }) {
     }
   }, [t, O, I]), ot = J(() => {
     var y;
-    if (L(!1), d != null && d["input_boolean.posta_presente"])
+    if (L(!1), c != null && c["input_boolean.posta_presente"])
       try {
         const $ = o == null ? void 0 : o("input_boolean", "turn_off", "input_boolean.posta_presente");
         Promise.resolve($).catch(() => {
@@ -726,7 +730,7 @@ function Xt({ cardId: t }) {
       }
     } else
       w(0), A(null), Ft(t, 0), localStorage.removeItem(E(t, "last"));
-  }, [t, p, s.entityIdCount, o, d]), at = (y) => (y == null ? void 0 : y.toLocaleTimeString("it-IT", { hour: "2-digit", minute: "2-digit" })) ?? "—";
+  }, [t, p, s.entityIdCount, o, c]), at = (y) => (y == null ? void 0 : y.toLocaleTimeString("it-IT", { hour: "2-digit", minute: "2-digit" })) ?? "—";
   return /* @__PURE__ */ l("div", { style: {
     padding: "16px 18px",
     borderRadius: 16,
@@ -735,7 +739,7 @@ function Xt({ cardId: t }) {
     position: "relative",
     overflow: "hidden"
   }, children: [
-    /* @__PURE__ */ n(
+    /* @__PURE__ */ i(
       R.div,
       {
         animate: _ ? { opacity: [0.6, 1, 0.6] } : { opacity: 1 },
@@ -751,15 +755,15 @@ function Xt({ cardId: t }) {
       }
     ),
     /* @__PURE__ */ l("div", { style: { display: "flex", alignItems: "center", gap: 8, marginBottom: 16 }, children: [
-      /* @__PURE__ */ n(
+      /* @__PURE__ */ i(
         R.div,
         {
           animate: _ ? { rotate: [0, -18, 18, -12, 12, 0], y: [0, -5, 0] } : {},
           transition: { duration: 0.7 },
-          children: _ ? /* @__PURE__ */ n(Mt, { size: 17, style: { color: g } }) : /* @__PURE__ */ n(Lt, { size: 17, style: { color: g } })
+          children: _ ? /* @__PURE__ */ i(Mt, { size: 17, style: { color: g } }) : /* @__PURE__ */ i(Lt, { size: 17, style: { color: g } })
         }
       ),
-      /* @__PURE__ */ n("span", { style: {
+      /* @__PURE__ */ i("span", { style: {
         flex: 1,
         fontSize: 11,
         fontWeight: 700,
@@ -790,13 +794,13 @@ function Xt({ cardId: t }) {
             gap: 4
           },
           children: [
-            /* @__PURE__ */ n(Bt, { size: 10 }),
+            /* @__PURE__ */ i(Bt, { size: 10 }),
             " ",
             P ? "Rivedi" : "✓ Ritirata"
           ]
         }
       ),
-      U && /* @__PURE__ */ n(
+      U && /* @__PURE__ */ i(
         R.button,
         {
           whileHover: { scale: 1.1 },
@@ -811,10 +815,10 @@ function Xt({ cardId: t }) {
             padding: 2,
             display: "flex"
           },
-          children: /* @__PURE__ */ n(Q, { size: 13 })
+          children: /* @__PURE__ */ i(Q, { size: 13 })
         }
       ),
-      O > 0 && /* @__PURE__ */ n(
+      O > 0 && /* @__PURE__ */ i(
         "button",
         {
           onClick: ot,
@@ -827,14 +831,14 @@ function Xt({ cardId: t }) {
             padding: 2,
             display: "flex"
           },
-          children: /* @__PURE__ */ n(Wt, { size: 11 })
+          children: /* @__PURE__ */ i(Wt, { size: 11 })
         }
       )
     ] }),
     /* @__PURE__ */ l("div", { style: { display: "flex", alignItems: "flex-end", gap: 16, marginBottom: 14 }, children: [
       /* @__PURE__ */ l("div", { children: [
-        /* @__PURE__ */ n("div", { style: { fontSize: 10, fontWeight: 700, color: "var(--text-muted)", marginBottom: 2 }, children: f }),
-        /* @__PURE__ */ n(
+        /* @__PURE__ */ i("div", { style: { fontSize: 10, fontWeight: 700, color: "var(--text-muted)", marginBottom: 2 }, children: f }),
+        /* @__PURE__ */ i(
           R.div,
           {
             initial: { scale: 1.35, opacity: 0 },
@@ -855,12 +859,12 @@ function Xt({ cardId: t }) {
         )
       ] }),
       /* @__PURE__ */ l("div", { style: { paddingBottom: 6 }, children: [
-        /* @__PURE__ */ n("div", { style: { fontSize: 10, fontWeight: 700, color: "var(--text-muted)", marginBottom: 4 }, children: "ULTIMA CONSEGNA" }),
+        /* @__PURE__ */ i("div", { style: { fontSize: 10, fontWeight: 700, color: "var(--text-muted)", marginBottom: 4 }, children: "ULTIMA CONSEGNA" }),
         /* @__PURE__ */ l("div", { style: { display: "flex", alignItems: "center", gap: 5 }, children: [
-          /* @__PURE__ */ n(Pt, { size: 12, style: { color: "var(--text-muted)" } }),
-          /* @__PURE__ */ n("span", { style: { fontSize: 14, fontWeight: 700, color: "var(--text-primary)" }, children: at(I) })
+          /* @__PURE__ */ i(Pt, { size: 12, style: { color: "var(--text-muted)" } }),
+          /* @__PURE__ */ i("span", { style: { fontSize: 14, fontWeight: 700, color: "var(--text-primary)" }, children: at(I) })
         ] }),
-        !s.entityId && !a && /* @__PURE__ */ n("div", { style: { fontSize: 10, color: "var(--text-muted)", marginTop: 4, fontStyle: "italic" }, children: "⚙️ Configura il sensore nelle impostazioni" })
+        !s.entityId && !a && /* @__PURE__ */ i("div", { style: { fontSize: 10, color: "var(--text-muted)", marginTop: 4, fontStyle: "italic" }, children: "⚙️ Configura il sensore nelle impostazioni" })
       ] })
     ] }),
     U && /* @__PURE__ */ l(
@@ -882,14 +886,14 @@ function Xt({ cardId: t }) {
         },
         children: [
           [
-            ["Mese", i("sensor.conteggio_aperture_posta_mensili_lettura") ?? i("input_number.conteggio_aperture_posta_mensili")],
-            ["Anno", i("sensor.conteggio_aperture_posta_annuali_lettura") ?? i("input_number.conteggio_aperture_posta_annuali")],
-            ["Record", i("input_number.sm_posta_record_giornaliero")]
+            ["Mese", n("sensor.conteggio_aperture_posta_mensili_lettura") ?? n("input_number.conteggio_aperture_posta_mensili")],
+            ["Anno", n("sensor.conteggio_aperture_posta_annuali_lettura") ?? n("input_number.conteggio_aperture_posta_annuali")],
+            ["Record", n("input_number.sm_posta_record_giornaliero")]
           ].map(([y, $]) => /* @__PURE__ */ l("div", { style: { display: "flex", flexDirection: "column", alignItems: "center", minWidth: 0 }, children: [
-            /* @__PURE__ */ n("span", { style: { fontSize: 9, fontWeight: 800, letterSpacing: ".06em", textTransform: "uppercase" }, children: y }),
-            /* @__PURE__ */ n("span", { style: { fontSize: 13, fontWeight: 800, color: "var(--text-primary)", fontVariantNumeric: "tabular-nums", lineHeight: 1.1 }, children: $ == null || $ === "unknown" || $ === "unavailable" ? "—" : parseInt($, 10) || 0 })
+            /* @__PURE__ */ i("span", { style: { fontSize: 9, fontWeight: 800, letterSpacing: ".06em", textTransform: "uppercase" }, children: y }),
+            /* @__PURE__ */ i("span", { style: { fontSize: 13, fontWeight: 800, color: "var(--text-primary)", fontVariantNumeric: "tabular-nums", lineHeight: 1.1 }, children: $ == null || $ === "unknown" || $ === "unavailable" ? "—" : parseInt($, 10) || 0 })
           ] }, y)),
-          /* @__PURE__ */ n(Q, { size: 11, style: { flexShrink: 0 } })
+          /* @__PURE__ */ i(Q, { size: 11, style: { flexShrink: 0 } })
         ]
       }
     ),
@@ -908,7 +912,7 @@ function Xt({ cardId: t }) {
           border: `1px solid ${_ ? `${g}40` : e ? "rgba(255,255,255,.06)" : "#f1f5f9"}`
         },
         children: [
-          /* @__PURE__ */ n(
+          /* @__PURE__ */ i(
             R.div,
             {
               animate: _ ? { scale: [1, 1.5, 1] } : { scale: 1 },
@@ -923,7 +927,7 @@ function Xt({ cardId: t }) {
               }
             }
           ),
-          /* @__PURE__ */ n("span", { style: {
+          /* @__PURE__ */ i("span", { style: {
             fontSize: 11,
             fontWeight: 600,
             flex: 1,
@@ -932,7 +936,7 @@ function Xt({ cardId: t }) {
         ]
       }
     ),
-    W && /* @__PURE__ */ n(bt, { cfg: s, onClose: () => H(!1) })
+    W && /* @__PURE__ */ i(ht, { cfg: s, onClose: () => H(!1) })
   ] });
 }
 export {

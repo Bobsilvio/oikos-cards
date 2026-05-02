@@ -106,7 +106,11 @@ registerCardWatcher({
         detail: { count, lastArrival: lastArrivalIso, hasNew: true },
       }))
     } catch {}
-    return { count, lastArrival: lastArrivalIso }
+    return {
+      count,
+      lastArrival: lastArrivalIso,
+      skipPopup: cfg?.popupEnabled === false,
+    }
   },
 
   dedupKey: (data, cfg, cardId) => {

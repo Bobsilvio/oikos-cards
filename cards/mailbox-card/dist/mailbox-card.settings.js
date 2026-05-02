@@ -855,17 +855,18 @@ automation:
                 data:
                   tag: oikos-mailbox-battery
                   group: mailbox-battery
-`, { useEffect: h } = window.__OIKOS_SDK__.React, { useCardConfig: x, EntityField: c, Field: m, Section: d, TextField: y, Slider: A, ColorCircles: k, ACCENT_COLORS: S, SettingsRow: g, useHaText: b, useHaBool: w, usePackageInstaller: z } = window.__OIKOS_SDK__, { Eye: I, Download: T, CheckCircle2: P, AlertTriangle: C, Trash2: O, ArrowUpCircle: E } = window.__OIKOS_SDK__.icons, N = {
+`, { useEffect: h } = window.__OIKOS_SDK__.React, { useCardConfig: x, EntityField: g, Field: d, Section: m, TextField: y, Slider: A, ColorCircles: k, ACCENT_COLORS: S, SettingsRow: u, Toggle: w, useHaText: b, useHaBool: z, usePackageInstaller: T } = window.__OIKOS_SDK__, { Eye: I, Download: C, CheckCircle2: P, AlertTriangle: E, Trash2: O, ArrowUpCircle: N } = window.__OIKOS_SDK__.icons, H = {
   entityId: "",
   entityIdCount: "",
   entityIdLast: "",
   label: "Cassetta delle Lettere",
   autoDismiss: 10,
-  accentColor: "#ef4444"
+  accentColor: "#ef4444",
+  popupEnabled: !0
 };
 function _({ entityId: r, label: i, hint: l }) {
-  const [o, e, s] = w(r);
-  return /* @__PURE__ */ n(g, { label: i, hint: l, children: /* @__PURE__ */ n(
+  const [o, e, s] = z(r);
+  return /* @__PURE__ */ n(u, { label: i, hint: l, children: /* @__PURE__ */ n(
     "button",
     {
       onClick: () => s && e(!o),
@@ -898,12 +899,12 @@ function _({ entityId: r, label: i, hint: l }) {
 }
 function p({ entityId: r, label: i, hint: l, placeholder: o }) {
   const [e, s, a] = b(r);
-  return /* @__PURE__ */ n(m, { label: i, hint: l, children: /* @__PURE__ */ n(
+  return /* @__PURE__ */ n(d, { label: i, hint: l, children: /* @__PURE__ */ n(
     "input",
     {
       type: "text",
       value: e || "",
-      onChange: (u) => s(u.target.value),
+      onChange: (c) => s(c.target.value),
       disabled: !a,
       placeholder: o,
       style: {
@@ -921,13 +922,13 @@ function p({ entityId: r, label: i, hint: l, placeholder: o }) {
     }
   ) });
 }
-function H({ cardId: r }) {
-  const [i, l] = x(r, N), o = (a, u) => l((v) => ({ ...v, [a]: u })), e = z({ name: "posta", yaml: f }), [, s] = b("input_text.sm_posta_sensor");
+function R({ cardId: r }) {
+  const [i, l] = x(r, H), o = (a, c) => l((v) => ({ ...v, [a]: c })), e = T({ name: "posta", yaml: f }), [, s] = b("input_text.sm_posta_sensor");
   return h(() => {
     i.entityId && s(i.entityId);
   }, [i.entityId]), /* @__PURE__ */ t("div", { style: { display: "flex", flexDirection: "column", gap: 14 }, children: [
-    /* @__PURE__ */ t(d, { title: "Generale", children: [
-      /* @__PURE__ */ n(m, { label: "Etichetta", children: /* @__PURE__ */ n(
+    /* @__PURE__ */ t(m, { title: "Generale", children: [
+      /* @__PURE__ */ n(d, { label: "Etichetta", children: /* @__PURE__ */ n(
         y,
         {
           value: i.label,
@@ -935,17 +936,24 @@ function H({ cardId: r }) {
           placeholder: "Cassetta delle Lettere"
         }
       ) }),
-      /* @__PURE__ */ n(m, { label: "Sensore cassetta", hint: "Si attiva quando l'entità passa allo stato «on»", children: /* @__PURE__ */ n(
-        c,
+      /* @__PURE__ */ n(d, { label: "Sensore cassetta", hint: "Si attiva quando l'entità passa allo stato «on»", children: /* @__PURE__ */ n(
+        g,
         {
           field: "entityId",
           config: i,
           setConfig: l,
           filterDomain: "binary_sensor"
         }
+      ) }),
+      /* @__PURE__ */ n(u, { label: "Mostra popup", hint: "Disabilita per ricevere solo la notifica campanella senza popup", children: /* @__PURE__ */ n(
+        w,
+        {
+          value: i.popupEnabled !== !1,
+          onChange: (a) => o("popupEnabled", a)
+        }
       ) })
     ] }),
-    /* @__PURE__ */ t(d, { title: "Conteggio (package HA «Posta Smart»)", children: [
+    /* @__PURE__ */ t(m, { title: "Conteggio (package HA «Posta Smart»)", children: [
       /* @__PURE__ */ t("div", { style: {
         fontSize: 11,
         lineHeight: 1.5,
@@ -958,8 +966,8 @@ function H({ cardId: r }) {
         /* @__PURE__ */ n("b", { children: "posta.yaml" }),
         " su Home Assistant, configura qui i sensori che HA aggiorna lato server (l'increment funziona anche con la dashboard chiusa). Se lasci vuoto, il conteggio resta in locale al browser."
       ] }),
-      /* @__PURE__ */ n(m, { label: "Sensore conteggio giornaliero", hint: "Es. sensor.conteggio_aperture_posta_giornaliere_lettura", children: /* @__PURE__ */ n(
-        c,
+      /* @__PURE__ */ n(d, { label: "Sensore posta da ritirare", hint: "Es. sensor.posta_da_ritirare_lettura — posta attualmente in cassetta (si azzera al ritiro)", children: /* @__PURE__ */ n(
+        g,
         {
           field: "entityIdCount",
           config: i,
@@ -967,8 +975,8 @@ function H({ cardId: r }) {
           filterDomain: "sensor"
         }
       ) }),
-      /* @__PURE__ */ n(m, { label: "Sensore ultima imbucata", hint: "Es. sensor.ultima_apertura_cassetta (timestamp)", children: /* @__PURE__ */ n(
-        c,
+      /* @__PURE__ */ n(d, { label: "Sensore ultima imbucata", hint: "Es. sensor.ultima_apertura_cassetta (timestamp)", children: /* @__PURE__ */ n(
+        g,
         {
           field: "entityIdLast",
           config: i,
@@ -977,7 +985,7 @@ function H({ cardId: r }) {
         }
       ) })
     ] }),
-    /* @__PURE__ */ t(d, { title: "Package Home Assistant", children: [
+    /* @__PURE__ */ t(m, { title: "Package Home Assistant", children: [
       /* @__PURE__ */ t("div", { style: {
         fontSize: 11,
         lineHeight: 1.5,
@@ -1005,7 +1013,7 @@ function H({ cardId: r }) {
         background: "linear-gradient(135deg, rgba(16,185,129,.12), rgba(16,185,129,.06))",
         border: "1px solid rgba(16,185,129,.4)"
       }, children: [
-        /* @__PURE__ */ n(E, { size: 18, style: { color: "#10b981", flexShrink: 0 } }),
+        /* @__PURE__ */ n(N, { size: 18, style: { color: "#10b981", flexShrink: 0 } }),
         /* @__PURE__ */ t("div", { style: { flex: 1, fontSize: 12, color: "var(--text-primary)" }, children: [
           /* @__PURE__ */ n("div", { style: { fontWeight: 700 }, children: "Aggiornamento package disponibile" }),
           /* @__PURE__ */ t("div", { style: { fontSize: 10, color: "var(--text-muted)", marginTop: 2 }, children: [
@@ -1034,7 +1042,7 @@ function H({ cardId: r }) {
         )
       ] }),
       /* @__PURE__ */ n(
-        g,
+        u,
         {
           label: e.checking ? "Stato package: controllo…" : e.installed ? `Package installato${e.installedVersion ? ` · v${e.installedVersion}` : ""}` : "Package non installato",
           hint: e.installed ? "/config/packages/posta.yaml" : void 0,
@@ -1058,7 +1066,7 @@ function H({ cardId: r }) {
                   color: "var(--amber)"
                 },
                 children: [
-                  /* @__PURE__ */ n(T, { size: 12 }),
+                  /* @__PURE__ */ n(C, { size: 12 }),
                   " ",
                   e.installed ? "Reinstalla" : "Installa"
                 ]
@@ -1102,11 +1110,11 @@ function H({ cardId: r }) {
         border: `1px solid ${e.msg.type === "ok" ? "var(--green-border, #bbf7d0)" : "var(--red-border, #fecaca)"}`,
         color: e.msg.type === "ok" ? "var(--green, #15803d)" : "var(--red, #b91c1c)"
       }, children: [
-        e.msg.type === "ok" ? /* @__PURE__ */ n(P, { size: 14, style: { flexShrink: 0, marginTop: 1 } }) : /* @__PURE__ */ n(C, { size: 14, style: { flexShrink: 0, marginTop: 1 } }),
+        e.msg.type === "ok" ? /* @__PURE__ */ n(P, { size: 14, style: { flexShrink: 0, marginTop: 1 } }) : /* @__PURE__ */ n(E, { size: 14, style: { flexShrink: 0, marginTop: 1 } }),
         /* @__PURE__ */ n("span", { children: e.msg.text })
       ] })
     ] }),
-    /* @__PURE__ */ t(d, { title: "Notifiche (package HA «Posta Smart»)", children: [
+    /* @__PURE__ */ t(m, { title: "Notifiche (package HA «Posta Smart»)", children: [
       /* @__PURE__ */ t("div", { style: {
         fontSize: 11,
         lineHeight: 1.5,
@@ -1246,8 +1254,8 @@ function H({ cardId: r }) {
         }
       )
     ] }),
-    /* @__PURE__ */ t(d, { title: "Popup", children: [
-      /* @__PURE__ */ n(g, { label: "Anteprima popup", hint: "Apre il popup per vedere l'aspetto", children: /* @__PURE__ */ t(
+    /* @__PURE__ */ t(m, { title: "Popup", children: [
+      /* @__PURE__ */ n(u, { label: "Anteprima popup", hint: "Apre il popup per vedere l'aspetto", children: /* @__PURE__ */ t(
         "button",
         {
           onClick: () => window.dispatchEvent(new CustomEvent("oikos-card-watcher-preview", {
@@ -1276,7 +1284,7 @@ function H({ cardId: r }) {
           ]
         }
       ) }),
-      /* @__PURE__ */ n(m, { label: "Chiusura automatica", children: /* @__PURE__ */ n(
+      /* @__PURE__ */ n(d, { label: "Chiusura automatica", children: /* @__PURE__ */ n(
         A,
         {
           value: i.autoDismiss,
@@ -1289,7 +1297,7 @@ function H({ cardId: r }) {
           format: (a) => a === 0 ? "Manuale" : `${a}s`
         }
       ) }),
-      /* @__PURE__ */ n(m, { label: "Colore accento", children: /* @__PURE__ */ n(
+      /* @__PURE__ */ n(d, { label: "Colore accento", children: /* @__PURE__ */ n(
         k,
         {
           value: i.accentColor,
@@ -1301,5 +1309,5 @@ function H({ cardId: r }) {
   ] });
 }
 export {
-  H as default
+  R as default
 };
