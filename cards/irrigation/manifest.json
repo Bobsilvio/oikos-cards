@@ -1,7 +1,7 @@
 {
   "id": "irrigation",
   "name": "Irrigazione",
-  "version": "1.5.1",
+  "version": "1.5.2",
   "author": "Oikos",
   "description": "Card orto & irrigazione: toggle switch HA, popup globale start/finish/reset (gestito dal watcher), sensori meteo/temperatura/pioggia.",
   "sdkVersion": "^1.1.0",

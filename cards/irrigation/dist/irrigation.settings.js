@@ -1,5 +1,5 @@
 const { jsxs: n, jsx: i } = window.__OIKOS_SDK__.jsxRuntime, f = `# oikos:package_id: orto_domotizzato
-# oikos:package_version: 1.5.0
+# oikos:package_version: 1.5.1
 #########################
 # Orto automatizzata v1.3 - 18 APRILE 2026
 # v1.3: rimossi anchors, ora switch/alexa/telegram/push si configurano
@@ -81,7 +81,6 @@ input_number:
   irrigatore_durata_irrigazione:
     name: Irrigatore durata irrigazione
     icon: mdi:clock
-    initial: 0
     min: 0
     max: 100
     step: 1
@@ -331,18 +330,15 @@ input_boolean:
   irrigatore_avvisi_attivi:
     name: "Avvisi irrigazione abilitati"
     icon: mdi:bell-ring
-    initial: true
 
   # ── Toggle per evento (separati da channel) ───────
   irrigatore_alert_on_start:
     name: "Avviso a inizio irrigazione"
     icon: mdi:play-circle
-    initial: true
 
   irrigatore_alert_on_finish:
     name: "Avviso a fine irrigazione"
     icon: mdi:stop-circle
-    initial: true
 
 ####################################################
 #                                                  #
@@ -1052,7 +1048,7 @@ script:
     mode: single
     icon: mdi:sprinkler
 
-`, { useCardConfig: b, EntityField: u, Section: g, Field: v, SettingsRow: l, Toggle: p, TextField: q, useHaText: h, useHaBool: z, usePackageInstaller: y } = window.__OIKOS_SDK__, { Download: x, CheckCircle2: I, AlertTriangle: w, Trash2: S, ArrowUpCircle: T } = window.__OIKOS_SDK__.icons, k = {
+`, { useCardConfig: b, EntityField: l, Section: g, Field: v, SettingsRow: u, Toggle: p, TextField: q, useHaText: h, useHaBool: z, usePackageInstaller: y } = window.__OIKOS_SDK__, { Download: x, CheckCircle2: I, AlertTriangle: w, Trash2: S, ArrowUpCircle: T } = window.__OIKOS_SDK__.icons, k = {
   switchEntityId: "",
   weatherEntity: "",
   temperatureSensor: "",
@@ -1063,7 +1059,7 @@ script:
 };
 function _({ entityId: s, label: a, hint: o }) {
   const [r, e, t] = z(s);
-  return /* @__PURE__ */ i(l, { label: a, hint: o, children: /* @__PURE__ */ i(
+  return /* @__PURE__ */ i(u, { label: a, hint: o, children: /* @__PURE__ */ i(
     "button",
     {
       onClick: () => t && e(!r),
@@ -1123,7 +1119,7 @@ function A({ cardId: s }) {
   const [a, o] = b(s, k), r = (t) => o({ ...a, ...t }), e = y({ name: "orto_domotizzato", yaml: f });
   return /* @__PURE__ */ n("div", { style: { display: "flex", flexDirection: "column", gap: 16 }, children: [
     /* @__PURE__ */ i(g, { title: "Dispositivo", children: /* @__PURE__ */ i(
-      u,
+      l,
       {
         label: "Switch irrigatore",
         field: "switchEntityId",
@@ -1134,7 +1130,7 @@ function A({ cardId: s }) {
     ) }),
     /* @__PURE__ */ n(g, { title: "Meteo & Sensori (opzionale)", children: [
       /* @__PURE__ */ i(
-        u,
+        l,
         {
           label: "Entità meteo",
           field: "weatherEntity",
@@ -1144,7 +1140,7 @@ function A({ cardId: s }) {
         }
       ),
       /* @__PURE__ */ i(
-        u,
+        l,
         {
           label: "Sensore temperatura",
           field: "temperatureSensor",
@@ -1154,7 +1150,7 @@ function A({ cardId: s }) {
         }
       ),
       /* @__PURE__ */ i(
-        u,
+        l,
         {
           label: "Sensore pioggia",
           field: "rainSensor",
@@ -1217,7 +1213,7 @@ function A({ cardId: s }) {
         )
       ] }),
       /* @__PURE__ */ i(
-        l,
+        u,
         {
           label: e.checking ? "Stato package: controllo…" : e.installed ? `Package installato${e.installedVersion ? ` · v${e.installedVersion}` : ""}` : "Package non installato",
           hint: e.installed ? "/config/packages/orto_domotizzato.yaml" : void 0,
@@ -1413,9 +1409,9 @@ function A({ cardId: s }) {
       )
     ] }),
     /* @__PURE__ */ n(g, { title: "Popup di avviso (locale)", children: [
-      /* @__PURE__ */ i(l, { label: "Irrigazione iniziata", hint: "Mostra popup quando lo switch si attiva", children: /* @__PURE__ */ i(p, { value: a.alertOnStart, onChange: (t) => r({ alertOnStart: t }) }) }),
-      /* @__PURE__ */ i(l, { label: "Irrigazione terminata", hint: "Mostra popup quando lo switch si spegne", children: /* @__PURE__ */ i(p, { value: a.alertOnFinish, onChange: (t) => r({ alertOnFinish: t }) }) }),
-      /* @__PURE__ */ i(l, { label: "Reset valori", hint: "Mostra popup dopo il reset manuale", children: /* @__PURE__ */ i(p, { value: a.alertOnReset, onChange: (t) => r({ alertOnReset: t }) }) })
+      /* @__PURE__ */ i(u, { label: "Irrigazione iniziata", hint: "Mostra popup quando lo switch si attiva", children: /* @__PURE__ */ i(p, { value: a.alertOnStart, onChange: (t) => r({ alertOnStart: t }) }) }),
+      /* @__PURE__ */ i(u, { label: "Irrigazione terminata", hint: "Mostra popup quando lo switch si spegne", children: /* @__PURE__ */ i(p, { value: a.alertOnFinish, onChange: (t) => r({ alertOnFinish: t }) }) }),
+      /* @__PURE__ */ i(u, { label: "Reset valori", hint: "Mostra popup dopo il reset manuale", children: /* @__PURE__ */ i(p, { value: a.alertOnReset, onChange: (t) => r({ alertOnReset: t }) }) })
     ] })
   ] });
 }

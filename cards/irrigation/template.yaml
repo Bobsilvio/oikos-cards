@@ -1,5 +1,5 @@
 # oikos:package_id: orto_domotizzato
-# oikos:package_version: 1.5.0
+# oikos:package_version: 1.5.1
 #########################
 # Orto automatizzata v1.3 - 18 APRILE 2026
 # v1.3: rimossi anchors, ora switch/alexa/telegram/push si configurano
@@ -81,7 +81,6 @@ input_number:
   irrigatore_durata_irrigazione:
     name: Irrigatore durata irrigazione
     icon: mdi:clock
-    initial: 0
     min: 0
     max: 100
     step: 1
@@ -331,18 +330,15 @@ input_boolean:
   irrigatore_avvisi_attivi:
     name: "Avvisi irrigazione abilitati"
     icon: mdi:bell-ring
-    initial: true
 
   # ── Toggle per evento (separati da channel) ───────
   irrigatore_alert_on_start:
     name: "Avviso a inizio irrigazione"
     icon: mdi:play-circle
-    initial: true
 
   irrigatore_alert_on_finish:
     name: "Avviso a fine irrigazione"
     icon: mdi:stop-circle
-    initial: true
 
 ####################################################
 #                                                  #

@@ -450,7 +450,6 @@ template:
 counter:
   cicli_funzionamento_elettrodomestici_totale_{{SUFFIX}}:
     name: Cicli Funzionamento Elettrodomestici Totale
-    initial: 0
     step: 1
 
 group:
