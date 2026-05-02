@@ -2,7 +2,7 @@
   "repo": "oikos-cards",
   "version": "0.1.0",
   "sdkVersion": "1.0.0",
-  "updated": "2026-05-01",
+  "updated": "2026-05-02",
   "cards": [
     {
       "id": "air-quality",
@@ -27,7 +27,7 @@
     {
       "id": "appliance",
       "name": "Elettrodomestico",
-      "version": "0.5.1",
+      "version": "0.5.2",
       "author": "Oikos",
       "description": "Monitor elettrodomestici: consumo live, costo ciclo, storico giornaliero/settimanale/mensile/annuale, popup globale a fine ciclo, animazioni in funzione. Auto-installa package HA con suffisso dedicato.",
       "sdkVersion": "^1.1.0",
@@ -135,7 +135,7 @@
     {
       "id": "mailbox-card",
       "name": "Cassetta delle Lettere",
-      "version": "1.8.3",
+      "version": "1.8.4",
       "author": "Oikos",
       "description": "Cassetta delle lettere: contatore giornaliero + popup elaborato self-contained con buste volanti (funziona anche quando la dashboard è chiusa, via watcher auto-registrato). Compatibile con package HA «Posta Smart» per notifiche push iPhone, statistiche giornaliere/mensili/annuali, digest serale e auto-spegnimento.",
       "sdkVersion": "^1.1.0",
