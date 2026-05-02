@@ -135,6 +135,8 @@ function MapBackground({ lat, lon, name, dark, zoomLevel = 15 }) {
         width: '100%', height: '100%',
         border: 'none', display: 'block',
         filter: dark ? 'saturate(.75) brightness(.65)' : 'saturate(.9)',
+        transform: 'translateX(20%)',
+        transformOrigin: 'left center',
       }}
       loading="lazy"
       referrerPolicy="no-referrer"
@@ -238,12 +240,11 @@ export default function PersonCard({ cardId }) {
           pointerEvents: 'none',
           background: `linear-gradient(105deg,
             ${bg} 0%,
-            ${bg} 25%,
-            ${bg}f5 38%,
-            ${bg}cc 48%,
-            ${bg}80 58%,
-            ${bg}33 68%,
-            transparent 80%)`,
+            ${bg} 18%,
+            ${bg}e0 25%,
+            ${bg}88 31%,
+            ${bg}22 35%,
+            transparent 40%)`,
         }}/>
       )}
 

@@ -22,25 +22,25 @@ function $(t, n) {
   const e = parseFloat(t);
   return isNaN(e) ? t : `${Math.round(e)}${n ?? ""}`;
 }
-const q = "M16 20H8V6H16M16.67 4H15V2H9V4H7.33C6.6 4 6 4.6 6 5.33V20.67C6 21.4 6.6 22 7.33 22H16.67C17.4 22 18 21.4 18 20.67V5.33C18 4.6 17.4 4 16.67 4Z", G = "M7 4C7 5.1 7.9 6 9 6S11 5.1 11 4 10.1 2 9 2 7 2.9 7 4M14 20.5L12 14L9 17V21H7V15.5L10 12.5L9 8.5C7.6 10.2 6 11 4 11V9C5.6 9 6.8 8.3 7.8 6.9L8.8 5.6C9.2 5.1 9.8 4.8 10.5 4.8C10.8 4.8 11.1 4.9 11.4 5L16 7V11H14V8.5L12.1 7.8L13 13L16 20.5H14Z", J = "M18.92 6C18.72 5.42 18.16 5 17.5 5H6.5C5.84 5 5.28 5.42 5.08 6L3 12V20A1 1 0 004 21H5A1 1 0 006 20V19H18V20A1 1 0 0019 21H20A1 1 0 0021 20V12L18.92 6M6.5 16A1.5 1.5 0 015 14.5 1.5 1.5 0 016.5 13 1.5 1.5 0 018 14.5 1.5 1.5 0 016.5 16M17.5 16A1.5 1.5 0 0116 14.5 1.5 1.5 0 0117.5 13 1.5 1.5 0 0119 14.5 1.5 1.5 0 0117.5 16M5 11L6.5 6.5H17.5L19 11H5Z";
-function Q({ d: t, size: n = 16, color: e }) {
+const q = "M16 20H8V6H16M16.67 4H15V2H9V4H7.33C6.6 4 6 4.6 6 5.33V20.67C6 21.4 6.6 22 7.33 22H16.67C17.4 22 18 21.4 18 20.67V5.33C18 4.6 17.4 4 16.67 4Z", X = "M7 4C7 5.1 7.9 6 9 6S11 5.1 11 4 10.1 2 9 2 7 2.9 7 4M14 20.5L12 14L9 17V21H7V15.5L10 12.5L9 8.5C7.6 10.2 6 11 4 11V9C5.6 9 6.8 8.3 7.8 6.9L8.8 5.6C9.2 5.1 9.8 4.8 10.5 4.8C10.8 4.8 11.1 4.9 11.4 5L16 7V11H14V8.5L12.1 7.8L13 13L16 20.5H14Z", G = "M18.92 6C18.72 5.42 18.16 5 17.5 5H6.5C5.84 5 5.28 5.42 5.08 6L3 12V20A1 1 0 004 21H5A1 1 0 006 20V19H18V20A1 1 0 0019 21H20A1 1 0 0021 20V12L18.92 6M6.5 16A1.5 1.5 0 015 14.5 1.5 1.5 0 016.5 13 1.5 1.5 0 018 14.5 1.5 1.5 0 016.5 16M17.5 16A1.5 1.5 0 0116 14.5 1.5 1.5 0 0117.5 13 1.5 1.5 0 0119 14.5 1.5 1.5 0 0117.5 16M5 11L6.5 6.5H17.5L19 11H5Z";
+function J({ d: t, size: n = 16, color: e }) {
   return /* @__PURE__ */ i("svg", { width: n, height: n, viewBox: "0 0 24 24", style: { flexShrink: 0 }, children: /* @__PURE__ */ i("path", { d: t, fill: e }) });
 }
-function _({ icon: t, value: n, color: e, dark: r, onMap: o = !1 }) {
+function _({ icon: t, value: n, color: e, dark: o, onMap: r = !1 }) {
   return !n || n === "—" ? null : /* @__PURE__ */ d("div", { style: { display: "flex", alignItems: "center", gap: 9 }, children: [
-    /* @__PURE__ */ i(Q, { d: t, size: 16, color: e ?? (r ? "rgba(255,255,255,.32)" : "#94a3b8") }),
+    /* @__PURE__ */ i(J, { d: t, size: 16, color: e ?? (o ? "rgba(255,255,255,.32)" : "#94a3b8") }),
     /* @__PURE__ */ i("span", { style: {
       fontSize: 14,
       fontWeight: 600,
-      color: o ? "rgba(255,255,255,.95)" : r ? "rgba(255,255,255,.8)" : "#374151",
+      color: r ? "rgba(255,255,255,.95)" : o ? "rgba(255,255,255,.8)" : "#374151",
       fontFamily: "system-ui,-apple-system,sans-serif",
       letterSpacing: "-0.2px",
-      textShadow: o ? "0 1px 2px rgba(0,0,0,.6)" : "none"
+      textShadow: r ? "0 1px 2px rgba(0,0,0,.6)" : "none"
     }, children: n })
   ] });
 }
-function X({ pictureUrl: t, name: n, color: e, size: r, dark: o, uid: a, isHome: p }) {
-  return /* @__PURE__ */ d("div", { style: { position: "relative", flexShrink: 0, width: r, height: r }, children: [
+function Q({ pictureUrl: t, name: n, color: e, size: o, dark: r, uid: a, isHome: p }) {
+  return /* @__PURE__ */ d("div", { style: { position: "relative", flexShrink: 0, width: o, height: o }, children: [
     /* @__PURE__ */ i("style", { children: `
         @keyframes pc-pulse-${a} {
           0%,100% { transform:scale(1);   opacity:.35 }
@@ -80,7 +80,7 @@ function X({ pictureUrl: t, name: n, color: e, size: r, dark: o, uid: a, isHome:
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
-      fontSize: r * 0.33,
+      fontSize: o * 0.33,
       fontWeight: 800,
       color: e
     }, children: (n ?? "?").slice(0, 2).toUpperCase() }),
@@ -93,15 +93,15 @@ function X({ pictureUrl: t, name: n, color: e, size: r, dark: o, uid: a, isHome:
       height: 13,
       borderRadius: "50%",
       background: e,
-      border: `2.5px solid ${o ? "#0d1117" : "#fff"}`,
+      border: `2.5px solid ${r ? "#0d1117" : "#fff"}`,
       boxShadow: `0 0 6px ${e}88`,
       transition: "background .4s"
     } })
   ] });
 }
-function ee({ lat: t, lon: n, name: e, dark: r, zoomLevel: o = 15 }) {
+function ee({ lat: t, lon: n, name: e, dark: o, zoomLevel: r = 15 }) {
   if (t == null || n == null) return null;
-  const a = `https://maps.google.com/maps?q=${t},${n}&z=${o}&output=embed`;
+  const a = `https://maps.google.com/maps?q=${t},${n}&z=${r}&output=embed`;
   return /* @__PURE__ */ i(
     "iframe",
     {
@@ -114,7 +114,9 @@ function ee({ lat: t, lon: n, name: e, dark: r, zoomLevel: o = 15 }) {
         height: "100%",
         border: "none",
         display: "block",
-        filter: r ? "saturate(.75) brightness(.65)" : "saturate(.9)"
+        filter: o ? "saturate(.75) brightness(.65)" : "saturate(.9)",
+        transform: "translateX(20%)",
+        transformOrigin: "left center"
       },
       loading: "lazy",
       referrerPolicy: "no-referrer",
@@ -124,8 +126,8 @@ function ee({ lat: t, lon: n, name: e, dark: r, zoomLevel: o = 15 }) {
 }
 function ne({ cardId: t }) {
   var M, I, z, H, L, R, V, D, A;
-  const { dark: n, haStates: e, getState: r } = U(), [o] = P(t, Y), a = B().replace(/:/g, "");
-  if (!o.personEntity) return /* @__PURE__ */ i("div", { style: {
+  const { dark: n, haStates: e, getState: o } = U(), [r] = P(t, Y), a = B().replace(/:/g, "");
+  if (!r.personEntity) return /* @__PURE__ */ i("div", { style: {
     borderRadius: 18,
     minHeight: 100,
     background: n ? "rgba(255,255,255,.03)" : "#f8fafc",
@@ -136,11 +138,11 @@ function ne({ cardId: t }) {
     color: "var(--text-muted)",
     fontSize: 11
   }, children: "Configura un'entità person in ⚙" });
-  const p = r(o.personEntity) ?? "unknown", f = ((M = e == null ? void 0 : e[o.personEntity]) == null ? void 0 : M.attributes) ?? {}, F = f.entity_picture, h = o.label || f.friendly_name || o.personEntity, s = Z(p), W = p === "home", c = o.gpsEntity ? ((I = e == null ? void 0 : e[o.gpsEntity]) == null ? void 0 : I.attributes) ?? {} : null, k = (c == null ? void 0 : c.latitude) ?? f.latitude, E = (c == null ? void 0 : c.longitude) ?? f.longitude, C = (z = e == null ? void 0 : e[o.personEntity]) == null ? void 0 : z.last_updated, S = (() => {
+  const p = o(r.personEntity) ?? "unknown", f = ((M = e == null ? void 0 : e[r.personEntity]) == null ? void 0 : M.attributes) ?? {}, F = f.entity_picture, h = r.label || f.friendly_name || r.personEntity, s = Z(p), O = p === "home", c = r.gpsEntity ? ((I = e == null ? void 0 : e[r.gpsEntity]) == null ? void 0 : I.attributes) ?? {} : null, k = (c == null ? void 0 : c.latitude) ?? f.latitude, E = (c == null ? void 0 : c.longitude) ?? f.longitude, C = (z = e == null ? void 0 : e[r.personEntity]) == null ? void 0 : z.last_updated, S = (() => {
     if (!C) return null;
     const u = (Date.now() - new Date(C).getTime()) / 1e3;
     return u < 90 ? "adesso" : u < 3600 ? `${Math.floor(u / 60)} min fa` : u < 86400 ? `${Math.floor(u / 3600)}h fa` : `${Math.floor(u / 86400)}g fa`;
-  })(), x = o.batteryEntity ? r(o.batteryEntity) : null, K = ((L = (H = e == null ? void 0 : e[o.batteryEntity]) == null ? void 0 : H.attributes) == null ? void 0 : L.unit_of_measurement) ?? "%", m = $(x, K), v = x ? parseFloat(x) : null, O = v == null ? null : v > 50 ? "#22c55e" : v > 20 ? "#f59e0b" : "#ef4444", g = o.walkEntity ? $(r(o.walkEntity), ((V = (R = e == null ? void 0 : e[o.walkEntity]) == null ? void 0 : R.attributes) == null ? void 0 : V.unit_of_measurement) ?? " min") : null, y = o.driveEntity ? $(r(o.driveEntity), ((A = (D = e == null ? void 0 : e[o.driveEntity]) == null ? void 0 : D.attributes) == null ? void 0 : A.unit_of_measurement) ?? " min") : null, j = m !== "—" || g || y, b = o.showMap && k != null && E != null, l = n ? "#0d1117" : "#ffffff", T = n ? "rgba(255,255,255,.08)" : "#f1f5f9", w = n ? "rgba(255,255,255,.28)" : "#94a3b8";
+  })(), x = r.batteryEntity ? o(r.batteryEntity) : null, W = ((L = (H = e == null ? void 0 : e[r.batteryEntity]) == null ? void 0 : H.attributes) == null ? void 0 : L.unit_of_measurement) ?? "%", m = $(x, W), v = x ? parseFloat(x) : null, K = v == null ? null : v > 50 ? "#22c55e" : v > 20 ? "#f59e0b" : "#ef4444", g = r.walkEntity ? $(o(r.walkEntity), ((V = (R = e == null ? void 0 : e[r.walkEntity]) == null ? void 0 : R.attributes) == null ? void 0 : V.unit_of_measurement) ?? " min") : null, y = r.driveEntity ? $(o(r.driveEntity), ((A = (D = e == null ? void 0 : e[r.driveEntity]) == null ? void 0 : D.attributes) == null ? void 0 : A.unit_of_measurement) ?? " min") : null, j = m !== "—" || g || y, b = r.showMap && k != null && E != null, l = n ? "#0d1117" : "#ffffff", T = n ? "rgba(255,255,255,.08)" : "#f1f5f9", w = n ? "rgba(255,255,255,.28)" : "#94a3b8";
   return /* @__PURE__ */ d("div", { style: {
     position: "relative",
     borderRadius: 20,
@@ -170,12 +172,11 @@ function ne({ cardId: t }) {
       pointerEvents: "none",
       background: `linear-gradient(105deg,
             ${l} 0%,
-            ${l} 25%,
-            ${l}f5 38%,
-            ${l}cc 48%,
-            ${l}80 58%,
-            ${l}33 68%,
-            transparent 80%)`
+            ${l} 18%,
+            ${l}e0 25%,
+            ${l}88 31%,
+            ${l}22 35%,
+            transparent 40%)`
     } }),
     b && /* @__PURE__ */ i("div", { "aria-hidden": !0, style: {
       position: "absolute",
@@ -207,7 +208,7 @@ function ne({ cardId: t }) {
         background: `radial-gradient(circle, ${s}1e 0%, transparent 70%)`,
         transition: "background .4s"
       } }),
-      /* @__PURE__ */ i(X, { pictureUrl: F, name: h, color: s, size: 72, dark: n, uid: a, isHome: W }),
+      /* @__PURE__ */ i(Q, { pictureUrl: F, name: h, color: s, size: 72, dark: n, uid: a, isHome: O }),
       /* @__PURE__ */ d("div", { style: { flex: 1, minWidth: 0, display: "flex", flexDirection: "column", gap: 5 }, children: [
         /* @__PURE__ */ d("div", { style: { display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }, children: [
           /* @__PURE__ */ i("span", { style: {
@@ -232,9 +233,9 @@ function ne({ cardId: t }) {
           }, children: N(p, f) })
         ] }),
         j && /* @__PURE__ */ d("div", { style: { display: "flex", flexDirection: "column", gap: 3 }, children: [
-          m !== "—" && /* @__PURE__ */ i(_, { icon: q, value: m, color: O, dark: n }),
-          g && g !== "—" && /* @__PURE__ */ i(_, { icon: G, value: g, color: w, dark: n }),
-          y && y !== "—" && /* @__PURE__ */ i(_, { icon: J, value: y, color: w, dark: n })
+          m !== "—" && /* @__PURE__ */ i(_, { icon: q, value: m, color: K, dark: n }),
+          g && g !== "—" && /* @__PURE__ */ i(_, { icon: X, value: g, color: w, dark: n }),
+          y && y !== "—" && /* @__PURE__ */ i(_, { icon: G, value: y, color: w, dark: n })
         ] }),
         S && /* @__PURE__ */ i("span", { style: { fontSize: 10, color: w }, children: S })
       ] }),
