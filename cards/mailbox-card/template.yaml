@@ -1,5 +1,5 @@
 # oikos:package_id: posta
-# oikos:package_version: 1.1.2
+# oikos:package_version: 1.1.3
 ################################################################################
 # Posta Smart — Package Home Assistant
 # Author: Oikos
@@ -115,44 +115,36 @@ input_boolean:
   sm_posta_avvisi_attivi:
     name: "📬 Avvisi posta abilitati"
     icon: mdi:bell-ring
-    initial: true
 
   # ── Canali di notifica ──────────────────────────────────────────────────────
   sm_posta_notify_push:
     name: "Notifica push"
     icon: mdi:cellphone-message
-    initial: true
 
   sm_posta_notify_alexa:
     name: "Annuncio Alexa"
     icon: mdi:speaker-wireless
-    initial: false
 
   sm_posta_notify_telegram:
     name: "Notifica Telegram"
     icon: mdi:send
-    initial: false
 
   # ── Comportamenti opzionali ─────────────────────────────────────────────────
   sm_posta_digest_serale:
     name: "Digest serale alle 20:00"
     icon: mdi:bell-outline
-    initial: true
 
   sm_posta_auto_spegnimento_24h:
     name: "Auto-spegnimento dopo 24h"
     icon: mdi:timer-outline
-    initial: false
 
   sm_posta_notify_ritirata:
     name: "Notifica famiglia quando ritirata"
     icon: mdi:account-multiple-check
-    initial: false
 
   sm_posta_low_battery_alert:
     name: "Avviso batteria bassa sensore"
     icon: mdi:battery-alert
-    initial: true
 
 ################################################################################
 #                          INPUT_NUMBER (contatori)                            #
@@ -164,7 +156,6 @@ input_number:
   # NON si resetta a mezzanotte: rappresenta i pezzi attualmente in cassetta.
   sm_posta_da_ritirare:
     name: "Posta da ritirare"
-    initial: 0
     min: 0
     max: 1000
     step: 1
@@ -174,7 +165,6 @@ input_number:
   # ── Esistenti (retained per back-compat) ────────────────────────────────────
   conteggio_aperture_posta_giornaliere:
     name: "Aperture posta oggi"
-    initial: 0
     min: 0
     max: 1000
     step: 1
@@ -182,7 +172,6 @@ input_number:
 
   conteggio_aperture_posta_mensili:
     name: "Aperture posta del mese"
-    initial: 0
     min: 0
     max: 10000
     step: 1
@@ -190,7 +179,6 @@ input_number:
 
   conteggio_aperture_posta_annuali:
     name: "Aperture posta dell'anno"
-    initial: 0
     min: 0
     max: 100000
     step: 1
@@ -199,49 +187,42 @@ input_number:
   # ── Statistiche per giorno della settimana ─────────────────────────────────
   sm_posta_giorno_lun:
     name: "Aperture lunedì (totale)"
-    initial: 0
     min: 0
     max: 100000
     step: 1
     mode: box
   sm_posta_giorno_mar:
     name: "Aperture martedì (totale)"
-    initial: 0
     min: 0
     max: 100000
     step: 1
     mode: box
   sm_posta_giorno_mer:
     name: "Aperture mercoledì (totale)"
-    initial: 0
     min: 0
     max: 100000
     step: 1
     mode: box
   sm_posta_giorno_gio:
     name: "Aperture giovedì (totale)"
-    initial: 0
     min: 0
     max: 100000
     step: 1
     mode: box
   sm_posta_giorno_ven:
     name: "Aperture venerdì (totale)"
-    initial: 0
     min: 0
     max: 100000
     step: 1
     mode: box
   sm_posta_giorno_sab:
     name: "Aperture sabato (totale)"
-    initial: 0
     min: 0
     max: 100000
     step: 1
     mode: box
   sm_posta_giorno_dom:
     name: "Aperture domenica (totale)"
-    initial: 0
     min: 0
     max: 100000
     step: 1
@@ -250,7 +231,6 @@ input_number:
   # ── Record / Statistiche extra ──────────────────────────────────────────────
   sm_posta_record_giornaliero:
     name: "Record consegne in un giorno"
-    initial: 0
     min: 0
     max: 1000
     step: 1
@@ -258,7 +238,6 @@ input_number:
 
   sm_posta_low_battery_threshold:
     name: "Soglia batteria sensore (%)"
-    initial: 20
     min: 5
     max: 50
     step: 5

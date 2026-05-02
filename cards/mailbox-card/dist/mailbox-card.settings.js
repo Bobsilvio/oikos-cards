@@ -1,5 +1,5 @@
-const { jsxs: a, jsx: n } = window.__OIKOS_SDK__.jsxRuntime, y = `# oikos:package_id: posta
-# oikos:package_version: 1.1.2
+const { jsxs: a, jsx: e } = window.__OIKOS_SDK__.jsxRuntime, y = `# oikos:package_id: posta
+# oikos:package_version: 1.1.3
 ################################################################################
 # Posta Smart — Package Home Assistant
 # Author: Oikos
@@ -115,44 +115,36 @@ input_boolean:
   sm_posta_avvisi_attivi:
     name: "📬 Avvisi posta abilitati"
     icon: mdi:bell-ring
-    initial: true
 
   # ── Canali di notifica ──────────────────────────────────────────────────────
   sm_posta_notify_push:
     name: "Notifica push"
     icon: mdi:cellphone-message
-    initial: true
 
   sm_posta_notify_alexa:
     name: "Annuncio Alexa"
     icon: mdi:speaker-wireless
-    initial: false
 
   sm_posta_notify_telegram:
     name: "Notifica Telegram"
     icon: mdi:send
-    initial: false
 
   # ── Comportamenti opzionali ─────────────────────────────────────────────────
   sm_posta_digest_serale:
     name: "Digest serale alle 20:00"
     icon: mdi:bell-outline
-    initial: true
 
   sm_posta_auto_spegnimento_24h:
     name: "Auto-spegnimento dopo 24h"
     icon: mdi:timer-outline
-    initial: false
 
   sm_posta_notify_ritirata:
     name: "Notifica famiglia quando ritirata"
     icon: mdi:account-multiple-check
-    initial: false
 
   sm_posta_low_battery_alert:
     name: "Avviso batteria bassa sensore"
     icon: mdi:battery-alert
-    initial: true
 
 ################################################################################
 #                          INPUT_NUMBER (contatori)                            #
@@ -164,7 +156,6 @@ input_number:
   # NON si resetta a mezzanotte: rappresenta i pezzi attualmente in cassetta.
   sm_posta_da_ritirare:
     name: "Posta da ritirare"
-    initial: 0
     min: 0
     max: 1000
     step: 1
@@ -174,7 +165,6 @@ input_number:
   # ── Esistenti (retained per back-compat) ────────────────────────────────────
   conteggio_aperture_posta_giornaliere:
     name: "Aperture posta oggi"
-    initial: 0
     min: 0
     max: 1000
     step: 1
@@ -182,7 +172,6 @@ input_number:
 
   conteggio_aperture_posta_mensili:
     name: "Aperture posta del mese"
-    initial: 0
     min: 0
     max: 10000
     step: 1
@@ -190,7 +179,6 @@ input_number:
 
   conteggio_aperture_posta_annuali:
     name: "Aperture posta dell'anno"
-    initial: 0
     min: 0
     max: 100000
     step: 1
@@ -199,49 +187,42 @@ input_number:
   # ── Statistiche per giorno della settimana ─────────────────────────────────
   sm_posta_giorno_lun:
     name: "Aperture lunedì (totale)"
-    initial: 0
     min: 0
     max: 100000
     step: 1
     mode: box
   sm_posta_giorno_mar:
     name: "Aperture martedì (totale)"
-    initial: 0
     min: 0
     max: 100000
     step: 1
     mode: box
   sm_posta_giorno_mer:
     name: "Aperture mercoledì (totale)"
-    initial: 0
     min: 0
     max: 100000
     step: 1
     mode: box
   sm_posta_giorno_gio:
     name: "Aperture giovedì (totale)"
-    initial: 0
     min: 0
     max: 100000
     step: 1
     mode: box
   sm_posta_giorno_ven:
     name: "Aperture venerdì (totale)"
-    initial: 0
     min: 0
     max: 100000
     step: 1
     mode: box
   sm_posta_giorno_sab:
     name: "Aperture sabato (totale)"
-    initial: 0
     min: 0
     max: 100000
     step: 1
     mode: box
   sm_posta_giorno_dom:
     name: "Aperture domenica (totale)"
-    initial: 0
     min: 0
     max: 100000
     step: 1
@@ -250,7 +231,6 @@ input_number:
   # ── Record / Statistiche extra ──────────────────────────────────────────────
   sm_posta_record_giornaliero:
     name: "Record consegne in un giorno"
-    initial: 0
     min: 0
     max: 1000
     step: 1
@@ -258,7 +238,6 @@ input_number:
 
   sm_posta_low_battery_threshold:
     name: "Soglia batteria sensore (%)"
-    initial: 20
     min: 5
     max: 50
     step: 5
@@ -885,11 +864,11 @@ automation:
   popupEnabled: !0
 };
 function _({ entityId: l, label: t, hint: s }) {
-  const [o, e, r] = T(l);
-  return /* @__PURE__ */ n(g, { label: t, hint: s, children: /* @__PURE__ */ n(
+  const [o, n, r] = T(l);
+  return /* @__PURE__ */ e(g, { label: t, hint: s, children: /* @__PURE__ */ e(
     "button",
     {
-      onClick: () => r && e(!o),
+      onClick: () => r && n(!o),
       disabled: !r,
       style: {
         width: 44,
@@ -903,7 +882,7 @@ function _({ entityId: l, label: t, hint: s }) {
         transition: "all .15s"
       },
       title: r ? "" : `Entità ${l} non trovata su HA`,
-      children: /* @__PURE__ */ n("span", { style: {
+      children: /* @__PURE__ */ e("span", { style: {
         position: "absolute",
         top: 2,
         left: o ? 22 : 2,
@@ -918,12 +897,12 @@ function _({ entityId: l, label: t, hint: s }) {
   ) });
 }
 function d({ entityId: l, label: t, hint: s, placeholder: o }) {
-  const [e, r, m] = b(l);
-  return /* @__PURE__ */ n(p, { label: t, hint: s, children: /* @__PURE__ */ n(
+  const [n, r, m] = b(l);
+  return /* @__PURE__ */ e(p, { label: t, hint: s, children: /* @__PURE__ */ e(
     "input",
     {
       type: "text",
-      value: e || "",
+      value: n || "",
       onChange: (i) => r(i.target.value),
       disabled: !m,
       placeholder: o,
@@ -943,14 +922,14 @@ function d({ entityId: l, label: t, hint: s, placeholder: o }) {
   ) });
 }
 function q({ cardId: l }) {
-  const [t, s] = x(l, R), o = (i, v) => s((h) => ({ ...h, [i]: v })), e = I({ name: "posta", yaml: y }), [, r] = b("input_text.sm_posta_sensor"), [, m] = b("input_text.sm_posta_battery_sensor");
+  const [t, s] = x(l, R), o = (i, v) => s((h) => ({ ...h, [i]: v })), n = I({ name: "posta", yaml: y }), [, r] = b("input_text.sm_posta_sensor"), [, m] = b("input_text.sm_posta_battery_sensor");
   return f(() => {
     t.entityId && r(t.entityId);
   }, [t.entityId]), f(() => {
     m(t.batteryEntity || "");
   }, [t.batteryEntity]), /* @__PURE__ */ a("div", { style: { display: "flex", flexDirection: "column", gap: 14 }, children: [
     /* @__PURE__ */ a(u, { title: "Generale", collapsible: !0, children: [
-      /* @__PURE__ */ n(p, { label: "Etichetta", children: /* @__PURE__ */ n(
+      /* @__PURE__ */ e(p, { label: "Etichetta", children: /* @__PURE__ */ e(
         k,
         {
           value: t.label,
@@ -958,7 +937,7 @@ function q({ cardId: l }) {
           placeholder: "Cassetta delle Lettere"
         }
       ) }),
-      /* @__PURE__ */ n(p, { label: "Sensore cassetta", hint: "Si attiva quando l'entità passa allo stato «on»", children: /* @__PURE__ */ n(
+      /* @__PURE__ */ e(p, { label: "Sensore cassetta", hint: "Si attiva quando l'entità passa allo stato «on»", children: /* @__PURE__ */ e(
         c,
         {
           field: "entityId",
@@ -978,10 +957,10 @@ function q({ cardId: l }) {
         color: "var(--text-muted)"
       }, children: [
         "Se hai installato il package ",
-        /* @__PURE__ */ n("b", { children: "posta.yaml" }),
+        /* @__PURE__ */ e("b", { children: "posta.yaml" }),
         " su Home Assistant, configura qui i sensori che HA aggiorna lato server (l'increment funziona anche con la dashboard chiusa). Se lasci vuoto, il conteggio resta in locale al browser."
       ] }),
-      /* @__PURE__ */ n(p, { label: "Sensore posta da ritirare", hint: "Es. sensor.posta_da_ritirare_lettura — posta attualmente in cassetta (si azzera al ritiro)", children: /* @__PURE__ */ n(
+      /* @__PURE__ */ e(p, { label: "Sensore posta da ritirare", hint: "Es. sensor.posta_da_ritirare_lettura — posta attualmente in cassetta (si azzera al ritiro)", children: /* @__PURE__ */ e(
         c,
         {
           field: "entityIdCount",
@@ -990,7 +969,7 @@ function q({ cardId: l }) {
           filterDomain: "sensor"
         }
       ) }),
-      /* @__PURE__ */ n(p, { label: "Sensore ultima imbucata", hint: "Es. sensor.ultima_apertura_cassetta (timestamp)", children: /* @__PURE__ */ n(
+      /* @__PURE__ */ e(p, { label: "Sensore ultima imbucata", hint: "Es. sensor.ultima_apertura_cassetta (timestamp)", children: /* @__PURE__ */ e(
         c,
         {
           field: "entityIdLast",
@@ -1010,16 +989,16 @@ function q({ cardId: l }) {
         color: "var(--text-muted)"
       }, children: [
         "Il package ",
-        /* @__PURE__ */ n("code", { children: "posta.yaml" }),
+        /* @__PURE__ */ e("code", { children: "posta.yaml" }),
         ' abilita conteggio server-side e tutte le notifiche sotto. Click su "Installa" lo scrive in',
-        /* @__PURE__ */ n("code", { children: " /config/packages/posta.yaml" }),
+        /* @__PURE__ */ e("code", { children: " /config/packages/posta.yaml" }),
         ". Richiede l'add-on Oikos attivo e ",
-        /* @__PURE__ */ n("code", { children: "packages: !include_dir_named packages" }),
+        /* @__PURE__ */ e("code", { children: "packages: !include_dir_named packages" }),
         " in ",
-        /* @__PURE__ */ n("code", { children: "configuration.yaml" }),
+        /* @__PURE__ */ e("code", { children: "configuration.yaml" }),
         "."
       ] }),
-      e.updateAvailable && /* @__PURE__ */ a("div", { style: {
+      n.updateAvailable && /* @__PURE__ */ a("div", { style: {
         display: "flex",
         alignItems: "center",
         gap: 10,
@@ -1028,20 +1007,20 @@ function q({ cardId: l }) {
         background: "linear-gradient(135deg, rgba(16,185,129,.12), rgba(16,185,129,.06))",
         border: "1px solid rgba(16,185,129,.4)"
       }, children: [
-        /* @__PURE__ */ n(N, { size: 18, style: { color: "#10b981", flexShrink: 0 } }),
+        /* @__PURE__ */ e(N, { size: 18, style: { color: "#10b981", flexShrink: 0 } }),
         /* @__PURE__ */ a("div", { style: { flex: 1, fontSize: 12, color: "var(--text-primary)" }, children: [
-          /* @__PURE__ */ n("div", { style: { fontWeight: 700 }, children: "Aggiornamento package disponibile" }),
+          /* @__PURE__ */ e("div", { style: { fontWeight: 700 }, children: "Aggiornamento package disponibile" }),
           /* @__PURE__ */ a("div", { style: { fontSize: 10, color: "var(--text-muted)", marginTop: 2 }, children: [
             "Installato v",
-            e.installedVersion,
+            n.installedVersion,
             " → Nuova v",
-            e.bundledVersion
+            n.bundledVersion
           ] })
         ] }),
-        /* @__PURE__ */ n(
+        /* @__PURE__ */ e(
           "button",
           {
-            onClick: e.install,
+            onClick: n.install,
             style: {
               padding: "6px 12px",
               borderRadius: 8,
@@ -1056,24 +1035,24 @@ function q({ cardId: l }) {
           }
         )
       ] }),
-      /* @__PURE__ */ n(
+      /* @__PURE__ */ e(
         g,
         {
-          label: e.checking ? "Stato package: controllo…" : e.installed ? `Package installato${e.installedVersion ? ` · v${e.installedVersion}` : ""}` : "Package non installato",
-          hint: e.installed ? "/config/packages/posta.yaml" : void 0,
+          label: n.checking ? "Stato package: controllo…" : n.installed ? `Package installato${n.installedVersion ? ` · v${n.installedVersion}` : ""}` : "Package non installato",
+          hint: n.installed ? "/config/packages/posta.yaml" : void 0,
           children: /* @__PURE__ */ a("div", { style: { display: "flex", gap: 6 }, children: [
             /* @__PURE__ */ a(
               "button",
               {
-                onClick: e.install,
-                disabled: e.checking,
+                onClick: n.install,
+                disabled: n.checking,
                 style: {
                   display: "flex",
                   alignItems: "center",
                   gap: 5,
                   padding: "6px 12px",
                   borderRadius: 8,
-                  cursor: e.checking ? "wait" : "pointer",
+                  cursor: n.checking ? "wait" : "pointer",
                   fontSize: 11,
                   fontWeight: 700,
                   border: "1px solid var(--amber-border)",
@@ -1081,16 +1060,16 @@ function q({ cardId: l }) {
                   color: "var(--amber)"
                 },
                 children: [
-                  /* @__PURE__ */ n(C, { size: 12 }),
+                  /* @__PURE__ */ e(C, { size: 12 }),
                   " ",
-                  e.installed ? "Reinstalla" : "Installa"
+                  n.installed ? "Reinstalla" : "Installa"
                 ]
               }
             ),
-            e.installed && /* @__PURE__ */ a(
+            n.installed && /* @__PURE__ */ a(
               "button",
               {
-                onClick: e.uninstall,
+                onClick: n.uninstall,
                 style: {
                   display: "flex",
                   alignItems: "center",
@@ -1105,7 +1084,7 @@ function q({ cardId: l }) {
                   color: "var(--red, #dc2626)"
                 },
                 children: [
-                  /* @__PURE__ */ n(H, { size: 12 }),
+                  /* @__PURE__ */ e(H, { size: 12 }),
                   " Disinstalla"
                 ]
               }
@@ -1113,7 +1092,7 @@ function q({ cardId: l }) {
           ] })
         }
       ),
-      e.msg && /* @__PURE__ */ a("div", { style: {
+      n.msg && /* @__PURE__ */ a("div", { style: {
         display: "flex",
         alignItems: "flex-start",
         gap: 8,
@@ -1121,12 +1100,12 @@ function q({ cardId: l }) {
         borderRadius: 8,
         fontSize: 11,
         lineHeight: 1.45,
-        background: e.msg.type === "ok" ? "var(--green-light, #f0fdf4)" : "var(--red-light, #fef2f2)",
-        border: `1px solid ${e.msg.type === "ok" ? "var(--green-border, #bbf7d0)" : "var(--red-border, #fecaca)"}`,
-        color: e.msg.type === "ok" ? "var(--green, #15803d)" : "var(--red, #b91c1c)"
+        background: n.msg.type === "ok" ? "var(--green-light, #f0fdf4)" : "var(--red-light, #fef2f2)",
+        border: `1px solid ${n.msg.type === "ok" ? "var(--green-border, #bbf7d0)" : "var(--red-border, #fecaca)"}`,
+        color: n.msg.type === "ok" ? "var(--green, #15803d)" : "var(--red, #b91c1c)"
       }, children: [
-        e.msg.type === "ok" ? /* @__PURE__ */ n(E, { size: 14, style: { flexShrink: 0, marginTop: 1 } }) : /* @__PURE__ */ n(O, { size: 14, style: { flexShrink: 0, marginTop: 1 } }),
-        /* @__PURE__ */ n("span", { children: e.msg.text })
+        n.msg.type === "ok" ? /* @__PURE__ */ e(E, { size: 14, style: { flexShrink: 0, marginTop: 1 } }) : /* @__PURE__ */ e(O, { size: 14, style: { flexShrink: 0, marginTop: 1 } }),
+        /* @__PURE__ */ e("span", { children: n.msg.text })
       ] })
     ] }),
     /* @__PURE__ */ a(u, { title: "Notifiche (package HA «Posta Smart»)", collapsible: !0, defaultOpen: !1, children: [
@@ -1139,10 +1118,10 @@ function q({ cardId: l }) {
         color: "var(--text-muted)"
       }, children: [
         "Configura tutti i canali di notifica direttamente qui. Le impostazioni vengono scritte negli helper HA del package. Se un campo è grigio, significa che il package ",
-        /* @__PURE__ */ n("b", { children: "posta.yaml" }),
+        /* @__PURE__ */ e("b", { children: "posta.yaml" }),
         " non è installato su HA."
       ] }),
-      /* @__PURE__ */ n(
+      /* @__PURE__ */ e(
         _,
         {
           entityId: "input_boolean.sm_posta_avvisi_attivi",
@@ -1150,15 +1129,15 @@ function q({ cardId: l }) {
           hint: "Master switch — disabilita per silenziare tutto"
         }
       ),
-      /* @__PURE__ */ n("div", { style: { fontSize: 10, fontWeight: 800, letterSpacing: ".06em", textTransform: "uppercase", color: "var(--text-muted)", marginTop: 4 }, children: "📱 Push (mobile_app)" }),
-      /* @__PURE__ */ n(
+      /* @__PURE__ */ e("div", { style: { fontSize: 10, fontWeight: 800, letterSpacing: ".06em", textTransform: "uppercase", color: "var(--text-muted)", marginTop: 4 }, children: "📱 Push (mobile_app)" }),
+      /* @__PURE__ */ e(
         _,
         {
           entityId: "input_boolean.sm_posta_notify_push",
           label: "Notifica push"
         }
       ),
-      /* @__PURE__ */ n(
+      /* @__PURE__ */ e(
         d,
         {
           entityId: "input_text.sm_posta_push_devices",
@@ -1167,7 +1146,7 @@ function q({ cardId: l }) {
           placeholder: "mobile_app_xxx, mobile_app_yyy"
         }
       ),
-      /* @__PURE__ */ n(
+      /* @__PURE__ */ e(
         d,
         {
           entityId: "input_text.sm_posta_msg_push_title",
@@ -1176,7 +1155,7 @@ function q({ cardId: l }) {
           placeholder: "📬 Hai posta!"
         }
       ),
-      /* @__PURE__ */ n(
+      /* @__PURE__ */ e(
         d,
         {
           entityId: "input_text.sm_posta_msg_push_body",
@@ -1185,15 +1164,15 @@ function q({ cardId: l }) {
           placeholder: "{n} consegne oggi"
         }
       ),
-      /* @__PURE__ */ n("div", { style: { fontSize: 10, fontWeight: 800, letterSpacing: ".06em", textTransform: "uppercase", color: "var(--text-muted)", marginTop: 4 }, children: "🔊 Alexa" }),
-      /* @__PURE__ */ n(
+      /* @__PURE__ */ e("div", { style: { fontSize: 10, fontWeight: 800, letterSpacing: ".06em", textTransform: "uppercase", color: "var(--text-muted)", marginTop: 4 }, children: "🔊 Alexa" }),
+      /* @__PURE__ */ e(
         _,
         {
           entityId: "input_boolean.sm_posta_notify_alexa",
           label: "Annuncio Alexa"
         }
       ),
-      /* @__PURE__ */ n(
+      /* @__PURE__ */ e(
         d,
         {
           entityId: "input_text.sm_posta_alexa_target",
@@ -1202,7 +1181,7 @@ function q({ cardId: l }) {
           placeholder: "media_player.echo_xxx"
         }
       ),
-      /* @__PURE__ */ n(
+      /* @__PURE__ */ e(
         d,
         {
           entityId: "input_text.sm_posta_msg_alexa",
@@ -1211,15 +1190,15 @@ function q({ cardId: l }) {
           placeholder: "Hai ricevuto della posta nella cassetta!"
         }
       ),
-      /* @__PURE__ */ n("div", { style: { fontSize: 10, fontWeight: 800, letterSpacing: ".06em", textTransform: "uppercase", color: "var(--text-muted)", marginTop: 4 }, children: "💬 Telegram" }),
-      /* @__PURE__ */ n(
+      /* @__PURE__ */ e("div", { style: { fontSize: 10, fontWeight: 800, letterSpacing: ".06em", textTransform: "uppercase", color: "var(--text-muted)", marginTop: 4 }, children: "💬 Telegram" }),
+      /* @__PURE__ */ e(
         _,
         {
           entityId: "input_boolean.sm_posta_notify_telegram",
           label: "Notifica Telegram"
         }
       ),
-      /* @__PURE__ */ n(
+      /* @__PURE__ */ e(
         d,
         {
           entityId: "input_text.sm_posta_telegram_service",
@@ -1228,7 +1207,7 @@ function q({ cardId: l }) {
           placeholder: "notify.telegram_xxx"
         }
       ),
-      /* @__PURE__ */ n(
+      /* @__PURE__ */ e(
         d,
         {
           entityId: "input_text.sm_posta_msg_telegram",
@@ -1237,8 +1216,8 @@ function q({ cardId: l }) {
           placeholder: "📬 Hai posta! {n} consegne oggi."
         }
       ),
-      /* @__PURE__ */ n("div", { style: { fontSize: 10, fontWeight: 800, letterSpacing: ".06em", textTransform: "uppercase", color: "var(--text-muted)", marginTop: 4 }, children: "⚙ Comportamenti" }),
-      /* @__PURE__ */ n(
+      /* @__PURE__ */ e("div", { style: { fontSize: 10, fontWeight: 800, letterSpacing: ".06em", textTransform: "uppercase", color: "var(--text-muted)", marginTop: 4 }, children: "⚙ Comportamenti" }),
+      /* @__PURE__ */ e(
         _,
         {
           entityId: "input_boolean.sm_posta_digest_serale",
@@ -1246,7 +1225,7 @@ function q({ cardId: l }) {
           hint: "Avvisa se la posta non è ancora stata ritirata"
         }
       ),
-      /* @__PURE__ */ n(
+      /* @__PURE__ */ e(
         _,
         {
           entityId: "input_boolean.sm_posta_auto_spegnimento_24h",
@@ -1254,21 +1233,21 @@ function q({ cardId: l }) {
           hint: "Spegne automaticamente «posta presente» dopo 24h"
         }
       ),
-      /* @__PURE__ */ n(
+      /* @__PURE__ */ e(
         _,
         {
           entityId: "input_boolean.sm_posta_notify_ritirata",
           label: "Notifica famiglia quando ritirata"
         }
       ),
-      /* @__PURE__ */ n(
+      /* @__PURE__ */ e(
         _,
         {
           entityId: "input_boolean.sm_posta_low_battery_alert",
           label: "Avviso batteria bassa sensore"
         }
       ),
-      /* @__PURE__ */ n(p, { label: "Sensore batteria", hint: "Es. sensor.sensore_posta_batteria — espone il livello % della batteria", children: /* @__PURE__ */ n(
+      /* @__PURE__ */ e(p, { label: "Sensore batteria", hint: "Es. sensor.sensore_posta_batteria — espone il livello % della batteria", children: /* @__PURE__ */ e(
         c,
         {
           field: "batteryEntity",
@@ -1279,14 +1258,14 @@ function q({ cardId: l }) {
       ) })
     ] }),
     /* @__PURE__ */ a(u, { title: "Popup", collapsible: !0, children: [
-      /* @__PURE__ */ n(g, { label: "Mostra popup", hint: "Disabilita per ricevere solo la notifica campanella senza popup", children: /* @__PURE__ */ n(
+      /* @__PURE__ */ e(g, { label: "Mostra popup", hint: "Disabilita per ricevere solo la notifica campanella senza popup", children: /* @__PURE__ */ e(
         z,
         {
           value: t.popupEnabled !== !1,
           onChange: (i) => o("popupEnabled", i)
         }
       ) }),
-      /* @__PURE__ */ n(g, { label: "Anteprima popup", hint: "Apre il popup per vedere l'aspetto", children: /* @__PURE__ */ a(
+      /* @__PURE__ */ e(g, { label: "Anteprima popup", hint: "Apre il popup per vedere l'aspetto", children: /* @__PURE__ */ a(
         "button",
         {
           onClick: () => window.dispatchEvent(new CustomEvent("oikos-card-watcher-preview", {
@@ -1310,12 +1289,12 @@ function q({ cardId: l }) {
             color: "var(--text-muted)"
           },
           children: [
-            /* @__PURE__ */ n(P, { size: 12 }),
+            /* @__PURE__ */ e(P, { size: 12 }),
             " Anteprima"
           ]
         }
       ) }),
-      /* @__PURE__ */ n(p, { label: "Chiusura automatica", children: /* @__PURE__ */ n(
+      /* @__PURE__ */ e(p, { label: "Chiusura automatica", children: /* @__PURE__ */ e(
         A,
         {
           value: t.autoDismiss,
@@ -1328,7 +1307,7 @@ function q({ cardId: l }) {
           format: (i) => i === 0 ? "Manuale" : `${i}s`
         }
       ) }),
-      /* @__PURE__ */ n(p, { label: "Colore accento", children: /* @__PURE__ */ n(
+      /* @__PURE__ */ e(p, { label: "Colore accento", children: /* @__PURE__ */ e(
         S,
         {
           value: t.accentColor,
