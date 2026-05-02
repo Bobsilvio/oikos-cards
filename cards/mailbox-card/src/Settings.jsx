@@ -84,7 +84,7 @@ export default function MailboxCardSettings({ cardId }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
 
-      <Section title="Generale">
+      <Section title="Generale" collapsible>
         <Field label="Etichetta">
           <TextField
             value={config.label}
@@ -100,15 +100,9 @@ export default function MailboxCardSettings({ cardId }) {
             filterDomain="binary_sensor"
           />
         </Field>
-        <SettingsRow label="Mostra popup" hint="Disabilita per ricevere solo la notifica campanella senza popup">
-          <Toggle
-            value={config.popupEnabled !== false}
-            onChange={v => set('popupEnabled', v)}
-          />
-        </SettingsRow>
       </Section>
 
-      <Section title="Conteggio (package HA «Posta Smart»)">
+      <Section title="Conteggio (package HA «Posta Smart»)" collapsible defaultOpen={false}>
         <div style={{
           fontSize: 11, lineHeight: 1.5,
           padding: '8px 10px', borderRadius: 8,
@@ -136,7 +130,7 @@ export default function MailboxCardSettings({ cardId }) {
         </Field>
       </Section>
 
-      <Section title="Package Home Assistant">
+      <Section title="Package Home Assistant" collapsible defaultOpen={false}>
         <div style={{
           fontSize: 11, lineHeight: 1.5,
           padding: '8px 10px', borderRadius: 8,
@@ -233,7 +227,7 @@ export default function MailboxCardSettings({ cardId }) {
         )}
       </Section>
 
-      <Section title="Notifiche (package HA «Posta Smart»)">
+      <Section title="Notifiche (package HA «Posta Smart»)" collapsible defaultOpen={false}>
         <div style={{
           fontSize: 11, lineHeight: 1.5,
           padding: '8px 10px', borderRadius: 8,
@@ -343,7 +337,13 @@ export default function MailboxCardSettings({ cardId }) {
         />
       </Section>
 
-      <Section title="Popup">
+      <Section title="Popup" collapsible>
+        <SettingsRow label="Mostra popup" hint="Disabilita per ricevere solo la notifica campanella senza popup">
+          <Toggle
+            value={config.popupEnabled !== false}
+            onChange={v => set('popupEnabled', v)}
+          />
+        </SettingsRow>
         <SettingsRow label="Anteprima popup" hint="Apre il popup per vedere l'aspetto">
           <button
             onClick={() => window.dispatchEvent(new CustomEvent('oikos-card-watcher-preview', {

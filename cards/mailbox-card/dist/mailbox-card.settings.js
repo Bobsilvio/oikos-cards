@@ -1,4 +1,4 @@
-const { jsxs: t, jsx: n } = window.__OIKOS_SDK__.jsxRuntime, f = `# oikos:package_id: posta
+const { jsxs: t, jsx: n } = window.__OIKOS_SDK__.jsxRuntime, v = `# oikos:package_id: posta
 # oikos:package_version: 1.1.1
 ################################################################################
 # Posta Smart — Package Home Assistant
@@ -855,7 +855,7 @@ automation:
                 data:
                   tag: oikos-mailbox-battery
                   group: mailbox-battery
-`, { useEffect: h } = window.__OIKOS_SDK__.React, { useCardConfig: x, EntityField: g, Field: d, Section: m, TextField: y, Slider: A, ColorCircles: k, ACCENT_COLORS: S, SettingsRow: u, Toggle: w, useHaText: b, useHaBool: z, usePackageInstaller: T } = window.__OIKOS_SDK__, { Eye: I, Download: C, CheckCircle2: P, AlertTriangle: E, Trash2: O, ArrowUpCircle: N } = window.__OIKOS_SDK__.icons, H = {
+`, { useEffect: h } = window.__OIKOS_SDK__.React, { useCardConfig: x, EntityField: g, Field: d, Section: m, TextField: y, Slider: A, ColorCircles: k, ACCENT_COLORS: S, SettingsRow: u, Toggle: w, useHaText: b, useHaBool: z, usePackageInstaller: T } = window.__OIKOS_SDK__, { Eye: I, Download: C, CheckCircle2: P, AlertTriangle: O, Trash2: E, ArrowUpCircle: N } = window.__OIKOS_SDK__.icons, H = {
   entityId: "",
   entityIdCount: "",
   entityIdLast: "",
@@ -864,7 +864,7 @@ automation:
   accentColor: "#ef4444",
   popupEnabled: !0
 };
-function _({ entityId: r, label: i, hint: l }) {
+function p({ entityId: r, label: i, hint: l }) {
   const [o, e, s] = z(r);
   return /* @__PURE__ */ n(u, { label: i, hint: l, children: /* @__PURE__ */ n(
     "button",
@@ -897,7 +897,7 @@ function _({ entityId: r, label: i, hint: l }) {
     }
   ) });
 }
-function p({ entityId: r, label: i, hint: l, placeholder: o }) {
+function _({ entityId: r, label: i, hint: l, placeholder: o }) {
   const [e, s, a] = b(r);
   return /* @__PURE__ */ n(d, { label: i, hint: l, children: /* @__PURE__ */ n(
     "input",
@@ -923,11 +923,11 @@ function p({ entityId: r, label: i, hint: l, placeholder: o }) {
   ) });
 }
 function R({ cardId: r }) {
-  const [i, l] = x(r, H), o = (a, c) => l((v) => ({ ...v, [a]: c })), e = T({ name: "posta", yaml: f }), [, s] = b("input_text.sm_posta_sensor");
+  const [i, l] = x(r, H), o = (a, c) => l((f) => ({ ...f, [a]: c })), e = T({ name: "posta", yaml: v }), [, s] = b("input_text.sm_posta_sensor");
   return h(() => {
     i.entityId && s(i.entityId);
   }, [i.entityId]), /* @__PURE__ */ t("div", { style: { display: "flex", flexDirection: "column", gap: 14 }, children: [
-    /* @__PURE__ */ t(m, { title: "Generale", children: [
+    /* @__PURE__ */ t(m, { title: "Generale", collapsible: !0, children: [
       /* @__PURE__ */ n(d, { label: "Etichetta", children: /* @__PURE__ */ n(
         y,
         {
@@ -944,16 +944,9 @@ function R({ cardId: r }) {
           setConfig: l,
           filterDomain: "binary_sensor"
         }
-      ) }),
-      /* @__PURE__ */ n(u, { label: "Mostra popup", hint: "Disabilita per ricevere solo la notifica campanella senza popup", children: /* @__PURE__ */ n(
-        w,
-        {
-          value: i.popupEnabled !== !1,
-          onChange: (a) => o("popupEnabled", a)
-        }
       ) })
     ] }),
-    /* @__PURE__ */ t(m, { title: "Conteggio (package HA «Posta Smart»)", children: [
+    /* @__PURE__ */ t(m, { title: "Conteggio (package HA «Posta Smart»)", collapsible: !0, defaultOpen: !1, children: [
       /* @__PURE__ */ t("div", { style: {
         fontSize: 11,
         lineHeight: 1.5,
@@ -985,7 +978,7 @@ function R({ cardId: r }) {
         }
       ) })
     ] }),
-    /* @__PURE__ */ t(m, { title: "Package Home Assistant", children: [
+    /* @__PURE__ */ t(m, { title: "Package Home Assistant", collapsible: !0, defaultOpen: !1, children: [
       /* @__PURE__ */ t("div", { style: {
         fontSize: 11,
         lineHeight: 1.5,
@@ -1090,7 +1083,7 @@ function R({ cardId: r }) {
                   color: "var(--red, #dc2626)"
                 },
                 children: [
-                  /* @__PURE__ */ n(O, { size: 12 }),
+                  /* @__PURE__ */ n(E, { size: 12 }),
                   " Disinstalla"
                 ]
               }
@@ -1110,11 +1103,11 @@ function R({ cardId: r }) {
         border: `1px solid ${e.msg.type === "ok" ? "var(--green-border, #bbf7d0)" : "var(--red-border, #fecaca)"}`,
         color: e.msg.type === "ok" ? "var(--green, #15803d)" : "var(--red, #b91c1c)"
       }, children: [
-        e.msg.type === "ok" ? /* @__PURE__ */ n(P, { size: 14, style: { flexShrink: 0, marginTop: 1 } }) : /* @__PURE__ */ n(E, { size: 14, style: { flexShrink: 0, marginTop: 1 } }),
+        e.msg.type === "ok" ? /* @__PURE__ */ n(P, { size: 14, style: { flexShrink: 0, marginTop: 1 } }) : /* @__PURE__ */ n(O, { size: 14, style: { flexShrink: 0, marginTop: 1 } }),
         /* @__PURE__ */ n("span", { children: e.msg.text })
       ] })
     ] }),
-    /* @__PURE__ */ t(m, { title: "Notifiche (package HA «Posta Smart»)", children: [
+    /* @__PURE__ */ t(m, { title: "Notifiche (package HA «Posta Smart»)", collapsible: !0, defaultOpen: !1, children: [
       /* @__PURE__ */ t("div", { style: {
         fontSize: 11,
         lineHeight: 1.5,
@@ -1128,7 +1121,7 @@ function R({ cardId: r }) {
         " non è installato su HA."
       ] }),
       /* @__PURE__ */ n(
-        _,
+        p,
         {
           entityId: "input_boolean.sm_posta_avvisi_attivi",
           label: "Avvisi posta abilitati",
@@ -1137,14 +1130,14 @@ function R({ cardId: r }) {
       ),
       /* @__PURE__ */ n("div", { style: { fontSize: 10, fontWeight: 800, letterSpacing: ".06em", textTransform: "uppercase", color: "var(--text-muted)", marginTop: 4 }, children: "📱 Push (mobile_app)" }),
       /* @__PURE__ */ n(
-        _,
+        p,
         {
           entityId: "input_boolean.sm_posta_notify_push",
           label: "Notifica push"
         }
       ),
       /* @__PURE__ */ n(
-        p,
+        _,
         {
           entityId: "input_text.sm_posta_push_devices",
           label: "Mobile_app destinatari (CSV)",
@@ -1153,7 +1146,7 @@ function R({ cardId: r }) {
         }
       ),
       /* @__PURE__ */ n(
-        p,
+        _,
         {
           entityId: "input_text.sm_posta_msg_push_title",
           label: "Titolo notifica push",
@@ -1162,7 +1155,7 @@ function R({ cardId: r }) {
         }
       ),
       /* @__PURE__ */ n(
-        p,
+        _,
         {
           entityId: "input_text.sm_posta_msg_push_body",
           label: "Corpo notifica push",
@@ -1172,14 +1165,14 @@ function R({ cardId: r }) {
       ),
       /* @__PURE__ */ n("div", { style: { fontSize: 10, fontWeight: 800, letterSpacing: ".06em", textTransform: "uppercase", color: "var(--text-muted)", marginTop: 4 }, children: "🔊 Alexa" }),
       /* @__PURE__ */ n(
-        _,
+        p,
         {
           entityId: "input_boolean.sm_posta_notify_alexa",
           label: "Annuncio Alexa"
         }
       ),
       /* @__PURE__ */ n(
-        p,
+        _,
         {
           entityId: "input_text.sm_posta_alexa_target",
           label: "Media player Alexa",
@@ -1188,7 +1181,7 @@ function R({ cardId: r }) {
         }
       ),
       /* @__PURE__ */ n(
-        p,
+        _,
         {
           entityId: "input_text.sm_posta_msg_alexa",
           label: "Messaggio annuncio",
@@ -1198,14 +1191,14 @@ function R({ cardId: r }) {
       ),
       /* @__PURE__ */ n("div", { style: { fontSize: 10, fontWeight: 800, letterSpacing: ".06em", textTransform: "uppercase", color: "var(--text-muted)", marginTop: 4 }, children: "💬 Telegram" }),
       /* @__PURE__ */ n(
-        _,
+        p,
         {
           entityId: "input_boolean.sm_posta_notify_telegram",
           label: "Notifica Telegram"
         }
       ),
       /* @__PURE__ */ n(
-        p,
+        _,
         {
           entityId: "input_text.sm_posta_telegram_service",
           label: "Service Telegram",
@@ -1214,7 +1207,7 @@ function R({ cardId: r }) {
         }
       ),
       /* @__PURE__ */ n(
-        p,
+        _,
         {
           entityId: "input_text.sm_posta_msg_telegram",
           label: "Messaggio Telegram",
@@ -1224,7 +1217,7 @@ function R({ cardId: r }) {
       ),
       /* @__PURE__ */ n("div", { style: { fontSize: 10, fontWeight: 800, letterSpacing: ".06em", textTransform: "uppercase", color: "var(--text-muted)", marginTop: 4 }, children: "⚙ Comportamenti" }),
       /* @__PURE__ */ n(
-        _,
+        p,
         {
           entityId: "input_boolean.sm_posta_digest_serale",
           label: "Digest serale (ore 20:00)",
@@ -1232,7 +1225,7 @@ function R({ cardId: r }) {
         }
       ),
       /* @__PURE__ */ n(
-        _,
+        p,
         {
           entityId: "input_boolean.sm_posta_auto_spegnimento_24h",
           label: "Auto-spegnimento dopo 24h",
@@ -1240,21 +1233,28 @@ function R({ cardId: r }) {
         }
       ),
       /* @__PURE__ */ n(
-        _,
+        p,
         {
           entityId: "input_boolean.sm_posta_notify_ritirata",
           label: "Notifica famiglia quando ritirata"
         }
       ),
       /* @__PURE__ */ n(
-        _,
+        p,
         {
           entityId: "input_boolean.sm_posta_low_battery_alert",
           label: "Avviso batteria bassa sensore"
         }
       )
     ] }),
-    /* @__PURE__ */ t(m, { title: "Popup", children: [
+    /* @__PURE__ */ t(m, { title: "Popup", collapsible: !0, children: [
+      /* @__PURE__ */ n(u, { label: "Mostra popup", hint: "Disabilita per ricevere solo la notifica campanella senza popup", children: /* @__PURE__ */ n(
+        w,
+        {
+          value: i.popupEnabled !== !1,
+          onChange: (a) => o("popupEnabled", a)
+        }
+      ) }),
       /* @__PURE__ */ n(u, { label: "Anteprima popup", hint: "Apre il popup per vedere l'aspetto", children: /* @__PURE__ */ t(
         "button",
         {
