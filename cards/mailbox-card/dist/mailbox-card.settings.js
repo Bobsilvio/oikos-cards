@@ -1,5 +1,5 @@
-const { jsxs: t, jsx: n } = window.__OIKOS_SDK__.jsxRuntime, v = `# oikos:package_id: posta
-# oikos:package_version: 1.1.0
+const { jsxs: t, jsx: n } = window.__OIKOS_SDK__.jsxRuntime, f = `# oikos:package_id: posta
+# oikos:package_version: 1.1.1
 ################################################################################
 # Posta Smart — Package Home Assistant
 # Author: Oikos
@@ -273,26 +273,6 @@ input_datetime:
 ################################################################################
 template:
   - binary_sensor:
-      # ── Proxy del sensore configurato in input_text.sm_posta_sensor ────────
-      # Necessario per ottenere un trigger state-based affidabile sulle
-      # automazioni server-side. HA traccia bene le dipendenze del template
-      # quando viene eseguito come binary_sensor (vs template trigger
-      # diretto, che con states() indiretti può perdere il tracking).
-      # È IL trigger del counter — ogni transizione off→on di questo proxy
-      # incrementa input_number.conteggio_aperture_*.
-      - unique_id: sm_posta_sensore_proxy
-        object_id: sm_posta_sensore_proxy
-        name: "Posta sensore (proxy)"
-        device_class: opening
-        icon: mdi:mailbox-up
-        state: >
-          {% set s = states('input_text.sm_posta_sensor') %}
-          {% if s and s != '' and s != 'unknown' %}
-            {{ is_state(s, 'on') }}
-          {% else %}
-            false
-          {% endif %}
-
       # ── Attesa lunga: posta arrivata >6h fa e ancora non ritirata ──────────
       - unique_id: sm_posta_attesa_lunga
         object_id: sm_posta_attesa_lunga
@@ -427,14 +407,23 @@ automation:
   # input_text non serve riavviare HA.
   - alias: "📬 Posta - Incrementa contatori all'apertura"
     description: "Incrementa giornaliero/mensile/annuale + giorno della settimana"
-    # Trigger state-based sul template binary_sensor proxy: HA traccia
-    # correttamente le dipendenze e firewatch sull'entity vera. Funziona
-    # 100% server-side, indipendentemente dalla dashboard.
+    # Trigger su ogni state_changed: non dipende dal tracking dinamico del
+    # template proxy (che può perdere la dipendenza se il sensore viene
+    # configurato dopo il boot di HA). La condition filtra solo l'entità
+    # configurata in input_text.sm_posta_sensor e solo la transizione off→on.
     trigger:
-      - platform: state
-        entity_id: binary_sensor.sm_posta_sensore_proxy
-        from: 'off'
-        to: 'on'
+      - platform: event
+        event_type: state_changed
+    condition:
+      - condition: template
+        value_template: >
+          {% set s = states('input_text.sm_posta_sensor') %}
+          {{ s not in ['', 'unknown', 'unavailable']
+             and trigger.event.data.entity_id == s
+             and trigger.event.data.new_state is not none
+             and trigger.event.data.new_state.state == 'on'
+             and (trigger.event.data.old_state is none
+                  or trigger.event.data.old_state.state != 'on') }}
     action:
       # Contatori standard
       - service: input_number.increment
@@ -479,10 +468,18 @@ automation:
   - alias: "📬 Posta - Attiva flag 'posta presente'"
     description: "Quando arriva posta, accende il flag che alimenta tutto il sistema notifiche"
     trigger:
-      - platform: state
-        entity_id: binary_sensor.sm_posta_sensore_proxy
-        from: 'off'
-        to: 'on'
+      - platform: event
+        event_type: state_changed
+    condition:
+      - condition: template
+        value_template: >
+          {% set s = states('input_text.sm_posta_sensor') %}
+          {{ s not in ['', 'unknown', 'unavailable']
+             and trigger.event.data.entity_id == s
+             and trigger.event.data.new_state is not none
+             and trigger.event.data.new_state.state == 'on'
+             and (trigger.event.data.old_state is none
+                  or trigger.event.data.old_state.state != 'on') }}
     action:
       - service: input_boolean.turn_on
         target:
@@ -858,7 +855,7 @@ automation:
                 data:
                   tag: oikos-mailbox-battery
                   group: mailbox-battery
-`, { useEffect: h } = window.__OIKOS_SDK__.React, { useCardConfig: x, EntityField: c, Field: m, Section: d, TextField: y, Slider: A, ColorCircles: k, ACCENT_COLORS: S, SettingsRow: g, useHaText: b, useHaBool: z, usePackageInstaller: w } = window.__OIKOS_SDK__, { Eye: I, Download: T, CheckCircle2: P, AlertTriangle: C, Trash2: q, ArrowUpCircle: N } = window.__OIKOS_SDK__.icons, O = {
+`, { useEffect: h } = window.__OIKOS_SDK__.React, { useCardConfig: x, EntityField: c, Field: m, Section: d, TextField: y, Slider: A, ColorCircles: k, ACCENT_COLORS: S, SettingsRow: g, useHaText: b, useHaBool: w, usePackageInstaller: z } = window.__OIKOS_SDK__, { Eye: I, Download: T, CheckCircle2: P, AlertTriangle: C, Trash2: O, ArrowUpCircle: E } = window.__OIKOS_SDK__.icons, N = {
   entityId: "",
   entityIdCount: "",
   entityIdLast: "",
@@ -867,7 +864,7 @@ automation:
   accentColor: "#ef4444"
 };
 function _({ entityId: r, label: i, hint: l }) {
-  const [o, e, s] = z(r);
+  const [o, e, s] = w(r);
   return /* @__PURE__ */ n(g, { label: i, hint: l, children: /* @__PURE__ */ n(
     "button",
     {
@@ -924,8 +921,8 @@ function p({ entityId: r, label: i, hint: l, placeholder: o }) {
     }
   ) });
 }
-function E({ cardId: r }) {
-  const [i, l] = x(r, O), o = (a, u) => l((f) => ({ ...f, [a]: u })), e = w({ name: "posta", yaml: v }), [, s] = b("input_text.sm_posta_sensor");
+function H({ cardId: r }) {
+  const [i, l] = x(r, N), o = (a, u) => l((v) => ({ ...v, [a]: u })), e = z({ name: "posta", yaml: f }), [, s] = b("input_text.sm_posta_sensor");
   return h(() => {
     i.entityId && s(i.entityId);
   }, [i.entityId]), /* @__PURE__ */ t("div", { style: { display: "flex", flexDirection: "column", gap: 14 }, children: [
@@ -1008,7 +1005,7 @@ function E({ cardId: r }) {
         background: "linear-gradient(135deg, rgba(16,185,129,.12), rgba(16,185,129,.06))",
         border: "1px solid rgba(16,185,129,.4)"
       }, children: [
-        /* @__PURE__ */ n(N, { size: 18, style: { color: "#10b981", flexShrink: 0 } }),
+        /* @__PURE__ */ n(E, { size: 18, style: { color: "#10b981", flexShrink: 0 } }),
         /* @__PURE__ */ t("div", { style: { flex: 1, fontSize: 12, color: "var(--text-primary)" }, children: [
           /* @__PURE__ */ n("div", { style: { fontWeight: 700 }, children: "Aggiornamento package disponibile" }),
           /* @__PURE__ */ t("div", { style: { fontSize: 10, color: "var(--text-muted)", marginTop: 2 }, children: [
@@ -1085,7 +1082,7 @@ function E({ cardId: r }) {
                   color: "var(--red, #dc2626)"
                 },
                 children: [
-                  /* @__PURE__ */ n(q, { size: 12 }),
+                  /* @__PURE__ */ n(O, { size: 12 }),
                   " Disinstalla"
                 ]
               }
@@ -1304,5 +1301,5 @@ function E({ cardId: r }) {
   ] });
 }
 export {
-  E as default
+  H as default
 };
