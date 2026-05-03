@@ -1,7 +1,7 @@
 {
   "id": "appliance",
   "name": "Elettrodomestico",
-  "version": "0.5.3",
+  "version": "0.5.4",
   "sdkVersion": "^1.1.0",
   "author": "Oikos",
   "description": "Monitor elettrodomestici: consumo live, costo ciclo, storico giornaliero/settimanale/mensile/annuale, popup globale a fine ciclo, animazioni in funzione. Auto-installa package HA con suffisso dedicato.",

@@ -16,7 +16,8 @@
  * Altrimenti: running→washing, fineCiclo recente→finished, else→idle.
  */
 import { useState, useMemo } from 'react'
-import { useStyles, useCardConfig, useSafeHass, MdiIcon } from '@oikos/sdk'
+import { useStyles, useCardConfig, useSafeHass, MdiIcon, usePackageInstaller } from '@oikos/sdk'
+import { TEMPLATE_YAML } from './templateYaml'
 import { AlertTriangle, BarChart3 } from 'lucide-react'
 import { buildEntities, attrKey } from './entities'
 import { defaultsFor } from './suffixDefaults'
@@ -166,6 +167,13 @@ export default function ApplianceCard({ cardId }) {
   const s = useStyles()
   const hass = useSafeHass()
   const [cfg] = useCardConfig(cardId ?? 'appliance', DEFAULT, { version: 2 })
+  const _suffix = String(cfg.suffix || '').trim().toLowerCase()
+  usePackageInstaller({
+    name:   /^[a-z0-9_]{1,40}$/.test(_suffix) ? _suffix : '',
+    yaml:   TEMPLATE_YAML,
+    subdir: 'silviosmart_elettrodomestici',
+    vars:   { SUFFIX: _suffix, NAME: cfg.displayName || defaultsFor(_suffix).name || '' },
+  })
 
   const entities = useMemo(
     () => cfg.mode === 'package' && cfg.suffix ? buildEntities(cfg.suffix) : null,

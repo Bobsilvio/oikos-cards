@@ -7,8 +7,9 @@ import {
   Droplets, Thermometer, Play, Square,
   RefreshCw, Clock, Sprout,
 } from 'lucide-react'
-import { useDashboard, useCardConfig } from '@oikos/sdk'
+import { useDashboard, useCardConfig, usePackageInstaller } from '@oikos/sdk'
 import './irrigationWatcher'  // ← auto-registra il watcher globale
+import IRRIG_TEMPLATE_YAML from '../template.yaml?raw'
 
 const DEFAULT_CONFIG = {
   switchEntityId:    '',
@@ -69,6 +70,7 @@ function fmtHHMM(ts) {
 export default function IrrigationCard({ cardId = 'irrigation' }) {
   const { dark, getState, getFloat, callService } = useDashboard()
   const [config] = useCardConfig(cardId, DEFAULT_CONFIG)
+  usePackageInstaller({ name: 'orto_domotizzato', yaml: IRRIG_TEMPLATE_YAML })
 
   // ── Switch ────────────────────────────────────────────────────────────────
   const switchState  = config.switchEntityId ? getState(config.switchEntityId) : null
