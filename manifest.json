@@ -1,0 +1,269 @@
+{
+  "repo": "oikos-cards",
+  "version": "0.1.0",
+  "sdkVersion": "1.0.0",
+  "updated": "2026-05-11",
+  "cards": [
+    {
+      "id": "air-quality",
+      "name": "Qualità dell'aria",
+      "version": "1.0.0",
+      "author": "Oikos",
+      "description": "Card qualità aria: AQI con zone colorate, classificazione, grafico 24h smooth.",
+      "sdkVersion": "^1.0.0",
+      "hasSettings": true,
+      "path": "cards/air-quality",
+      "entry": "cards/air-quality/dist/air-quality.js",
+      "settings": "cards/air-quality/dist/air-quality.settings.js",
+      "manifest": "cards/air-quality/manifest.json",
+      "preview": null,
+      "previews": null,
+      "thumbnail": null,
+      "tags": [
+        "aria",
+        "salute"
+      ],
+      "package": null,
+      "tier": "free"
+    },
+    {
+      "id": "appliance",
+      "name": "Elettrodomestico",
+      "version": "0.5.1",
+      "author": "Oikos",
+      "description": "Monitor elettrodomestici: consumo live, costo ciclo, storico giornaliero/settimanale/mensile/annuale, popup globale a fine ciclo, animazioni in funzione. Auto-installa package HA con suffisso dedicato.",
+      "sdkVersion": "^1.1.0",
+      "hasSettings": true,
+      "path": "cards/appliance",
+      "entry": "cards/appliance/dist/appliance.js",
+      "settings": "cards/appliance/dist/appliance.settings.js",
+      "manifest": "cards/appliance/manifest.json",
+      "preview": null,
+      "previews": null,
+      "thumbnail": null,
+      "tags": [
+        "casa",
+        "energia",
+        "elettrodomestici",
+        "lavatrice",
+        "asciugatrice",
+        "lavastoviglie"
+      ],
+      "package": null,
+      "tier": "free"
+    },
+    {
+      "id": "bridge-status",
+      "name": "Bridge Status",
+      "version": "1.0.0",
+      "author": "Oikos",
+      "description": "Card diagnostica che confronta lo stato standalone vs add-on con bridge Oikos ↔ HA.",
+      "sdkVersion": "^1.0.0",
+      "hasSettings": false,
+      "path": "cards/bridge-status",
+      "entry": "cards/bridge-status/dist/bridge-status.js",
+      "settings": null,
+      "manifest": "cards/bridge-status/manifest.json",
+      "preview": null,
+      "previews": null,
+      "thumbnail": null,
+      "tags": [
+        "system",
+        "bridge"
+      ],
+      "package": null,
+      "tier": "free"
+    },
+    {
+      "id": "climatizzatore",
+      "name": "Climatizzatore",
+      "version": "1.0.0",
+      "author": "Oikos",
+      "description": "Controllo completo climatizzatore HA: power, modalità (cool/heat/auto/dry/fan), target ±, fan speed, temperatura corrente e umidità. Icona animata e tema colore dinamico per modalità attiva.",
+      "sdkVersion": "^1.1.0",
+      "hasSettings": true,
+      "path": "cards/climatizzatore",
+      "entry": "cards/climatizzatore/dist/climatizzatore.js",
+      "settings": "cards/climatizzatore/dist/climatizzatore.settings.js",
+      "manifest": "cards/climatizzatore/manifest.json",
+      "preview": null,
+      "previews": null,
+      "thumbnail": null,
+      "tags": [
+        "casa",
+        "clima",
+        "ac",
+        "aria-condizionata"
+      ],
+      "package": null,
+      "tier": "free"
+    },
+    {
+      "id": "clock",
+      "name": "Clock",
+      "version": "1.0.0",
+      "author": "Oikos",
+      "description": "Orologio digitale con ticks counter. Dimostra useCardConfig e useStyles.",
+      "sdkVersion": "^1.0.0",
+      "hasSettings": false,
+      "path": "cards/clock",
+      "entry": "cards/clock/dist/clock.js",
+      "settings": null,
+      "manifest": "cards/clock/manifest.json",
+      "preview": null,
+      "previews": null,
+      "thumbnail": null,
+      "tags": [
+        "time",
+        "demo"
+      ],
+      "package": null,
+      "tier": "free"
+    },
+    {
+      "id": "person",
+      "name": "Persona",
+      "version": "1.3.6",
+      "author": "Oikos",
+      "description": "Card persona HA: avatar, zona, batteria, passi/km guidati. Layout split con mappa Google Maps live sul lato destro (sfumatura graduale tra info e mappa), campo dedicato per il device_tracker GPS, badge LIVE animato.",
+      "sdkVersion": "^1.0.0",
+      "hasSettings": true,
+      "path": "cards/person",
+      "entry": "cards/person/dist/person.js",
+      "settings": "cards/person/dist/person.settings.js",
+      "manifest": "cards/person/manifest.json",
+      "preview": null,
+      "previews": null,
+      "thumbnail": null,
+      "tags": [
+        "famiglia",
+        "persona",
+        "tracking"
+      ],
+      "package": null,
+      "tier": "free"
+    },
+    {
+      "id": "room-sensor",
+      "name": "Room Sensor",
+      "version": "1.0.1",
+      "author": "Oikos",
+      "description": "Card sensore stanza: gauge multipli, flow chart storico, badge numerici, mini-gauge batteria/segnale.",
+      "sdkVersion": "^1.0.0",
+      "hasSettings": true,
+      "path": "cards/room-sensor",
+      "entry": "cards/room-sensor/dist/room-sensor.js",
+      "settings": "cards/room-sensor/dist/room-sensor.settings.js",
+      "manifest": "cards/room-sensor/manifest.json",
+      "preview": "cards/room-sensor/preview.png",
+      "previews": [
+        "cards/room-sensor/preview.png",
+        "cards/room-sensor/preview-2.png"
+      ],
+      "thumbnail": "cards/room-sensor/preview-thumb.png",
+      "tags": [
+        "casa",
+        "sensor",
+        "stanza"
+      ],
+      "package": null,
+      "tier": "free"
+    },
+    {
+      "id": "thermostat",
+      "name": "Termostato",
+      "version": "1.0.2",
+      "author": "Oikos",
+      "description": "Gauge 270° con gradiente blu→arancione per termostato HA. Slider target, toggle on/off, multi-mode.",
+      "sdkVersion": "^1.0.0",
+      "hasSettings": true,
+      "path": "cards/thermostat",
+      "entry": "cards/thermostat/dist/thermostat.js",
+      "settings": "cards/thermostat/dist/thermostat.settings.js",
+      "manifest": "cards/thermostat/manifest.json",
+      "preview": "cards/thermostat/preview.png",
+      "previews": [
+        "cards/thermostat/preview.png"
+      ],
+      "thumbnail": "cards/thermostat/preview-thumb.png",
+      "tags": [
+        "casa",
+        "climate"
+      ],
+      "package": null,
+      "tier": "free"
+    },
+    {
+      "id": "tigo-panels",
+      "name": "Tigo Panels",
+      "version": "1.0.0",
+      "author": "Oikos",
+      "description": "Monitor real-time ottimizzatori Tigo: griglia celle pulsanti per potenza istantanea di ogni pannello.",
+      "sdkVersion": "^1.0.0",
+      "hasSettings": true,
+      "path": "cards/tigo-panels",
+      "entry": "cards/tigo-panels/dist/tigo-panels.js",
+      "settings": "cards/tigo-panels/dist/tigo-panels.settings.js",
+      "manifest": "cards/tigo-panels/manifest.json",
+      "preview": "cards/tigo-panels/preview.png",
+      "previews": [
+        "cards/tigo-panels/preview.png"
+      ],
+      "thumbnail": "cards/tigo-panels/preview-thumb.png",
+      "tags": [
+        "solar",
+        "tigo"
+      ],
+      "package": null,
+      "tier": "free"
+    },
+    {
+      "id": "vacuum",
+      "name": "Dreame Vacuum",
+      "version": "1.0.0",
+      "author": "Oikos",
+      "description": "Card completa Dreame Vacuum: stato, sessione, controlli, modalità, base/stazione, consumabili, switch, totali.",
+      "sdkVersion": "^1.0.0",
+      "hasSettings": true,
+      "path": "cards/vacuum",
+      "entry": "cards/vacuum/dist/vacuum.js",
+      "settings": "cards/vacuum/dist/vacuum.settings.js",
+      "manifest": "cards/vacuum/manifest.json",
+      "preview": null,
+      "previews": null,
+      "thumbnail": null,
+      "tags": [
+        "casa",
+        "vacuum",
+        "dreame"
+      ],
+      "package": null,
+      "tier": "free"
+    },
+    {
+      "id": "yesterday",
+      "name": "Fotovoltaico — Ieri",
+      "version": "1.0.0",
+      "author": "Oikos",
+      "description": "Riepilogo produzione/consumo/prelievo/cessione del giorno precedente con grafico orario.",
+      "sdkVersion": "^1.0.0",
+      "hasSettings": true,
+      "path": "cards/yesterday",
+      "entry": "cards/yesterday/dist/yesterday.js",
+      "settings": "cards/yesterday/dist/yesterday.settings.js",
+      "manifest": "cards/yesterday/manifest.json",
+      "preview": "cards/yesterday/preview.png",
+      "previews": [
+        "cards/yesterday/preview.png"
+      ],
+      "thumbnail": "cards/yesterday/preview-thumb.png",
+      "tags": [
+        "energia",
+        "fotovoltaico",
+        "storico"
+      ],
+      "package": null,
+      "tier": "free"
+    }
+  ]
+}

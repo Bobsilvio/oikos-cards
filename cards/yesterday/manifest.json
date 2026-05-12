@@ -1,0 +1,15 @@
+{
+  "id": "yesterday",
+  "name": "Fotovoltaico — Ieri",
+  "version": "1.0.0",
+  "author": "Oikos",
+  "description": "Riepilogo produzione/consumo/prelievo/cessione del giorno precedente con grafico orario.",
+  "sdkVersion": "^1.0.0",
+  "hasSettings": true,
+  "preview": "preview.png",
+  "entry": "dist/yesterday.js",
+  "settings": "dist/yesterday.settings.js",
+  "tags": ["energia", "fotovoltaico", "storico"],
+  "configVersion": 1,
+  "defaultWidth": "md"
+}

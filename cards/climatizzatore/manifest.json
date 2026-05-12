@@ -1,0 +1,15 @@
+{
+  "id": "climatizzatore",
+  "name": "Climatizzatore",
+  "version": "1.0.0",
+  "author": "Oikos",
+  "description": "Controllo completo climatizzatore HA: power, modalità (cool/heat/auto/dry/fan), target ±, fan speed, temperatura corrente e umidità. Icona animata e tema colore dinamico per modalità attiva.",
+  "sdkVersion": "^1.1.0",
+  "hasSettings": true,
+  "preview": "preview.png",
+  "entry": "dist/climatizzatore.js",
+  "settings": "dist/climatizzatore.settings.js",
+  "tags": ["casa", "clima", "ac", "aria-condizionata"],
+  "configVersion": 1,
+  "defaultWidth": "half"
+}

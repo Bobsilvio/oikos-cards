@@ -1,0 +1,15 @@
+{
+  "id": "vacuum",
+  "name": "Dreame Vacuum",
+  "version": "1.0.0",
+  "author": "Oikos",
+  "description": "Card completa Dreame Vacuum: stato, sessione, controlli, modalità, base/stazione, consumabili, switch, totali.",
+  "sdkVersion": "^1.0.0",
+  "hasSettings": true,
+  "preview": "preview.png",
+  "entry": "dist/vacuum.js",
+  "settings": "dist/vacuum.settings.js",
+  "tags": ["casa", "vacuum", "dreame"],
+  "configVersion": 1,
+  "defaultWidth": "md"
+}
