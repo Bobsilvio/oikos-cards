@@ -15,7 +15,7 @@
 > pubblica le release su GitHub e condividi il tuo URL — come HACS.
 > Gli utenti aggiungono il tuo repo direttamente nel dashboard.
 > Puoi farti scoprire aprendo una PR in
-> [`Bobsilvio/oikos-registry`](https://github.com/Bobsilvio/oikos-registry).
+> [`Bobsilvio/oikos-card-starter`](https://github.com/Bobsilvio/oikos-card-starter) (cartella `registry/`).
 
 Questa guida riguarda il repo `oikos-cards` (il catalogo ufficiale del
 dashboard Store). Per creare una card da zero usa
@@ -141,7 +141,7 @@ nuova chiave e rimuove la vecchia.
 > publish releases on GitHub, and share your URL — just like HACS.
 > Users add your repo directly in the dashboard.
 > To get discovered, open a PR in
-> [`Bobsilvio/oikos-registry`](https://github.com/Bobsilvio/oikos-registry).
+> [`Bobsilvio/oikos-card-starter`](https://github.com/Bobsilvio/oikos-card-starter) (cartella `registry/`).
 
 This guide covers the `oikos-cards` repo (the official dashboard Store
 catalog). To create a card from scratch, use
