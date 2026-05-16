@@ -10,6 +10,7 @@
   "entry": "dist/tigo-panels.js",
   "settings": "dist/tigo-panels.settings.js",
   "tags": ["solar", "tigo"],
+  "requires": ["fv"],
   "configVersion": 1,
   "defaultWidth": "lg"
 }
