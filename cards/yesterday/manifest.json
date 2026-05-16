@@ -10,6 +10,7 @@
   "entry": "dist/yesterday.js",
   "settings": "dist/yesterday.settings.js",
   "tags": ["energia", "fotovoltaico", "storico"],
+  "requires": ["fv"],
   "configVersion": 1,
   "defaultWidth": "md"
 }
