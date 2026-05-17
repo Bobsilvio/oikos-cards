@@ -2,7 +2,7 @@
  * TigoPanelsSettings — impostazioni per la card Tigo Panels.
  * Configura il prefisso entità, i suffissi e i parametri di visualizzazione.
  */
-import { useCardConfig, useDashboard } from '@oikos/sdk'
+import { useCardConfig, useDashboard, useT } from '@oikos/sdk'
 
 const DEFAULT = {
   prefix:        'sensor.tigo_optimizer_',
@@ -21,6 +21,7 @@ export default function TigoPanelsSettings({ cardId = 'tigo-panels' }) {
   const { dark } = useDashboard()
   const [config, setConfig] = useCardConfig(cardId, DEFAULT)
   const set = (k, v) => setConfig(prev => ({ ...prev, [k]: v }))
+  const { t } = useT('card-tigo-panels')
 
   const inputStyle = (mono = false) => ({
     background: 'var(--bg-primary)',
@@ -70,12 +71,12 @@ export default function TigoPanelsSettings({ cardId = 'tigo-panels' }) {
         paddingBottom: 2,
         borderBottom: '1px solid var(--border-color)',
       }}>
-        Entità Home Assistant
+        {t('settings.sectionEntities')}
       </div>
 
       {/* Prefisso */}
       <div>
-        <label style={labelStyle}>Prefisso entity ID</label>
+        <label style={labelStyle}>{t('settings.prefixLabel')}</label>
         <input
           value={config.prefix ?? DEFAULT.prefix}
           onChange={e => set('prefix', e.target.value)}
@@ -84,15 +85,13 @@ export default function TigoPanelsSettings({ cardId = 'tigo-panels' }) {
           style={inputStyle(true)}
           onFocus={onFocus} onBlur={onBlur}
         />
-        <span style={hintStyle}>
-          Il numero del pannello viene inserito dopo questo prefisso.
-        </span>
+        <span style={hintStyle}>{t('settings.prefixHint')}</span>
       </div>
 
       {/* Suffissi in griglia 2×2 */}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
         <div>
-          <label style={labelStyle}>Suffisso Potenza</label>
+          <label style={labelStyle}>{t('settings.suffixPower')}</label>
           <input
             value={config.powerSuffix ?? DEFAULT.powerSuffix}
             onChange={e => set('powerSuffix', e.target.value)}
@@ -103,7 +102,7 @@ export default function TigoPanelsSettings({ cardId = 'tigo-panels' }) {
           />
         </div>
         <div>
-          <label style={labelStyle}>Suffisso Voltaggio</label>
+          <label style={labelStyle}>{t('settings.suffixVoltage')}</label>
           <input
             value={config.voltageSuffix ?? DEFAULT.voltageSuffix}
             onChange={e => set('voltageSuffix', e.target.value)}
@@ -114,7 +113,7 @@ export default function TigoPanelsSettings({ cardId = 'tigo-panels' }) {
           />
         </div>
         <div>
-          <label style={labelStyle}>Suffisso Corrente</label>
+          <label style={labelStyle}>{t('settings.suffixCurrent')}</label>
           <input
             value={config.currentSuffix ?? DEFAULT.currentSuffix}
             onChange={e => set('currentSuffix', e.target.value)}
@@ -125,7 +124,7 @@ export default function TigoPanelsSettings({ cardId = 'tigo-panels' }) {
           />
         </div>
         <div>
-          <label style={labelStyle}>Suffisso Energia</label>
+          <label style={labelStyle}>{t('settings.suffixEnergy')}</label>
           <input
             value={config.energySuffix ?? DEFAULT.energySuffix}
             onChange={e => set('energySuffix', e.target.value)}
@@ -139,7 +138,7 @@ export default function TigoPanelsSettings({ cardId = 'tigo-panels' }) {
 
       {/* Lista ID pannelli personalizzata */}
       <div>
-        <label style={labelStyle}>ID pannelli (opzionale)</label>
+        <label style={labelStyle}>{t('settings.panelIdsLabel')}</label>
         <textarea
           value={config.panelIds ?? ''}
           onChange={e => set('panelIds', e.target.value)}
@@ -150,8 +149,8 @@ export default function TigoPanelsSettings({ cardId = 'tigo-panels' }) {
           onFocus={onFocus} onBlur={onBlur}
         />
         <span style={hintStyle}>
-          Se compilato, sostituisce la sequenza numerica. ID separati da virgola
-          (es. <code>a1, b1, a2, b2</code>) → <code>{config.prefix ?? DEFAULT.prefix}a1{config.powerSuffix ?? DEFAULT.powerSuffix}</code>.
+          {t('settings.panelIdsHint')}
+          {' '}(es. <code>a1, b1, a2, b2</code>) → <code>{config.prefix ?? DEFAULT.prefix}a1{config.powerSuffix ?? DEFAULT.powerSuffix}</code>.
         </span>
       </div>
 
@@ -165,7 +164,7 @@ export default function TigoPanelsSettings({ cardId = 'tigo-panels' }) {
         color: 'var(--text-muted)',
         wordBreak: 'break-all',
       }}>
-        <span style={{ color: 'var(--amber)', fontWeight: 700 }}>Esempio pannello {useCustomIds ? firstId : '01'}: </span>
+        <span style={{ color: 'var(--amber)', fontWeight: 700 }}>{t('settings.previewPanel', { id: useCustomIds ? firstId : '01' })} </span>
         {previewId}
       </div>
 
@@ -177,19 +176,19 @@ export default function TigoPanelsSettings({ cardId = 'tigo-panels' }) {
         paddingBottom: 2, marginTop: 2,
         borderBottom: '1px solid var(--border-color)',
       }}>
-        Visualizzazione
+        {t('settings.sectionDisplay')}
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: 8 }}>
         {/* Numero pannelli */}
         <div>
-          <label style={labelStyle}>Pannelli</label>
+          <label style={labelStyle}>{t('settings.panelCountLabel')}</label>
           <input
             type="number" min={1} max={40}
             value={config.panelCount ?? DEFAULT.panelCount}
             onChange={e => set('panelCount', Math.min(40, Math.max(1, +e.target.value)))}
             disabled={useCustomIds}
-            title={useCustomIds ? 'Determinato dalla lista ID' : undefined}
+            title={useCustomIds ? t('settings.panelCountTitle') : undefined}
             style={{ ...inputStyle(), opacity: useCustomIds ? .5 : 1 }}
             onFocus={onFocus} onBlur={onBlur}
           />
@@ -197,7 +196,7 @@ export default function TigoPanelsSettings({ cardId = 'tigo-panels' }) {
 
         {/* Colonne griglia */}
         <div>
-          <label style={labelStyle}>Colonne</label>
+          <label style={labelStyle}>{t('settings.colsLabel')}</label>
           <input
             type="number" min={2} max={10}
             value={config.cols ?? DEFAULT.cols}
@@ -209,7 +208,7 @@ export default function TigoPanelsSettings({ cardId = 'tigo-panels' }) {
 
         {/* Potenza massima */}
         <div>
-          <label style={labelStyle}>Max W</label>
+          <label style={labelStyle}>{t('settings.maxWLabel')}</label>
           <input
             type="number" min={50} max={1000}
             value={config.maxPower ?? DEFAULT.maxPower}
@@ -221,23 +220,21 @@ export default function TigoPanelsSettings({ cardId = 'tigo-panels' }) {
 
         {/* Cifre padding numero */}
         <div>
-          <label style={labelStyle}>Padding N°</label>
+          <label style={labelStyle}>{t('settings.paddingLabel')}</label>
           <select
             value={config.padDigits ?? DEFAULT.padDigits}
             onChange={e => set('padDigits', +e.target.value)}
             style={{ ...inputStyle(), paddingRight: 6 }}
             onFocus={onFocus} onBlur={onBlur}
           >
-            <option value={1}>1 (1, 2…)</option>
-            <option value={2}>2 (01, 02…)</option>
-            <option value={3}>3 (001…)</option>
+            <option value={1}>{t('settings.padding1')}</option>
+            <option value={2}>{t('settings.padding2')}</option>
+            <option value={3}>{t('settings.padding3')}</option>
           </select>
         </div>
       </div>
 
-      <span style={hintStyle}>
-        Max W = potenza massima per pannello (usata per la barra di intensità).
-      </span>
+      <span style={hintStyle}>{t('settings.maxWHint')}</span>
 
     </div>
   )

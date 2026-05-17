@@ -1,5 +1,5 @@
 import {
-  useDashboard, useCardConfig,
+  useDashboard, useCardConfig, useT,
   EntityField as _EntityField,
   Field, Section, TextField, Toggle,
 } from '@oikos/sdk'
@@ -17,52 +17,53 @@ const DEFAULT = {
 export default function PersonSettings({ cardId }) {
   const { dark } = useDashboard()
   const [cfg, setCfg] = useCardConfig(cardId, DEFAULT)
+  const { t } = useT('card-person')
   const set = (k, v) => setCfg(p => ({ ...p, [k]: v }))
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
 
-      <Section title="Persona">
+      <Section title={t('settings.sectionPerson')}>
         <_EntityField
-          label="Entità person"
+          label={t('settings.personEntity')}
           field="personEntity"
           config={cfg} setConfig={setCfg}
           filterDomain="person"
         />
-        <Field label="Nome (opzionale)">
+        <Field label={t('settings.nameOverride')}>
           <TextField value={cfg.label} onChange={v => set('label', v)} placeholder="usa friendly_name da HA"/>
         </Field>
       </Section>
 
-      <Section title="Metriche opzionali">
+      <Section title={t('settings.sectionMetrics')}>
         <_EntityField
-          label="Batteria telefono"
+          label={t('settings.batteryEntity')}
           field="batteryEntity"
           config={cfg} setConfig={setCfg}
           filterDomain="sensor"
         />
         <_EntityField
-          label="Tempo a piedi (es. proximity o travel time)"
+          label={t('settings.walkTimeEntity')}
           field="walkEntity"
           config={cfg} setConfig={setCfg}
           filterDomain="sensor"
         />
         <_EntityField
-          label="Tempo in auto (es. Waze / Google)"
+          label={t('settings.driveTimeEntity')}
           field="driveEntity"
           config={cfg} setConfig={setCfg}
           filterDomain="sensor"
         />
       </Section>
 
-      <Section title="Mappa posizione">
-        <Field label="Abilita mappa live (retro della card)">
+      <Section title={t('settings.sectionMap')}>
+        <Field label={t('settings.enableMap')}>
           <Toggle value={cfg.showMap ?? false} onChange={v => set('showMap', v)}/>
         </Field>
         {cfg.showMap && (
           <>
             <_EntityField
-              label="Sensore GPS (device_tracker)"
+              label={t('settings.gpsTracker')}
               field="gpsEntity"
               config={cfg} setConfig={setCfg}
               filterDomain="device_tracker"

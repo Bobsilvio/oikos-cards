@@ -11,7 +11,11 @@
  */
 import { useState, useEffect } from 'react'
 import { Clock as ClockIcon } from 'lucide-react'
-import { useStyles, useCardConfig } from '@oikos/sdk'
+import { useStyles, useCardConfig, registerCardTranslations, useT } from '@oikos/sdk'
+import it from './i18n/it.json'
+import en from './i18n/en.json'
+
+registerCardTranslations('card-clock', { it, en })
 
 export const manifest = {
   id: 'clock',
@@ -20,8 +24,9 @@ export const manifest = {
   author: 'Oikos',
 }
 
-export default function Clock({ label = 'Orologio' }) {
+export default function Clock({ label }) {
   const s = useStyles()
+  const { t } = useT('card-clock')
   const [cfg] = useCardConfig('clock', { format: '24h' })
   const [time, setTime] = useState(() => formatTime(new Date(), cfg.format))
 
@@ -34,7 +39,7 @@ export default function Clock({ label = 'Orologio' }) {
     <div style={s.card}>
       <div style={s.row}>
         <ClockIcon size={14} color={s.tokens.color.amber} />
-        <div style={s.label}>{label}</div>
+        <div style={s.label}>{label ?? t('label')}</div>
       </div>
       <div style={s.value}>{time}</div>
     </div>

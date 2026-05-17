@@ -6,7 +6,7 @@
 import {
   useDashboard, useCardConfig, MdiIconPicker,
   EntityField as _EntityField,
-  Field, Section, TextField, NumberField, Pills,
+  Field, Section, TextField, NumberField, Pills, useT,
 } from '@oikos/sdk'
 import { useState } from 'react'
 import { ChevronDown, ChevronRight } from 'lucide-react'
@@ -33,7 +33,7 @@ const BADGE_DEFAULT = {
 }
 
 // ── Card compatta per singolo gauge ──────────────────────────────────────────
-function GaugeRow({ gauge, index, total, dark, onChange, onRemove, onMoveUp, onMoveDown, defaultOpen }) {
+function GaugeRow({ gauge, index, total, dark, onChange, onRemove, onMoveUp, onMoveDown, defaultOpen, t }) {
   const set = (k, v) => onChange({ ...gauge, [k]: v })
   const [open, setOpen] = useState(!!defaultOpen)
 
@@ -51,7 +51,7 @@ function GaugeRow({ gauge, index, total, dark, onChange, onRemove, onMoveUp, onM
       <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
         <button
           onClick={() => setOpen(v => !v)}
-          title={open ? 'Comprimi' : 'Espandi'}
+          title={open ? t('settings.collapse') : t('settings.expand')}
           style={btnStyle(dark)}
         >
           <Chevron size={14}/>
@@ -66,16 +66,16 @@ function GaugeRow({ gauge, index, total, dark, onChange, onRemove, onMoveUp, onM
             whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
           }}
         >
-          Gauge {index + 1}{gauge.label ? ` — ${gauge.label}` : ''}{gauge.entity ? ` · ${gauge.entity}` : ''}
+          {t('settings.gaugeN', { n: index + 1 })}{gauge.label ? ` — ${gauge.label}` : ''}{gauge.entity ? ` · ${gauge.entity}` : ''}
         </button>
         <div style={{ display: 'flex', gap: 4 }}>
           {index > 0 && (
-            <button onClick={onMoveUp} title="Sposta su" style={btnStyle(dark)}>↑</button>
+            <button onClick={onMoveUp} title={t('settings.moveUp')} style={btnStyle(dark)}>↑</button>
           )}
           {index < total - 1 && (
-            <button onClick={onMoveDown} title="Sposta giù" style={btnStyle(dark)}>↓</button>
+            <button onClick={onMoveDown} title={t('settings.moveDown')} style={btnStyle(dark)}>↓</button>
           )}
-          <button onClick={onRemove} title="Elimina" style={btnStyle(dark, true)}>✕</button>
+          <button onClick={onRemove} title={t('settings.delete')} style={btnStyle(dark, true)}>✕</button>
         </div>
       </div>
 
@@ -83,7 +83,7 @@ function GaugeRow({ gauge, index, total, dark, onChange, onRemove, onMoveUp, onM
         <>
           {/* Entità */}
           <_EntityField
-            label="Entità sensore"
+            label={t('settings.flowEntity')}
             field="entity"
             config={gauge}
             setConfig={(updater) => onChange(typeof updater === 'function' ? updater(gauge) : updater)}
@@ -91,24 +91,24 @@ function GaugeRow({ gauge, index, total, dark, onChange, onRemove, onMoveUp, onM
           />
 
           {/* Label opzionale */}
-          <Field label="Etichetta (opzionale)">
+          <Field label={t('settings.roomName')}>
             <TextField value={gauge.label} onChange={v => set('label', v)} placeholder="es. Temperatura"/>
           </Field>
 
           {/* Unit + decimali + colore */}
           <div style={{ display: 'flex', gap: 8 }}>
             <div style={{ flex: 1 }}>
-              <Field label="Unità">
+              <Field label="Unit">
                 <TextField value={gauge.unit} onChange={v => set('unit', v)} placeholder="es. °C"/>
               </Field>
             </div>
             <div style={{ flex: 1 }}>
-              <Field label="Decimali">
+              <Field label="Dec.">
                 <NumberField value={gauge.decimals ?? 1} onChange={v => set('decimals', v)} min={0} max={4}/>
               </Field>
             </div>
             <div style={{ flex: 1 }}>
-              <Field label="Colore">
+              <Field label={t('settings.barColor')}>
                 <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
                   <input
                     type="color"
@@ -142,7 +142,7 @@ function GaugeRow({ gauge, index, total, dark, onChange, onRemove, onMoveUp, onM
 }
 
 // ── Card compatta per singolo badge ──────────────────────────────────────────
-function BadgeRow({ badge, index, total, dark, onChange, onRemove, onMoveUp, onMoveDown, defaultOpen }) {
+function BadgeRow({ badge, index, total, dark, onChange, onRemove, onMoveUp, onMoveDown, defaultOpen, t }) {
   const set = (k, v) => onChange({ ...badge, [k]: v })
   const [open, setOpen] = useState(!!defaultOpen)
 
@@ -160,7 +160,7 @@ function BadgeRow({ badge, index, total, dark, onChange, onRemove, onMoveUp, onM
       <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
         <button
           onClick={() => setOpen(v => !v)}
-          title={open ? 'Comprimi' : 'Espandi'}
+          title={open ? t('settings.collapse') : t('settings.expand')}
           style={btnStyle(dark)}
         >
           <Chevron size={14}/>
@@ -175,16 +175,16 @@ function BadgeRow({ badge, index, total, dark, onChange, onRemove, onMoveUp, onM
             whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
           }}
         >
-          Badge {index + 1}{badge.entity ? ` · ${badge.entity}` : ''}
+          {t('settings.badgeN', { n: index + 1 })}{badge.entity ? ` · ${badge.entity}` : ''}
         </button>
         <div style={{ display: 'flex', gap: 4 }}>
           {index > 0 && (
-            <button onClick={onMoveUp} title="Sposta su" style={btnStyle(dark)}>↑</button>
+            <button onClick={onMoveUp} title={t('settings.moveUp')} style={btnStyle(dark)}>↑</button>
           )}
           {index < total - 1 && (
-            <button onClick={onMoveDown} title="Sposta giù" style={btnStyle(dark)}>↓</button>
+            <button onClick={onMoveDown} title={t('settings.moveDown')} style={btnStyle(dark)}>↓</button>
           )}
-          <button onClick={onRemove} title="Elimina" style={btnStyle(dark, true)}>✕</button>
+          <button onClick={onRemove} title={t('settings.delete')} style={btnStyle(dark, true)}>✕</button>
         </div>
       </div>
 
@@ -192,7 +192,7 @@ function BadgeRow({ badge, index, total, dark, onChange, onRemove, onMoveUp, onM
         <>
           {/* Entità */}
           <_EntityField
-            label="Entità"
+            label="Entity"
             field="entity"
             config={badge}
             setConfig={(updater) => onChange(typeof updater === 'function' ? updater(badge) : updater)}
@@ -202,12 +202,12 @@ function BadgeRow({ badge, index, total, dark, onChange, onRemove, onMoveUp, onM
           {/* Unità + decimali */}
           <div style={{ display: 'flex', gap: 8 }}>
             <div style={{ flex: 1 }}>
-              <Field label="Unità">
+              <Field label="Unit">
                 <TextField value={badge.unit} onChange={v => set('unit', v)} placeholder="es. %"/>
               </Field>
             </div>
             <div style={{ flex: 1 }}>
-              <Field label="Decimali">
+              <Field label="Dec.">
                 <NumberField value={badge.decimals ?? 0} onChange={v => set('decimals', v)} min={0} max={4}/>
               </Field>
             </div>
@@ -226,7 +226,7 @@ function BadgeRow({ badge, index, total, dark, onChange, onRemove, onMoveUp, onM
               </Field>
             </div>
             <div style={{ flex: 1 }}>
-              <Field label="Colore">
+              <Field label={t('settings.barColor')}>
                 <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
                   <input
                     type="color"
@@ -268,7 +268,7 @@ function moveItem(arr, from, to) {
 }
 
 // ── Dropdown entità da lista gauge ───────────────────────────────────────────
-function EntityDropdown({ label, value, onChange, gauges, dark }) {
+function EntityDropdown({ label, value, onChange, gauges, dark, autoFirstLabel }) {
   const options = gauges.filter(g => g.entity)
   if (!options.length) return null
 
@@ -287,7 +287,7 @@ function EntityDropdown({ label, value, onChange, gauges, dark }) {
         onFocus={e => e.target.style.borderColor = 'var(--amber-border)'}
         onBlur={e  => e.target.style.borderColor = 'var(--border-medium)'}
       >
-        <option value="">Automatico (primo gauge)</option>
+        <option value="">{autoFirstLabel}</option>
         {options.map((g, i) => (
           <option key={i} value={g.entity}>
             {g.label || g.entity}
@@ -303,6 +303,7 @@ export default function RoomSensorSettings({ cardId }) {
   const { dark } = useDashboard()
   const [cfg, setCfg] = useCardConfig(cardId, DEFAULT)
   const set = (k, v) => setCfg(p => ({ ...p, [k]: v }))
+  const { t } = useT('card-room-sensor')
 
   const gauges = cfg.gauges ?? []
   const badges = cfg.badges ?? []
@@ -326,23 +327,23 @@ export default function RoomSensorSettings({ cardId }) {
     <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
 
       {/* ── 1. Stanza ── */}
-      <Section title="Stanza">
-        <Field label="Nome (opzionale)">
+      <Section title={t('settings.sectionRoom')}>
+        <Field label={t('settings.roomName')}>
           <TextField value={cfg.label} onChange={v => set('label', v)} placeholder="usa friendly_name da HA"/>
         </Field>
-        <Field label="Icona">
+        <Field label={t('settings.roomIcon')}>
           <MdiIconPicker value={cfg.icon ?? 'home'} onChange={v => set('icon', v)} dark={dark} size={32}/>
         </Field>
       </Section>
 
       {/* ── 2. Gauge ── */}
-      <Section title="Gauge">
+      <Section title={t('settings.sectionGauge')}>
         {gauges.length === 0 && (
           <div style={{
             fontSize: 11, color: 'var(--text-muted)', fontStyle: 'italic',
             padding: '6px 0',
           }}>
-            Nessun gauge configurato. Aggiungine uno.
+            {t('settings.noGauges')}
           </div>
         )}
         {gauges.map((g, i) => (
@@ -357,6 +358,7 @@ export default function RoomSensorSettings({ cardId }) {
             onRemove={() => removeGauge(i)}
             onMoveUp={() => moveGaugeUp(i)}
             onMoveDown={() => moveGaugeDown(i)}
+            t={t}
           />
         ))}
         <button
@@ -378,44 +380,45 @@ export default function RoomSensorSettings({ cardId }) {
             e.currentTarget.style.color = 'var(--text-muted)'
           }}
         >
-          + Aggiungi gauge
+          {t('settings.addGauge')}
         </button>
       </Section>
 
       {/* ── 3. Visualizzazione ── */}
-      <Section title="Visualizzazione">
-        <Field label="Stile principale">
+      <Section title={t('settings.sectionDisplay')}>
+        <Field label={t('settings.mainStyle')}>
           <Pills
             value={cfg.displayMode ?? 'gauge'}
             onChange={v => set('displayMode', v)}
             options={[
-              { value: 'gauge', label: 'Gauge' },
-              { value: 'flow',  label: 'Flow' },
+              { value: 'gauge', label: t('settings.styleGauge') },
+              { value: 'flow',  label: t('settings.styleFlow') },
             ]}
           />
         </Field>
 
         {cfg.displayMode === 'flow' && (
           <EntityDropdown
-            label="Entità per il grafico flow"
+            label={t('settings.flowEntity')}
             value={cfg.flowEntity}
             onChange={v => set('flowEntity', v)}
             gauges={gauges}
             dark={dark}
+            autoFirstLabel={t('settings.autoFirst')}
           />
         )}
 
         {/* Sezione destra (solo gauge mode) */}
         {isGauge && (
-          <Field label="Sezione destra">
+          <Field label={t('settings.rightSection')}>
             <Pills
               value={cfg.rightSection ?? 'none'}
               onChange={v => set('rightSection', v)}
               options={[
-                { value: 'none',      label: 'Nessuna' },
-                { value: 'badges',    label: 'Badge' },
-                { value: 'minigauge', label: 'Mini gauge' },
-                { value: 'history',   label: 'Storico' },
+                { value: 'none',      label: t('settings.styleNone') },
+                { value: 'badges',    label: t('settings.rightBadge') },
+                { value: 'minigauge', label: t('settings.rightMiniGauge') },
+                { value: 'history',   label: t('settings.rightHistory') },
               ]}
             />
           </Field>
@@ -425,13 +428,14 @@ export default function RoomSensorSettings({ cardId }) {
         {isGauge && cfg.rightSection === 'history' && (
           <>
             <EntityDropdown
-              label="Entità per lo storico"
+              label={t('settings.historyEntity')}
               value={cfg.historyEntity}
               onChange={v => set('historyEntity', v)}
               gauges={gauges}
               dark={dark}
+              autoFirstLabel={t('settings.autoFirst')}
             />
-            <Field label="Colore barre">
+            <Field label={t('settings.barColor')}>
               <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
                 <input
                   type="color"
@@ -448,13 +452,13 @@ export default function RoomSensorSettings({ cardId }) {
 
       {/* ── 4. Badge / Mini gauge ── */}
       {showBadges && (
-        <Section title={cfg.rightSection === 'minigauge' ? 'Mini gauge (batteria, segnale…)' : 'Badge'}>
+        <Section title={cfg.rightSection === 'minigauge' ? t('settings.sectionMiniGauge') : 'Badge'}>
           {badges.length === 0 && (
             <div style={{
               fontSize: 11, color: 'var(--text-muted)', fontStyle: 'italic',
               padding: '6px 0',
             }}>
-              Nessun badge configurato. Aggiungine uno.
+              {t('settings.noBadges')}
             </div>
           )}
           {badges.map((b, i) => (
@@ -469,6 +473,7 @@ export default function RoomSensorSettings({ cardId }) {
               onRemove={() => removeBadge(i)}
               onMoveUp={() => moveBadgeUp(i)}
               onMoveDown={() => moveBadgeDown(i)}
+              t={t}
             />
           ))}
           <button
@@ -490,7 +495,7 @@ export default function RoomSensorSettings({ cardId }) {
               e.currentTarget.style.color = 'var(--text-muted)'
             }}
           >
-            + Aggiungi badge
+            {t('settings.addBadge')}
           </button>
         </Section>
       )}

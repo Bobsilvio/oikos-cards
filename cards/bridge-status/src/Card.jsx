@@ -2,7 +2,11 @@
  * BridgeStatusCard — mostra la differenza tra dashboard standalone e add-on con bridge.
  * Split-panel: "Prima" (limitato) vs "Ora" (bridge attivo, dati reali).
  */
-import { useDashboard, useBridge, MdiIcon } from '@oikos/sdk'
+import { useDashboard, useBridge, MdiIcon, registerCardTranslations, useT } from '@oikos/sdk'
+import it from './i18n/it.json'
+import en from './i18n/en.json'
+
+registerCardTranslations('card-bridge-status', { it, en })
 
 // ── Micro-componenti ─────────────────────────────────────────────────────────
 
@@ -98,6 +102,7 @@ function PanelHeader({ title, subtitle, active, dark }) {
 export default function BridgeStatusCard() {
   const { dark, connected }    = useDashboard()
   const { registry, available } = useBridge()
+  const { t } = useT('card-bridge-status')
 
   const entities = registry?.entities ?? {}
   const areas    = registry?.areas    ?? {}
@@ -159,7 +164,7 @@ export default function BridgeStatusCard() {
               ? '1px solid rgba(16,185,129,.2)'
               : `1px solid ${dark ? 'rgba(255,255,255,.08)' : '#dde3ec'}`,
           }}>
-            {available ? 'Attivo' : 'Non disponibile'}
+            {available ? t('badgeActive') : t('badgeUnavailable')}
           </span>
         </div>
 
@@ -169,19 +174,19 @@ export default function BridgeStatusCard() {
           {/* ── Colonna PRIMA ── */}
           <div style={{ opacity: available ? 0.7 : 1 }}>
             <PanelHeader
-              title="Prima"
-              subtitle="Standalone / senza bridge"
+              title={t('panelBefore')}
+              subtitle={t('panelBeforeSubtitle')}
               active={false}
               dark={dark}
             />
 
-            <Row icon="wifi"           label="WebSocket HA"   value={connected ? 'OK' : 'KO'}         dark={dark} />
-            <Row icon="key"            label="Autenticazione" value="Token manuale"                    dark={dark} />
-            <Row icon="database-off"   label="Registry"       value="Non disponibile" muted dark={dark} />
-            <Row icon="account-off"    label="Utente HA"      value="Non disponibile" muted dark={dark} />
-            <Row icon="map-marker-off" label="Aree"           value="Non disponibile" muted dark={dark} />
-            <Row icon="puzzle-off"     label="Editor visuale" value="Non disponibile" muted dark={dark} />
-            <Row icon="palette-swatch" label="Tema HA"        value="Non sincronizzato" muted dark={dark}/>
+            <Row icon="wifi"           label={t('rowWebsocket')} value={connected ? 'OK' : 'KO'}           dark={dark} />
+            <Row icon="key"            label={t('rowAuth')}      value={t('valManualToken')}                dark={dark} />
+            <Row icon="database-off"   label={t('rowRegistry')}  value={t('valUnavailable')} muted dark={dark} />
+            <Row icon="account-off"    label={t('rowUser')}      value={t('valUnavailable')} muted dark={dark} />
+            <Row icon="map-marker-off" label={t('rowAreas')}     value={t('valUnavailable')} muted dark={dark} />
+            <Row icon="puzzle-off"     label={t('rowEditor')}    value={t('valUnavailable')} muted dark={dark} />
+            <Row icon="palette-swatch" label={t('rowTheme')}     value={t('valNotSynced')}   muted dark={dark}/>
           </div>
 
           {/* ── Divisore ── */}
@@ -190,28 +195,28 @@ export default function BridgeStatusCard() {
           {/* ── Colonna ORA ── */}
           <div>
             <PanelHeader
-              title="Ora"
-              subtitle="Add-on + bridge attivo"
+              title={t('panelNow')}
+              subtitle={t('panelNowSubtitle')}
               active={available}
               dark={dark}
             />
 
             <Row
               icon="wifi"
-              label="WebSocket HA"
+              label={t('rowWebsocket')}
               value={connected ? 'OK' : 'KO'}
               dark={dark}
             />
             <Row
               icon="key-variant"
-              label="Autenticazione"
-              value="Supervisor Token"
+              label={t('rowAuth')}
+              value={t('valSupervisorToken')}
               highlight={available}
               dark={dark}
             />
             <Row
               icon="database"
-              label="Entità registry"
+              label={t('rowRegistry')}
               value={available ? `${entityCount.toLocaleString('it')}` : '—'}
               highlight={available && entityCount > 0}
               muted={!available}
@@ -219,7 +224,7 @@ export default function BridgeStatusCard() {
             />
             <Row
               icon="account-circle"
-              label="Utente HA"
+              label={t('rowUser')}
               value={available && user ? user.name : '—'}
               highlight={available && !!user}
               muted={!available}
@@ -227,7 +232,7 @@ export default function BridgeStatusCard() {
             />
             <Row
               icon="home-city"
-              label="Aree"
+              label={t('rowAreas')}
               value={available
                 ? (areaCount > 0 ? `${areaCount} (${areaNames.join(', ')}${areaCount > 3 ? '…' : ''})` : '0')
                 : '—'}
@@ -237,15 +242,15 @@ export default function BridgeStatusCard() {
             />
             <Row
               icon="pencil-ruler"
-              label="Editor visuale"
-              value={available ? 'Disponibile' : '—'}
+              label={t('rowEditor')}
+              value={available ? t('valAvailable') : '—'}
               highlight={available}
               muted={!available}
               dark={dark}
             />
             <Row
               icon="palette"
-              label="Tema HA"
+              label={t('rowTheme')}
               value={available && themes ? themes.theme : '—'}
               highlight={available && !!themes}
               muted={!available}
@@ -262,9 +267,9 @@ export default function BridgeStatusCard() {
             display: 'flex', gap: 16, flexWrap: 'wrap',
           }}>
             {[
-              { icon: 'home-assistant', label: 'Versione HA', value: haConfig.version },
-              { icon: 'map-marker',     label: 'Luogo',       value: haConfig.location_name },
-              { icon: 'devices',        label: 'Dispositivi', value: deviceCount },
+              { icon: 'home-assistant', label: t('footerVersion'),  value: haConfig.version },
+              { icon: 'map-marker',     label: t('footerLocation'), value: haConfig.location_name },
+              { icon: 'devices',        label: t('footerDevices'),  value: deviceCount },
             ].map(({ icon, label, value }) => (
               <div key={label} style={{
                 display: 'flex', alignItems: 'center', gap: 5,
@@ -293,8 +298,7 @@ export default function BridgeStatusCard() {
             fontSize: 11, color: dark ? 'rgba(245,158,11,.8)' : '#92400e',
             lineHeight: 1.6,
           }}>
-            Il bridge si auto-installa al primo avvio come add-on HA.
-            Vai su <code style={{ fontSize: 10 }}>/oikos-bridge</code> in HA per attivarlo.
+            {t('installMessage')}
           </div>
         )}
       </div>

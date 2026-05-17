@@ -1,0 +1,21 @@
+{
+  "title": "Fotovoltaico — Ieri",
+  "stats": {
+    "production": "Produzione",
+    "consumption": "Consumo",
+    "fromGrid": "Da Rete",
+    "toGrid": "Ceduta"
+  },
+  "chart": {
+    "title": "Andamento Giornaliero",
+    "loading": "Caricamento storico…"
+  },
+  "settings": {
+    "sectionTitle": "Entità energia (globali)",
+    "sectionHint": "Questi sensori sono condivisi con altre card (Energy, Tigo). Vengono interrogati per la data di ieri.",
+    "prodToday": "Produzione giornaliera (kWh)",
+    "consToday": "Consumo giornaliero (kWh)",
+    "gridFromToday": "Prelievo da rete (kWh)",
+    "gridToToday": "Ceduta alla rete (kWh)"
+  }
+}

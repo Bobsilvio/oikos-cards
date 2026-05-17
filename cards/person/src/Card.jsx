@@ -2,7 +2,11 @@
  * PersonCard — avatar, zona, metriche. Retro: mappa OSM live (flip 3D).
  */
 import { useId } from 'react'
-import { useDashboard, useCardConfig } from '@oikos/sdk'
+import { useDashboard, useCardConfig, registerCardTranslations, useT } from '@oikos/sdk'
+import it from './i18n/it.json'
+import en from './i18n/en.json'
+
+registerCardTranslations('card-person', { it, en })
 
 const DEFAULT = {
   personEntity:  '',
@@ -25,10 +29,10 @@ function zoneColor(state) {
   if (state === 'not_home') return '#f97316'
   return '#3b82f6'
 }
-function zoneLabel(state, attrs) {
-  if (!state || state === 'unknown' || state === 'unavailable') return 'Sconosciuto'
-  if (state === 'home')     return 'A casa'
-  if (state === 'not_home') return 'Fuori'
+function zoneLabel(state, attrs, t) {
+  if (!state || state === 'unknown' || state === 'unavailable') return t('zoneUnknown')
+  if (state === 'home')     return t('zoneHome')
+  if (state === 'not_home') return t('zoneAway')
   return attrs?.friendly_name ?? state
 }
 function fmtMetric(state, unit) {
@@ -149,6 +153,7 @@ function MapBackground({ lat, lon, name, dark, zoomLevel = 15 }) {
 export default function PersonCard({ cardId }) {
   const { dark, haStates, getState } = useDashboard()
   const [cfg]     = useCardConfig(cardId, DEFAULT)
+  const { t } = useT('card-person')
   const uid = useId().replace(/:/g, '')
 
   if (!cfg.personEntity) return (
@@ -159,7 +164,7 @@ export default function PersonCard({ cardId }) {
       display: 'flex', alignItems: 'center', justifyContent: 'center',
       color: 'var(--text-muted)', fontSize: 11,
     }}>
-      Configura un'entità person in ⚙
+      {t('noEntity')}
     </div>
   )
 
@@ -179,10 +184,10 @@ export default function PersonCard({ cardId }) {
   const lastSeen = (() => {
     if (!lastUpdated) return null
     const s = (Date.now() - new Date(lastUpdated).getTime()) / 1000
-    if (s < 90)    return 'adesso'
-    if (s < 3600)  return `${Math.floor(s / 60)} min fa`
-    if (s < 86400) return `${Math.floor(s / 3600)}h fa`
-    return `${Math.floor(s / 86400)}g fa`
+    if (s < 90)    return t('timeNow')
+    if (s < 3600)  return t('timeMinAgo', { n: Math.floor(s / 60) })
+    if (s < 86400) return t('timeHAgo', { n: Math.floor(s / 3600) })
+    return t('timeDayAgo', { n: Math.floor(s / 86400) })
   })()
 
   const battState = cfg.batteryEntity ? getState(cfg.batteryEntity) : null
@@ -307,7 +312,7 @@ export default function PersonCard({ cardId }) {
               background: `${color}20`, color, border: `1px solid ${color}40`,
               whiteSpace: 'nowrap',
             }}>
-              {zoneLabel(personState, attrs)}
+              {zoneLabel(personState, attrs, t)}
             </span>
           </div>
 
@@ -345,7 +350,7 @@ export default function PersonCard({ cardId }) {
               fontSize: 9, fontWeight: 800,
               color: dark ? '#fff' : '#0f172a',
               letterSpacing: '.04em', textTransform: 'uppercase',
-            }}>Live</span>
+            }}>{t('live')}</span>
           </div>
         )}
       </div>

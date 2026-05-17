@@ -1,8 +1,12 @@
 import { useState, useEffect, useCallback } from 'react'
 import { TrendingUp, Zap, Home, PlugZap, Upload } from 'lucide-react'
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend } from 'recharts'
-import { useDashboard, getEntities } from '@oikos/sdk'
+import { useDashboard, getEntities, registerCardTranslations, useT } from '@oikos/sdk'
 import { fmt, yesterdayIt } from './format'
+import it from './i18n/it.json'
+import en from './i18n/en.json'
+
+registerCardTranslations('card-yesterday', { it, en })
 
 function StatBox({ dark, icon: Icon, iconColor, label, value }) {
   return (
@@ -22,6 +26,7 @@ function StatBox({ dark, icon: Icon, iconColor, label, value }) {
 
 export default function YesterdayCard() {
   const { dark, fetchHistory, connected } = useDashboard()
+  const { t } = useT('card-yesterday')
   const [chartData, setChartData] = useState([])
   const [totals,    setTotals]    = useState({ prod: 0, cons: 0, prel: 0, ced: 0 })
   const [loading,   setLoading]   = useState(false)
@@ -74,11 +79,11 @@ export default function YesterdayCard() {
       const ced  = serieOraria(idCed)
 
       const chart = Array.from({ length: 24 }, (_, h) => ({
-        ora:        `${String(h).padStart(2, '0')}:00`,
-        Produzione: prod[h] != null ? +prod[h].toFixed(2) : null,
-        Consumo:    cons[h] != null ? +cons[h].toFixed(2) : null,
-        'Da Rete':  prel[h] != null ? +prel[h].toFixed(2) : null,
-        Ceduta:     ced[h]  != null ? +ced[h].toFixed(2)  : null,
+        ora:  `${String(h).padStart(2, '0')}:00`,
+        prod: prod[h] != null ? +prod[h].toFixed(2) : null,
+        cons: cons[h] != null ? +cons[h].toFixed(2) : null,
+        prel: prel[h] != null ? +prel[h].toFixed(2) : null,
+        ced:  ced[h]  != null ? +ced[h].toFixed(2)  : null,
       }))
       setChartData(chart)
 
@@ -116,7 +121,7 @@ export default function YesterdayCard() {
         <TrendingUp size={20} color="#f59e0b"/>
         <div>
           <div style={{ fontSize: 18, fontWeight: 900, color: dark ? '#fef3c7' : '#78350f', letterSpacing: '-.3px' }}>
-            Fotovoltaico — Ieri
+            {t('title')}
           </div>
           <div style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 2 }}>
             {yesterdayIt()}
@@ -126,10 +131,10 @@ export default function YesterdayCard() {
 
       <div style={{ padding: 20 }}>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: 10, marginBottom: 20 }}>
-          <StatBox dark={dark} icon={Zap}     iconColor={dark ? '#fbbf24' : '#d97706'} label="Produzione" value={fmt(totals.prod, 2) + ' kWh'}/>
-          <StatBox dark={dark} icon={Home}    iconColor={dark ? '#60a5fa' : '#2563eb'} label="Consumo"    value={fmt(totals.cons, 2) + ' kWh'}/>
-          <StatBox dark={dark} icon={PlugZap} iconColor={dark ? '#a78bfa' : '#7c3aed'} label="Da Rete"    value={fmt(totals.prel, 2) + ' kWh'}/>
-          <StatBox dark={dark} icon={Upload}  iconColor={dark ? '#34d399' : '#059669'} label="Ceduta"     value={fmt(totals.ced, 2) + ' kWh'}/>
+          <StatBox dark={dark} icon={Zap}     iconColor={dark ? '#fbbf24' : '#d97706'} label={t('stats.production')} value={fmt(totals.prod, 2) + ' kWh'}/>
+          <StatBox dark={dark} icon={Home}    iconColor={dark ? '#60a5fa' : '#2563eb'} label={t('stats.consumption')} value={fmt(totals.cons, 2) + ' kWh'}/>
+          <StatBox dark={dark} icon={PlugZap} iconColor={dark ? '#a78bfa' : '#7c3aed'} label={t('stats.fromGrid')}    value={fmt(totals.prel, 2) + ' kWh'}/>
+          <StatBox dark={dark} icon={Upload}  iconColor={dark ? '#34d399' : '#059669'} label={t('stats.toGrid')}      value={fmt(totals.ced, 2) + ' kWh'}/>
         </div>
 
         <div style={{
@@ -138,11 +143,11 @@ export default function YesterdayCard() {
           borderRadius: 14, padding: '16px 8px 8px',
         }}>
           <div style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '.8px', color: 'var(--text-muted)', marginBottom: 12, paddingLeft: 8 }}>
-            Andamento Giornaliero
+            {t('chart.title')}
           </div>
           {loading ? (
             <div style={{ textAlign: 'center', padding: '40px 0', color: 'var(--text-muted)', fontSize: 13 }}>
-              Caricamento storico…
+              {t('chart.loading')}
             </div>
           ) : (
             <ResponsiveContainer width="100%" height={220}>
@@ -151,8 +156,13 @@ export default function YesterdayCard() {
                 <YAxis tick={{ fill: 'var(--text-muted)', fontSize: 10 }} tickLine={false} axisLine={false} width={35}/>
                 <Tooltip contentStyle={tooltipStyle} labelStyle={{ fontWeight: 700 }}/>
                 <Legend wrapperStyle={{ fontSize: 11, paddingTop: 8 }}/>
-                {['Produzione', 'Consumo', 'Da Rete', 'Ceduta'].map((k, i) => (
-                  <Line key={k} type="monotone" dataKey={k} stroke={lineColors[i]}
+                {[
+                  { key: 'prod', label: t('stats.production')  },
+                  { key: 'cons', label: t('stats.consumption') },
+                  { key: 'prel', label: t('stats.fromGrid')    },
+                  { key: 'ced',  label: t('stats.toGrid')      },
+                ].map(({ key, label }, i) => (
+                  <Line key={key} type="monotone" dataKey={key} name={label} stroke={lineColors[i]}
                     strokeWidth={2} dot={false} connectNulls
                     activeDot={{ r: 4, fill: lineColors[i] }}/>
                 ))}

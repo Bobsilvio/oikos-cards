@@ -1,0 +1,32 @@
+{
+  "header": {
+    "title": "Tigo Solar",
+    "panelsActive": "{{count}}/{{total}} panels active"
+  },
+  "totals": {
+    "power": "power",
+    "energyToday": "energy today"
+  },
+  "settings": {
+    "sectionEntities": "Home Assistant Entities",
+    "sectionDisplay": "Display",
+    "prefixLabel": "Entity ID prefix",
+    "prefixHint": "The panel number is appended after this prefix.",
+    "suffixPower": "Power suffix",
+    "suffixVoltage": "Voltage suffix",
+    "suffixCurrent": "Current suffix",
+    "suffixEnergy": "Energy suffix",
+    "panelIdsLabel": "Panel IDs (optional)",
+    "panelIdsHint": "If set, replaces the numeric sequence. Comma-separated IDs.",
+    "previewPanel": "Example panel {{id}}:",
+    "panelCountLabel": "Panels",
+    "panelCountTitle": "Determined by ID list",
+    "colsLabel": "Columns",
+    "maxWLabel": "Max W",
+    "maxWHint": "Max W = maximum power per panel (used for intensity bar).",
+    "paddingLabel": "Number padding",
+    "padding1": "1 (1, 2…)",
+    "padding2": "2 (01, 02…)",
+    "padding3": "3 (001…)"
+  }
+}

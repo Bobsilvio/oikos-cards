@@ -11,7 +11,11 @@ import {
   Power, Snowflake, Flame, Wind, Droplets, RefreshCcw,
   Plus, Minus, Sun, Sparkles,
 } from 'lucide-react'
-import { useDashboard, useCardConfig } from '@oikos/sdk'
+import { useDashboard, useCardConfig, registerCardTranslations, useT } from '@oikos/sdk'
+import it from './i18n/it.json'
+import en from './i18n/en.json'
+
+registerCardTranslations('card-climatizzatore', { it, en })
 
 const DEFAULT_CONFIG = {
   entityId:    '',                     // climate.X
@@ -23,15 +27,15 @@ const DEFAULT_CONFIG = {
   showHumidity: true,
 }
 
-// Mappa modalità HVAC → preset visivo
+// Mappa modalità HVAC → preset visivo (le label vengono sovrascritte via t() nel componente)
 const MODE_PRESETS = {
-  off:       { label: 'Spento',      color: '#94a3b8', icon: Power,      bg: 'rgba(148,163,184,.1)'   },
-  cool:      { label: 'Raffredda',   color: '#06b6d4', icon: Snowflake,  bg: 'rgba(6,182,212,.12)'    },
-  heat:      { label: 'Riscalda',    color: '#ef4444', icon: Flame,      bg: 'rgba(239,68,68,.12)'    },
-  heat_cool: { label: 'Auto',        color: '#8b5cf6', icon: Sparkles,   bg: 'rgba(139,92,246,.12)'   },
-  auto:      { label: 'Auto',        color: '#8b5cf6', icon: Sparkles,   bg: 'rgba(139,92,246,.12)'   },
-  dry:       { label: 'Deumidifica', color: '#f59e0b', icon: Droplets,   bg: 'rgba(245,158,11,.12)'   },
-  fan_only:  { label: 'Ventola',     color: '#22c55e', icon: Wind,       bg: 'rgba(34,197,94,.12)'    },
+  off:       { modeKey: 'off',      color: '#94a3b8', icon: Power,      bg: 'rgba(148,163,184,.1)'   },
+  cool:      { modeKey: 'cool',     color: '#06b6d4', icon: Snowflake,  bg: 'rgba(6,182,212,.12)'    },
+  heat:      { modeKey: 'heat',     color: '#ef4444', icon: Flame,      bg: 'rgba(239,68,68,.12)'    },
+  heat_cool: { modeKey: 'auto',     color: '#8b5cf6', icon: Sparkles,   bg: 'rgba(139,92,246,.12)'   },
+  auto:      { modeKey: 'auto',     color: '#8b5cf6', icon: Sparkles,   bg: 'rgba(139,92,246,.12)'   },
+  dry:       { modeKey: 'dry',      color: '#f59e0b', icon: Droplets,   bg: 'rgba(245,158,11,.12)'   },
+  fan_only:  { modeKey: 'fan_only', color: '#22c55e', icon: Wind,       bg: 'rgba(34,197,94,.12)'    },
 }
 
 function modeOf(state) {
@@ -46,6 +50,7 @@ function fmtTemp(t, dec = 1) {
 export default function ClimatizzatoreCard({ cardId = 'climatizzatore' }) {
   const { dark, getState, getFloat, getAttr, callService, haStates } = useDashboard()
   const [config] = useCardConfig(cardId, DEFAULT_CONFIG)
+  const { t } = useT('card-climatizzatore')
   const [busy, setBusy] = useState(null) // 'temp' | 'mode' | 'power' | 'fan'
 
   const id = config.entityId
@@ -120,7 +125,7 @@ export default function ClimatizzatoreCard({ cardId = 'climatizzatore' }) {
         padding: 16, borderRadius: 16, background: cardBg, border: `1px solid ${border}`,
         color: cMuted, fontSize: 12, fontStyle: 'italic',
       }}>
-        ⚙ Configura un'entità <code>climate.*</code> nelle impostazioni della card.
+        {t('noEntity')}
       </div>
     )
   }
@@ -187,7 +192,7 @@ export default function ClimatizzatoreCard({ cardId = 'climatizzatore' }) {
             fontSize: 10, color: accent, fontWeight: 700,
             letterSpacing: '.04em', textTransform: 'uppercase',
           }}>
-            {preset.label}
+            {t(`mode.${preset.modeKey}`)}
           </div>
         </div>
 
@@ -195,7 +200,7 @@ export default function ClimatizzatoreCard({ cardId = 'climatizzatore' }) {
         <button
           onClick={togglePower}
           disabled={busy === 'power'}
-          title={isOff ? 'Accendi' : 'Spegni'}
+          title={isOff ? t('btnOn') : t('btnOff')}
           style={{
             width: 38, height: 38, borderRadius: 10, cursor: 'pointer',
             background: isOff
@@ -218,7 +223,7 @@ export default function ClimatizzatoreCard({ cardId = 'climatizzatore' }) {
       }}>
         <div>
           <div style={{ fontSize: 9, fontWeight: 800, color: cMuted, letterSpacing: '.08em', textTransform: 'uppercase' }}>
-            Attuale
+            {t('tempCurrent')}
           </div>
           <div style={{
             fontSize: 44, fontWeight: 900, color: cText,
@@ -238,7 +243,7 @@ export default function ClimatizzatoreCard({ cardId = 'climatizzatore' }) {
               marginBottom: 4,
             }}>
               <span style={{ fontSize: 9, fontWeight: 800, color: cMuted, letterSpacing: '.08em', textTransform: 'uppercase' }}>
-                Target
+                {t('tempTarget')}
               </span>
             </div>
             <div style={{
@@ -290,19 +295,19 @@ export default function ClimatizzatoreCard({ cardId = 'climatizzatore' }) {
           {config.showHumidity && humidity != null && (
             <InfoChip
               dark={dark} icon={<Droplets size={11}/>}
-              value={`${Math.round(humidity)}%`} label="Umidità"
+              value={`${Math.round(humidity)}%`} label={t('chipHumidity')}
             />
           )}
           {outdoorTemp != null && (
             <InfoChip
               dark={dark} icon={<Sun size={11}/>}
-              value={`${fmtTemp(outdoorTemp, 0)}°`} label="Esterna"
+              value={`${fmtTemp(outdoorTemp, 0)}°`} label={t('chipOutdoor')}
             />
           )}
           {config.showFan && fanMode && (
             <InfoChip
               dark={dark} icon={<Wind size={11}/>}
-              value={fanMode} label="Ventola"
+              value={fanMode} label={t('chipFan')}
             />
           )}
         </div>
@@ -324,7 +329,7 @@ export default function ClimatizzatoreCard({ cardId = 'climatizzatore' }) {
               key={m}
               onClick={() => setHvacMode(m)}
               disabled={busy === 'mode'}
-              title={p.label}
+              title={t(`mode.${p.modeKey}`)}
               style={{
                 flex: 1, padding: '8px 0', borderRadius: 8, cursor: 'pointer',
                 background: active ? p.bg : 'transparent',
@@ -338,7 +343,7 @@ export default function ClimatizzatoreCard({ cardId = 'climatizzatore' }) {
               <span style={{
                 fontSize: 9, fontWeight: 800, letterSpacing: '.04em', textTransform: 'uppercase',
               }}>
-                {p.label}
+                {t(`mode.${p.modeKey}`)}
               </span>
             </button>
           )
@@ -386,7 +391,7 @@ export default function ClimatizzatoreCard({ cardId = 'climatizzatore' }) {
             }}
           >
             <RefreshCcw size={13} style={{ animation: 'spin 2s linear infinite' }}/>
-            Entità non disponibile
+            {t('unavailable')}
           </motion.div>
         )}
       </AnimatePresence>

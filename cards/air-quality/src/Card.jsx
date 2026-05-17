@@ -1,6 +1,10 @@
 import { useState, useEffect, useId } from 'react'
-import { useDashboard, useCardConfig } from '@oikos/sdk'
+import { useDashboard, useCardConfig, registerCardTranslations, useT } from '@oikos/sdk'
 import { smoothPath } from './smoothPath'
+import it from './i18n/it.json'
+import en from './i18n/en.json'
+
+registerCardTranslations('card-air-quality', { it, en })
 
 const ZONE_COLORS = ['#16a34a', '#84cc16', '#eab308', '#f97316', '#dc2626']
 
@@ -17,21 +21,21 @@ const CLASSIFICATION_COLORS = {
 }
 
 const DEFAULT = {
-  label:                      'Oggi AQI',
-  title:                      'Casa Out',
+  label:                      '',
+  title:                      '',
   aqiEntity:                  '',
   aqiMin:                     0,
   aqiMax:                     100,
   aqiInverted:                true,
   classificationEntity:       '',
   aqiColorFromClassification: false,
-  description:                'Sensori con lo stato attuale e media ogni 30 minuti',
+  description:                '',
   sensors:                    [],
 }
 
 const SENSOR_DEFAULT = {
   entity:   '',
-  label:    'Sensore',
+  label:    '',
   unit:     '',
   decimals: 1,
   min:      0,
@@ -362,7 +366,7 @@ function SensorColumn({ sensor, dark, fetchHistory, connected, cardUid, index })
         overflow: 'hidden', textOverflow: 'ellipsis',
         maxWidth: '100%',
       }}>
-        {sensor.label || 'Sensore'}
+        {sensor.label || t('sensorDefault')}
       </div>
       <div style={{
         fontSize: 15, fontWeight: 800, color: col,
@@ -395,6 +399,7 @@ function SensorColumn({ sensor, dark, fetchHistory, connected, cardUid, index })
 export default function AirQualityCard({ cardId }) {
   const { dark, getFloat, getState, fetchHistory, connected, openMoreInfo } = useDashboard()
   const [cfg, setCfg] = useCardConfig(cardId, DEFAULT)
+  const { t } = useT('card-air-quality')
   const uid   = useId().replace(/:/g, '')
 
   // Migrazione una-tantum: vecchio default aqiMax=500 → 100 (scala %)
@@ -454,13 +459,13 @@ export default function AirQualityCard({ cardId }) {
             fontSize: 11, fontWeight: 600, color: 'var(--text-muted)',
             letterSpacing: '.8px', textTransform: 'uppercase',
           }}>
-            {cfg.label || 'Oggi AQI'}
+            {cfg.label || t('label')}
           </div>
           <div style={{
             fontSize: 18, fontWeight: 800, color: 'var(--text-primary)',
             letterSpacing: '-0.4px', lineHeight: 1.15,
           }}>
-            {cfg.title || 'Qualità Aria'}
+            {cfg.title || t('title')}
           </div>
           {hasClassification && (
             <div

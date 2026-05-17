@@ -1,0 +1,29 @@
+{
+  "badgeActive": "Active",
+  "badgeUnavailable": "Unavailable",
+
+  "panelBefore": "Before",
+  "panelNow": "Now",
+  "panelBeforeSubtitle": "Standalone / no bridge",
+  "panelNowSubtitle": "Add-on + active bridge",
+
+  "rowWebsocket": "HA WebSocket",
+  "rowAuth": "Authentication",
+  "rowRegistry": "Registry",
+  "rowUser": "HA User",
+  "rowAreas": "Areas",
+  "rowEditor": "Visual editor",
+  "rowTheme": "HA Theme",
+
+  "valManualToken": "Manual token",
+  "valUnavailable": "Unavailable",
+  "valNotSynced": "Not synced",
+  "valSupervisorToken": "Supervisor Token",
+  "valAvailable": "Available",
+
+  "footerVersion": "HA Version",
+  "footerLocation": "Location",
+  "footerDevices": "Devices",
+
+  "installMessage": "The bridge self-installs on first launch as an HA add-on. Go to /oikos-bridge in HA to activate it."
+}

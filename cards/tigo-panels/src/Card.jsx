@@ -8,8 +8,12 @@
  * Header: totale impianto + pannelli online.
  */
 import { useMemo, useState, useEffect, useId } from 'react'
-import { useDashboard, useCardConfig, MdiIcon } from '@oikos/sdk'
+import { useDashboard, useCardConfig, MdiIcon, registerCardTranslations, useT } from '@oikos/sdk'
 import { useTigoHistory } from './useTigoHistory'
+import it from './i18n/it.json'
+import en from './i18n/en.json'
+
+registerCardTranslations('card-tigo-panels', { it, en })
 
 // ─── Config default ───────────────────────────────────────────────────────────
 const DEFAULT = {
@@ -253,6 +257,7 @@ export default function TigoPanelsCard({ cardId = 'tigo-panels' }) {
   const { dark, getFloat, fetchHistory, connected } = useDashboard()
   const [cfg] = useCardConfig(cardId, DEFAULT)
   const baseUid = useId().replace(/:/g, '')
+  const { t } = useT('card-tigo-panels')
 
   injectAnim()
 
@@ -344,13 +349,10 @@ export default function TigoPanelsCard({ cardId = 'tigo-panels' }) {
               fontSize: 11, fontWeight: 700, color: textMuted,
               textTransform: 'uppercase', letterSpacing: '.08em',
             }}>
-              Tigo Fotovoltaico
+              {t('header.title')}
             </div>
             <div style={{ fontSize: 10, color: textMuted, marginTop: 1 }}>
-              <span style={{ color: online === count ? '#22c55e' : online > 0 ? amber : '#ef4444' }}>
-                {online}
-              </span>
-              <span style={{ color: textMuted }}>/{count} pannelli attivi</span>
+              {t('header.panelsActive', { count: online, total: count })}
             </div>
           </div>
         </div>
@@ -369,7 +371,7 @@ export default function TigoPanelsCard({ cardId = 'tigo-panels' }) {
               {fmtKw(totalW)}
             </div>
             <div style={{ fontSize: 10, color: textMuted, marginTop: 2, textAlign: 'right' }}>
-              potenza
+              {t('totals.power')}
             </div>
           </div>
 
@@ -388,7 +390,7 @@ export default function TigoPanelsCard({ cardId = 'tigo-panels' }) {
               {fmtKwh(totalKwh)}
             </div>
             <div style={{ fontSize: 10, color: textMuted, marginTop: 2 }}>
-              energia oggi
+              {t('totals.energyToday')}
             </div>
           </div>
         </div>

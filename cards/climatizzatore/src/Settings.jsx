@@ -11,7 +11,7 @@
  *   - showHumidity       mostra umidità (se disponibile)
  */
 import {
-  useCardConfig, EntityField,
+  useCardConfig, EntityField, useT,
   Section, Field, SettingsRow, TextField, Toggle,
   ColorCircles, ACCENT_COLORS, Slider,
 } from '@oikos/sdk'
@@ -28,13 +28,14 @@ const DEFAULT_CONFIG = {
 
 export default function ClimatizzatoreSettings({ cardId }) {
   const [config, setConfig] = useCardConfig(cardId, DEFAULT_CONFIG)
+  const { t } = useT('card-climatizzatore')
   const set = (k, v) => setConfig(p => ({ ...p, [k]: v }))
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
 
-      <Section title="Entità">
-        <Field label="Climatizzatore" hint="Entità climate.* di Home Assistant">
+      <Section title={t('settings.sectionEntity')}>
+        <Field label={t('settings.climateEntity')} hint={t('settings.climateHint')}>
           <EntityField
             field="entityId"
             config={config}
@@ -42,7 +43,7 @@ export default function ClimatizzatoreSettings({ cardId }) {
             filterDomain="climate"
           />
         </Field>
-        <Field label="Sensore temperatura esterna" hint="Opzionale — mostra °C esterni in chip dedicato">
+        <Field label={t('settings.outdoorSensor')} hint={t('settings.outdoorHint')}>
           <EntityField
             field="outdoorTempEntity"
             config={config}
@@ -52,15 +53,15 @@ export default function ClimatizzatoreSettings({ cardId }) {
         </Field>
       </Section>
 
-      <Section title="Aspetto">
-        <Field label="Etichetta" hint="Vuoto = usa il friendly_name dell'entità">
+      <Section title={t('settings.sectionAppearance')}>
+        <Field label={t('settings.label')} hint={t('settings.labelHint')}>
           <TextField
             value={config.label}
             onChange={v => set('label', v)}
             placeholder="Es. Soggiorno"
           />
         </Field>
-        <Field label="Colore accento" hint="Vuoto = colore automatico (cool=ciano, heat=rosso, ecc.)">
+        <Field label={t('settings.accentColor')} hint={t('settings.accentHint')}>
           <ColorCircles
             value={config.accentColor}
             onChange={v => set('accentColor', v)}
@@ -69,8 +70,8 @@ export default function ClimatizzatoreSettings({ cardId }) {
         </Field>
       </Section>
 
-      <Section title="Comandi">
-        <Field label="Step temperatura (°C)" hint="Incremento/decremento bottoni +/-">
+      <Section title={t('settings.sectionCommands')}>
+        <Field label={t('settings.tempStep')} hint={t('settings.tempStepHint')}>
           <Slider
             value={config.step}
             onChange={v => set('step', v)}
@@ -78,10 +79,10 @@ export default function ClimatizzatoreSettings({ cardId }) {
             format={v => `${v.toFixed(1)}°`}
           />
         </Field>
-        <SettingsRow label="Mostra ventola" hint="Chip umidità + chip fan + selettore fan_mode">
+        <SettingsRow label={t('settings.showFan')}>
           <Toggle value={config.showFan} onChange={v => set('showFan', v)}/>
         </SettingsRow>
-        <SettingsRow label="Mostra umidità" hint="Visibile solo se l'entità espone current_humidity">
+        <SettingsRow label={t('settings.showHumidity')}>
           <Toggle value={config.showHumidity} onChange={v => set('showHumidity', v)}/>
         </SettingsRow>
       </Section>

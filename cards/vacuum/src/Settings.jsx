@@ -1,94 +1,95 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Plus, Trash2 } from 'lucide-react'
-import { EntityField } from '@oikos/sdk'
+import { EntityField, useT } from '@oikos/sdk'
 import { getVacuumConfig, saveVacuumConfig } from './vacuumStore'
 
-const GROUPS = [
+// Group definitions use translation keys instead of hardcoded strings
+const GROUP_KEYS = [
   {
-    title: 'Principale',
+    titleKey: 'main',
     fields: [
-      { key: 'name',              label: 'Nome',                     mono: false, entity: false },
-      { key: 'vacuumEntity',      label: 'Entità vacuum (comandi)'               },
-      { key: 'cameraEntity',      label: 'Camera mappa (opzionale)'              },
-      { key: 'batteryEntity',     label: 'Batteria'                              },
-      { key: 'stateEntity',       label: 'Stato dettagliato'                     },
-      { key: 'statusEntity',      label: 'Status'                                },
-      { key: 'chargingEntity',    label: 'Stato ricarica'                        },
-      { key: 'currentRoomEntity', label: 'Stanza corrente'                       },
-      { key: 'errorEntity',       label: 'Errore'                                },
+      { key: 'name',              mono: false, entity: false },
+      { key: 'vacuumEntity'      },
+      { key: 'cameraEntity'      },
+      { key: 'batteryEntity'     },
+      { key: 'stateEntity'       },
+      { key: 'statusEntity'      },
+      { key: 'chargingEntity'    },
+      { key: 'currentRoomEntity' },
+      { key: 'errorEntity'       },
     ],
   },
   {
-    title: 'Sessione corrente',
+    titleKey: 'session',
     fields: [
-      { key: 'cleaningTimeEntity',     label: 'Tempo pulizia' },
-      { key: 'cleanedAreaEntity',      label: 'Area pulita'   },
-      { key: 'cleaningProgressEntity', label: 'Progresso (%)'  },
+      { key: 'cleaningTimeEntity'     },
+      { key: 'cleanedAreaEntity'      },
+      { key: 'cleaningProgressEntity' },
     ],
   },
   {
-    title: 'Consumabili',
+    titleKey: 'consumables',
     fields: [
-      { key: 'mainBrushEntity',       label: 'Sp. principale (%)' },
-      { key: 'mainBrushDaysEntity',   label: 'Sp. principale (gg)' },
-      { key: 'sideBrushEntity',       label: 'Sp. laterale (%)'   },
-      { key: 'sideBrushDaysEntity',   label: 'Sp. laterale (gg)'  },
-      { key: 'filterEntity',          label: 'Filtro (%)'         },
-      { key: 'filterDaysEntity',      label: 'Filtro (gg)'        },
-      { key: 'sensorDirtyEntity',     label: 'Sensori (%)'        },
-      { key: 'sensorDirtyDaysEntity', label: 'Sensori (gg)'       },
+      { key: 'mainBrushEntity'       },
+      { key: 'mainBrushDaysEntity'   },
+      { key: 'sideBrushEntity'       },
+      { key: 'sideBrushDaysEntity'   },
+      { key: 'filterEntity'          },
+      { key: 'filterDaysEntity'      },
+      { key: 'sensorDirtyEntity'     },
+      { key: 'sensorDirtyDaysEntity' },
     ],
   },
   {
-    title: 'Modalità operative',
+    titleKey: 'modes',
     fields: [
-      { key: 'suctionLevelEntity',  label: 'Aspirazione'  },
-      { key: 'cleaningModeEntity',  label: 'Modalità'     },
-      { key: 'waterTempEntity',     label: 'Temperatura'  },
-      { key: 'dryingTimeEntity',    label: 'Asciugatura'  },
-      { key: 'mopFreqEntity',       label: 'Freq. mop'    },
-      { key: 'cleaningRouteEntity', label: 'Percorso'     },
+      { key: 'suctionLevelEntity'  },
+      { key: 'cleaningModeEntity'  },
+      { key: 'waterTempEntity'     },
+      { key: 'dryingTimeEntity'    },
+      { key: 'mopFreqEntity'       },
+      { key: 'cleaningRouteEntity' },
     ],
   },
   {
-    title: 'Stato stazione',
+    titleKey: 'station',
     fields: [
-      { key: 'autoEmptyEntity',      label: 'Vuotatura auto'    },
-      { key: 'selfWashEntity',       label: 'Lavaggio base'     },
-      { key: 'drainageEntity',       label: 'Scarico'           },
-      { key: 'dustBagEntity',        label: 'Sacchetto'         },
-      { key: 'mopPadEntity',         label: 'Mop pad'           },
-      { key: 'detergentEntity',      label: 'Detergente'        },
-      { key: 'dirtyWaterEntity',     label: 'Acqua sporca'      },
-      { key: 'hotWaterEntity',       label: 'Acqua calda'       },
-      { key: 'lowWaterEntity',       label: 'Livello acqua'     },
-      { key: 'dustCollectionEntity', label: 'Raccolta polvere'  },
+      { key: 'autoEmptyEntity'      },
+      { key: 'selfWashEntity'       },
+      { key: 'drainageEntity'       },
+      { key: 'dustBagEntity'        },
+      { key: 'mopPadEntity'         },
+      { key: 'detergentEntity'      },
+      { key: 'dirtyWaterEntity'     },
+      { key: 'hotWaterEntity'       },
+      { key: 'lowWaterEntity'       },
+      { key: 'dustCollectionEntity' },
     ],
   },
   {
-    title: 'Switch rapidi',
+    titleKey: 'switches',
     fields: [
-      { key: 'dndEntity',             label: 'Non disturbare' },
-      { key: 'carpetBoostEntity',     label: 'Boost tappeto'  },
-      { key: 'selfCleanSwitchEntity', label: 'Auto-pulizia'   },
-      { key: 'autoDryingEntity',      label: 'Auto-asciuga'   },
-      { key: 'obstacleEntity',        label: 'Evita ostacoli' },
-      { key: 'resumeEntity',          label: 'Riprendi auto'  },
+      { key: 'dndEntity'             },
+      { key: 'carpetBoostEntity'     },
+      { key: 'selfCleanSwitchEntity' },
+      { key: 'autoDryingEntity'      },
+      { key: 'obstacleEntity'        },
+      { key: 'resumeEntity'          },
     ],
   },
   {
-    title: 'Statistiche totali',
+    titleKey: 'totalStats',
     fields: [
-      { key: 'totalAreaEntity',  label: 'Area totale'   },
-      { key: 'countEntity',      label: 'N° pulizie'    },
-      { key: 'totalTimeEntity',  label: 'Minuti totali' },
-      { key: 'firstCleanEntity', label: 'Prima pulizia' },
+      { key: 'totalAreaEntity'  },
+      { key: 'countEntity'      },
+      { key: 'totalTimeEntity'  },
+      { key: 'firstCleanEntity' },
     ],
   },
 ]
 
-function SaveButton({ saved, onClick }) {
+function SaveButton({ saved, onClick, saveLabel, savedLabel }) {
   return (
     <button
       onClick={onClick}
@@ -102,12 +103,12 @@ function SaveButton({ saved, onClick }) {
         transition: 'all .2s',
       }}
     >
-      {saved ? '✓ Salvato — ricarica per applicare' : 'Salva entità'}
+      {saved ? savedLabel : saveLabel}
     </button>
   )
 }
 
-function RoomsEditor({ rooms, onChange, dark }) {
+function RoomsEditor({ rooms, onChange, dark, idLabel, nameLabel, idPlaceholder, namePlaceholder, addLabel, hintText }) {
   const update = (index, field, value) => {
     const next = rooms.map((r, i) => i === index ? { ...r, [field]: field === 'id' ? parseInt(value) || 0 : value } : r)
     onChange(next)
@@ -126,8 +127,8 @@ function RoomsEditor({ rooms, onChange, dark }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
       <div style={{ display: 'grid', gridTemplateColumns: '52px 1fr 28px', gap: 6 }}>
-        <span style={{ fontSize: 10, fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '.4px' }}>ID HA</span>
-        <span style={{ fontSize: 10, fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '.4px' }}>Nome</span>
+        <span style={{ fontSize: 10, fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '.4px' }}>{idLabel}</span>
+        <span style={{ fontSize: 10, fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '.4px' }}>{nameLabel}</span>
         <span/>
       </div>
 
@@ -140,14 +141,14 @@ function RoomsEditor({ rooms, onChange, dark }) {
           >
             <div style={{ display: 'grid', gridTemplateColumns: '52px 1fr 28px', gap: 6, alignItems: 'center' }}>
               <input
-                type="number" value={room.id} placeholder="ID"
+                type="number" value={room.id} placeholder={idPlaceholder}
                 onChange={e => update(i, 'id', e.target.value)}
                 style={inputStyle(true)}
                 onFocus={e => e.target.style.borderColor = 'var(--amber-border)'}
                 onBlur={e => e.target.style.borderColor = 'var(--border-medium)'}
               />
               <input
-                value={room.name} placeholder="Nome stanza"
+                value={room.name} placeholder={namePlaceholder}
                 onChange={e => update(i, 'name', e.target.value)}
                 style={inputStyle(false)}
                 onFocus={e => e.target.style.borderColor = 'var(--amber-border)'}
@@ -177,12 +178,11 @@ function RoomsEditor({ rooms, onChange, dark }) {
         border: '1px solid var(--border-medium)', background: 'transparent',
         color: 'var(--text-muted)', cursor: 'pointer',
       }}>
-        <Plus size={13}/> Aggiungi stanza
+        <Plus size={13}/> {addLabel}
       </button>
 
       <p style={{ fontSize: 10, color: 'var(--text-muted)', lineHeight: 1.5, marginTop: 2 }}>
-        L'ID HA si trova nelle entità <code style={{ fontFamily: 'monospace' }}>select.*_room_N_name</code> dove N è il numero.
-        Integrazione Tasshack: usa <code style={{ fontFamily: 'monospace' }}>vacuum.send_command</code> → <code style={{ fontFamily: 'monospace' }}>clean_segment</code>.
+        {hintText}
       </p>
     </div>
   )
@@ -191,6 +191,7 @@ function RoomsEditor({ rooms, onChange, dark }) {
 export default function VacuumSettings({ dark }) {
   const [cfg, setCfg] = useState(getVacuumConfig)
   const [saved, setSaved] = useState(false)
+  const { t } = useT('card-vacuum')
 
   const set = (key, value) => { setCfg(c => ({ ...c, [key]: value })); setSaved(false) }
   const entitySetConfig = fn => { setCfg(fn); setSaved(false) }
@@ -211,21 +212,21 @@ export default function VacuumSettings({ dark }) {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-      {GROUPS.map(({ title, fields }) => (
-        <div key={title}>
+      {GROUP_KEYS.map(({ titleKey, fields }) => (
+        <div key={titleKey}>
           <div style={{ fontSize: 10, fontWeight: 700, textTransform: 'uppercase',
             letterSpacing: '.6px', color: 'var(--text-muted)', marginBottom: 8 }}>
-            {title}
+            {t(`settings.groups.${titleKey}`)}
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 7 }}>
-            {fields.map(({ key, label, mono = true, entity = true }) => (
+            {fields.map(({ key, mono = true, entity = true }) => (
               <div key={key}>
                 {entity ? (
-                  <EntityField label={label} field={key} config={cfg} setConfig={entitySetConfig}/>
+                  <EntityField label={t(`settings.fields.${key}`)} field={key} config={cfg} setConfig={entitySetConfig}/>
                 ) : (
                   <div style={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
                     <label style={{ fontSize: 11, fontWeight: 600, color: 'var(--text-muted)',
-                      textTransform: 'uppercase', letterSpacing: '.4px' }}>{label}</label>
+                      textTransform: 'uppercase', letterSpacing: '.4px' }}>{t(`settings.fields.${key}`)}</label>
                     <input
                       value={cfg[key] || ''}
                       onChange={e => { set(key, e.target.value); setSaved(false) }}
@@ -245,16 +246,22 @@ export default function VacuumSettings({ dark }) {
       <div>
         <div style={{ fontSize: 10, fontWeight: 700, textTransform: 'uppercase',
           letterSpacing: '.6px', color: 'var(--text-muted)', marginBottom: 8 }}>
-          Stanze
+          {t('settings.groups.rooms')}
         </div>
         <RoomsEditor
           rooms={cfg.rooms || []}
           onChange={rooms => { setCfg(c => ({ ...c, rooms })); setSaved(false) }}
           dark={dark}
+          idLabel={t('settings.roomIdLabel')}
+          nameLabel={t('settings.roomNameLabel')}
+          idPlaceholder={t('settings.roomIdPlaceholder')}
+          namePlaceholder={t('settings.roomNamePlaceholder')}
+          addLabel={t('settings.addRoom')}
+          hintText={t('settings.roomsHint')}
         />
       </div>
 
-      <SaveButton onClick={handleSave} saved={saved}/>
+      <SaveButton onClick={handleSave} saved={saved} saveLabel={t('settings.saveButton')} savedLabel={t('settings.savedButton')}/>
     </div>
   )
 }

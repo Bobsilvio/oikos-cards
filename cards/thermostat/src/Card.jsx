@@ -4,7 +4,11 @@
  * Click fiamma = toggle on/off.
  */
 import { useState, useRef, useCallback } from 'react'
-import { useDashboard, useCardConfig } from '@oikos/sdk'
+import { useDashboard, useCardConfig, registerCardTranslations, useT } from '@oikos/sdk'
+import it from './i18n/it.json'
+import en from './i18n/en.json'
+
+registerCardTranslations('card-thermostat', { it, en })
 
 const DEFAULT_CONFIG = { entityId: '', label: '' }
 
@@ -140,6 +144,7 @@ function TempSlider({ value, min, max, step, onChange, onCommit, disabled, dark 
 export default function ThermostatCard({ cardId }) {
   const { dark, getState, getAttr, callService } = useDashboard()
   const [config]  = useCardConfig(cardId ?? 'thermostat', DEFAULT_CONFIG)
+  const { t } = useT('card-thermostat')
   const [sliderT, setSliderT] = useState(null)
 
   const id = config.entityId
@@ -158,7 +163,7 @@ export default function ThermostatCard({ cardId }) {
       display: 'flex', alignItems: 'center', justifyContent: 'center',
       color: 'var(--text-muted)', fontSize: 11,
     }}>
-      Configura un'entità climate in ⚙
+      {t('noEntity')}
     </div>
   )
 
@@ -178,7 +183,6 @@ export default function ThermostatCard({ cardId }) {
   const displayT    = sliderT ?? targetTemp ?? minT
 
   const ACCENT_MAP = { heat: '#f97316', cool: '#3b82f6', auto: '#8b5cf6', heat_cool: '#f97316', fan_only: '#06b6d4', dry: '#84cc16' }
-  const LABELS     = { heat: 'Caldo', cool: 'Freddo', auto: 'Auto', heat_cool: 'H+C', fan_only: 'Ventola', dry: 'Asciuga' }
 
   const setMode   = m => callService('climate', 'set_hvac_mode', id, { hvac_mode: m })
 
@@ -319,7 +323,7 @@ export default function ThermostatCard({ cardId }) {
                 color: active ? col : 'var(--text-muted)',
                 transition: 'all .15s',
               }}>
-                {LABELS[m] ?? m}
+                {t(`mode.${m}`) ?? m}
               </button>
             )
           })}

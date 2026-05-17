@@ -1,0 +1,24 @@
+{
+  "zoneUnknown": "Sconosciuto",
+  "zoneHome": "A casa",
+  "zoneAway": "Fuori",
+  "timeNow": "adesso",
+  "timeMinAgo": "{{n}} min fa",
+  "timeHAgo": "{{n}}h fa",
+  "timeDayAgo": "{{n}}g fa",
+  "live": "Live",
+  "noEntity": "Configura un'entità person in ⚙",
+
+  "settings": {
+    "sectionPerson": "Persona",
+    "sectionMetrics": "Metriche opzionali",
+    "sectionMap": "Mappa posizione",
+    "personEntity": "Entità person",
+    "nameOverride": "Nome (opzionale)",
+    "batteryEntity": "Batteria telefono",
+    "walkTimeEntity": "Tempo a piedi (es. proximity o travel time)",
+    "driveTimeEntity": "Tempo in auto (es. Waze / Google)",
+    "enableMap": "Abilita mappa live (retro della card)",
+    "gpsTracker": "Sensore GPS (device_tracker)"
+  }
+}

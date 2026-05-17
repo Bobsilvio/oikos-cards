@@ -12,7 +12,11 @@
  *
  */
 import { useState, useEffect, useId, useRef } from 'react'
-import { useDashboard, useCardConfig } from '@oikos/sdk'
+import { useDashboard, useCardConfig, registerCardTranslations, useT } from '@oikos/sdk'
+import it from './i18n/it.json'
+import en from './i18n/en.json'
+
+registerCardTranslations('card-room-sensor', { it, en })
 import {
   relTime, MdiIcon, ArcGauge, MiniGauge, VSep, EmptyState,
   smoothPath, tempColor, rgbStr,
@@ -65,7 +69,7 @@ function SensorBadge({ value, iconName, unit, dark }) {
 }
 
 // ── Bar chart storico ─────────────────────────────────────────────────────────
-function HistoryBars({ bars, loading, chartColor, dark }) {
+function HistoryBars({ bars, loading, chartColor, dark, t }) {
   const CHART_H = 52
   const nowH    = new Date().getHours()
   const valid   = bars.filter(b => b.v != null)
@@ -80,7 +84,7 @@ function HistoryBars({ bars, loading, chartColor, dark }) {
         fontSize: 10, fontWeight: 700, color: 'var(--text-muted)',
         marginBottom: 7, textTransform: 'uppercase', letterSpacing: '.07em',
       }}>
-        Ultime 24 ore
+        {t('last24h')}
       </div>
       <div style={{ display: 'flex', alignItems: 'flex-end', gap: 2, height: CHART_H }}>
         {(loading || !bars.length
@@ -108,7 +112,7 @@ function HistoryBars({ bars, loading, chartColor, dark }) {
 }
 
 // ── Flow chart ────────────────────────────────────────────────────────────────
-function FlowChart({ bars, rMin, rMax, dark, uid }) {
+function FlowChart({ bars, rMin, rMax, dark, uid, t }) {
   const W = 100, H = 56
   const PAD_TOP = 3, PAD_BOT = 2
 
@@ -141,7 +145,7 @@ function FlowChart({ bars, rMin, rMax, dark, uid }) {
         fontSize: 10, fontWeight: 700, color: 'var(--text-muted)',
         marginBottom: 4, textTransform: 'uppercase', letterSpacing: '.07em',
       }}>
-        Ultime 24 ore
+        {t('last24h')}
       </div>
       <svg
         viewBox={`0 0 ${W} ${H}`}
@@ -167,7 +171,7 @@ function FlowChart({ bars, rMin, rMax, dark, uid }) {
         {!validPts.length ? (
           <text x={W/2} y={H/2} textAnchor="middle" fontSize="6"
             fill={dark ? 'rgba(255,255,255,.25)' : 'rgba(0,0,0,.2)'}>
-            in attesa di dati…
+            {t('waitingData')}
           </text>
         ) : (
           <>
@@ -214,6 +218,7 @@ function useHistory(entityId, fetchHistory, connected) {
 export default function RoomSensorCard({ cardId }) {
   const { dark, getFloat, haStates, fetchHistory, connected } = useDashboard()
   const [cfg]   = useCardConfig(cardId, DEFAULT)
+  const { t } = useT('card-room-sensor')
   const uid     = useId().replace(/:/g, '')
   const [detail, setDetail] = useState(null)
 
@@ -233,7 +238,7 @@ export default function RoomSensorCard({ cardId }) {
   const rawName = haStates?.[firstGaugeEntity]?.attributes?.friendly_name ?? ''
   const roomName = cfg.label
     || rawName.replace(/\b(temperatura|umidità|temp|hum|sensor|sensore)\b/gi, '').trim()
-    || 'Stanza'
+    || t('roomDefault')
 
   const lastIso = haStates?.[firstGaugeEntity]?.last_updated
   const timeAgo = relTime(lastIso)
@@ -371,6 +376,7 @@ export default function RoomSensorCard({ cardId }) {
             rMax={flowGauge?.max ?? 100}
             dark={dark}
             uid={uid}
+            t={t}
           />
         </>
       )}
@@ -424,7 +430,7 @@ export default function RoomSensorCard({ cardId }) {
       {showRightHistory && (
         <>
           <VSep dark={dark} h={56}/>
-          <HistoryBars bars={histBars} loading={histLoading} chartColor={chartColor} dark={dark}/>
+          <HistoryBars bars={histBars} loading={histLoading} chartColor={chartColor} dark={dark} t={t}/>
         </>
       )}
     </div>

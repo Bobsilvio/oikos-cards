@@ -7,13 +7,13 @@
 import { useState, useEffect, useId, useRef, useCallback } from 'react'
 import { createPortal } from 'react-dom'
 import { X, TrendingUp, TrendingDown, Minus } from 'lucide-react'
-import { useDashboard } from '@oikos/sdk'
+import { useDashboard, useT } from '@oikos/sdk'
 import { smoothPath } from './roomSensorUtils'
 
-const RANGES = [
-  { key: '1h',  label: '1 ora',    hours: 1   },
-  { key: '24h', label: '24 ore',   hours: 24  },
-  { key: '7d',  label: '7 giorni', hours: 168 },
+const RANGE_KEYS = [
+  { key: '1h',  tKey: 'modal.range1h',  hours: 1   },
+  { key: '24h', tKey: 'modal.range24h', hours: 24  },
+  { key: '7d',  tKey: 'modal.range7d',  hours: 168 },
 ]
 
 // Converte la risposta WebSocket in array di {ts, v}
@@ -30,14 +30,15 @@ function parsePoints(raw, entityId) {
     .sort((a, b) => a.ts - b.ts)
 }
 
-function relTime(iso) {
-  if (!iso) return null
+// relTime is used in the component where t() is available — passed as arg
+function relTime(iso, t) {
+  if (!iso || !t) return null
   const s = (Date.now() - new Date(iso)) / 1000
-  if (s < 90)     return 'adesso'
-  if (s < 3600)   return `${Math.floor(s / 60)} min fa`
-  if (s < 86400)  return `${Math.floor(s / 3600)} ore fa`
+  if (s < 90)     return t('timeNow')
+  if (s < 3600)   return t('timeMinAgo', { n: Math.floor(s / 60) })
+  if (s < 86400)  return t('timeHAgo',   { n: Math.floor(s / 3600) })
   if (s < 172800) return 'ieri'
-  return `${Math.floor(s / 86400)} gg fa`
+  return t('timeDayAgo', { n: Math.floor(s / 86400) })
 }
 
 // ── Formattazione timestamp asse X ────────────────────────────────────────────
@@ -49,7 +50,7 @@ function fmtTick(ts, rangeHours) {
 }
 
 // ── Grafico storico con assi leggibili + tooltip ───────────────────────────────
-function HistoryChart({ points, dark, uid, rangeHours, unit }) {
+function HistoryChart({ points, dark, uid, rangeHours, unit, noDataLabel }) {
   const svgRef    = useRef(null)
   const [tip, setTip] = useState(null) // { x, v, ts } in px relativi al container
 
@@ -58,7 +59,7 @@ function HistoryChart({ points, dark, uid, rangeHours, unit }) {
       height: 120, display: 'flex', alignItems: 'center', justifyContent: 'center',
       fontSize: 11, color: 'var(--text-muted)',
     }}>
-      Nessun dato nel periodo selezionato
+      {noDataLabel}
     </div>
   )
 
@@ -230,6 +231,7 @@ function HistoryChart({ points, dark, uid, rangeHours, unit }) {
 // ── Componente principale ─────────────────────────────────────────────────────
 export default function SensorDetailModal({ entityId, label, unit, dark, onClose }) {
   const { haStates, fetchHistory, connected, getFloat } = useDashboard()
+  const { t } = useT('card-room-sensor')
   const uid = useId().replace(/:/g, '')
 
   const [timeRange, setTimeRange] = useState('24h')
@@ -247,7 +249,7 @@ export default function SensorDetailModal({ entityId, label, unit, dark, onClose
     if (!entityId || !fetchHistory || !connected) return
     setLoading(true)
     setPoints([])
-    const hours = RANGES.find(r => r.key === timeRange)?.hours ?? 24
+    const hours = RANGE_KEYS.find(r => r.key === timeRange)?.hours ?? 24
     const now   = new Date()
     const start = new Date(now.getTime() - hours * 3600 * 1000)
     fetchHistory([entityId], start, now)
@@ -312,7 +314,7 @@ export default function SensorDetailModal({ entityId, label, unit, dark, onClose
             </div>
             {lastUpdated && (
               <div style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 2 }}>
-                Aggiornato {relTime(lastUpdated)}
+                {t('modal.updatedAt', { time: relTime(lastUpdated, t) })}
               </div>
             )}
           </div>
@@ -333,7 +335,7 @@ export default function SensorDetailModal({ entityId, label, unit, dark, onClose
 
             <button
               onClick={onClose}
-              aria-label="Chiudi"
+              aria-label={t('modal.close')}
               style={{
                 width: 32, height: 32, borderRadius: 9, flexShrink: 0,
                 border: `1px solid ${dark ? 'rgba(255,255,255,.1)' : '#e2e8f0'}`,
@@ -352,7 +354,7 @@ export default function SensorDetailModal({ entityId, label, unit, dark, onClose
 
           {/* Selettore range temporale */}
           <div style={{ display: 'flex', gap: 6, marginBottom: 14 }}>
-            {RANGES.map(r => (
+            {RANGE_KEYS.map(r => (
               <button
                 key={r.key}
                 onClick={() => setTimeRange(r.key)}
@@ -369,7 +371,7 @@ export default function SensorDetailModal({ entityId, label, unit, dark, onClose
                   transition: 'all .12s',
                 }}
               >
-                {r.label}
+                {t(r.tKey)}
               </button>
             ))}
           </div>
@@ -387,13 +389,14 @@ export default function SensorDetailModal({ entityId, label, unit, dark, onClose
                 height: 100, display: 'flex', alignItems: 'center',
                 justifyContent: 'center', fontSize: 11, color: 'var(--text-muted)',
               }}>
-                Caricamento…
+                {t('modal.loading')}
               </div>
             ) : (
               <HistoryChart
                 points={points} dark={dark} uid={uid}
-                rangeHours={RANGES.find(r => r.key === timeRange)?.hours ?? 24}
+                rangeHours={RANGE_KEYS.find(r => r.key === timeRange)?.hours ?? 24}
                 unit={unitFinal}
+                noDataLabel={t('modal.noData')}
               />
             )}
           </div>
@@ -402,9 +405,9 @@ export default function SensorDetailModal({ entityId, label, unit, dark, onClose
           {!loading && points.length > 0 && (
             <div style={{ display: 'flex', gap: 8 }}>
               {[
-                { label: 'Min',   value: fmt(minV), icon: TrendingDown, color: '#3b82f6' },
-                { label: 'Media', value: fmt(avgV), icon: Minus,        color: 'var(--text-muted)' },
-                { label: 'Max',   value: fmt(maxV), icon: TrendingUp,   color: '#ef4444' },
+                { label: t('modal.statMin'), value: fmt(minV), icon: TrendingDown, color: '#3b82f6' },
+                { label: t('modal.statAvg'), value: fmt(avgV), icon: Minus,        color: 'var(--text-muted)' },
+                { label: t('modal.statMax'), value: fmt(maxV), icon: TrendingUp,   color: '#ef4444' },
               ].map(s => (
                 <div key={s.label} style={{
                   flex: 1, textAlign: 'center',

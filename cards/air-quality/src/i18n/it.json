@@ -1,0 +1,32 @@
+{
+  "title": "Casa Out",
+  "label": "Oggi AQI",
+  "description": "Sensori con lo stato attuale e media ogni 30 minuti",
+  "sensorDefault": "Sensore",
+
+  "settings": {
+    "sectionHeader": "Header",
+    "sectionAqi": "Qualità Aria",
+    "sectionSensors": "Sensori",
+    "aqiEntity": "Entità AQI numerica (cerchio)",
+    "classEntity": "Entità classificazione (testo)",
+    "minAqi": "Min AQI",
+    "maxAqi": "Max AQI",
+    "invertedAqi": "AQI invertito (basso = buono)",
+    "colorFromClass": "Colore dalla classificazione",
+    "sensorN": "Sensore {{n}} — {{label}}",
+    "sensorEntity": "Entità sensore",
+    "sensorLabel": "Etichetta",
+    "sensorUnit": "Unità",
+    "sensorDecimals": "Decimali",
+    "sensorMin": "Min",
+    "sensorMax": "Max",
+    "sensorInverted": "Invertito",
+    "invertedHint": "Alto = buono (es. O2)",
+    "moveUp": "Sposta su",
+    "moveDown": "Sposta giù",
+    "delete": "Elimina",
+    "noSensors": "Nessun sensore configurato. Aggiungine uno.",
+    "addSensor": "+ Aggiungi sensore"
+  }
+}

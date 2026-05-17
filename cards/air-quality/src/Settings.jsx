@@ -1,26 +1,26 @@
 import {
-  useDashboard, useCardConfig,
+  useDashboard, useCardConfig, useT,
   EntityField as _EntityField,
   Field, Section, TextField, NumberField,
   SettingsRow, Toggle,
 } from '@oikos/sdk'
 
 const DEFAULT = {
-  label:                      'Oggi AQI',
-  title:                      'Casa Out',
+  label:                      '',
+  title:                      '',
   aqiEntity:                  '',
   aqiMin:                     0,
   aqiMax:                     500,
   aqiInverted:                true,
   classificationEntity:       '',
   aqiColorFromClassification: false,
-  description:                'Sensori con lo stato attuale e media ogni 30 minuti',
+  description:                '',
   sensors:                    [],
 }
 
 const SENSOR_DEFAULT = {
   entity:   '',
-  label:    'Sensore',
+  label:    '',
   unit:     '',
   decimals: 1,
   min:      0,
@@ -49,7 +49,7 @@ function moveItem(arr, from, to) {
   return next
 }
 
-function SensorRow({ sensor, index, total, dark, onChange, onRemove, onMoveUp, onMoveDown }) {
+function SensorRow({ sensor, index, total, dark, onChange, onRemove, onMoveUp, onMoveDown, t }) {
   const set = (k, v) => onChange({ ...sensor, [k]: v })
 
   const cardBg  = dark ? 'rgba(255,255,255,.04)' : '#f4f6fa'
@@ -63,39 +63,39 @@ function SensorRow({ sensor, index, total, dark, onChange, onRemove, onMoveUp, o
     }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
         <span style={{ flex: 1, fontSize: 11, fontWeight: 600, color: 'var(--text-muted)' }}>
-          Sensore {index + 1}{sensor.label ? ` — ${sensor.label}` : ''}
+          {t('settings.sensorN', { n: index + 1, label: sensor.label || '' }).replace(' — ', sensor.label ? ' — ' : '')}
         </span>
         <div style={{ display: 'flex', gap: 4 }}>
           {index > 0 && (
-            <button onClick={onMoveUp} title="Sposta su" style={btnStyle(dark)}>↑</button>
+            <button onClick={onMoveUp} title={t('settings.moveUp')} style={btnStyle(dark)}>↑</button>
           )}
           {index < total - 1 && (
-            <button onClick={onMoveDown} title="Sposta giù" style={btnStyle(dark)}>↓</button>
+            <button onClick={onMoveDown} title={t('settings.moveDown')} style={btnStyle(dark)}>↓</button>
           )}
-          <button onClick={onRemove} title="Elimina" style={btnStyle(dark, true)}>✕</button>
+          <button onClick={onRemove} title={t('settings.delete')} style={btnStyle(dark, true)}>✕</button>
         </div>
       </div>
 
       <_EntityField
-        label="Entità sensore"
+        label={t('settings.sensorEntity')}
         field="entity"
         config={sensor}
         setConfig={(updater) => onChange(typeof updater === 'function' ? updater(sensor) : updater)}
         filterDomain="sensor"
       />
 
-      <Field label="Etichetta">
+      <Field label={t('settings.sensorLabel')}>
         <TextField value={sensor.label} onChange={v => set('label', v)} placeholder="es. CO2"/>
       </Field>
 
       <div style={{ display: 'flex', gap: 8 }}>
         <div style={{ flex: 1 }}>
-          <Field label="Unità">
+          <Field label={t('settings.sensorUnit')}>
             <TextField value={sensor.unit} onChange={v => set('unit', v)} placeholder="es. ppm"/>
           </Field>
         </div>
         <div style={{ flex: 1 }}>
-          <Field label="Decimali">
+          <Field label={t('settings.sensorDecimals')}>
             <NumberField value={sensor.decimals ?? 1} onChange={v => set('decimals', v)} min={0} max={4}/>
           </Field>
         </div>
@@ -103,20 +103,20 @@ function SensorRow({ sensor, index, total, dark, onChange, onRemove, onMoveUp, o
 
       <div style={{ display: 'flex', gap: 8 }}>
         <div style={{ flex: 1 }}>
-          <Field label="Min">
+          <Field label={t('settings.sensorMin')}>
             <NumberField value={sensor.min ?? 0} onChange={v => set('min', v)}/>
           </Field>
         </div>
         <div style={{ flex: 1 }}>
-          <Field label="Max">
+          <Field label={t('settings.sensorMax')}>
             <NumberField value={sensor.max ?? 100} onChange={v => set('max', v)}/>
           </Field>
         </div>
       </div>
 
       <SettingsRow
-        label="Invertito"
-        hint="Alto = buono (es. O2). Verde in basso quando valore alto."
+        label={t('settings.sensorInverted')}
+        hint={t('settings.invertedHint')}
       >
         <Toggle value={sensor.inverted ?? false} onChange={v => set('inverted', v)}/>
       </SettingsRow>
@@ -127,6 +127,7 @@ function SensorRow({ sensor, index, total, dark, onChange, onRemove, onMoveUp, o
 export default function AirQualitySettings({ cardId }) {
   const { dark } = useDashboard()
   const [cfg, setCfg] = useCardConfig(cardId, DEFAULT)
+  const { t } = useT('card-air-quality')
   const set = (k, v) => setCfg(p => ({ ...p, [k]: v }))
 
   const sensors = cfg.sensors ?? []
@@ -143,33 +144,33 @@ export default function AirQualitySettings({ cardId }) {
     <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
 
       {/* ── 1. Header ── */}
-      <Section title="Header">
+      <Section title={t('settings.sectionHeader')}>
         <Field label="Label">
-          <TextField value={cfg.label} onChange={v => set('label', v)} placeholder="Oggi AQI"/>
+          <TextField value={cfg.label} onChange={v => set('label', v)} placeholder={t('label')}/>
         </Field>
         <Field label="Titolo">
-          <TextField value={cfg.title} onChange={v => set('title', v)} placeholder="Casa Out"/>
+          <TextField value={cfg.title} onChange={v => set('title', v)} placeholder={t('title')}/>
         </Field>
         <Field label="Descrizione">
           <TextField
             value={cfg.description}
             onChange={v => set('description', v)}
-            placeholder="Sensori con lo stato attuale..."
+            placeholder={t('description')}
           />
         </Field>
       </Section>
 
       {/* ── 2. Qualità Aria ── */}
-      <Section title="Qualità Aria">
+      <Section title={t('settings.sectionAqi')}>
         <_EntityField
-          label="Entità AQI numerica (cerchio)"
+          label={t('settings.aqiEntity')}
           field="aqiEntity"
           config={cfg}
           setConfig={setCfg}
           filterDomain="sensor"
         />
         <_EntityField
-          label="Entità classificazione (testo)"
+          label={t('settings.classEntity')}
           field="classificationEntity"
           config={cfg}
           setConfig={setCfg}
@@ -178,39 +179,33 @@ export default function AirQualitySettings({ cardId }) {
         {hasAqi && (
           <div style={{ display: 'flex', gap: 8 }}>
             <div style={{ flex: 1 }}>
-              <Field label="Min AQI">
+              <Field label={t('settings.minAqi')}>
                 <NumberField value={cfg.aqiMin ?? 0} onChange={v => set('aqiMin', v)} min={0}/>
               </Field>
             </div>
             <div style={{ flex: 1 }}>
-              <Field label="Max AQI">
+              <Field label={t('settings.maxAqi')}>
                 <NumberField value={cfg.aqiMax ?? 500} onChange={v => set('aqiMax', v)} min={1}/>
               </Field>
             </div>
           </div>
         )}
-        <SettingsRow
-          label="AQI invertito (basso = buono)"
-          hint="Verde quando il valore è basso (es. IAQ, PM2.5)."
-        >
+        <SettingsRow label={t('settings.invertedAqi')}>
           <Toggle value={cfg.aqiInverted ?? true} onChange={v => set('aqiInverted', v)}/>
         </SettingsRow>
-        <SettingsRow
-          label="Colore dalla classificazione"
-          hint="Il colore del cerchio deriva dal testo classificazione invece che dal numero."
-        >
+        <SettingsRow label={t('settings.colorFromClass')}>
           <Toggle value={cfg.aqiColorFromClassification ?? false} onChange={v => set('aqiColorFromClassification', v)}/>
         </SettingsRow>
       </Section>
 
       {/* ── 3. Sensori ── */}
-      <Section title="Sensori">
+      <Section title={t('settings.sectionSensors')}>
         {sensors.length === 0 && (
           <div style={{
             fontSize: 11, color: 'var(--text-muted)', fontStyle: 'italic',
             padding: '6px 0',
           }}>
-            Nessun sensore configurato. Aggiungine uno.
+            {t('settings.noSensors')}
           </div>
         )}
         {sensors.map((s, i) => (
@@ -220,6 +215,7 @@ export default function AirQualitySettings({ cardId }) {
             index={i}
             total={sensors.length}
             dark={dark}
+            t={t}
             onChange={next => updateSensor(i, next)}
             onRemove={() => removeSensor(i)}
             onMoveUp={() => moveSensorUp(i)}
@@ -245,7 +241,7 @@ export default function AirQualitySettings({ cardId }) {
             e.currentTarget.style.color = 'var(--text-muted)'
           }}
         >
-          + Aggiungi sensore
+          {t('settings.addSensor')}
         </button>
       </Section>
 

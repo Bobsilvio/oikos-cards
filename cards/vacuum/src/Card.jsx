@@ -9,38 +9,24 @@ import {
   MapPin, Clock, RefreshCw, Wind, Droplets, Filter, Cpu,
   AlertTriangle, AreaChart, ChevronDown, ChevronUp,
 } from 'lucide-react'
-import { useDashboard, getHAConfig } from '@oikos/sdk'
+import { useDashboard, getHAConfig, registerCardTranslations, useT } from '@oikos/sdk'
 import { getVacuumConfig } from './vacuumStore'
+import it from './i18n/it.json'
+import en from './i18n/en.json'
 
-// ─── Traduzioni ───────────────────────────────────────────────────────────────
-const T = {
-  // stati vacuum
-  docked: 'In base', cleaning: 'In pulizia', paused: 'In pausa',
-  returning: 'Rientro', idle: 'Fermo', error: 'Errore',
-  charging_completed: 'Carico', sleeping: 'Standby', unavailable: 'N/D',
-  // aspirazione
-  quiet: 'Silenzioso', standard: 'Standard', strong: 'Forte',
-  turbo: 'Turbo', max: 'Max', boost: 'Boost',
-  // modalità pulizia
-  sweeping: 'Aspira', mopping: 'Lava', sweeping_and_mopping: 'Aspira+Lava',
-  // temperatura
-  cold: 'Freddo', warm: 'Tiepido', hot: 'Caldo',
-  // frequenza
-  low: 'Bassa', medium: 'Media', high: 'Alta',
-  // route
-  intensive: 'Intensivo', by_area: 'Per area', by_time: 'Per tempo',
-  // stato base / stazione
-  installed: 'OK', available: 'OK', not_available: 'N/D',
-  not_installed: 'Non inst.', empty: 'Vuoto', full: 'Pieno',
-  enabled: 'Attivo', disabled: '—', no_warning: 'OK',
-  completed: 'Completato', active: 'Attivo',
-  ok: 'OK', warning: 'Attenzione', error_occurred: 'Errore',
-  replacing_required: 'Da sostituire', reset_required: 'Reset necessario',
-  dirty: 'Sporco', clean: 'Pulito',
-  // switch
-  on: 'Sì', off: 'No',
+registerCardTranslations('card-vacuum', { it, en })
+
+// Fallback per valori non in lookup
+const tr = (v, t) => {
+  if (!v || v === 'unavailable') return '—'
+  // Try all translation namespaces
+  const namespaces = ['state', 'suction', 'cleanMode', 'waterTemp', 'freq', 'route', 'stationStatus', 'sw']
+  for (const ns of namespaces) {
+    const val = t(`${ns}.${v}`)
+    if (val !== `${ns}.${v}`) return val
+  }
+  return v ?? '—'
 }
-const tr = (v) => T[v] ?? v ?? '—'
 
 const STATE_COLOR = {
   docked: '#10b981', charging_completed: '#10b981', sleeping: '#94a3b8',
@@ -118,7 +104,7 @@ function CtrlBtn({ label, icon: Icon, onClick, primary, danger, dark, disabled }
   )
 }
 
-function ModeBadge({ label, value, dark }) {
+function ModeBadge({ label, value, dark, t }) {
   if (!value || value === 'unavailable') return null
   return (
     <div style={{
@@ -128,12 +114,12 @@ function ModeBadge({ label, value, dark }) {
       border: '1px solid var(--border)', textAlign: 'center',
     }}>
       <span style={{ fontSize: 9, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '.5px' }}>{label}</span>
-      <span style={{ fontSize: 12, fontWeight: 700, color: dark ? '#c4b5fd' : '#7c3aed', wordBreak: 'break-word' }}>{tr(value)}</span>
+      <span style={{ fontSize: 12, fontWeight: 700, color: dark ? '#c4b5fd' : '#7c3aed', wordBreak: 'break-word' }}>{tr(value, t)}</span>
     </div>
   )
 }
 
-function StatusChip({ label, value, warn, dark }) {
+function StatusChip({ label, value, warn, dark, t }) {
   if (!value || value === 'unavailable') return null
   const isOk = ['installed', 'available', 'ok', 'no_warning', 'enabled', 'completed'].includes(value)
   const isWarn = warn || (!isOk && value !== 'idle' && value !== '—')
@@ -142,7 +128,7 @@ function StatusChip({ label, value, warn, dark }) {
     ? (dark ? 'rgba(16,185,129,.1)' : 'rgba(16,185,129,.07)')
     : isWarn ? (dark ? 'rgba(245,158,11,.1)' : 'rgba(245,158,11,.07)')
     : (dark ? 'rgba(255,255,255,.04)' : 'rgba(0,0,0,.03)')
-  const displayed = value === 'idle' ? '—' : tr(value)
+  const displayed = value === 'idle' ? '—' : tr(value, t)
   return (
     <div style={{
       display: 'flex', flexDirection: 'column', gap: 2, padding: '6px 8px',
@@ -180,7 +166,7 @@ function OptionSelector({ options, current, onSelect, dark, spread = false }) {
 }
 
 // Selettore stanze
-function RoomSelector({ rooms, selectedRooms, onToggle, onToggleAll, allSelected, dark }) {
+function RoomSelector({ rooms, selectedRooms, onToggle, onToggleAll, allSelected, dark, allHomeLabel }) {
   return (
     <div style={{ display: 'flex', gap: 5, flexWrap: 'wrap', justifyContent: 'center' }}>
       <motion.button whileTap={{ scale: .93 }} onClick={onToggleAll} style={{
@@ -190,7 +176,7 @@ function RoomSelector({ rooms, selectedRooms, onToggle, onToggleAll, allSelected
         color: allSelected ? (dark ? '#c4b5fd' : '#7c3aed') : 'var(--text-muted)',
         cursor: 'pointer',
       }}>
-        Tutta la casa
+        {allHomeLabel}
       </motion.button>
       {rooms.filter(r => r.name).map(room => {
         const sel = selectedRooms.includes(room.id)
@@ -232,6 +218,7 @@ function SwitchToggle({ label, entityId, isOn, onToggle, dark }) {
 // ─── Card principale ───────────────────────────────────────────────────────────
 export default function VacuumCard() {
   const { dark, callService, getState, getAttr } = useDashboard()
+  const { t } = useT('card-vacuum')
   const [cfg] = useState(getVacuumConfig)
   const [cmdBusy, setCmdBusy] = useState(false)
   const [showTotals, setShowTotals] = useState(false)
@@ -391,7 +378,7 @@ export default function VacuumCard() {
                 <span style={{ fontSize: 11, fontWeight: 700, color: sc(mainState),
                   background: `${sc(mainState)}1a`, border: `1px solid ${sc(mainState)}33`,
                   borderRadius: 5, padding: '1px 7px' }}>
-                  {T[mainState] ?? mainState ?? '—'}
+                  {tr(mainState, t)}
                 </span>
                 {room && room !== 'unavailable' && (
                   <span style={{ display: 'flex', alignItems: 'center', gap: 3, fontSize: 11, color: 'var(--text-muted)' }}>
@@ -441,7 +428,7 @@ export default function VacuumCard() {
             {cleanProg !== null && cleanProg > 0 && (
               <div style={{ display: 'flex', alignItems: 'center', gap: 6, flex: 1, minWidth: 100,
                 padding: '5px 9px', borderRadius: 7, background: dark ? 'rgba(255,255,255,.04)' : 'rgba(0,0,0,.03)', border: '1px solid var(--border)' }}>
-                <span style={{ fontSize: 11, color: 'var(--text-muted)', whiteSpace: 'nowrap' }}>Progresso</span>
+                <span style={{ fontSize: 11, color: 'var(--text-muted)', whiteSpace: 'nowrap' }}>{t('session.progress')}</span>
                 <div style={{ flex: 1, height: 4, borderRadius: 99, background: dark ? 'rgba(255,255,255,.08)' : 'rgba(0,0,0,.06)', overflow: 'hidden' }}>
                   <div style={{ height: '100%', width: `${cleanProg}%`, background: accent, borderRadius: 99 }}/>
                 </div>
@@ -454,22 +441,22 @@ export default function VacuumCard() {
         {/* ── 3. CONTROLLI ── */}
         <div style={{ display: 'flex', gap: 6 }}>
           {(vacState === 'docked' || vacState === 'idle' || !vacState) && (
-            <CtrlBtn label="Avvia" icon={Play} primary dark={dark} disabled={cmdBusy} onClick={() => cmd('start')}/>
+            <CtrlBtn label={t('controls.start')} icon={Play} primary dark={dark} disabled={cmdBusy} onClick={() => cmd('start')}/>
           )}
           {vacState === 'paused' && (
-            <CtrlBtn label="Riprendi" icon={Play} primary dark={dark} disabled={cmdBusy} onClick={() => cmd('resume')}/>
+            <CtrlBtn label={t('controls.resume')} icon={Play} primary dark={dark} disabled={cmdBusy} onClick={() => cmd('resume')}/>
           )}
           {vacState === 'cleaning' && (
-            <CtrlBtn label="Pausa" icon={Pause} dark={dark} disabled={cmdBusy} onClick={() => cmd('pause')}/>
+            <CtrlBtn label={t('controls.pause')} icon={Pause} dark={dark} disabled={cmdBusy} onClick={() => cmd('pause')}/>
           )}
           {(vacState === 'cleaning' || vacState === 'paused' || vacState === 'returning') && (
-            <CtrlBtn label="Stop" icon={Square} danger dark={dark} disabled={cmdBusy} onClick={() => cmd('stop')}/>
+            <CtrlBtn label={t('controls.stop')} icon={Square} danger dark={dark} disabled={cmdBusy} onClick={() => cmd('stop')}/>
           )}
           {(vacState === 'cleaning' || vacState === 'paused' || vacState === 'idle') && (
-            <CtrlBtn label="Base" icon={Home} dark={dark} disabled={cmdBusy} onClick={() => cmd('return_to_base')}/>
+            <CtrlBtn label={t('controls.base')} icon={Home} dark={dark} disabled={cmdBusy} onClick={() => cmd('return_to_base')}/>
           )}
           {vacState === 'docked' && (
-            <CtrlBtn label="Base" icon={Home} dark={dark} disabled={true} onClick={() => {}}/>
+            <CtrlBtn label={t('controls.base')} icon={Home} dark={dark} disabled={true} onClick={() => {}}/>
           )}
         </div>
 
@@ -484,11 +471,11 @@ export default function VacuumCard() {
             }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                 <span style={{ fontSize: 10, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '.7px', color: accent }}>
-                  Mappa
+                  {t('map.title')}
                 </span>
                 {showMap && (
                   <span style={{ fontSize: 9, color: 'var(--text-muted)', fontWeight: 500 }}>
-                    aggiorn. 5s
+                    {t('map.refreshRate')}
                   </span>
                 )}
               </div>
@@ -516,7 +503,7 @@ export default function VacuumCard() {
                       <img
                         key={mapTs}
                         src={`${haHost.current}/api/camera_proxy/${cfg.cameraEntity}?token=${getAttr(cfg.cameraEntity, 'access_token') ?? ''}&t=${mapTs}`}
-                        alt="Mappa aspirapolvere"
+                        alt={t('map.alt')}
                         style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }}
                         onError={e => { e.currentTarget.style.display = 'none' }}
                       />
@@ -548,33 +535,34 @@ export default function VacuumCard() {
 
         {/* ── 4. SELETTORI MODALITÀ + ASPIRAZIONE ── */}
         {cfg.cleaningModeEntity && (<>
-          <SectionTitle label="Modalità pulizia" dark={dark}/>
+          <SectionTitle label={t('sections.cleanMode')} dark={dark}/>
           <OptionSelector spread dark={dark} current={cleanMode} onSelect={opt => selectOption(cfg.cleaningModeEntity, opt)}
             options={[
-              { value: 'sweeping',              label: 'Aspira'       },
-              { value: 'mopping',               label: 'Lava'          },
-              { value: 'sweeping_and_mopping',  label: 'Aspira+Lava' },
+              { value: 'sweeping',              label: t('cleanMode.sweeping')              },
+              { value: 'mopping',               label: t('cleanMode.mopping')               },
+              { value: 'sweeping_and_mopping',  label: t('cleanMode.sweeping_and_mopping')  },
             ]}/>
         </>)}
 
         {cfg.suctionLevelEntity && (<>
-          <SectionTitle label="Potenza aspirazione" dark={dark}/>
+          <SectionTitle label={t('sections.suction')} dark={dark}/>
           <OptionSelector spread dark={dark} current={suction} onSelect={opt => selectOption(cfg.suctionLevelEntity, opt)}
             options={[
-              { value: 'quiet',    label: 'Silenz.'  },
-              { value: 'standard', label: 'Standard' },
-              { value: 'strong',   label: 'Forte'    },
-              { value: 'turbo',    label: 'Turbo'    },
-              { value: 'max',      label: 'Max'      },
+              { value: 'quiet',    label: t('suction.quiet')    },
+              { value: 'standard', label: t('suction.standard') },
+              { value: 'strong',   label: t('suction.strong')   },
+              { value: 'turbo',    label: t('suction.turbo')    },
+              { value: 'max',      label: t('suction.max')      },
             ]}/>
         </>)}
 
         {/* ── 5. SELEZIONE STANZE ── */}
         {rooms.length > 0 && (<>
           <div style={{ height: 1, background: divider }}/>
-          <SectionTitle label="Pulizia per stanza" dark={dark}/>
+          <SectionTitle label={t('sections.rooms')} dark={dark}/>
           <RoomSelector rooms={rooms} selectedRooms={selectedRooms} allSelected={allRooms}
-            onToggle={toggleRoom} onToggleAll={toggleAllRooms} dark={dark}/>
+            onToggle={toggleRoom} onToggleAll={toggleAllRooms} dark={dark}
+            allHomeLabel={t('rooms.allHome')}/>
           <motion.button whileTap={{ scale: .97 }} onClick={startRooms} disabled={cmdBusy || (!allRooms && selectedRooms.length === 0)}
             style={{
               display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
@@ -586,7 +574,7 @@ export default function VacuumCard() {
               opacity: (!allRooms && selectedRooms.length === 0) ? .4 : 1,
             }}>
             <Play size={15} strokeWidth={2}/>
-            {allRooms ? 'Avvia pulizia completa' : `Avvia ${selectedRooms.length} stanz${selectedRooms.length === 1 ? 'a' : 'e'}`}
+            {allRooms ? t('rooms.startAll') : t('rooms.startN', { count: selectedRooms.length })}
           </motion.button>
         </>)}
 
@@ -594,52 +582,52 @@ export default function VacuumCard() {
 
         {/* ── 6. INFO MODALITÀ (read-only) ── */}
         {(waterTemp || dryingTime || mopFreq || cleanRoute) && (<>
-          <SectionTitle label="Altre impostazioni" dark={dark}/>
+          <SectionTitle label={t('sections.otherSettings')} dark={dark}/>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 6 }}>
-            <ModeBadge label="Acqua"       value={waterTemp}  dark={dark}/>
-            <ModeBadge label="Asciugatura" value={dryingTime} dark={dark}/>
-            <ModeBadge label="Freq. mop"   value={mopFreq}    dark={dark}/>
-            <ModeBadge label="Percorso"    value={cleanRoute} dark={dark}/>
+            <ModeBadge label={t('modeBadges.water')}   value={waterTemp}  dark={dark} t={t}/>
+            <ModeBadge label={t('modeBadges.drying')}  value={dryingTime} dark={dark} t={t}/>
+            <ModeBadge label={t('modeBadges.mopFreq')} value={mopFreq}    dark={dark} t={t}/>
+            <ModeBadge label={t('modeBadges.route')}   value={cleanRoute} dark={dark} t={t}/>
           </div>
           <div style={{ height: 1, background: divider }}/>
         </>)}
 
         {/* ── 5. STATO BASE / STAZIONE ── */}
-        <SectionTitle label="Stazione" dark={dark}/>
+        <SectionTitle label={t('sections.station')} dark={dark}/>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 6 }}>
-          <StatusChip label="Vuotatura"  value={autoEmpty}  dark={dark}/>
-          <StatusChip label="Lavaggio"   value={selfWash}   dark={dark}/>
-          <StatusChip label="Scarico"    value={drainage}   dark={dark}/>
-          <StatusChip label="Sacchetto"  value={dustBag}    dark={dark}/>
-          <StatusChip label="Mop pad"    value={mopPad}     dark={dark}/>
-          <StatusChip label="Detergente" value={detergent}  dark={dark}/>
-          <StatusChip label="Acqua sp."  value={dirtyWater} dark={dark}/>
-          <StatusChip label="Acqua cal." value={hotWater}   dark={dark}/>
-          <StatusChip label="Livello"    value={lowWater}   warn={lowWater && lowWater !== 'no_warning'} dark={dark}/>
+          <StatusChip label={t('stationChips.autoEmpty')}  value={autoEmpty}  dark={dark} t={t}/>
+          <StatusChip label={t('stationChips.selfWash')}   value={selfWash}   dark={dark} t={t}/>
+          <StatusChip label={t('stationChips.drainage')}   value={drainage}   dark={dark} t={t}/>
+          <StatusChip label={t('stationChips.dustBag')}    value={dustBag}    dark={dark} t={t}/>
+          <StatusChip label={t('stationChips.mopPad')}     value={mopPad}     dark={dark} t={t}/>
+          <StatusChip label={t('stationChips.detergent')}  value={detergent}  dark={dark} t={t}/>
+          <StatusChip label={t('stationChips.dirtyWater')} value={dirtyWater} dark={dark} t={t}/>
+          <StatusChip label={t('stationChips.hotWater')}   value={hotWater}   dark={dark} t={t}/>
+          <StatusChip label={t('stationChips.lowWater')}   value={lowWater}   warn={lowWater && lowWater !== 'no_warning'} dark={dark} t={t}/>
         </div>
 
         <div style={{ height: 1, background: divider }}/>
 
         {/* ── 6. CONSUMABILI ── */}
-        <SectionTitle label="Consumabili" dark={dark}/>
+        <SectionTitle label={t('sections.consumables')} dark={dark}/>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-          {mainBrush !== null && <ConsBar label="Sp. principale" pct={mainBrush} days={mainBrushDays} icon={Wind}     dark={dark}/>}
-          {sideBrush !== null && <ConsBar label="Sp. laterale"   pct={sideBrush} days={sideBrushDays} icon={Droplets} dark={dark}/>}
-          {filterPct !== null && <ConsBar label="Filtro"         pct={filterPct} days={filterDays}    icon={Filter}   dark={dark}/>}
-          {sensorDirty !== null && <ConsBar label="Sensori"      pct={sensorDirty} days={sensorDays}  icon={Cpu}      dark={dark}/>}
+          {mainBrush !== null && <ConsBar label={t('consumables.mainBrush')} pct={mainBrush} days={mainBrushDays} icon={Wind}     dark={dark}/>}
+          {sideBrush !== null && <ConsBar label={t('consumables.sideBrush')} pct={sideBrush} days={sideBrushDays} icon={Droplets} dark={dark}/>}
+          {filterPct !== null && <ConsBar label={t('consumables.filter')}    pct={filterPct} days={filterDays}    icon={Filter}   dark={dark}/>}
+          {sensorDirty !== null && <ConsBar label={t('consumables.sensors')} pct={sensorDirty} days={sensorDays}  icon={Cpu}      dark={dark}/>}
         </div>
 
         <div style={{ height: 1, background: divider }}/>
 
         {/* ── 7. SWITCH RAPIDI ── */}
-        <SectionTitle label="Impostazioni rapide" dark={dark}/>
+        <SectionTitle label={t('sections.quickSettings')} dark={dark}/>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 6 }}>
-          {cfg.dndEntity             && <SwitchToggle label="Non disturb." entityId={cfg.dndEntity}             isOn={isOn(cfg.dndEntity)}             onToggle={toggleSwitch} dark={dark}/>}
-          {cfg.carpetBoostEntity     && <SwitchToggle label="Boost tappeto" entityId={cfg.carpetBoostEntity}     isOn={isOn(cfg.carpetBoostEntity)}     onToggle={toggleSwitch} dark={dark}/>}
-          {cfg.selfCleanSwitchEntity && <SwitchToggle label="Auto-pulizia"  entityId={cfg.selfCleanSwitchEntity} isOn={isOn(cfg.selfCleanSwitchEntity)} onToggle={toggleSwitch} dark={dark}/>}
-          {cfg.autoDryingEntity      && <SwitchToggle label="Auto-asciuga"  entityId={cfg.autoDryingEntity}      isOn={isOn(cfg.autoDryingEntity)}      onToggle={toggleSwitch} dark={dark}/>}
-          {cfg.obstacleEntity        && <SwitchToggle label="Evita ostacoli" entityId={cfg.obstacleEntity}        isOn={isOn(cfg.obstacleEntity)}        onToggle={toggleSwitch} dark={dark}/>}
-          {cfg.resumeEntity          && <SwitchToggle label="Riprendi auto" entityId={cfg.resumeEntity}          isOn={isOn(cfg.resumeEntity)}          onToggle={toggleSwitch} dark={dark}/>}
+          {cfg.dndEntity             && <SwitchToggle label={t('switches.dnd')}         entityId={cfg.dndEntity}             isOn={isOn(cfg.dndEntity)}             onToggle={toggleSwitch} dark={dark}/>}
+          {cfg.carpetBoostEntity     && <SwitchToggle label={t('switches.carpetBoost')} entityId={cfg.carpetBoostEntity}     isOn={isOn(cfg.carpetBoostEntity)}     onToggle={toggleSwitch} dark={dark}/>}
+          {cfg.selfCleanSwitchEntity && <SwitchToggle label={t('switches.selfClean')}   entityId={cfg.selfCleanSwitchEntity} isOn={isOn(cfg.selfCleanSwitchEntity)} onToggle={toggleSwitch} dark={dark}/>}
+          {cfg.autoDryingEntity      && <SwitchToggle label={t('switches.autoDrying')}  entityId={cfg.autoDryingEntity}      isOn={isOn(cfg.autoDryingEntity)}      onToggle={toggleSwitch} dark={dark}/>}
+          {cfg.obstacleEntity        && <SwitchToggle label={t('switches.obstacle')}    entityId={cfg.obstacleEntity}        isOn={isOn(cfg.obstacleEntity)}        onToggle={toggleSwitch} dark={dark}/>}
+          {cfg.resumeEntity          && <SwitchToggle label={t('switches.resume')}      entityId={cfg.resumeEntity}          isOn={isOn(cfg.resumeEntity)}          onToggle={toggleSwitch} dark={dark}/>}
         </div>
 
         <div style={{ height: 1, background: divider }}/>
@@ -650,7 +638,7 @@ export default function VacuumCard() {
           background: 'transparent', border: 'none', cursor: 'pointer', padding: 0, width: '100%',
         }}>
           <span style={{ fontSize: 10, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '.7px', color: accent }}>
-            Statistiche totali
+            {t('sections.totalStats')}
           </span>
           {showTotals ? <ChevronUp size={13} color={accent}/> : <ChevronDown size={13} color={accent}/>}
         </button>
@@ -659,9 +647,9 @@ export default function VacuumCard() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 6 }}>
               {[
-                { label: 'Pulizie',   value: count     !== null ? Math.round(count).toLocaleString('it') : '—', icon: RefreshCw },
-                { label: 'Area tot.', value: totalArea !== null ? fmtArea(totalArea) : '—',                     icon: AreaChart },
-                { label: 'Ore tot.',  value: totalTime !== null ? fmtMin(Math.round(totalTime)) : '—',           icon: Clock },
+                { label: t('totals.cleanings'), value: count     !== null ? Math.round(count).toLocaleString('it') : '—', icon: RefreshCw },
+                { label: t('totals.totalArea'), value: totalArea !== null ? fmtArea(totalArea) : '—',                     icon: AreaChart },
+                { label: t('totals.totalTime'), value: totalTime !== null ? fmtMin(Math.round(totalTime)) : '—',           icon: Clock },
               ].map(({ label, value, icon: Icon }) => (
                 <div key={label} style={{ textAlign: 'center', padding: '8px 4px', borderRadius: 9,
                   background: dark ? 'rgba(139,92,246,.08)' : 'rgba(139,92,246,.06)', border: `1px solid ${accentBorder}` }}>
@@ -673,7 +661,7 @@ export default function VacuumCard() {
             </div>
             {firstClean && firstClean !== 'unavailable' && (
               <div style={{ fontSize: 11, color: 'var(--text-muted)', textAlign: 'center' }}>
-                Prima pulizia: {fmtDate(firstClean)}
+                {t('totals.firstClean')} {fmtDate(firstClean)}
               </div>
             )}
           </div>
