@@ -1,0 +1,37 @@
+{
+  "mode": {
+    "off":  "Aus",
+    "cool": "Kühlen",
+    "heat": "Heizen",
+    "auto": "Auto",
+    "dry":  "Entfeuchten",
+    "fan_only": "Lüfter"
+  },
+  "tempCurrent": "Aktuell",
+  "tempTarget":  "Ziel",
+  "chipHumidity": "Luftfeuchtigkeit",
+  "chipOutdoor":  "Außen",
+  "chipFan":      "Lüfter",
+  "btnOn":  "Einschalten",
+  "btnOff": "Ausschalten",
+  "unavailable": "Entität nicht verfügbar",
+  "noEntity": "Konfiguriere eine climate.*-Entität in den Karteneinstellungen.",
+
+  "settings": {
+    "sectionEntity": "Entität",
+    "sectionAppearance": "Aussehen",
+    "sectionCommands": "Befehle",
+    "climateEntity": "Klimaanlage",
+    "climateHint": "climate.*-Entität von Home Assistant",
+    "outdoorSensor": "Außentemperatursensor",
+    "outdoorHint": "Optional — zeigt Außen-°C",
+    "label": "Bezeichnung",
+    "labelHint": "Leer = verwendet den friendly_name",
+    "accentColor": "Akzentfarbe",
+    "accentHint": "Leer = automatische Farbe",
+    "tempStep": "Temperaturschritt (°C)",
+    "tempStepHint": "Inkrement/Dekrement Tasten +/-",
+    "showFan": "Lüfter anzeigen",
+    "showHumidity": "Luftfeuchtigkeit anzeigen"
+  }
+}

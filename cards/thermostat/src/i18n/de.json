@@ -1,0 +1,15 @@
+{
+  "mode": {
+    "heat":     "Heizen",
+    "cool":     "Kühlen",
+    "auto":     "Auto",
+    "heat_cool":"H+K",
+    "fan_only": "Lüfter",
+    "dry":      "Entfeuchten"
+  },
+  "noEntity": "Konfiguriere eine climate-Entität in ⚙",
+  "settings": {
+    "entityLabel": "Climate-Entität",
+    "nameLabel": "Angezeigter Name (optional)"
+  }
+}

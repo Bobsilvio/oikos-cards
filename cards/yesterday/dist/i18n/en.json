@@ -1,0 +1,21 @@
+{
+  "title": "Solar — Yesterday",
+  "stats": {
+    "production": "Production",
+    "consumption": "Consumption",
+    "fromGrid": "From Grid",
+    "toGrid": "Exported"
+  },
+  "chart": {
+    "title": "Daily Trend",
+    "loading": "Loading history…"
+  },
+  "settings": {
+    "sectionTitle": "Energy entities (global)",
+    "sectionHint": "These sensors are shared with other cards (Energy, Tigo). They are queried for yesterday's date.",
+    "prodToday": "Daily production (kWh)",
+    "consToday": "Daily consumption (kWh)",
+    "gridFromToday": "Grid import (kWh)",
+    "gridToToday": "Grid export (kWh)"
+  }
+}

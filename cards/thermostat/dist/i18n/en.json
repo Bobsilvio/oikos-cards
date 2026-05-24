@@ -1,0 +1,16 @@
+{
+  "mode": {
+    "heat":     "Heat",
+    "cool":     "Cool",
+    "auto":     "Auto",
+    "heat_cool":"H+C",
+    "fan_only": "Fan",
+    "dry":      "Dry"
+  },
+  "noEntity": "Configure a climate entity in ⚙",
+
+  "settings": {
+    "entityLabel": "Climate entity",
+    "nameLabel": "Display name (optional)"
+  }
+}

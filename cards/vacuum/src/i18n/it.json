@@ -1,0 +1,201 @@
+{
+  "state": {
+    "docked": "In base",
+    "cleaning": "In pulizia",
+    "paused": "In pausa",
+    "returning": "Rientro",
+    "idle": "Fermo",
+    "error": "Errore",
+    "charging_completed": "Carico",
+    "sleeping": "Standby",
+    "unavailable": "N/D"
+  },
+  "suction": {
+    "quiet": "Silenzioso",
+    "standard": "Standard",
+    "strong": "Forte",
+    "turbo": "Turbo",
+    "max": "Max",
+    "boost": "Boost"
+  },
+  "cleanMode": {
+    "sweeping": "Aspira",
+    "mopping": "Lava",
+    "sweeping_and_mopping": "Aspira+Lava"
+  },
+  "waterTemp": {
+    "cold": "Freddo",
+    "warm": "Tiepido",
+    "hot": "Caldo"
+  },
+  "freq": {
+    "low": "Bassa",
+    "medium": "Media",
+    "high": "Alta"
+  },
+  "route": {
+    "intensive": "Intensivo",
+    "by_area": "Per area",
+    "by_time": "Per tempo"
+  },
+  "stationStatus": {
+    "installed": "OK",
+    "available": "OK",
+    "not_available": "N/D",
+    "not_installed": "Non inst.",
+    "empty": "Vuoto",
+    "full": "Pieno",
+    "enabled": "Attivo",
+    "disabled": "—",
+    "no_warning": "OK",
+    "completed": "Completato",
+    "active": "Attivo",
+    "ok": "OK",
+    "warning": "Attenzione",
+    "error_occurred": "Errore",
+    "replacing_required": "Da sostituire",
+    "reset_required": "Reset necessario",
+    "dirty": "Sporco",
+    "clean": "Pulito"
+  },
+  "sw": {
+    "on": "Sì",
+    "off": "No"
+  },
+  "map": {
+    "title": "Mappa",
+    "refreshRate": "aggiorn. 5s",
+    "alt": "Mappa aspirapolvere"
+  },
+  "session": {
+    "progress": "Progresso"
+  },
+  "sections": {
+    "cleanMode": "Modalità pulizia",
+    "suction": "Potenza aspirazione",
+    "rooms": "Pulizia per stanza",
+    "otherSettings": "Altre impostazioni",
+    "station": "Stazione",
+    "consumables": "Consumabili",
+    "quickSettings": "Impostazioni rapide",
+    "totalStats": "Statistiche totali"
+  },
+  "controls": {
+    "start": "Avvia",
+    "resume": "Riprendi",
+    "pause": "Pausa",
+    "stop": "Stop",
+    "base": "Base"
+  },
+  "rooms": {
+    "allHome": "Tutta la casa",
+    "startAll": "Avvia pulizia completa",
+    "startN_one": "Avvia {{count}} stanza",
+    "startN_other": "Avvia {{count}} stanze"
+  },
+  "modeBadges": {
+    "water": "Acqua",
+    "drying": "Asciugatura",
+    "mopFreq": "Freq. mop",
+    "route": "Percorso"
+  },
+  "stationChips": {
+    "autoEmpty": "Vuotatura",
+    "selfWash": "Lavaggio",
+    "drainage": "Scarico",
+    "dustBag": "Sacchetto",
+    "mopPad": "Mop pad",
+    "detergent": "Detergente",
+    "dirtyWater": "Acqua sp.",
+    "hotWater": "Acqua cal.",
+    "lowWater": "Livello"
+  },
+  "consumables": {
+    "mainBrush": "Sp. principale",
+    "sideBrush": "Sp. laterale",
+    "filter": "Filtro",
+    "sensors": "Sensori"
+  },
+  "switches": {
+    "dnd": "Non disturb.",
+    "carpetBoost": "Boost tappeto",
+    "selfClean": "Auto-pulizia",
+    "autoDrying": "Auto-asciuga",
+    "obstacle": "Evita ostacoli",
+    "resume": "Riprendi auto"
+  },
+  "totals": {
+    "cleanings": "Pulizie",
+    "totalArea": "Area tot.",
+    "totalTime": "Ore tot.",
+    "firstClean": "Prima pulizia:"
+  },
+  "settings": {
+    "groups": {
+      "main": "Principale",
+      "session": "Sessione corrente",
+      "consumables": "Consumabili",
+      "modes": "Modalità operative",
+      "station": "Stato stazione",
+      "switches": "Switch rapidi",
+      "totalStats": "Statistiche totali",
+      "rooms": "Stanze"
+    },
+    "fields": {
+      "name": "Nome",
+      "vacuumEntity": "Entità vacuum (comandi)",
+      "cameraEntity": "Camera mappa (opzionale)",
+      "batteryEntity": "Batteria",
+      "stateEntity": "Stato dettagliato",
+      "statusEntity": "Status",
+      "chargingEntity": "Stato ricarica",
+      "currentRoomEntity": "Stanza corrente",
+      "errorEntity": "Errore",
+      "cleaningTimeEntity": "Tempo pulizia",
+      "cleanedAreaEntity": "Area pulita",
+      "cleaningProgressEntity": "Progresso (%)",
+      "mainBrushEntity": "Sp. principale (%)",
+      "mainBrushDaysEntity": "Sp. principale (gg)",
+      "sideBrushEntity": "Sp. laterale (%)",
+      "sideBrushDaysEntity": "Sp. laterale (gg)",
+      "filterEntity": "Filtro (%)",
+      "filterDaysEntity": "Filtro (gg)",
+      "sensorDirtyEntity": "Sensori (%)",
+      "sensorDirtyDaysEntity": "Sensori (gg)",
+      "suctionLevelEntity": "Aspirazione",
+      "cleaningModeEntity": "Modalità",
+      "waterTempEntity": "Temperatura",
+      "dryingTimeEntity": "Asciugatura",
+      "mopFreqEntity": "Freq. mop",
+      "cleaningRouteEntity": "Percorso",
+      "autoEmptyEntity": "Vuotatura auto",
+      "selfWashEntity": "Lavaggio base",
+      "drainageEntity": "Scarico",
+      "dustBagEntity": "Sacchetto",
+      "mopPadEntity": "Mop pad",
+      "detergentEntity": "Detergente",
+      "dirtyWaterEntity": "Acqua sporca",
+      "hotWaterEntity": "Acqua calda",
+      "lowWaterEntity": "Livello acqua",
+      "dustCollectionEntity": "Raccolta polvere",
+      "dndEntity": "Non disturbare",
+      "carpetBoostEntity": "Boost tappeto",
+      "selfCleanSwitchEntity": "Auto-pulizia",
+      "autoDryingEntity": "Auto-asciuga",
+      "obstacleEntity": "Evita ostacoli",
+      "resumeEntity": "Riprendi auto",
+      "totalAreaEntity": "Area totale",
+      "countEntity": "N° pulizie",
+      "totalTimeEntity": "Minuti totali",
+      "firstCleanEntity": "Prima pulizia"
+    },
+    "saveButton": "Salva entità",
+    "savedButton": "✓ Salvato — ricarica per applicare",
+    "addRoom": "Aggiungi stanza",
+    "roomIdLabel": "ID HA",
+    "roomNameLabel": "Nome",
+    "roomIdPlaceholder": "ID",
+    "roomNamePlaceholder": "Nome stanza",
+    "roomsHint": "L'ID HA si trova nelle entità select.*_room_N_name dove N è il numero. Integrazione Tasshack: usa vacuum.send_command → clean_segment."
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "mode": {
+    "off":  "Spento",
+    "cool": "Raffredda",
+    "heat": "Riscalda",
+    "auto": "Auto",
+    "dry":  "Deumidifica",
+    "fan_only": "Ventola"
+  },
+  "tempCurrent": "Attuale",
+  "tempTarget":  "Target",
+  "chipHumidity": "Umidità",
+  "chipOutdoor":  "Esterna",
+  "chipFan":      "Ventola",
+  "btnOn":  "Accendi",
+  "btnOff": "Spegni",
+  "unavailable": "Entità non disponibile",
+  "noEntity": "Configura un'entità climate.* nelle impostazioni della card.",
+
+  "settings": {
+    "sectionEntity": "Entità",
+    "sectionAppearance": "Aspetto",
+    "sectionCommands": "Comandi",
+    "climateEntity": "Climatizzatore",
+    "climateHint": "Entità climate.* di Home Assistant",
+    "outdoorSensor": "Sensore temperatura esterna",
+    "outdoorHint": "Opzionale — mostra °C esterni",
+    "label": "Etichetta",
+    "labelHint": "Vuoto = usa il friendly_name",
+    "accentColor": "Colore accento",
+    "accentHint": "Vuoto = colore automatico",
+    "tempStep": "Step temperatura (°C)",
+    "tempStepHint": "Incremento/decremento bottoni +/-",
+    "showFan": "Mostra ventola",
+    "showHumidity": "Mostra umidità"
+  }
+}

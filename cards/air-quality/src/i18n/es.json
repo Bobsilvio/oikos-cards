@@ -1,0 +1,32 @@
+{
+  "title": "Casa Ext.",
+  "label": "AQI Hoy",
+  "description": "Sensores con el estado actual y media cada 30 minutos",
+  "sensorDefault": "Sensor",
+
+  "settings": {
+    "sectionHeader": "Encabezado",
+    "sectionAqi": "Calidad del aire",
+    "sectionSensors": "Sensores",
+    "aqiEntity": "Entidad AQI numérica (círculo)",
+    "classEntity": "Entidad clasificación (texto)",
+    "minAqi": "AQI Mín",
+    "maxAqi": "AQI Máx",
+    "invertedAqi": "AQI invertido (bajo = bueno)",
+    "colorFromClass": "Color desde la clasificación",
+    "sensorN": "Sensor {{n}} — {{label}}",
+    "sensorEntity": "Entidad sensor",
+    "sensorLabel": "Etiqueta",
+    "sensorUnit": "Unidad",
+    "sensorDecimals": "Decimales",
+    "sensorMin": "Mín",
+    "sensorMax": "Máx",
+    "sensorInverted": "Invertido",
+    "invertedHint": "Alto = bueno (ej. O2)",
+    "moveUp": "Subir",
+    "moveDown": "Bajar",
+    "delete": "Eliminar",
+    "noSensors": "Ningún sensor configurado. Añade uno.",
+    "addSensor": "+ Añadir sensor"
+  }
+}

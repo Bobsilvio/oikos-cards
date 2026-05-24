@@ -1,0 +1,21 @@
+{
+  "title": "Photovoltaik — Gestern",
+  "stats": {
+    "production": "Produktion",
+    "consumption": "Verbrauch",
+    "fromGrid": "Vom Netz",
+    "toGrid": "Eingespeist"
+  },
+  "chart": {
+    "title": "Tagesverlauf",
+    "loading": "Verlauf wird geladen…"
+  },
+  "settings": {
+    "sectionTitle": "Energie-Entitäten (global)",
+    "sectionHint": "Diese Sensoren werden mit anderen Cards (Energy, Tigo) geteilt. Sie werden für das gestrige Datum abgefragt.",
+    "prodToday": "Tagesproduktion (kWh)",
+    "consToday": "Tagesverbrauch (kWh)",
+    "gridFromToday": "Netzbezug (kWh)",
+    "gridToToday": "Netzeinspeisung (kWh)"
+  }
+}

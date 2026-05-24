@@ -1,0 +1,37 @@
+{
+  "mode": {
+    "off":  "Off",
+    "cool": "Cool",
+    "heat": "Heat",
+    "auto": "Auto",
+    "dry":  "Dry",
+    "fan_only": "Fan"
+  },
+  "tempCurrent": "Current",
+  "tempTarget":  "Target",
+  "chipHumidity": "Humidity",
+  "chipOutdoor":  "Outdoor",
+  "chipFan":      "Fan",
+  "btnOn":  "Turn on",
+  "btnOff": "Turn off",
+  "unavailable": "Entity unavailable",
+  "noEntity": "Configure a climate.* entity in the card settings.",
+
+  "settings": {
+    "sectionEntity": "Entity",
+    "sectionAppearance": "Appearance",
+    "sectionCommands": "Commands",
+    "climateEntity": "Air conditioner",
+    "climateHint": "Home Assistant climate.* entity",
+    "outdoorSensor": "Outdoor temperature sensor",
+    "outdoorHint": "Optional — shows outdoor °C",
+    "label": "Label",
+    "labelHint": "Empty = use friendly_name",
+    "accentColor": "Accent color",
+    "accentHint": "Empty = automatic color",
+    "tempStep": "Temperature step (°C)",
+    "tempStepHint": "Increment/decrement for +/- buttons",
+    "showFan": "Show fan",
+    "showHumidity": "Show humidity"
+  }
+}

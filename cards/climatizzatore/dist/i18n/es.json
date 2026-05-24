@@ -1,0 +1,37 @@
+{
+  "mode": {
+    "off":  "Apagado",
+    "cool": "Enfriar",
+    "heat": "Calentar",
+    "auto": "Auto",
+    "dry":  "Deshumidificar",
+    "fan_only": "Ventilador"
+  },
+  "tempCurrent": "Actual",
+  "tempTarget":  "Objetivo",
+  "chipHumidity": "Humedad",
+  "chipOutdoor":  "Exterior",
+  "chipFan":      "Ventilador",
+  "btnOn":  "Encender",
+  "btnOff": "Apagar",
+  "unavailable": "Entidad no disponible",
+  "noEntity": "Configura una entidad climate.* en los ajustes de la tarjeta.",
+
+  "settings": {
+    "sectionEntity": "Entidad",
+    "sectionAppearance": "Apariencia",
+    "sectionCommands": "Comandos",
+    "climateEntity": "Climatizador",
+    "climateHint": "Entidad climate.* de Home Assistant",
+    "outdoorSensor": "Sensor de temperatura exterior",
+    "outdoorHint": "Opcional — muestra °C exteriores",
+    "label": "Etiqueta",
+    "labelHint": "Vacío = usa el friendly_name",
+    "accentColor": "Color de acento",
+    "accentHint": "Vacío = color automático",
+    "tempStep": "Paso de temperatura (°C)",
+    "tempStepHint": "Incremento/decremento botones +/-",
+    "showFan": "Mostrar ventilador",
+    "showHumidity": "Mostrar humedad"
+  }
+}

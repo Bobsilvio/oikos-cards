@@ -1,0 +1,32 @@
+{
+  "header": {
+    "title": "Tigo Photovoltaik",
+    "panelsActive": "{{count}}/{{total}} aktive Module"
+  },
+  "totals": {
+    "power": "Leistung",
+    "energyToday": "Energie heute"
+  },
+  "settings": {
+    "sectionEntities": "Home Assistant Entitäten",
+    "sectionDisplay": "Darstellung",
+    "prefixLabel": "Präfix der Entity-ID",
+    "prefixHint": "Die Modulnummer wird nach diesem Präfix eingefügt.",
+    "suffixPower": "Suffix Leistung",
+    "suffixVoltage": "Suffix Spannung",
+    "suffixCurrent": "Suffix Strom",
+    "suffixEnergy": "Suffix Energie",
+    "panelIdsLabel": "Modul-IDs (optional)",
+    "panelIdsHint": "Wenn angegeben, ersetzt die numerische Sequenz. IDs kommagetrennt.",
+    "previewPanel": "Beispiel Modul {{id}}:",
+    "panelCountLabel": "Module",
+    "panelCountTitle": "Bestimmt durch die ID-Liste",
+    "colsLabel": "Spalten",
+    "maxWLabel": "Max W",
+    "maxWHint": "Max W = maximale Leistung pro Modul (wird für die Intensitätsanzeige verwendet).",
+    "paddingLabel": "Auffüllung Nr.",
+    "padding1": "1 (1, 2…)",
+    "padding2": "2 (01, 02…)",
+    "padding3": "3 (001…)"
+  }
+}

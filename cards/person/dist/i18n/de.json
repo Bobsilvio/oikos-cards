@@ -1,0 +1,26 @@
+{
+  "zoneUnknown": "Unbekannt",
+  "zoneHome": "Zu Hause",
+  "zoneAway": "Abwesend",
+  "timeNow": "jetzt",
+  "timeMinAgo": "vor {{n}} Min.",
+  "timeHAgo": "vor {{n}}h",
+  "timeDayAgo": "vor {{n}}T",
+  "live": "Live",
+  "noEntity": "Konfiguriere eine person-Entität in ⚙",
+
+  "settings": {
+    "sectionPerson": "Person",
+    "sectionMetrics": "Optionale Metriken",
+    "sectionMap": "Positionskarte",
+    "personEntity": "Person-Entität",
+    "nameOverride": "Name (optional)",
+    "batteryEntity": "Telefonakku",
+    "walkTimeEntity": "Gehzeit (z.B. proximity oder travel time)",
+    "driveTimeEntity": "Fahrzeit (z.B. Waze / Google)",
+    "enableMap": "Live-Karte aktivieren (Rückseite der Karte)",
+    "gpsTracker": "GPS-Sensor (device_tracker)",
+    "namePlaceholder": "verwendet friendly_name von HA",
+    "gpsHint": "Wähle einen device_tracker mit den Attributen latitude und longitude (z.B. iPhone Companion). Wenn leer, versucht die Karte, sie von der person-Entität zu lesen. Die Karte verwendet Google Maps."
+  }
+}

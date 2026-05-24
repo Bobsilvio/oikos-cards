@@ -1,0 +1,201 @@
+{
+  "state": {
+    "docked": "Docked",
+    "cleaning": "Cleaning",
+    "paused": "Paused",
+    "returning": "Returning",
+    "idle": "Idle",
+    "error": "Error",
+    "charging_completed": "Charged",
+    "sleeping": "Standby",
+    "unavailable": "N/A"
+  },
+  "suction": {
+    "quiet": "Quiet",
+    "standard": "Standard",
+    "strong": "Strong",
+    "turbo": "Turbo",
+    "max": "Max",
+    "boost": "Boost"
+  },
+  "cleanMode": {
+    "sweeping": "Sweep",
+    "mopping": "Mop",
+    "sweeping_and_mopping": "Sweep+Mop"
+  },
+  "waterTemp": {
+    "cold": "Cold",
+    "warm": "Warm",
+    "hot": "Hot"
+  },
+  "freq": {
+    "low": "Low",
+    "medium": "Medium",
+    "high": "High"
+  },
+  "route": {
+    "intensive": "Intensive",
+    "by_area": "By area",
+    "by_time": "By time"
+  },
+  "stationStatus": {
+    "installed": "OK",
+    "available": "OK",
+    "not_available": "N/A",
+    "not_installed": "Not inst.",
+    "empty": "Empty",
+    "full": "Full",
+    "enabled": "Active",
+    "disabled": "—",
+    "no_warning": "OK",
+    "completed": "Completed",
+    "active": "Active",
+    "ok": "OK",
+    "warning": "Warning",
+    "error_occurred": "Error",
+    "replacing_required": "Replace",
+    "reset_required": "Reset needed",
+    "dirty": "Dirty",
+    "clean": "Clean"
+  },
+  "sw": {
+    "on": "Yes",
+    "off": "No"
+  },
+  "map": {
+    "title": "Map",
+    "refreshRate": "refresh 5s",
+    "alt": "Vacuum map"
+  },
+  "session": {
+    "progress": "Progress"
+  },
+  "sections": {
+    "cleanMode": "Clean mode",
+    "suction": "Suction power",
+    "rooms": "Room cleaning",
+    "otherSettings": "Other settings",
+    "station": "Station",
+    "consumables": "Consumables",
+    "quickSettings": "Quick settings",
+    "totalStats": "Total statistics"
+  },
+  "controls": {
+    "start": "Start",
+    "resume": "Resume",
+    "pause": "Pause",
+    "stop": "Stop",
+    "base": "Base"
+  },
+  "rooms": {
+    "allHome": "Whole house",
+    "startAll": "Start full clean",
+    "startN_one": "Start {{count}} room",
+    "startN_other": "Start {{count}} rooms"
+  },
+  "modeBadges": {
+    "water": "Water",
+    "drying": "Drying",
+    "mopFreq": "Mop freq.",
+    "route": "Route"
+  },
+  "stationChips": {
+    "autoEmpty": "Emptying",
+    "selfWash": "Washing",
+    "drainage": "Drainage",
+    "dustBag": "Dust bag",
+    "mopPad": "Mop pad",
+    "detergent": "Detergent",
+    "dirtyWater": "Dirty water",
+    "hotWater": "Hot water",
+    "lowWater": "Level"
+  },
+  "consumables": {
+    "mainBrush": "Main brush",
+    "sideBrush": "Side brush",
+    "filter": "Filter",
+    "sensors": "Sensors"
+  },
+  "switches": {
+    "dnd": "Do not disturb",
+    "carpetBoost": "Carpet boost",
+    "selfClean": "Auto-clean",
+    "autoDrying": "Auto-dry",
+    "obstacle": "Avoid obstacles",
+    "resume": "Auto-resume"
+  },
+  "totals": {
+    "cleanings": "Cleanings",
+    "totalArea": "Total area",
+    "totalTime": "Total time",
+    "firstClean": "First clean:"
+  },
+  "settings": {
+    "groups": {
+      "main": "Main",
+      "session": "Current session",
+      "consumables": "Consumables",
+      "modes": "Operating modes",
+      "station": "Station status",
+      "switches": "Quick switches",
+      "totalStats": "Total statistics",
+      "rooms": "Rooms"
+    },
+    "fields": {
+      "name": "Name",
+      "vacuumEntity": "Vacuum entity (commands)",
+      "cameraEntity": "Map camera (optional)",
+      "batteryEntity": "Battery",
+      "stateEntity": "Detailed state",
+      "statusEntity": "Status",
+      "chargingEntity": "Charging state",
+      "currentRoomEntity": "Current room",
+      "errorEntity": "Error",
+      "cleaningTimeEntity": "Cleaning time",
+      "cleanedAreaEntity": "Cleaned area",
+      "cleaningProgressEntity": "Progress (%)",
+      "mainBrushEntity": "Main brush (%)",
+      "mainBrushDaysEntity": "Main brush (days)",
+      "sideBrushEntity": "Side brush (%)",
+      "sideBrushDaysEntity": "Side brush (days)",
+      "filterEntity": "Filter (%)",
+      "filterDaysEntity": "Filter (days)",
+      "sensorDirtyEntity": "Sensors (%)",
+      "sensorDirtyDaysEntity": "Sensors (days)",
+      "suctionLevelEntity": "Suction",
+      "cleaningModeEntity": "Mode",
+      "waterTempEntity": "Temperature",
+      "dryingTimeEntity": "Drying",
+      "mopFreqEntity": "Mop freq.",
+      "cleaningRouteEntity": "Route",
+      "autoEmptyEntity": "Auto empty",
+      "selfWashEntity": "Self wash",
+      "drainageEntity": "Drainage",
+      "dustBagEntity": "Dust bag",
+      "mopPadEntity": "Mop pad",
+      "detergentEntity": "Detergent",
+      "dirtyWaterEntity": "Dirty water",
+      "hotWaterEntity": "Hot water",
+      "lowWaterEntity": "Water level",
+      "dustCollectionEntity": "Dust collection",
+      "dndEntity": "Do not disturb",
+      "carpetBoostEntity": "Carpet boost",
+      "selfCleanSwitchEntity": "Auto-clean",
+      "autoDryingEntity": "Auto-dry",
+      "obstacleEntity": "Avoid obstacles",
+      "resumeEntity": "Auto-resume",
+      "totalAreaEntity": "Total area",
+      "countEntity": "# cleanings",
+      "totalTimeEntity": "Total minutes",
+      "firstCleanEntity": "First clean"
+    },
+    "saveButton": "Save entities",
+    "savedButton": "✓ Saved — reload to apply",
+    "addRoom": "Add room",
+    "roomIdLabel": "HA ID",
+    "roomNameLabel": "Name",
+    "roomIdPlaceholder": "ID",
+    "roomNamePlaceholder": "Room name",
+    "roomsHint": "The HA ID is found in select.*_room_N_name entities where N is the number. Tasshack integration: use vacuum.send_command → clean_segment."
+  }
+}

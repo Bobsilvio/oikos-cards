@@ -1,0 +1,26 @@
+{
+  "zoneUnknown": "Desconocido",
+  "zoneHome": "En casa",
+  "zoneAway": "Fuera",
+  "timeNow": "ahora",
+  "timeMinAgo": "hace {{n}} min",
+  "timeHAgo": "hace {{n}}h",
+  "timeDayAgo": "hace {{n}}d",
+  "live": "Live",
+  "noEntity": "Configura una entidad person en ⚙",
+
+  "settings": {
+    "sectionPerson": "Persona",
+    "sectionMetrics": "Métricas opcionales",
+    "sectionMap": "Mapa de posición",
+    "personEntity": "Entidad person",
+    "nameOverride": "Nombre (opcional)",
+    "batteryEntity": "Batería del teléfono",
+    "walkTimeEntity": "Tiempo a pie (ej. proximity o travel time)",
+    "driveTimeEntity": "Tiempo en coche (ej. Waze / Google)",
+    "enableMap": "Activar mapa live (reverso de la tarjeta)",
+    "gpsTracker": "Sensor GPS (device_tracker)",
+    "namePlaceholder": "usa friendly_name de HA",
+    "gpsHint": "Elige un device_tracker con los atributos latitude y longitude (ej. iPhone Companion). Si está vacío, la card intenta leerlos de la entidad person. El mapa usa Google Maps."
+  }
+}

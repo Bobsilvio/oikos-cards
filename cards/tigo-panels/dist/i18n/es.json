@@ -1,0 +1,32 @@
+{
+  "header": {
+    "title": "Tigo Fotovoltaico",
+    "panelsActive": "{{count}}/{{total}} paneles activos"
+  },
+  "totals": {
+    "power": "potencia",
+    "energyToday": "energía hoy"
+  },
+  "settings": {
+    "sectionEntities": "Entidades Home Assistant",
+    "sectionDisplay": "Visualización",
+    "prefixLabel": "Prefijo del entity ID",
+    "prefixHint": "El número del panel se inserta después de este prefijo.",
+    "suffixPower": "Sufijo Potencia",
+    "suffixVoltage": "Sufijo Tensión",
+    "suffixCurrent": "Sufijo Corriente",
+    "suffixEnergy": "Sufijo Energía",
+    "panelIdsLabel": "ID de paneles (opcional)",
+    "panelIdsHint": "Si se rellena, sustituye la secuencia numérica. IDs separados por coma.",
+    "previewPanel": "Ejemplo panel {{id}}:",
+    "panelCountLabel": "Paneles",
+    "panelCountTitle": "Determinado por la lista de IDs",
+    "colsLabel": "Columnas",
+    "maxWLabel": "Máx W",
+    "maxWHint": "Máx W = potencia máxima por panel (usada para la barra de intensidad).",
+    "paddingLabel": "Padding N°",
+    "padding1": "1 (1, 2…)",
+    "padding2": "2 (01, 02…)",
+    "padding3": "3 (001…)"
+  }
+}

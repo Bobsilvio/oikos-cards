@@ -1,0 +1,16 @@
+{
+  "mode": {
+    "heat":     "Caldo",
+    "cool":     "Freddo",
+    "auto":     "Auto",
+    "heat_cool":"H+C",
+    "fan_only": "Ventola",
+    "dry":      "Asciuga"
+  },
+  "noEntity": "Configura un'entità climate in ⚙",
+
+  "settings": {
+    "entityLabel": "Entità clima",
+    "nameLabel": "Nome visualizzato (opzionale)"
+  }
+}

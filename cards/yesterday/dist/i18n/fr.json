@@ -1,0 +1,21 @@
+{
+  "title": "Photovoltaïque — Hier",
+  "stats": {
+    "production": "Production",
+    "consumption": "Consommation",
+    "fromGrid": "Du réseau",
+    "toGrid": "Injectée"
+  },
+  "chart": {
+    "title": "Évolution journalière",
+    "loading": "Chargement de l'historique…"
+  },
+  "settings": {
+    "sectionTitle": "Entités énergie (globales)",
+    "sectionHint": "Ces capteurs sont partagés avec d'autres cards (Energy, Tigo). Ils sont interrogés pour la date d'hier.",
+    "prodToday": "Production journalière (kWh)",
+    "consToday": "Consommation journalière (kWh)",
+    "gridFromToday": "Soutirage réseau (kWh)",
+    "gridToToday": "Injection réseau (kWh)"
+  }
+}
