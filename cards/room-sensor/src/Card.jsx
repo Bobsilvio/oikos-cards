@@ -343,26 +343,51 @@ export default function RoomSensorCard({ cardId }) {
           </div>
         </div>
 
-        {/* Gauge grid */}
+        {/* Gauge + sezione destra in un'unica riga */}
         {displayMode === 'gauge' && (
           <div style={{
-            display: 'flex', flexWrap: 'wrap', gap: 6,
-            justifyContent: 'space-around',
+            display: 'flex', alignItems: 'center', gap: 8,
             borderTop: `1px solid ${sep}`, paddingTop: 10,
           }}>
-            {gauges.map((g, i) => {
-              const value = g.entity ? getFloat(g.entity) : null
-              return (
-                <div key={i} ref={el => { gaugeRefs.current[i] = el }}
-                  style={{ cursor: 'pointer', touchAction: 'manipulation' }}>
-                  <ArcGauge
-                    value={value} min={g.min ?? 0} max={g.max ?? 100}
-                    unit={g.unit ?? ''} iconName={g.icon ?? 'gauge'}
-                    color={g.color ?? '#3d8ea0'} dark={dark} size={60}
-                  />
+            {/* Gauges */}
+            <div style={{ flex: 1, display: 'flex', flexWrap: 'wrap', gap: 6, justifyContent: 'space-around' }}>
+              {gauges.map((g, i) => {
+                const value = g.entity ? getFloat(g.entity) : null
+                return (
+                  <div key={i} ref={el => { gaugeRefs.current[i] = el }}
+                    style={{ cursor: 'pointer', touchAction: 'manipulation' }}>
+                    <ArcGauge
+                      value={value} min={g.min ?? 0} max={g.max ?? 100}
+                      unit={g.unit ?? ''} iconName={g.icon ?? 'gauge'}
+                      color={g.color ?? '#3d8ea0'} dark={dark} size={60}
+                    />
+                  </div>
+                )
+              })}
+            </div>
+
+            {/* Separatore verticale + sezione destra */}
+            {(showRightBadges || showRightMiniGauge || showRightHistory) && (
+              <>
+                <div style={{ width: 1, alignSelf: 'stretch', background: sep, margin: '0 2px' }}/>
+                <div style={{ flexShrink: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
+                  {showRightBadges && badges.map((b, i) => {
+                    const value = b.entity ? getFloat(b.entity) : null
+                    return <SensorBadge key={i} value={value} iconName={b.icon ?? 'circle'} unit={b.unit ?? ''} dark={dark}/>
+                  })}
+                  {showRightMiniGauge && badges.map((b, i) => {
+                    const value = b.entity ? getFloat(b.entity) : null
+                    return <MiniGauge key={i} value={value} min={b.min ?? 0} max={b.max ?? 100}
+                      iconLeft={b.icon ?? 'battery'} color={b.color ?? '#5b6b85'} dark={dark} size={34}/>
+                  })}
+                  {showRightHistory && (
+                    <div style={{ width: 90 }}>
+                      <HistoryBars bars={histBars} loading={histLoading} chartColor={chartColor} dark={dark} t={t}/>
+                    </div>
+                  )}
                 </div>
-              )
-            })}
+              </>
+            )}
           </div>
         )}
 
@@ -371,40 +396,6 @@ export default function RoomSensorCard({ cardId }) {
           <div style={{ borderTop: `1px solid ${sep}`, paddingTop: 10 }}>
             <FlowChart bars={histBars} rMin={flowGauge?.min ?? 0} rMax={flowGauge?.max ?? 100}
               dark={dark} uid={uid} t={t}/>
-          </div>
-        )}
-
-        {/* Badges */}
-        {showRightBadges && badges.length > 0 && (
-          <div style={{
-            display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap',
-            borderTop: `1px solid ${sep}`, paddingTop: 8, marginTop: 8,
-          }}>
-            {badges.map((b, i) => {
-              const value = b.entity ? getFloat(b.entity) : null
-              return <SensorBadge key={i} value={value} iconName={b.icon ?? 'circle'} unit={b.unit ?? ''} dark={dark}/>
-            })}
-          </div>
-        )}
-
-        {/* Mini gauge */}
-        {showRightMiniGauge && badges.length > 0 && (
-          <div style={{
-            display: 'flex', gap: 8, justifyContent: 'center', flexWrap: 'wrap',
-            borderTop: `1px solid ${sep}`, paddingTop: 8, marginTop: 8,
-          }}>
-            {badges.map((b, i) => {
-              const value = b.entity ? getFloat(b.entity) : null
-              return <MiniGauge key={i} value={value} min={b.min ?? 0} max={b.max ?? 100}
-                iconLeft={b.icon ?? 'battery'} color={b.color ?? '#5b6b85'} dark={dark} size={34}/>
-            })}
-          </div>
-        )}
-
-        {/* History bars */}
-        {showRightHistory && (
-          <div style={{ borderTop: `1px solid ${sep}`, paddingTop: 8, marginTop: 8 }}>
-            <HistoryBars bars={histBars} loading={histLoading} chartColor={chartColor} dark={dark} t={t}/>
           </div>
         )}
       </div>
