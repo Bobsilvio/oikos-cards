@@ -222,6 +222,18 @@ export default function RoomSensorCard({ cardId }) {
   const uid     = useId().replace(/:/g, '')
   const [detail, setDetail] = useState(null)
 
+  const containerRef = useRef(null)
+  const [compact, setCompact] = useState(false)
+  useEffect(() => {
+    const el = containerRef.current
+    if (!el) return
+    const ro = new ResizeObserver(([entry]) => {
+      setCompact(entry.contentRect.width < 480)
+    })
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [])
+
   const gauges       = cfg.gauges ?? []
   const badges       = cfg.badges ?? []
   const displayMode  = cfg.displayMode
@@ -230,10 +242,8 @@ export default function RoomSensorCard({ cardId }) {
   const flowEntity   = cfg.flowEntity || cfg.gauges?.[0]?.entity || ''
   const historyEntity = cfg.historyEntity || cfg.gauges?.[0]?.entity || ''
 
-  // Ref array per i gauge (per il pattern pointerup capture contro dnd-kit)
   const gaugeRefs = useRef([])
 
-  // Calcola roomName dal label o dal primo gauge
   const firstGaugeEntity = gauges[0]?.entity ?? ''
   const rawName = haStates?.[firstGaugeEntity]?.attributes?.friendly_name ?? ''
   const roomName = cfg.label
@@ -252,7 +262,6 @@ export default function RoomSensorCard({ cardId }) {
 
   const { bars: histBars, loading: histLoading } = useHistory(historyEnt, fetchHistory, connected)
 
-  // Listener pointerup capture per ogni gauge — bypassano dnd-kit
   useEffect(() => {
     const cleanups = gauges.map((g, i) => {
       const el = gaugeRefs.current[i]
@@ -273,17 +282,145 @@ export default function RoomSensorCard({ cardId }) {
 
   const bg  = dark ? 'rgba(255,255,255,.03)' : '#f7f9fc'
   const bdr = dark ? 'rgba(255,255,255,.07)' : '#dde3ec'
+  const sep = dark ? 'rgba(255,255,255,.06)' : 'rgba(0,0,0,.06)'
 
   const showRightBadges    = displayMode === 'gauge' && rightSection === 'badges'
   const showRightHistory   = displayMode === 'gauge' && rightSection === 'history'
   const showRightMiniGauge = displayMode === 'gauge' && rightSection === 'minigauge'
 
-  // Trova il gauge corrispondente a flowEntity per min/max range
   const flowGauge = gauges.find(g => g.entity === flowEntity) ?? gauges[0]
 
+  // ── Layout compatto (< 480px) ─────────────────────────────────────────────
+  if (compact) {
+    return (
+      <>
+      <div ref={containerRef} style={{
+        borderRadius: 20,
+        background: bg,
+        border: `1px solid ${bdr}`,
+        boxShadow: dark ? 'none' : '0 1px 8px rgba(0,0,0,.06)',
+        padding: '12px 14px',
+        overflow: 'hidden',
+      }}>
+        {/* Header: icona + nome */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
+          <div style={{
+            width: 38, height: 38, borderRadius: '50%', flexShrink: 0,
+            background: dark ? 'rgba(255,255,255,.07)' : '#eef1f8',
+            border: `1.5px solid ${dark ? 'rgba(255,255,255,.11)' : '#dde3ec'}`,
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+          }}>
+            <MdiIcon name={iconName} size={20} dark={dark} opacity={dark ? 0.72 : 0.52}/>
+          </div>
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <div style={{
+              fontSize: 14, fontWeight: 800, color: 'var(--text-primary)',
+              lineHeight: 1.2, letterSpacing: '-0.2px',
+              overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
+            }}>
+              {roomName}
+            </div>
+            {timeAgo && <div style={{ fontSize: 10, color: 'var(--text-muted)', marginTop: 2 }}>{timeAgo}</div>}
+            {displayMode === 'flow' && (
+              <div style={{ display: 'flex', gap: 6, marginTop: 4, flexWrap: 'wrap' }}>
+                {gauges.map((g, i) => {
+                  const v = g.entity ? getFloat(g.entity) : null
+                  if (v == null) return null
+                  const norm = Math.max(0, Math.min(1, (v - g.min) / Math.max(g.max - g.min, 1)))
+                  const col = g.color ?? rgbStr(tempColor(norm))
+                  return (
+                    <span key={i} style={{
+                      fontSize: 12, fontWeight: 800,
+                      fontFamily: 'JetBrains Mono, monospace',
+                      color: col, fontVariantNumeric: 'tabular-nums',
+                    }}>
+                      {v.toFixed(g.decimals ?? 1)}{g.unit}
+                    </span>
+                  )
+                })}
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Gauge grid */}
+        {displayMode === 'gauge' && (
+          <div style={{
+            display: 'flex', flexWrap: 'wrap', gap: 6,
+            justifyContent: 'space-around',
+            borderTop: `1px solid ${sep}`, paddingTop: 10,
+          }}>
+            {gauges.map((g, i) => {
+              const value = g.entity ? getFloat(g.entity) : null
+              return (
+                <div key={i} ref={el => { gaugeRefs.current[i] = el }}
+                  style={{ cursor: 'pointer', touchAction: 'manipulation' }}>
+                  <ArcGauge
+                    value={value} min={g.min ?? 0} max={g.max ?? 100}
+                    unit={g.unit ?? ''} iconName={g.icon ?? 'gauge'}
+                    color={g.color ?? '#3d8ea0'} dark={dark} size={60}
+                  />
+                </div>
+              )
+            })}
+          </div>
+        )}
+
+        {/* Flow chart */}
+        {displayMode === 'flow' && (
+          <div style={{ borderTop: `1px solid ${sep}`, paddingTop: 10 }}>
+            <FlowChart bars={histBars} rMin={flowGauge?.min ?? 0} rMax={flowGauge?.max ?? 100}
+              dark={dark} uid={uid} t={t}/>
+          </div>
+        )}
+
+        {/* Badges */}
+        {showRightBadges && badges.length > 0 && (
+          <div style={{
+            display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap',
+            borderTop: `1px solid ${sep}`, paddingTop: 8, marginTop: 8,
+          }}>
+            {badges.map((b, i) => {
+              const value = b.entity ? getFloat(b.entity) : null
+              return <SensorBadge key={i} value={value} iconName={b.icon ?? 'circle'} unit={b.unit ?? ''} dark={dark}/>
+            })}
+          </div>
+        )}
+
+        {/* Mini gauge */}
+        {showRightMiniGauge && badges.length > 0 && (
+          <div style={{
+            display: 'flex', gap: 8, justifyContent: 'center', flexWrap: 'wrap',
+            borderTop: `1px solid ${sep}`, paddingTop: 8, marginTop: 8,
+          }}>
+            {badges.map((b, i) => {
+              const value = b.entity ? getFloat(b.entity) : null
+              return <MiniGauge key={i} value={value} min={b.min ?? 0} max={b.max ?? 100}
+                iconLeft={b.icon ?? 'battery'} color={b.color ?? '#5b6b85'} dark={dark} size={34}/>
+            })}
+          </div>
+        )}
+
+        {/* History bars */}
+        {showRightHistory && (
+          <div style={{ borderTop: `1px solid ${sep}`, paddingTop: 8, marginTop: 8 }}>
+            <HistoryBars bars={histBars} loading={histLoading} chartColor={chartColor} dark={dark} t={t}/>
+          </div>
+        )}
+      </div>
+
+      {detail && (
+        <SensorDetailModal entityId={detail.entityId} label={detail.label} unit={detail.unit}
+          dark={dark} onClose={() => setDetail(null)}/>
+      )}
+      </>
+    )
+  }
+
+  // ── Layout normale (≥ 480px) ──────────────────────────────────────────────
   return (
     <>
-    <div style={{
+    <div ref={containerRef} style={{
       display: 'flex', alignItems: 'center',
       borderRadius: 20, overflow: 'hidden',
       background: bg,
@@ -316,7 +453,6 @@ export default function RoomSensorCard({ cardId }) {
             {timeAgo}
           </div>
         )}
-        {/* In flow mode: valori correnti di tutti i gauge in forma compatta */}
         {displayMode === 'flow' && (
           <div style={{ display: 'flex', gap: 6, marginTop: 5, flexWrap: 'wrap' }}>
             {gauges.map((g, i) => {
@@ -338,27 +474,19 @@ export default function RoomSensorCard({ cardId }) {
         )}
       </div>
 
-      {/* ── Gauge mode: mappa su tutti i gauge ── */}
+      {/* ── Gauge mode ── */}
       {displayMode === 'gauge' && (
         <>
           <VSep dark={dark}/>
           {gauges.map((g, i) => {
             const value = g.entity ? getFloat(g.entity) : null
             return (
-              <div
-                key={i}
-                ref={el => { gaugeRefs.current[i] = el }}
-                style={{ cursor: 'pointer', display: 'flex', touchAction: 'manipulation' }}
-              >
+              <div key={i} ref={el => { gaugeRefs.current[i] = el }}
+                style={{ cursor: 'pointer', display: 'flex', touchAction: 'manipulation' }}>
                 <ArcGauge
-                  value={value}
-                  min={g.min ?? 0}
-                  max={g.max ?? 100}
-                  unit={g.unit ?? ''}
-                  iconName={g.icon ?? 'gauge'}
-                  color={g.color ?? '#3d8ea0'}
-                  dark={dark}
-                  size={72}
+                  value={value} min={g.min ?? 0} max={g.max ?? 100}
+                  unit={g.unit ?? ''} iconName={g.icon ?? 'gauge'}
+                  color={g.color ?? '#3d8ea0'} dark={dark} size={72}
                 />
               </div>
             )
@@ -370,14 +498,8 @@ export default function RoomSensorCard({ cardId }) {
       {displayMode === 'flow' && (
         <>
           <VSep dark={dark} h={60}/>
-          <FlowChart
-            bars={histBars}
-            rMin={flowGauge?.min ?? 0}
-            rMax={flowGauge?.max ?? 100}
-            dark={dark}
-            uid={uid}
-            t={t}
-          />
+          <FlowChart bars={histBars} rMin={flowGauge?.min ?? 0} rMax={flowGauge?.max ?? 100}
+            dark={dark} uid={uid} t={t}/>
         </>
       )}
 
@@ -388,39 +510,21 @@ export default function RoomSensorCard({ cardId }) {
           <div style={{ display: 'flex', gap: 14, alignItems: 'center' }}>
             {badges.map((b, i) => {
               const value = b.entity ? getFloat(b.entity) : null
-              return (
-                <SensorBadge
-                  key={i}
-                  value={value}
-                  iconName={b.icon ?? 'circle'}
-                  unit={b.unit ?? ''}
-                  dark={dark}
-                />
-              )
+              return <SensorBadge key={i} value={value} iconName={b.icon ?? 'circle'} unit={b.unit ?? ''} dark={dark}/>
             })}
           </div>
         </>
       )}
 
-      {/* ── Sezione destra: mini-gauge circolari (batteria/segnale) ── */}
+      {/* ── Sezione destra: mini-gauge ── */}
       {showRightMiniGauge && badges.length > 0 && (
         <>
           <VSep dark={dark}/>
           <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
             {badges.map((b, i) => {
               const value = b.entity ? getFloat(b.entity) : null
-              return (
-                <MiniGauge
-                  key={i}
-                  value={value}
-                  min={b.min ?? 0}
-                  max={b.max ?? 100}
-                  iconLeft={b.icon ?? 'battery'}
-                  color={b.color ?? '#5b6b85'}
-                  dark={dark}
-                  size={34}
-                />
-              )
+              return <MiniGauge key={i} value={value} min={b.min ?? 0} max={b.max ?? 100}
+                iconLeft={b.icon ?? 'battery'} color={b.color ?? '#5b6b85'} dark={dark} size={34}/>
             })}
           </div>
         </>
@@ -436,13 +540,8 @@ export default function RoomSensorCard({ cardId }) {
     </div>
 
     {detail && (
-      <SensorDetailModal
-        entityId={detail.entityId}
-        label={detail.label}
-        unit={detail.unit}
-        dark={dark}
-        onClose={() => setDetail(null)}
-      />
+      <SensorDetailModal entityId={detail.entityId} label={detail.label} unit={detail.unit}
+        dark={dark} onClose={() => setDetail(null)}/>
     )}
     </>
   )
