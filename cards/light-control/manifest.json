@@ -1,0 +1,19 @@
+{
+  "id": "light-control",
+  "name": "Light Control",
+  "version": "1.0.12",
+  "author": "Silvio",
+  "description": "Controllo luce HA: on/off, luminosità e colore con sezioni disattivabili.",
+  "sdkVersion": "^1.1.0",
+  "hasSettings": true,
+  "entry": "dist/light-control.js",
+  "settings": "dist/light-control.settings.js",
+  "tags": [
+    "lights",
+    "controls",
+    "home"
+  ],
+  "configVersion": 1,
+  "defaultWidth": "half",
+  "tier": "free"
+}
