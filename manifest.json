@@ -116,9 +116,11 @@
       "entry": "cards/person/dist/person.js",
       "settings": "cards/person/dist/person.settings.js",
       "manifest": "cards/person/manifest.json",
-      "preview": null,
-      "previews": null,
-      "thumbnail": null,
+      "preview": "cards/person/preview.png",
+      "previews": [
+        "cards/person/preview.png"
+      ],
+      "thumbnail": "cards/person/preview-thumb.png",
       "tags": [
         "famiglia",
         "persona",
