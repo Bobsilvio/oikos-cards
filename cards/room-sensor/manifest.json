@@ -1,9 +1,10 @@
 {
   "id": "room-sensor",
   "name": "Room Sensor",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "author": "Oikos",
   "description": "Card sensore stanza: gauge multipli, flow chart storico, badge numerici, mini-gauge batteria/segnale.",
+  "description_en": "Room sensor card: multiple gauges, history flow chart, numeric badges, mini battery/signal gauges.",
   "sdkVersion": "^1.0.0",
   "hasSettings": true,
   "preview": "preview.png",
