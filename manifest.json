@@ -69,9 +69,11 @@
       "entry": "cards/clock/dist/clock.js",
       "settings": null,
       "manifest": "cards/clock/manifest.json",
-      "preview": null,
-      "previews": null,
-      "thumbnail": null,
+      "preview": "cards/clock/preview.png",
+      "previews": [
+        "cards/clock/preview.png"
+      ],
+      "thumbnail": "cards/clock/preview-thumb.png",
       "tags": [
         "time",
         "demo"
@@ -92,9 +94,11 @@
       "entry": "cards/light-control/dist/light-control.js",
       "settings": "cards/light-control/dist/light-control.settings.js",
       "manifest": "cards/light-control/manifest.json",
-      "preview": null,
-      "previews": null,
-      "thumbnail": null,
+      "preview": "cards/light-control/preview.png",
+      "previews": [
+        "cards/light-control/preview.png"
+      ],
+      "thumbnail": "cards/light-control/preview-thumb.png",
       "tags": [
         "lights",
         "controls",
