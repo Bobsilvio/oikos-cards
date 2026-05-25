@@ -20,7 +20,7 @@
       "previews": [
         "cards/air-quality/preview.png"
       ],
-      "thumbnail": null,
+      "thumbnail": "cards/air-quality/preview-thumb.png",
       "tags": [
         "aria",
         "salute"
@@ -40,9 +40,11 @@
       "entry": "cards/climatizzatore/dist/climatizzatore.js",
       "settings": "cards/climatizzatore/dist/climatizzatore.settings.js",
       "manifest": "cards/climatizzatore/manifest.json",
-      "preview": null,
-      "previews": null,
-      "thumbnail": null,
+      "preview": "cards/climatizzatore/preview.png",
+      "previews": [
+        "cards/climatizzatore/preview.png"
+      ],
+      "thumbnail": "cards/climatizzatore/preview-thumb.png",
       "tags": [
         "casa",
         "clima",
