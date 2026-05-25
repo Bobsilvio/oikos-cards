@@ -217,9 +217,11 @@
       "entry": "cards/vacuum/dist/vacuum.js",
       "settings": "cards/vacuum/dist/vacuum.settings.js",
       "manifest": "cards/vacuum/manifest.json",
-      "preview": null,
-      "previews": null,
-      "thumbnail": null,
+      "preview": "cards/vacuum/preview.png",
+      "previews": [
+        "cards/vacuum/preview.png"
+      ],
+      "thumbnail": "cards/vacuum/preview-thumb.png",
       "tags": [
         "casa",
         "vacuum",
