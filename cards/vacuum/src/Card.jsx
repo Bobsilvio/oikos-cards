@@ -1,14 +1,9 @@
 /**
- * VacuumCard — Dreame Vacuum
- * v1.2.0 — Pulizia con tab CleanGenius/Personalizza + scope Stanza/Tutto/Zona
+ * VacuumCard — Dreame-style UI
+ * v2.0.0 — Rewrite completo: map + bottom sheet + pagine navigate
  */
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import {
-  Bot, BatteryCharging, Battery, Play, Pause, Square, Home,
-  MapPin, Clock, RefreshCw, AlertTriangle, AreaChart,
-  ChevronDown, ChevronUp, Wind, Droplets, Waves, Repeat,
-} from 'lucide-react'
 import { useDashboard, getHAConfig, registerCardTranslations, useT } from '@oikos/sdk'
 import { getVacuumConfig } from './vacuumStore'
 import it from './i18n/it.json'
@@ -16,827 +11,1089 @@ import en from './i18n/en.json'
 
 registerCardTranslations('card-vacuum', { it, en })
 
-const tr = (v, t) => {
-  if (!v || v === 'unavailable') return '—'
-  const nss = ['state', 'suction', 'cleanMode', 'waterTemp', 'freq', 'route', 'stationStatus', 'sw']
-  for (const ns of nss) {
-    const val = t(`${ns}.${v}`)
-    if (val !== `${ns}.${v}`) return val
-  }
-  return v ?? '—'
-}
+// ── Palette ──────────────────────────────────────────────────────────────────
+const A    = '#c47c18'
+const ABG  = '#f5e8d0'
+const ASEL = '#fef3d0'
+const GRN  = '#34c759'
 
 const STATE_COLOR = {
   docked: '#10b981', charging_completed: '#10b981', sleeping: '#94a3b8',
-  cleaning: '#f59e0b', paused: '#f59e0b', returning: '#3b82f6',
-  error: '#ef4444', idle: '#94a3b8',
+  cleaning: A, paused: A, returning: '#3b82f6', error: '#ef4444', idle: '#94a3b8',
 }
 const sc = (s) => STATE_COLOR[s] || '#94a3b8'
 
 function fmtMin(v) {
-  const m = parseInt(v)
-  if (!m || isNaN(m)) return '—'
+  const m = parseInt(v); if (!m || isNaN(m)) return '—'
   if (m < 60) return `${m} min`
   const h = Math.floor(m / 60), r = m % 60
   return r ? `${h}h ${r}m` : `${h}h`
 }
-function fmtArea(v) {
-  const n = parseFloat(v)
-  if (!n || isNaN(n)) return '—'
-  return n >= 10000 ? `${(n / 10000).toFixed(1)} km²` : `${Math.round(n).toLocaleString('it')} m²`
-}
-function fmtDate(v) {
-  if (!v || v === 'unavailable') return '—'
-  try { return new Date(v).toLocaleDateString('it-IT', { day: '2-digit', month: 'short', year: 'numeric' }) }
-  catch { return '—' }
+
+// ── Inline SVGs per mode items ───────────────────────────────────────────────
+const SvgAspira = () => (
+  <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="currentColor" strokeLinecap="round">
+    <path d="M20 20 C23 17.5 24 11.5 20.5 9.5" strokeWidth="3.4"/>
+    <path d="M20 20 C23 17.5 24 11.5 20.5 9.5" transform="rotate(120 20 20)" strokeWidth="3.4"/>
+    <path d="M20 20 C23 17.5 24 11.5 20.5 9.5" transform="rotate(240 20 20)" strokeWidth="3.4"/>
+    <circle cx="20" cy="20" r="3.2" fill="currentColor" stroke="none"/>
+  </svg>
+)
+const SvgMocio = () => (
+  <svg width="32" height="38" viewBox="0 0 32 38" fill="none" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M16 3 C16 3 5 15 5 22 C5 28.6 10 34 16 34 C22 34 27 28.6 27 22 C27 15 16 3 16 3Z"/>
+    <path d="M23 9 L24.2 11.2 L26.5 12.4 L24.2 13.6 L23 15.8 L21.8 13.6 L19.5 12.4 L21.8 11.2 Z" fill="currentColor" stroke="none" opacity=".7"/>
+    <path d="M10 19 Q11.5 14 16 12" strokeWidth="1.8" opacity=".45"/>
+  </svg>
+)
+const SvgAspiraLava = () => (
+  <svg width="36" height="38" viewBox="0 0 36 38" fill="none" stroke="currentColor">
+    <path d="M18 3 C18 3 7 15 7 22 C7 28.3 12 33.5 18 33.5 C24 33.5 29 28.3 29 22 C29 15 18 3 18 3Z" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M18 21 C19.8 19.8 20.3 16.5 18.5 15.5" strokeWidth="2.3" strokeLinecap="round"/>
+    <path d="M18 21 C19.8 19.8 20.3 16.5 18.5 15.5" transform="rotate(120 18 21)" strokeWidth="2.3" strokeLinecap="round"/>
+    <path d="M18 21 C19.8 19.8 20.3 16.5 18.5 15.5" transform="rotate(240 18 21)" strokeWidth="2.3" strokeLinecap="round"/>
+    <circle cx="18" cy="21" r="2" fill="currentColor" stroke="none"/>
+  </svg>
+)
+const SvgMocioDopo = () => (
+  <svg width="42" height="36" viewBox="0 0 42 36" fill="none" stroke="currentColor" strokeLinecap="round">
+    <path d="M11 18 C13.5 16 14.5 11 12 9.5" strokeWidth="2.6"/>
+    <path d="M11 18 C13.5 16 14.5 11 12 9.5" transform="rotate(120 11 18)" strokeWidth="2.6"/>
+    <path d="M11 18 C13.5 16 14.5 11 12 9.5" transform="rotate(240 11 18)" strokeWidth="2.6"/>
+    <circle cx="11" cy="18" r="2.4" fill="currentColor" stroke="none"/>
+    <line x1="21" y1="9" x2="21" y2="27" strokeWidth="1" opacity=".25"/>
+    <path d="M34 8 C34 8 28 16 28 21 C28 24.3 30.7 27 34 27 C37.3 27 40 24.3 40 21 C40 16 34 8 34 8Z" strokeWidth="2.3" strokeLinejoin="round"/>
+    <path d="M30 18 Q31.5 14 34 13" strokeWidth="1.5" opacity=".4"/>
+  </svg>
+)
+const SvgPersStanza = () => (
+  <svg width="40" height="34" viewBox="0 0 40 34" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="3" y="4" width="16" height="26" rx="3"/>
+    <rect x="15" y="8" width="16" height="22" rx="3"/>
+    <circle cx="9" cy="11" r="2" fill="currentColor" stroke="none" opacity=".45"/>
+    <circle cx="23" cy="17" r="2" fill="currentColor" stroke="none" opacity=".45"/>
+  </svg>
+)
+const SvgSilenz = () => (
+  <svg width="30" height="30" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M19 8 C12 9 7 12 7 16 C7 20 12 23 19 24 C15 22 13 19 13 16 C13 13 15 10 19 8Z" strokeWidth="2.3"/>
+  </svg>
+)
+const SvgStd = () => (
+  <svg width="30" height="30" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeLinecap="round">
+    <path d="M16 16 C18.5 14 19.5 9 17 7.5" strokeWidth="3.2"/>
+    <path d="M16 16 C18.5 14 19.5 9 17 7.5" transform="rotate(180 16 16)" strokeWidth="3.2"/>
+    <circle cx="16" cy="16" r="2.5" fill="currentColor" stroke="none"/>
+  </svg>
+)
+const SvgIntensiva = () => (
+  <svg width="30" height="30" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeLinecap="round">
+    <path d="M16 16 C18.5 14 19.5 9 17 7.5" strokeWidth="3.2"/>
+    <path d="M16 16 C18.5 14 19.5 9 17 7.5" transform="rotate(120 16 16)" strokeWidth="3.2"/>
+    <path d="M16 16 C18.5 14 19.5 9 17 7.5" transform="rotate(240 16 16)" strokeWidth="3.2"/>
+    <circle cx="16" cy="16" r="2.5" fill="currentColor" stroke="none"/>
+  </svg>
+)
+const SvgMaxP = () => (
+  <svg width="30" height="30" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeLinecap="round">
+    <path d="M16 16 C18.5 14 19.5 9 17 7.5" strokeWidth="3.2"/>
+    <path d="M16 16 C18.5 14 19.5 9 17 7.5" transform="rotate(90 16 16)" strokeWidth="3.2"/>
+    <path d="M16 16 C18.5 14 19.5 9 17 7.5" transform="rotate(180 16 16)" strokeWidth="3.2"/>
+    <path d="M16 16 C18.5 14 19.5 9 17 7.5" transform="rotate(270 16 16)" strokeWidth="3.2"/>
+    <circle cx="16" cy="16" r="2.5" fill="currentColor" stroke="none"/>
+  </svg>
+)
+const SvgPercVeloce = () => (
+  <svg width="30" height="30" viewBox="0 0 34 34" fill="none" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M9 9 L25 9"/><path d="M25 9 Q28 9 28 13 Q28 17 25 17 L9 17"/>
+    <path d="M9 17 Q6 17 6 21 Q6 25 9 25 L25 25"/>
+  </svg>
+)
+const SvgPercStd = () => (
+  <svg width="30" height="30" viewBox="0 0 34 34" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="5" y="5" width="24" height="24" rx="3"/>
+    <path d="M10 11 L24 11"/><path d="M24 11 L24 17 L10 17"/>
+    <path d="M10 17 L10 23 L24 23"/>
+  </svg>
+)
+const SvgPercIntensivo = () => (
+  <svg width="30" height="30" viewBox="0 0 34 34" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="5" y="5" width="24" height="24" rx="3"/>
+    <path d="M10 10 L24 10"/><path d="M24 10 L24 14 L10 14"/>
+    <path d="M10 14 L10 18 L24 18"/><path d="M24 18 L24 22 L10 22"/>
+    <path d="M8 26 Q11 24 14 26 Q17 28 20 26 Q23 24 26 26" strokeWidth="1.8"/>
+  </svg>
+)
+const SvgPercProfonda = () => (
+  <svg width="30" height="30" viewBox="0 0 34 34" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="5" y="5" width="24" height="24" rx="3"/>
+    <path d="M10 10 L24 10"/><path d="M24 10 L24 14 L10 14"/>
+    <path d="M10 14 L10 18 L24 18"/><path d="M24 18 L24 22 L10 22"/>
+    <circle cx="11" cy="26" r="1.5" fill="currentColor" stroke="none"/>
+    <circle cx="17" cy="26" r="1.5" fill="currentColor" stroke="none"/>
+    <circle cx="23" cy="26" r="1.5" fill="currentColor" stroke="none"/>
+  </svg>
+)
+
+// ── Primitivi UI ─────────────────────────────────────────────────────────────
+
+function SheetHandle() {
+  return <div style={{ width: 38, height: 4, background: '#ddd', borderRadius: 2, margin: '12px auto 10px', flexShrink: 0 }}/>
 }
 
-// ─── Componenti UI ─────────────────────────────────────────────────────────
+function IosToggle({ on, onToggle }) {
+  return (
+    <button onClick={e => { e.stopPropagation(); onToggle() }} style={{
+      width: 51, height: 31, borderRadius: 16, border: 'none', flexShrink: 0,
+      background: on ? GRN : '#e0e0e0', position: 'relative', cursor: 'pointer',
+      transition: 'background .2s', marginTop: 2,
+    }}>
+      <motion.div animate={{ x: on ? 20 : 0 }} transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+        style={{ position: 'absolute', width: 25, height: 25, borderRadius: '50%', background: 'white', top: 3, left: 3, boxShadow: '0 1px 4px rgba(0,0,0,.2)' }}/>
+    </button>
+  )
+}
 
-function AccordionSection({ id, label, open, onToggle, summary, summaryColor, dark, children }) {
-  const accent = dark ? '#a78bfa' : '#7c3aed'
+function CircleItem({ label, active, onClick, children, small }) {
+  return (
+    <div onClick={onClick} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8, cursor: 'pointer', flex: 1, minWidth: 0 }}>
+      <div style={{ width: 70, height: 70, borderRadius: '50%', margin: '0 auto', background: active ? ABG : '#f0f0f0', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'background .2s', color: active ? A : '#555' }}>
+        {children}
+      </div>
+      <span style={{ fontSize: small ? 10 : 11.5, textAlign: 'center', lineHeight: 1.3, color: active ? A : '#888', fontWeight: active ? 700 : 500 }}>{label}</span>
+    </div>
+  )
+}
+
+function ModeItem({ label, active, onClick, children, small }) {
+  return (
+    <div onClick={onClick} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8, cursor: 'pointer', width: 80, flexShrink: 0 }}>
+      <div style={{ width: 80, height: 80, borderRadius: '50%', background: active ? ABG : '#f0f0f0', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'background .2s', color: active ? A : '#555' }}>
+        {children}
+      </div>
+      <span style={{ fontSize: small ? 10 : 11, textAlign: 'center', color: active ? A : '#888', fontWeight: active ? 700 : 500, lineHeight: 1.3, maxWidth: 80 }}>{label}</span>
+    </div>
+  )
+}
+
+function RadioOption({ label, desc, selected, onClick }) {
+  return (
+    <div onClick={onClick} style={{ position: 'relative', padding: '16px 44px 16px 16px', borderRadius: 14, margin: '3px 12px', cursor: 'pointer', background: selected ? ASEL : 'transparent', transition: 'background .15s' }}>
+      <div style={{ fontSize: 17, fontWeight: 700, color: selected ? A : '#111', marginBottom: desc ? 5 : 0 }}>{label}</div>
+      {desc && <div style={{ fontSize: 14, color: selected ? A : '#888', lineHeight: 1.6 }}>{desc}</div>}
+      {selected && <span style={{ position: 'absolute', right: 14, top: 17, color: A, fontSize: 18, fontWeight: 700 }}>✓</span>}
+    </div>
+  )
+}
+
+function HumSlider({ value, onChange }) {
+  const pct = ((value - 1) / 31) * 100
+  const ticks = [{ pct: 12.9 }, { pct: 48.4 }, { pct: 83.9 }]
+  const labels = [{ pct: 12.9, txt: 'Leggerm.\nasciutto' }, { pct: 48.4, txt: 'Umido' }, { pct: 83.9, txt: 'Bagnato' }]
+  return (
+    <div style={{ marginBottom: 8 }}>
+      <div style={{ position: 'relative', padding: '18px 0 8px' }}>
+        <div style={{ height: 4, borderRadius: 2, background: '#e8e8e8', position: 'relative', margin: '0 18px' }}>
+          <div style={{ height: '100%', borderRadius: 2, background: A, position: 'absolute', left: 0, top: 0, width: `${pct}%`, pointerEvents: 'none' }}/>
+          {ticks.map(t => (
+            <div key={t.pct} style={{ position: 'absolute', top: '50%', left: `${t.pct}%`, transform: 'translate(-50%,-50%)', width: 3, height: 11, borderRadius: 1.5, background: 'rgba(0,0,0,.18)', pointerEvents: 'none', zIndex: 2 }}/>
+          ))}
+          <div style={{ position: 'absolute', top: -28, left: `${pct}%`, transform: 'translateX(-50%)', width: 36, height: 36, borderRadius: '50%', background: ABG, border: `2.5px solid ${A}`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12, fontWeight: 700, color: A, pointerEvents: 'none' }}>
+            {value}
+          </div>
+        </div>
+        <input type="range" min={1} max={32} value={value} onChange={e => onChange(Number(e.target.value))}
+          style={{ position: 'absolute', width: 'calc(100% - 36px)', left: 18, opacity: 0, height: 32, top: -14, cursor: 'pointer', margin: 0 }}/>
+      </div>
+      <div style={{ position: 'relative', height: 38, margin: '10px 18px 0', fontSize: 11, color: '#aaa' }}>
+        {labels.map(l => (
+          <span key={l.pct} style={{ position: 'absolute', left: `${l.pct}%`, transform: 'translateX(-50%)', textAlign: 'center', whiteSpace: 'nowrap', fontWeight: 500, lineHeight: 1.35 }}>
+            {l.txt.split('\n').map((s, i) => <span key={i}>{i > 0 && <br/>}{s}</span>)}
+          </span>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+// ── Sheet wrappers ────────────────────────────────────────────────────────────
+
+function SubSheet({ open, onClose, children }) {
+  return (
+    <AnimatePresence>
+      {open && (
+        <motion.div key="sub-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+          onClick={onClose}
+          style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,.38)', zIndex: 1200, display: 'flex', alignItems: 'flex-end', justifyContent: 'center' }}>
+          <motion.div key="sub-sheet" initial={{ y: '100%' }} animate={{ y: 0 }} exit={{ y: '100%' }}
+            transition={{ type: 'spring', damping: 32, stiffness: 280 }}
+            onClick={e => e.stopPropagation()}
+            style={{ width: '100%', maxWidth: 390, background: 'white', borderRadius: '26px 26px 0 0', overflowY: 'auto', maxHeight: '80vh' }}>
+            <SheetHandle/>
+            {children}
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  )
+}
+
+function FullSheet({ open, onClose, zIndex = 1000, children }) {
+  return (
+    <AnimatePresence>
+      {open && (
+        <motion.div key="full-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+          onClick={onClose}
+          style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,.38)', zIndex, display: 'flex', alignItems: 'flex-end', justifyContent: 'center' }}>
+          <motion.div key="full-sheet" initial={{ y: '100%' }} animate={{ y: 0 }} exit={{ y: '100%' }}
+            transition={{ type: 'spring', damping: 32, stiffness: 280 }}
+            onClick={e => e.stopPropagation()}
+            style={{ width: '100%', maxWidth: 390, background: 'white', borderRadius: '26px 26px 0 0', height: '92vh', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+            <SheetHandle/>
+            {children}
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  )
+}
+
+function SettingsHeader({ title, onBack }) {
+  return (
+    <div style={{ background: 'white', display: 'flex', alignItems: 'center', gap: 8, padding: '14px 16px', borderBottom: '1px solid #ebebeb', position: 'sticky', top: 0, zIndex: 5, flexShrink: 0 }}>
+      <div onClick={onBack} style={{ fontSize: 28, lineHeight: 1, color: '#888', cursor: 'pointer', width: 28, flexShrink: 0 }}>‹</div>
+      <div style={{ fontSize: 17, fontWeight: 700, color: '#111', flex: 1, textAlign: 'center' }}>{title}</div>
+      <div style={{ width: 28 }}/>
+    </div>
+  )
+}
+
+// ── FrequenzaSheet ────────────────────────────────────────────────────────────
+function FrequenzaSheet({ open, onClose, selected, onSelect, t }) {
+  const opts = [
+    { id: 'standard', label: t('dreame.freqStandard'), desc: t('dreame.freqStandardDesc') },
+    { id: 'intelligent', label: t('dreame.freqIntelligent'), desc: t('dreame.freqIntelligentDesc') },
+    { id: 'high', label: t('dreame.freqHigh'), desc: t('dreame.freqHighDesc') },
+  ]
+  return (
+    <SubSheet open={open} onClose={onClose}>
+      <div style={{ fontSize: 17, fontWeight: 700, color: '#111', textAlign: 'center', padding: '0 20px 18px' }}>{t('dreame.freqTitle')}</div>
+      {opts.map(o => (
+        <RadioOption key={o.id} label={o.label} desc={o.desc} selected={selected === o.id}
+          onClick={() => { onSelect(o.id); setTimeout(onClose, 280) }}/>
+      ))}
+      <div style={{ height: 20 }}/>
+    </SubSheet>
+  )
+}
+
+// ── SvuotSheet ────────────────────────────────────────────────────────────────
+function SvuotSheet({ open, onClose, selected, onSelect, t }) {
+  const opts = [
+    { id: 'smart',  label: t('dreame.svuotSmart'),  desc: t('dreame.svuotSmartDesc')  },
+    { id: 'always', label: t('dreame.svuotAlways'), desc: t('dreame.svuotAlwaysDesc') },
+    { id: 'manual', label: t('dreame.svuotManual'), desc: t('dreame.svuotManualDesc') },
+  ]
+  return (
+    <SubSheet open={open} onClose={onClose}>
+      <div style={{ fontSize: 17, fontWeight: 700, color: '#111', textAlign: 'center', padding: '0 20px 18px' }}>{t('dreame.svuotTitle')}</div>
+      {opts.map(o => (
+        <RadioOption key={o.id} label={o.label} desc={o.desc} selected={selected === o.id}
+          onClick={() => { onSelect(o.id); setTimeout(onClose, 280) }}/>
+      ))}
+      <div style={{ height: 20 }}/>
+    </SubSheet>
+  )
+}
+
+// ── LavRipSheet ───────────────────────────────────────────────────────────────
+function LavRipSheet({ open, onClose, selected, onSelect, t }) {
+  const opts = [
+    { id: 'low',    label: t('dreame.lavRipLow'),    desc: t('dreame.lavRipLowDesc')    },
+    { id: 'medium', label: t('dreame.lavRipMedium'), desc: t('dreame.lavRipMediumDesc') },
+    { id: 'high',   label: t('dreame.lavRipHigh'),   desc: t('dreame.lavRipHighDesc')   },
+  ]
+  return (
+    <SubSheet open={open} onClose={onClose}>
+      <div style={{ fontSize: 17, fontWeight: 700, color: '#111', textAlign: 'center', padding: '0 20px 18px' }}>{t('dreame.lavRipTitle')}</div>
+      {opts.map(o => (
+        <RadioOption key={o.id} label={o.label} desc={o.desc} selected={selected === o.id}
+          onClick={() => { onSelect(o.id); setTimeout(onClose, 280) }}/>
+      ))}
+      <div style={{ height: 20 }}/>
+    </SubSheet>
+  )
+}
+
+// ── TempAsciugSheet ───────────────────────────────────────────────────────────
+function TempAsciugSheet({ open, onClose, selected, onSelect, t }) {
+  const opts = [{ id: '2h', label: '2h' }, { id: '3h', label: '3h' }, { id: '4h', label: '4h' }]
+  return (
+    <SubSheet open={open} onClose={onClose}>
+      <div style={{ fontSize: 17, fontWeight: 700, color: '#111', textAlign: 'center', padding: '16px 20px 8px' }}>{t('dreame.tempAsciugTitle')}</div>
+      <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', padding: '22px 20px 36px' }}>
+        {opts.map(o => (
+          <div key={o.id} onClick={() => { onSelect(o.id); setTimeout(onClose, 280) }} style={{ display: 'flex', alignItems: 'center', gap: 10, cursor: 'pointer' }}>
+            <div style={{ width: 28, height: 28, borderRadius: '50%', border: `2px solid ${selected === o.id ? A : '#ccc'}`, background: selected === o.id ? A : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all .18s' }}>
+              {selected === o.id && <span style={{ fontSize: 13, color: 'white', fontWeight: 800 }}>✓</span>}
+            </div>
+            <span style={{ fontSize: 18, fontWeight: 600, color: '#111' }}>{o.label}</span>
+          </div>
+        ))}
+      </div>
+    </SubSheet>
+  )
+}
+
+// ── MopExtendSheet ────────────────────────────────────────────────────────────
+function MopExtendSheet({ open, onClose, onFrequenza, freqSel, sideReach, setSideReach, mopExtend, setMopExtend, mopVoid, setMopVoid, mopLegs, setMopLegs, t }) {
+  const freqLabel = freqSel === 'high' ? t('dreame.freqHigh') : freqSel === 'intelligent' ? t('dreame.freqIntelligent') : t('dreame.freqStandard')
+  return (
+    <FullSheet open={open} onClose={onClose} zIndex={1100}>
+      <div style={{ flex: 1, overflowY: 'auto', minHeight: 0 }}>
+        <div style={{ background: '#f2f2f7', minHeight: '100%' }}>
+          <SettingsHeader title={t('dreame.mopExtendTitle')} onBack={onClose}/>
+          {/* SideReach */}
+          <div style={{ background: 'white', borderRadius: 16, margin: '14px 14px 0', padding: 16, boxShadow: '0 1px 3px rgba(0,0,0,.04)' }}>
+            <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 10, marginBottom: 8 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6, flex: 1 }}>
+                <span style={{ fontSize: 16, fontWeight: 700, color: '#111' }}>{t('dreame.sideReach')}</span>
+                <div style={{ width: 18, height: 18, borderRadius: '50%', border: '1.5px solid #ccc', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, color: '#aaa', flexShrink: 0 }}>?</div>
+              </div>
+              <IosToggle on={sideReach} onToggle={() => setSideReach(p => !p)}/>
+            </div>
+            <div style={{ fontSize: 13, color: '#888', lineHeight: 1.6 }}>{t('dreame.sideReachDesc')}</div>
+          </div>
+          {/* MopExtend + nested */}
+          <div style={{ background: 'white', borderRadius: 16, margin: '14px 14px 0', padding: 16, boxShadow: '0 1px 3px rgba(0,0,0,.04)' }}>
+            <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 10, marginBottom: 8 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6, flex: 1 }}>
+                <span style={{ fontSize: 16, fontWeight: 700, color: '#111' }}>{t('dreame.mopExtendLabel')}</span>
+                <div style={{ width: 18, height: 18, borderRadius: '50%', border: '1.5px solid #ccc', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, color: '#aaa', flexShrink: 0 }}>?</div>
+              </div>
+              <IosToggle on={mopExtend} onToggle={() => setMopExtend(p => !p)}/>
+            </div>
+            <div style={{ fontSize: 13, color: '#888', lineHeight: 1.6, marginBottom: 14 }}>{t('dreame.mopExtendDesc')}</div>
+            <div style={{ background: '#f7f7f9', borderRadius: 12, padding: '0 14px', border: '1px solid #efefef' }}>
+              {[
+                { label: t('dreame.mopVoid'), on: mopVoid, set: setMopVoid },
+                { label: t('dreame.mopLegs'), on: mopLegs, set: setMopLegs },
+              ].map((item, i) => (
+                <div key={item.label} style={{ padding: '14px 0', borderTop: i > 0 ? '1px solid #efefef' : 'none', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                  <span style={{ fontSize: 15, fontWeight: 600, color: '#111' }}>{item.label}</span>
+                  <IosToggle on={item.on} onToggle={() => item.set(p => !p)}/>
+                </div>
+              ))}
+            </div>
+          </div>
+          {/* Frequenza */}
+          <div style={{ background: 'white', borderRadius: 16, margin: '14px 14px 28px', padding: 16, boxShadow: '0 1px 3px rgba(0,0,0,.04)' }}>
+            <div onClick={onFrequenza} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', cursor: 'pointer' }}>
+              <span style={{ fontSize: 16, fontWeight: 700, color: '#111' }}>{t('dreame.frequenzaLabel')}</span>
+              <span style={{ fontSize: 14, color: A, whiteSpace: 'nowrap' }}>{freqLabel} ›</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </FullSheet>
+  )
+}
+
+// ── ImpostazioniSheet ─────────────────────────────────────────────────────────
+function ImpostazioniSheet({ open, onClose, onMopExtend, cfg, t, callService, getState }) {
+  const isOn = (id) => id ? getState(id) === 'on' : false
+  const items = [
+    cfg.dndEntity             && { label: t('switches.dnd'),         e: cfg.dndEntity             },
+    cfg.carpetBoostEntity     && { label: t('switches.carpetBoost'), e: cfg.carpetBoostEntity     },
+    cfg.selfCleanSwitchEntity && { label: t('switches.selfClean'),   e: cfg.selfCleanSwitchEntity },
+    cfg.autoDryingEntity      && { label: t('switches.autoDrying'),  e: cfg.autoDryingEntity      },
+    cfg.obstacleEntity        && { label: t('switches.obstacle'),    e: cfg.obstacleEntity        },
+    cfg.resumeEntity          && { label: t('switches.resume'),      e: cfg.resumeEntity          },
+  ].filter(Boolean)
+
+  return (
+    <FullSheet open={open} onClose={onClose} zIndex={1000}>
+      <div style={{ flex: 1, overflowY: 'auto', minHeight: 0 }}>
+        <div style={{ background: '#f2f2f7', minHeight: '100%' }}>
+          <SettingsHeader title={t('dreame.impostazioniTitle')} onBack={onClose}/>
+          {items.length > 0 && (
+            <div style={{ background: 'white', borderRadius: 16, margin: '10px 14px 0', overflow: 'hidden' }}>
+              {items.map((item, i) => (
+                <div key={item.e} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 16, borderTop: i > 0 ? '1px solid #f2f2f2' : 'none' }}>
+                  <span style={{ fontSize: 16, color: '#111' }}>{item.label}</span>
+                  <IosToggle on={isOn(item.e)} onToggle={() => callService('switch', 'toggle', item.e)}/>
+                </div>
+              ))}
+            </div>
+          )}
+          <div style={{ background: 'white', borderRadius: 16, margin: '10px 14px 0', overflow: 'hidden' }}>
+            <div onClick={() => { onClose(); setTimeout(onMopExtend, 120) }} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 16, cursor: 'pointer' }}>
+              <span style={{ fontSize: 16, color: '#111' }}>{t('dreame.mopExtendTitle')}</span>
+              <span style={{ color: '#c8c8cc', fontSize: 17 }}>›</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </FullSheet>
+  )
+}
+
+// ── BaseSheet ─────────────────────────────────────────────────────────────────
+function BaseSheet({ open, onClose, cfg, t, callService, getState,
+  svuotOpen, setSvuotOpen, svuotSel, setSvuotSel,
+  lavRipOpen, setLavRipOpen, lavRipSel, setLavRipSel,
+  tempAsciugOpen, setTempAsciugOpen, tempAsciugSel, setTempAsciugSel,
+}) {
+  const [page, setPage] = useState('main')
+  const [washQty, setWashQty] = useState('medium')
+  const [washTemp, setWashTemp] = useState('warm')
+  const [autoDetergent, setAutoDetergent] = useState(true)
+  const [autoWash, setAutoWash] = useState(true)
+  const [asciugaOn, setAsciugaOn] = useState(false)
+
+  useEffect(() => { if (!open) setPage('main') }, [open])
+
+  const get = (id) => id ? (getState(id) ?? null) : null
+  const OK = ['installed', 'available', 'ok', 'no_warning', 'enabled', 'completed']
+  const stItems = [
+    { label: t('stationChips.dustBag'),    val: get(cfg.dustBagEntity)    },
+    { label: t('stationChips.detergent'),  val: get(cfg.detergentEntity)  },
+    { label: t('stationChips.mopPad'),     val: get(cfg.mopPadEntity)     },
+    { label: t('stationChips.dirtyWater'), val: get(cfg.dirtyWaterEntity) },
+  ].filter(i => i.val && i.val !== 'unavailable')
+
+  const washQtyOpts = [
+    { id: 'low',    label: t('dreame.washQtyLow'),    desc: t('dreame.washQtyLowDesc')    },
+    { id: 'medium', label: t('dreame.washQtyMedium'), desc: t('dreame.washQtyMediumDesc') },
+    { id: 'high',   label: t('dreame.washQtyHigh'),   desc: t('dreame.washQtyHighDesc')   },
+  ]
+  const washTempOpts = [
+    { id: 'cold', label: t('waterTemp.cold') },
+    { id: 'warm', label: t('waterTemp.warm') },
+    { id: 'hot',  label: t('waterTemp.hot')  },
+  ]
+
+  const pageX = (target) => page === target ? 0 : page === 'main' ? '100%' : target === 'main' ? '-100%' : '100%'
+
+  return (
+    <>
+      <FullSheet open={open} onClose={onClose} zIndex={1000}>
+        <div style={{ flex: 1, position: 'relative', minHeight: 0, overflow: 'hidden' }}>
+          {/* PAGE MAIN */}
+          <motion.div animate={{ x: page === 'main' ? 0 : '-100%' }} transition={{ type: 'spring', damping: 30, stiffness: 280 }}
+            style={{ position: 'absolute', inset: 0, overflowY: 'auto' }}>
+            <div style={{ padding: '22px 20px 32px' }}>
+              <div style={{ fontSize: 22, fontWeight: 800, color: '#111', marginBottom: 22 }}>{t('dreame.baseTitle')}</div>
+              {stItems.length > 0 && (
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px 12px', marginBottom: 26 }}>
+                  {stItems.map(item => (
+                    <div key={item.label} style={{ display: 'flex', alignItems: 'flex-start', gap: 10 }}>
+                      <div style={{ width: 12, height: 12, borderRadius: '50%', flexShrink: 0, marginTop: 4, background: OK.includes(item.val) ? '#34c759' : '#e03030' }}/>
+                      <div>
+                        <div style={{ fontSize: 15, fontWeight: 600, color: '#111', lineHeight: 1.4 }}>{item.label}</div>
+                        <div style={{ fontSize: 13, color: OK.includes(item.val) ? '#34c759' : '#e03030', lineHeight: 1.4, marginTop: 3 }}>{item.val}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+              <div style={{ height: 1, background: '#efefef', margin: '0 -20px 26px' }}/>
+              <div style={{ display: 'flex', justifyContent: 'space-around', marginBottom: 28 }}>
+                {[
+                  { label: t('dreame.svuotLabel'),      icon: '🗑️', onClick: () => setSvuotOpen(true)      },
+                  { label: t('dreame.lavRipLabel'),      icon: '🫧', onClick: () => setLavRipOpen(true)      },
+                  { label: t('dreame.tempAsciugLabel'),  icon: '💨', onClick: () => setTempAsciugOpen(true)  },
+                ].map(act => (
+                  <div key={act.label} onClick={act.onClick} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12, cursor: 'pointer' }}>
+                    <div style={{ width: 88, height: 88, borderRadius: '50%', background: '#f2f2f4', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 30, transition: 'background .18s' }}>{act.icon}</div>
+                    <span style={{ fontSize: 15, color: '#111', fontWeight: 500 }}>{act.label}</span>
+                  </div>
+                ))}
+              </div>
+              <div onClick={() => setPage('settings')} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, color: A, fontSize: 16, fontWeight: 600, cursor: 'pointer', textDecoration: 'underline', textUnderlineOffset: 3 }}>
+                {t('dreame.baseSettingsLink')}
+              </div>
+            </div>
+          </motion.div>
+
+          {/* PAGE SETTINGS */}
+          <motion.div animate={{ x: page === 'settings' ? 0 : page === 'main' ? '100%' : '-100%' }} transition={{ type: 'spring', damping: 30, stiffness: 280 }}
+            style={{ position: 'absolute', inset: 0, overflowY: 'auto' }}>
+            <div style={{ background: '#f2f2f7', minHeight: '100%' }}>
+              <SettingsHeader title={t('dreame.baseSettingsTitle')} onBack={() => setPage('main')}/>
+              <div style={{ background: 'white', borderRadius: 16, margin: '14px 14px 0', padding: 16 }}>
+                <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 10 }}>
+                  <div>
+                    <div style={{ fontSize: 16, fontWeight: 700, color: '#111', marginBottom: 4 }}>{t('dreame.svuotTitle')}</div>
+                    <div onClick={() => setSvuotOpen(true)} style={{ fontSize: 14, color: A, cursor: 'pointer' }}>
+                      {svuotSel === 'always' ? t('dreame.svuotAlways') : svuotSel === 'manual' ? t('dreame.svuotManual') : t('dreame.svuotSmart')} ›
+                    </div>
+                  </div>
+                  <IosToggle on={true} onToggle={() => {}}/>
+                </div>
+              </div>
+              <div style={{ background: 'white', borderRadius: 16, margin: '14px 14px 0', padding: 16 }}>
+                {[
+                  { label: t('dreame.autoDetergent'), on: autoDetergent, set: setAutoDetergent },
+                  { label: t('dreame.autoWash'),      on: autoWash,      set: setAutoWash      },
+                  { label: t('dreame.asciuga'),        on: asciugaOn,     set: setAsciugaOn     },
+                ].map((item, i) => (
+                  <div key={item.label} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingTop: i > 0 ? 14 : 0, marginTop: i > 0 ? 14 : 0, borderTop: i > 0 ? '1px solid #f2f2f2' : 'none' }}>
+                    <span style={{ fontSize: 16, fontWeight: 500, color: '#111' }}>{item.label}</span>
+                    <IosToggle on={item.on} onToggle={() => item.set(p => !p)}/>
+                  </div>
+                ))}
+              </div>
+              <div onClick={() => setPage('washing')} style={{ background: 'white', borderRadius: 16, margin: '10px 14px 0', padding: '16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', cursor: 'pointer' }}>
+                <span style={{ fontSize: 16, color: '#111' }}>{t('dreame.washingSettingsTitle')}</span>
+                <span style={{ color: '#c8c8cc', fontSize: 17 }}>›</span>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* PAGE WASHING */}
+          <motion.div animate={{ x: page === 'washing' ? 0 : '100%' }} transition={{ type: 'spring', damping: 30, stiffness: 280 }}
+            style={{ position: 'absolute', inset: 0, overflowY: 'auto' }}>
+            <div style={{ background: '#f2f2f7', minHeight: '100%' }}>
+              <SettingsHeader title={t('dreame.washingSettingsTitle')} onBack={() => setPage('settings')}/>
+              <div style={{ fontSize: 14, color: '#888', margin: '16px 14px 8px', lineHeight: 1.5 }}>{t('dreame.washQtyLabel')}</div>
+              <div style={{ background: 'white', borderRadius: 16, margin: '0 14px', overflow: 'hidden' }}>
+                {washQtyOpts.map((o, i) => (
+                  <div key={o.id} onClick={() => setWashQty(o.id)} style={{ display: 'flex', alignItems: 'flex-start', gap: 14, padding: 16, cursor: 'pointer', borderTop: i > 0 ? '1px solid #f2f2f2' : 'none' }}>
+                    <div style={{ width: 24, height: 24, borderRadius: '50%', border: `2px solid ${washQty === o.id ? A : '#ccc'}`, flexShrink: 0, marginTop: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', background: washQty === o.id ? A : 'transparent', transition: 'all .18s' }}>
+                      {washQty === o.id && <span style={{ fontSize: 13, color: 'white', fontWeight: 800, lineHeight: 1 }}>✓</span>}
+                    </div>
+                    <div>
+                      <div style={{ fontSize: 16, fontWeight: 700, color: '#111', marginBottom: 4 }}>{o.label}</div>
+                      <div style={{ fontSize: 13, color: '#888', lineHeight: 1.5 }}>{o.desc}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div style={{ fontSize: 14, color: '#888', margin: '16px 14px 8px' }}>{t('dreame.washTempLabel')}</div>
+              <div style={{ background: 'white', borderRadius: 16, margin: '0 14px', overflow: 'hidden' }}>
+                {washTempOpts.map((o, i) => (
+                  <div key={o.id} onClick={() => setWashTemp(o.id)} style={{ display: 'flex', alignItems: 'center', gap: 14, padding: 16, cursor: 'pointer', borderTop: i > 0 ? '1px solid #f2f2f2' : 'none' }}>
+                    <div style={{ width: 24, height: 24, borderRadius: '50%', border: `2px solid ${washTemp === o.id ? A : '#ccc'}`, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: washTemp === o.id ? A : 'transparent', transition: 'all .18s' }}>
+                      {washTemp === o.id && <span style={{ fontSize: 13, color: 'white', fontWeight: 800, lineHeight: 1 }}>✓</span>}
+                    </div>
+                    <span style={{ fontSize: 16, fontWeight: 700, color: '#111' }}>{o.label}</span>
+                  </div>
+                ))}
+              </div>
+              <div style={{ fontSize: 13, color: A, lineHeight: 1.6, margin: '12px 14px 28px' }}>{t('dreame.washWarning')}</div>
+            </div>
+          </motion.div>
+        </div>
+      </FullSheet>
+
+      <SvuotSheet    open={svuotOpen}     onClose={() => setSvuotOpen(false)}     selected={svuotSel}     onSelect={setSvuotSel}     t={t}/>
+      <LavRipSheet   open={lavRipOpen}    onClose={() => setLavRipOpen(false)}    selected={lavRipSel}    onSelect={setLavRipSel}    t={t}/>
+      <TempAsciugSheet open={tempAsciugOpen} onClose={() => setTempAsciugOpen(false)} selected={tempAsciugSel} onSelect={setTempAsciugSel} t={t}/>
+    </>
+  )
+}
+
+// ── MainSheet — sub-panels per mode ───────────────────────────────────────────
+function SuctionRow({ suction, onSelect, t }) {
+  const opts = [
+    { id: 'quiet',    label: t('dreame.suctionSilenz'), Ico: SvgSilenz    },
+    { id: 'standard', label: t('dreame.suctionStd'),    Ico: SvgStd       },
+    { id: 'strong',   label: t('dreame.suctionIntensiva'), Ico: SvgIntensiva },
+    { id: 'max',      label: t('dreame.suctionMax'),    Ico: SvgMaxP      },
+  ]
   return (
     <div>
-      <button onClick={() => onToggle(id)} style={{
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        background: 'transparent', border: 'none', cursor: 'pointer',
-        padding: '4px 0', width: '100%',
-      }}>
-        <span style={{ fontSize: 10, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '.7px', color: accent }}>
-          {label}
-        </span>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-          {summary && (
-            <span style={{
-              fontSize: 10, fontWeight: 600,
-              color: summaryColor || 'var(--text-muted)',
-              background: summaryColor ? `${summaryColor}18` : (dark ? 'rgba(255,255,255,.05)' : 'rgba(0,0,0,.04)'),
-              border: `1px solid ${summaryColor ? `${summaryColor}30` : 'var(--border)'}`,
-              borderRadius: 5, padding: '1px 6px',
+      <div style={{ fontSize: 17, fontWeight: 700, color: '#111', marginBottom: 16, display: 'flex', alignItems: 'center', gap: 6 }}>{t('dreame.potenzaAspira')}</div>
+      <div style={{ display: 'flex', gap: 8, justifyContent: 'center', marginBottom: 22 }}>
+        {opts.map(({ id, label, Ico }) => (
+          <CircleItem key={id} label={label} active={suction === id} onClick={() => onSelect(id)}><Ico/></CircleItem>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+function PercorsoRow({ route, onSelect, mop, t }) {
+  const baseOpts = [
+    { id: 'by_area', label: t('dreame.percVeloce'),   Ico: SvgPercVeloce  },
+    { id: 'by_time', label: t('dreame.percStandard'), Ico: SvgPercStd     },
+  ]
+  const mopOpts = [
+    ...baseOpts,
+    { id: 'intensive', label: t('dreame.percIntensivo'), Ico: SvgPercIntensivo, small: true },
+    { id: 'deep',      label: t('dreame.percProfonda'),  Ico: SvgPercProfonda  },
+  ]
+  const opts = mop ? mopOpts : baseOpts
+  return (
+    <div>
+      <div style={{ fontSize: 17, fontWeight: 700, color: '#111', marginBottom: 16, display: 'flex', alignItems: 'center', gap: 6 }}>
+        {t('dreame.percorso')}
+        <div style={{ width: 20, height: 20, borderRadius: '50%', border: '1.5px solid #ccc', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12, color: '#aaa', cursor: 'pointer' }}>?</div>
+      </div>
+      <div style={{ display: 'flex', gap: 8, justifyContent: 'center', marginBottom: 22 }}>
+        {opts.map(({ id, label, Ico, small }) => (
+          <CircleItem key={id} label={label} active={route === id} onClick={() => onSelect(id)} small={small}><Ico/></CircleItem>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+function MopSection({ humidity, onHumChange, onFrequenza, freqSel, t }) {
+  const freqLabel = freqSel === 'high' ? t('dreame.freqHigh') : freqSel === 'intelligent' ? t('dreame.freqIntelligent') : t('dreame.freqStandard')
+  return (
+    <div>
+      <div style={{ fontSize: 17, fontWeight: 700, color: '#111', marginBottom: 16 }}>{t('dreame.umidita')}</div>
+      <HumSlider value={humidity} onChange={onHumChange}/>
+      <div onClick={onFrequenza} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 0', borderTop: '1px solid #f0f0f0', borderBottom: '1px solid #f0f0f0', marginBottom: 16, cursor: 'pointer' }}>
+        <span style={{ fontSize: 16, fontWeight: 600, color: '#111' }}>{t('dreame.freqLavaggio')}</span>
+        <span style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 14, color: '#888' }}><span style={{ color: '#666' }}>{freqLabel}</span> ›</span>
+      </div>
+      {humidity >= 27 && <div style={{ fontSize: 13, color: '#d97706', lineHeight: 1.6, marginBottom: 16, marginTop: -8 }}>{t('dreame.humWarning')}</div>}
+    </div>
+  )
+}
+
+function MainSheet({ open, onClose, cfg, t, callService, getState,
+  suction, onSuction, route, onRoute, humidity, onHumidity, freqSel, onFrequenza, deepClean, onDeepClean,
+}) {
+  const [tab, setTab] = useState('custom') // 'custom' | 'genius'
+  const [mode, setMode] = useState(0)       // 0=aspira 1=mocio 2=aspira+lava 3=mocio-dopo 4=pers-stanza
+  const [massima, setMassima] = useState(false)
+  const [freqSheetOpen, setFreqSheetOpen] = useState(false)
+
+  const cleanGeniusOn = cfg.cleanGeniusEntity ? getState(cfg.cleanGeniusEntity) === 'on' : false
+
+  useEffect(() => {
+    if (!cfg.cleanGeniusEntity) return
+    setTab(cleanGeniusOn ? 'genius' : 'custom')
+  }, [cleanGeniusOn, cfg.cleanGeniusEntity])
+
+  const switchTab = (t2) => {
+    setTab(t2)
+    if (cfg.cleanGeniusEntity) callService('switch', t2 === 'genius' ? 'turn_on' : 'turn_off', cfg.cleanGeniusEntity)
+  }
+
+  const hasMop = mode === 1 || mode === 2 || mode === 3
+  const hasAspira = mode === 0 || mode === 2 || mode === 3
+
+  const modes = [
+    { label: t('dreame.modeAspira'),       Ico: SvgAspira,     small: false },
+    { label: t('dreame.modeMocio'),         Ico: SvgMocio,      small: false },
+    { label: t('dreame.modeAspiraLava'),    Ico: SvgAspiraLava, small: true  },
+    { label: t('dreame.modeMocioDopo'),     Ico: SvgMocioDopo,  small: true  },
+    { label: t('dreame.modePersStanza'),    Ico: SvgPersStanza, small: true  },
+  ]
+
+  return (
+    <>
+      <FullSheet open={open} onClose={onClose} zIndex={1000}>
+        {/* Tabs */}
+        <div style={{ display: 'flex', margin: '0 16px 14px', background: '#f0f0f0', borderRadius: 14, padding: 4, gap: 3, flexShrink: 0 }}>
+          {['genius', 'custom'].map(id => (
+            <button key={id} onClick={() => switchTab(id)} style={{
+              flex: 1, textAlign: 'center', padding: '11px 4px', borderRadius: 10,
+              fontSize: 15, fontWeight: 600, border: 'none', cursor: 'pointer', transition: 'all .2s',
+              background: tab === id ? 'white' : 'transparent',
+              color: tab === id ? '#111' : '#888',
+              boxShadow: tab === id ? '0 2px 8px rgba(0,0,0,.1)' : 'none',
             }}>
-              {summary}
-            </span>
-          )}
-          {open ? <ChevronUp size={13} color={accent}/> : <ChevronDown size={13} color={accent}/>}
+              {id === 'genius' ? t('dreame.cleanGenius') : t('dreame.personalizza')}
+            </button>
+          ))}
         </div>
-      </button>
-      <AnimatePresence initial={false}>
-        {open && (
-          <motion.div key={id}
-            initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }} transition={{ duration: .22 }}
-            style={{ overflow: 'hidden' }}>
-            <div style={{ paddingTop: 8 }}>{children}</div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
+
+        {/* Pages */}
+        <div style={{ flex: 1, minHeight: 0, overflow: 'hidden', position: 'relative' }}>
+          {/* PERSONALIZZA */}
+          <div style={{ position: 'absolute', inset: 0, overflowY: 'auto', display: tab === 'custom' ? 'block' : 'none' }}>
+            {/* Mode row */}
+            <div style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none', padding: '0 16px 16px' }}>
+              <div style={{ display: 'flex', gap: 10, width: 'max-content' }}>
+                {modes.map(({ label, Ico, small }, i) => (
+                  <ModeItem key={i} label={label} active={mode === i} onClick={() => setMode(i)} small={small}>
+                    <Ico/>
+                  </ModeItem>
+                ))}
+              </div>
+            </div>
+            {/* Sub-panel */}
+            <div style={{ padding: '0 16px 80px' }}>
+              {/* Aspira sub-panel */}
+              {mode === 0 && (
+                <div>
+                  <SuctionRow suction={suction} onSelect={onSuction} t={t}/>
+                  <div style={{ background: '#fafafa', borderRadius: 16, padding: '14px 16px', marginBottom: 24 }}>
+                    <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 12, marginBottom: 8 }}>
+                      <div style={{ flex: 1 }}>
+                        <div style={{ fontSize: 15, fontWeight: 700, color: '#111' }}>{t('dreame.massimaTitle')}</div>
+                      </div>
+                      <IosToggle on={massima} onToggle={() => setMassima(p => !p)}/>
+                    </div>
+                    <div style={{ fontSize: 13, color: '#888', lineHeight: 1.6 }}>{t('dreame.massimaDesc')}</div>
+                  </div>
+                  <PercorsoRow route={route} onSelect={onRoute} mop={false} t={t}/>
+                </div>
+              )}
+              {/* Mocio sub-panel */}
+              {mode === 1 && (
+                <div>
+                  <MopSection humidity={humidity} onHumChange={onHumidity} onFrequenza={() => setFreqSheetOpen(true)} freqSel={freqSel} t={t}/>
+                  <PercorsoRow route={route} onSelect={onRoute} mop={true} t={t}/>
+                </div>
+              )}
+              {/* Aspira+Lava sub-panel */}
+              {mode === 2 && (
+                <div>
+                  <SuctionRow suction={suction} onSelect={onSuction} t={t}/>
+                  <MopSection humidity={humidity} onHumChange={onHumidity} onFrequenza={() => setFreqSheetOpen(true)} freqSel={freqSel} t={t}/>
+                  <PercorsoRow route={route} onSelect={onRoute} mop={true} t={t}/>
+                </div>
+              )}
+              {/* Mocio dopo sub-panel */}
+              {mode === 3 && (
+                <div>
+                  <SuctionRow suction={suction} onSelect={onSuction} t={t}/>
+                  <MopSection humidity={humidity} onHumChange={onHumidity} onFrequenza={() => setFreqSheetOpen(true)} freqSel={freqSel} t={t}/>
+                  <PercorsoRow route={route} onSelect={onRoute} mop={true} t={t}/>
+                </div>
+              )}
+              {/* Personalizza stanza */}
+              {mode === 4 && (
+                <div style={{ textAlign: 'center', padding: '32px 16px', color: '#888', fontSize: 15 }}>
+                  {t('dreame.modePersStanza')}
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* GENIUS */}
+          <div style={{ position: 'absolute', inset: 0, overflowY: 'auto', display: tab === 'genius' ? 'block' : 'none' }}>
+            <div style={{ padding: '0 12px 80px' }}>
+              <div style={{ background: 'white', borderRadius: 18, padding: 16, boxShadow: '0 2px 12px rgba(0,0,0,.06)' }}>
+                <div style={{ fontSize: 17, fontWeight: 700, color: '#111', marginBottom: 16 }}>{t('cleaning.geniusDesc')}</div>
+                <div style={{ display: 'flex', gap: 12 }}>
+                  {[
+                    { id: 'sweeping_and_mopping',   Ico: SvgAspiraLava, label: t('cleanMode.sweeping_and_mopping')   },
+                    { id: 'mopping_after_sweeping',  Ico: SvgMocioDopo,  label: t('cleanMode.mopping_after_sweeping')  },
+                  ].map(({ id, Ico, label }) => {
+                    const active = getState(cfg.cleaningModeEntity) === id
+                    return (
+                      <div key={id} onClick={() => cfg.cleaningModeEntity && callService('select', 'select_option', cfg.cleaningModeEntity, { option: id })}
+                        style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10, padding: '16px 8px 20px', borderRadius: 16, background: active ? 'white' : '#f5f5f5', cursor: 'pointer', position: 'relative', border: `2px solid ${active ? A : 'transparent'}`, transition: 'all .2s' }}>
+                        <div style={{ color: active ? A : '#555' }}><Ico/></div>
+                        <span style={{ fontSize: 11.5, textAlign: 'center', color: active ? '#111' : '#888', lineHeight: 1.4, fontWeight: active ? 700 : 500 }}>{label}</span>
+                        {active && <div style={{ position: 'absolute', bottom: -10, left: '50%', transform: 'translateX(-50%)', width: 22, height: 22, borderRadius: '50%', background: A, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, color: 'white', fontWeight: 700 }}>✓</div>}
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+              {cfg.deepCleanEntity && (
+                <div style={{ background: 'white', borderRadius: 18, padding: '14px 16px', marginTop: 12, boxShadow: '0 2px 12px rgba(0,0,0,.06)' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <div style={{ fontSize: 17, fontWeight: 700, color: '#111' }}>{t('dreame.geniusDeepTitle')}</div>
+                    <IosToggle on={getState(cfg.deepCleanEntity) === 'on'} onToggle={() => callService('switch', 'toggle', cfg.deepCleanEntity)}/>
+                  </div>
+                  <div style={{ marginTop: 10, fontSize: 13, color: '#888', lineHeight: 1.6 }}>{t('dreame.geniusDeepDesc')}</div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </FullSheet>
+
+      <FrequenzaSheet open={freqSheetOpen} onClose={() => setFreqSheetOpen(false)} selected={freqSel} onSelect={onFrequenza} t={t}/>
+    </>
   )
 }
 
-// Tab tipo pill (CleanGenius | Personalizza  oppure  Stanza | Tutto | Zona)
-function PillTabs({ tabs, active, onSelect, dark }) {
-  return (
-    <div style={{
-      display: 'flex', gap: 3, padding: 3, borderRadius: 11,
-      background: dark ? 'rgba(255,255,255,.06)' : 'rgba(0,0,0,.06)',
-    }}>
-      {tabs.map(({ id, label, disabled }) => {
-        const isActive = active === id
-        return (
-          <motion.button key={id} whileTap={!disabled ? { scale: .97 } : {}}
-            onClick={() => !disabled && !isActive && onSelect(id)}
-            style={{
-              flex: 1, padding: '7px 4px', borderRadius: 8,
-              fontSize: 12, fontWeight: isActive ? 700 : 500,
-              textAlign: 'center',
-              background: isActive ? (dark ? '#2d2040' : '#fff') : 'transparent',
-              color: isActive ? (dark ? '#c4b5fd' : '#7c3aed')
-                : disabled ? (dark ? 'rgba(255,255,255,.2)' : 'rgba(0,0,0,.2)')
-                : 'var(--text-muted)',
-              border: 'none', cursor: disabled ? 'default' : isActive ? 'default' : 'pointer',
-              boxShadow: isActive ? '0 1px 4px rgba(0,0,0,.12)' : 'none',
-              transition: 'background .15s, color .15s',
-            }}>
-            {label}
-          </motion.button>
-        )
-      })}
-    </div>
-  )
-}
-
-// Cerchio con icona per la modalità pulizia (stile app Dreame)
-function ModeCircle({ value, label, active, onSelect, dark, icon: Icon }) {
-  const accent = dark ? '#a78bfa' : '#7c3aed'
-  return (
-    <motion.button whileTap={!active ? { scale: .93 } : {}} onClick={() => !active && onSelect(value)} style={{
-      display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6,
-      flex: 1, padding: '8px 2px', background: 'transparent', border: 'none', cursor: active ? 'default' : 'pointer',
-    }}>
-      <div style={{
-        width: 50, height: 50, borderRadius: '50%', flexShrink: 0,
-        background: active ? (dark ? 'rgba(139,92,246,.22)' : 'rgba(139,92,246,.1)') : (dark ? 'rgba(255,255,255,.06)' : 'rgba(0,0,0,.05)'),
-        border: `2px solid ${active ? accent : 'transparent'}`,
-        display: 'flex', alignItems: 'center', justifyContent: 'center',
-        transition: 'background .15s, border-color .15s',
-      }}>
-        <Icon size={20} color={active ? accent : 'var(--text-muted)'} strokeWidth={1.5}/>
-      </div>
-      <span style={{
-        fontSize: 10, fontWeight: active ? 700 : 500, textAlign: 'center', lineHeight: 1.3,
-        color: active ? accent : 'var(--text-muted)', maxWidth: 56,
-      }}>
-        {label}
-      </span>
-    </motion.button>
-  )
-}
-
-// Toggle row stile iOS (per deep clean, ecc.)
-function ToggleRow({ label, entityId, isOn, onToggle, dark }) {
-  const accent = dark ? '#a78bfa' : '#7c3aed'
-  return (
-    <div style={{
-      display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-      padding: '8px 12px', borderRadius: 10,
-      background: dark ? 'rgba(255,255,255,.04)' : 'rgba(0,0,0,.03)', border: '1px solid var(--border)',
-    }}>
-      <span style={{ fontSize: 12, fontWeight: 600, color: 'var(--text-primary)' }}>{label}</span>
-      <motion.button whileTap={{ scale: .93 }} onClick={() => onToggle(entityId)} style={{
-        width: 40, height: 22, borderRadius: 11, position: 'relative',
-        cursor: 'pointer', border: 'none', flexShrink: 0,
-        background: isOn ? accent : (dark ? 'rgba(255,255,255,.15)' : 'rgba(0,0,0,.12)'),
-        transition: 'background .2s',
-      }}>
-        <motion.div animate={{ x: isOn ? 20 : 2 }}
-          transition={{ type: 'spring', stiffness: 500, damping: 30 }}
-          style={{ position: 'absolute', top: 3, width: 16, height: 16, borderRadius: '50%', background: '#fff' }}/>
-      </motion.button>
-    </div>
-  )
-}
-
-function ConsBar({ label, pct, days, onReset, dark }) {
-  const n = pct ?? 0
-  const color = n <= 20 ? '#ef4444' : n <= 50 ? '#f59e0b' : '#10b981'
-  return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
-      <span style={{ fontSize: 11, color: 'var(--text-muted)', flex: '0 0 88px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-        {label}
-      </span>
-      <div style={{ flex: 1, height: 5, borderRadius: 99, background: dark ? 'rgba(255,255,255,.08)' : 'rgba(0,0,0,.06)', overflow: 'hidden' }}>
-        <motion.div initial={{ width: 0 }} animate={{ width: `${n}%` }} transition={{ duration: 1, ease: [.4, 0, .2, 1] }}
-          style={{ height: '100%', borderRadius: 99, background: color }}/>
-      </div>
-      <span style={{ fontSize: 11, fontWeight: 700, color, width: 30, textAlign: 'right', flexShrink: 0 }}>{n}%</span>
-      {days !== null && days !== undefined && (
-        <span style={{ fontSize: 10, color: 'var(--text-muted)', width: 34, textAlign: 'right', flexShrink: 0 }}>
-          {days > 0 ? `${days}d` : '—'}
-        </span>
-      )}
-      {onReset && (
-        <motion.button whileTap={{ scale: .85 }} onClick={onReset} title="Reset" style={{
-          width: 22, height: 22, borderRadius: 5, flexShrink: 0,
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          background: 'transparent', border: '1px solid var(--border-medium)',
-          cursor: 'pointer', color: 'var(--text-muted)',
-        }}>
-          <RefreshCw size={10} strokeWidth={2.5}/>
-        </motion.button>
-      )}
-    </div>
-  )
-}
-
-function CtrlBtn({ label, icon: Icon, onClick, primary, danger, dark, disabled }) {
-  const bg = primary ? (dark ? 'rgba(139,92,246,.25)' : 'rgba(139,92,246,.12)')
-    : danger ? (dark ? 'rgba(239,68,68,.15)' : 'rgba(239,68,68,.08)')
-    : (dark ? 'rgba(255,255,255,.06)' : 'rgba(0,0,0,.04)')
-  const color = primary ? (dark ? '#c4b5fd' : '#7c3aed')
-    : danger ? (dark ? '#f87171' : '#dc2626') : 'var(--text-muted)'
-  const border = primary ? (dark ? 'rgba(139,92,246,.35)' : 'rgba(139,92,246,.25)')
-    : danger ? (dark ? 'rgba(239,68,68,.25)' : 'rgba(239,68,68,.2)') : 'var(--border-medium)'
-  return (
-    <motion.button onClick={onClick} disabled={disabled} whileTap={{ scale: .93 }} style={{
-      flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4,
-      padding: '9px 4px', borderRadius: 10, background: bg, border: `1px solid ${border}`,
-      color, cursor: disabled ? 'default' : 'pointer', opacity: disabled ? .4 : 1,
-      fontSize: 10, fontWeight: 700, transition: 'opacity .2s',
-    }}>
-      <Icon size={17} strokeWidth={2}/>{label}
-    </motion.button>
-  )
-}
-
-function OptionSelector({ options, current, onSelect, dark }) {
-  return (
-    <div style={{ display: 'flex', gap: 5, flexWrap: 'nowrap' }}>
-      {options.map(({ value, label }) => {
-        const active = current === value
-        return (
-          <motion.button key={value} whileTap={{ scale: .93 }} onClick={() => !active && onSelect(value)} style={{
-            flex: 1, padding: '6px 4px', borderRadius: 7, fontSize: 11,
-            fontWeight: active ? 700 : 500, textAlign: 'center',
-            border: `1px solid ${active ? (dark ? 'rgba(139,92,246,.5)' : 'rgba(139,92,246,.4)') : 'var(--border-medium)'}`,
-            background: active ? (dark ? 'rgba(139,92,246,.22)' : 'rgba(139,92,246,.1)') : 'transparent',
-            color: active ? (dark ? '#c4b5fd' : '#7c3aed') : 'var(--text-muted)',
-            cursor: active ? 'default' : 'pointer', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
-          }}>
-            {label}
-          </motion.button>
-        )
-      })}
-    </div>
-  )
-}
-
-function SelectRow({ label, entityId, current, options, onSelect, dark }) {
-  if (!entityId || !current || current === 'unavailable') return null
-  return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
-      <div style={{ fontSize: 10, fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '.5px' }}>
-        {label}
-      </div>
-      <OptionSelector options={options} current={current} onSelect={opt => onSelect(entityId, opt)} dark={dark}/>
-    </div>
-  )
-}
-
-function StatusChip({ label, value, warn, dark, t }) {
-  if (!value || value === 'unavailable') return null
-  const isOk = ['installed', 'available', 'ok', 'no_warning', 'enabled', 'completed'].includes(value)
-  const isWarn = warn || (!isOk && value !== 'idle' && value !== '—')
-  const color = isOk ? '#10b981' : isWarn ? '#f59e0b' : 'var(--text-muted)'
-  const bg = isOk ? (dark ? 'rgba(16,185,129,.1)' : 'rgba(16,185,129,.07)')
-    : isWarn ? (dark ? 'rgba(245,158,11,.1)' : 'rgba(245,158,11,.07)')
-    : (dark ? 'rgba(255,255,255,.04)' : 'rgba(0,0,0,.03)')
-  return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 2, padding: '6px 8px', borderRadius: 8, background: bg, border: `1px solid ${color}22` }}>
-      <span style={{ fontSize: 9, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '.5px', whiteSpace: 'nowrap' }}>{label}</span>
-      <span style={{ fontSize: 11, fontWeight: 700, color }}>{value === 'idle' ? '—' : tr(value, t)}</span>
-    </div>
-  )
-}
-
-function SwitchToggle({ label, entityId, isOn, onToggle, dark }) {
-  const color = isOn ? (dark ? '#a78bfa' : '#7c3aed') : 'var(--text-muted)'
-  return (
-    <motion.button whileTap={{ scale: .93 }} onClick={() => onToggle(entityId)} style={{
-      padding: '7px 6px', borderRadius: 8, cursor: 'pointer', fontSize: 10,
-      fontWeight: isOn ? 700 : 500, textAlign: 'center', color,
-      background: isOn ? (dark ? 'rgba(139,92,246,.18)' : 'rgba(139,92,246,.1)') : (dark ? 'rgba(255,255,255,.04)' : 'rgba(0,0,0,.03)'),
-      border: `1px solid ${isOn ? (dark ? 'rgba(139,92,246,.35)' : 'rgba(139,92,246,.25)') : 'var(--border-medium)'}`,
-    }}>
-      {isOn ? '● ' : '○ '}{label}
-    </motion.button>
-  )
-}
-
-// ─── Card principale ────────────────────────────────────────────────────────
+// ── VacuumCard — componente principale ────────────────────────────────────────
 export default function VacuumCard() {
   const { dark, callService, getState, getAttr } = useDashboard()
   const { t } = useT('card-vacuum')
   const [cfg] = useState(getVacuumConfig)
-  const [cmdBusy, setCmdBusy] = useState(false)
-  const [open, setOpen] = useState({ cleaning: true, map: false, station: false, consumables: false, settings: false, stats: false })
-  const [cleanTab, setCleanTab] = useState('custom')
+  const haHost = useRef(getHAConfig().host)
+  const [mapTs, setMapTs] = useState(() => Date.now())
+
+  // Scope + rooms
   const [scope, setScope] = useState('all')
   const [selectedRooms, setSelectedRooms] = useState([])
-  const [mapTs, setMapTs] = useState(() => Date.now())
-  const [mapHeight, setMapHeight] = useState(240)
-  const haHost = useRef(getHAConfig().host)
-  const dragRef = useRef(null)
+  const [zonaCount, setZonaCount] = useState(1)
+  const [zonaCiclo, setZonaCiclo] = useState(1)
+  const [zonaTooltipDismissed, setZonaTooltipDismissed] = useState(false)
 
-  const toggle = (key) => setOpen(p => ({ ...p, [key]: !p[key] }))
+  // Sheet visibility
+  const [mainOpen, setMainOpen] = useState(false)
+  const [baseOpen, setBaseOpen] = useState(false)
+  const [impostazioniOpen, setImpostazioniOpen] = useState(false)
+  const [mopExtendOpen, setMopExtendOpen] = useState(false)
 
-  // Sync cleanTab con stato switch CleanGenius
-  const cleanGeniusOn = getState(cfg.cleanGeniusEntity) === 'on'
-  useEffect(() => {
-    if (!cfg.cleanGeniusEntity) return
-    setCleanTab(cleanGeniusOn ? 'genius' : 'custom')
-  }, [cleanGeniusOn, cfg.cleanGeniusEntity])
+  // Base sub-sheets
+  const [svuotOpen, setSvuotOpen] = useState(false)
+  const [svuotSel, setSvuotSel] = useState('smart')
+  const [lavRipOpen, setLavRipOpen] = useState(false)
+  const [lavRipSel, setLavRipSel] = useState('medium')
+  const [tempAsciugOpen, setTempAsciugOpen] = useState(false)
+  const [tempAsciugSel, setTempAsciugSel] = useState('3h')
 
-  const switchCleanTab = (tab) => {
-    setCleanTab(tab)
-    if (cfg.cleanGeniusEntity) {
-      callService('switch', tab === 'genius' ? 'turn_on' : 'turn_off', cfg.cleanGeniusEntity)
-    }
-  }
+  // MopExtend state
+  const [freqSel, setFreqSel] = useState('high')
+  const [sideReach, setSideReach] = useState(true)
+  const [mopExtend, setMopExtend] = useState(true)
+  const [mopVoid, setMopVoid] = useState(false)
+  const [mopLegs, setMopLegs] = useState(false)
+  const [mopExtFreqOpen, setMopExtFreqOpen] = useState(false)
 
-  useEffect(() => {
-    if (!open.map || !cfg.cameraEntity) return
-    const iv = setInterval(() => setMapTs(Date.now()), 5000)
-    return () => clearInterval(iv)
-  }, [open.map, cfg.cameraEntity])
-
-  const onResizeStart = (e) => {
-    e.preventDefault()
-    const startY = e.touches ? e.touches[0].clientY : e.clientY
-    const startH = mapHeight
-    const onMove = (ev) => {
-      const y = ev.touches ? ev.touches[0].clientY : ev.clientY
-      setMapHeight(Math.max(120, Math.min(600, startH + (y - startY))))
-    }
-    const onUp = () => {
-      window.removeEventListener('mousemove', onMove)
-      window.removeEventListener('mouseup', onUp)
-      window.removeEventListener('touchmove', onMove)
-      window.removeEventListener('touchend', onUp)
-    }
-    window.addEventListener('mousemove', onMove)
-    window.addEventListener('mouseup', onUp)
-    window.addEventListener('touchmove', onMove, { passive: false })
-    window.addEventListener('touchend', onUp)
-  }
+  // Cleaning options (mirror to HA via service calls)
+  const [humidity, setHumidity] = useState(20)
 
   const get    = (id) => id ? (getState(id) ?? null) : null
   const getNum = (id) => { const v = get(id); return (v && v !== 'unavailable') ? parseFloat(v) : null }
-  const isOn   = (id) => get(id) === 'on'
 
-  const vacState   = get(cfg.vacuumEntity)
-  const devState   = get(cfg.stateEntity)
-  const mainState  = vacState || devState
-  const battery    = getNum(cfg.batteryEntity)
-  const room       = get(cfg.currentRoomEntity)
-  const error      = get(cfg.errorEntity)
-  const hasError   = error && error !== 'no_error' && error !== 'unavailable'
+  const vacState  = get(cfg.vacuumEntity)
+  const devState  = get(cfg.stateEntity)
+  const mainState = vacState || devState
+  const battery   = getNum(cfg.batteryEntity)
+  const room      = get(cfg.currentRoomEntity)
+  const error     = get(cfg.errorEntity)
+  const hasError  = error && error !== 'no_error' && error !== 'unavailable'
+  const cleanArea = getNum(cfg.cleanedAreaEntity)
+  const cleanTime = getNum(cfg.cleaningTimeEntity)
 
-  const cleanTime  = getNum(cfg.cleaningTimeEntity)
-  const cleanArea  = getNum(cfg.cleanedAreaEntity)
-  const cleanProg  = getNum(cfg.cleaningProgressEntity)
+  const suction  = get(cfg.suctionLevelEntity)
+  const route    = get(cfg.cleaningRouteEntity)
 
-  const suction    = get(cfg.suctionLevelEntity)
-  const cleanMode  = get(cfg.cleaningModeEntity)
-  const waterTemp  = get(cfg.waterTempEntity)
-  const mopFreq    = get(cfg.mopFreqEntity)
-  const cleanRoute = get(cfg.cleaningRouteEntity)
-  const dryingTime = get(cfg.dryingTimeEntity)
+  const stateColor = sc(mainState)
 
-  const mainBrush     = getNum(cfg.mainBrushEntity)
-  const mainBrushDays = getNum(cfg.mainBrushDaysEntity)
-  const sideBrush     = getNum(cfg.sideBrushEntity)
-  const sideBrushDays = getNum(cfg.sideBrushDaysEntity)
-  const filterPct     = getNum(cfg.filterEntity)
-  const filterDays    = getNum(cfg.filterDaysEntity)
-  const sensorDirty   = getNum(cfg.sensorDirtyEntity)
-  const sensorDays    = getNum(cfg.sensorDirtyDaysEntity)
-  const mopPadLife    = getNum(cfg.mopPadLifeEntity)
-  const mopPadDays    = getNum(cfg.mopPadLifeDaysEntity)
-  const silverIon     = getNum(cfg.silverIonEntity)
-  const silverIonDays = getNum(cfg.silverIonDaysEntity)
+  const rooms = cfg.rooms || []
 
-  const autoEmpty  = get(cfg.autoEmptyEntity)
-  const selfWash   = get(cfg.selfWashEntity)
-  const dustBag    = get(cfg.dustBagEntity)
-  const mopPad     = get(cfg.mopPadEntity)
-  const detergent  = get(cfg.detergentEntity)
-  const dirtyWater = get(cfg.dirtyWaterEntity)
-  const hotWater   = get(cfg.hotWaterEntity)
-  const lowWater   = get(cfg.lowWaterEntity)
-  const drainage   = get(cfg.drainageEntity)
+  useEffect(() => {
+    if (!cfg.cameraEntity) return
+    const iv = setInterval(() => setMapTs(Date.now()), 5000)
+    return () => clearInterval(iv)
+  }, [cfg.cameraEntity])
 
-  const totalArea  = getNum(cfg.totalAreaEntity)
-  const count      = getNum(cfg.countEntity)
-  const totalTime  = getNum(cfg.totalTimeEntity)
-  const firstClean = get(cfg.firstCleanEntity)
+  const cmd = (svc) => callService('vacuum', svc, cfg.vacuumEntity)
 
-  const accent       = dark ? '#a78bfa' : '#7c3aed'
-  const accentLight  = dark ? 'rgba(139,92,246,.07)' : 'rgba(139,92,246,.05)'
-  const accentBorder = dark ? 'rgba(139,92,246,.20)' : 'rgba(139,92,246,.16)'
-  const divider      = dark ? 'rgba(255,255,255,.06)' : 'rgba(0,0,0,.05)'
-
-  const OK_CODES = ['installed', 'available', 'ok', 'no_warning', 'enabled', 'completed']
-  const stationVals = [autoEmpty, selfWash, dustBag, mopPad, detergent, dirtyWater, hotWater, lowWater, drainage]
-  const warnCount = stationVals.filter(v => v && v !== 'unavailable' && !OK_CODES.includes(v) && v !== 'idle').length
-  const stationSummary = stationVals.some(v => v && v !== 'unavailable')
-    ? (warnCount > 0 ? `${warnCount} ⚠` : t('sections.allOk')) : null
-  const stationColor = warnCount > 0 ? '#f59e0b' : '#10b981'
-
-  const consArr = [mainBrush, sideBrush, filterPct, sensorDirty, mopPadLife, silverIon].filter(v => v !== null)
-  const minCons = consArr.length > 0 ? Math.min(...consArr) : null
-  const consSummary = minCons !== null ? `min ${minCons}%` : null
-  const consColor = minCons !== null ? (minCons <= 20 ? '#ef4444' : minCons <= 50 ? '#f59e0b' : '#10b981') : null
-
-  const cmd = async (svc) => {
-    if (cmdBusy) return
-    setCmdBusy(true)
-    await callService('vacuum', svc, cfg.vacuumEntity)
-    setTimeout(() => setCmdBusy(false), 2500)
-  }
-  const toggleSwitch  = (id) => callService('switch', 'toggle', id)
-  const selectOption  = (id, option) => callService('select', 'select_option', id, { option })
-  const resetConsumable = (id) => { if (id) callService('dreame_vacuum', 'vacuum_reset_consumable', id) }
-
-  const startClean = async () => {
-    if (cmdBusy) return
-    setCmdBusy(true)
+  const startClean = () => {
     if (scope === 'all') {
-      await callService('vacuum', 'start', cfg.vacuumEntity)
+      cmd('start')
     } else if (scope === 'room' && selectedRooms.length > 0) {
-      await callService('dreame_vacuum', 'vacuum_clean_segment', cfg.vacuumEntity, { segments: selectedRooms, repeats: 1 })
+      callService('dreame_vacuum', 'vacuum_clean_segment', cfg.vacuumEntity, { segments: selectedRooms, repeats: 1 })
     }
-    setTimeout(() => setCmdBusy(false), 2500)
   }
+
   const toggleRoom = (id) => {
     setScope('room')
     setSelectedRooms(p => p.includes(id) ? p.filter(r => r !== id) : [...p, id])
   }
 
-  const rooms = cfg.rooms || []
+  const onSuction = (val) => cfg.suctionLevelEntity && callService('select', 'select_option', cfg.suctionLevelEntity, { option: val })
+  const onRoute   = (val) => cfg.cleaningRouteEntity && callService('select', 'select_option', cfg.cleaningRouteEntity, { option: val })
 
-  const CLEAN_MODES = [
-    { value: 'sweeping',               icon: Wind,    label: t('cleanMode.sweeping')               },
-    { value: 'mopping',                icon: Droplets, label: t('cleanMode.mopping')               },
-    { value: 'sweeping_and_mopping',   icon: Waves,   label: t('cleanMode.sweeping_and_mopping')   },
-    { value: 'mopping_after_sweeping', icon: Repeat,  label: t('cleanMode.mopping_after_sweeping') },
-  ]
+  const isCharging = mainState === 'docked' || mainState === 'charging_completed'
+  const isCleaning = mainState === 'cleaning'
+  const isPaused   = mainState === 'paused'
 
-  const Divider = () => <div style={{ height: 1, background: divider, margin: '10px 0' }}/>
+  const btnLabel = isCleaning ? t('controls.pause') : isPaused ? t('controls.resume') : t('dreame.pulisci')
+
+  const handleMainBtn = () => {
+    if (isCleaning) { cmd('pause'); return }
+    if (isPaused)   { cmd('resume'); return }
+    setMainOpen(true)
+  }
 
   return (
-    <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .4 }}
-      style={{ background: dark ? accentLight : 'linear-gradient(160deg,#faf5ff,#f5f3ff)', border: `1px solid ${accentBorder}`, borderRadius: 14, overflow: 'hidden' }}>
+    <div style={{ background: '#fff', borderRadius: 22, overflow: 'hidden', boxShadow: '0 8px 40px rgba(0,0,0,.13)', fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', sans-serif", position: 'relative' }}>
 
-      <div style={{ height: 3, background: 'linear-gradient(90deg,#8b5cf6,#a78bfa,#c4b5fd)' }}/>
-
-      <div style={{ padding: '12px 14px', display: 'flex', flexDirection: 'column', gap: 0 }}>
-
-        {/* ── HEADER ── */}
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8 }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8, minWidth: 0 }}>
-            <div style={{
-              width: 34, height: 34, borderRadius: 10, flexShrink: 0,
-              background: dark ? 'rgba(139,92,246,.2)' : 'rgba(139,92,246,.12)',
-              border: `1px solid ${accentBorder}`,
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-            }}>
-              <Bot size={18} color={accent} strokeWidth={2}/>
-            </div>
-            <div style={{ minWidth: 0 }}>
-              <div style={{ fontSize: 14, fontWeight: 800, color: 'var(--text-primary)', lineHeight: 1.2 }}>{cfg.name}</div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 5, marginTop: 3, flexWrap: 'wrap' }}>
-                <span style={{
-                  fontSize: 11, fontWeight: 700, color: sc(mainState),
-                  background: `${sc(mainState)}1a`, border: `1px solid ${sc(mainState)}33`,
-                  borderRadius: 5, padding: '1px 7px',
-                }}>
-                  {tr(mainState, t)}
-                </span>
-                {room && room !== 'unavailable' && (
-                  <span style={{ display: 'flex', alignItems: 'center', gap: 3, fontSize: 11, color: 'var(--text-muted)' }}>
-                    <MapPin size={11} color={accent}/> {room}
-                  </span>
-                )}
-              </div>
-            </div>
+      {/* ── Header ── */}
+      <div style={{ padding: '18px 18px 10px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <div style={{ width: 34, height: 34, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: 10, background: '#f5f5f5', color: '#666', fontSize: 18, cursor: 'pointer' }}>←</div>
+        <div style={{ textAlign: 'center', flex: 1 }}>
+          <div style={{ fontSize: 17, fontWeight: 700, color: '#111' }}>{cfg.name}</div>
+          <div style={{ fontSize: 13, color: stateColor, marginTop: 2, fontWeight: 500 }}>
+            {mainState === 'docked' ? t('state.docked') : mainState === 'cleaning' ? t('state.cleaning') : mainState === 'paused' ? t('state.paused') : mainState === 'returning' ? t('state.returning') : mainState === 'charging_completed' ? t('state.charging_completed') : mainState === 'sleeping' ? t('state.sleeping') : mainState === 'error' ? t('state.error') : mainState === 'idle' ? t('state.idle') : (mainState || '—')}
           </div>
-          {battery !== null && (
-            <div style={{ display: 'flex', alignItems: 'center', gap: 3, flexShrink: 0 }}>
-              {(vacState === 'docked' || devState === 'charging_completed')
-                ? <BatteryCharging size={15} color="#10b981" strokeWidth={2}/>
-                : <Battery size={15} color={battery < 20 ? '#ef4444' : '#10b981'} strokeWidth={2}/>}
-              <span style={{ fontSize: 12, fontWeight: 700, color: battery < 20 ? '#ef4444' : 'var(--text-primary)' }}>{battery}%</span>
-            </div>
-          )}
         </div>
-
-        {hasError && (
-          <div style={{
-            display: 'flex', alignItems: 'center', gap: 6, padding: '7px 10px', borderRadius: 8, marginTop: 8,
-            background: dark ? 'rgba(239,68,68,.1)' : 'rgba(239,68,68,.07)', border: '1px solid rgba(239,68,68,.25)',
-          }}>
-            <AlertTriangle size={13} color="#ef4444" strokeWidth={2}/>
-            <span style={{ fontSize: 12, color: '#ef4444', fontWeight: 600 }}>{error}</span>
-          </div>
-        )}
-
-        {(cleanTime !== null || cleanArea !== null || cleanProg !== null) && (
-          <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginTop: 8 }}>
-            {cleanTime !== null && (
-              <div style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 12, color: 'var(--text-muted)',
-                padding: '5px 9px', borderRadius: 7, background: dark ? 'rgba(255,255,255,.04)' : 'rgba(0,0,0,.03)', border: '1px solid var(--border)' }}>
-                <Clock size={12} color={accent}/> {fmtMin(cleanTime)}
-              </div>
-            )}
-            {cleanArea !== null && (
-              <div style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 12, color: 'var(--text-muted)',
-                padding: '5px 9px', borderRadius: 7, background: dark ? 'rgba(255,255,255,.04)' : 'rgba(0,0,0,.03)', border: '1px solid var(--border)' }}>
-                <AreaChart size={12} color={accent}/> {cleanArea} m²
-              </div>
-            )}
-            {cleanProg !== null && cleanProg > 0 && (
-              <div style={{ display: 'flex', alignItems: 'center', gap: 6, flex: 1, minWidth: 100,
-                padding: '5px 9px', borderRadius: 7, background: dark ? 'rgba(255,255,255,.04)' : 'rgba(0,0,0,.03)', border: '1px solid var(--border)' }}>
-                <span style={{ fontSize: 11, color: 'var(--text-muted)', whiteSpace: 'nowrap' }}>{t('session.progress')}</span>
-                <div style={{ flex: 1, height: 4, borderRadius: 99, background: dark ? 'rgba(255,255,255,.08)' : 'rgba(0,0,0,.06)', overflow: 'hidden' }}>
-                  <div style={{ height: '100%', width: `${cleanProg}%`, background: accent, borderRadius: 99 }}/>
-                </div>
-                <span style={{ fontSize: 11, fontWeight: 700, color: accent }}>{cleanProg}%</span>
-              </div>
-            )}
-          </div>
-        )}
-
-        <div style={{ display: 'flex', gap: 6, marginTop: 10 }}>
-          {(vacState === 'docked' || vacState === 'idle' || !vacState) && (
-            <CtrlBtn label={t('controls.start')} icon={Play} primary dark={dark} disabled={cmdBusy} onClick={() => cmd('start')}/>
-          )}
-          {vacState === 'paused' && (
-            <CtrlBtn label={t('controls.resume')} icon={Play} primary dark={dark} disabled={cmdBusy} onClick={() => cmd('resume')}/>
-          )}
-          {vacState === 'cleaning' && (
-            <CtrlBtn label={t('controls.pause')} icon={Pause} dark={dark} disabled={cmdBusy} onClick={() => cmd('pause')}/>
-          )}
-          {(vacState === 'cleaning' || vacState === 'paused' || vacState === 'returning') && (
-            <CtrlBtn label={t('controls.stop')} icon={Square} danger dark={dark} disabled={cmdBusy} onClick={() => cmd('stop')}/>
-          )}
-          {(vacState === 'cleaning' || vacState === 'paused' || vacState === 'idle') && (
-            <CtrlBtn label={t('controls.base')} icon={Home} dark={dark} disabled={cmdBusy} onClick={() => cmd('return_to_base')}/>
-          )}
-          {vacState === 'docked' && (
-            <CtrlBtn label={t('controls.base')} icon={Home} dark={dark} disabled onClick={() => {}}/>
-          )}
-        </div>
-
-        <Divider/>
-
-        {/* ── PULIZIA ── */}
-        <AccordionSection id="cleaning" label={t('sections.cleaning')} open={open.cleaning} onToggle={toggle} dark={dark}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-
-            {/* Tab CleanGenius | Personalizza */}
-            {cfg.cleanGeniusEntity && (
-              <PillTabs dark={dark} active={cleanTab} onSelect={switchCleanTab}
-                tabs={[
-                  { id: 'genius', label: 'CleanGenius' },
-                  { id: 'custom', label: t('cleaning.customize') },
-                ]}/>
-            )}
-
-            {/* ─ CleanGenius tab ─ */}
-            <AnimatePresence mode="wait" initial={false}>
-              {cleanTab === 'genius' && cfg.cleanGeniusEntity && (
-                <motion.div key="genius"
-                  initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -6 }} transition={{ duration: .18 }}
-                  style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-                  <p style={{ margin: 0, fontSize: 11, color: 'var(--text-muted)', lineHeight: 1.55 }}>
-                    {t('cleaning.geniusDesc')}
-                  </p>
-                  {cfg.cleaningModeEntity && (
-                    <div style={{ display: 'flex', gap: 4, justifyContent: 'center' }}>
-                      {['sweeping_and_mopping', 'mopping_after_sweeping'].map(val => {
-                        const mc = CLEAN_MODES.find(m => m.value === val)
-                        return mc ? (
-                          <ModeCircle key={val} value={val} label={mc.label} icon={mc.icon}
-                            active={cleanMode === val} onSelect={opt => selectOption(cfg.cleaningModeEntity, opt)} dark={dark}/>
-                        ) : null
-                      })}
-                    </div>
-                  )}
-                  {cfg.deepCleanEntity && (
-                    <ToggleRow label={t('cleaning.deepClean')} entityId={cfg.deepCleanEntity}
-                      isOn={isOn(cfg.deepCleanEntity)} onToggle={toggleSwitch} dark={dark}/>
-                  )}
-                </motion.div>
-              )}
-
-              {/* ─ Personalizza tab ─ */}
-              {(cleanTab === 'custom' || !cfg.cleanGeniusEntity) && (
-                <motion.div key="custom"
-                  initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -6 }} transition={{ duration: .18 }}
-                  style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-
-                  {cfg.cleaningModeEntity && (
-                    <div>
-                      <div style={{ fontSize: 10, fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '.5px', marginBottom: 8 }}>
-                        {t('sections.cleanMode')}
-                      </div>
-                      <div style={{ display: 'flex', gap: 2, justifyContent: 'space-around' }}>
-                        {CLEAN_MODES.map(({ value, icon, label }) => (
-                          <ModeCircle key={value} value={value} label={label} icon={icon}
-                            active={cleanMode === value} onSelect={opt => selectOption(cfg.cleaningModeEntity, opt)} dark={dark}/>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {cfg.suctionLevelEntity && (
-                    <div>
-                      <div style={{ fontSize: 10, fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '.5px', marginBottom: 5 }}>
-                        {t('sections.suction')}
-                      </div>
-                      <OptionSelector dark={dark} current={suction} onSelect={opt => selectOption(cfg.suctionLevelEntity, opt)}
-                        options={[
-                          { value: 'quiet',    label: t('suction.quiet')    },
-                          { value: 'standard', label: t('suction.standard') },
-                          { value: 'strong',   label: t('suction.strong')   },
-                          { value: 'turbo',    label: t('suction.turbo')    },
-                          { value: 'max',      label: t('suction.max')      },
-                        ]}/>
-                    </div>
-                  )}
-
-                  {cfg.waterTempEntity && (
-                    <SelectRow label={t('modeBadges.water')} entityId={cfg.waterTempEntity} current={waterTemp}
-                      onSelect={selectOption} dark={dark}
-                      options={[
-                        { value: 'cold', label: t('waterTemp.cold') },
-                        { value: 'warm', label: t('waterTemp.warm') },
-                        { value: 'hot',  label: t('waterTemp.hot')  },
-                      ]}/>
-                  )}
-
-                  {cfg.mopFreqEntity && (
-                    <SelectRow label={t('modeBadges.mopFreq')} entityId={cfg.mopFreqEntity} current={mopFreq}
-                      onSelect={selectOption} dark={dark}
-                      options={[
-                        { value: 'low',    label: t('freq.low')    },
-                        { value: 'medium', label: t('freq.medium') },
-                        { value: 'high',   label: t('freq.high')   },
-                      ]}/>
-                  )}
-                </motion.div>
-              )}
-            </AnimatePresence>
-
-            {/* ─ Scope: Stanza | Tutto | Zona ─ */}
-            <div style={{ height: 1, background: divider }}/>
-            <PillTabs dark={dark} active={scope} onSelect={setScope}
-              tabs={[
-                { id: 'room', label: t('cleaning.scopeRoom') },
-                { id: 'all',  label: t('cleaning.scopeAll')  },
-                { id: 'zone', label: t('cleaning.scopeZone'), disabled: true },
-              ]}/>
-
-            {scope === 'room' && rooms.length > 0 && (
-              <div style={{ display: 'flex', gap: 5, flexWrap: 'wrap' }}>
-                {rooms.filter(r => r.name).map(r => {
-                  const sel = selectedRooms.includes(r.id)
-                  return (
-                    <motion.button key={r.id} whileTap={{ scale: .93 }} onClick={() => toggleRoom(r.id)} style={{
-                      padding: '6px 12px', borderRadius: 7, fontSize: 11, fontWeight: sel ? 700 : 500, cursor: 'pointer',
-                      border: `1px solid ${sel ? (dark ? 'rgba(139,92,246,.5)' : 'rgba(139,92,246,.4)') : 'var(--border-medium)'}`,
-                      background: sel ? (dark ? 'rgba(139,92,246,.22)' : 'rgba(139,92,246,.1)') : 'transparent',
-                      color: sel ? (dark ? '#c4b5fd' : '#7c3aed') : 'var(--text-muted)',
-                    }}>
-                      {r.name}
-                    </motion.button>
-                  )
-                })}
-              </div>
-            )}
-
-            {scope === 'zone' && (
-              <div style={{ padding: '10px', borderRadius: 8, textAlign: 'center',
-                background: dark ? 'rgba(255,255,255,.03)' : 'rgba(0,0,0,.03)', border: '1px dashed var(--border-medium)' }}>
-                <span style={{ fontSize: 11, color: 'var(--text-muted)' }}>{t('cleaning.zoneComingSoon')}</span>
-              </div>
-            )}
-
-            <motion.button whileTap={{ scale: .97 }} onClick={startClean}
-              disabled={cmdBusy || (scope === 'room' && selectedRooms.length === 0)}
-              style={{
-                display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
-                padding: '10px', borderRadius: 10, width: '100%',
-                background: dark ? 'rgba(139,92,246,.22)' : 'rgba(139,92,246,.12)',
-                border: `1px solid ${dark ? 'rgba(139,92,246,.4)' : 'rgba(139,92,246,.3)'}`,
-                color: dark ? '#c4b5fd' : '#7c3aed', fontSize: 13, fontWeight: 700,
-                cursor: cmdBusy ? 'wait' : 'pointer',
-                opacity: (scope === 'room' && selectedRooms.length === 0) ? .4 : 1,
-              }}>
-              <Play size={15} strokeWidth={2}/>
-              {scope === 'all'  ? t('rooms.startAll') :
-               scope === 'room' ? t('rooms.startN', { count: selectedRooms.length }) :
-               t('cleaning.scopeZone')}
-            </motion.button>
-          </div>
-        </AccordionSection>
-
-        {cfg.cameraEntity && (<>
-          <Divider/>
-          <AccordionSection id="map" label={t('map.title')} open={open.map} onToggle={toggle} dark={dark}
-            summary={open.map ? t('map.refreshRate') : null}>
-            <div>
-              <div style={{
-                height: mapHeight, borderRadius: 10, overflow: 'hidden',
-                border: `1px solid ${accentBorder}`,
-                background: dark ? 'rgba(0,0,0,.3)' : 'rgba(0,0,0,.06)',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-              }}>
-                <img key={mapTs}
-                  src={`${haHost.current}/api/camera_proxy/${cfg.cameraEntity}?token=${getAttr(cfg.cameraEntity, 'access_token') ?? ''}&t=${mapTs}`}
-                  alt={t('map.alt')}
-                  style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }}
-                  onError={e => { e.currentTarget.style.display = 'none' }}
-                />
-              </div>
-              <div ref={dragRef} onMouseDown={onResizeStart} onTouchStart={onResizeStart}
-                style={{ height: 18, display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  cursor: 'ns-resize', userSelect: 'none', touchAction: 'none', marginTop: 2 }}>
-                <div style={{ width: 32, height: 4, borderRadius: 99, background: dark ? 'rgba(139,92,246,.35)' : 'rgba(139,92,246,.25)' }}/>
-              </div>
-            </div>
-          </AccordionSection>
-        </>)}
-
-        <Divider/>
-
-        {/* ── STAZIONE ── */}
-        <AccordionSection id="station" label={t('sections.station')} open={open.station} onToggle={toggle} dark={dark}
-          summary={stationSummary} summaryColor={stationColor}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 6 }}>
-            <StatusChip label={t('stationChips.autoEmpty')}  value={autoEmpty}  dark={dark} t={t}/>
-            <StatusChip label={t('stationChips.selfWash')}   value={selfWash}   dark={dark} t={t}/>
-            <StatusChip label={t('stationChips.drainage')}   value={drainage}   dark={dark} t={t}/>
-            <StatusChip label={t('stationChips.dustBag')}    value={dustBag}    dark={dark} t={t}/>
-            <StatusChip label={t('stationChips.mopPad')}     value={mopPad}     dark={dark} t={t}/>
-            <StatusChip label={t('stationChips.detergent')}  value={detergent}  dark={dark} t={t}/>
-            <StatusChip label={t('stationChips.dirtyWater')} value={dirtyWater} dark={dark} t={t}/>
-            <StatusChip label={t('stationChips.hotWater')}   value={hotWater}   dark={dark} t={t}/>
-            <StatusChip label={t('stationChips.lowWater')}   value={lowWater}
-              warn={lowWater && lowWater !== 'no_warning'} dark={dark} t={t}/>
-          </div>
-        </AccordionSection>
-
-        <Divider/>
-
-        {/* ── CONSUMABILI ── */}
-        <AccordionSection id="consumables" label={t('sections.consumables')} open={open.consumables} onToggle={toggle} dark={dark}
-          summary={consSummary} summaryColor={consColor}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 9 }}>
-            {mainBrush  !== null && <ConsBar label={t('consumables.mainBrush')}  pct={mainBrush}  days={mainBrushDays} onReset={() => resetConsumable(cfg.mainBrushEntity)}  dark={dark}/>}
-            {sideBrush  !== null && <ConsBar label={t('consumables.sideBrush')}  pct={sideBrush}  days={sideBrushDays} onReset={() => resetConsumable(cfg.sideBrushEntity)}  dark={dark}/>}
-            {filterPct  !== null && <ConsBar label={t('consumables.filter')}     pct={filterPct}  days={filterDays}    onReset={() => resetConsumable(cfg.filterEntity)}      dark={dark}/>}
-            {sensorDirty !== null && <ConsBar label={t('consumables.sensors')}   pct={sensorDirty} days={sensorDays}  onReset={() => resetConsumable(cfg.sensorDirtyEntity)} dark={dark}/>}
-            {mopPadLife !== null && <ConsBar label={t('consumables.mopPadLife')} pct={mopPadLife} days={mopPadDays}   onReset={() => resetConsumable(cfg.mopPadLifeEntity)}  dark={dark}/>}
-            {silverIon  !== null && <ConsBar label={t('consumables.silverIon')}  pct={silverIon}  days={silverIonDays} onReset={() => resetConsumable(cfg.silverIonEntity)}  dark={dark}/>}
-          </div>
-        </AccordionSection>
-
-        <Divider/>
-
-        {/* ── IMPOSTAZIONI ── */}
-        <AccordionSection id="settings" label={t('sections.quickSettings')} open={open.settings} onToggle={toggle} dark={dark}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-            {cfg.cleaningRouteEntity && (
-              <SelectRow label={t('modeBadges.route')} entityId={cfg.cleaningRouteEntity} current={cleanRoute}
-                onSelect={selectOption} dark={dark}
-                options={[
-                  { value: 'intensive', label: t('route.intensive') },
-                  { value: 'by_area',   label: t('route.by_area')   },
-                  { value: 'by_time',   label: t('route.by_time')   },
-                ]}/>
-            )}
-            {dryingTime && dryingTime !== 'unavailable' && (
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-                padding: '6px 10px', borderRadius: 8,
-                background: dark ? 'rgba(255,255,255,.04)' : 'rgba(0,0,0,.03)', border: '1px solid var(--border)' }}>
-                <span style={{ fontSize: 11, color: 'var(--text-muted)' }}>{t('modeBadges.drying')}</span>
-                <span style={{ fontSize: 11, fontWeight: 700, color: accent }}>{tr(dryingTime, t)}</span>
-              </div>
-            )}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 6 }}>
-              {cfg.dndEntity             && <SwitchToggle label={t('switches.dnd')}         entityId={cfg.dndEntity}             isOn={isOn(cfg.dndEntity)}             onToggle={toggleSwitch} dark={dark}/>}
-              {cfg.carpetBoostEntity     && <SwitchToggle label={t('switches.carpetBoost')} entityId={cfg.carpetBoostEntity}     isOn={isOn(cfg.carpetBoostEntity)}     onToggle={toggleSwitch} dark={dark}/>}
-              {cfg.selfCleanSwitchEntity && <SwitchToggle label={t('switches.selfClean')}   entityId={cfg.selfCleanSwitchEntity} isOn={isOn(cfg.selfCleanSwitchEntity)} onToggle={toggleSwitch} dark={dark}/>}
-              {cfg.autoDryingEntity      && <SwitchToggle label={t('switches.autoDrying')}  entityId={cfg.autoDryingEntity}      isOn={isOn(cfg.autoDryingEntity)}      onToggle={toggleSwitch} dark={dark}/>}
-              {cfg.obstacleEntity        && <SwitchToggle label={t('switches.obstacle')}    entityId={cfg.obstacleEntity}        isOn={isOn(cfg.obstacleEntity)}        onToggle={toggleSwitch} dark={dark}/>}
-              {cfg.resumeEntity          && <SwitchToggle label={t('switches.resume')}      entityId={cfg.resumeEntity}          isOn={isOn(cfg.resumeEntity)}          onToggle={toggleSwitch} dark={dark}/>}
-            </div>
-          </div>
-        </AccordionSection>
-
-        <Divider/>
-
-        {/* ── STATISTICHE ── */}
-        <AccordionSection id="stats" label={t('sections.totalStats')} open={open.stats} onToggle={toggle} dark={dark}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 6 }}>
-              {[
-                { label: t('totals.cleanings'), value: count     !== null ? Math.round(count).toLocaleString('it') : '—', icon: RefreshCw },
-                { label: t('totals.totalArea'), value: totalArea !== null ? fmtArea(totalArea) : '—',                     icon: AreaChart },
-                { label: t('totals.totalTime'), value: totalTime !== null ? fmtMin(Math.round(totalTime)) : '—',           icon: Clock },
-              ].map(({ label, value, icon: Icon }) => (
-                <div key={label} style={{ textAlign: 'center', padding: '8px 4px', borderRadius: 9,
-                  background: dark ? 'rgba(139,92,246,.08)' : 'rgba(139,92,246,.06)', border: `1px solid ${accentBorder}` }}>
-                  <Icon size={12} color={accent} strokeWidth={2}/>
-                  <div style={{ fontSize: 13, fontWeight: 800, color: accent, marginTop: 4 }}>{value}</div>
-                  <div style={{ fontSize: 9, color: 'var(--text-muted)', marginTop: 2, textTransform: 'uppercase', letterSpacing: '.5px' }}>{label}</div>
-                </div>
-              ))}
-            </div>
-            {firstClean && firstClean !== 'unavailable' && (
-              <div style={{ fontSize: 11, color: 'var(--text-muted)', textAlign: 'center' }}>
-                {t('totals.firstClean')} {fmtDate(firstClean)}
-              </div>
-            )}
-          </div>
-        </AccordionSection>
-
+        <div onClick={() => setImpostazioniOpen(true)} style={{ width: 34, height: 34, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: 10, background: '#f5f5f5', color: '#666', fontSize: 20, cursor: 'pointer' }}>⋯</div>
       </div>
-    </motion.div>
+
+      {/* ── Stats row ── */}
+      <div style={{ margin: '10px 16px 0', padding: '10px 0', background: '#f7f7f7', borderRadius: 14, display: 'flex' }}>
+        {[
+          { val: cleanArea !== null ? Math.round(cleanArea) : (battery ?? '—'), unit: cleanArea !== null ? 'm²' : '%', icon: cleanArea !== null ? '📐' : '🔋' },
+          { val: cleanTime !== null ? fmtMin(cleanTime).replace(' min', '').replace('h', '') : '—', unit: cleanTime !== null && cleanTime < 60 ? 'min' : cleanTime !== null ? 'h' : '', icon: '⏱' },
+          { val: battery !== null ? battery : '—', unit: '%', icon: isCharging ? '⚡' : '🔋' },
+        ].map((s, i) => (
+          <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '0 16px', flex: 1, justifyContent: 'center', borderLeft: i > 0 ? '1px solid #e0e0e0' : 'none' }}>
+            <span style={{ fontSize: 17, fontWeight: 800, color: '#111' }}>{s.val}</span>
+            <span style={{ fontSize: 12, color: '#888', marginTop: 1 }}>{s.unit}</span>
+          </div>
+        ))}
+      </div>
+
+      {/* ── Map ── */}
+      <div style={{ marginTop: 10, position: 'relative', height: 260, background: '#eef2f7', overflow: 'hidden' }}>
+        {cfg.cameraEntity ? (
+          <img key={mapTs}
+            src={`${haHost.current}/api/camera_proxy/${cfg.cameraEntity}?token=${getAttr(cfg.cameraEntity, 'access_token') ?? ''}&t=${mapTs}`}
+            alt={t('map.alt')}
+            style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }}
+            onError={e => { e.currentTarget.style.display = 'none' }}
+          />
+        ) : (
+          <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 12 }}>
+            <div style={{ fontSize: 48 }}>🤖</div>
+            <div style={{ fontSize: 13, color: '#999' }}>{cfg.name}</div>
+          </div>
+        )}
+        {/* Map overlay buttons */}
+        <div style={{ position: 'absolute', right: 10, top: '50%', transform: 'translateY(-50%)', display: 'flex', flexDirection: 'column', gap: 6 }}>
+          {['📷', '✏️', '🎬'].map((ico, i) => (
+            <div key={i} style={{ width: 42, height: 42, background: 'white', borderRadius: 11, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 2px 8px rgba(0,0,0,.12)', cursor: 'pointer', fontSize: 17 }}>{ico}</div>
+          ))}
+        </div>
+      </div>
+
+      {/* ── Personalizza button ── */}
+      <div style={{ display: 'flex', alignItems: 'center', padding: '12px 16px 0' }}>
+        <button onClick={() => setMainOpen(true)} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '11px 14px', background: '#f5f5f5', borderRadius: 16, cursor: 'pointer', border: 'none', width: '100%' }}>
+          <div style={{ width: 38, height: 38, background: `linear-gradient(135deg,#f5a228,#e07c0a)`, borderRadius: 11, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round">
+              <circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M4.93 4.93a10 10 0 0 0 0 14.14"/>
+              <path d="M16.24 7.76a6 6 0 0 1 0 8.49"/><path d="M7.76 7.76a6 6 0 0 0 0 8.49"/>
+            </svg>
+          </div>
+          <span style={{ fontSize: 15, fontWeight: 600, color: '#111' }}>{t('dreame.personalizzaBtn')}</span>
+          <span style={{ fontSize: 14, color: '#aaa', marginLeft: 'auto' }}>›</span>
+        </button>
+      </div>
+
+      {/* ── Zona tooltip ── */}
+      {scope === 'zona' && !zonaTooltipDismissed && (
+        <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10, padding: '12px 14px', background: '#e8f1ff', margin: '8px 16px 0', borderRadius: 12, fontSize: 13, color: '#2a5faa', lineHeight: 1.5 }}>
+          <span style={{ flex: 1 }}>{t('dreame.zonaTooltip')}</span>
+          <span onClick={() => setZonaTooltipDismissed(true)} style={{ fontSize: 15, color: '#7aa0d4', cursor: 'pointer', flexShrink: 0, lineHeight: 1, marginTop: 1 }}>✕</span>
+        </div>
+      )}
+
+      {/* ── Scope tabs ── */}
+      <div style={{ padding: '10px 16px 0' }}>
+        <div style={{ display: 'flex', background: '#f0f0f0', borderRadius: 13, padding: 3, gap: 2 }}>
+          {[
+            { id: 'room', label: t('dreame.scopeRoom') },
+            { id: 'all',  label: t('dreame.scopeAll')  },
+            { id: 'zona', label: t('dreame.scopeZona') },
+          ].map(({ id, label }) => (
+            <button key={id} onClick={() => setScope(id)} style={{
+              flex: 1, textAlign: 'center', padding: '9px 4px', borderRadius: 10,
+              fontSize: 14, fontWeight: scope === id ? 700 : 500, cursor: 'pointer', border: 'none', transition: 'all .18s',
+              background: scope === id ? 'white' : 'transparent',
+              color: scope === id ? '#111' : '#888',
+              boxShadow: scope === id ? '0 1px 5px rgba(0,0,0,.1)' : 'none',
+            }}>
+              {label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* ── Zona controls ── */}
+      {scope === 'zona' && (
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '10px 16px 0' }}>
+          <button onClick={() => setZonaCount(p => Math.min(p + 1, 3))} style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '11px 18px', background: '#5b9cf6', border: 'none', borderRadius: 22, color: 'white', fontSize: 14, fontWeight: 700, cursor: 'pointer', boxShadow: '0 2px 8px rgba(91,156,246,.35)' }}>
+            {t('dreame.zonaAdd')}
+          </button>
+          <button onClick={() => setZonaCiclo(p => p >= 3 ? 1 : p + 1)} style={{ width: 48, height: 48, borderRadius: '50%', background: ABG, border: 'none', cursor: 'pointer', fontSize: 15, fontWeight: 800, color: A, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: `0 2px 6px rgba(196,124,24,.18)` }}>
+            x{zonaCiclo}
+          </button>
+        </div>
+      )}
+
+      {/* ── Room chips ── */}
+      {scope === 'room' && rooms.length > 0 && (
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 7, padding: '10px 16px 0' }}>
+          {rooms.filter(r => r.name).map(r => {
+            const sel = selectedRooms.includes(r.id)
+            return (
+              <button key={r.id} onClick={() => toggleRoom(r.id)} style={{
+                padding: '6px 14px', borderRadius: 20, fontSize: 13, cursor: 'pointer', border: `2px solid ${sel ? A : 'transparent'}`,
+                background: sel ? '#fff5e6' : '#f5f5f5', color: sel ? A : '#555', fontWeight: sel ? 700 : 500,
+              }}>
+                {r.name}
+              </button>
+            )
+          })}
+        </div>
+      )}
+
+      {/* ── Error banner ── */}
+      {hasError && (
+        <div style={{ display: 'flex', alignItems: 'center', gap: 6, margin: '8px 16px 0', padding: '8px 12px', borderRadius: 10, background: 'rgba(239,68,68,.07)', border: '1px solid rgba(239,68,68,.25)' }}>
+          <span style={{ fontSize: 14 }}>⚠️</span>
+          <span style={{ fontSize: 12, color: '#ef4444', fontWeight: 600 }}>{error}</span>
+        </div>
+      )}
+
+      {/* ── Action bar ── */}
+      <div style={{ display: 'flex', alignItems: 'center', padding: '14px 20px 20px', borderTop: '1px solid #f0f0f0', marginTop: 12 }}>
+        {/* Pulisci / Pausa / Riprendi */}
+        <button onClick={handleMainBtn} style={{ display: 'flex', alignItems: 'center', gap: 8, flex: 1, background: 'transparent', border: 'none', cursor: 'pointer', padding: 0 }}>
+          <svg width="28" height="28" viewBox="0 0 28 28">
+            {isCleaning
+              ? <><rect x="6" y="5" width="5" height="18" fill={A} rx="1.5"/><rect x="17" y="5" width="5" height="18" fill={A} rx="1.5"/></>
+              : <polygon points="7,4 24,14 7,24" fill={A}/>
+            }
+          </svg>
+          <span style={{ fontSize: 17, fontWeight: 700, color: A }}>{btnLabel}</span>
+        </button>
+        <div style={{ width: 1, height: 32, background: '#e8e8e8', margin: '0 8px' }}/>
+        {/* Base */}
+        <button onClick={() => setBaseOpen(true)} style={{ display: 'flex', alignItems: 'center', gap: 8, flex: 1, justifyContent: 'center', background: 'transparent', border: 'none', cursor: 'pointer', padding: 0 }}>
+          <span style={{ fontSize: 22 }}>🏠</span>
+          <span style={{ fontSize: 17, fontWeight: 600, color: '#333' }}>{t('dreame.baseBtn')}</span>
+        </button>
+        {/* Stop */}
+        {(isCleaning || isPaused) && (
+          <button onClick={() => cmd('stop')} style={{ width: 22, height: 22, borderRadius: '50%', background: '#e8392e', border: 'none', cursor: 'pointer', flexShrink: 0, marginLeft: 8, boxShadow: '0 2px 6px rgba(232,57,46,.35)' }}/>
+        )}
+      </div>
+
+      {/* ── Sheets ── */}
+      <MainSheet
+        open={mainOpen} onClose={() => setMainOpen(false)}
+        cfg={cfg} t={t} callService={callService} getState={getState}
+        suction={suction} onSuction={onSuction}
+        route={route} onRoute={onRoute}
+        humidity={humidity} onHumidity={setHumidity}
+        freqSel={freqSel} onFrequenza={setFreqSel}
+        deepClean={cfg.deepCleanEntity ? getState(cfg.deepCleanEntity) === 'on' : false}
+        onDeepClean={() => cfg.deepCleanEntity && callService('switch', 'toggle', cfg.deepCleanEntity)}
+      />
+      <BaseSheet
+        open={baseOpen} onClose={() => setBaseOpen(false)}
+        cfg={cfg} t={t} callService={callService} getState={getState}
+        svuotOpen={svuotOpen} setSvuotOpen={setSvuotOpen} svuotSel={svuotSel} setSvuotSel={setSvuotSel}
+        lavRipOpen={lavRipOpen} setLavRipOpen={setLavRipOpen} lavRipSel={lavRipSel} setLavRipSel={setLavRipSel}
+        tempAsciugOpen={tempAsciugOpen} setTempAsciugOpen={setTempAsciugOpen} tempAsciugSel={tempAsciugSel} setTempAsciugSel={setTempAsciugSel}
+      />
+      <ImpostazioniSheet
+        open={impostazioniOpen} onClose={() => setImpostazioniOpen(false)}
+        onMopExtend={() => setMopExtendOpen(true)}
+        cfg={cfg} t={t} callService={callService} getState={getState}
+      />
+      <MopExtendSheet
+        open={mopExtendOpen} onClose={() => setMopExtendOpen(false)}
+        onFrequenza={() => setMopExtFreqOpen(true)} freqSel={freqSel}
+        sideReach={sideReach} setSideReach={setSideReach}
+        mopExtend={mopExtend} setMopExtend={setMopExtend}
+        mopVoid={mopVoid} setMopVoid={setMopVoid}
+        mopLegs={mopLegs} setMopLegs={setMopLegs}
+        t={t}
+      />
+      <FrequenzaSheet open={mopExtFreqOpen} onClose={() => setMopExtFreqOpen(false)} selected={freqSel} onSelect={setFreqSel} t={t}/>
+    </div>
   )
 }

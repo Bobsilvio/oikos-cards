@@ -1,10 +1,10 @@
 {
   "id": "vacuum",
   "name": "Dreame Vacuum",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "author": "Oikos",
-  "description": "Card completa Dreame Vacuum: stato, sessione, controlli, modalità, base/stazione, consumabili, switch, totali.",
-  "description_en": "Complete Dreame Vacuum card: state, session, controls, modes, base/station, consumables, switches, totals.",
+  "description": "Card Dreame Vacuum con UI ispirata all'app ufficiale: mappa, sheet di pulizia (CleanGenius/Personalizza), base stazione, impostazioni MopExtend™.",
+  "description_en": "Dreame Vacuum card with app-inspired UI: map, cleaning sheet (CleanGenius/Customize), base station, MopExtend™ settings.",
   "sdkVersion": "^1.0.0",
   "hasSettings": true,
   "preview": "preview.png",
