@@ -39,6 +39,10 @@ const GROUP_KEYS = [
       { key: 'filterDaysEntity'      },
       { key: 'sensorDirtyEntity'     },
       { key: 'sensorDirtyDaysEntity' },
+      { key: 'mopPadLifeEntity'      },
+      { key: 'mopPadLifeDaysEntity'  },
+      { key: 'silverIonEntity'       },
+      { key: 'silverIonDaysEntity'   },
     ],
   },
   {

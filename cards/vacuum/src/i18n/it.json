@@ -71,14 +71,16 @@
     "progress": "Progresso"
   },
   "sections": {
+    "cleaning": "Pulizia",
     "cleanMode": "Modalità pulizia",
     "suction": "Potenza aspirazione",
     "rooms": "Pulizia per stanza",
     "otherSettings": "Altre impostazioni",
     "station": "Stazione",
     "consumables": "Consumabili",
-    "quickSettings": "Impostazioni rapide",
-    "totalStats": "Statistiche totali"
+    "quickSettings": "Impostazioni",
+    "totalStats": "Statistiche totali",
+    "allOk": "OK"
   },
   "controls": {
     "start": "Avvia",
@@ -114,7 +116,9 @@
     "mainBrush": "Sp. principale",
     "sideBrush": "Sp. laterale",
     "filter": "Filtro",
-    "sensors": "Sensori"
+    "sensors": "Sensori",
+    "mopPadLife": "Mop pad",
+    "silverIon": "Argento ionico"
   },
   "switches": {
     "dnd": "Non disturb.",
@@ -184,6 +188,10 @@
       "autoDryingEntity": "Auto-asciuga",
       "obstacleEntity": "Evita ostacoli",
       "resumeEntity": "Riprendi auto",
+      "mopPadLifeEntity": "Mop pad (%)",
+      "mopPadLifeDaysEntity": "Mop pad (gg)",
+      "silverIonEntity": "Argento ionico (%)",
+      "silverIonDaysEntity": "Argento ionico (gg)",
       "totalAreaEntity": "Area totale",
       "countEntity": "N° pulizie",
       "totalTimeEntity": "Minuti totali",
