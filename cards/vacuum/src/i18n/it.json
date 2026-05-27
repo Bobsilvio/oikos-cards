@@ -126,7 +126,8 @@
     "selfClean": "Auto-pulizia",
     "autoDrying": "Auto-asciuga",
     "obstacle": "Evita ostacoli",
-    "resume": "Riprendi auto"
+    "resume": "Riprendi auto",
+    "cleanGenius": "CleanGenius"
   },
   "totals": {
     "cleanings": "Pulizie",
@@ -188,6 +189,7 @@
       "autoDryingEntity": "Auto-asciuga",
       "obstacleEntity": "Evita ostacoli",
       "resumeEntity": "Riprendi auto",
+      "cleanGeniusEntity": "CleanGenius",
       "mopPadLifeEntity": "Mop pad (%)",
       "mopPadLifeDaysEntity": "Mop pad (gg)",
       "silverIonEntity": "Argento ionico (%)",

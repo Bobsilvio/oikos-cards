@@ -126,7 +126,8 @@
     "selfClean": "Auto-clean",
     "autoDrying": "Auto-dry",
     "obstacle": "Avoid obstacles",
-    "resume": "Auto-resume"
+    "resume": "Auto-resume",
+    "cleanGenius": "CleanGenius"
   },
   "totals": {
     "cleanings": "Cleanings",
@@ -188,6 +189,7 @@
       "autoDryingEntity": "Auto-dry",
       "obstacleEntity": "Avoid obstacles",
       "resumeEntity": "Auto-resume",
+      "cleanGeniusEntity": "CleanGenius",
       "mopPadLifeEntity": "Mop pad (%)",
       "mopPadLifeDaysEntity": "Mop pad (days)",
       "silverIonEntity": "Silver ion (%)",

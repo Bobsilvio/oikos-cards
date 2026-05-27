@@ -80,6 +80,7 @@ const GROUP_KEYS = [
       { key: 'autoDryingEntity'      },
       { key: 'obstacleEntity'        },
       { key: 'resumeEntity'          },
+      { key: 'cleanGeniusEntity'     },
     ],
   },
   {

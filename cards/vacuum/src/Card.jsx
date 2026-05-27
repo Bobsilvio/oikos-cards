@@ -635,8 +635,9 @@ export default function VacuumCard() {
               {cfg.carpetBoostEntity     && <SwitchToggle label={t('switches.carpetBoost')} entityId={cfg.carpetBoostEntity}     isOn={isOn(cfg.carpetBoostEntity)}     onToggle={toggleSwitch} dark={dark}/>}
               {cfg.selfCleanSwitchEntity && <SwitchToggle label={t('switches.selfClean')}   entityId={cfg.selfCleanSwitchEntity} isOn={isOn(cfg.selfCleanSwitchEntity)} onToggle={toggleSwitch} dark={dark}/>}
               {cfg.autoDryingEntity      && <SwitchToggle label={t('switches.autoDrying')}  entityId={cfg.autoDryingEntity}      isOn={isOn(cfg.autoDryingEntity)}      onToggle={toggleSwitch} dark={dark}/>}
-              {cfg.obstacleEntity        && <SwitchToggle label={t('switches.obstacle')}    entityId={cfg.obstacleEntity}        isOn={isOn(cfg.obstacleEntity)}        onToggle={toggleSwitch} dark={dark}/>}
-              {cfg.resumeEntity          && <SwitchToggle label={t('switches.resume')}      entityId={cfg.resumeEntity}          isOn={isOn(cfg.resumeEntity)}          onToggle={toggleSwitch} dark={dark}/>}
+              {cfg.obstacleEntity        && <SwitchToggle label={t('switches.obstacle')}      entityId={cfg.obstacleEntity}        isOn={isOn(cfg.obstacleEntity)}        onToggle={toggleSwitch} dark={dark}/>}
+              {cfg.resumeEntity          && <SwitchToggle label={t('switches.resume')}        entityId={cfg.resumeEntity}          isOn={isOn(cfg.resumeEntity)}          onToggle={toggleSwitch} dark={dark}/>}
+              {cfg.cleanGeniusEntity     && <SwitchToggle label={t('switches.cleanGenius')}   entityId={cfg.cleanGeniusEntity}     isOn={isOn(cfg.cleanGeniusEntity)}     onToggle={toggleSwitch} dark={dark}/>}
             </div>
           </div>
         </AccordionSection>
