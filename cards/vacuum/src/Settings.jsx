@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Plus, Trash2 } from 'lucide-react'
+import { Plus, Trash2, Wand2 } from 'lucide-react'
 import { EntityField, useT } from '@oikos/sdk'
-import { getVacuumConfig, saveVacuumConfig } from './vacuumStore'
+import { getVacuumConfig, saveVacuumConfig, derivePrefix, buildEntityMap } from './vacuumStore'
 
 // Group definitions use translation keys instead of hardcoded strings
 const GROUP_KEYS = [
@@ -195,10 +195,20 @@ function RoomsEditor({ rooms, onChange, dark, idLabel, nameLabel, idPlaceholder,
 export default function VacuumSettings({ dark }) {
   const [cfg, setCfg] = useState(getVacuumConfig)
   const [saved, setSaved] = useState(false)
+  const [autoMsg, setAutoMsg] = useState(null)
   const { t } = useT('card-vacuum')
 
   const set = (key, value) => { setCfg(c => ({ ...c, [key]: value })); setSaved(false) }
   const entitySetConfig = fn => { setCfg(fn); setSaved(false) }
+
+  const handleAutoPopulate = () => {
+    const prefix = derivePrefix(cfg.vacuumEntity)
+    if (!prefix) { setAutoMsg('err'); setTimeout(() => setAutoMsg(null), 3000); return }
+    setCfg(c => ({ ...c, ...buildEntityMap(prefix) }))
+    setSaved(false)
+    setAutoMsg(prefix)
+    setTimeout(() => setAutoMsg(null), 4000)
+  }
 
   const handleSave = () => {
     saveVacuumConfig(cfg)
@@ -244,6 +254,27 @@ export default function VacuumSettings({ dark }) {
               </div>
             ))}
           </div>
+          {titleKey === 'main' && (
+            <div style={{ marginTop: 10, display: 'flex', flexDirection: 'column', gap: 5 }}>
+              <motion.button whileTap={{ scale: .97 }} onClick={handleAutoPopulate} style={{
+                display: 'flex', alignItems: 'center', gap: 6,
+                padding: '7px 13px', borderRadius: 8, alignSelf: 'flex-start',
+                fontSize: 12, fontWeight: 700, cursor: 'pointer',
+                border: '1px solid rgba(139,92,246,.4)',
+                background: 'rgba(139,92,246,.1)', color: '#7c3aed',
+              }}>
+                <Wand2 size={13}/> {t('settings.autoPopulate')}
+              </motion.button>
+              {autoMsg === 'err' && (
+                <span style={{ fontSize: 11, color: '#ef4444' }}>{t('settings.autoPopulateNeedEntity')}</span>
+              )}
+              {autoMsg && autoMsg !== 'err' && (
+                <span style={{ fontSize: 11, color: '#10b981' }}>
+                  {t('settings.autoPopulateHint', { prefix: autoMsg })}
+                </span>
+              )}
+            </div>
+          )}
         </div>
       ))}
 

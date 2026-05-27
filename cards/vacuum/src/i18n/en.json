@@ -197,6 +197,9 @@
       "totalTimeEntity": "Total minutes",
       "firstCleanEntity": "First clean"
     },
+    "autoPopulate": "Auto-populate entities",
+    "autoPopulateHint": "✓ Entities populated (prefix: {{prefix}}) — review and save",
+    "autoPopulateNeedEntity": "Set the vacuum entity first (vacuum.robot_name)",
     "saveButton": "Save entities",
     "savedButton": "✓ Saved — reload to apply",
     "addRoom": "Add room",

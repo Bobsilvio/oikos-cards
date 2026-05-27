@@ -74,3 +74,66 @@ export function getVacuumConfig() {
 export function saveVacuumConfig(cfg) {
   localStorage.setItem(LS_KEY, JSON.stringify(cfg))
 }
+
+// Genera tutte le entità dal prefisso dispositivo Tasshack/Dreame
+// es. "vacuum.ambrogio_2" → prefix "ambrogio" → "sensor.ambrogio_battery_level" ...
+export function derivePrefix(vacuumEntityId) {
+  if (!vacuumEntityId || !vacuumEntityId.startsWith('vacuum.')) return null
+  return vacuumEntityId.replace(/^vacuum\./, '').replace(/_\d+$/, '')
+}
+
+export function buildEntityMap(prefix) {
+  const s = (n) => `sensor.${prefix}_${n}`
+  const sel = (n) => `select.${prefix}_${n}`
+  const sw = (n) => `switch.${prefix}_${n}`
+  return {
+    cameraEntity:           `camera.${prefix}_map`,
+    batteryEntity:          s('battery_level'),
+    stateEntity:            s('state'),
+    statusEntity:           s('status'),
+    chargingEntity:         s('charging_status'),
+    currentRoomEntity:      s('current_room'),
+    errorEntity:            s('error'),
+    cleaningTimeEntity:     s('cleaning_time'),
+    cleanedAreaEntity:      s('cleaned_area'),
+    cleaningProgressEntity: s('cleaning_progress'),
+    mainBrushEntity:        s('main_brush_left'),
+    mainBrushDaysEntity:    s('main_brush_time_left'),
+    sideBrushEntity:        s('side_brush_left'),
+    sideBrushDaysEntity:    s('side_brush_time_left'),
+    filterEntity:           s('filter_left'),
+    filterDaysEntity:       s('filter_time_left'),
+    sensorDirtyEntity:      s('sensor_dirty_left'),
+    sensorDirtyDaysEntity:  s('sensor_dirty_time_left'),
+    mopPadLifeEntity:       s('mop_pad_left'),
+    mopPadLifeDaysEntity:   s('mop_pad_time_left'),
+    silverIonEntity:        '',
+    silverIonDaysEntity:    '',
+    suctionLevelEntity:     sel('suction_level'),
+    cleaningModeEntity:     sel('cleaning_mode'),
+    waterTempEntity:        sel('water_temperature'),
+    dryingTimeEntity:       sel('drying_time'),
+    mopFreqEntity:          sel('mop_extend_frequency'),
+    cleaningRouteEntity:    sel('cleaning_route'),
+    autoEmptyEntity:        s('auto_empty_status'),
+    selfWashEntity:         s('self_wash_base_status'),
+    dustBagEntity:          s('dust_bag_status'),
+    mopPadEntity:           s('mop_pad'),
+    detergentEntity:        s('detergent_status'),
+    dirtyWaterEntity:       s('dirty_water_tank_status'),
+    hotWaterEntity:         s('hot_water_status'),
+    lowWaterEntity:         s('low_water_warning'),
+    dustCollectionEntity:   s('dust_collection'),
+    drainageEntity:         s('drainage_status'),
+    dndEntity:              sw('dnd'),
+    carpetBoostEntity:      sw('carpet_boost'),
+    selfCleanSwitchEntity:  sw('self_clean'),
+    autoDryingEntity:       sw('auto_drying'),
+    obstacleEntity:         sw('obstacle_avoidance'),
+    resumeEntity:           sw('resume_cleaning'),
+    totalAreaEntity:        s('total_cleaned_area'),
+    countEntity:            s('cleaning_count'),
+    totalTimeEntity:        s('total_cleaning_time'),
+    firstCleanEntity:       s('first_cleaning_date'),
+  }
+}
