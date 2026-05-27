@@ -1,4 +1,4 @@
-const { jsxs: y, jsx: e } = window.__OIKOS_SDK__.jsxRuntime, v = "oikos-card-cfg-vacuum", E = {
+const { jsxs: d, jsx: e } = window.__OIKOS_SDK__.jsxRuntime, v = "oikos-card-cfg-vacuum", E = {
   name: "Dreame Vacuum",
   vacuumEntity: "vacuum.ambrogio_2",
   cameraEntity: "camera.ambrogio_map",
@@ -41,6 +41,10 @@ const { jsxs: y, jsx: e } = window.__OIKOS_SDK__.jsxRuntime, v = "oikos-card-cfg
   autoDryingEntity: "switch.ambrogio_auto_drying",
   obstacleEntity: "switch.ambrogio_obstacle_avoidance",
   resumeEntity: "switch.ambrogio_resume_cleaning",
+  mopPadLifeEntity: "sensor.ambrogio_mop_pad_left",
+  mopPadLifeDaysEntity: "sensor.ambrogio_mop_pad_time_left",
+  silverIonEntity: "",
+  silverIonDaysEntity: "",
   totalAreaEntity: "sensor.ambrogio_total_cleaned_area",
   countEntity: "sensor.ambrogio_cleaning_count",
   totalTimeEntity: "sensor.ambrogio_total_cleaning_time",
@@ -67,7 +71,7 @@ function S() {
 function C(r) {
   localStorage.setItem(v, JSON.stringify(r));
 }
-const { useState: h } = window.__OIKOS_SDK__.React, { motion: w, AnimatePresence: T } = window.__OIKOS_SDK__.framerMotion, { Plus: D, Trash2: B } = window.__OIKOS_SDK__.icons, { EntityField: K, useT: W } = window.__OIKOS_SDK__, I = [
+const { useState: h } = window.__OIKOS_SDK__.React, { motion: w, AnimatePresence: D } = window.__OIKOS_SDK__.framerMotion, { Plus: T, Trash2: B } = window.__OIKOS_SDK__.icons, { EntityField: I, useT: K } = window.__OIKOS_SDK__, L = [
   {
     titleKey: "main",
     fields: [
@@ -100,7 +104,11 @@ const { useState: h } = window.__OIKOS_SDK__.React, { motion: w, AnimatePresence
       { key: "filterEntity" },
       { key: "filterDaysEntity" },
       { key: "sensorDirtyEntity" },
-      { key: "sensorDirtyDaysEntity" }
+      { key: "sensorDirtyDaysEntity" },
+      { key: "mopPadLifeEntity" },
+      { key: "mopPadLifeDaysEntity" },
+      { key: "silverIonEntity" },
+      { key: "silverIonDaysEntity" }
     ]
   },
   {
@@ -150,7 +158,7 @@ const { useState: h } = window.__OIKOS_SDK__.React, { motion: w, AnimatePresence
     ]
   }
 ];
-function R({ saved: r, onClick: a, saveLabel: m, savedLabel: g }) {
+function P({ saved: r, onClick: a, saveLabel: m, savedLabel: g }) {
   return /* @__PURE__ */ e(
     "button",
     {
@@ -174,10 +182,10 @@ function R({ saved: r, onClick: a, saveLabel: m, savedLabel: g }) {
     }
   );
 }
-function L({ rooms: r, onChange: a, dark: m, idLabel: g, nameLabel: d, idPlaceholder: n, namePlaceholder: _, addLabel: p, hintText: b }) {
+function W({ rooms: r, onChange: a, dark: m, idLabel: g, nameLabel: y, idPlaceholder: n, namePlaceholder: _, addLabel: p, hintText: b }) {
   const u = (s, l, t) => {
-    const x = r.map((f, k) => k === s ? { ...f, [l]: l === "id" ? parseInt(t) || 0 : t } : f);
-    a(x);
+    const k = r.map((f, x) => x === s ? { ...f, [l]: l === "id" ? parseInt(t) || 0 : t } : f);
+    a(k);
   }, i = (s) => a(r.filter((l, t) => t !== s)), c = () => a([...r, { id: "", name: "" }]), o = (s) => ({
     background: "var(--bg-secondary, var(--bg-primary))",
     border: "1px solid var(--border-medium)",
@@ -189,13 +197,13 @@ function L({ rooms: r, onChange: a, dark: m, idLabel: g, nameLabel: d, idPlaceho
     outline: "none",
     width: "100%"
   });
-  return /* @__PURE__ */ y("div", { style: { display: "flex", flexDirection: "column", gap: 6 }, children: [
-    /* @__PURE__ */ y("div", { style: { display: "grid", gridTemplateColumns: "52px 1fr 28px", gap: 6 }, children: [
+  return /* @__PURE__ */ d("div", { style: { display: "flex", flexDirection: "column", gap: 6 }, children: [
+    /* @__PURE__ */ d("div", { style: { display: "grid", gridTemplateColumns: "52px 1fr 28px", gap: 6 }, children: [
       /* @__PURE__ */ e("span", { style: { fontSize: 10, fontWeight: 600, color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: ".4px" }, children: g }),
-      /* @__PURE__ */ e("span", { style: { fontSize: 10, fontWeight: 600, color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: ".4px" }, children: d }),
+      /* @__PURE__ */ e("span", { style: { fontSize: 10, fontWeight: 600, color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: ".4px" }, children: y }),
       /* @__PURE__ */ e("span", {})
     ] }),
-    /* @__PURE__ */ e(T, { initial: !1, children: r.map((s, l) => /* @__PURE__ */ e(
+    /* @__PURE__ */ e(D, { initial: !1, children: r.map((s, l) => /* @__PURE__ */ e(
       w.div,
       {
         initial: { opacity: 0, height: 0 },
@@ -203,7 +211,7 @@ function L({ rooms: r, onChange: a, dark: m, idLabel: g, nameLabel: d, idPlaceho
         exit: { opacity: 0, height: 0 },
         transition: { duration: 0.18 },
         style: { overflow: "hidden" },
-        children: /* @__PURE__ */ y("div", { style: { display: "grid", gridTemplateColumns: "52px 1fr 28px", gap: 6, alignItems: "center" }, children: [
+        children: /* @__PURE__ */ d("div", { style: { display: "grid", gridTemplateColumns: "52px 1fr 28px", gap: 6, alignItems: "center" }, children: [
           /* @__PURE__ */ e(
             "input",
             {
@@ -256,7 +264,7 @@ function L({ rooms: r, onChange: a, dark: m, idLabel: g, nameLabel: d, idPlaceho
       },
       l
     )) }),
-    /* @__PURE__ */ y("button", { onClick: c, style: {
+    /* @__PURE__ */ d("button", { onClick: c, style: {
       display: "flex",
       alignItems: "center",
       gap: 5,
@@ -270,20 +278,20 @@ function L({ rooms: r, onChange: a, dark: m, idLabel: g, nameLabel: d, idPlaceho
       color: "var(--text-muted)",
       cursor: "pointer"
     }, children: [
-      /* @__PURE__ */ e(D, { size: 13 }),
+      /* @__PURE__ */ e(T, { size: 13 }),
       " ",
       p
     ] }),
     /* @__PURE__ */ e("p", { style: { fontSize: 10, color: "var(--text-muted)", lineHeight: 1.5, marginTop: 2 }, children: b })
   ] });
 }
-function O({ dark: r }) {
-  const [a, m] = h(S), [g, d] = h(!1), { t: n } = W("card-vacuum"), _ = (i, c) => {
-    m((o) => ({ ...o, [i]: c })), d(!1);
+function R({ dark: r }) {
+  const [a, m] = h(S), [g, y] = h(!1), { t: n } = K("card-vacuum"), _ = (i, c) => {
+    m((o) => ({ ...o, [i]: c })), y(!1);
   }, p = (i) => {
-    m(i), d(!1);
+    m(i), y(!1);
   }, b = () => {
-    C(a), d(!0), setTimeout(() => d(!1), 1500);
+    C(a), y(!0), setTimeout(() => y(!1), 1500);
   }, u = (i) => ({
     background: "var(--bg-secondary, var(--bg-primary))",
     border: "1px solid var(--border-medium)",
@@ -295,8 +303,8 @@ function O({ dark: r }) {
     outline: "none",
     width: "100%"
   });
-  return /* @__PURE__ */ y("div", { style: { display: "flex", flexDirection: "column", gap: 16 }, children: [
-    I.map(({ titleKey: i, fields: c }) => /* @__PURE__ */ y("div", { children: [
+  return /* @__PURE__ */ d("div", { style: { display: "flex", flexDirection: "column", gap: 16 }, children: [
+    L.map(({ titleKey: i, fields: c }) => /* @__PURE__ */ d("div", { children: [
       /* @__PURE__ */ e("div", { style: {
         fontSize: 10,
         fontWeight: 700,
@@ -305,7 +313,7 @@ function O({ dark: r }) {
         color: "var(--text-muted)",
         marginBottom: 8
       }, children: n(`settings.groups.${i}`) }),
-      /* @__PURE__ */ e("div", { style: { display: "flex", flexDirection: "column", gap: 7 }, children: c.map(({ key: o, mono: s = !0, entity: l = !0 }) => /* @__PURE__ */ e("div", { children: l ? /* @__PURE__ */ e(K, { label: n(`settings.fields.${o}`), field: o, config: a, setConfig: p }) : /* @__PURE__ */ y("div", { style: { display: "flex", flexDirection: "column", gap: 3 }, children: [
+      /* @__PURE__ */ e("div", { style: { display: "flex", flexDirection: "column", gap: 7 }, children: c.map(({ key: o, mono: s = !0, entity: l = !0 }) => /* @__PURE__ */ e("div", { children: l ? /* @__PURE__ */ e(I, { label: n(`settings.fields.${o}`), field: o, config: a, setConfig: p }) : /* @__PURE__ */ d("div", { style: { display: "flex", flexDirection: "column", gap: 3 }, children: [
         /* @__PURE__ */ e("label", { style: {
           fontSize: 11,
           fontWeight: 600,
@@ -318,7 +326,7 @@ function O({ dark: r }) {
           {
             value: a[o] || "",
             onChange: (t) => {
-              _(o, t.target.value), d(!1);
+              _(o, t.target.value), y(!1);
             },
             spellCheck: !1,
             style: u(s),
@@ -328,7 +336,7 @@ function O({ dark: r }) {
         )
       ] }) }, o)) })
     ] }, i)),
-    /* @__PURE__ */ y("div", { children: [
+    /* @__PURE__ */ d("div", { children: [
       /* @__PURE__ */ e("div", { style: {
         fontSize: 10,
         fontWeight: 700,
@@ -338,11 +346,11 @@ function O({ dark: r }) {
         marginBottom: 8
       }, children: n("settings.groups.rooms") }),
       /* @__PURE__ */ e(
-        L,
+        W,
         {
           rooms: a.rooms || [],
           onChange: (i) => {
-            m((c) => ({ ...c, rooms: i })), d(!1);
+            m((c) => ({ ...c, rooms: i })), y(!1);
           },
           dark: r,
           idLabel: n("settings.roomIdLabel"),
@@ -354,9 +362,9 @@ function O({ dark: r }) {
         }
       )
     ] }),
-    /* @__PURE__ */ e(R, { onClick: b, saved: g, saveLabel: n("settings.saveButton"), savedLabel: n("settings.savedButton") })
+    /* @__PURE__ */ e(P, { onClick: b, saved: g, saveLabel: n("settings.saveButton"), savedLabel: n("settings.savedButton") })
   ] });
 }
 export {
-  O as default
+  R as default
 };
