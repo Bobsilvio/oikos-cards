@@ -81,6 +81,7 @@ const GROUP_KEYS = [
       { key: 'obstacleEntity'        },
       { key: 'resumeEntity'          },
       { key: 'cleanGeniusEntity'     },
+      { key: 'deepCleanEntity'       },
     ],
   },
   {

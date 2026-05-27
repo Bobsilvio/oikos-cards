@@ -1,13 +1,13 @@
 /**
- * VacuumCard — Dreame Vacuum, accordion layout
- * v1.1.0 — sezioni collassabili, reset consumabili, selects interattivi
+ * VacuumCard — Dreame Vacuum
+ * v1.2.0 — Pulizia con tab CleanGenius/Personalizza + scope Stanza/Tutto/Zona
  */
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   Bot, BatteryCharging, Battery, Play, Pause, Square, Home,
   MapPin, Clock, RefreshCw, AlertTriangle, AreaChart,
-  ChevronDown, ChevronUp,
+  ChevronDown, ChevronUp, Wind, Droplets, Waves, Repeat,
 } from 'lucide-react'
 import { useDashboard, getHAConfig, registerCardTranslations, useT } from '@oikos/sdk'
 import { getVacuumConfig } from './vacuumStore'
@@ -94,6 +94,89 @@ function AccordionSection({ id, label, open, onToggle, summary, summaryColor, da
   )
 }
 
+// Tab tipo pill (CleanGenius | Personalizza  oppure  Stanza | Tutto | Zona)
+function PillTabs({ tabs, active, onSelect, dark }) {
+  return (
+    <div style={{
+      display: 'flex', gap: 3, padding: 3, borderRadius: 11,
+      background: dark ? 'rgba(255,255,255,.06)' : 'rgba(0,0,0,.06)',
+    }}>
+      {tabs.map(({ id, label, disabled }) => {
+        const isActive = active === id
+        return (
+          <motion.button key={id} whileTap={!disabled ? { scale: .97 } : {}}
+            onClick={() => !disabled && !isActive && onSelect(id)}
+            style={{
+              flex: 1, padding: '7px 4px', borderRadius: 8,
+              fontSize: 12, fontWeight: isActive ? 700 : 500,
+              textAlign: 'center',
+              background: isActive ? (dark ? '#2d2040' : '#fff') : 'transparent',
+              color: isActive ? (dark ? '#c4b5fd' : '#7c3aed')
+                : disabled ? (dark ? 'rgba(255,255,255,.2)' : 'rgba(0,0,0,.2)')
+                : 'var(--text-muted)',
+              border: 'none', cursor: disabled ? 'default' : isActive ? 'default' : 'pointer',
+              boxShadow: isActive ? '0 1px 4px rgba(0,0,0,.12)' : 'none',
+              transition: 'background .15s, color .15s',
+            }}>
+            {label}
+          </motion.button>
+        )
+      })}
+    </div>
+  )
+}
+
+// Cerchio con icona per la modalità pulizia (stile app Dreame)
+function ModeCircle({ value, label, active, onSelect, dark, icon: Icon }) {
+  const accent = dark ? '#a78bfa' : '#7c3aed'
+  return (
+    <motion.button whileTap={!active ? { scale: .93 } : {}} onClick={() => !active && onSelect(value)} style={{
+      display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6,
+      flex: 1, padding: '8px 2px', background: 'transparent', border: 'none', cursor: active ? 'default' : 'pointer',
+    }}>
+      <div style={{
+        width: 50, height: 50, borderRadius: '50%', flexShrink: 0,
+        background: active ? (dark ? 'rgba(139,92,246,.22)' : 'rgba(139,92,246,.1)') : (dark ? 'rgba(255,255,255,.06)' : 'rgba(0,0,0,.05)'),
+        border: `2px solid ${active ? accent : 'transparent'}`,
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        transition: 'background .15s, border-color .15s',
+      }}>
+        <Icon size={20} color={active ? accent : 'var(--text-muted)'} strokeWidth={1.5}/>
+      </div>
+      <span style={{
+        fontSize: 10, fontWeight: active ? 700 : 500, textAlign: 'center', lineHeight: 1.3,
+        color: active ? accent : 'var(--text-muted)', maxWidth: 56,
+      }}>
+        {label}
+      </span>
+    </motion.button>
+  )
+}
+
+// Toggle row stile iOS (per deep clean, ecc.)
+function ToggleRow({ label, entityId, isOn, onToggle, dark }) {
+  const accent = dark ? '#a78bfa' : '#7c3aed'
+  return (
+    <div style={{
+      display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+      padding: '8px 12px', borderRadius: 10,
+      background: dark ? 'rgba(255,255,255,.04)' : 'rgba(0,0,0,.03)', border: '1px solid var(--border)',
+    }}>
+      <span style={{ fontSize: 12, fontWeight: 600, color: 'var(--text-primary)' }}>{label}</span>
+      <motion.button whileTap={{ scale: .93 }} onClick={() => onToggle(entityId)} style={{
+        width: 40, height: 22, borderRadius: 11, position: 'relative',
+        cursor: 'pointer', border: 'none', flexShrink: 0,
+        background: isOn ? accent : (dark ? 'rgba(255,255,255,.15)' : 'rgba(0,0,0,.12)'),
+        transition: 'background .2s',
+      }}>
+        <motion.div animate={{ x: isOn ? 20 : 2 }}
+          transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+          style={{ position: 'absolute', top: 3, width: 16, height: 16, borderRadius: '50%', background: '#fff' }}/>
+      </motion.button>
+    </div>
+  )
+}
+
 function ConsBar({ label, pct, days, onReset, dark }) {
   const n = pct ?? 0
   const color = n <= 20 ? '#ef4444' : n <= 50 ? '#f59e0b' : '#10b981'
@@ -154,16 +237,28 @@ function OptionSelector({ options, current, onSelect, dark }) {
         return (
           <motion.button key={value} whileTap={{ scale: .93 }} onClick={() => !active && onSelect(value)} style={{
             flex: 1, padding: '6px 4px', borderRadius: 7, fontSize: 11,
-            fontWeight: active ? 700 : 500, textAlign: 'center', whiteSpace: 'nowrap',
+            fontWeight: active ? 700 : 500, textAlign: 'center',
             border: `1px solid ${active ? (dark ? 'rgba(139,92,246,.5)' : 'rgba(139,92,246,.4)') : 'var(--border-medium)'}`,
             background: active ? (dark ? 'rgba(139,92,246,.22)' : 'rgba(139,92,246,.1)') : 'transparent',
             color: active ? (dark ? '#c4b5fd' : '#7c3aed') : 'var(--text-muted)',
-            cursor: active ? 'default' : 'pointer', overflow: 'hidden', textOverflow: 'ellipsis',
+            cursor: active ? 'default' : 'pointer', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
           }}>
             {label}
           </motion.button>
         )
       })}
+    </div>
+  )
+}
+
+function SelectRow({ label, entityId, current, options, onSelect, dark }) {
+  if (!entityId || !current || current === 'unavailable') return null
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
+      <div style={{ fontSize: 10, fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '.5px' }}>
+        {label}
+      </div>
+      <OptionSelector options={options} current={current} onSelect={opt => onSelect(entityId, opt)} dark={dark}/>
     </div>
   )
 }
@@ -198,18 +293,6 @@ function SwitchToggle({ label, entityId, isOn, onToggle, dark }) {
   )
 }
 
-function SelectRow({ label, entityId, current, options, onSelect, dark }) {
-  if (!entityId || !current || current === 'unavailable') return null
-  return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
-      <div style={{ fontSize: 10, fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '.5px' }}>
-        {label}
-      </div>
-      <OptionSelector options={options} current={current} onSelect={opt => onSelect(entityId, opt)} dark={dark}/>
-    </div>
-  )
-}
-
 // ─── Card principale ────────────────────────────────────────────────────────
 export default function VacuumCard() {
   const { dark, callService, getState, getAttr } = useDashboard()
@@ -217,14 +300,29 @@ export default function VacuumCard() {
   const [cfg] = useState(getVacuumConfig)
   const [cmdBusy, setCmdBusy] = useState(false)
   const [open, setOpen] = useState({ cleaning: true, map: false, station: false, consumables: false, settings: false, stats: false })
+  const [cleanTab, setCleanTab] = useState('custom')
+  const [scope, setScope] = useState('all')
+  const [selectedRooms, setSelectedRooms] = useState([])
   const [mapTs, setMapTs] = useState(() => Date.now())
   const [mapHeight, setMapHeight] = useState(240)
-  const [selectedRooms, setSelectedRooms] = useState([])
-  const [allRooms, setAllRooms] = useState(true)
   const haHost = useRef(getHAConfig().host)
   const dragRef = useRef(null)
 
   const toggle = (key) => setOpen(p => ({ ...p, [key]: !p[key] }))
+
+  // Sync cleanTab con stato switch CleanGenius
+  const cleanGeniusOn = getState(cfg.cleanGeniusEntity) === 'on'
+  useEffect(() => {
+    if (!cfg.cleanGeniusEntity) return
+    setCleanTab(cleanGeniusOn ? 'genius' : 'custom')
+  }, [cleanGeniusOn, cfg.cleanGeniusEntity])
+
+  const switchCleanTab = (tab) => {
+    setCleanTab(tab)
+    if (cfg.cleanGeniusEntity) {
+      callService('switch', tab === 'genius' ? 'turn_on' : 'turn_off', cfg.cleanGeniusEntity)
+    }
+  }
 
   useEffect(() => {
     if (!open.map || !cfg.cameraEntity) return
@@ -308,7 +406,6 @@ export default function VacuumCard() {
   const accentBorder = dark ? 'rgba(139,92,246,.20)' : 'rgba(139,92,246,.16)'
   const divider      = dark ? 'rgba(255,255,255,.06)' : 'rgba(0,0,0,.05)'
 
-  // Summaries accordion
   const OK_CODES = ['installed', 'available', 'ok', 'no_warning', 'enabled', 'completed']
   const stationVals = [autoEmpty, selfWash, dustBag, mopPad, detergent, dirtyWater, hotWater, lowWater, drainage]
   const warnCount = stationVals.filter(v => v && v !== 'unavailable' && !OK_CODES.includes(v) && v !== 'idle').length
@@ -331,20 +428,29 @@ export default function VacuumCard() {
   const selectOption  = (id, option) => callService('select', 'select_option', id, { option })
   const resetConsumable = (id) => { if (id) callService('dreame_vacuum', 'vacuum_reset_consumable', id) }
 
-  const startRooms = async () => {
+  const startClean = async () => {
     if (cmdBusy) return
     setCmdBusy(true)
-    if (allRooms) {
+    if (scope === 'all') {
       await callService('vacuum', 'start', cfg.vacuumEntity)
-    } else if (selectedRooms.length > 0) {
+    } else if (scope === 'room' && selectedRooms.length > 0) {
       await callService('dreame_vacuum', 'vacuum_clean_segment', cfg.vacuumEntity, { segments: selectedRooms, repeats: 1 })
     }
     setTimeout(() => setCmdBusy(false), 2500)
   }
-  const toggleRoom    = (id) => { setAllRooms(false); setSelectedRooms(p => p.includes(id) ? p.filter(r => r !== id) : [...p, id]) }
-  const toggleAllRooms = () => { setAllRooms(true); setSelectedRooms([]) }
+  const toggleRoom = (id) => {
+    setScope('room')
+    setSelectedRooms(p => p.includes(id) ? p.filter(r => r !== id) : [...p, id])
+  }
 
   const rooms = cfg.rooms || []
+
+  const CLEAN_MODES = [
+    { value: 'sweeping',               icon: Wind,    label: t('cleanMode.sweeping')               },
+    { value: 'mopping',                icon: Droplets, label: t('cleanMode.mopping')               },
+    { value: 'sweeping_and_mopping',   icon: Waves,   label: t('cleanMode.sweeping_and_mopping')   },
+    { value: 'mopping_after_sweeping', icon: Repeat,  label: t('cleanMode.mopping_after_sweeping') },
+  ]
 
   const Divider = () => <div style={{ height: 1, background: divider, margin: '10px 0' }}/>
 
@@ -457,79 +563,155 @@ export default function VacuumCard() {
 
         {/* ── PULIZIA ── */}
         <AccordionSection id="cleaning" label={t('sections.cleaning')} open={open.cleaning} onToggle={toggle} dark={dark}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-            {cfg.cleaningModeEntity && (
-              <div>
-                <div style={{ fontSize: 10, fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '.5px', marginBottom: 5 }}>
-                  {t('sections.cleanMode')}
-                </div>
-                <OptionSelector dark={dark} current={cleanMode} onSelect={opt => selectOption(cfg.cleaningModeEntity, opt)}
-                  options={[
-                    { value: 'sweeping',             label: t('cleanMode.sweeping')             },
-                    { value: 'mopping',              label: t('cleanMode.mopping')              },
-                    { value: 'sweeping_and_mopping', label: t('cleanMode.sweeping_and_mopping') },
-                  ]}/>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+
+            {/* Tab CleanGenius | Personalizza */}
+            {cfg.cleanGeniusEntity && (
+              <PillTabs dark={dark} active={cleanTab} onSelect={switchCleanTab}
+                tabs={[
+                  { id: 'genius', label: 'CleanGenius' },
+                  { id: 'custom', label: t('cleaning.customize') },
+                ]}/>
+            )}
+
+            {/* ─ CleanGenius tab ─ */}
+            <AnimatePresence mode="wait" initial={false}>
+              {cleanTab === 'genius' && cfg.cleanGeniusEntity && (
+                <motion.div key="genius"
+                  initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -6 }} transition={{ duration: .18 }}
+                  style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                  <p style={{ margin: 0, fontSize: 11, color: 'var(--text-muted)', lineHeight: 1.55 }}>
+                    {t('cleaning.geniusDesc')}
+                  </p>
+                  {cfg.cleaningModeEntity && (
+                    <div style={{ display: 'flex', gap: 4, justifyContent: 'center' }}>
+                      {['sweeping_and_mopping', 'mopping_after_sweeping'].map(val => {
+                        const mc = CLEAN_MODES.find(m => m.value === val)
+                        return mc ? (
+                          <ModeCircle key={val} value={val} label={mc.label} icon={mc.icon}
+                            active={cleanMode === val} onSelect={opt => selectOption(cfg.cleaningModeEntity, opt)} dark={dark}/>
+                        ) : null
+                      })}
+                    </div>
+                  )}
+                  {cfg.deepCleanEntity && (
+                    <ToggleRow label={t('cleaning.deepClean')} entityId={cfg.deepCleanEntity}
+                      isOn={isOn(cfg.deepCleanEntity)} onToggle={toggleSwitch} dark={dark}/>
+                  )}
+                </motion.div>
+              )}
+
+              {/* ─ Personalizza tab ─ */}
+              {(cleanTab === 'custom' || !cfg.cleanGeniusEntity) && (
+                <motion.div key="custom"
+                  initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -6 }} transition={{ duration: .18 }}
+                  style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+
+                  {cfg.cleaningModeEntity && (
+                    <div>
+                      <div style={{ fontSize: 10, fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '.5px', marginBottom: 8 }}>
+                        {t('sections.cleanMode')}
+                      </div>
+                      <div style={{ display: 'flex', gap: 2, justifyContent: 'space-around' }}>
+                        {CLEAN_MODES.map(({ value, icon, label }) => (
+                          <ModeCircle key={value} value={value} label={label} icon={icon}
+                            active={cleanMode === value} onSelect={opt => selectOption(cfg.cleaningModeEntity, opt)} dark={dark}/>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {cfg.suctionLevelEntity && (
+                    <div>
+                      <div style={{ fontSize: 10, fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '.5px', marginBottom: 5 }}>
+                        {t('sections.suction')}
+                      </div>
+                      <OptionSelector dark={dark} current={suction} onSelect={opt => selectOption(cfg.suctionLevelEntity, opt)}
+                        options={[
+                          { value: 'quiet',    label: t('suction.quiet')    },
+                          { value: 'standard', label: t('suction.standard') },
+                          { value: 'strong',   label: t('suction.strong')   },
+                          { value: 'turbo',    label: t('suction.turbo')    },
+                          { value: 'max',      label: t('suction.max')      },
+                        ]}/>
+                    </div>
+                  )}
+
+                  {cfg.waterTempEntity && (
+                    <SelectRow label={t('modeBadges.water')} entityId={cfg.waterTempEntity} current={waterTemp}
+                      onSelect={selectOption} dark={dark}
+                      options={[
+                        { value: 'cold', label: t('waterTemp.cold') },
+                        { value: 'warm', label: t('waterTemp.warm') },
+                        { value: 'hot',  label: t('waterTemp.hot')  },
+                      ]}/>
+                  )}
+
+                  {cfg.mopFreqEntity && (
+                    <SelectRow label={t('modeBadges.mopFreq')} entityId={cfg.mopFreqEntity} current={mopFreq}
+                      onSelect={selectOption} dark={dark}
+                      options={[
+                        { value: 'low',    label: t('freq.low')    },
+                        { value: 'medium', label: t('freq.medium') },
+                        { value: 'high',   label: t('freq.high')   },
+                      ]}/>
+                  )}
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {/* ─ Scope: Stanza | Tutto | Zona ─ */}
+            <div style={{ height: 1, background: divider }}/>
+            <PillTabs dark={dark} active={scope} onSelect={setScope}
+              tabs={[
+                { id: 'room', label: t('cleaning.scopeRoom') },
+                { id: 'all',  label: t('cleaning.scopeAll')  },
+                { id: 'zone', label: t('cleaning.scopeZone'), disabled: true },
+              ]}/>
+
+            {scope === 'room' && rooms.length > 0 && (
+              <div style={{ display: 'flex', gap: 5, flexWrap: 'wrap' }}>
+                {rooms.filter(r => r.name).map(r => {
+                  const sel = selectedRooms.includes(r.id)
+                  return (
+                    <motion.button key={r.id} whileTap={{ scale: .93 }} onClick={() => toggleRoom(r.id)} style={{
+                      padding: '6px 12px', borderRadius: 7, fontSize: 11, fontWeight: sel ? 700 : 500, cursor: 'pointer',
+                      border: `1px solid ${sel ? (dark ? 'rgba(139,92,246,.5)' : 'rgba(139,92,246,.4)') : 'var(--border-medium)'}`,
+                      background: sel ? (dark ? 'rgba(139,92,246,.22)' : 'rgba(139,92,246,.1)') : 'transparent',
+                      color: sel ? (dark ? '#c4b5fd' : '#7c3aed') : 'var(--text-muted)',
+                    }}>
+                      {r.name}
+                    </motion.button>
+                  )
+                })}
               </div>
             )}
-            {cfg.suctionLevelEntity && (
-              <div>
-                <div style={{ fontSize: 10, fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '.5px', marginBottom: 5 }}>
-                  {t('sections.suction')}
-                </div>
-                <OptionSelector dark={dark} current={suction} onSelect={opt => selectOption(cfg.suctionLevelEntity, opt)}
-                  options={[
-                    { value: 'quiet',    label: t('suction.quiet')    },
-                    { value: 'standard', label: t('suction.standard') },
-                    { value: 'strong',   label: t('suction.strong')   },
-                    { value: 'turbo',    label: t('suction.turbo')    },
-                    { value: 'max',      label: t('suction.max')      },
-                  ]}/>
+
+            {scope === 'zone' && (
+              <div style={{ padding: '10px', borderRadius: 8, textAlign: 'center',
+                background: dark ? 'rgba(255,255,255,.03)' : 'rgba(0,0,0,.03)', border: '1px dashed var(--border-medium)' }}>
+                <span style={{ fontSize: 11, color: 'var(--text-muted)' }}>{t('cleaning.zoneComingSoon')}</span>
               </div>
             )}
-            {rooms.length > 0 && (
-              <div>
-                <div style={{ fontSize: 10, fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '.5px', marginBottom: 5 }}>
-                  {t('sections.rooms')}
-                </div>
-                <div style={{ display: 'flex', gap: 5, flexWrap: 'wrap' }}>
-                  <motion.button whileTap={{ scale: .93 }} onClick={toggleAllRooms} style={{
-                    padding: '6px 12px', borderRadius: 7, fontSize: 11, fontWeight: allRooms ? 700 : 500, cursor: 'pointer',
-                    border: `1px solid ${allRooms ? (dark ? 'rgba(139,92,246,.5)' : 'rgba(139,92,246,.4)') : 'var(--border-medium)'}`,
-                    background: allRooms ? (dark ? 'rgba(139,92,246,.22)' : 'rgba(139,92,246,.1)') : 'transparent',
-                    color: allRooms ? (dark ? '#c4b5fd' : '#7c3aed') : 'var(--text-muted)',
-                  }}>
-                    {t('rooms.allHome')}
-                  </motion.button>
-                  {rooms.filter(r => r.name).map(r => {
-                    const sel = selectedRooms.includes(r.id)
-                    return (
-                      <motion.button key={r.id} whileTap={{ scale: .93 }} onClick={() => toggleRoom(r.id)} style={{
-                        padding: '6px 12px', borderRadius: 7, fontSize: 11, fontWeight: sel ? 700 : 500, cursor: 'pointer',
-                        border: `1px solid ${sel ? (dark ? 'rgba(139,92,246,.5)' : 'rgba(139,92,246,.4)') : 'var(--border-medium)'}`,
-                        background: sel ? (dark ? 'rgba(139,92,246,.22)' : 'rgba(139,92,246,.1)') : 'transparent',
-                        color: sel ? (dark ? '#c4b5fd' : '#7c3aed') : 'var(--text-muted)',
-                      }}>
-                        {r.name}
-                      </motion.button>
-                    )
-                  })}
-                </div>
-                <motion.button whileTap={{ scale: .97 }} onClick={startRooms}
-                  disabled={cmdBusy || (!allRooms && selectedRooms.length === 0)}
-                  style={{
-                    display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
-                    padding: '10px', borderRadius: 10, width: '100%', marginTop: 8,
-                    background: dark ? 'rgba(139,92,246,.22)' : 'rgba(139,92,246,.12)',
-                    border: `1px solid ${dark ? 'rgba(139,92,246,.4)' : 'rgba(139,92,246,.3)'}`,
-                    color: dark ? '#c4b5fd' : '#7c3aed', fontSize: 13, fontWeight: 700,
-                    cursor: cmdBusy ? 'wait' : 'pointer',
-                    opacity: (!allRooms && selectedRooms.length === 0) ? .4 : 1,
-                  }}>
-                  <Play size={15} strokeWidth={2}/>
-                  {allRooms ? t('rooms.startAll') : t('rooms.startN', { count: selectedRooms.length })}
-                </motion.button>
-              </div>
-            )}
+
+            <motion.button whileTap={{ scale: .97 }} onClick={startClean}
+              disabled={cmdBusy || (scope === 'room' && selectedRooms.length === 0)}
+              style={{
+                display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
+                padding: '10px', borderRadius: 10, width: '100%',
+                background: dark ? 'rgba(139,92,246,.22)' : 'rgba(139,92,246,.12)',
+                border: `1px solid ${dark ? 'rgba(139,92,246,.4)' : 'rgba(139,92,246,.3)'}`,
+                color: dark ? '#c4b5fd' : '#7c3aed', fontSize: 13, fontWeight: 700,
+                cursor: cmdBusy ? 'wait' : 'pointer',
+                opacity: (scope === 'room' && selectedRooms.length === 0) ? .4 : 1,
+              }}>
+              <Play size={15} strokeWidth={2}/>
+              {scope === 'all'  ? t('rooms.startAll') :
+               scope === 'room' ? t('rooms.startN', { count: selectedRooms.length }) :
+               t('cleaning.scopeZone')}
+            </motion.button>
           </div>
         </AccordionSection>
 
@@ -585,12 +767,12 @@ export default function VacuumCard() {
         <AccordionSection id="consumables" label={t('sections.consumables')} open={open.consumables} onToggle={toggle} dark={dark}
           summary={consSummary} summaryColor={consColor}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 9 }}>
-            {mainBrush  !== null && <ConsBar label={t('consumables.mainBrush')} pct={mainBrush}  days={mainBrushDays} onReset={() => resetConsumable(cfg.mainBrushEntity)}  dark={dark}/>}
-            {sideBrush  !== null && <ConsBar label={t('consumables.sideBrush')} pct={sideBrush}  days={sideBrushDays} onReset={() => resetConsumable(cfg.sideBrushEntity)}  dark={dark}/>}
-            {filterPct  !== null && <ConsBar label={t('consumables.filter')}    pct={filterPct}  days={filterDays}    onReset={() => resetConsumable(cfg.filterEntity)}      dark={dark}/>}
-            {sensorDirty !== null && <ConsBar label={t('consumables.sensors')}  pct={sensorDirty} days={sensorDays}  onReset={() => resetConsumable(cfg.sensorDirtyEntity)} dark={dark}/>}
-            {mopPadLife !== null && <ConsBar label={t('consumables.mopPadLife')} pct={mopPadLife} days={mopPadDays}  onReset={() => resetConsumable(cfg.mopPadLifeEntity)}  dark={dark}/>}
-            {silverIon  !== null && <ConsBar label={t('consumables.silverIon')} pct={silverIon}  days={silverIonDays} onReset={() => resetConsumable(cfg.silverIonEntity)}   dark={dark}/>}
+            {mainBrush  !== null && <ConsBar label={t('consumables.mainBrush')}  pct={mainBrush}  days={mainBrushDays} onReset={() => resetConsumable(cfg.mainBrushEntity)}  dark={dark}/>}
+            {sideBrush  !== null && <ConsBar label={t('consumables.sideBrush')}  pct={sideBrush}  days={sideBrushDays} onReset={() => resetConsumable(cfg.sideBrushEntity)}  dark={dark}/>}
+            {filterPct  !== null && <ConsBar label={t('consumables.filter')}     pct={filterPct}  days={filterDays}    onReset={() => resetConsumable(cfg.filterEntity)}      dark={dark}/>}
+            {sensorDirty !== null && <ConsBar label={t('consumables.sensors')}   pct={sensorDirty} days={sensorDays}  onReset={() => resetConsumable(cfg.sensorDirtyEntity)} dark={dark}/>}
+            {mopPadLife !== null && <ConsBar label={t('consumables.mopPadLife')} pct={mopPadLife} days={mopPadDays}   onReset={() => resetConsumable(cfg.mopPadLifeEntity)}  dark={dark}/>}
+            {silverIon  !== null && <ConsBar label={t('consumables.silverIon')}  pct={silverIon}  days={silverIonDays} onReset={() => resetConsumable(cfg.silverIonEntity)}  dark={dark}/>}
           </div>
         </AccordionSection>
 
@@ -599,24 +781,9 @@ export default function VacuumCard() {
         {/* ── IMPOSTAZIONI ── */}
         <AccordionSection id="settings" label={t('sections.quickSettings')} open={open.settings} onToggle={toggle} dark={dark}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-            {cfg.waterTempEntity && (
-              <SelectRow label={t('modeBadges.water')} entityId={cfg.waterTempEntity} current={waterTemp} onSelect={selectOption} dark={dark}
-                options={[
-                  { value: 'cold', label: t('waterTemp.cold') },
-                  { value: 'warm', label: t('waterTemp.warm') },
-                  { value: 'hot',  label: t('waterTemp.hot')  },
-                ]}/>
-            )}
-            {cfg.mopFreqEntity && (
-              <SelectRow label={t('modeBadges.mopFreq')} entityId={cfg.mopFreqEntity} current={mopFreq} onSelect={selectOption} dark={dark}
-                options={[
-                  { value: 'low',    label: t('freq.low')    },
-                  { value: 'medium', label: t('freq.medium') },
-                  { value: 'high',   label: t('freq.high')   },
-                ]}/>
-            )}
             {cfg.cleaningRouteEntity && (
-              <SelectRow label={t('modeBadges.route')} entityId={cfg.cleaningRouteEntity} current={cleanRoute} onSelect={selectOption} dark={dark}
+              <SelectRow label={t('modeBadges.route')} entityId={cfg.cleaningRouteEntity} current={cleanRoute}
+                onSelect={selectOption} dark={dark}
                 options={[
                   { value: 'intensive', label: t('route.intensive') },
                   { value: 'by_area',   label: t('route.by_area')   },
@@ -625,7 +792,8 @@ export default function VacuumCard() {
             )}
             {dryingTime && dryingTime !== 'unavailable' && (
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-                padding: '6px 10px', borderRadius: 8, background: dark ? 'rgba(255,255,255,.04)' : 'rgba(0,0,0,.03)', border: '1px solid var(--border)' }}>
+                padding: '6px 10px', borderRadius: 8,
+                background: dark ? 'rgba(255,255,255,.04)' : 'rgba(0,0,0,.03)', border: '1px solid var(--border)' }}>
                 <span style={{ fontSize: 11, color: 'var(--text-muted)' }}>{t('modeBadges.drying')}</span>
                 <span style={{ fontSize: 11, fontWeight: 700, color: accent }}>{tr(dryingTime, t)}</span>
               </div>
@@ -635,9 +803,8 @@ export default function VacuumCard() {
               {cfg.carpetBoostEntity     && <SwitchToggle label={t('switches.carpetBoost')} entityId={cfg.carpetBoostEntity}     isOn={isOn(cfg.carpetBoostEntity)}     onToggle={toggleSwitch} dark={dark}/>}
               {cfg.selfCleanSwitchEntity && <SwitchToggle label={t('switches.selfClean')}   entityId={cfg.selfCleanSwitchEntity} isOn={isOn(cfg.selfCleanSwitchEntity)} onToggle={toggleSwitch} dark={dark}/>}
               {cfg.autoDryingEntity      && <SwitchToggle label={t('switches.autoDrying')}  entityId={cfg.autoDryingEntity}      isOn={isOn(cfg.autoDryingEntity)}      onToggle={toggleSwitch} dark={dark}/>}
-              {cfg.obstacleEntity        && <SwitchToggle label={t('switches.obstacle')}      entityId={cfg.obstacleEntity}        isOn={isOn(cfg.obstacleEntity)}        onToggle={toggleSwitch} dark={dark}/>}
-              {cfg.resumeEntity          && <SwitchToggle label={t('switches.resume')}        entityId={cfg.resumeEntity}          isOn={isOn(cfg.resumeEntity)}          onToggle={toggleSwitch} dark={dark}/>}
-              {cfg.cleanGeniusEntity     && <SwitchToggle label={t('switches.cleanGenius')}   entityId={cfg.cleanGeniusEntity}     isOn={isOn(cfg.cleanGeniusEntity)}     onToggle={toggleSwitch} dark={dark}/>}
+              {cfg.obstacleEntity        && <SwitchToggle label={t('switches.obstacle')}    entityId={cfg.obstacleEntity}        isOn={isOn(cfg.obstacleEntity)}        onToggle={toggleSwitch} dark={dark}/>}
+              {cfg.resumeEntity          && <SwitchToggle label={t('switches.resume')}      entityId={cfg.resumeEntity}          isOn={isOn(cfg.resumeEntity)}          onToggle={toggleSwitch} dark={dark}/>}
             </div>
           </div>
         </AccordionSection>

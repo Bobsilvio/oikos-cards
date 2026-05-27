@@ -20,8 +20,10 @@
   },
   "cleanMode": {
     "sweeping": "Aspira",
-    "mopping": "Lava",
-    "sweeping_and_mopping": "Aspira+Lava"
+    "mopping": "Mocio",
+    "sweeping_and_mopping": "Aspira+Lava",
+    "mopping_after_sweeping": "Mocio dopo",
+    "customized_cleaning": "Personalizza"
   },
   "waterTemp": {
     "cold": "Freddo",
@@ -66,6 +68,15 @@
     "title": "Mappa",
     "refreshRate": "aggiorn. 5s",
     "alt": "Mappa aspirapolvere"
+  },
+  "cleaning": {
+    "customize": "Personalizza",
+    "geniusDesc": "Il robot ottimizza automaticamente la pulizia in base al tipo di pavimento",
+    "deepClean": "Pulizia profonda",
+    "scopeRoom": "Stanza",
+    "scopeAll": "Tutto",
+    "scopeZone": "Zona",
+    "zoneComingSoon": "Pulizia per zona — prossimamente"
   },
   "session": {
     "progress": "Progresso"
@@ -190,6 +201,7 @@
       "obstacleEntity": "Evita ostacoli",
       "resumeEntity": "Riprendi auto",
       "cleanGeniusEntity": "CleanGenius",
+      "deepCleanEntity": "Pulizia profonda",
       "mopPadLifeEntity": "Mop pad (%)",
       "mopPadLifeDaysEntity": "Mop pad (gg)",
       "silverIonEntity": "Argento ionico (%)",

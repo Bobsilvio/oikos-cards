@@ -21,7 +21,9 @@
   "cleanMode": {
     "sweeping": "Sweep",
     "mopping": "Mop",
-    "sweeping_and_mopping": "Sweep+Mop"
+    "sweeping_and_mopping": "Sweep+Mop",
+    "mopping_after_sweeping": "Mop after",
+    "customized_cleaning": "Custom"
   },
   "waterTemp": {
     "cold": "Cold",
@@ -66,6 +68,15 @@
     "title": "Map",
     "refreshRate": "refresh 5s",
     "alt": "Vacuum map"
+  },
+  "cleaning": {
+    "customize": "Customize",
+    "geniusDesc": "The robot automatically optimizes cleaning based on floor type",
+    "deepClean": "Deep clean",
+    "scopeRoom": "Room",
+    "scopeAll": "All",
+    "scopeZone": "Zone",
+    "zoneComingSoon": "Zone cleaning — coming soon"
   },
   "session": {
     "progress": "Progress"
@@ -190,6 +201,7 @@
       "obstacleEntity": "Avoid obstacles",
       "resumeEntity": "Auto-resume",
       "cleanGeniusEntity": "CleanGenius",
+      "deepCleanEntity": "Deep clean",
       "mopPadLifeEntity": "Mop pad (%)",
       "mopPadLifeDaysEntity": "Mop pad (days)",
       "silverIonEntity": "Silver ion (%)",
