@@ -38,6 +38,9 @@ const { jsxs: d, jsx: r } = window.__OIKOS_SDK__.jsxRuntime, x = "oikos-card-cfg
   autoEmptyModeEntity: "select.ambrogio_auto_empty_mode",
   mopWashLevelEntity: "select.ambrogio_mop_wash_level",
   autoRewashingEntity: "select.ambrogio_auto_rewashing",
+  startAutoEmptyEntity: "button.ambrogio_start_auto_empty",
+  startSelfWashEntity: "button.ambrogio_start_self_wash",
+  startDryingEntity: "button.ambrogio_start_drying",
   autoDetergentEntity: "switch.ambrogio_auto_water_refilling",
   autoWashEntity: "switch.ambrogio_auto_mount_mop",
   dndEntity: "switch.ambrogio_dnd",
@@ -75,10 +78,10 @@ function S() {
   }
   return { ...k };
 }
-function C(n) {
+function D(n) {
   localStorage.setItem(x, JSON.stringify(n));
 }
-function D(n) {
+function C(n) {
   return !n || !n.startsWith("vacuum.") ? null : n.replace(/^vacuum\./, "").replace(/_\d+$/, "");
 }
 function T(n) {
@@ -125,6 +128,9 @@ function T(n) {
     autoEmptyModeEntity: a("auto_empty_mode"),
     mopWashLevelEntity: a("mop_wash_level"),
     autoRewashingEntity: a("auto_rewashing"),
+    startAutoEmptyEntity: `button.${n}_start_auto_empty`,
+    startSelfWashEntity: `button.${n}_start_self_wash`,
+    startDryingEntity: `button.${n}_start_drying`,
     autoDetergentEntity: l("auto_water_refilling"),
     autoWashEntity: l("auto_mount_mop"),
     dndEntity: l("dnd"),
@@ -141,7 +147,7 @@ function T(n) {
     firstCleanEntity: t("first_cleaning_date")
   };
 }
-const { useState: v } = window.__OIKOS_SDK__.React, { motion: w, AnimatePresence: B } = window.__OIKOS_SDK__.framerMotion, { Plus: W, Trash2: P, Wand2: L } = window.__OIKOS_SDK__.icons, { EntityField: R, useT: I } = window.__OIKOS_SDK__, K = [
+const { useState: v } = window.__OIKOS_SDK__.React, { motion: w, AnimatePresence: W } = window.__OIKOS_SDK__.framerMotion, { Plus: B, Trash2: P, Wand2: L } = window.__OIKOS_SDK__.icons, { EntityField: R, useT: I } = window.__OIKOS_SDK__, K = [
   {
     titleKey: "main",
     fields: [
@@ -208,6 +214,9 @@ const { useState: v } = window.__OIKOS_SDK__.React, { motion: w, AnimatePresence
       { key: "autoEmptyModeEntity" },
       { key: "mopWashLevelEntity" },
       { key: "autoRewashingEntity" },
+      { key: "startAutoEmptyEntity" },
+      { key: "startSelfWashEntity" },
+      { key: "startDryingEntity" },
       { key: "autoDetergentEntity" },
       { key: "autoWashEntity" }
     ]
@@ -263,7 +272,7 @@ function M({ rooms: n, onChange: t, dark: a, idLabel: l, nameLabel: y, idPlaceho
   const g = (i, s, e) => {
     const h = n.map((E, c) => c === i ? { ...E, [s]: s === "id" ? parseInt(e) || 0 : e } : E);
     t(h);
-  }, f = (i) => t(n.filter((s, e) => e !== i)), b = () => t([...n, { id: "", name: "" }]), _ = (i) => ({
+  }, b = (i) => t(n.filter((s, e) => e !== i)), f = () => t([...n, { id: "", name: "" }]), _ = (i) => ({
     background: "var(--bg-secondary, var(--bg-primary))",
     border: "1px solid var(--border-medium)",
     borderRadius: 7,
@@ -280,7 +289,7 @@ function M({ rooms: n, onChange: t, dark: a, idLabel: l, nameLabel: y, idPlaceho
       /* @__PURE__ */ r("span", { style: { fontSize: 10, fontWeight: 600, color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: ".4px" }, children: y }),
       /* @__PURE__ */ r("span", {})
     ] }),
-    /* @__PURE__ */ r(B, { initial: !1, children: n.map((i, s) => /* @__PURE__ */ r(
+    /* @__PURE__ */ r(W, { initial: !1, children: n.map((i, s) => /* @__PURE__ */ r(
       w.div,
       {
         initial: { opacity: 0, height: 0 },
@@ -315,7 +324,7 @@ function M({ rooms: n, onChange: t, dark: a, idLabel: l, nameLabel: y, idPlaceho
           /* @__PURE__ */ r(
             "button",
             {
-              onClick: () => f(s),
+              onClick: () => b(s),
               style: {
                 width: 28,
                 height: 28,
@@ -341,7 +350,7 @@ function M({ rooms: n, onChange: t, dark: a, idLabel: l, nameLabel: y, idPlaceho
       },
       s
     )) }),
-    /* @__PURE__ */ d("button", { onClick: b, style: {
+    /* @__PURE__ */ d("button", { onClick: f, style: {
       display: "flex",
       alignItems: "center",
       gap: 5,
@@ -355,27 +364,27 @@ function M({ rooms: n, onChange: t, dark: a, idLabel: l, nameLabel: y, idPlaceho
       color: "var(--text-muted)",
       cursor: "pointer"
     }, children: [
-      /* @__PURE__ */ r(W, { size: 13 }),
+      /* @__PURE__ */ r(B, { size: 13 }),
       " ",
       o
     ] }),
     /* @__PURE__ */ r("p", { style: { fontSize: 10, color: "var(--text-muted)", lineHeight: 1.5, marginTop: 2 }, children: p })
   ] });
 }
-function O({ dark: n }) {
+function $({ dark: n }) {
   const [t, a] = v(S), [l, y] = v(!1), [u, m] = v(null), { t: o } = I("card-vacuum"), p = (i, s) => {
     a((e) => ({ ...e, [i]: s })), y(!1);
   }, g = (i) => {
     a(i), y(!1);
-  }, f = () => {
-    const i = D(t.vacuumEntity);
+  }, b = () => {
+    const i = C(t.vacuumEntity);
     if (!i) {
       m("err"), setTimeout(() => m(null), 3e3);
       return;
     }
     a((s) => ({ ...s, ...T(i) })), y(!1), m(i), setTimeout(() => m(null), 4e3);
-  }, b = () => {
-    C(t), y(!0), setTimeout(() => y(!1), 1500);
+  }, f = () => {
+    D(t), y(!0), setTimeout(() => y(!1), 1500);
   }, _ = (i) => ({
     background: "var(--bg-secondary, var(--bg-primary))",
     border: "1px solid var(--border-medium)",
@@ -420,7 +429,7 @@ function O({ dark: n }) {
         )
       ] }) }, e)) }),
       i === "main" && /* @__PURE__ */ d("div", { style: { marginTop: 10, display: "flex", flexDirection: "column", gap: 5 }, children: [
-        /* @__PURE__ */ d(w.button, { whileTap: { scale: 0.97 }, onClick: f, style: {
+        /* @__PURE__ */ d(w.button, { whileTap: { scale: 0.97 }, onClick: b, style: {
           display: "flex",
           alignItems: "center",
           gap: 6,
@@ -468,9 +477,9 @@ function O({ dark: n }) {
         }
       )
     ] }),
-    /* @__PURE__ */ r(z, { onClick: b, saved: l, saveLabel: o("settings.saveButton"), savedLabel: o("settings.savedButton") })
+    /* @__PURE__ */ r(z, { onClick: f, saved: l, saveLabel: o("settings.saveButton"), savedLabel: o("settings.savedButton") })
   ] });
 }
 export {
-  O as default
+  $ as default
 };
