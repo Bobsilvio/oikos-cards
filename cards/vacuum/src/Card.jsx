@@ -652,6 +652,7 @@ function BaseSheet({ open, onClose, cfg, t, callService, getState,
     const det = g(cfg.autoDetergentEntity);  if (det !== null) setAutoDetergent(det === 'on')
     const aw  = g(cfg.autoWashEntity);       if (aw  !== null) setAutoWash(aw  === 'on')
     const dry = g(cfg.autoDryingEntity);     if (dry !== null) setAsciugaOn(dry === 'on')
+    const smw = g(cfg.smartMopWashingEntity); if (smw !== null) setSmartWash(smw === 'on')
   }, [open])
 
   const get = (id) => id ? (getState(id) ?? null) : null
@@ -851,53 +852,60 @@ function BaseSheet({ open, onClose, cfg, t, callService, getState,
                 <div style={itemSt(false)}>
                   <div style={rowSt}>
                     <span style={{ fontSize: 16, fontWeight: 600, color: 'var(--text-primary)' }}>{t('dreame.smartWash')}</span>
-                    <IosToggle on={smartWash} onToggle={() => setSmartWash(p => !p)}/>
+                    <IosToggle on={smartWash} onToggle={() => {
+                      const v = !smartWash
+                      setSmartWash(v)
+                      swToggle(cfg.smartMopWashingEntity, v)
+                    }}/>
                   </div>
                   <div style={{ fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.6, marginTop: 6 }}>{t('dreame.smartWashDesc')}</div>
                 </div>
               </div>
 
-              {/* Quantità acqua */}
-              <div style={{ fontSize: 14, color: 'var(--text-muted)', margin: '16px 14px 8px', lineHeight: 1.5 }}>{t('dreame.washQtyLabel')}</div>
-              <div style={{ background: 'var(--bg-card)', borderRadius: 16, margin: '0 14px', overflow: 'hidden' }}>
-                {washQtyOpts.map((o, i) => (
-                  <div key={o.id} onClick={() => { setWashQty(o.id); selOpt(cfg.washingModeEntity, WASHQTY_HA[o.id]) }}
-                    style={{ display: 'flex', alignItems: 'flex-start', gap: 14, padding: 16, cursor: 'pointer', borderTop: i > 0 ? '1px solid var(--border)' : 'none' }}>
-                    <div style={{ width: 24, height: 24, borderRadius: '50%', border: `2px solid ${washQty === o.id ? A : '#ccc'}`,
-                      flexShrink: 0, marginTop: 1, display: 'flex', alignItems: 'center', justifyContent: 'center',
-                      background: washQty === o.id ? A : 'transparent', transition: 'all .18s' }}>
-                      {washQty === o.id && <span style={{ fontSize: 13, color: 'white', fontWeight: 800, lineHeight: 1 }}>✓</span>}
+              {/* Quantità acqua — disabilitata quando smart wash ON */}
+              <div style={{ opacity: smartWash ? 0.35 : 1, pointerEvents: smartWash ? 'none' : 'auto', transition: 'opacity .2s' }}>
+                <div style={{ fontSize: 14, color: 'var(--text-muted)', margin: '16px 14px 8px', lineHeight: 1.5 }}>{t('dreame.washQtyLabel')}</div>
+                <div style={{ background: 'var(--bg-card)', borderRadius: 16, margin: '0 14px', overflow: 'hidden' }}>
+                  {washQtyOpts.map((o, i) => (
+                    <div key={o.id} onClick={() => { setWashQty(o.id); selOpt(cfg.washingModeEntity, WASHQTY_HA[o.id]) }}
+                      style={{ display: 'flex', alignItems: 'flex-start', gap: 14, padding: 16, cursor: 'pointer', borderTop: i > 0 ? '1px solid var(--border)' : 'none' }}>
+                      <div style={{ width: 24, height: 24, borderRadius: '50%', border: `2px solid ${washQty === o.id ? A : '#ccc'}`,
+                        flexShrink: 0, marginTop: 1, display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        background: washQty === o.id ? A : 'transparent', transition: 'all .18s' }}>
+                        {washQty === o.id && <span style={{ fontSize: 13, color: 'white', fontWeight: 800, lineHeight: 1 }}>✓</span>}
+                      </div>
+                      <div>
+                        <div style={{ fontSize: 16, fontWeight: 700, color: 'var(--text-primary)', marginBottom: 4 }}>{o.label}</div>
+                        <div style={{ fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.5 }}>{o.desc}</div>
+                      </div>
                     </div>
-                    <div>
-                      <div style={{ fontSize: 16, fontWeight: 700, color: 'var(--text-primary)', marginBottom: 4 }}>{o.label}</div>
-                      <div style={{ fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.5 }}>{o.desc}</div>
-                    </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
 
-              {/* Temperatura acqua */}
-              <div style={{ fontSize: 14, color: 'var(--text-muted)', margin: '16px 14px 8px' }}>{t('dreame.washTempLabel')}</div>
-              <div style={{ background: 'var(--bg-card)', borderRadius: 16, margin: '0 14px', overflow: 'hidden' }}>
-                {washTempOpts.map((o, i) => (
-                  <div key={o.id} onClick={() => { setWashTemp(o.id); selOpt(cfg.waterTempEntity, WASHTEMP_HA[o.id]) }}
-                    style={{ display: 'flex', alignItems: 'flex-start', gap: 14, padding: 16, cursor: 'pointer', borderTop: i > 0 ? '1px solid var(--border)' : 'none' }}>
-                    <div style={{ width: 24, height: 24, borderRadius: '50%', border: `2px solid ${washTemp === o.id ? A : '#ccc'}`,
-                      flexShrink: 0, marginTop: 1, display: 'flex', alignItems: 'center', justifyContent: 'center',
-                      background: washTemp === o.id ? A : 'transparent', transition: 'all .18s' }}>
-                      {washTemp === o.id && <span style={{ fontSize: 13, color: 'white', fontWeight: 800, lineHeight: 1 }}>✓</span>}
+              {/* Temperatura acqua — disabilitata quando smart wash ON */}
+              <div style={{ opacity: smartWash ? 0.35 : 1, pointerEvents: smartWash ? 'none' : 'auto', transition: 'opacity .2s' }}>
+                <div style={{ fontSize: 14, color: 'var(--text-muted)', margin: '16px 14px 8px' }}>{t('dreame.washTempLabel')}</div>
+                <div style={{ background: 'var(--bg-card)', borderRadius: 16, margin: '0 14px', overflow: 'hidden' }}>
+                  {washTempOpts.map((o, i) => (
+                    <div key={o.id} onClick={() => { setWashTemp(o.id); selOpt(cfg.waterTempEntity, WASHTEMP_HA[o.id]) }}
+                      style={{ display: 'flex', alignItems: 'flex-start', gap: 14, padding: 16, cursor: 'pointer', borderTop: i > 0 ? '1px solid var(--border)' : 'none' }}>
+                      <div style={{ width: 24, height: 24, borderRadius: '50%', border: `2px solid ${washTemp === o.id ? A : '#ccc'}`,
+                        flexShrink: 0, marginTop: 1, display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        background: washTemp === o.id ? A : 'transparent', transition: 'all .18s' }}>
+                        {washTemp === o.id && <span style={{ fontSize: 13, color: 'white', fontWeight: 800, lineHeight: 1 }}>✓</span>}
+                      </div>
+                      <div>
+                        <div style={{ fontSize: 16, fontWeight: 700, color: 'var(--text-primary)', marginBottom: 4 }}>{o.label}</div>
+                        <div style={{ fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.5 }}>{o.desc}</div>
+                      </div>
                     </div>
-                    <div>
-                      <div style={{ fontSize: 16, fontWeight: 700, color: 'var(--text-primary)', marginBottom: 4 }}>{o.label}</div>
-                      <div style={{ fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.5 }}>{o.desc}</div>
-                    </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
+                {washTemp === 'hot' && !smartWash && (
+                  <div style={{ fontSize: 13, color: A, lineHeight: 1.6, margin: '12px 14px 0' }}>{t('dreame.washWarningHot')}</div>
+                )}
               </div>
-
-              {washTemp === 'hot' && (
-                <div style={{ fontSize: 13, color: A, lineHeight: 1.6, margin: '12px 14px 0' }}>{t('dreame.washWarningHot')}</div>
-              )}
             </div>
           </motion.div>
         </div>

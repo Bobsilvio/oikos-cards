@@ -36,6 +36,7 @@ const { jsxs: c, jsx: a } = window.__OIKOS_SDK__.jsxRuntime, w = "oikos-card-cfg
   dustCollectionEntity: "sensor.ambrogio_dust_collection",
   drainageEntity: "sensor.ambrogio_drainage_status",
   autoEmptyModeEntity: "select.ambrogio_auto_empty_mode",
+  smartMopWashingEntity: "switch.ambrogio_smart_mop_washing",
   washingModeEntity: "select.ambrogio_washing_mode",
   mopWashLevelEntity: "select.ambrogio_mop_wash_level",
   autoRewashingEntity: "select.ambrogio_auto_rewashing",
@@ -92,7 +93,7 @@ function D(n) {
   return !n || !n.startsWith("vacuum.") ? null : n.replace(/^vacuum\./, "").replace(/_\d+$/, "");
 }
 function T(n) {
-  const t = (y) => `sensor.${n}_${y}`, r = (y) => `select.${n}_${y}`, s = (y) => `switch.${n}_${y}`;
+  const t = (y) => `sensor.${n}_${y}`, r = (y) => `select.${n}_${y}`, o = (y) => `switch.${n}_${y}`;
   return {
     cameraEntity: `camera.${n}_map`,
     batteryEntity: t("battery_level"),
@@ -134,6 +135,7 @@ function T(n) {
     dustCollectionEntity: t("dust_collection"),
     drainageEntity: t("drainage_status"),
     autoEmptyModeEntity: r("auto_empty_mode"),
+    smartMopWashingEntity: o("smart_mop_washing"),
     washingModeEntity: r("washing_mode"),
     mopWashLevelEntity: r("mop_wash_level"),
     autoRewashingEntity: r("auto_rewashing"),
@@ -143,25 +145,25 @@ function T(n) {
     startAutoEmptyEntity: `button.${n}_start_auto_empty`,
     startSelfWashEntity: `button.${n}_self_clean`,
     startDryingEntity: `button.${n}_manual_drying`,
-    autoDetergentEntity: s("auto_water_refilling"),
-    autoWashEntity: s("auto_mount_mop"),
-    dndEntity: s("dnd"),
-    carpetBoostEntity: s("carpet_boost"),
-    selfCleanSwitchEntity: s("self_clean"),
-    autoDryingEntity: s("auto_drying"),
-    obstacleEntity: s("obstacle_avoidance"),
-    resumeEntity: s("resume_cleaning"),
+    autoDetergentEntity: o("auto_water_refilling"),
+    autoWashEntity: o("auto_mount_mop"),
+    dndEntity: o("dnd"),
+    carpetBoostEntity: o("carpet_boost"),
+    selfCleanSwitchEntity: o("self_clean"),
+    autoDryingEntity: o("auto_drying"),
+    obstacleEntity: o("obstacle_avoidance"),
+    resumeEntity: o("resume_cleaning"),
     cleanGeniusEntity: r("cleangenius"),
     cleanGeniusModeEntity: r("cleangenius_mode"),
-    deepCleanEntity: s("intensive_carpet_cleaning"),
-    maxSuctionEntity: s("max_suction_power"),
+    deepCleanEntity: o("intensive_carpet_cleaning"),
+    maxSuctionEntity: o("max_suction_power"),
     totalAreaEntity: t("total_cleaned_area"),
     countEntity: t("cleaning_count"),
     totalTimeEntity: t("total_cleaning_time"),
     firstCleanEntity: t("first_cleaning_date")
   };
 }
-const { useState: v } = window.__OIKOS_SDK__.React, { motion: x, AnimatePresence: W } = window.__OIKOS_SDK__.framerMotion, { Plus: B, Trash2: P, Wand2: L } = window.__OIKOS_SDK__.icons, { EntityField: R, useT: I } = window.__OIKOS_SDK__, M = [
+const { useState: v } = window.__OIKOS_SDK__.React, { motion: x, AnimatePresence: W } = window.__OIKOS_SDK__.framerMotion, { Plus: B, Trash2: P, Wand2: L } = window.__OIKOS_SDK__.icons, { EntityField: M, useT: R } = window.__OIKOS_SDK__, I = [
   {
     titleKey: "main",
     fields: [
@@ -258,7 +260,7 @@ const { useState: v } = window.__OIKOS_SDK__.React, { motion: x, AnimatePresence
     ]
   }
 ];
-function $({ saved: n, onClick: t, saveLabel: r, savedLabel: s }) {
+function $({ saved: n, onClick: t, saveLabel: r, savedLabel: o }) {
   return /* @__PURE__ */ a(
     "button",
     {
@@ -278,13 +280,13 @@ function $({ saved: n, onClick: t, saveLabel: r, savedLabel: s }) {
         color: n ? "var(--green)" : "var(--amber)",
         transition: "all .2s"
       },
-      children: n ? s : r
+      children: n ? o : r
     }
   );
 }
-function K({ rooms: n, onChange: t, dark: r, idLabel: s, nameLabel: y, idPlaceholder: m, namePlaceholder: u, addLabel: o, hintText: p }) {
+function K({ rooms: n, onChange: t, dark: r, idLabel: o, nameLabel: y, idPlaceholder: d, namePlaceholder: u, addLabel: s, hintText: p }) {
   const g = (i, l, e) => {
-    const h = n.map((E, d) => d === i ? { ...E, [l]: l === "id" ? parseInt(e) || 0 : e } : E);
+    const h = n.map((E, m) => m === i ? { ...E, [l]: l === "id" ? parseInt(e) || 0 : e } : E);
     t(h);
   }, b = (i) => t(n.filter((l, e) => e !== i)), f = () => t([...n, { id: "", name: "" }]), _ = (i) => ({
     background: "var(--bg-secondary, var(--bg-primary))",
@@ -299,7 +301,7 @@ function K({ rooms: n, onChange: t, dark: r, idLabel: s, nameLabel: y, idPlaceho
   });
   return /* @__PURE__ */ c("div", { style: { display: "flex", flexDirection: "column", gap: 6 }, children: [
     /* @__PURE__ */ c("div", { style: { display: "grid", gridTemplateColumns: "52px 1fr 28px", gap: 6 }, children: [
-      /* @__PURE__ */ a("span", { style: { fontSize: 10, fontWeight: 600, color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: ".4px" }, children: s }),
+      /* @__PURE__ */ a("span", { style: { fontSize: 10, fontWeight: 600, color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: ".4px" }, children: o }),
       /* @__PURE__ */ a("span", { style: { fontSize: 10, fontWeight: 600, color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: ".4px" }, children: y }),
       /* @__PURE__ */ a("span", {})
     ] }),
@@ -317,7 +319,7 @@ function K({ rooms: n, onChange: t, dark: r, idLabel: s, nameLabel: y, idPlaceho
             {
               type: "number",
               value: i.id,
-              placeholder: m,
+              placeholder: d,
               onChange: (e) => g(l, "id", e.target.value),
               style: _(!0),
               onFocus: (e) => e.target.style.borderColor = "var(--amber-border)",
@@ -380,13 +382,13 @@ function K({ rooms: n, onChange: t, dark: r, idLabel: s, nameLabel: y, idPlaceho
     }, children: [
       /* @__PURE__ */ a(B, { size: 13 }),
       " ",
-      o
+      s
     ] }),
     /* @__PURE__ */ a("p", { style: { fontSize: 10, color: "var(--text-muted)", lineHeight: 1.5, marginTop: 2 }, children: p })
   ] });
 }
 function z({ dark: n }) {
-  const [t, r] = v(S), [s, y] = v(!1), [m, u] = v(null), { t: o } = I("card-vacuum"), p = (i, l) => {
+  const [t, r] = v(S), [o, y] = v(!1), [d, u] = v(null), { t: s } = R("card-vacuum"), p = (i, l) => {
     r((e) => ({ ...e, [i]: l })), y(!1);
   }, g = (i) => {
     r(i), y(!1);
@@ -411,7 +413,7 @@ function z({ dark: n }) {
     width: "100%"
   });
   return /* @__PURE__ */ c("div", { style: { display: "flex", flexDirection: "column", gap: 16 }, children: [
-    M.map(({ titleKey: i, fields: l }) => /* @__PURE__ */ c("div", { children: [
+    I.map(({ titleKey: i, fields: l }) => /* @__PURE__ */ c("div", { children: [
       /* @__PURE__ */ a("div", { style: {
         fontSize: 10,
         fontWeight: 700,
@@ -419,26 +421,26 @@ function z({ dark: n }) {
         letterSpacing: ".6px",
         color: "var(--text-muted)",
         marginBottom: 8
-      }, children: o(`settings.groups.${i}`) }),
-      /* @__PURE__ */ a("div", { style: { display: "flex", flexDirection: "column", gap: 7 }, children: l.map(({ key: e, mono: h = !0, entity: E = !0 }) => /* @__PURE__ */ a("div", { children: E ? /* @__PURE__ */ a(R, { label: o(`settings.fields.${e}`), field: e, config: t, setConfig: g }) : /* @__PURE__ */ c("div", { style: { display: "flex", flexDirection: "column", gap: 3 }, children: [
+      }, children: s(`settings.groups.${i}`) }),
+      /* @__PURE__ */ a("div", { style: { display: "flex", flexDirection: "column", gap: 7 }, children: l.map(({ key: e, mono: h = !0, entity: E = !0 }) => /* @__PURE__ */ a("div", { children: E ? /* @__PURE__ */ a(M, { label: s(`settings.fields.${e}`), field: e, config: t, setConfig: g }) : /* @__PURE__ */ c("div", { style: { display: "flex", flexDirection: "column", gap: 3 }, children: [
         /* @__PURE__ */ a("label", { style: {
           fontSize: 11,
           fontWeight: 600,
           color: "var(--text-muted)",
           textTransform: "uppercase",
           letterSpacing: ".4px"
-        }, children: o(`settings.fields.${e}`) }),
+        }, children: s(`settings.fields.${e}`) }),
         /* @__PURE__ */ a(
           "input",
           {
             value: t[e] || "",
-            onChange: (d) => {
-              p(e, d.target.value), y(!1);
+            onChange: (m) => {
+              p(e, m.target.value), y(!1);
             },
             spellCheck: !1,
             style: _(h),
-            onFocus: (d) => d.target.style.borderColor = "var(--amber-border)",
-            onBlur: (d) => d.target.style.borderColor = "var(--border-medium)"
+            onFocus: (m) => m.target.style.borderColor = "var(--amber-border)",
+            onBlur: (m) => m.target.style.borderColor = "var(--border-medium)"
           }
         )
       ] }) }, e)) }),
@@ -459,10 +461,10 @@ function z({ dark: n }) {
         }, children: [
           /* @__PURE__ */ a(L, { size: 13 }),
           " ",
-          o("settings.autoPopulate")
+          s("settings.autoPopulate")
         ] }),
-        m === "err" && /* @__PURE__ */ a("span", { style: { fontSize: 11, color: "#ef4444" }, children: o("settings.autoPopulateNeedEntity") }),
-        m && m !== "err" && /* @__PURE__ */ a("span", { style: { fontSize: 11, color: "#10b981" }, children: o("settings.autoPopulateHint", { prefix: m }) })
+        d === "err" && /* @__PURE__ */ a("span", { style: { fontSize: 11, color: "#ef4444" }, children: s("settings.autoPopulateNeedEntity") }),
+        d && d !== "err" && /* @__PURE__ */ a("span", { style: { fontSize: 11, color: "#10b981" }, children: s("settings.autoPopulateHint", { prefix: d }) })
       ] })
     ] }, i)),
     /* @__PURE__ */ c("div", { children: [
@@ -473,7 +475,7 @@ function z({ dark: n }) {
         letterSpacing: ".6px",
         color: "var(--text-muted)",
         marginBottom: 8
-      }, children: o("settings.groups.rooms") }),
+      }, children: s("settings.groups.rooms") }),
       /* @__PURE__ */ a(
         K,
         {
@@ -482,16 +484,16 @@ function z({ dark: n }) {
             r((l) => ({ ...l, rooms: i })), y(!1);
           },
           dark: n,
-          idLabel: o("settings.roomIdLabel"),
-          nameLabel: o("settings.roomNameLabel"),
-          idPlaceholder: o("settings.roomIdPlaceholder"),
-          namePlaceholder: o("settings.roomNamePlaceholder"),
-          addLabel: o("settings.addRoom"),
-          hintText: o("settings.roomsHint")
+          idLabel: s("settings.roomIdLabel"),
+          nameLabel: s("settings.roomNameLabel"),
+          idPlaceholder: s("settings.roomIdPlaceholder"),
+          namePlaceholder: s("settings.roomNamePlaceholder"),
+          addLabel: s("settings.addRoom"),
+          hintText: s("settings.roomsHint")
         }
       )
     ] }),
-    /* @__PURE__ */ a($, { onClick: f, saved: s, saveLabel: o("settings.saveButton"), savedLabel: o("settings.savedButton") })
+    /* @__PURE__ */ a($, { onClick: f, saved: o, saveLabel: s("settings.saveButton"), savedLabel: s("settings.savedButton") })
   ] });
 }
 export {
