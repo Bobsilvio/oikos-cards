@@ -224,11 +224,11 @@ function SubSheet({ open, onClose, children }) {
       {open && (
         <motion.div key="sub-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
           onClick={onClose}
-          style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,.38)', zIndex: 1200, display: 'flex', alignItems: 'flex-end', justifyContent: 'center' }}>
+          style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,.38)', zIndex: 20, display: 'flex', alignItems: 'flex-end' }}>
           <motion.div key="sub-sheet" initial={{ y: '100%' }} animate={{ y: 0 }} exit={{ y: '100%' }}
             transition={{ type: 'spring', damping: 32, stiffness: 280 }}
             onClick={e => e.stopPropagation()}
-            style={{ width: '100%', maxWidth: 390, background: 'var(--bg-card)', borderRadius: '26px 26px 0 0', overflowY: 'auto', maxHeight: '80vh' }}>
+            style={{ width: '100%', background: 'var(--bg-card)', borderRadius: '26px 26px 0 0', overflowY: 'auto', maxHeight: '80%' }}>
             <SheetHandle/>
             {children}
           </motion.div>
@@ -238,17 +238,17 @@ function SubSheet({ open, onClose, children }) {
   )
 }
 
-function FullSheet({ open, onClose, zIndex = 1000, children }) {
+function FullSheet({ open, onClose, zIndex = 10, children }) {
   return (
     <AnimatePresence>
       {open && (
         <motion.div key="full-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
           onClick={onClose}
-          style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,.38)', zIndex, display: 'flex', alignItems: 'flex-end', justifyContent: 'center' }}>
+          style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,.38)', zIndex, display: 'flex', alignItems: 'flex-end' }}>
           <motion.div key="full-sheet" initial={{ y: '100%' }} animate={{ y: 0 }} exit={{ y: '100%' }}
             transition={{ type: 'spring', damping: 32, stiffness: 280 }}
             onClick={e => e.stopPropagation()}
-            style={{ width: '100%', maxWidth: 390, background: 'var(--bg-card)', borderRadius: '26px 26px 0 0', height: '92vh', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+            style={{ width: '100%', background: 'var(--bg-card)', borderRadius: '26px 26px 0 0', height: '92%', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
             <SheetHandle/>
             {children}
           </motion.div>
@@ -940,7 +940,7 @@ export default function VacuumCard() {
   }
 
   return (
-    <div style={{ background: 'var(--bg-card)', borderRadius: 22, overflow: 'hidden', border: '1px solid var(--border)', position: 'relative' }}>
+    <div style={{ background: 'var(--bg-card)', borderRadius: 22, overflow: 'hidden', border: '1px solid var(--border)', position: 'relative', isolation: 'isolate' }}>
 
       {/* ── Header ── */}
       <div style={{ padding: '12px 18px 6px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
