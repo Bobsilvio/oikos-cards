@@ -872,7 +872,7 @@ function MainSheet({ open, onClose, cfg, t, callService, getState,
 }
 
 // ── ZonaRect — zona draggabile/ridimensionabile sulla mappa ──────────────────
-function ZonaRect({ rect, onUpdate }) {
+function ZonaRect({ rect, num, onUpdate, onRemove }) {
   const startDrag = (e) => {
     if (e.target !== e.currentTarget) return
     e.stopPropagation()
@@ -909,6 +909,21 @@ function ZonaRect({ rect, onUpdate }) {
       border: `2px dashed ${A}`, background: 'rgba(245,158,11,0.15)',
       cursor: 'move', userSelect: 'none', touchAction: 'none', boxSizing: 'border-box',
     }}>
+      {/* numero zona centrato */}
+      <div style={{
+        position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center',
+        fontSize: 20, fontWeight: 800, color: A, pointerEvents: 'none',
+        textShadow: '0 1px 3px rgba(0,0,0,.5)',
+      }}>{num}</div>
+      {/* X rimuovi */}
+      <div onPointerDown={e => { e.stopPropagation(); onRemove() }} style={{
+        position: 'absolute', top: -10, right: -10, width: 20, height: 20,
+        background: 'rgba(0,0,0,.7)', borderRadius: '50%', cursor: 'pointer',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        fontSize: 11, fontWeight: 800, color: 'white', zIndex: 3, touchAction: 'none',
+        border: `1.5px solid ${A}`,
+      }}>✕</div>
+      {/* handle resize */}
       <div onPointerDown={startResize} style={{
         position: 'absolute', bottom: -8, right: -8, width: 16, height: 16,
         background: A, borderRadius: 4, cursor: 'se-resize', touchAction: 'none', zIndex: 2,
@@ -931,9 +946,7 @@ export default function VacuumCard() {
   // Scope + rooms
   const [scope, setScope] = useState('all')
   const [selectedRooms, setSelectedRooms] = useState([])
-  const [zonaCount, setZonaCount] = useState(1)
   const [zonaCiclo, setZonaCiclo] = useState(1)
-  const [zonaTooltipDismissed] = useState(false)
   const [zonaRects, setZonaRects] = useState([{ x: 15, y: 15, w: 60, h: 50 }])
 
   // Sheet visibility
@@ -993,19 +1006,6 @@ export default function VacuumCard() {
     return () => clearInterval(iv)
   }, [cfg.cameraEntity])
 
-  useEffect(() => {
-    setZonaRects(prev => {
-      if (prev.length === zonaCount) return prev
-      if (prev.length < zonaCount) {
-        const added = Array.from({ length: zonaCount - prev.length }, (_, i) => ({
-          x: 10 + (prev.length + i) * 9, y: 10 + (prev.length + i) * 9, w: 55, h: 44,
-        }))
-        return [...prev, ...added]
-      }
-      return prev.slice(0, zonaCount)
-    })
-  }, [zonaCount])
-
   const cmd = (svc) => callService('vacuum', svc, { entity_id: cfg.vacuumEntity })
 
   const startClean = () => {
@@ -1015,22 +1015,28 @@ export default function VacuumCard() {
       callService('dreame_vacuum', 'vacuum_clean_segment', { entity_id: cfg.vacuumEntity, segments: selectedRooms, repeats: 1 })
     } else if (scope === 'zona' && zonaRects.length > 0) {
       const container = mapContainerRef.current
-      const ns = imgNatSize.current
+      const imgEl = mapImgRef.current
+      const natW = (imgEl?.naturalWidth > 0 ? imgEl.naturalWidth : null) ?? imgNatSize.current?.[0] ?? 0
+      const natH = (imgEl?.naturalHeight > 0 ? imgEl.naturalHeight : null) ?? imgNatSize.current?.[1] ?? 0
       const cal = cfg.cameraEntity ? (getAttr(cfg.cameraEntity, 'calibration_points') || []) : []
-      if (container && ns && cal.length >= 3) {
-        const { width: cw, height: ch } = container.getBoundingClientRect()
-        const zones = zonaRects.map(r => {
-          const [x0i, y0i] = cPctToImgPx(r.x,       r.y,       cw, ch, ns[0], ns[1])
-          const [x1i, y1i] = cPctToImgPx(r.x + r.w, r.y + r.h, cw, ch, ns[0], ns[1])
+      const { width: cw, height: ch } = container?.getBoundingClientRect() ?? { width: 375, height: 390 }
+      const zones = zonaRects.map(r => {
+        if (natW > 0 && natH > 0 && cal.length >= 3) {
+          const [x0i, y0i] = cPctToImgPx(r.x,       r.y,       cw, ch, natW, natH)
+          const [x1i, y1i] = cPctToImgPx(r.x + r.w, r.y + r.h, cw, ch, natW, natH)
           const [x0v, y0v] = imgPxToVac(x0i, y0i, cal)
           const [x1v, y1v] = imgPxToVac(x1i, y1i, cal)
           return [Math.round(x0v), Math.round(y0v), Math.round(x1v), Math.round(y1v)]
-        })
-        callService('dreame_vacuum', 'vacuum_clean_zone', { entity_id: cfg.vacuumEntity, zone: zones, repeats: zonaCiclo })
-      } else {
-        // fallback senza calibrazione: avvio pulizia normale
-        cmd('start')
-      }
+        }
+        // fallback senza calibrazione: scala lineare sul range mappa (da -6000 a +6000)
+        return [
+          Math.round((r.x / 100) * 12000 - 6000),
+          Math.round((r.y / 100) * 12000 - 6000),
+          Math.round(((r.x + r.w) / 100) * 12000 - 6000),
+          Math.round(((r.y + r.h) / 100) * 12000 - 6000),
+        ]
+      })
+      callService('dreame_vacuum', 'vacuum_clean_zone', { entity_id: cfg.vacuumEntity, zone: zones, repeats: zonaCiclo })
     }
   }
 
@@ -1102,8 +1108,9 @@ export default function VacuumCard() {
           </div>
         )}
         {scope === 'zona' && zonaRects.map((r, idx) => (
-          <ZonaRect key={idx} rect={r}
-            onUpdate={upd => setZonaRects(prev => prev.map((x, i) => i === idx ? upd : x))}/>
+          <ZonaRect key={idx} rect={r} num={idx + 1}
+            onUpdate={upd => setZonaRects(prev => prev.map((x, i) => i === idx ? upd : x))}
+            onRemove={() => setZonaRects(prev => prev.filter((_, i) => i !== idx))}/>
         ))}
         {scope === 'room' && selectedRooms.length > 0 && (
           <div style={{ position: 'absolute', top: 10, left: '50%', transform: 'translateX(-50%)', background: A, color: 'white', padding: '5px 14px', borderRadius: 20, fontSize: 12, fontWeight: 700, boxShadow: '0 2px 8px rgba(0,0,0,.25)', whiteSpace: 'nowrap', pointerEvents: 'none' }}>
@@ -1180,7 +1187,11 @@ export default function VacuumCard() {
         </button>
         {scope === 'zona' && (
           <>
-            <button onClick={() => setZonaCount(p => Math.min(p + 1, 3))} style={{ padding: '9px 14px', background: 'var(--blue)', border: 'none', borderRadius: 14, color: 'white', fontSize: 13, fontWeight: 700, cursor: 'pointer', flexShrink: 0, whiteSpace: 'nowrap' }}>
+            <button onClick={() => {
+              if (zonaRects.length >= 3) return
+              const last = zonaRects[zonaRects.length - 1] ?? { x: 15, y: 15 }
+              setZonaRects(prev => [...prev, { x: (last.x + 10) % 35, y: (last.y + 10) % 35, w: 55, h: 44 }])
+            }} style={{ padding: '9px 14px', background: 'var(--blue)', border: 'none', borderRadius: 14, color: 'white', fontSize: 13, fontWeight: 700, cursor: 'pointer', flexShrink: 0, whiteSpace: 'nowrap', opacity: zonaRects.length >= 3 ? 0.4 : 1 }}>
               {t('dreame.zonaAdd')}
             </button>
             <button onClick={() => setZonaCiclo(p => p >= 3 ? 1 : p + 1)} style={{ width: 40, height: 40, borderRadius: '50%', background: ABG, border: 'none', cursor: 'pointer', fontSize: 13, fontWeight: 800, color: A, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
