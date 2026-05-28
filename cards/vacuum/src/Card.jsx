@@ -402,7 +402,7 @@ function MopExtendSheet({ open, onClose, onFrequenza, freqSel, sideReach, setSid
 // ── ImpostazioniSheet ─────────────────────────────────────────────────────────
 function ImpostazioniSheet({ open, onClose, onMopExtend, onBase, cfg, t, callService, getState }) {
   const isOn = (id) => id ? getState(id) === 'on' : false
-  const tog  = (id) => id && callService('switch', 'toggle', { entity_id: id })
+  const tog  = (id) => id && callService('switch', 'toggle', id)
 
   const navItems = [
     { label: t('dreame.mopExtendTitle'), onClick: () => { onClose(); setTimeout(onMopExtend, 140) } },
@@ -497,11 +497,11 @@ function BaseSheet({ open, onClose, cfg, t, callService, getState,
   const [asciugaOn, setAsciugaOn] = useState(false)
 
   const selOpt  = (entityId, option) =>
-    entityId && callService('select', 'select_option', { entity_id: entityId, option })
+    entityId && callService('select', 'select_option', entityId, { option })
   const swToggle = (entityId, on) =>
-    entityId && callService('switch', on ? 'turn_on' : 'turn_off', { entity_id: entityId })
+    entityId && callService('switch', on ? 'turn_on' : 'turn_off', entityId)
   const pressBtn = (entityId) =>
-    entityId && callService('button', 'press', { entity_id: entityId })
+    entityId && callService('button', 'press', entityId)
 
   useEffect(() => {
     if (!open) { setPage('main'); return }
@@ -738,7 +738,7 @@ function MainSheet({ open, onClose, cfg, t, callService, getState,
 
   const switchTab = (t2) => {
     setTab(t2)
-    if (cfg.cleanGeniusEntity) callService('select', 'select_option', { entity_id: cfg.cleanGeniusEntity, option: t2 === 'genius' ? 'routine_cleaning' : 'off' })
+    if (cfg.cleanGeniusEntity) callService('select', 'select_option', cfg.cleanGeniusEntity, { option: t2 === 'genius' ? 'routine_cleaning' : 'off' })
   }
 
   const hasMop = mode === 1 || mode === 2 || mode === 3
@@ -844,7 +844,7 @@ function MainSheet({ open, onClose, cfg, t, callService, getState,
                   ].map(({ id, Ico, label }) => {
                     const active = getState(cfg.cleaningModeEntity) === id
                     return (
-                      <div key={id} onClick={() => cfg.cleaningModeEntity && callService('select', 'select_option', { entity_id: cfg.cleaningModeEntity, option: id })}
+                      <div key={id} onClick={() => cfg.cleaningModeEntity && callService('select', 'select_option', cfg.cleaningModeEntity, { option: id })}
                         style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10, padding: '16px 8px 20px', borderRadius: 16, background: active ? 'var(--bg-card)' : 'var(--bg-elevated)', cursor: 'pointer', position: 'relative', border: `2px solid ${active ? A : 'transparent'}`, transition: 'all .2s' }}>
                         <div style={{ color: active ? A : 'var(--text-secondary)' }}><Ico/></div>
                         <span style={{ fontSize: 11.5, textAlign: 'center', color: active ? 'var(--text-primary)' : 'var(--text-muted)', lineHeight: 1.4, fontWeight: active ? 700 : 500 }}>{label}</span>
@@ -858,7 +858,7 @@ function MainSheet({ open, onClose, cfg, t, callService, getState,
                 <div style={{ background: 'var(--bg-card)', borderRadius: 18, padding: '14px 16px', marginTop: 12, boxShadow: '0 2px 12px rgba(0,0,0,.06)' }}>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                     <div style={{ fontSize: 17, fontWeight: 700, color: 'var(--text-primary)' }}>{t('dreame.geniusDeepTitle')}</div>
-                    <IosToggle on={getState(cfg.deepCleanEntity) === 'on'} onToggle={() => callService('switch', 'toggle', { entity_id: cfg.deepCleanEntity })}/>
+                    <IosToggle on={getState(cfg.deepCleanEntity) === 'on'} onToggle={() => callService('switch', 'toggle', cfg.deepCleanEntity)}/>
                   </div>
                   <div style={{ marginTop: 10, fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.6 }}>{t('dreame.geniusDeepDesc')}</div>
                 </div>
@@ -1008,13 +1008,13 @@ export default function VacuumCard() {
     return () => clearInterval(iv)
   }, [cfg.cameraEntity])
 
-  const cmd = (svc) => callService('vacuum', svc, { entity_id: cfg.vacuumEntity })
+  const cmd = (svc) => callService('vacuum', svc, cfg.vacuumEntity)
 
   const startClean = () => {
     if (scope === 'all') {
       cmd('start')
     } else if (scope === 'room' && selectedRooms.length > 0) {
-      callService('dreame_vacuum', 'vacuum_clean_segment', { entity_id: cfg.vacuumEntity, segments: selectedRooms, repeats: 1 })
+      callService('dreame_vacuum', 'vacuum_clean_segment', cfg.vacuumEntity, { segments: selectedRooms, repeats: 1 })
     } else if (scope === 'zona' && zonaRects.length > 0) {
       const container = mapContainerRef.current
       const imgEl = mapImgRef.current
@@ -1038,7 +1038,7 @@ export default function VacuumCard() {
           Math.round(((r.y + r.h) / 100) * 12000 - 6000),
         ]
       })
-      callService('dreame_vacuum', 'vacuum_clean_zone', { entity_id: cfg.vacuumEntity, zone: zones, repeats: zonaCiclo })
+      callService('dreame_vacuum', 'vacuum_clean_zone', cfg.vacuumEntity, { zone: zones, repeats: zonaCiclo })
     }
   }
 
@@ -1047,8 +1047,8 @@ export default function VacuumCard() {
     setSelectedRooms(p => p.includes(id) ? p.filter(r => r !== id) : [...p, id])
   }
 
-  const onSuction = (val) => cfg.suctionLevelEntity && callService('select', 'select_option', { entity_id: cfg.suctionLevelEntity, option: val })
-  const onRoute   = (val) => cfg.cleaningRouteEntity && callService('select', 'select_option', { entity_id: cfg.cleaningRouteEntity, option: val })
+  const onSuction = (val) => cfg.suctionLevelEntity && callService('select', 'select_option', cfg.suctionLevelEntity, { option: val })
+  const onRoute   = (val) => cfg.cleaningRouteEntity && callService('select', 'select_option', cfg.cleaningRouteEntity, { option: val })
 
   const isCharging = mainState === 'docked' || mainState === 'charging_completed'
   const isCleaning = mainState === 'cleaning'
@@ -1244,7 +1244,7 @@ export default function VacuumCard() {
         humidity={humidity} onHumidity={setHumidity}
         freqSel={freqSel} onFrequenza={setFreqSel}
         deepClean={cfg.deepCleanEntity ? getState(cfg.deepCleanEntity) === 'on' : false}
-        onDeepClean={() => cfg.deepCleanEntity && callService('switch', 'toggle', { entity_id: cfg.deepCleanEntity })}
+        onDeepClean={() => cfg.deepCleanEntity && callService('switch', 'toggle', cfg.deepCleanEntity)}
       />
       <BaseSheet
         open={baseOpen} onClose={() => setBaseOpen(false)}
