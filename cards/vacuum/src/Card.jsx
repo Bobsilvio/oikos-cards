@@ -1057,7 +1057,7 @@ export default function VacuumCard() {
   const { dark, callService, getState, getAttr } = useDashboard()
   const { t } = useT('card-vacuum')
   const [cfg] = useState(getVacuumConfig)
-  const haHost = useRef(getHAConfig().host)
+  const haHost = useRef(window.location.origin)
   const mapImgRef = useRef(null)
   const mapContainerRef = useRef(null)
   const imgNatSize = useRef(null)
