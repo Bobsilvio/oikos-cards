@@ -993,8 +993,9 @@ export default function VacuumCard() {
   const cleanArea = getNum(cfg.cleanedAreaEntity)
   const cleanTime = getNum(cfg.cleaningTimeEntity)
 
-  const suction  = get(cfg.suctionLevelEntity)
-  const route    = get(cfg.cleaningRouteEntity)
+  const suction   = get(cfg.suctionLevelEntity)
+  const route     = get(cfg.cleaningRouteEntity)
+  const progress  = getNum(cfg.cleaningProgressEntity)
 
   const stateColor = sc(mainState)
 
@@ -1095,6 +1096,19 @@ export default function VacuumCard() {
           </div>
         ))}
       </div>
+
+      {/* ── Progress bar ── */}
+      {(isCleaning || isPaused) && progress !== null && (
+        <div style={{ margin: '8px 16px 0', display: 'flex', flexDirection: 'column', gap: 4 }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <span style={{ fontSize: 11, fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '.4px' }}>{t('session.progress')}</span>
+            <span style={{ fontSize: 12, fontWeight: 700, color: A }}>{Math.round(progress)}%</span>
+          </div>
+          <div style={{ height: 5, borderRadius: 99, background: 'var(--bg-elevated)', overflow: 'hidden' }}>
+            <div style={{ height: '100%', borderRadius: 99, background: A, width: `${Math.min(100, Math.max(0, progress))}%`, transition: 'width .6s ease' }}/>
+          </div>
+        </div>
+      )}
 
       {/* ── Map ── */}
       <div ref={mapContainerRef} style={{ marginTop: 8, position: 'relative', height: 390, background: 'var(--bg-elevated)', overflow: 'hidden' }}>
