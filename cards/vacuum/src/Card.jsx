@@ -157,21 +157,21 @@ function IosToggle({ on, onToggle }) {
 function CircleItem({ label, active, onClick, children, small }) {
   return (
     <div onClick={onClick} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8, cursor: 'pointer', flex: 1, minWidth: 0 }}>
-      <div style={{ width: 70, height: 70, borderRadius: '50%', margin: '0 auto', background: active ? ABG : '#f0f0f0', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'background .2s', color: active ? A : '#555' }}>
+      <div style={{ width: 70, height: 70, borderRadius: '50%', margin: '0 auto', background: active ? ABG : 'var(--bg-elevated)', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'background .2s', color: active ? A : 'var(--text-secondary)' }}>
         {children}
       </div>
-      <span style={{ fontSize: small ? 10 : 11.5, textAlign: 'center', lineHeight: 1.3, color: active ? A : '#888', fontWeight: active ? 700 : 500 }}>{label}</span>
+      <span style={{ fontSize: small ? 10 : 11.5, textAlign: 'center', lineHeight: 1.3, color: active ? A : 'var(--text-muted)', fontWeight: active ? 700 : 500 }}>{label}</span>
     </div>
   )
 }
 
-function ModeItem({ label, active, onClick, children, small }) {
+function ModeItem({ label, active, onClick, children }) {
   return (
-    <div onClick={onClick} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8, cursor: 'pointer', width: 80, flexShrink: 0 }}>
-      <div style={{ width: 80, height: 80, borderRadius: '50%', background: active ? ABG : '#f0f0f0', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'background .2s', color: active ? A : '#555' }}>
+    <div onClick={onClick} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, cursor: 'pointer', flex: 1, minWidth: 0 }}>
+      <div style={{ width: 62, height: 62, borderRadius: '50%', background: active ? ABG : 'var(--bg-elevated)', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'background .2s', color: active ? A : 'var(--text-secondary)' }}>
         {children}
       </div>
-      <span style={{ fontSize: small ? 10 : 11, textAlign: 'center', color: active ? A : '#888', fontWeight: active ? 700 : 500, lineHeight: 1.3, maxWidth: 80 }}>{label}</span>
+      <span style={{ fontSize: 10, textAlign: 'center', color: active ? A : 'var(--text-muted)', fontWeight: active ? 700 : 500, lineHeight: 1.3, width: '100%', wordBreak: 'break-word' }}>{label}</span>
     </div>
   )
 }
@@ -224,7 +224,7 @@ function SubSheet({ open, onClose, children }) {
       {open && (
         <motion.div key="sub-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
           onClick={onClose}
-          style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,.72)', zIndex: 20, display: 'flex', alignItems: 'flex-end' }}>
+          style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,.93)', zIndex: 20, display: 'flex', alignItems: 'flex-end' }}>
           <motion.div key="sub-sheet" initial={{ y: '100%' }} animate={{ y: 0 }} exit={{ y: '100%' }}
             transition={{ type: 'spring', damping: 32, stiffness: 280 }}
             onClick={e => e.stopPropagation()}
@@ -244,7 +244,7 @@ function FullSheet({ open, onClose, zIndex = 10, children }) {
       {open && (
         <motion.div key="full-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
           onClick={onClose}
-          style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,.72)', zIndex, display: 'flex', alignItems: 'flex-end' }}>
+          style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,.93)', zIndex, display: 'flex', alignItems: 'flex-end' }}>
           <motion.div key="full-sheet" initial={{ y: '100%' }} animate={{ y: 0 }} exit={{ y: '100%' }}
             transition={{ type: 'spring', damping: 32, stiffness: 280 }}
             onClick={e => e.stopPropagation()}
@@ -742,8 +742,8 @@ function MainSheet({ open, onClose, cfg, t, callService, getState,
             <button key={id} onClick={() => switchTab(id)} style={{
               flex: 1, textAlign: 'center', padding: '11px 4px', borderRadius: 10,
               fontSize: 15, fontWeight: 600, border: 'none', cursor: 'pointer', transition: 'all .2s',
-              background: tab === id ? 'white' : 'transparent',
-              color: tab === id ? '#111' : '#888',
+              background: tab === id ? 'var(--bg-card)' : 'transparent',
+              color: tab === id ? 'var(--text-primary)' : 'var(--text-muted)',
               boxShadow: tab === id ? '0 2px 8px rgba(0,0,0,.1)' : 'none',
             }}>
               {id === 'genius' ? t('dreame.cleanGenius') : t('dreame.personalizza')}
@@ -756,14 +756,12 @@ function MainSheet({ open, onClose, cfg, t, callService, getState,
           {/* PERSONALIZZA */}
           <div style={{ position: 'absolute', inset: 0, overflowY: 'auto', display: tab === 'custom' ? 'block' : 'none' }}>
             {/* Mode row */}
-            <div style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none', padding: '0 16px 16px' }}>
-              <div style={{ display: 'flex', gap: 10, width: 'max-content' }}>
-                {modes.map(({ label, Ico, small }, i) => (
-                  <ModeItem key={i} label={label} active={mode === i} onClick={() => setMode(i)} small={small}>
+            <div style={{ display: 'flex', gap: 6, padding: '0 12px 16px' }}>
+              {modes.map(({ label, Ico }, i) => (
+                  <ModeItem key={i} label={label} active={mode === i} onClick={() => setMode(i)}>
                     <Ico/>
                   </ModeItem>
                 ))}
-              </div>
             </div>
             {/* Sub-panel */}
             <div style={{ padding: '0 16px 80px' }}>
@@ -828,9 +826,9 @@ function MainSheet({ open, onClose, cfg, t, callService, getState,
                     const active = getState(cfg.cleaningModeEntity) === id
                     return (
                       <div key={id} onClick={() => cfg.cleaningModeEntity && callService('select', 'select_option', cfg.cleaningModeEntity, { option: id })}
-                        style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10, padding: '16px 8px 20px', borderRadius: 16, background: active ? 'white' : '#f5f5f5', cursor: 'pointer', position: 'relative', border: `2px solid ${active ? A : 'transparent'}`, transition: 'all .2s' }}>
-                        <div style={{ color: active ? A : '#555' }}><Ico/></div>
-                        <span style={{ fontSize: 11.5, textAlign: 'center', color: active ? '#111' : '#888', lineHeight: 1.4, fontWeight: active ? 700 : 500 }}>{label}</span>
+                        style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10, padding: '16px 8px 20px', borderRadius: 16, background: active ? 'var(--bg-card)' : 'var(--bg-elevated)', cursor: 'pointer', position: 'relative', border: `2px solid ${active ? A : 'transparent'}`, transition: 'all .2s' }}>
+                        <div style={{ color: active ? A : 'var(--text-secondary)' }}><Ico/></div>
+                        <span style={{ fontSize: 11.5, textAlign: 'center', color: active ? 'var(--text-primary)' : 'var(--text-muted)', lineHeight: 1.4, fontWeight: active ? 700 : 500 }}>{label}</span>
                         {active && <div style={{ position: 'absolute', bottom: -10, left: '50%', transform: 'translateX(-50%)', width: 22, height: 22, borderRadius: '50%', background: A, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, color: 'white', fontWeight: 700 }}>✓</div>}
                       </div>
                     )
