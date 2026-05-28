@@ -1346,15 +1346,30 @@ export default function VacuumCard() {
             return [(Math.min(...xs)+Math.max(...xs))/2, (Math.min(...ys)+Math.max(...ys))/2]
           }
 
-          // SVG viewBox = dimensioni immagine reale + preserveAspectRatio="xMidYMid meet"
-          // corrisponde esattamente a objectFit:contain → nessuna conversione extra
           const unsel = roomList.filter(rm => selectedRooms.indexOf(rm.id) < 0)
           const sel   = roomList.filter(rm => selectedRooms.indexOf(rm.id) >= 0)
+
+          // clipPath evenodd: rettangolo pieno MENO le stanze non-selezionate
+          // → il fill blu delle stanze selezionate non invade mai le non-selezionate
+          const clipD = `M0,0 L${natW},0 L${natW},${natH} L0,${natH} Z` +
+            (unsel.length > 0
+              ? ' ' + unsel.map(nr => {
+                  const p = mkPts(nr)
+                  return `M${p.map(([x,y]) => `${x},${y}`).join(' L')} Z`
+                }).join(' ')
+              : '')
+
           return (
             <svg style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}
                  viewBox={`0 0 ${natW} ${natH}`}
                  preserveAspectRatio="xMidYMid meet">
-              {/* Non-selezionate: bordo sottile, no fill */}
+              <defs>
+                <clipPath id="oikos-vac-clip" clipPathUnits="userSpaceOnUse">
+                  <path d={clipD} fillRule="evenodd"/>
+                </clipPath>
+              </defs>
+
+              {/* Non-selezionate: bordo sottile, fill quasi trasparente — sempre visibili sopra */}
               {unsel.map(rm => {
                 const pts = mkPts(rm)
                 return (
@@ -1368,21 +1383,31 @@ export default function VacuumCard() {
                   />
                 )
               })}
-              {/* Selezionate: fill blu + bordo + badge numerato */}
+
+              {/* Selezionate: fill blu clippato — non invade mai le non-selezionate */}
               {sel.map(rm => {
                 const pts = mkPts(rm)
                 const [cx, cy] = mkCenter(rm, pts)
                 const idx = selectedRooms.indexOf(rm.id) + 1
                 return (
                   <g key={rm.id}>
+                    {/* Target click: poligono pieno trasparente, non clippato */}
                     <polygon
                       points={pts.map(([x,y]) => `${x},${y}`).join(' ')}
-                      fill="rgba(37,99,235,0.38)"
-                      stroke="rgba(37,99,235,0.95)"
-                      strokeWidth={2.5}
+                      fill="rgba(0,0,0,0.001)" stroke="none"
                       style={{ touchAction: 'none' }}
                       onPointerDown={e => { e.stopPropagation(); toggleRoom(rm.id) }}
                     />
+                    {/* Visuale clippata */}
+                    <g clipPath="url(#oikos-vac-clip)" pointerEvents="none">
+                      <polygon
+                        points={pts.map(([x,y]) => `${x},${y}`).join(' ')}
+                        fill="rgba(37,99,235,0.38)"
+                        stroke="rgba(37,99,235,0.95)"
+                        strokeWidth={2.5}
+                      />
+                    </g>
+                    {/* Badge numero — fuori dal clip, sempre visibile */}
                     <circle cx={cx} cy={cy} r={14} fill="rgba(37,99,235,1)" pointerEvents="none"/>
                     <text x={cx} y={cy} textAnchor="middle" dominantBaseline="central"
                       style={{ fontSize: 14, fontWeight: 700, fill: 'white', pointerEvents: 'none', userSelect: 'none' }}>
