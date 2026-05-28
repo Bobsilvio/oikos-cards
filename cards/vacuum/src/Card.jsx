@@ -345,13 +345,14 @@ function FrequenzaSheet({ open, onClose, selected, onSelect, t, rewash = false,
 // ── SvuotSheet ────────────────────────────────────────────────────────────────
 function SvuotSheet({ open, onClose, selected, onSelect, t }) {
   const opts = [
-    { id: 'smart',  label: t('dreame.svuotSmart'),  desc: t('dreame.svuotSmartDesc')  },
-    { id: 'always', label: t('dreame.svuotAlways'), desc: t('dreame.svuotAlwaysDesc') },
-    { id: 'manual', label: t('dreame.svuotManual'), desc: t('dreame.svuotManualDesc') },
+    { id: 'off',      label: t('dreame.svuotOff'),      desc: t('dreame.svuotOffDesc')      },
+    { id: 'standard', label: t('dreame.svuotStandard'),  desc: t('dreame.svuotStandardDesc') },
+    { id: 'high',     label: t('dreame.svuotHighFreq'),  desc: t('dreame.svuotHighFreqDesc') },
+    { id: 'low',      label: t('dreame.svuotLowFreq'),   desc: t('dreame.svuotLowFreqDesc')  },
   ]
   return (
     <SubSheet open={open} onClose={onClose}>
-      <div style={{ fontSize: 17, fontWeight: 700, color: 'var(--text-primary)', textAlign: 'center', padding: '0 20px 18px' }}>{t('dreame.svuotTitle')}</div>
+      <div style={{ fontSize: 17, fontWeight: 700, color: 'var(--text-primary)', textAlign: 'center', padding: '0 20px 18px' }}>{t('dreame.svuotAutoTitle')}</div>
       {opts.map(o => (
         <RadioOption key={o.id} label={o.label} desc={o.desc} selected={selected === o.id}
           onClick={() => { onSelect(o.id); setTimeout(onClose, 280) }}/>
@@ -364,15 +365,15 @@ function SvuotSheet({ open, onClose, selected, onSelect, t }) {
 // ── LavRipSheet ───────────────────────────────────────────────────────────────
 function LavRipSheet({ open, onClose, selected, onSelect, t }) {
   const opts = [
-    { id: 'low',    label: t('dreame.lavRipLow'),    desc: t('dreame.lavRipLowDesc')    },
-    { id: 'medium', label: t('dreame.lavRipMedium'), desc: t('dreame.lavRipMediumDesc') },
-    { id: 'high',   label: t('dreame.lavRipHigh'),   desc: t('dreame.lavRipHighDesc')   },
+    { id: 'off',      label: t('dreame.lavRipOff')      },
+    { id: 'deepOnly', label: t('dreame.lavRipDeepOnly')  },
+    { id: 'allModes', label: t('dreame.lavRipAllModes')  },
   ]
   return (
     <SubSheet open={open} onClose={onClose}>
       <div style={{ fontSize: 17, fontWeight: 700, color: 'var(--text-primary)', textAlign: 'center', padding: '0 20px 18px' }}>{t('dreame.lavRipTitle')}</div>
       {opts.map(o => (
-        <RadioOption key={o.id} label={o.label} desc={o.desc} selected={selected === o.id}
+        <RadioOption key={o.id} label={o.label} selected={selected === o.id}
           onClick={() => { onSelect(o.id); setTimeout(onClose, 280) }}/>
       ))}
       <div style={{ height: 20 }}/>
@@ -513,14 +514,14 @@ function ImpostazioniSheet({ open, onClose, onMopExtend, onBase, cfg, t, callSer
 }
 
 // ── BaseSheet ─────────────────────────────────────────────────────────────────
-const SVUOT_HA  = { smart: 'standard', always: 'high_frequency', manual: 'off' }
-const SVUOT_UI  = { standard: 'smart', high_frequency: 'always', off: 'manual', low_frequency: 'smart' }
-const LAVRIP_HA = { low: 'off', medium: 'in_deep_mode', high: 'in_all_modes' }
-const LAVRIP_UI = { off: 'low', in_deep_mode: 'medium', in_all_modes: 'high' }
+const SVUOT_HA  = { off: 'off', standard: 'standard', high: 'high_frequency', low: 'low_frequency' }
+const SVUOT_UI  = { off: 'off', standard: 'standard', high_frequency: 'high', low_frequency: 'low', smart: 'standard' }
+const LAVRIP_HA = { off: 'off', deepOnly: 'in_deep_mode', allModes: 'in_all_modes' }
+const LAVRIP_UI = { off: 'off', in_deep_mode: 'deepOnly', in_all_modes: 'allModes' }
 const WASHQTY_HA = { low: 'water_saving', medium: 'daily', high: 'deep' }
 const WASHQTY_UI = { water_saving: 'low', daily: 'medium', deep: 'high' }
-const WASHTEMP_HA = { cold: 'normal', warm: 'warm', hot: 'hot' }
-const WASHTEMP_UI = { normal: 'cold', mild: 'cold', warm: 'warm', hot: 'hot' }
+const WASHTEMP_HA = { normal: 'normal', mild: 'mild', warm: 'warm', hot: 'hot' }
+const WASHTEMP_UI = { normal: 'normal', mild: 'mild', warm: 'warm', hot: 'hot' }
 
 // ── Zona coordinate helpers ───────────────────────────────────────────────────
 // Converte posizione % nella container in pixel nell'immagine reale (objectFit:contain)
@@ -553,6 +554,50 @@ function imgPxToCont(px, py, cw, ch, iw, ih) {
   return [px / iw * rW + oX, py / ih * rH + oY]
 }
 
+const SvgVuota = () => (
+  <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="12" y="26" width="24" height="16" rx="4" fill="#ede9fe" stroke="#7c3aed" strokeWidth="1.8"/>
+    <line x1="17" y1="29" x2="17" y2="39" stroke="#7c3aed" strokeWidth="1.3" opacity=".5"/>
+    <line x1="22" y1="29" x2="22" y2="39" stroke="#7c3aed" strokeWidth="1.3" opacity=".5"/>
+    <line x1="27" y1="29" x2="27" y2="39" stroke="#7c3aed" strokeWidth="1.3" opacity=".5"/>
+    <line x1="32" y1="29" x2="32" y2="39" stroke="#7c3aed" strokeWidth="1.3" opacity=".5"/>
+    <rect x="21" y="18" width="6" height="10" rx="2" fill="#7c3aed" opacity=".25"/>
+    <rect x="21" y="18" width="6" height="10" rx="2" stroke="#7c3aed" strokeWidth="1.6" fill="none"/>
+    <circle cx="24" cy="13" r="1.5" fill="#7c3aed" opacity=".7"/>
+    <circle cx="19" cy="11" r="1.2" fill="#7c3aed" opacity=".45"/>
+    <circle cx="29" cy="10" r="1.2" fill="#7c3aed" opacity=".45"/>
+    <path d="M24 18 L24 15" stroke="#7c3aed" strokeWidth="1.4" strokeLinecap="round"/>
+    <path d="M19 16 L20 14" stroke="#7c3aed" strokeWidth="1.2" strokeLinecap="round" opacity=".5"/>
+    <path d="M29 15 L28 13" stroke="#7c3aed" strokeWidth="1.2" strokeLinecap="round" opacity=".5"/>
+  </svg>
+)
+const SvgLavaMocioAct = () => (
+  <svg width="44" height="48" viewBox="0 0 44 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="vacBaseDropG" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stopColor="#60b4f8"/>
+        <stop offset="100%" stopColor="#1a7ed8"/>
+      </linearGradient>
+    </defs>
+    <path d="M22 8 C16 18 10 26 10 32 C10 39.7 15.4 45 22 45 C28.6 45 34 39.7 34 32 C34 26 28 18 22 8Z" fill="url(#vacBaseDropG)"/>
+    <path d="M15 28 Q16.5 22 21 20" stroke="white" strokeWidth="2" strokeLinecap="round" fill="none" opacity=".45"/>
+  </svg>
+)
+const SvgAsciugaAct = () => (
+  <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="24" cy="24" r="10" fill="#fb923c"/>
+    <line x1="24" y1="7"   x2="24" y2="11"  stroke="#fb923c" strokeWidth="2.5" strokeLinecap="round"/>
+    <line x1="24" y1="37"  x2="24" y2="41"  stroke="#fb923c" strokeWidth="2.5" strokeLinecap="round"/>
+    <line x1="7"  y1="24"  x2="11" y2="24"  stroke="#fb923c" strokeWidth="2.5" strokeLinecap="round"/>
+    <line x1="37" y1="24"  x2="41" y2="24"  stroke="#fb923c" strokeWidth="2.5" strokeLinecap="round"/>
+    <line x1="11.5" y1="11.5" x2="14.3" y2="14.3" stroke="#fb923c" strokeWidth="2.3" strokeLinecap="round"/>
+    <line x1="33.7" y1="33.7" x2="36.5" y2="36.5" stroke="#fb923c" strokeWidth="2.3" strokeLinecap="round"/>
+    <line x1="36.5" y1="11.5" x2="33.7" y2="14.3" stroke="#fb923c" strokeWidth="2.3" strokeLinecap="round"/>
+    <line x1="14.3" y1="33.7" x2="11.5" y2="36.5" stroke="#fb923c" strokeWidth="2.3" strokeLinecap="round"/>
+    <circle cx="24" cy="24" r="6.5" fill="#fde68a"/>
+  </svg>
+)
+
 function BaseSheet({ open, onClose, cfg, t, callService, getState,
   svuotOpen, setSvuotOpen, svuotSel, setSvuotSel,
   lavRipOpen, setLavRipOpen, lavRipSel, setLavRipSel,
@@ -560,10 +605,11 @@ function BaseSheet({ open, onClose, cfg, t, callService, getState,
 }) {
   const [page, setPage] = useState('main')
   const [washQty, setWashQty] = useState('medium')
-  const [washTemp, setWashTemp] = useState('warm')
+  const [washTemp, setWashTemp] = useState('normal')
   const [autoDetergent, setAutoDetergent] = useState(false)
   const [autoWash, setAutoWash] = useState(false)
   const [asciugaOn, setAsciugaOn] = useState(false)
+  const [smartWash, setSmartWash] = useState(false)
 
   const selOpt  = (entityId, option) =>
     entityId && callService('select', 'select_option', entityId, { option })
@@ -575,24 +621,29 @@ function BaseSheet({ open, onClose, cfg, t, callService, getState,
   useEffect(() => {
     if (!open) { setPage('main'); return }
     const g = (id) => id ? getState(id) : null
-    const sv = g(cfg.autoEmptyModeEntity);   if (sv)  setSvuotSel(SVUOT_UI[sv]  || 'smart')
-    const lr = g(cfg.autoRewashingEntity);   if (lr)  setLavRipSel(LAVRIP_UI[lr] || 'medium')
+    const sv = g(cfg.autoEmptyModeEntity);   if (sv)  setSvuotSel(SVUOT_UI[sv]  || 'standard')
+    const lr = g(cfg.autoRewashingEntity);   if (lr)  setLavRipSel(LAVRIP_UI[lr] || 'off')
     const dt = g(cfg.dryingTimeEntity);      if (dt && ['2h','3h','4h'].includes(dt)) setTempAsciugSel(dt)
     const wq = g(cfg.mopWashLevelEntity);    if (wq)  setWashQty(WASHQTY_UI[wq]  || 'medium')
-    const wt = g(cfg.waterTempEntity);       if (wt)  setWashTemp(WASHTEMP_UI[wt] || 'warm')
+    const wt = g(cfg.waterTempEntity);       if (wt)  setWashTemp(WASHTEMP_UI[wt] || 'normal')
     const det = g(cfg.autoDetergentEntity);  if (det !== null) setAutoDetergent(det === 'on')
     const aw  = g(cfg.autoWashEntity);       if (aw  !== null) setAutoWash(aw  === 'on')
     const dry = g(cfg.autoDryingEntity);     if (dry !== null) setAsciugaOn(dry === 'on')
   }, [open])
 
   const get = (id) => id ? (getState(id) ?? null) : null
-  const OK = ['installed', 'available', 'ok', 'no_warning', 'enabled', 'completed']
-  const stItems = [
-    { label: t('stationChips.dustBag'),    val: get(cfg.dustBagEntity)    },
-    { label: t('stationChips.detergent'),  val: get(cfg.detergentEntity)  },
-    { label: t('stationChips.mopPad'),     val: get(cfg.mopPadEntity)     },
-    { label: t('stationChips.dirtyWater'), val: get(cfg.dirtyWaterEntity) },
-  ].filter(i => i.val && i.val !== 'unavailable')
+  const OK  = ['installed', 'available', 'ok', 'no_warning', 'enabled', 'completed', 'clean']
+
+  const baseStatusItems = [
+    { label: t('dreame.cleanWaterTank'),      entity: cfg.lowWaterEntity,    okVals: ['no_warning'] },
+    { label: t('dreame.dirtyWaterTankName'),  entity: cfg.dirtyWaterEntity,  okVals: OK             },
+    { label: t('dreame.dustBagName'),         entity: cfg.dustBagEntity,     okVals: OK             },
+    { label: t('dreame.detergentStatusName'), entity: cfg.detergentEntity,   okVals: OK             },
+  ].map(item => {
+    const val = get(item.entity)
+    const isOk = !val || val === 'unavailable' ? null : item.okVals.includes(val)
+    return { ...item, val, isOk }
+  })
 
   const washQtyOpts = [
     { id: 'low',    label: t('dreame.washQtyLow'),    desc: t('dreame.washQtyLowDesc')    },
@@ -600,103 +651,196 @@ function BaseSheet({ open, onClose, cfg, t, callService, getState,
     { id: 'high',   label: t('dreame.washQtyHigh'),   desc: t('dreame.washQtyHighDesc')   },
   ]
   const washTempOpts = [
-    { id: 'cold', label: t('waterTemp.cold') },
-    { id: 'warm', label: t('waterTemp.warm') },
-    { id: 'hot',  label: t('waterTemp.hot')  },
+    { id: 'normal', label: t('dreame.washTempNormal'), desc: t('dreame.washTempNormalDesc') },
+    { id: 'mild',   label: t('dreame.washTempMild'),   desc: t('dreame.washTempMildDesc')   },
+    { id: 'warm',   label: t('dreame.washTempWarm'),   desc: t('dreame.washTempWarmDesc')   },
+    { id: 'hot',    label: t('dreame.washTempHot'),    desc: t('dreame.washTempHotDesc')    },
   ]
 
-  const pageX = (target) => page === target ? 0 : page === 'main' ? '100%' : target === 'main' ? '-100%' : '100%'
+  const svuotLabel  = svuotSel === 'off' ? t('dreame.svuotOff') : svuotSel === 'high' ? t('dreame.svuotHighFreq') : svuotSel === 'low' ? t('dreame.svuotLowFreq') : t('dreame.svuotStandard')
+  const lavRipLabel = lavRipSel === 'deepOnly' ? t('dreame.lavRipDeepOnly') : lavRipSel === 'allModes' ? t('dreame.lavRipAllModes') : t('dreame.lavRipOff')
+  const wqLabel     = washQty === 'low' ? t('dreame.washQtyLow') : washQty === 'high' ? t('dreame.washQtyHigh') : t('dreame.washQtyMedium')
+  const wtLabel     = washTemp === 'mild' ? t('dreame.washTempMild') : washTemp === 'warm' ? t('dreame.washTempWarm') : washTemp === 'hot' ? t('dreame.washTempHot') : t('dreame.washTempNormal')
+
+  const SP = { type: 'spring', damping: 30, stiffness: 280 }
+
+  const cardSt = { background: 'var(--bg-card)', borderRadius: 16, margin: '12px 14px 0', overflow: 'hidden' }
+  const itemSt = (border) => ({ padding: 16, borderTop: border ? '1px solid var(--border)' : 'none' })
+  const rowSt  = { display: 'flex', alignItems: 'center', justifyContent: 'space-between' }
 
   return (
     <>
       <FullSheet open={open} onClose={onClose} zIndex={1000}>
         <div style={{ flex: 1, position: 'relative', minHeight: 0, overflow: 'hidden' }}>
-          {/* PAGE MAIN */}
-          <motion.div animate={{ x: page === 'main' ? 0 : '-100%' }} transition={{ type: 'spring', damping: 30, stiffness: 280 }}
+
+          {/* ── PAGE MAIN ── */}
+          <motion.div animate={{ x: page === 'main' ? 0 : '-100%' }} transition={SP}
             style={{ position: 'absolute', inset: 0, overflowY: 'auto' }}>
             <div style={{ padding: '22px 20px 32px' }}>
-              <div style={{ fontSize: 22, fontWeight: 800, color: 'var(--text-primary)', marginBottom: 22 }}>{t('dreame.baseTitle')}</div>
-              {stItems.length > 0 && (
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px 12px', marginBottom: 26 }}>
-                  {stItems.map(item => (
-                    <div key={item.label} style={{ display: 'flex', alignItems: 'flex-start', gap: 10 }}>
-                      <div style={{ width: 12, height: 12, borderRadius: '50%', flexShrink: 0, marginTop: 4, background: OK.includes(item.val) ? '#34c759' : 'var(--red)' }}/>
-                      <div>
-                        <div style={{ fontSize: 15, fontWeight: 600, color: 'var(--text-primary)', lineHeight: 1.4 }}>{item.label}</div>
-                        <div style={{ fontSize: 13, color: OK.includes(item.val) ? '#34c759' : 'var(--red)', lineHeight: 1.4, marginTop: 3 }}>{item.val}</div>
-                      </div>
+
+              {/* Informazioni sulla stazione */}
+              <div style={{ fontSize: 22, fontWeight: 800, color: 'var(--text-primary)', marginBottom: 20 }}>
+                {t('dreame.infoStazione')}
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px 12px', marginBottom: 26 }}>
+                {baseStatusItems.map(item => (
+                  <div key={item.label} style={{ display: 'flex', alignItems: 'flex-start', gap: 10 }}>
+                    <div style={{ width: 10, height: 10, borderRadius: '50%', flexShrink: 0, marginTop: 5,
+                      background: item.isOk === null ? '#8e8e93' : item.isOk ? '#34c759' : '#ef4444' }}/>
+                    <div>
+                      <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-primary)', lineHeight: 1.4 }}>{item.label}</div>
+                      {item.isOk === false && item.val && item.val !== 'unavailable' && (
+                        <div style={{ fontSize: 12, color: '#ef4444', lineHeight: 1.4, marginTop: 2 }}>
+                          {t(`stationStatus.${item.val}`, { defaultValue: item.val })}
+                        </div>
+                      )}
                     </div>
-                  ))}
-                </div>
-              )}
-              <div style={{ height: 1, background: 'var(--border)', margin: '0 -20px 26px' }}/>
-              <div style={{ display: 'flex', justifyContent: 'space-around', marginBottom: 28 }}>
-                {[
-                  { label: t('dreame.svuotaBtn'),     icon: '🗑️', onClick: () => pressBtn(cfg.startAutoEmptyEntity) },
-                  { label: t('dreame.lavaMocioBtn'),  icon: '🫧', onClick: () => pressBtn(cfg.startSelfWashEntity)  },
-                  { label: t('dreame.asciugaBtn'),    icon: '💨', onClick: () => pressBtn(cfg.startDryingEntity)    },
-                ].map(act => (
-                  <div key={act.label} onClick={act.onClick} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12, cursor: 'pointer' }}>
-                    <div style={{ width: 88, height: 88, borderRadius: '50%', background: 'var(--bg-elevated)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 30, transition: 'background .18s' }}>{act.icon}</div>
-                    <span style={{ fontSize: 15, color: 'var(--text-primary)', fontWeight: 500 }}>{act.label}</span>
                   </div>
                 ))}
               </div>
-              <div onClick={() => setPage('settings')} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, color: A, fontSize: 16, fontWeight: 600, cursor: 'pointer', textDecoration: 'underline', textUnderlineOffset: 3 }}>
+
+              <div style={{ height: 1, background: 'var(--border)', margin: '0 -20px 26px' }}/>
+
+              {/* Attività base */}
+              <div style={{ fontSize: 17, fontWeight: 700, color: 'var(--text-primary)', marginBottom: 20 }}>
+                {t('dreame.attivitaBase')}
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-around', marginBottom: 28 }}>
+                {[
+                  { label: t('dreame.svuotaBtn'),    Svg: SvgVuota,        onClick: () => pressBtn(cfg.startAutoEmptyEntity) },
+                  { label: t('dreame.lavaMocioBtn'), Svg: SvgLavaMocioAct, onClick: () => pressBtn(cfg.startSelfWashEntity)  },
+                  { label: t('dreame.asciugaBtn'),   Svg: SvgAsciugaAct,   onClick: () => pressBtn(cfg.startDryingEntity)    },
+                ].map(act => (
+                  <div key={act.label} onClick={act.onClick}
+                    style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10, cursor: 'pointer' }}>
+                    <div style={{ width: 88, height: 88, borderRadius: '50%', background: 'var(--bg-elevated)',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'background .18s' }}>
+                      <act.Svg/>
+                    </div>
+                    <span style={{ fontSize: 14, color: 'var(--text-primary)', fontWeight: 500 }}>{act.label}</span>
+                  </div>
+                ))}
+              </div>
+
+              {/* Impostazioni base link */}
+              <div onClick={() => setPage('settings')}
+                style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+                  color: A, fontSize: 16, fontWeight: 600, cursor: 'pointer',
+                  textDecoration: 'underline', textUnderlineOffset: 3 }}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={A} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="3"/>
+                  <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                </svg>
                 {t('dreame.baseSettingsLink')}
               </div>
             </div>
           </motion.div>
 
-          {/* PAGE SETTINGS */}
-          <motion.div animate={{ x: page === 'settings' ? 0 : page === 'main' ? '100%' : '-100%' }} transition={{ type: 'spring', damping: 30, stiffness: 280 }}
+          {/* ── PAGE SETTINGS ── */}
+          <motion.div animate={{ x: page === 'settings' ? 0 : page === 'main' ? '100%' : '-100%' }} transition={SP}
             style={{ position: 'absolute', inset: 0, overflowY: 'auto' }}>
-            <div style={{ background: 'var(--bg-elevated)', minHeight: '100%' }}>
+            <div style={{ background: 'var(--bg-elevated)', minHeight: '100%', paddingBottom: 32 }}>
               <SettingsHeader title={t('dreame.baseSettingsTitle')} onBack={() => setPage('main')}/>
-              {/* Svuotamento / lavaggio pad / asciugatura — picker rows */}
-              <div style={{ background: 'var(--bg-card)', borderRadius: 16, margin: '14px 14px 0', overflow: 'hidden' }}>
-                {[
-                  { title: t('dreame.svuotLabel'),  val: svuotSel === 'always' ? t('dreame.svuotAlways') : svuotSel === 'manual' ? t('dreame.svuotManual') : t('dreame.svuotSmart'),   onTap: () => setSvuotOpen(true)    },
-                  { title: t('dreame.lavRipLabel'), val: lavRipSel === 'high' ? t('dreame.lavRipHigh') : lavRipSel === 'low' ? t('dreame.lavRipLow') : t('dreame.lavRipMedium'),        onTap: () => setLavRipOpen(true)   },
-                  { title: t('dreame.tempAsciugLabel'), val: tempAsciugSel || '—',                                                                                                       onTap: () => setTempAsciugOpen(true) },
-                ].map((row, i) => (
-                  <div key={row.title} onClick={row.onTap}
-                    style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 16px', cursor: 'pointer', borderTop: i > 0 ? '1px solid var(--border)' : 'none' }}>
-                    <span style={{ fontSize: 16, color: 'var(--text-primary)' }}>{row.title}</span>
-                    <span style={{ fontSize: 14, color: A }}>{row.val} ›</span>
+
+              {/* Card 1: Svuotamento automatico */}
+              <div style={cardSt}>
+                <div onClick={() => setSvuotOpen(true)} style={{ ...itemSt(false), cursor: 'pointer' }}>
+                  <div style={rowSt}>
+                    <span style={{ fontSize: 16, fontWeight: 600, color: 'var(--text-primary)' }}>{t('dreame.svuotAutoTitle')}</span>
+                    <span style={{ fontSize: 14, color: A, whiteSpace: 'nowrap' }}>{svuotLabel} ›</span>
                   </div>
-                ))}
+                  <div style={{ fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.6, marginTop: 6 }}>{t('dreame.svuotAutoDesc')}</div>
+                </div>
               </div>
-              {/* Switch rapidi */}
-              <div style={{ background: 'var(--bg-card)', borderRadius: 16, margin: '14px 14px 0', padding: 16 }}>
+
+              {/* Card 2: Detersivo + Lavaggio automatico */}
+              <div style={cardSt}>
                 {[
-                  { label: t('dreame.autoDetergent'), on: autoDetergent, set: (fn) => { const v = typeof fn === 'function' ? fn(autoDetergent) : fn; setAutoDetergent(v); swToggle(cfg.autoDetergentEntity, v) } },
-                  { label: t('dreame.autoWash'),      on: autoWash,      set: (fn) => { const v = typeof fn === 'function' ? fn(autoWash)      : fn; setAutoWash(v);      swToggle(cfg.autoWashEntity,        v) } },
-                  { label: t('dreame.asciuga'),       on: asciugaOn,     set: (fn) => { const v = typeof fn === 'function' ? fn(asciugaOn)     : fn; setAsciugaOn(v);     swToggle(cfg.autoDryingEntity,      v) } },
+                  { key: 'det', label: t('dreame.autoDetergent'), desc: t('dreame.autoDetergentDesc'), on: autoDetergent, toggle: () => { const v = !autoDetergent; setAutoDetergent(v); swToggle(cfg.autoDetergentEntity, v) } },
+                  { key: 'aw',  label: t('dreame.autoWashTitle'),  desc: t('dreame.autoWashDesc'),       on: autoWash,      toggle: () => { const v = !autoWash;       setAutoWash(v);      swToggle(cfg.autoWashEntity,        v) } },
                 ].map((item, i) => (
-                  <div key={item.label} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingTop: i > 0 ? 14 : 0, marginTop: i > 0 ? 14 : 0, borderTop: i > 0 ? '1px solid var(--border)' : 'none' }}>
-                    <span style={{ fontSize: 16, fontWeight: 500, color: 'var(--text-primary)' }}>{item.label}</span>
-                    <IosToggle on={item.on} onToggle={() => item.set(p => !p)}/>
+                  <div key={item.key} style={itemSt(i > 0)}>
+                    <div style={rowSt}>
+                      <span style={{ fontSize: 16, fontWeight: 600, color: 'var(--text-primary)', flex: 1 }}>{item.label}</span>
+                      <IosToggle on={item.on} onToggle={item.toggle}/>
+                    </div>
+                    <div style={{ fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.6, marginTop: 6 }}>{item.desc}</div>
                   </div>
                 ))}
               </div>
-              <div onClick={() => setPage('washing')} style={{ background: 'var(--bg-card)', borderRadius: 16, margin: '10px 14px 28px', padding: '16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', cursor: 'pointer' }}>
-                <span style={{ fontSize: 16, color: 'var(--text-primary)' }}>{t('dreame.washingSettingsTitle')}</span>
-                <span style={{ color: 'var(--text-muted)', fontSize: 17 }}>›</span>
+
+              {/* Card 3: Impostazioni lavaggio + Lavaggio ripetuto */}
+              <div style={cardSt}>
+                <div onClick={() => setPage('washing')} style={{ ...itemSt(false), cursor: 'pointer' }}>
+                  <div style={rowSt}>
+                    <span style={{ fontSize: 16, fontWeight: 600, color: 'var(--text-primary)' }}>{t('dreame.washingSettingsTitle')}</span>
+                    <span style={{ fontSize: 14, color: A, whiteSpace: 'nowrap' }}>{wqLabel} | {wtLabel} ›</span>
+                  </div>
+                  <div style={{ fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.6, marginTop: 6 }}>{t('dreame.washingSettingsDesc')}</div>
+                </div>
+                <div onClick={() => setLavRipOpen(true)} style={{ ...itemSt(true), cursor: 'pointer' }}>
+                  <div style={rowSt}>
+                    <span style={{ fontSize: 16, fontWeight: 600, color: 'var(--text-primary)' }}>{t('dreame.lavRipLabel')}</span>
+                    <span style={{ fontSize: 14, color: lavRipSel === 'off' ? 'var(--text-muted)' : A, whiteSpace: 'nowrap' }}>{lavRipLabel} ›</span>
+                  </div>
+                  <div style={{ fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.6, marginTop: 6 }}>{t('dreame.lavRipDesc')}</div>
+                </div>
+              </div>
+
+              {/* Card 4: Asciuga + Tempo asciugatura */}
+              <div style={cardSt}>
+                <div style={itemSt(false)}>
+                  <div style={rowSt}>
+                    <span style={{ fontSize: 16, fontWeight: 600, color: 'var(--text-primary)' }}>{t('dreame.asciugaTitle')}</span>
+                    <IosToggle on={asciugaOn} onToggle={() => { const v = !asciugaOn; setAsciugaOn(v); swToggle(cfg.autoDryingEntity, v) }}/>
+                  </div>
+                  <div style={{ fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.6, marginTop: 6 }}>{t('dreame.asciugaDesc')}</div>
+                </div>
+                <div onClick={() => setTempAsciugOpen(true)} style={{ ...itemSt(true), cursor: 'pointer' }}>
+                  <div style={rowSt}>
+                    <span style={{ fontSize: 16, fontWeight: 600, color: 'var(--text-primary)' }}>{t('dreame.tempAsciugLabel')}</span>
+                    <span style={{ fontSize: 14, color: A }}>{tempAsciugSel || '—'} ›</span>
+                  </div>
+                  <div style={{ fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.6, marginTop: 6 }}>{t('dreame.tempAsciugDesc')}</div>
+                </div>
+              </div>
+
+              {/* Card 5: Pulisci manualmente */}
+              <div style={{ ...cardSt, marginBottom: 0 }}>
+                <div style={{ ...itemSt(false), display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                  <span style={{ fontSize: 16, fontWeight: 600, color: 'var(--text-primary)', flex: 1 }}>{t('dreame.cleanWashBase')}</span>
+                  <span style={{ fontSize: 17, color: 'var(--text-muted)' }}>›</span>
+                </div>
               </div>
             </div>
           </motion.div>
 
-          {/* PAGE WASHING */}
-          <motion.div animate={{ x: page === 'washing' ? 0 : '100%' }} transition={{ type: 'spring', damping: 30, stiffness: 280 }}
+          {/* ── PAGE WASHING ── */}
+          <motion.div animate={{ x: page === 'washing' ? 0 : '100%' }} transition={SP}
             style={{ position: 'absolute', inset: 0, overflowY: 'auto' }}>
-            <div style={{ background: 'var(--bg-elevated)', minHeight: '100%' }}>
+            <div style={{ background: 'var(--bg-elevated)', minHeight: '100%', paddingBottom: 32 }}>
               <SettingsHeader title={t('dreame.washingSettingsTitle')} onBack={() => setPage('settings')}/>
+
+              {/* Lavaggio mocio intelligente */}
+              <div style={cardSt}>
+                <div style={itemSt(false)}>
+                  <div style={rowSt}>
+                    <span style={{ fontSize: 16, fontWeight: 600, color: 'var(--text-primary)' }}>{t('dreame.smartWash')}</span>
+                    <IosToggle on={smartWash} onToggle={() => setSmartWash(p => !p)}/>
+                  </div>
+                  <div style={{ fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.6, marginTop: 6 }}>{t('dreame.smartWashDesc')}</div>
+                </div>
+              </div>
+
+              {/* Quantità acqua */}
               <div style={{ fontSize: 14, color: 'var(--text-muted)', margin: '16px 14px 8px', lineHeight: 1.5 }}>{t('dreame.washQtyLabel')}</div>
               <div style={{ background: 'var(--bg-card)', borderRadius: 16, margin: '0 14px', overflow: 'hidden' }}>
                 {washQtyOpts.map((o, i) => (
-                  <div key={o.id} onClick={() => { setWashQty(o.id); selOpt(cfg.mopWashLevelEntity, WASHQTY_HA[o.id]) }} style={{ display: 'flex', alignItems: 'flex-start', gap: 14, padding: 16, cursor: 'pointer', borderTop: i > 0 ? '1px solid var(--border)' : 'none' }}>
-                    <div style={{ width: 24, height: 24, borderRadius: '50%', border: `2px solid ${washQty === o.id ? A : '#ccc'}`, flexShrink: 0, marginTop: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', background: washQty === o.id ? A : 'transparent', transition: 'all .18s' }}>
+                  <div key={o.id} onClick={() => { setWashQty(o.id); selOpt(cfg.mopWashLevelEntity, WASHQTY_HA[o.id]) }}
+                    style={{ display: 'flex', alignItems: 'flex-start', gap: 14, padding: 16, cursor: 'pointer', borderTop: i > 0 ? '1px solid var(--border)' : 'none' }}>
+                    <div style={{ width: 24, height: 24, borderRadius: '50%', border: `2px solid ${washQty === o.id ? A : '#ccc'}`,
+                      flexShrink: 0, marginTop: 1, display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      background: washQty === o.id ? A : 'transparent', transition: 'all .18s' }}>
                       {washQty === o.id && <span style={{ fontSize: 13, color: 'white', fontWeight: 800, lineHeight: 1 }}>✓</span>}
                     </div>
                     <div>
@@ -706,18 +850,29 @@ function BaseSheet({ open, onClose, cfg, t, callService, getState,
                   </div>
                 ))}
               </div>
+
+              {/* Temperatura acqua */}
               <div style={{ fontSize: 14, color: 'var(--text-muted)', margin: '16px 14px 8px' }}>{t('dreame.washTempLabel')}</div>
               <div style={{ background: 'var(--bg-card)', borderRadius: 16, margin: '0 14px', overflow: 'hidden' }}>
                 {washTempOpts.map((o, i) => (
-                  <div key={o.id} onClick={() => { setWashTemp(o.id); selOpt(cfg.waterTempEntity, WASHTEMP_HA[o.id]) }} style={{ display: 'flex', alignItems: 'center', gap: 14, padding: 16, cursor: 'pointer', borderTop: i > 0 ? '1px solid var(--border)' : 'none' }}>
-                    <div style={{ width: 24, height: 24, borderRadius: '50%', border: `2px solid ${washTemp === o.id ? A : '#ccc'}`, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: washTemp === o.id ? A : 'transparent', transition: 'all .18s' }}>
+                  <div key={o.id} onClick={() => { setWashTemp(o.id); selOpt(cfg.waterTempEntity, WASHTEMP_HA[o.id]) }}
+                    style={{ display: 'flex', alignItems: 'flex-start', gap: 14, padding: 16, cursor: 'pointer', borderTop: i > 0 ? '1px solid var(--border)' : 'none' }}>
+                    <div style={{ width: 24, height: 24, borderRadius: '50%', border: `2px solid ${washTemp === o.id ? A : '#ccc'}`,
+                      flexShrink: 0, marginTop: 1, display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      background: washTemp === o.id ? A : 'transparent', transition: 'all .18s' }}>
                       {washTemp === o.id && <span style={{ fontSize: 13, color: 'white', fontWeight: 800, lineHeight: 1 }}>✓</span>}
                     </div>
-                    <span style={{ fontSize: 16, fontWeight: 700, color: 'var(--text-primary)' }}>{o.label}</span>
+                    <div>
+                      <div style={{ fontSize: 16, fontWeight: 700, color: 'var(--text-primary)', marginBottom: 4 }}>{o.label}</div>
+                      <div style={{ fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.5 }}>{o.desc}</div>
+                    </div>
                   </div>
                 ))}
               </div>
-              <div style={{ fontSize: 13, color: A, lineHeight: 1.6, margin: '12px 14px 28px' }}>{t('dreame.washWarning')}</div>
+
+              {washTemp === 'hot' && (
+                <div style={{ fontSize: 13, color: A, lineHeight: 1.6, margin: '12px 14px 0' }}>{t('dreame.washWarningHot')}</div>
+              )}
             </div>
           </motion.div>
         </div>
@@ -1079,9 +1234,9 @@ export default function VacuumCard() {
 
   // Base sub-sheets
   const [svuotOpen, setSvuotOpen] = useState(false)
-  const [svuotSel, setSvuotSel] = useState('smart')
+  const [svuotSel, setSvuotSel] = useState('standard')
   const [lavRipOpen, setLavRipOpen] = useState(false)
-  const [lavRipSel, setLavRipSel] = useState('medium')
+  const [lavRipSel, setLavRipSel] = useState('off')
   const [tempAsciugOpen, setTempAsciugOpen] = useState(false)
   const [tempAsciugSel, setTempAsciugSel] = useState('3h')
 
