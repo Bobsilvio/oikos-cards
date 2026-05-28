@@ -985,20 +985,18 @@ export default function VacuumCard() {
       </div>
 
       {/* ── Personalizza button ── */}
-      <div style={{ display: 'flex', alignItems: 'center', padding: '12px 16px 0' }}>
-        <button onClick={() => setMainOpen(true)} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '11px 14px', background: '#f5f5f5', borderRadius: 16, cursor: 'pointer', border: 'none', width: '100%' }}>
-          <div style={{ width: 38, height: 38, background: `linear-gradient(135deg,#f5a228,#e07c0a)`, borderRadius: 11, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.2" strokeLinecap="round">
-              <line x1="4" y1="6" x2="20" y2="6"/>
-              <line x1="4" y1="12" x2="20" y2="12"/>
-              <line x1="4" y1="18" x2="20" y2="18"/>
-              <circle cx="8"  cy="6"  r="2.2" fill="white" stroke="none"/>
-              <circle cx="15" cy="12" r="2.2" fill="white" stroke="none"/>
-              <circle cx="10" cy="18" r="2.2" fill="white" stroke="none"/>
-            </svg>
+      <div style={{ padding: '10px 16px 0' }}>
+        <button onClick={() => setMainOpen(true)} style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 6, padding: '12px 16px', background: '#fff', borderRadius: 16, cursor: 'pointer', border: 'none', boxShadow: '0 2px 12px rgba(0,0,0,.10)' }}>
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="#333">
+            <rect x="2" y="2" width="9" height="9" rx="2"/>
+            <rect x="13" y="2" width="9" height="9" rx="2"/>
+            <rect x="2" y="13" width="9" height="9" rx="2"/>
+            <rect x="13" y="13" width="9" height="9" rx="2"/>
+          </svg>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+            <span style={{ fontSize: 15, fontWeight: 600, color: '#111' }}>{t('dreame.personalizzaBtn')}</span>
+            <span style={{ fontSize: 14, color: '#bbb' }}>›</span>
           </div>
-          <span style={{ fontSize: 15, fontWeight: 600, color: '#111' }}>{t('dreame.personalizzaBtn')}</span>
-          <span style={{ fontSize: 14, color: '#aaa', marginLeft: 'auto' }}>›</span>
         </button>
       </div>
 
@@ -1011,7 +1009,7 @@ export default function VacuumCard() {
       )}
 
       {/* ── Scope tabs ── */}
-      <div style={{ padding: '10px 16px 0' }}>
+      <div style={{ padding: '8px 16px 0' }}>
         <div style={{ display: 'flex', background: '#f0f0f0', borderRadius: 13, padding: 3, gap: 2 }}>
           {[
             { id: 'room', label: t('dreame.scopeRoom') },
