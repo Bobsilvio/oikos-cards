@@ -730,7 +730,7 @@ const kt = {
   totals: un,
   dreame: mn,
   settings: gn
-}, { useState: h, useEffect: ce, useRef: Me } = window.__OIKOS_SDK__.React, { motion: j, AnimatePresence: tt } = window.__OIKOS_SDK__.framerMotion, { useDashboard: yn, getHAConfig: vn, registerCardTranslations: fn, useT: bn } = window.__OIKOS_SDK__;
+}, { useState: h, useEffect: ce, useRef: Me } = window.__OIKOS_SDK__.React, { motion: $, AnimatePresence: tt } = window.__OIKOS_SDK__.framerMotion, { useDashboard: yn, getHAConfig: vn, registerCardTranslations: fn, useT: bn } = window.__OIKOS_SDK__;
 fn("card-vacuum", { it: Vt, en: hn });
 const m = "var(--amber)", Ie = "var(--amber-light)", xn = "var(--amber-light)", wn = "var(--green)", Sn = {
   docked: "var(--green)",
@@ -836,7 +836,7 @@ function Y({ on: d, onToggle: s }) {
     transition: "background .2s",
     marginTop: 2
   }, children: /* @__PURE__ */ e(
-    j.div,
+    $.div,
     {
       animate: { x: d ? 20 : 0 },
       transition: { type: "spring", stiffness: 500, damping: 30 },
@@ -894,7 +894,7 @@ asciutto` }, { pct: 48.4, txt: "Umido" }, { pct: 83.9, txt: "Bagnato" }];
 }
 function Re({ open: d, onClose: s, children: i, zIndex: t = 1100 }) {
   return /* @__PURE__ */ e(tt, { children: d && /* @__PURE__ */ e(
-    j.div,
+    $.div,
     {
       initial: { opacity: 0 },
       animate: { opacity: 1 },
@@ -902,7 +902,7 @@ function Re({ open: d, onClose: s, children: i, zIndex: t = 1100 }) {
       onClick: s,
       style: { position: "absolute", inset: 0, background: "rgba(0,0,0,.93)", zIndex: t, display: "flex", alignItems: "flex-end" },
       children: /* @__PURE__ */ o(
-        j.div,
+        $.div,
         {
           initial: { y: "100%" },
           animate: { y: 0 },
@@ -923,7 +923,7 @@ function Re({ open: d, onClose: s, children: i, zIndex: t = 1100 }) {
 }
 function We({ open: d, onClose: s, zIndex: i = 10, children: t }) {
   return /* @__PURE__ */ e(tt, { children: d && /* @__PURE__ */ e(
-    j.div,
+    $.div,
     {
       initial: { opacity: 0 },
       animate: { opacity: 1 },
@@ -931,7 +931,7 @@ function We({ open: d, onClose: s, zIndex: i = 10, children: t }) {
       onClick: s,
       style: { position: "absolute", inset: 0, background: "rgba(0,0,0,.93)", zIndex: i, display: "flex", alignItems: "flex-end" },
       children: /* @__PURE__ */ o(
-        j.div,
+        $.div,
         {
           initial: { y: "100%" },
           animate: { y: 0 },
@@ -1167,7 +1167,7 @@ function Jn({
   tempAsciugSel: w,
   setTempAsciugSel: L
 }) {
-  const [k, W] = h("main"), [$, q] = h("medium"), [F, T] = h("warm"), [N, Q] = h(!1), [Z, S] = h(!1), [H, B] = h(!1), A = (r, b) => r && n("select", "select_option", r, { option: b }), te = (r, b) => r && n("switch", b ? "turn_on" : "turn_off", r), ne = (r) => r && n("button", "press", r);
+  const [k, W] = h("main"), [q, H] = h("medium"), [F, T] = h("warm"), [N, Q] = h(!1), [Z, S] = h(!1), [O, B] = h(!1), A = (r, b) => r && n("select", "select_option", r, { option: b }), te = (r, b) => r && n("switch", b ? "turn_on" : "turn_off", r), ne = (r) => r && n("button", "press", r);
   ce(() => {
     if (!d) {
       W("main");
@@ -1180,7 +1180,7 @@ function Jn({
     const ie = r(i.dryingTimeEntity);
     ie && ["2h", "3h", "4h"].includes(ie) && L(ie);
     const me = r(i.mopWashLevelEntity);
-    me && q(Kn[me] || "medium");
+    me && H(Kn[me] || "medium");
     const ge = r(i.waterTempEntity);
     ge && T(Zn[ge] || "warm");
     const he = r(i.autoDetergentEntity);
@@ -1207,7 +1207,7 @@ function Jn({
   return /* @__PURE__ */ o(Le, { children: [
     /* @__PURE__ */ e(We, { open: d, onClose: s, zIndex: 1e3, children: /* @__PURE__ */ o("div", { style: { flex: 1, position: "relative", minHeight: 0, overflow: "hidden" }, children: [
       /* @__PURE__ */ e(
-        j.div,
+        $.div,
         {
           animate: { x: k === "main" ? 0 : "-100%" },
           transition: { type: "spring", damping: 30, stiffness: 280 },
@@ -1235,7 +1235,7 @@ function Jn({
         }
       ),
       /* @__PURE__ */ e(
-        j.div,
+        $.div,
         {
           animate: { x: k === "settings" ? 0 : k === "main" ? "100%" : "-100%" },
           transition: { type: "spring", damping: 30, stiffness: 280 },
@@ -1270,8 +1270,8 @@ function Jn({
                 const b = typeof r == "function" ? r(Z) : r;
                 S(b), te(i.autoWashEntity, b);
               } },
-              { label: t("dreame.asciuga"), on: H, set: (r) => {
-                const b = typeof r == "function" ? r(H) : r;
+              { label: t("dreame.asciuga"), on: O, set: (r) => {
+                const b = typeof r == "function" ? r(O) : r;
                 B(b), te(i.autoDryingEntity, b);
               } }
             ].map((r, b) => /* @__PURE__ */ o("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", paddingTop: b > 0 ? 14 : 0, marginTop: b > 0 ? 14 : 0, borderTop: b > 0 ? "1px solid var(--border)" : "none" }, children: [
@@ -1286,7 +1286,7 @@ function Jn({
         }
       ),
       /* @__PURE__ */ e(
-        j.div,
+        $.div,
         {
           animate: { x: k === "washing" ? 0 : "100%" },
           transition: { type: "spring", damping: 30, stiffness: 280 },
@@ -1295,9 +1295,9 @@ function Jn({
             /* @__PURE__ */ e(De, { title: t("dreame.washingSettingsTitle"), onBack: () => W("settings") }),
             /* @__PURE__ */ e("div", { style: { fontSize: 14, color: "var(--text-muted)", margin: "16px 14px 8px", lineHeight: 1.5 }, children: t("dreame.washQtyLabel") }),
             /* @__PURE__ */ e("div", { style: { background: "var(--bg-card)", borderRadius: 16, margin: "0 14px", overflow: "hidden" }, children: Te.map((r, b) => /* @__PURE__ */ o("div", { onClick: () => {
-              q(r.id), A(i.mopWashLevelEntity, Gn[r.id]);
+              H(r.id), A(i.mopWashLevelEntity, Gn[r.id]);
             }, style: { display: "flex", alignItems: "flex-start", gap: 14, padding: 16, cursor: "pointer", borderTop: b > 0 ? "1px solid var(--border)" : "none" }, children: [
-              /* @__PURE__ */ e("div", { style: { width: 24, height: 24, borderRadius: "50%", border: `2px solid ${$ === r.id ? m : "#ccc"}`, flexShrink: 0, marginTop: 1, display: "flex", alignItems: "center", justifyContent: "center", background: $ === r.id ? m : "transparent", transition: "all .18s" }, children: $ === r.id && /* @__PURE__ */ e("span", { style: { fontSize: 13, color: "white", fontWeight: 800, lineHeight: 1 }, children: "✓" }) }),
+              /* @__PURE__ */ e("div", { style: { width: 24, height: 24, borderRadius: "50%", border: `2px solid ${q === r.id ? m : "#ccc"}`, flexShrink: 0, marginTop: 1, display: "flex", alignItems: "center", justifyContent: "center", background: q === r.id ? m : "transparent", transition: "all .18s" }, children: q === r.id && /* @__PURE__ */ e("span", { style: { fontSize: 13, color: "white", fontWeight: 800, lineHeight: 1 }, children: "✓" }) }),
               /* @__PURE__ */ o("div", { children: [
                 /* @__PURE__ */ e("div", { style: { fontSize: 16, fontWeight: 700, color: "var(--text-primary)", marginBottom: 4 }, children: r.label }),
                 /* @__PURE__ */ e("div", { style: { fontSize: 13, color: "var(--text-muted)", lineHeight: 1.5 }, children: r.desc })
@@ -1415,7 +1415,7 @@ function ei({
   deepClean: z,
   onDeepClean: I
 }) {
-  const [w, L] = h("custom"), [k, W] = h(0), [$, q] = h(!1), [F, T] = h(!1), N = i.cleanGeniusEntity ? a(i.cleanGeniusEntity) !== "off" : !1;
+  const [w, L] = h("custom"), [k, W] = h(0), [q, H] = h(!1), [F, T] = h(!1), N = i.cleanGeniusEntity ? a(i.cleanGeniusEntity) !== "off" : !1;
   ce(() => {
     i.cleanGeniusEntity && L(N ? "genius" : "custom");
   }, [N, i.cleanGeniusEntity]);
@@ -1446,14 +1446,17 @@ function ei({
       }, children: t(S === "genius" ? "dreame.cleanGenius" : "dreame.personalizza") }, S)) }),
       /* @__PURE__ */ o("div", { style: { flex: 1, minHeight: 0, overflow: "hidden", position: "relative" }, children: [
         /* @__PURE__ */ o("div", { style: { position: "absolute", inset: 0, overflowY: "auto", display: w === "custom" ? "block" : "none" }, children: [
-          /* @__PURE__ */ e("div", { style: { display: "flex", gap: 6, padding: "0 12px 16px" }, children: Z.map(({ label: S, Ico: H }, B) => /* @__PURE__ */ e(Bn, { label: S, active: k === B, onClick: () => W(B), children: /* @__PURE__ */ e(H, {}) }, B)) }),
+          /* @__PURE__ */ e("div", { style: { display: "flex", gap: 6, padding: "0 12px 16px" }, children: Z.map(({ label: S, Ico: O }, B) => /* @__PURE__ */ e(Bn, { label: S, active: k === B, onClick: () => W(B), children: /* @__PURE__ */ e(O, {}) }, B)) }),
           /* @__PURE__ */ o("div", { style: { padding: "0 16px 80px" }, children: [
             k === 0 && /* @__PURE__ */ o("div", { children: [
               /* @__PURE__ */ e(Oe, { suction: l, onSelect: p, t }),
               /* @__PURE__ */ o("div", { style: { background: "var(--bg-elevated)", borderRadius: 16, padding: "14px 16px", marginBottom: 24 }, children: [
                 /* @__PURE__ */ o("div", { style: { display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 12, marginBottom: 8 }, children: [
                   /* @__PURE__ */ e("div", { style: { flex: 1 }, children: /* @__PURE__ */ e("div", { style: { fontSize: 15, fontWeight: 700, color: "var(--text-primary)" }, children: t("dreame.massimaTitle") }) }),
-                  /* @__PURE__ */ e(Y, { on: $, onToggle: () => q((S) => !S) })
+                  /* @__PURE__ */ e(Y, { on: q, onToggle: () => {
+                    const S = !q;
+                    H(S), S && p("turbo");
+                  } })
                 ] }),
                 /* @__PURE__ */ e("div", { style: { fontSize: 13, color: "var(--text-muted)", lineHeight: 1.6 }, children: t("dreame.massimaDesc") })
               ] }),
@@ -1482,7 +1485,7 @@ function ei({
             /* @__PURE__ */ e("div", { style: { display: "flex", gap: 12 }, children: [
               { id: "sweeping_and_mopping", Ico: Ue, label: t("cleanMode.sweeping_and_mopping") },
               { id: "mopping_after_sweeping", Ico: Xe, label: t("cleanMode.mopping_after_sweeping") }
-            ].map(({ id: S, Ico: H, label: B }) => {
+            ].map(({ id: S, Ico: O, label: B }) => {
               const A = a(i.cleaningModeEntity) === S;
               return /* @__PURE__ */ o(
                 "div",
@@ -1490,7 +1493,7 @@ function ei({
                   onClick: () => i.cleaningModeEntity && n("select", "select_option", i.cleaningModeEntity, { option: S }),
                   style: { flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 10, padding: "16px 8px 20px", borderRadius: 16, background: A ? "var(--bg-card)" : "var(--bg-elevated)", cursor: "pointer", position: "relative", border: `2px solid ${A ? m : "transparent"}`, transition: "all .2s" },
                   children: [
-                    /* @__PURE__ */ e("div", { style: { color: A ? m : "var(--text-secondary)" }, children: /* @__PURE__ */ e(H, {}) }),
+                    /* @__PURE__ */ e("div", { style: { color: A ? m : "var(--text-secondary)" }, children: /* @__PURE__ */ e(O, {}) }),
                     /* @__PURE__ */ e("span", { style: { fontSize: 11.5, textAlign: "center", color: A ? "var(--text-primary)" : "var(--text-muted)", lineHeight: 1.4, fontWeight: A ? 700 : 500 }, children: B }),
                     A && /* @__PURE__ */ e("div", { style: { position: "absolute", bottom: -10, left: "50%", transform: "translateX(-50%)", width: 22, height: 22, borderRadius: "50%", background: m, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, color: "white", fontWeight: 700 }, children: "✓" })
                   ]
@@ -1593,7 +1596,7 @@ function ti({ rect: d, num: s, onUpdate: i, onRemove: t }) {
   ] });
 }
 function ni() {
-  const { dark: d, callService: s, getState: i, getAttr: t } = yn(), { t: n } = bn("card-vacuum"), [a] = h(zt), l = Me(vn().host), p = Me(null), v = Me(null), y = Me(null), [g, x] = h("all"), [u, _] = h([]), [z, I] = h(1), [w, L] = h([{ x: 15, y: 15, w: 60, h: 50 }]), [k, W] = h(!1), [$, q] = h(!1), [F, T] = h(!1), [N, Q] = h(!1), [Z, S] = h(!1), [H, B] = h("smart"), [A, te] = h(!1), [ne, U] = h("medium"), [pe, ue] = h(!1), [Te, Be] = h("3h"), [r, b] = h("high"), [X, ie] = h(!0), [me, ge] = h(!0), [he, ye] = h(!1), [ve, fe] = h(!1), [at, Fe] = h(!1), [rt, st] = h(20), [lt, Ne] = h("standard"), [dt, Qe] = h("standard"), V = (c) => c ? i(c) ?? null : null, be = (c) => {
+  const { dark: d, callService: s, getState: i, getAttr: t } = yn(), { t: n } = bn("card-vacuum"), [a] = h(zt), l = Me(vn().host), p = Me(null), v = Me(null), y = Me(null), [g, x] = h("all"), [u, _] = h([]), [z, I] = h(1), [w, L] = h([{ x: 15, y: 15, w: 60, h: 50 }]), [k, W] = h(!1), [q, H] = h(!1), [F, T] = h(!1), [N, Q] = h(!1), [Z, S] = h(!1), [O, B] = h("smart"), [A, te] = h(!1), [ne, U] = h("medium"), [pe, ue] = h(!1), [Te, Be] = h("3h"), [r, b] = h("high"), [X, ie] = h(!0), [me, ge] = h(!0), [he, ye] = h(!1), [ve, fe] = h(!1), [at, Fe] = h(!1), [rt, st] = h(20), [lt, Ne] = h("standard"), [dt, Qe] = h("standard"), V = (c) => c ? i(c) ?? null : null, be = (c) => {
     const f = V(c);
     return f && f !== "unavailable" ? parseFloat(f) : null;
   }, ct = V(a.vacuumEntity), pt = V(a.stateEntity), D = ct || pt, Ve = be(a.batteryEntity);
@@ -1622,7 +1625,7 @@ function ni() {
     else if (g === "zona" && w.length > 0) {
       const E = v.current, C = p.current, R = ((C == null ? void 0 : C.naturalWidth) > 0 ? C.naturalWidth : null) ?? ((c = y.current) == null ? void 0 : c[0]) ?? 0, P = ((C == null ? void 0 : C.naturalHeight) > 0 ? C.naturalHeight : null) ?? ((f = y.current) == null ? void 0 : f[1]) ?? 0, ee = a.cameraEntity ? t(a.cameraEntity, "calibration_points") || [] : [], { width: ae, height: re } = (E == null ? void 0 : E.getBoundingClientRect()) ?? { width: 375, height: 390 }, _e = w.map((M) => {
         if (R > 0 && P > 0 && ee.length >= 3) {
-          const [O, G] = Je(M.x, M.y, ae, re, R, P), [se, le] = Je(M.x + M.w, M.y + M.h, ae, re, R, P), [He, Ce] = et(O, G, ee), [K, de] = et(se, le, ee);
+          const [j, G] = Je(M.x, M.y, ae, re, R, P), [se, le] = Je(M.x + M.w, M.y + M.h, ae, re, R, P), [He, Ce] = et(j, G, ee), [K, de] = et(se, le, ee);
           return [Math.round(He), Math.round(Ce), Math.round(K), Math.round(de)];
         }
         return [
@@ -1730,13 +1733,13 @@ function ni() {
         var ee, ae, re, _e, M;
         const c = a.cameraEntity && t(a.cameraEntity, "segments") || null, f = a.cameraEntity ? t(a.cameraEntity, "calibration_points") || [] : [], E = (((ee = p.current) == null ? void 0 : ee.naturalWidth) > 0 ? p.current.naturalWidth : null) ?? ((ae = y.current) == null ? void 0 : ae[0]) ?? 0, C = (((re = p.current) == null ? void 0 : re.naturalHeight) > 0 ? p.current.naturalHeight : null) ?? ((_e = y.current) == null ? void 0 : _e[1]) ?? 0, { width: R, height: P } = ((M = v.current) == null ? void 0 : M.getBoundingClientRect()) ?? { width: 375, height: 390 };
         if (c && f.length >= 3 && E > 0 && C > 0) {
-          const O = Array.isArray(c) ? c : Object.values(c);
+          const j = Array.isArray(c) ? c : Object.values(c);
           return /* @__PURE__ */ e(
             "svg",
             {
               style: { position: "absolute", inset: 0, width: R, height: P, cursor: "pointer" },
               viewBox: `0 0 ${R} ${P}`,
-              children: O.map((G) => {
+              children: j.map((G) => {
                 var Ce;
                 if (!((Ce = G == null ? void 0 : G.outline) != null && Ce.length)) return null;
                 const se = Number(G.id), le = u.indexOf(se) >= 0, He = G.outline.map(([K, de]) => {
@@ -1761,7 +1764,7 @@ function ni() {
             }
           );
         }
-        return u.length === 0 ? null : /* @__PURE__ */ e("div", { style: { position: "absolute", top: 10, left: 0, right: 0, display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 6, padding: "0 12px", pointerEvents: "none" }, children: qe.filter((O) => u.indexOf(Number(O.id)) >= 0).map((O) => /* @__PURE__ */ e("span", { style: { background: m, color: "white", padding: "4px 12px", borderRadius: 14, fontSize: 12, fontWeight: 700, boxShadow: "0 2px 8px rgba(0,0,0,.3)" }, children: O.name }, O.id)) });
+        return u.length === 0 ? null : /* @__PURE__ */ e("div", { style: { position: "absolute", top: 10, left: 0, right: 0, display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 6, padding: "0 12px", pointerEvents: "none" }, children: qe.filter((j) => u.indexOf(Number(j.id)) >= 0).map((j) => /* @__PURE__ */ e("span", { style: { background: m, color: "white", padding: "4px 12px", borderRadius: 14, fontSize: 12, fontWeight: 700, boxShadow: "0 2px 8px rgba(0,0,0,.3)" }, children: j.name }, j.id)) });
       })()
     ] }),
     g === "room" && /* @__PURE__ */ e("div", { style: { padding: "8px 16px 0" }, children: qe.filter((c) => c.name).length > 0 ? /* @__PURE__ */ e("div", { style: { overflowX: "auto", scrollbarWidth: "none", WebkitOverflowScrolling: "touch", display: "flex", gap: 6, paddingBottom: 2 }, children: qe.filter((c) => c.name).map((c) => {
@@ -1864,7 +1867,7 @@ function ni() {
       oe || ke || J ? /* @__PURE__ */ o("button", { onClick: () => ze("stop"), style: { display: "flex", alignItems: "center", gap: 8, flex: 1, justifyContent: "center", background: "transparent", border: "none", cursor: "pointer", padding: 0 }, children: [
         /* @__PURE__ */ e("svg", { width: "22", height: "22", viewBox: "0 0 22 22", children: /* @__PURE__ */ e("rect", { x: "3", y: "3", width: "16", height: "16", rx: "3", fill: "var(--red)" }) }),
         /* @__PURE__ */ e("span", { style: { fontSize: 17, fontWeight: 600, color: "var(--red)" }, children: n("dreame.stopBtn") })
-      ] }) : /* @__PURE__ */ o("button", { onClick: () => q(!0), style: { display: "flex", alignItems: "center", gap: 8, flex: 1, justifyContent: "center", background: "transparent", border: "none", cursor: "pointer", padding: 0 }, children: [
+      ] }) : /* @__PURE__ */ o("button", { onClick: () => H(!0), style: { display: "flex", alignItems: "center", gap: 8, flex: 1, justifyContent: "center", background: "transparent", border: "none", cursor: "pointer", padding: 0 }, children: [
         /* @__PURE__ */ e("span", { style: { fontSize: 22 }, children: "🏠" }),
         /* @__PURE__ */ e("span", { style: { fontSize: 17, fontWeight: 600, color: "var(--text-secondary)" }, children: n("dreame.baseBtn") })
       ] })
@@ -1893,15 +1896,15 @@ function ni() {
     /* @__PURE__ */ e(
       Jn,
       {
-        open: $,
-        onClose: () => q(!1),
+        open: q,
+        onClose: () => H(!1),
         cfg: a,
         t: n,
         callService: s,
         getState: i,
         svuotOpen: Z,
         setSvuotOpen: S,
-        svuotSel: H,
+        svuotSel: O,
         setSvuotSel: B,
         lavRipOpen: A,
         setLavRipOpen: te,
@@ -1919,7 +1922,7 @@ function ni() {
         open: F,
         onClose: () => T(!1),
         onMopExtend: () => Q(!0),
-        onBase: () => q(!0),
+        onBase: () => H(!0),
         cfg: a,
         t: n,
         callService: s,

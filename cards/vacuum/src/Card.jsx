@@ -811,7 +811,11 @@ function MainSheet({ open, onClose, cfg, t, callService, getState,
                       <div style={{ flex: 1 }}>
                         <div style={{ fontSize: 15, fontWeight: 700, color: 'var(--text-primary)' }}>{t('dreame.massimaTitle')}</div>
                       </div>
-                      <IosToggle on={massima} onToggle={() => setMassima(p => !p)}/>
+                      <IosToggle on={massima} onToggle={() => {
+                        const next = !massima
+                        setMassima(next)
+                        if (next) onSuction('turbo')
+                      }}/>
                     </div>
                     <div style={{ fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.6 }}>{t('dreame.massimaDesc')}</div>
                   </div>
