@@ -1048,8 +1048,8 @@ export default function VacuumCard() {
   }
 
   const toggleRoom = (id) => {
-    setScope('room')
-    setSelectedRooms(p => p.includes(id) ? p.filter(r => r !== id) : [...p, id])
+    const nid = Number(id)
+    setSelectedRooms(p => p.includes(nid) ? p.filter(r => r !== nid) : [...p, nid])
   }
 
   const onSuction = (val) => cfg.suctionLevelEntity && callService('select', 'select_option', cfg.suctionLevelEntity, { option: val })
@@ -1135,8 +1135,12 @@ export default function VacuumCard() {
             onRemove={() => setZonaRects(prev => prev.filter((_, i) => i !== idx))}/>
         ))}
         {scope === 'room' && selectedRooms.length > 0 && (
-          <div style={{ position: 'absolute', top: 10, left: '50%', transform: 'translateX(-50%)', background: A, color: 'white', padding: '5px 14px', borderRadius: 20, fontSize: 12, fontWeight: 700, boxShadow: '0 2px 8px rgba(0,0,0,.25)', whiteSpace: 'nowrap', pointerEvents: 'none' }}>
-            {selectedRooms.length === 1 ? t('rooms.startN_one', { count: selectedRooms.length }) : t('rooms.startN_other', { count: selectedRooms.length })}
+          <div style={{ position: 'absolute', top: 10, left: 0, right: 0, display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 6, padding: '0 12px', pointerEvents: 'none' }}>
+            {rooms.filter(r => selectedRooms.indexOf(Number(r.id)) >= 0).map(r => (
+              <span key={r.id} style={{ background: A, color: 'white', padding: '4px 12px', borderRadius: 14, fontSize: 12, fontWeight: 700, boxShadow: '0 2px 8px rgba(0,0,0,.3)' }}>
+                {r.name}
+              </span>
+            ))}
           </div>
         )}
       </div>
@@ -1145,21 +1149,26 @@ export default function VacuumCard() {
       {scope === 'room' && (
         <div style={{ padding: '8px 16px 0' }}>
           {rooms.filter(r => r.name).length > 0 ? (
-            <div style={{ overflowX: 'auto', scrollbarWidth: 'none', display: 'flex', gap: 6 }}>
+            <div style={{ overflowX: 'auto', scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch', display: 'flex', gap: 6, paddingBottom: 2 }}>
               {rooms.filter(r => r.name).map(r => {
-                const idx = selectedRooms.indexOf(r.id)
-                const sel = idx >= 0
+                const sel = selectedRooms.indexOf(Number(r.id)) >= 0
                 return (
-                  <div key={r.id} onClick={() => toggleRoom(r.id)} style={{
-                    flexShrink: 0, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 5,
-                    padding: '7px 14px', borderRadius: 20,
-                    background: sel ? A : 'var(--bg-elevated)',
-                    color: sel ? 'white' : 'var(--text-secondary)',
-                    fontSize: 13, fontWeight: sel ? 700 : 500,
-                    border: `1.5px solid ${sel ? A : 'var(--border)'}`,
-                    boxShadow: sel ? `0 2px 8px rgba(245,158,11,.35)` : 'none',
-                    transition: 'all .15s',
-                  }}>
+                  <div key={r.id}
+                    onPointerDown={e => { e.currentTarget.style.transform = 'scale(0.94)' }}
+                    onPointerUp={e => { e.currentTarget.style.transform = ''; toggleRoom(Number(r.id)) }}
+                    onPointerCancel={e => { e.currentTarget.style.transform = '' }}
+                    style={{
+                      flexShrink: 0, cursor: 'pointer', touchAction: 'manipulation',
+                      display: 'flex', alignItems: 'center', gap: 5,
+                      padding: '7px 14px', borderRadius: 20,
+                      background: sel ? A : 'var(--bg-elevated)',
+                      color: sel ? 'white' : 'var(--text-secondary)',
+                      fontSize: 13, fontWeight: sel ? 700 : 500,
+                      border: `1.5px solid ${sel ? A : 'var(--border)'}`,
+                      boxShadow: sel ? `0 2px 10px rgba(245,158,11,.45)` : 'none',
+                      transition: 'background .12s, border-color .12s, box-shadow .12s, color .12s',
+                      userSelect: 'none',
+                    }}>
                     {sel && <span style={{ fontSize: 11, fontWeight: 800 }}>✓</span>}
                     {r.name}
                   </div>
