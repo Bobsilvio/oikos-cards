@@ -1062,6 +1062,8 @@ export default function VacuumCard() {
   const mapContainerRef = useRef(null)
   const imgNatSize = useRef(null)
   const [imgLoaded, setImgLoaded] = useState(false)
+  const [mapZoom, setMapZoom] = useState(1)
+  const [zoomUnlocked, setZoomUnlocked] = useState(false)
 
   // Scope + rooms
   const [scope, setScope] = useState('all')
@@ -1252,6 +1254,8 @@ export default function VacuumCard() {
 
       {/* ── Map ── */}
       <div ref={mapContainerRef} style={{ marginTop: 8, position: 'relative', height: 390, background: 'var(--bg-elevated)', overflow: 'hidden' }}>
+        {/* Contenuto scalabile */}
+        <div style={{ width: '100%', height: '100%', transform: `scale(${mapZoom})`, transformOrigin: 'center center', transition: 'transform .2s' }}>
         {cfg.cameraEntity ? (
           <img ref={mapImgRef}
             alt={t('map.alt')}
@@ -1369,11 +1373,48 @@ export default function VacuumCard() {
                 </clipPath>
               </defs>
 
-              {/* Non-selezionate: bordo sottile, fill quasi trasparente — sempre visibili sopra */}
+              {/* Selezionate: visuale clippata (layer sotto, no pointer events) */}
+              {sel.map(rm => {
+                const pts = mkPts(rm)
+                return (
+                  <g key={`vis-${rm.id}`} clipPath="url(#oikos-vac-clip)" pointerEvents="none">
+                    <polygon
+                      points={pts.map(([x,y]) => `${x},${y}`).join(' ')}
+                      fill="rgba(37,99,235,0.38)"
+                      stroke="rgba(37,99,235,0.95)"
+                      strokeWidth={2.5}
+                    />
+                  </g>
+                )
+              })}
+
+              {/* Selezionate: click target trasparente (layer intermedio) */}
+              {sel.map(rm => {
+                const pts = mkPts(rm)
+                const [cx, cy] = mkCenter(rm, pts)
+                const idx = selectedRooms.indexOf(rm.id) + 1
+                return (
+                  <g key={`sel-${rm.id}`}>
+                    <polygon
+                      points={pts.map(([x,y]) => `${x},${y}`).join(' ')}
+                      fill="rgba(0,0,0,0.001)" stroke="none"
+                      style={{ touchAction: 'none' }}
+                      onPointerDown={e => { e.stopPropagation(); toggleRoom(rm.id) }}
+                    />
+                    <circle cx={cx} cy={cy} r={14} fill="rgba(37,99,235,1)" pointerEvents="none"/>
+                    <text x={cx} y={cy} textAnchor="middle" dominantBaseline="central"
+                      style={{ fontSize: 14, fontWeight: 700, fill: 'white', pointerEvents: 'none', userSelect: 'none' }}>
+                      {idx}
+                    </text>
+                  </g>
+                )
+              })}
+
+              {/* Non-selezionate: per ultime → z-order top → vincono pointer events nell'overlap */}
               {unsel.map(rm => {
                 const pts = mkPts(rm)
                 return (
-                  <polygon key={rm.id}
+                  <polygon key={`unsel-${rm.id}`}
                     points={pts.map(([x,y]) => `${x},${y}`).join(' ')}
                     fill="rgba(255,255,255,0.06)"
                     stroke="rgba(255,255,255,0.35)"
@@ -1383,42 +1424,30 @@ export default function VacuumCard() {
                   />
                 )
               })}
-
-              {/* Selezionate: fill blu clippato — non invade mai le non-selezionate */}
-              {sel.map(rm => {
-                const pts = mkPts(rm)
-                const [cx, cy] = mkCenter(rm, pts)
-                const idx = selectedRooms.indexOf(rm.id) + 1
-                return (
-                  <g key={rm.id}>
-                    {/* Target click: poligono pieno trasparente, non clippato */}
-                    <polygon
-                      points={pts.map(([x,y]) => `${x},${y}`).join(' ')}
-                      fill="rgba(0,0,0,0.001)" stroke="none"
-                      style={{ touchAction: 'none' }}
-                      onPointerDown={e => { e.stopPropagation(); toggleRoom(rm.id) }}
-                    />
-                    {/* Visuale clippata */}
-                    <g clipPath="url(#oikos-vac-clip)" pointerEvents="none">
-                      <polygon
-                        points={pts.map(([x,y]) => `${x},${y}`).join(' ')}
-                        fill="rgba(37,99,235,0.38)"
-                        stroke="rgba(37,99,235,0.95)"
-                        strokeWidth={2.5}
-                      />
-                    </g>
-                    {/* Badge numero — fuori dal clip, sempre visibile */}
-                    <circle cx={cx} cy={cy} r={14} fill="rgba(37,99,235,1)" pointerEvents="none"/>
-                    <text x={cx} y={cy} textAnchor="middle" dominantBaseline="central"
-                      style={{ fontSize: 14, fontWeight: 700, fill: 'white', pointerEvents: 'none', userSelect: 'none' }}>
-                      {idx}
-                    </text>
-                  </g>
-                )
-              })}
             </svg>
           )
         })()}
+        </div>{/* fine div scalabile */}
+
+        {/* ── Zoom controls ── */}
+        <div style={{ position: 'absolute', top: 8, right: 8, display: 'flex', flexDirection: 'column', gap: 4, zIndex: 10 }}>
+          {/* Lock / Unlock */}
+          <div onClick={() => { setZoomUnlocked(v => !v); if (zoomUnlocked) setMapZoom(1) }}
+            style={{ width: 32, height: 32, borderRadius: 8, background: 'rgba(0,0,0,0.55)', backdropFilter: 'blur(6px)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', fontSize: 15 }}>
+            {zoomUnlocked ? '🔓' : '🔒'}
+          </div>
+          {/* +/- visibili solo quando sbloccato */}
+          {zoomUnlocked && (<>
+            <div onClick={() => setMapZoom(z => Math.min(3, parseFloat((z + 0.3).toFixed(1))))}
+              style={{ width: 32, height: 32, borderRadius: 8, background: 'rgba(0,0,0,0.55)', backdropFilter: 'blur(6px)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', fontSize: 20, color: 'white', fontWeight: 700, lineHeight: 1 }}>
+              +
+            </div>
+            <div onClick={() => setMapZoom(z => Math.max(1, parseFloat((z - 0.3).toFixed(1))))}
+              style={{ width: 32, height: 32, borderRadius: 8, background: 'rgba(0,0,0,0.55)', backdropFilter: 'blur(6px)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', fontSize: 20, color: 'white', fontWeight: 700, lineHeight: 1 }}>
+              −
+            </div>
+          </>)}
+        </div>
       </div>
 
       {/* ── Room pill row ── */}
