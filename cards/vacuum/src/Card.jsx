@@ -224,7 +224,7 @@ function SubSheet({ open, onClose, children }) {
       {open && (
         <motion.div key="sub-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
           onClick={onClose}
-          style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,.38)', zIndex: 20, display: 'flex', alignItems: 'flex-end' }}>
+          style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,.72)', zIndex: 20, display: 'flex', alignItems: 'flex-end' }}>
           <motion.div key="sub-sheet" initial={{ y: '100%' }} animate={{ y: 0 }} exit={{ y: '100%' }}
             transition={{ type: 'spring', damping: 32, stiffness: 280 }}
             onClick={e => e.stopPropagation()}
@@ -244,7 +244,7 @@ function FullSheet({ open, onClose, zIndex = 10, children }) {
       {open && (
         <motion.div key="full-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
           onClick={onClose}
-          style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,.38)', zIndex, display: 'flex', alignItems: 'flex-end' }}>
+          style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,.72)', zIndex, display: 'flex', alignItems: 'flex-end' }}>
           <motion.div key="full-sheet" initial={{ y: '100%' }} animate={{ y: 0 }} exit={{ y: '100%' }}
             transition={{ type: 'spring', damping: 32, stiffness: 280 }}
             onClick={e => e.stopPropagation()}
@@ -400,9 +400,15 @@ function MopExtendSheet({ open, onClose, onFrequenza, freqSel, sideReach, setSid
 }
 
 // ── ImpostazioniSheet ─────────────────────────────────────────────────────────
-function ImpostazioniSheet({ open, onClose, onMopExtend, cfg, t, callService, getState }) {
+function ImpostazioniSheet({ open, onClose, onMopExtend, onBase, cfg, t, callService, getState }) {
   const isOn = (id) => id ? getState(id) === 'on' : false
-  const items = [
+  const tog  = (id) => id && callService('switch', 'toggle', id)
+
+  const navItems = [
+    { label: t('dreame.mopExtendTitle'), onClick: () => { onClose(); setTimeout(onMopExtend, 140) } },
+    { label: t('dreame.baseTitle'),      onClick: () => { onClose(); setTimeout(onBase, 140) } },
+  ]
+  const switchItems = [
     cfg.dndEntity             && { label: t('switches.dnd'),         e: cfg.dndEntity             },
     cfg.carpetBoostEntity     && { label: t('switches.carpetBoost'), e: cfg.carpetBoostEntity     },
     cfg.selfCleanSwitchEntity && { label: t('switches.selfClean'),   e: cfg.selfCleanSwitchEntity },
@@ -416,22 +422,35 @@ function ImpostazioniSheet({ open, onClose, onMopExtend, cfg, t, callService, ge
       <div style={{ flex: 1, overflowY: 'auto', minHeight: 0 }}>
         <div style={{ background: 'var(--bg-elevated)', minHeight: '100%' }}>
           <SettingsHeader title={t('dreame.impostazioniTitle')} onBack={onClose}/>
-          {items.length > 0 && (
-            <div style={{ background: 'var(--bg-card)', borderRadius: 16, margin: '10px 14px 0', overflow: 'hidden' }}>
-              {items.map((item, i) => (
-                <div key={item.e} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 16, borderTop: i > 0 ? '1px solid var(--border)' : 'none' }}>
+          {/* Search bar */}
+          <div style={{ margin: '12px 14px 0', background: 'var(--bg-card)', borderRadius: 12, padding: '10px 14px', display: 'flex', alignItems: 'center', gap: 10 }}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" strokeWidth="2.2" strokeLinecap="round">
+              <circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+            <span style={{ fontSize: 15, color: 'var(--text-muted)' }}>Cerca</span>
+          </div>
+          {/* Navigazione */}
+          <div style={{ background: 'var(--bg-card)', borderRadius: 16, margin: '12px 14px 0', overflow: 'hidden' }}>
+            {navItems.map((item, i) => (
+              <div key={item.label} onClick={item.onClick}
+                style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px', borderTop: i > 0 ? '1px solid var(--border)' : 'none', cursor: 'pointer' }}>
+                <span style={{ fontSize: 16, color: 'var(--text-primary)' }}>{item.label}</span>
+                <span style={{ color: 'var(--text-muted)', fontSize: 17 }}>›</span>
+              </div>
+            ))}
+          </div>
+          {/* Switch rapidi */}
+          {switchItems.length > 0 && (
+            <div style={{ background: 'var(--bg-card)', borderRadius: 16, margin: '12px 14px 28px', overflow: 'hidden' }}>
+              {switchItems.map((item, i) => (
+                <div key={item.e}
+                  style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 16px', borderTop: i > 0 ? '1px solid var(--border)' : 'none' }}>
                   <span style={{ fontSize: 16, color: 'var(--text-primary)' }}>{item.label}</span>
-                  <IosToggle on={isOn(item.e)} onToggle={() => callService('switch', 'toggle', item.e)}/>
+                  <IosToggle on={isOn(item.e)} onToggle={() => tog(item.e)}/>
                 </div>
               ))}
             </div>
           )}
-          <div style={{ background: 'var(--bg-card)', borderRadius: 16, margin: '10px 14px 0', overflow: 'hidden' }}>
-            <div onClick={() => { onClose(); setTimeout(onMopExtend, 120) }} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 16, cursor: 'pointer' }}>
-              <span style={{ fontSize: 16, color: 'var(--text-primary)' }}>{t('dreame.mopExtendTitle')}</span>
-              <span style={{ color: 'var(--text-muted)', fontSize: 17 }}>›</span>
-            </div>
-          </div>
         </div>
       </div>
     </FullSheet>
@@ -837,6 +856,55 @@ function MainSheet({ open, onClose, cfg, t, callService, getState,
   )
 }
 
+// ── ZonaRect — zona draggabile/ridimensionabile sulla mappa ──────────────────
+function ZonaRect({ rect, onUpdate }) {
+  const startDrag = (e) => {
+    if (e.target !== e.currentTarget) return
+    e.stopPropagation()
+    e.currentTarget.setPointerCapture(e.pointerId)
+    const mapEl = e.currentTarget.parentElement
+    const { width: cw, height: ch } = mapEl.getBoundingClientRect()
+    const sx = e.clientX, sy = e.clientY
+    const ox = rect.x, oy = rect.y, ow = rect.w, oh = rect.h
+    const onMove = (me) => {
+      const nx = Math.max(0, Math.min(100 - ow, ox + ((me.clientX - sx) / cw) * 100))
+      const ny = Math.max(0, Math.min(100 - oh, oy + ((me.clientY - sy) / ch) * 100))
+      onUpdate({ x: nx, y: ny, w: ow, h: oh })
+    }
+    e.currentTarget.addEventListener('pointermove', onMove)
+    e.currentTarget.addEventListener('pointerup', () => e.currentTarget.removeEventListener('pointermove', onMove), { once: true })
+  }
+  const startResize = (e) => {
+    e.stopPropagation()
+    e.currentTarget.setPointerCapture(e.pointerId)
+    const mapEl = e.currentTarget.parentElement.parentElement
+    const { width: cw, height: ch } = mapEl.getBoundingClientRect()
+    const sx = e.clientX, sy = e.clientY
+    const { x, y, w: ow, h: oh } = rect
+    const el = e.currentTarget
+    const onMove = (me) => {
+      const nw = Math.max(10, Math.min(100 - x, ow + ((me.clientX - sx) / cw) * 100))
+      const nh = Math.max(8,  Math.min(100 - y, oh + ((me.clientY - sy) / ch) * 100))
+      onUpdate({ x, y, w: nw, h: nh })
+    }
+    el.addEventListener('pointermove', onMove)
+    el.addEventListener('pointerup', () => el.removeEventListener('pointermove', onMove), { once: true })
+  }
+  return (
+    <div onPointerDown={startDrag} style={{
+      position: 'absolute', left: `${rect.x}%`, top: `${rect.y}%`,
+      width: `${rect.w}%`, height: `${rect.h}%`,
+      border: `2px dashed ${A}`, background: 'rgba(245,158,11,0.13)',
+      cursor: 'move', userSelect: 'none', touchAction: 'none', boxSizing: 'border-box',
+    }}>
+      <div onPointerDown={startResize} style={{
+        position: 'absolute', bottom: -7, right: -7, width: 14, height: 14,
+        background: A, borderRadius: 3, cursor: 'se-resize', touchAction: 'none', zIndex: 2,
+      }}/>
+    </div>
+  )
+}
+
 // ── VacuumCard — componente principale ────────────────────────────────────────
 export default function VacuumCard() {
   const { dark, callService, getState, getAttr } = useDashboard()
@@ -851,6 +919,7 @@ export default function VacuumCard() {
   const [zonaCount, setZonaCount] = useState(1)
   const [zonaCiclo, setZonaCiclo] = useState(1)
   const [zonaTooltipDismissed, setZonaTooltipDismissed] = useState(false)
+  const [zonaRects, setZonaRects] = useState([{ x: 15, y: 15, w: 60, h: 50 }])
 
   // Sheet visibility
   const [mainOpen, setMainOpen] = useState(false)
@@ -908,6 +977,19 @@ export default function VacuumCard() {
     }, 5000)
     return () => clearInterval(iv)
   }, [cfg.cameraEntity])
+
+  useEffect(() => {
+    setZonaRects(prev => {
+      if (prev.length === zonaCount) return prev
+      if (prev.length < zonaCount) {
+        const added = Array.from({ length: zonaCount - prev.length }, (_, i) => ({
+          x: 10 + (prev.length + i) * 9, y: 10 + (prev.length + i) * 9, w: 55, h: 44,
+        }))
+        return [...prev, ...added]
+      }
+      return prev.slice(0, zonaCount)
+    })
+  }, [zonaCount])
 
   const cmd = (svc) => callService('vacuum', svc, cfg.vacuumEntity)
 
@@ -985,6 +1067,10 @@ export default function VacuumCard() {
             <div style={{ fontSize: 13, color: 'var(--text-muted)' }}>{cfg.name}</div>
           </div>
         )}
+        {scope === 'zona' && zonaRects.map((r, idx) => (
+          <ZonaRect key={idx} rect={r}
+            onUpdate={upd => setZonaRects(prev => prev.map((x, i) => i === idx ? upd : x))}/>
+        ))}
       </div>
 
       {/* ── Room pill row (visible only in room scope) ── */}
@@ -1119,6 +1205,7 @@ export default function VacuumCard() {
       <ImpostazioniSheet
         open={impostazioniOpen} onClose={() => setImpostazioniOpen(false)}
         onMopExtend={() => setMopExtendOpen(true)}
+        onBase={() => setBaseOpen(true)}
         cfg={cfg} t={t} callService={callService} getState={getState}
       />
       <MopExtendSheet
