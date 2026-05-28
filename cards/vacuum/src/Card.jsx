@@ -402,7 +402,7 @@ function MopExtendSheet({ open, onClose, onFrequenza, freqSel, sideReach, setSid
 // ── ImpostazioniSheet ─────────────────────────────────────────────────────────
 function ImpostazioniSheet({ open, onClose, onMopExtend, onBase, cfg, t, callService, getState }) {
   const isOn = (id) => id ? getState(id) === 'on' : false
-  const tog  = (id) => id && callService('switch', 'toggle', id)
+  const tog  = (id) => id && callService('switch', 'toggle', { entity_id: id })
 
   const navItems = [
     { label: t('dreame.mopExtendTitle'), onClick: () => { onClose(); setTimeout(onMopExtend, 140) } },
@@ -719,7 +719,7 @@ function MainSheet({ open, onClose, cfg, t, callService, getState,
 
   const switchTab = (t2) => {
     setTab(t2)
-    if (cfg.cleanGeniusEntity) callService('switch', t2 === 'genius' ? 'turn_on' : 'turn_off', cfg.cleanGeniusEntity)
+    if (cfg.cleanGeniusEntity) callService('switch', t2 === 'genius' ? 'turn_on' : 'turn_off', { entity_id: cfg.cleanGeniusEntity })
   }
 
   const hasMop = mode === 1 || mode === 2 || mode === 3
@@ -825,7 +825,7 @@ function MainSheet({ open, onClose, cfg, t, callService, getState,
                   ].map(({ id, Ico, label }) => {
                     const active = getState(cfg.cleaningModeEntity) === id
                     return (
-                      <div key={id} onClick={() => cfg.cleaningModeEntity && callService('select', 'select_option', cfg.cleaningModeEntity, { option: id })}
+                      <div key={id} onClick={() => cfg.cleaningModeEntity && callService('select', 'select_option', { entity_id: cfg.cleaningModeEntity, option: id })}
                         style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10, padding: '16px 8px 20px', borderRadius: 16, background: active ? 'var(--bg-card)' : 'var(--bg-elevated)', cursor: 'pointer', position: 'relative', border: `2px solid ${active ? A : 'transparent'}`, transition: 'all .2s' }}>
                         <div style={{ color: active ? A : 'var(--text-secondary)' }}><Ico/></div>
                         <span style={{ fontSize: 11.5, textAlign: 'center', color: active ? 'var(--text-primary)' : 'var(--text-muted)', lineHeight: 1.4, fontWeight: active ? 700 : 500 }}>{label}</span>
@@ -839,7 +839,7 @@ function MainSheet({ open, onClose, cfg, t, callService, getState,
                 <div style={{ background: 'var(--bg-card)', borderRadius: 18, padding: '14px 16px', marginTop: 12, boxShadow: '0 2px 12px rgba(0,0,0,.06)' }}>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                     <div style={{ fontSize: 17, fontWeight: 700, color: 'var(--text-primary)' }}>{t('dreame.geniusDeepTitle')}</div>
-                    <IosToggle on={getState(cfg.deepCleanEntity) === 'on'} onToggle={() => callService('switch', 'toggle', cfg.deepCleanEntity)}/>
+                    <IosToggle on={getState(cfg.deepCleanEntity) === 'on'} onToggle={() => callService('switch', 'toggle', { entity_id: cfg.deepCleanEntity })}/>
                   </div>
                   <div style={{ marginTop: 10, fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.6 }}>{t('dreame.geniusDeepDesc')}</div>
                 </div>
@@ -914,7 +914,7 @@ export default function VacuumCard() {
   const [selectedRooms, setSelectedRooms] = useState([])
   const [zonaCount, setZonaCount] = useState(1)
   const [zonaCiclo, setZonaCiclo] = useState(1)
-  const [zonaTooltipDismissed, setZonaTooltipDismissed] = useState(false)
+  const [zonaTooltipDismissed] = useState(false)
   const [zonaRects, setZonaRects] = useState([{ x: 15, y: 15, w: 60, h: 50 }])
 
   // Sheet visibility
@@ -987,13 +987,13 @@ export default function VacuumCard() {
     })
   }, [zonaCount])
 
-  const cmd = (svc) => callService('vacuum', svc, cfg.vacuumEntity)
+  const cmd = (svc) => callService('vacuum', svc, { entity_id: cfg.vacuumEntity })
 
   const startClean = () => {
     if (scope === 'all') {
       cmd('start')
     } else if (scope === 'room' && selectedRooms.length > 0) {
-      callService('dreame_vacuum', 'vacuum_clean_segment', cfg.vacuumEntity, { segments: selectedRooms, repeats: 1 })
+      callService('dreame_vacuum', 'vacuum_clean_segment', { entity_id: cfg.vacuumEntity, segments: selectedRooms, repeats: 1 })
     }
   }
 
@@ -1002,8 +1002,8 @@ export default function VacuumCard() {
     setSelectedRooms(p => p.includes(id) ? p.filter(r => r !== id) : [...p, id])
   }
 
-  const onSuction = (val) => cfg.suctionLevelEntity && callService('select', 'select_option', cfg.suctionLevelEntity, { option: val })
-  const onRoute   = (val) => cfg.cleaningRouteEntity && callService('select', 'select_option', cfg.cleaningRouteEntity, { option: val })
+  const onSuction = (val) => cfg.suctionLevelEntity && callService('select', 'select_option', { entity_id: cfg.suctionLevelEntity, option: val })
+  const onRoute   = (val) => cfg.cleaningRouteEntity && callService('select', 'select_option', { entity_id: cfg.cleaningRouteEntity, option: val })
 
   const isCharging = mainState === 'docked' || mainState === 'charging_completed'
   const isCleaning = mainState === 'cleaning'
@@ -1048,7 +1048,7 @@ export default function VacuumCard() {
       </div>
 
       {/* ── Map ── */}
-      <div style={{ marginTop: 8, position: 'relative', height: 340, background: 'var(--bg-elevated)', overflow: 'hidden' }}>
+      <div style={{ marginTop: 8, position: 'relative', height: 390, background: 'var(--bg-elevated)', overflow: 'hidden' }}>
         {cfg.cameraEntity ? (
           <img ref={mapImgRef}
             alt={t('map.alt')}
@@ -1107,28 +1107,6 @@ export default function VacuumCard() {
         </div>
       )}
 
-      {/* ── Personalizza button ── */}
-      <div style={{ padding: '10px 16px 0' }}>
-        <button onClick={() => setMainOpen(true)} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 16px', background: 'var(--bg-card)', borderRadius: 16, cursor: 'pointer', border: 'none', boxShadow: '0 2px 12px rgba(0,0,0,.10)' }}>
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="#333">
-            <rect x="2" y="2" width="9" height="9" rx="2"/>
-            <rect x="13" y="2" width="9" height="9" rx="2"/>
-            <rect x="2" y="13" width="9" height="9" rx="2"/>
-            <rect x="13" y="13" width="9" height="9" rx="2"/>
-          </svg>
-          <span style={{ fontSize: 15, fontWeight: 600, color: 'var(--text-primary)' }}>{t('dreame.personalizzaBtn')}</span>
-          <span style={{ fontSize: 14, color: 'var(--text-muted)' }}>›</span>
-        </button>
-      </div>
-
-      {/* ── Zona tooltip ── */}
-      {scope === 'zona' && !zonaTooltipDismissed && (
-        <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10, padding: '12px 14px', background: 'var(--blue-light)', margin: '8px 16px 0', borderRadius: 12, fontSize: 13, color: 'var(--blue)', lineHeight: 1.5 }}>
-          <span style={{ flex: 1 }}>{t('dreame.zonaTooltip')}</span>
-          <span onClick={() => setZonaTooltipDismissed(true)} style={{ fontSize: 15, color: 'var(--text-muted)', cursor: 'pointer', flexShrink: 0, lineHeight: 1, marginTop: 1 }}>✕</span>
-        </div>
-      )}
-
       {/* ── Scope tabs ── */}
       <div style={{ padding: '8px 16px 0' }}>
         <div style={{ display: 'flex', background: 'var(--bg-elevated)', borderRadius: 13, padding: 3, gap: 2 }}>
@@ -1140,8 +1118,8 @@ export default function VacuumCard() {
             <button key={id} onClick={() => setScope(id)} style={{
               flex: 1, textAlign: 'center', padding: '9px 4px', borderRadius: 10,
               fontSize: 14, fontWeight: scope === id ? 700 : 500, cursor: 'pointer', border: 'none', transition: 'all .18s',
-              background: scope === id ? 'white' : 'transparent',
-              color: scope === id ? '#111' : '#888',
+              background: scope === id ? 'var(--bg-card)' : 'transparent',
+              color: scope === id ? 'var(--text-primary)' : 'var(--text-muted)',
               boxShadow: scope === id ? '0 1px 5px rgba(0,0,0,.1)' : 'none',
             }}>
               {label}
@@ -1150,17 +1128,29 @@ export default function VacuumCard() {
         </div>
       </div>
 
-      {/* ── Zona controls ── */}
-      {scope === 'zona' && (
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '10px 16px 0' }}>
-          <button onClick={() => setZonaCount(p => Math.min(p + 1, 3))} style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '11px 18px', background: 'var(--blue)', border: 'none', borderRadius: 22, color: 'white', fontSize: 14, fontWeight: 700, cursor: 'pointer', boxShadow: '0 2px 8px rgba(91,156,246,.35)' }}>
-            {t('dreame.zonaAdd')}
-          </button>
-          <button onClick={() => setZonaCiclo(p => p >= 3 ? 1 : p + 1)} style={{ width: 48, height: 48, borderRadius: '50%', background: ABG, border: 'none', cursor: 'pointer', fontSize: 15, fontWeight: 800, color: A, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: `0 2px 6px rgba(196,124,24,.18)` }}>
-            x{zonaCiclo}
-          </button>
-        </div>
-      )}
+      {/* ── Personalizza + zona controls (stessa riga) ── */}
+      <div style={{ padding: '8px 16px 0', display: 'flex', alignItems: 'center', gap: 8 }}>
+        <button onClick={() => setMainOpen(true)} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '9px 14px', background: 'var(--bg-elevated)', borderRadius: 14, cursor: 'pointer', border: 'none', flex: 1, minWidth: 0 }}>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="var(--text-secondary)">
+            <rect x="2" y="2" width="9" height="9" rx="2"/>
+            <rect x="13" y="2" width="9" height="9" rx="2"/>
+            <rect x="2" y="13" width="9" height="9" rx="2"/>
+            <rect x="13" y="13" width="9" height="9" rx="2"/>
+          </svg>
+          <span style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-primary)', flex: 1 }}>{t('dreame.personalizzaBtn')}</span>
+          <span style={{ fontSize: 13, color: 'var(--text-muted)' }}>›</span>
+        </button>
+        {scope === 'zona' && (
+          <>
+            <button onClick={() => setZonaCount(p => Math.min(p + 1, 3))} style={{ padding: '9px 14px', background: 'var(--blue)', border: 'none', borderRadius: 14, color: 'white', fontSize: 13, fontWeight: 700, cursor: 'pointer', flexShrink: 0, whiteSpace: 'nowrap' }}>
+              {t('dreame.zonaAdd')}
+            </button>
+            <button onClick={() => setZonaCiclo(p => p >= 3 ? 1 : p + 1)} style={{ width: 40, height: 40, borderRadius: '50%', background: ABG, border: 'none', cursor: 'pointer', fontSize: 13, fontWeight: 800, color: A, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+              x{zonaCiclo}
+            </button>
+          </>
+        )}
+      </div>
 
       {/* ── Error banner ── */}
       {hasError && (
@@ -1203,7 +1193,7 @@ export default function VacuumCard() {
         humidity={humidity} onHumidity={setHumidity}
         freqSel={freqSel} onFrequenza={setFreqSel}
         deepClean={cfg.deepCleanEntity ? getState(cfg.deepCleanEntity) === 'on' : false}
-        onDeepClean={() => cfg.deepCleanEntity && callService('switch', 'toggle', cfg.deepCleanEntity)}
+        onDeepClean={() => cfg.deepCleanEntity && callService('switch', 'toggle', { entity_id: cfg.deepCleanEntity })}
       />
       <BaseSheet
         open={baseOpen} onClose={() => setBaseOpen(false)}
