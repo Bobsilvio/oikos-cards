@@ -910,7 +910,7 @@ export default function VacuumCard() {
 
       {/* ── Header ── */}
       <div style={{ padding: '18px 18px 10px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <div style={{ width: 34, height: 34, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: 10, background: '#f5f5f5', color: '#666', fontSize: 18, cursor: 'pointer' }}>←</div>
+        <div style={{ width: 34 }} />
         <div style={{ textAlign: 'center', flex: 1 }}>
           <div style={{ fontSize: 17, fontWeight: 700, color: '#111' }}>{cfg.name}</div>
           <div style={{ fontSize: 13, color: stateColor, marginTop: 2, fontWeight: 500 }}>

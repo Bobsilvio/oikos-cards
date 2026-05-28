@@ -698,7 +698,7 @@ const Ye = {
   totals: Bt,
   dreame: qt,
   settings: Pt
-}, { useState: p, useEffect: ue, useRef: jt } = window.__OIKOS_SDK__.React, { motion: D, AnimatePresence: xe } = window.__OIKOS_SDK__.framerMotion, { useDashboard: Ot, getHAConfig: Ft, registerCardTranslations: Qt, useT: $t } = window.__OIKOS_SDK__;
+}, { useState: p, useEffect: ue, useRef: Ot } = window.__OIKOS_SDK__.React, { motion: D, AnimatePresence: xe } = window.__OIKOS_SDK__.framerMotion, { useDashboard: jt, getHAConfig: Ft, registerCardTranslations: Qt, useT: $t } = window.__OIKOS_SDK__;
 Qt("card-vacuum", { it: ft, en: Ht });
 const u = "#c47c18", X = "#f5e8d0", Nt = "#fef3d0", Gt = "#34c759", Vt = {
   docked: "#10b981",
@@ -1089,7 +1089,7 @@ function mi({
   tempAsciugSel: z,
   setTempAsciugSel: H
 }) {
-  const [E, C] = p("main"), [_, O] = p("medium"), [I, A] = p("warm"), [T, F] = p(!0), [j, h] = p(!0), [W, B] = p(!1);
+  const [E, C] = p("main"), [_, j] = p("medium"), [I, A] = p("warm"), [T, F] = p(!0), [O, h] = p(!0), [W, B] = p(!1);
   ue(() => {
     s || C("main");
   }, [s]);
@@ -1158,7 +1158,7 @@ function mi({
             ] }) }),
             /* @__PURE__ */ e("div", { style: { background: "white", borderRadius: 16, margin: "14px 14px 0", padding: 16 }, children: [
               { label: t("dreame.autoDetergent"), on: T, set: F },
-              { label: t("dreame.autoWash"), on: j, set: h },
+              { label: t("dreame.autoWash"), on: O, set: h },
               { label: t("dreame.asciuga"), on: W, set: B }
             ].map((c, M) => /* @__PURE__ */ i("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", paddingTop: M > 0 ? 14 : 0, marginTop: M > 0 ? 14 : 0, borderTop: M > 0 ? "1px solid #f2f2f2" : "none" }, children: [
               /* @__PURE__ */ e("span", { style: { fontSize: 16, fontWeight: 500, color: "#111" }, children: c.label }),
@@ -1180,7 +1180,7 @@ function mi({
           children: /* @__PURE__ */ i("div", { style: { background: "#f2f2f7", minHeight: "100%" }, children: [
             /* @__PURE__ */ e(U, { title: t("dreame.washingSettingsTitle"), onBack: () => C("settings") }),
             /* @__PURE__ */ e("div", { style: { fontSize: 14, color: "#888", margin: "16px 14px 8px", lineHeight: 1.5 }, children: t("dreame.washQtyLabel") }),
-            /* @__PURE__ */ e("div", { style: { background: "white", borderRadius: 16, margin: "0 14px", overflow: "hidden" }, children: te.map((c, M) => /* @__PURE__ */ i("div", { onClick: () => O(c.id), style: { display: "flex", alignItems: "flex-start", gap: 14, padding: 16, cursor: "pointer", borderTop: M > 0 ? "1px solid #f2f2f2" : "none" }, children: [
+            /* @__PURE__ */ e("div", { style: { background: "white", borderRadius: 16, margin: "0 14px", overflow: "hidden" }, children: te.map((c, M) => /* @__PURE__ */ i("div", { onClick: () => j(c.id), style: { display: "flex", alignItems: "flex-start", gap: 14, padding: 16, cursor: "pointer", borderTop: M > 0 ? "1px solid #f2f2f2" : "none" }, children: [
               /* @__PURE__ */ e("div", { style: { width: 24, height: 24, borderRadius: "50%", border: `2px solid ${_ === c.id ? u : "#ccc"}`, flexShrink: 0, marginTop: 1, display: "flex", alignItems: "center", justifyContent: "center", background: _ === c.id ? u : "transparent", transition: "all .18s" }, children: _ === c.id && /* @__PURE__ */ e("span", { style: { fontSize: 13, color: "white", fontWeight: 800, lineHeight: 1 }, children: "✓" }) }),
               /* @__PURE__ */ i("div", { children: [
                 /* @__PURE__ */ e("div", { style: { fontSize: 16, fontWeight: 700, color: "#111", marginBottom: 4 }, children: c.label }),
@@ -1264,13 +1264,13 @@ function hi({
   deepClean: S,
   onDeepClean: R
 }) {
-  const [z, H] = p("custom"), [E, C] = p(0), [_, O] = p(!1), [I, A] = p(!1), T = o.cleanGeniusEntity ? r(o.cleanGeniusEntity) === "on" : !1;
+  const [z, H] = p("custom"), [E, C] = p(0), [_, j] = p(!1), [I, A] = p(!1), T = o.cleanGeniusEntity ? r(o.cleanGeniusEntity) === "on" : !1;
   ue(() => {
     o.cleanGeniusEntity && H(T ? "genius" : "custom");
   }, [T, o.cleanGeniusEntity]);
   const F = (h) => {
     H(h), o.cleanGeniusEntity && n("switch", h === "genius" ? "turn_on" : "turn_off", o.cleanGeniusEntity);
-  }, j = [
+  }, O = [
     { label: t("dreame.modeAspira"), Ico: Yt, small: !1 },
     { label: t("dreame.modeMocio"), Ico: Ut, small: !1 },
     { label: t("dreame.modeAspiraLava"), Ico: be, small: !0 },
@@ -1295,14 +1295,14 @@ function hi({
       }, children: t(h === "genius" ? "dreame.cleanGenius" : "dreame.personalizza") }, h)) }),
       /* @__PURE__ */ i("div", { style: { flex: 1, minHeight: 0, overflow: "hidden", position: "relative" }, children: [
         /* @__PURE__ */ i("div", { style: { position: "absolute", inset: 0, overflowY: "auto", display: z === "custom" ? "block" : "none" }, children: [
-          /* @__PURE__ */ e("div", { style: { overflowX: "auto", WebkitOverflowScrolling: "touch", scrollbarWidth: "none", padding: "0 16px 16px" }, children: /* @__PURE__ */ e("div", { style: { display: "flex", gap: 10, width: "max-content" }, children: j.map(({ label: h, Ico: W, small: B }, b) => /* @__PURE__ */ e(si, { label: h, active: E === b, onClick: () => C(b), small: B, children: /* @__PURE__ */ e(W, {}) }, b)) }) }),
+          /* @__PURE__ */ e("div", { style: { overflowX: "auto", WebkitOverflowScrolling: "touch", scrollbarWidth: "none", padding: "0 16px 16px" }, children: /* @__PURE__ */ e("div", { style: { display: "flex", gap: 10, width: "max-content" }, children: O.map(({ label: h, Ico: W, small: B }, b) => /* @__PURE__ */ e(si, { label: h, active: E === b, onClick: () => C(b), small: B, children: /* @__PURE__ */ e(W, {}) }, b)) }) }),
           /* @__PURE__ */ i("div", { style: { padding: "0 16px 80px" }, children: [
             E === 0 && /* @__PURE__ */ i("div", { children: [
               /* @__PURE__ */ e(de, { suction: d, onSelect: m, t }),
               /* @__PURE__ */ i("div", { style: { background: "#fafafa", borderRadius: 16, padding: "14px 16px", marginBottom: 24 }, children: [
                 /* @__PURE__ */ i("div", { style: { display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 12, marginBottom: 8 }, children: [
                   /* @__PURE__ */ e("div", { style: { flex: 1 }, children: /* @__PURE__ */ e("div", { style: { fontSize: 15, fontWeight: 700, color: "#111" }, children: t("dreame.massimaTitle") }) }),
-                  /* @__PURE__ */ e(L, { on: _, onToggle: () => O((h) => !h) })
+                  /* @__PURE__ */ e(L, { on: _, onToggle: () => j((h) => !h) })
                 ] }),
                 /* @__PURE__ */ e("div", { style: { fontSize: 13, color: "#888", lineHeight: 1.6 }, children: t("dreame.massimaDesc") })
               ] }),
@@ -1362,12 +1362,12 @@ function hi({
   ] });
 }
 function yi() {
-  const { dark: s, callService: a, getState: o, getAttr: t } = Ot(), { t: n } = $t("card-vacuum"), [r] = p(Ze), d = jt(Ft().host), [m, f] = p(() => Date.now()), [g, x] = p("all"), [k, y] = p([]), [P, S] = p(1), [R, z] = p(1), [H, E] = p(!1), [C, _] = p(!1), [O, I] = p(!1), [A, T] = p(!1), [F, j] = p(!1), [h, W] = p(!1), [B, b] = p("smart"), [N, G] = p(!1), [te, ie] = p("medium"), [c, M] = p(!1), [ne, ze] = p("3h"), [oe, me] = p("high"), [ke, Ce] = p(!0), [_e, Me] = p(!0), [Ie, Ae] = p(!1), [De, Le] = p(!1), [Re, he] = p(!1), [Te, We] = p(20), q = (l) => l ? o(l) ?? null : null, ae = (l) => {
+  const { dark: s, callService: a, getState: o, getAttr: t } = jt(), { t: n } = $t("card-vacuum"), [r] = p(Ze), d = Ot(Ft().host), [m, f] = p(() => Date.now()), [g, x] = p("all"), [k, y] = p([]), [P, S] = p(1), [R, z] = p(1), [H, E] = p(!1), [C, _] = p(!1), [j, I] = p(!1), [A, T] = p(!1), [F, O] = p(!1), [h, W] = p(!1), [B, b] = p("smart"), [N, G] = p(!1), [te, ie] = p("medium"), [c, M] = p(!1), [ne, ze] = p("3h"), [oe, me] = p("high"), [ke, Ce] = p(!0), [_e, Me] = p(!0), [Ie, Ae] = p(!1), [De, Le] = p(!1), [Re, he] = p(!1), [Te, We] = p(20), q = (l) => l ? o(l) ?? null : null, ae = (l) => {
     const v = q(l);
     return v && v !== "unavailable" ? parseFloat(v) : null;
   }, Be = q(r.vacuumEntity), qe = q(r.stateEntity), w = Be || qe, re = ae(r.batteryEntity);
   q(r.currentRoomEntity);
-  const V = q(r.errorEntity), Pe = V && V !== "no_error" && V !== "unavailable", K = ae(r.cleanedAreaEntity), Q = ae(r.cleaningTimeEntity), He = q(r.suctionLevelEntity), je = q(r.cleaningRouteEntity), Oe = Kt(w), ye = r.rooms || [];
+  const V = q(r.errorEntity), Pe = V && V !== "no_error" && V !== "unavailable", K = ae(r.cleanedAreaEntity), Q = ae(r.cleaningTimeEntity), He = q(r.suctionLevelEntity), Oe = q(r.cleaningRouteEntity), je = Kt(w), ye = r.rooms || [];
   ue(() => {
     if (!r.cameraEntity) return;
     const l = setInterval(() => f(Date.now()), 5e3);
@@ -1388,10 +1388,10 @@ function yi() {
   };
   return /* @__PURE__ */ i("div", { style: { background: "#fff", borderRadius: 22, overflow: "hidden", boxShadow: "0 8px 40px rgba(0,0,0,.13)", fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', sans-serif", position: "relative" }, children: [
     /* @__PURE__ */ i("div", { style: { padding: "18px 18px 10px", display: "flex", alignItems: "center", justifyContent: "space-between" }, children: [
-      /* @__PURE__ */ e("div", { style: { width: 34, height: 34, display: "flex", alignItems: "center", justifyContent: "center", borderRadius: 10, background: "#f5f5f5", color: "#666", fontSize: 18, cursor: "pointer" }, children: "←" }),
+      /* @__PURE__ */ e("div", { style: { width: 34 } }),
       /* @__PURE__ */ i("div", { style: { textAlign: "center", flex: 1 }, children: [
         /* @__PURE__ */ e("div", { style: { fontSize: 17, fontWeight: 700, color: "#111" }, children: r.name }),
-        /* @__PURE__ */ e("div", { style: { fontSize: 13, color: Oe, marginTop: 2, fontWeight: 500 }, children: w === "docked" ? n("state.docked") : w === "cleaning" ? n("state.cleaning") : w === "paused" ? n("state.paused") : w === "returning" ? n("state.returning") : w === "charging_completed" ? n("state.charging_completed") : w === "sleeping" ? n("state.sleeping") : w === "error" ? n("state.error") : w === "idle" ? n("state.idle") : w || "—" })
+        /* @__PURE__ */ e("div", { style: { fontSize: 13, color: je, marginTop: 2, fontWeight: 500 }, children: w === "docked" ? n("state.docked") : w === "cleaning" ? n("state.cleaning") : w === "paused" ? n("state.paused") : w === "returning" ? n("state.returning") : w === "charging_completed" ? n("state.charging_completed") : w === "sleeping" ? n("state.sleeping") : w === "error" ? n("state.error") : w === "idle" ? n("state.idle") : w || "—" })
       ] }),
       /* @__PURE__ */ e("div", { onClick: () => T(!0), style: { width: 34, height: 34, display: "flex", alignItems: "center", justifyContent: "center", borderRadius: 10, background: "#f5f5f5", color: "#666", fontSize: 20, cursor: "pointer" }, children: "⋯" })
     ] }),
@@ -1525,7 +1525,7 @@ function yi() {
         getState: o,
         suction: He,
         onSuction: Qe,
-        route: je,
+        route: Oe,
         onRoute: $e,
         humidity: Te,
         onHumidity: We,
@@ -1538,7 +1538,7 @@ function yi() {
     /* @__PURE__ */ e(
       mi,
       {
-        open: O,
+        open: j,
         onClose: () => I(!1),
         cfg: r,
         t: n,
@@ -1563,7 +1563,7 @@ function yi() {
       {
         open: A,
         onClose: () => T(!1),
-        onMopExtend: () => j(!0),
+        onMopExtend: () => O(!0),
         cfg: r,
         t: n,
         callService: a,
@@ -1574,7 +1574,7 @@ function yi() {
       ui,
       {
         open: F,
-        onClose: () => j(!1),
+        onClose: () => O(!1),
         onFrequenza: () => he(!0),
         freqSel: oe,
         sideReach: ke,
