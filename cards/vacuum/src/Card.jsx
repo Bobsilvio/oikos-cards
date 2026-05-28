@@ -986,17 +986,15 @@ export default function VacuumCard() {
 
       {/* ── Personalizza button ── */}
       <div style={{ padding: '10px 16px 0' }}>
-        <button onClick={() => setMainOpen(true)} style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 6, padding: '12px 16px', background: '#fff', borderRadius: 16, cursor: 'pointer', border: 'none', boxShadow: '0 2px 12px rgba(0,0,0,.10)' }}>
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="#333">
+        <button onClick={() => setMainOpen(true)} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 16px', background: '#fff', borderRadius: 16, cursor: 'pointer', border: 'none', boxShadow: '0 2px 12px rgba(0,0,0,.10)' }}>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="#333">
             <rect x="2" y="2" width="9" height="9" rx="2"/>
             <rect x="13" y="2" width="9" height="9" rx="2"/>
             <rect x="2" y="13" width="9" height="9" rx="2"/>
             <rect x="13" y="13" width="9" height="9" rx="2"/>
           </svg>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-            <span style={{ fontSize: 15, fontWeight: 600, color: '#111' }}>{t('dreame.personalizzaBtn')}</span>
-            <span style={{ fontSize: 14, color: '#bbb' }}>›</span>
-          </div>
+          <span style={{ fontSize: 15, fontWeight: 600, color: '#111' }}>{t('dreame.personalizzaBtn')}</span>
+          <span style={{ fontSize: 14, color: '#bbb' }}>›</span>
         </button>
       </div>
 

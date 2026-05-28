@@ -1466,17 +1466,15 @@ function mi() {
         ] }, l.id);
       }) })
     ] }),
-    /* @__PURE__ */ e("div", { style: { padding: "10px 16px 0" }, children: /* @__PURE__ */ i("button", { onClick: () => _(!0), style: { display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 6, padding: "12px 16px", background: "#fff", borderRadius: 16, cursor: "pointer", border: "none", boxShadow: "0 2px 12px rgba(0,0,0,.10)" }, children: [
-      /* @__PURE__ */ i("svg", { width: "26", height: "26", viewBox: "0 0 24 24", fill: "#333", children: [
+    /* @__PURE__ */ e("div", { style: { padding: "10px 16px 0" }, children: /* @__PURE__ */ i("button", { onClick: () => _(!0), style: { display: "flex", alignItems: "center", gap: 10, padding: "10px 16px", background: "#fff", borderRadius: 16, cursor: "pointer", border: "none", boxShadow: "0 2px 12px rgba(0,0,0,.10)" }, children: [
+      /* @__PURE__ */ i("svg", { width: "22", height: "22", viewBox: "0 0 24 24", fill: "#333", children: [
         /* @__PURE__ */ e("rect", { x: "2", y: "2", width: "9", height: "9", rx: "2" }),
         /* @__PURE__ */ e("rect", { x: "13", y: "2", width: "9", height: "9", rx: "2" }),
         /* @__PURE__ */ e("rect", { x: "2", y: "13", width: "9", height: "9", rx: "2" }),
         /* @__PURE__ */ e("rect", { x: "13", y: "13", width: "9", height: "9", rx: "2" })
       ] }),
-      /* @__PURE__ */ i("div", { style: { display: "flex", alignItems: "center", gap: 4 }, children: [
-        /* @__PURE__ */ e("span", { style: { fontSize: 15, fontWeight: 600, color: "#111" }, children: n("dreame.personalizzaBtn") }),
-        /* @__PURE__ */ e("span", { style: { fontSize: 14, color: "#bbb" }, children: "›" })
-      ] })
+      /* @__PURE__ */ e("span", { style: { fontSize: 15, fontWeight: 600, color: "#111" }, children: n("dreame.personalizzaBtn") }),
+      /* @__PURE__ */ e("span", { style: { fontSize: 14, color: "#bbb" }, children: "›" })
     ] }) }),
     g === "zona" && !H && /* @__PURE__ */ i("div", { style: { display: "flex", alignItems: "flex-start", gap: 10, padding: "12px 14px", background: "#e8f1ff", margin: "8px 16px 0", borderRadius: 12, fontSize: 13, color: "#2a5faa", lineHeight: 1.5 }, children: [
       /* @__PURE__ */ e("span", { style: { flex: 1 }, children: n("dreame.zonaTooltip") }),
