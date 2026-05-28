@@ -785,10 +785,10 @@ function BaseSheet({ open, onClose, cfg, t, callService, getState,
                   </div>
                   <div style={{ fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.6, marginTop: 6 }}>{t('dreame.autoDetergentDesc')}</div>
                 </div>
-                <div style={itemSt(true)}>
+                <div style={{ ...itemSt(true), opacity: 0.35 }}>
                   <div style={rowSt}>
                     <span style={{ fontSize: 16, fontWeight: 600, color: 'var(--text-primary)', flex: 1 }}>{t('dreame.autoWashTitle')}</span>
-                    <IosToggle on={autoWash} onToggle={() => { const v = !autoWash; setAutoWash(v); swToggle(cfg.autoWashEntity, v) }}/>
+                    <IosToggle on={autoWash} onToggle={() => {}}/>
                   </div>
                   <div style={{ fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.6, marginTop: 6 }}>{t('dreame.autoWashDesc')}</div>
                 </div>
