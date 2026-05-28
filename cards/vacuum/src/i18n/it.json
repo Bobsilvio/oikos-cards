@@ -237,7 +237,7 @@
     "startRooms_one": "Avvia {{count}} stanza",
     "startRooms_other": "Avvia {{count}} stanze",
     "startZone": "Avvia zona",
-    "stopBtn": "Stop"
+    "stopBtn": "Termina"
   },
   "settings": {
     "groups": {

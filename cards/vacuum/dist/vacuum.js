@@ -187,14 +187,14 @@ const ht = {
   dirtyWater: "Acqua sp.",
   hotWater: "Acqua cal.",
   lowWater: "Livello"
-}, Lt = {
+}, It = {
   mainBrush: "Sp. principale",
   sideBrush: "Sp. laterale",
   filter: "Filtro",
   sensors: "Sensori",
   mopPadLife: "Mop pad",
   silverIon: "Argento ionico"
-}, It = {
+}, Lt = {
   dnd: "Non disturb.",
   carpetBoost: "Boost tappeto",
   selfClean: "Auto-pulizia",
@@ -297,7 +297,7 @@ const ht = {
   startRooms_one: "Avvia {{count}} stanza",
   startRooms_other: "Avvia {{count}} stanze",
   startZone: "Avvia zona",
-  stopBtn: "Stop"
+  stopBtn: "Termina"
 }, Tt = {
   groups: {
     main: "Principale",
@@ -399,8 +399,8 @@ const ht = {
   rooms: Mt,
   modeBadges: At,
   stationChips: Dt,
-  consumables: Lt,
-  switches: It,
+  consumables: It,
+  switches: Lt,
   totals: Rt,
   dreame: Wt,
   settings: Tt
@@ -1038,7 +1038,7 @@ function Dn({ open: l, onClose: s, selected: o, onSelect: t, t: n }) {
     ] }, d.id)) })
   ] });
 }
-function Ln({ open: l, onClose: s, onFrequenza: o, freqSel: t, sideReach: n, setSideReach: r, mopExtend: d, setMopExtend: u, mopVoid: v, setMopVoid: f, mopLegs: g, setMopLegs: w, t: p }) {
+function In({ open: l, onClose: s, onFrequenza: o, freqSel: t, sideReach: n, setSideReach: r, mopExtend: d, setMopExtend: u, mopVoid: v, setMopVoid: f, mopLegs: g, setMopLegs: w, t: p }) {
   const _ = p(t === "high" ? "dreame.freqHigh" : t === "intelligent" ? "dreame.freqIntelligent" : "dreame.freqStandard");
   return /* @__PURE__ */ e(ve, { open: l, onClose: s, zIndex: 1100, children: /* @__PURE__ */ e("div", { style: { flex: 1, overflowY: "auto", minHeight: 0 }, children: /* @__PURE__ */ i("div", { style: { background: "var(--bg-elevated)", minHeight: "100%" }, children: [
     /* @__PURE__ */ e(ge, { title: p("dreame.mopExtendTitle"), onBack: s }),
@@ -1078,7 +1078,7 @@ function Ln({ open: l, onClose: s, onFrequenza: o, freqSel: t, sideReach: n, set
     ] }) })
   ] }) }) });
 }
-function In({ open: l, onClose: s, onMopExtend: o, onBase: t, cfg: n, t: r, callService: d, getState: u }) {
+function Ln({ open: l, onClose: s, onMopExtend: o, onBase: t, cfg: n, t: r, callService: d, getState: u }) {
   const v = (p) => p ? u(p) === "on" : !1, f = (p) => p && d("switch", "toggle", p), g = [
     { label: r("dreame.mopExtendTitle"), onClick: () => {
       s(), setTimeout(o, 140);
@@ -1589,12 +1589,12 @@ function Qn() {
     return x && x !== "unavailable" ? parseFloat(x) : null;
   }, Ve = $(r.vacuumEntity), Ge = $(r.stateEntity), D = Ve || Ge, Me = xe(r.batteryEntity);
   $(r.currentRoomEntity);
-  const se = $(r.errorEntity), Ke = se && se !== "no_error" && se !== "unavailable", Ae = xe(r.cleanedAreaEntity), le = xe(r.cleaningTimeEntity), Ze = $(r.suctionLevelEntity), Ye = $(r.cleaningRouteEntity), Ue = mn(D), De = r.rooms || [], Le = () => `${d.current}/api/camera_proxy/${r.cameraEntity}?token=${t(r.cameraEntity, "access_token") ?? ""}&t=${Date.now()}`;
+  const se = $(r.errorEntity), Ke = se && se !== "no_error" && se !== "unavailable", Ae = xe(r.cleanedAreaEntity), le = xe(r.cleaningTimeEntity), Ze = $(r.suctionLevelEntity), Ye = $(r.cleaningRouteEntity), Ue = mn(D), De = r.rooms || [], Ie = () => `${d.current}/api/camera_proxy/${r.cameraEntity}?token=${t(r.cameraEntity, "access_token") ?? ""}&t=${Date.now()}`;
   _e(() => {
     if (!r.cameraEntity) return;
-    u.current && (u.current.src = Le());
+    u.current && (u.current.src = Ie());
     const c = setInterval(() => {
-      u.current && (u.current.src = Le());
+      u.current && (u.current.src = Ie());
     }, 5e3);
     return () => clearInterval(c);
   }, [r.cameraEntity]);
@@ -1605,16 +1605,16 @@ function Qn() {
     else if (g === "room" && p.length > 0)
       s("dreame_vacuum", "vacuum_clean_segment", r.vacuumEntity, { segments: p, repeats: 1 });
     else if (g === "zona" && b.length > 0) {
-      const k = v.current, I = u.current, Q = ((I == null ? void 0 : I.naturalWidth) > 0 ? I.naturalWidth : null) ?? ((c = f.current) == null ? void 0 : c[0]) ?? 0, X = ((I == null ? void 0 : I.naturalHeight) > 0 ? I.naturalHeight : null) ?? ((x = f.current) == null ? void 0 : x[1]) ?? 0, Se = r.cameraEntity ? t(r.cameraEntity, "calibration_points") || [] : [], { width: Ie, height: Re } = (k == null ? void 0 : k.getBoundingClientRect()) ?? { width: 375, height: 390 }, ot = b.map((L) => {
+      const k = v.current, L = u.current, Q = ((L == null ? void 0 : L.naturalWidth) > 0 ? L.naturalWidth : null) ?? ((c = f.current) == null ? void 0 : c[0]) ?? 0, X = ((L == null ? void 0 : L.naturalHeight) > 0 ? L.naturalHeight : null) ?? ((x = f.current) == null ? void 0 : x[1]) ?? 0, Se = r.cameraEntity ? t(r.cameraEntity, "calibration_points") || [] : [], { width: Le, height: Re } = (k == null ? void 0 : k.getBoundingClientRect()) ?? { width: 375, height: 390 }, ot = b.map((I) => {
         if (Q > 0 && X > 0 && Se.length >= 3) {
-          const [at, rt] = qe(L.x, L.y, Ie, Re, Q, X), [st, lt] = qe(L.x + L.w, L.y + L.h, Ie, Re, Q, X), [dt, ct] = Pe(at, rt, Se), [pt, ut] = Pe(st, lt, Se);
+          const [at, rt] = qe(I.x, I.y, Le, Re, Q, X), [st, lt] = qe(I.x + I.w, I.y + I.h, Le, Re, Q, X), [dt, ct] = Pe(at, rt, Se), [pt, ut] = Pe(st, lt, Se);
           return [Math.round(dt), Math.round(ct), Math.round(pt), Math.round(ut)];
         }
         return [
-          Math.round(L.x / 100 * 12e3 - 6e3),
-          Math.round(L.y / 100 * 12e3 - 6e3),
-          Math.round((L.x + L.w) / 100 * 12e3 - 6e3),
-          Math.round((L.y + L.h) / 100 * 12e3 - 6e3)
+          Math.round(I.x / 100 * 12e3 - 6e3),
+          Math.round(I.y / 100 * 12e3 - 6e3),
+          Math.round((I.x + I.w) / 100 * 12e3 - 6e3),
+          Math.round((I.y + I.h) / 100 * 12e3 - 6e3)
         ];
       });
       s("dreame_vacuum", "vacuum_clean_zone", r.vacuumEntity, { zone: ot, repeats: E });
@@ -1691,8 +1691,8 @@ function Qn() {
         {
           rect: c,
           num: x + 1,
-          onUpdate: (k) => M((I) => I.map((Q, X) => X === x ? k : Q)),
-          onRemove: () => M((k) => k.filter((I, Q) => Q !== x))
+          onUpdate: (k) => M((L) => L.map((Q, X) => X === x ? k : Q)),
+          onRemove: () => M((k) => k.filter((L, Q) => Q !== x))
         },
         x
       )),
@@ -1777,11 +1777,13 @@ function Qn() {
         /* @__PURE__ */ e("span", { style: { fontSize: 17, fontWeight: 700, color: m }, children: nt })
       ] }),
       /* @__PURE__ */ e("div", { style: { width: 1, height: 32, background: "var(--border-medium)", margin: "0 8px" } }),
-      /* @__PURE__ */ i("button", { onClick: () => B(!0), style: { display: "flex", alignItems: "center", gap: 8, flex: 1, justifyContent: "center", background: "transparent", border: "none", cursor: "pointer", padding: 0 }, children: [
+      ce || we ? /* @__PURE__ */ i("button", { onClick: () => de("stop"), style: { display: "flex", alignItems: "center", gap: 8, flex: 1, justifyContent: "center", background: "transparent", border: "none", cursor: "pointer", padding: 0 }, children: [
+        /* @__PURE__ */ e("svg", { width: "22", height: "22", viewBox: "0 0 22 22", children: /* @__PURE__ */ e("rect", { x: "3", y: "3", width: "16", height: "16", rx: "3", fill: "var(--red)" }) }),
+        /* @__PURE__ */ e("span", { style: { fontSize: 17, fontWeight: 600, color: "var(--red)" }, children: n("dreame.stopBtn") })
+      ] }) : /* @__PURE__ */ i("button", { onClick: () => B(!0), style: { display: "flex", alignItems: "center", gap: 8, flex: 1, justifyContent: "center", background: "transparent", border: "none", cursor: "pointer", padding: 0 }, children: [
         /* @__PURE__ */ e("span", { style: { fontSize: 22 }, children: "🏠" }),
         /* @__PURE__ */ e("span", { style: { fontSize: 17, fontWeight: 600, color: "var(--text-secondary)" }, children: n("dreame.baseBtn") })
-      ] }),
-      (ce || we) && /* @__PURE__ */ e("button", { onClick: () => de("stop"), style: { width: 22, height: 22, borderRadius: "50%", background: "var(--red)", border: "none", cursor: "pointer", flexShrink: 0, marginLeft: 8, boxShadow: "0 2px 6px rgba(232,57,46,.35)" } })
+      ] })
     ] }),
     /* @__PURE__ */ e(
       Fn,
@@ -1828,7 +1830,7 @@ function Qn() {
       }
     ),
     /* @__PURE__ */ e(
-      In,
+      Ln,
       {
         open: O,
         onClose: () => W(!1),
@@ -1841,7 +1843,7 @@ function Qn() {
       }
     ),
     /* @__PURE__ */ e(
-      Ln,
+      In,
       {
         open: j,
         onClose: () => F(!1),

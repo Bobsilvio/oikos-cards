@@ -1228,14 +1228,17 @@ export default function VacuumCard() {
           <span style={{ fontSize: 17, fontWeight: 700, color: A }}>{btnLabel}</span>
         </button>
         <div style={{ width: 1, height: 32, background: 'var(--border-medium)', margin: '0 8px' }}/>
-        {/* Base */}
-        <button onClick={() => setBaseOpen(true)} style={{ display: 'flex', alignItems: 'center', gap: 8, flex: 1, justifyContent: 'center', background: 'transparent', border: 'none', cursor: 'pointer', padding: 0 }}>
-          <span style={{ fontSize: 22 }}>🏠</span>
-          <span style={{ fontSize: 17, fontWeight: 600, color: 'var(--text-secondary)' }}>{t('dreame.baseBtn')}</span>
-        </button>
-        {/* Stop */}
-        {(isCleaning || isPaused) && (
-          <button onClick={() => cmd('stop')} style={{ width: 22, height: 22, borderRadius: '50%', background: 'var(--red)', border: 'none', cursor: 'pointer', flexShrink: 0, marginLeft: 8, boxShadow: '0 2px 6px rgba(232,57,46,.35)' }}/>
+        {/* Base (idle) o Termina (cleaning/paused) */}
+        {(isCleaning || isPaused) ? (
+          <button onClick={() => cmd('stop')} style={{ display: 'flex', alignItems: 'center', gap: 8, flex: 1, justifyContent: 'center', background: 'transparent', border: 'none', cursor: 'pointer', padding: 0 }}>
+            <svg width="22" height="22" viewBox="0 0 22 22"><rect x="3" y="3" width="16" height="16" rx="3" fill="var(--red)"/></svg>
+            <span style={{ fontSize: 17, fontWeight: 600, color: 'var(--red)' }}>{t('dreame.stopBtn')}</span>
+          </button>
+        ) : (
+          <button onClick={() => setBaseOpen(true)} style={{ display: 'flex', alignItems: 'center', gap: 8, flex: 1, justifyContent: 'center', background: 'transparent', border: 'none', cursor: 'pointer', padding: 0 }}>
+            <span style={{ fontSize: 22 }}>🏠</span>
+            <span style={{ fontSize: 17, fontWeight: 600, color: 'var(--text-secondary)' }}>{t('dreame.baseBtn')}</span>
+          </button>
         )}
       </div>
 
