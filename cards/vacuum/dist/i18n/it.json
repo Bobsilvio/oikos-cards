@@ -104,7 +104,8 @@
     "allHome": "Tutta la casa",
     "startAll": "Avvia pulizia completa",
     "startN_one": "Avvia {{count}} stanza",
-    "startN_other": "Avvia {{count}} stanze"
+    "startN_other": "Avvia {{count}} stanze",
+    "noRoomsHint": "Aggiungi le stanze nelle impostazioni della card"
   },
   "modeBadges": {
     "water": "Acqua",

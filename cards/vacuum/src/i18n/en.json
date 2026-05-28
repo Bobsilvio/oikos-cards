@@ -104,7 +104,8 @@
     "allHome": "Whole house",
     "startAll": "Start full clean",
     "startN_one": "Start {{count}} room",
-    "startN_other": "Start {{count}} rooms"
+    "startN_other": "Start {{count}} rooms",
+    "noRoomsHint": "Add rooms in the card settings"
   },
   "modeBadges": {
     "water": "Water",

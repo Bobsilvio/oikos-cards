@@ -859,45 +859,43 @@ function ZonaRect({ rect, onUpdate }) {
   const startDrag = (e) => {
     if (e.target !== e.currentTarget) return
     e.stopPropagation()
-    e.currentTarget.setPointerCapture(e.pointerId)
-    const mapEl = e.currentTarget.parentElement
-    const { width: cw, height: ch } = mapEl.getBoundingClientRect()
+    const el = e.currentTarget
+    el.setPointerCapture(e.pointerId)
+    const { width: cw, height: ch } = el.parentElement.getBoundingClientRect()
     const sx = e.clientX, sy = e.clientY
     const ox = rect.x, oy = rect.y, ow = rect.w, oh = rect.h
     const onMove = (me) => {
-      const nx = Math.max(0, Math.min(100 - ow, ox + ((me.clientX - sx) / cw) * 100))
-      const ny = Math.max(0, Math.min(100 - oh, oy + ((me.clientY - sy) / ch) * 100))
-      onUpdate({ x: nx, y: ny, w: ow, h: oh })
+      onUpdate({ x: Math.max(0, Math.min(100 - ow, ox + ((me.clientX - sx) / cw) * 100)), y: Math.max(0, Math.min(100 - oh, oy + ((me.clientY - sy) / ch) * 100)), w: ow, h: oh })
     }
-    e.currentTarget.addEventListener('pointermove', onMove)
-    e.currentTarget.addEventListener('pointerup', () => e.currentTarget.removeEventListener('pointermove', onMove), { once: true })
+    const onUp = () => el.removeEventListener('pointermove', onMove)
+    el.addEventListener('pointermove', onMove)
+    el.addEventListener('pointerup', onUp, { once: true })
   }
   const startResize = (e) => {
     e.stopPropagation()
-    e.currentTarget.setPointerCapture(e.pointerId)
-    const mapEl = e.currentTarget.parentElement.parentElement
-    const { width: cw, height: ch } = mapEl.getBoundingClientRect()
+    const el = e.currentTarget
+    el.setPointerCapture(e.pointerId)
+    const { width: cw, height: ch } = el.parentElement.parentElement.getBoundingClientRect()
     const sx = e.clientX, sy = e.clientY
     const { x, y, w: ow, h: oh } = rect
-    const el = e.currentTarget
     const onMove = (me) => {
-      const nw = Math.max(10, Math.min(100 - x, ow + ((me.clientX - sx) / cw) * 100))
-      const nh = Math.max(8,  Math.min(100 - y, oh + ((me.clientY - sy) / ch) * 100))
-      onUpdate({ x, y, w: nw, h: nh })
+      onUpdate({ x, y, w: Math.max(10, Math.min(100 - x, ow + ((me.clientX - sx) / cw) * 100)), h: Math.max(8, Math.min(100 - y, oh + ((me.clientY - sy) / ch) * 100)) })
     }
+    const onUp = () => el.removeEventListener('pointermove', onMove)
     el.addEventListener('pointermove', onMove)
-    el.addEventListener('pointerup', () => el.removeEventListener('pointermove', onMove), { once: true })
+    el.addEventListener('pointerup', onUp, { once: true })
   }
   return (
     <div onPointerDown={startDrag} style={{
       position: 'absolute', left: `${rect.x}%`, top: `${rect.y}%`,
       width: `${rect.w}%`, height: `${rect.h}%`,
-      border: `2px dashed ${A}`, background: 'rgba(245,158,11,0.13)',
+      border: `2px dashed ${A}`, background: 'rgba(245,158,11,0.15)',
       cursor: 'move', userSelect: 'none', touchAction: 'none', boxSizing: 'border-box',
     }}>
       <div onPointerDown={startResize} style={{
-        position: 'absolute', bottom: -7, right: -7, width: 14, height: 14,
-        background: A, borderRadius: 3, cursor: 'se-resize', touchAction: 'none', zIndex: 2,
+        position: 'absolute', bottom: -8, right: -8, width: 16, height: 16,
+        background: A, borderRadius: 4, cursor: 'se-resize', touchAction: 'none', zIndex: 2,
+        boxShadow: '0 1px 4px rgba(0,0,0,.3)',
       }}/>
     </div>
   )
@@ -1071,27 +1069,35 @@ export default function VacuumCard() {
         ))}
       </div>
 
-      {/* ── Room pill row (visible only in room scope) ── */}
-      {scope === 'room' && rooms.filter(r => r.name).length > 0 && (
-        <div style={{ overflowX: 'auto', scrollbarWidth: 'none', display: 'flex', gap: 6, padding: '8px 16px 0' }}>
-          {rooms.filter(r => r.name).map(r => {
-            const idx = selectedRooms.indexOf(r.id)
-            const sel = idx >= 0
-            return (
-              <div key={r.id} onClick={() => toggleRoom(r.id)} style={{
-                position: 'relative', flexShrink: 0, cursor: 'pointer',
-                padding: '5px 10px', borderRadius: 20,
-                background: sel ? A : 'var(--bg-elevated)',
-                color: sel ? 'white' : 'var(--text-secondary)',
-                fontSize: 11, fontWeight: sel ? 700 : 500,
-                border: `1px solid ${sel ? 'transparent' : 'var(--border)'}`,
-                transition: 'all .15s',
-              }}>
-                {sel && <span style={{ marginRight: 4, fontSize: 10, fontWeight: 800, opacity: 0.9 }}>{idx + 1}</span>}
-                {r.name}
-              </div>
-            )
-          })}
+      {/* ── Room pill row ── */}
+      {scope === 'room' && (
+        <div style={{ padding: '8px 16px 0' }}>
+          {rooms.filter(r => r.name).length > 0 ? (
+            <div style={{ overflowX: 'auto', scrollbarWidth: 'none', display: 'flex', gap: 6 }}>
+              {rooms.filter(r => r.name).map(r => {
+                const idx = selectedRooms.indexOf(r.id)
+                const sel = idx >= 0
+                return (
+                  <div key={r.id} onClick={() => toggleRoom(r.id)} style={{
+                    flexShrink: 0, cursor: 'pointer',
+                    padding: '6px 12px', borderRadius: 20,
+                    background: sel ? A : 'var(--bg-elevated)',
+                    color: sel ? 'white' : 'var(--text-secondary)',
+                    fontSize: 12, fontWeight: sel ? 700 : 500,
+                    border: `1px solid ${sel ? 'transparent' : 'var(--border)'}`,
+                    transition: 'all .15s',
+                  }}>
+                    {sel && <span style={{ marginRight: 4, fontSize: 10, fontWeight: 800, opacity: 0.9 }}>{idx + 1}</span>}
+                    {r.name}
+                  </div>
+                )
+              })}
+            </div>
+          ) : (
+            <div style={{ fontSize: 12, color: 'var(--text-muted)', padding: '4px 2px' }}>
+              ⚙ {t('rooms.noRoomsHint')}
+            </div>
+          )}
         </div>
       )}
 
