@@ -218,13 +218,13 @@ function HumSlider({ value, onChange }) {
 
 // ── Sheet wrappers ────────────────────────────────────────────────────────────
 
-function SubSheet({ open, onClose, children }) {
+function SubSheet({ open, onClose, children, zIndex = 1100 }) {
   return (
     <AnimatePresence>
       {open && (
         <motion.div key="sub-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
           onClick={onClose}
-          style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,.93)', zIndex: 20, display: 'flex', alignItems: 'flex-end' }}>
+          style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,.93)', zIndex, display: 'flex', alignItems: 'flex-end' }}>
           <motion.div key="sub-sheet" initial={{ y: '100%' }} animate={{ y: 0 }} exit={{ y: '100%' }}
             transition={{ type: 'spring', damping: 32, stiffness: 280 }}
             onClick={e => e.stopPropagation()}
@@ -1014,7 +1014,7 @@ export default function VacuumCard() {
   const handleMainBtn = () => {
     if (isCleaning) { cmd('pause'); return }
     if (isPaused)   { cmd('resume'); return }
-    setMainOpen(true)
+    startClean()
   }
 
   return (
@@ -1053,7 +1053,7 @@ export default function VacuumCard() {
           <img ref={mapImgRef}
             alt={t('map.alt')}
             style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block',
-              filter: scope === 'room' ? 'brightness(1.35) saturate(0.65)' : 'none',
+              filter: scope === 'room' ? 'brightness(0.85) saturate(0.5)' : scope === 'zona' ? 'brightness(0.55) saturate(0.2)' : 'none',
               transition: 'filter .25s' }}
             onError={e => { e.currentTarget.style.opacity = '0' }}
           />
@@ -1067,6 +1067,11 @@ export default function VacuumCard() {
           <ZonaRect key={idx} rect={r}
             onUpdate={upd => setZonaRects(prev => prev.map((x, i) => i === idx ? upd : x))}/>
         ))}
+        {scope === 'room' && selectedRooms.length > 0 && (
+          <div style={{ position: 'absolute', top: 10, left: '50%', transform: 'translateX(-50%)', background: A, color: 'white', padding: '5px 14px', borderRadius: 20, fontSize: 12, fontWeight: 700, boxShadow: '0 2px 8px rgba(0,0,0,.25)', whiteSpace: 'nowrap', pointerEvents: 'none' }}>
+            {selectedRooms.length === 1 ? t('rooms.startN_one', { count: selectedRooms.length }) : t('rooms.startN_other', { count: selectedRooms.length })}
+          </div>
+        )}
       </div>
 
       {/* ── Room pill row ── */}
@@ -1079,15 +1084,16 @@ export default function VacuumCard() {
                 const sel = idx >= 0
                 return (
                   <div key={r.id} onClick={() => toggleRoom(r.id)} style={{
-                    flexShrink: 0, cursor: 'pointer',
-                    padding: '6px 12px', borderRadius: 20,
+                    flexShrink: 0, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 5,
+                    padding: '7px 14px', borderRadius: 20,
                     background: sel ? A : 'var(--bg-elevated)',
                     color: sel ? 'white' : 'var(--text-secondary)',
-                    fontSize: 12, fontWeight: sel ? 700 : 500,
-                    border: `1px solid ${sel ? 'transparent' : 'var(--border)'}`,
+                    fontSize: 13, fontWeight: sel ? 700 : 500,
+                    border: `1.5px solid ${sel ? A : 'var(--border)'}`,
+                    boxShadow: sel ? `0 2px 8px rgba(245,158,11,.35)` : 'none',
                     transition: 'all .15s',
                   }}>
-                    {sel && <span style={{ marginRight: 4, fontSize: 10, fontWeight: 800, opacity: 0.9 }}>{idx + 1}</span>}
+                    {sel && <span style={{ fontSize: 11, fontWeight: 800 }}>✓</span>}
                     {r.name}
                   </div>
                 )
