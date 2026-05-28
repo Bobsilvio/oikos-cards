@@ -1285,7 +1285,7 @@ export default function VacuumCard() {
           let roomList = []
           if (roomsAttr) {
             const arr = Array.isArray(roomsAttr) ? roomsAttr : Object.values(roomsAttr)
-            roomList = arr.filter(r => r.x0 !== undefined && r.x1 !== undefined)
+            roomList = arr.filter(r => r.x0 !== undefined && r.x1 !== undefined && r.visibility !== 'Hidden')
               .map(r => ({ id: Number(r.room_id ?? r.id), x0: r.x0, y0: r.y0, x1: r.x1, y1: r.y1, outline: null }))
           } else if (segsAttr) {
             const arr = Array.isArray(segsAttr) ? segsAttr : Object.values(segsAttr)
