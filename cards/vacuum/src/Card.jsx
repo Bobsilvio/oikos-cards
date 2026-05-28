@@ -439,6 +439,15 @@ function ImpostazioniSheet({ open, onClose, onMopExtend, cfg, t, callService, ge
 }
 
 // ── BaseSheet ─────────────────────────────────────────────────────────────────
+const SVUOT_HA  = { smart: 'standard', always: 'high_frequency', manual: 'off' }
+const SVUOT_UI  = { standard: 'smart', high_frequency: 'always', off: 'manual', low_frequency: 'smart' }
+const LAVRIP_HA = { low: 'off', medium: 'in_deep_mode', high: 'in_all_modes' }
+const LAVRIP_UI = { off: 'low', in_deep_mode: 'medium', in_all_modes: 'high' }
+const WASHQTY_HA = { low: 'water_saving', medium: 'daily', high: 'deep' }
+const WASHQTY_UI = { water_saving: 'low', daily: 'medium', deep: 'high' }
+const WASHTEMP_HA = { cold: 'normal', warm: 'warm', hot: 'hot' }
+const WASHTEMP_UI = { normal: 'cold', mild: 'cold', warm: 'warm', hot: 'hot' }
+
 function BaseSheet({ open, onClose, cfg, t, callService, getState,
   svuotOpen, setSvuotOpen, svuotSel, setSvuotSel,
   lavRipOpen, setLavRipOpen, lavRipSel, setLavRipSel,
@@ -447,11 +456,27 @@ function BaseSheet({ open, onClose, cfg, t, callService, getState,
   const [page, setPage] = useState('main')
   const [washQty, setWashQty] = useState('medium')
   const [washTemp, setWashTemp] = useState('warm')
-  const [autoDetergent, setAutoDetergent] = useState(true)
-  const [autoWash, setAutoWash] = useState(true)
+  const [autoDetergent, setAutoDetergent] = useState(false)
+  const [autoWash, setAutoWash] = useState(false)
   const [asciugaOn, setAsciugaOn] = useState(false)
 
-  useEffect(() => { if (!open) setPage('main') }, [open])
+  const selOpt = (entityId, option) =>
+    entityId && callService('select', 'select_option', { entity_id: entityId, option })
+  const swToggle = (entityId, on) =>
+    entityId && callService('switch', on ? 'turn_on' : 'turn_off', { entity_id: entityId })
+
+  useEffect(() => {
+    if (!open) { setPage('main'); return }
+    const g = (id) => id ? getState(id) : null
+    const sv = g(cfg.autoEmptyModeEntity);   if (sv)  setSvuotSel(SVUOT_UI[sv]  || 'smart')
+    const lr = g(cfg.autoRewashingEntity);   if (lr)  setLavRipSel(LAVRIP_UI[lr] || 'medium')
+    const dt = g(cfg.dryingTimeEntity);      if (dt && ['2h','3h','4h'].includes(dt)) setTempAsciugSel(dt)
+    const wq = g(cfg.mopWashLevelEntity);    if (wq)  setWashQty(WASHQTY_UI[wq]  || 'medium')
+    const wt = g(cfg.waterTempEntity);       if (wt)  setWashTemp(WASHTEMP_UI[wt] || 'warm')
+    const det = g(cfg.autoDetergentEntity);  if (det !== null) setAutoDetergent(det === 'on')
+    const aw  = g(cfg.autoWashEntity);       if (aw  !== null) setAutoWash(aw  === 'on')
+    const dry = g(cfg.autoDryingEntity);     if (dry !== null) setAsciugaOn(dry === 'on')
+  }, [open])
 
   const get = (id) => id ? (getState(id) ?? null) : null
   const OK = ['installed', 'available', 'ok', 'no_warning', 'enabled', 'completed']
@@ -500,9 +525,9 @@ function BaseSheet({ open, onClose, cfg, t, callService, getState,
               <div style={{ height: 1, background: '#efefef', margin: '0 -20px 26px' }}/>
               <div style={{ display: 'flex', justifyContent: 'space-around', marginBottom: 28 }}>
                 {[
-                  { label: t('dreame.svuotLabel'),      icon: '🗑️', onClick: () => setSvuotOpen(true)      },
-                  { label: t('dreame.lavRipLabel'),      icon: '🫧', onClick: () => setLavRipOpen(true)      },
-                  { label: t('dreame.tempAsciugLabel'),  icon: '💨', onClick: () => setTempAsciugOpen(true)  },
+                  { label: t('dreame.svuotLabel'),     icon: '🗑️', onClick: () => setSvuotOpen(true)     },
+                  { label: t('dreame.lavRipLabel'),     icon: '🫧', onClick: () => setLavRipOpen(true)     },
+                  { label: t('dreame.tempAsciugLabel'), icon: '💨', onClick: () => setTempAsciugOpen(true) },
                 ].map(act => (
                   <div key={act.label} onClick={act.onClick} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12, cursor: 'pointer' }}>
                     <div style={{ width: 88, height: 88, borderRadius: '50%', background: '#f2f2f4', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 30, transition: 'background .18s' }}>{act.icon}</div>
@@ -534,9 +559,9 @@ function BaseSheet({ open, onClose, cfg, t, callService, getState,
               </div>
               <div style={{ background: 'white', borderRadius: 16, margin: '14px 14px 0', padding: 16 }}>
                 {[
-                  { label: t('dreame.autoDetergent'), on: autoDetergent, set: setAutoDetergent },
-                  { label: t('dreame.autoWash'),      on: autoWash,      set: setAutoWash      },
-                  { label: t('dreame.asciuga'),        on: asciugaOn,     set: setAsciugaOn     },
+                  { label: t('dreame.autoDetergent'), on: autoDetergent, set: (fn) => { const v = typeof fn === 'function' ? fn(autoDetergent) : fn; setAutoDetergent(v); swToggle(cfg.autoDetergentEntity, v) } },
+                  { label: t('dreame.autoWash'),      on: autoWash,      set: (fn) => { const v = typeof fn === 'function' ? fn(autoWash)      : fn; setAutoWash(v);      swToggle(cfg.autoWashEntity,        v) } },
+                  { label: t('dreame.asciuga'),       on: asciugaOn,     set: (fn) => { const v = typeof fn === 'function' ? fn(asciugaOn)     : fn; setAsciugaOn(v);     swToggle(cfg.autoDryingEntity,      v) } },
                 ].map((item, i) => (
                   <div key={item.label} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingTop: i > 0 ? 14 : 0, marginTop: i > 0 ? 14 : 0, borderTop: i > 0 ? '1px solid #f2f2f2' : 'none' }}>
                     <span style={{ fontSize: 16, fontWeight: 500, color: '#111' }}>{item.label}</span>
@@ -559,7 +584,7 @@ function BaseSheet({ open, onClose, cfg, t, callService, getState,
               <div style={{ fontSize: 14, color: '#888', margin: '16px 14px 8px', lineHeight: 1.5 }}>{t('dreame.washQtyLabel')}</div>
               <div style={{ background: 'white', borderRadius: 16, margin: '0 14px', overflow: 'hidden' }}>
                 {washQtyOpts.map((o, i) => (
-                  <div key={o.id} onClick={() => setWashQty(o.id)} style={{ display: 'flex', alignItems: 'flex-start', gap: 14, padding: 16, cursor: 'pointer', borderTop: i > 0 ? '1px solid #f2f2f2' : 'none' }}>
+                  <div key={o.id} onClick={() => { setWashQty(o.id); selOpt(cfg.mopWashLevelEntity, WASHQTY_HA[o.id]) }} style={{ display: 'flex', alignItems: 'flex-start', gap: 14, padding: 16, cursor: 'pointer', borderTop: i > 0 ? '1px solid #f2f2f2' : 'none' }}>
                     <div style={{ width: 24, height: 24, borderRadius: '50%', border: `2px solid ${washQty === o.id ? A : '#ccc'}`, flexShrink: 0, marginTop: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', background: washQty === o.id ? A : 'transparent', transition: 'all .18s' }}>
                       {washQty === o.id && <span style={{ fontSize: 13, color: 'white', fontWeight: 800, lineHeight: 1 }}>✓</span>}
                     </div>
@@ -573,7 +598,7 @@ function BaseSheet({ open, onClose, cfg, t, callService, getState,
               <div style={{ fontSize: 14, color: '#888', margin: '16px 14px 8px' }}>{t('dreame.washTempLabel')}</div>
               <div style={{ background: 'white', borderRadius: 16, margin: '0 14px', overflow: 'hidden' }}>
                 {washTempOpts.map((o, i) => (
-                  <div key={o.id} onClick={() => setWashTemp(o.id)} style={{ display: 'flex', alignItems: 'center', gap: 14, padding: 16, cursor: 'pointer', borderTop: i > 0 ? '1px solid #f2f2f2' : 'none' }}>
+                  <div key={o.id} onClick={() => { setWashTemp(o.id); selOpt(cfg.waterTempEntity, WASHTEMP_HA[o.id]) }} style={{ display: 'flex', alignItems: 'center', gap: 14, padding: 16, cursor: 'pointer', borderTop: i > 0 ? '1px solid #f2f2f2' : 'none' }}>
                     <div style={{ width: 24, height: 24, borderRadius: '50%', border: `2px solid ${washTemp === o.id ? A : '#ccc'}`, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: washTemp === o.id ? A : 'transparent', transition: 'all .18s' }}>
                       {washTemp === o.id && <span style={{ fontSize: 13, color: 'white', fontWeight: 800, lineHeight: 1 }}>✓</span>}
                     </div>
@@ -587,9 +612,12 @@ function BaseSheet({ open, onClose, cfg, t, callService, getState,
         </div>
       </FullSheet>
 
-      <SvuotSheet    open={svuotOpen}     onClose={() => setSvuotOpen(false)}     selected={svuotSel}     onSelect={setSvuotSel}     t={t}/>
-      <LavRipSheet   open={lavRipOpen}    onClose={() => setLavRipOpen(false)}    selected={lavRipSel}    onSelect={setLavRipSel}    t={t}/>
-      <TempAsciugSheet open={tempAsciugOpen} onClose={() => setTempAsciugOpen(false)} selected={tempAsciugSel} onSelect={setTempAsciugSel} t={t}/>
+      <SvuotSheet open={svuotOpen} onClose={() => setSvuotOpen(false)} selected={svuotSel}
+        onSelect={v => { setSvuotSel(v); selOpt(cfg.autoEmptyModeEntity, SVUOT_HA[v]) }} t={t}/>
+      <LavRipSheet open={lavRipOpen} onClose={() => setLavRipOpen(false)} selected={lavRipSel}
+        onSelect={v => { setLavRipSel(v); selOpt(cfg.autoRewashingEntity, LAVRIP_HA[v]) }} t={t}/>
+      <TempAsciugSheet open={tempAsciugOpen} onClose={() => setTempAsciugOpen(false)} selected={tempAsciugSel}
+        onSelect={v => { setTempAsciugSel(v); selOpt(cfg.dryingTimeEntity, v) }} t={t}/>
     </>
   )
 }

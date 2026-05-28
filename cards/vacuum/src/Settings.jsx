@@ -68,7 +68,12 @@ const GROUP_KEYS = [
       { key: 'dirtyWaterEntity'     },
       { key: 'hotWaterEntity'       },
       { key: 'lowWaterEntity'       },
-      { key: 'dustCollectionEntity' },
+      { key: 'dustCollectionEntity'   },
+      { key: 'autoEmptyModeEntity'    },
+      { key: 'mopWashLevelEntity'     },
+      { key: 'autoRewashingEntity'    },
+      { key: 'autoDetergentEntity'    },
+      { key: 'autoWashEntity'         },
     ],
   },
   {
