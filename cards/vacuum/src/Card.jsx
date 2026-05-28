@@ -776,20 +776,22 @@ function BaseSheet({ open, onClose, cfg, t, callService, getState,
                 </div>
               </div>
 
-              {/* Card 2: Detersivo + Lavaggio automatico */}
+              {/* Card 2: Detersivo (disabilitato) + Lavaggio automatico */}
               <div style={cardSt}>
-                {[
-                  { key: 'det', label: t('dreame.autoDetergent'), desc: t('dreame.autoDetergentDesc'), on: autoDetergent, toggle: () => { const v = !autoDetergent; setAutoDetergent(v); swToggle(cfg.autoDetergentEntity, v) } },
-                  { key: 'aw',  label: t('dreame.autoWashTitle'),  desc: t('dreame.autoWashDesc'),       on: autoWash,      toggle: () => { const v = !autoWash;       setAutoWash(v);      swToggle(cfg.autoWashEntity,        v) } },
-                ].map((item, i) => (
-                  <div key={item.key} style={itemSt(i > 0)}>
-                    <div style={rowSt}>
-                      <span style={{ fontSize: 16, fontWeight: 600, color: 'var(--text-primary)', flex: 1 }}>{item.label}</span>
-                      <IosToggle on={item.on} onToggle={item.toggle}/>
-                    </div>
-                    <div style={{ fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.6, marginTop: 6 }}>{item.desc}</div>
+                <div style={{ ...itemSt(false), opacity: 0.35 }}>
+                  <div style={rowSt}>
+                    <span style={{ fontSize: 16, fontWeight: 600, color: 'var(--text-primary)', flex: 1 }}>{t('dreame.autoDetergent')}</span>
+                    <IosToggle on={autoDetergent} onToggle={() => {}}/>
                   </div>
-                ))}
+                  <div style={{ fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.6, marginTop: 6 }}>{t('dreame.autoDetergentDesc')}</div>
+                </div>
+                <div style={itemSt(true)}>
+                  <div style={rowSt}>
+                    <span style={{ fontSize: 16, fontWeight: 600, color: 'var(--text-primary)', flex: 1 }}>{t('dreame.autoWashTitle')}</span>
+                    <IosToggle on={autoWash} onToggle={() => { const v = !autoWash; setAutoWash(v); swToggle(cfg.autoWashEntity, v) }}/>
+                  </div>
+                  <div style={{ fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.6, marginTop: 6 }}>{t('dreame.autoWashDesc')}</div>
+                </div>
               </div>
 
               {/* Card 3: Impostazioni lavaggio + Lavaggio ripetuto */}
