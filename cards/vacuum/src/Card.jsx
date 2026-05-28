@@ -1055,15 +1055,17 @@ export default function VacuumCard() {
   const onSuction = (val) => cfg.suctionLevelEntity && callService('select', 'select_option', cfg.suctionLevelEntity, { option: val })
   const onRoute   = (val) => cfg.cleaningRouteEntity && callService('select', 'select_option', cfg.cleaningRouteEntity, { option: val })
 
-  const isCharging = mainState === 'docked' || mainState === 'charging_completed'
-  const isCleaning = mainState === 'cleaning'
-  const isPaused   = mainState === 'paused'
+  const isCharging  = mainState === 'docked' || mainState === 'charging_completed'
+  const isCleaning  = mainState === 'cleaning'
+  const isPaused    = mainState === 'paused'
+  const isReturning = mainState === 'returning'
 
   const btnLabel = isCleaning ? t('controls.pause') : isPaused ? t('controls.resume') : t('dreame.pulisci')
 
   const handleMainBtn = () => {
-    if (isCleaning) { cmd('pause'); return }
-    if (isPaused)   { cmd('resume'); return }
+    if (isCleaning)  { cmd('pause'); return }
+    if (isPaused)    { cmd('resume'); return }
+    if (isReturning) { return }
     startClean()
   }
 
@@ -1231,19 +1233,19 @@ export default function VacuumCard() {
 
       {/* ── Action bar ── */}
       <div style={{ display: 'flex', alignItems: 'center', padding: '14px 20px 20px', borderTop: '1px solid var(--border)', marginTop: 12 }}>
-        {/* Pulisci / Pausa / Riprendi */}
-        <button onClick={handleMainBtn} style={{ display: 'flex', alignItems: 'center', gap: 8, flex: 1, background: 'transparent', border: 'none', cursor: 'pointer', padding: 0 }}>
+        {/* Pulisci / Pausa / Riprendi / In rientro */}
+        <button onClick={handleMainBtn} disabled={isReturning} style={{ display: 'flex', alignItems: 'center', gap: 8, flex: 1, background: 'transparent', border: 'none', cursor: isReturning ? 'default' : 'pointer', padding: 0, opacity: isReturning ? 0.45 : 1 }}>
           <svg width="28" height="28" viewBox="0 0 28 28">
             {isCleaning
               ? <><rect x="6" y="5" width="5" height="18" fill={A} rx="1.5"/><rect x="17" y="5" width="5" height="18" fill={A} rx="1.5"/></>
               : <polygon points="7,4 24,14 7,24" fill={A}/>
             }
           </svg>
-          <span style={{ fontSize: 17, fontWeight: 700, color: A }}>{btnLabel}</span>
+          <span style={{ fontSize: 17, fontWeight: 700, color: A }}>{isReturning ? t('state.returning') : btnLabel}</span>
         </button>
         <div style={{ width: 1, height: 32, background: 'var(--border-medium)', margin: '0 8px' }}/>
-        {/* Base (idle) o Termina (cleaning/paused) */}
-        {(isCleaning || isPaused) ? (
+        {/* Base (idle) o Termina (cleaning/paused/returning) */}
+        {(isCleaning || isPaused || isReturning) ? (
           <button onClick={() => cmd('stop')} style={{ display: 'flex', alignItems: 'center', gap: 8, flex: 1, justifyContent: 'center', background: 'transparent', border: 'none', cursor: 'pointer', padding: 0 }}>
             <svg width="22" height="22" viewBox="0 0 22 22"><rect x="3" y="3" width="16" height="16" rx="3" fill="var(--red)"/></svg>
             <span style={{ fontSize: 17, fontWeight: 600, color: 'var(--red)' }}>{t('dreame.stopBtn')}</span>
