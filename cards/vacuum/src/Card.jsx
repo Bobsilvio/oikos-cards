@@ -813,29 +813,21 @@ function BaseSheet({ open, onClose, cfg, t, callService, getState,
                 </div>
               </div>
 
-              {/* Card 4: Asciuga + Tempo asciugatura */}
-              <div style={cardSt}>
+              {/* Card 4: Asciuga + Tempo asciugatura — nessun sensore, disabilitato */}
+              <div style={{ ...cardSt, marginBottom: 0, opacity: 0.35, pointerEvents: 'none' }}>
                 <div style={itemSt(false)}>
                   <div style={rowSt}>
                     <span style={{ fontSize: 16, fontWeight: 600, color: 'var(--text-primary)' }}>{t('dreame.asciugaTitle')}</span>
-                    <IosToggle on={asciugaOn} onToggle={() => { const v = !asciugaOn; setAsciugaOn(v); swToggle(cfg.autoDryingEntity, v) }}/>
+                    <IosToggle on={asciugaOn} onToggle={() => {}}/>
                   </div>
                   <div style={{ fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.6, marginTop: 6 }}>{t('dreame.asciugaDesc')}</div>
                 </div>
-                <div onClick={() => setTempAsciugOpen(true)} style={{ ...itemSt(true), cursor: 'pointer' }}>
+                <div style={{ ...itemSt(true) }}>
                   <div style={rowSt}>
                     <span style={{ fontSize: 16, fontWeight: 600, color: 'var(--text-primary)' }}>{t('dreame.tempAsciugLabel')}</span>
                     <span style={{ fontSize: 14, color: A }}>{tempAsciugSel || '—'} ›</span>
                   </div>
                   <div style={{ fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.6, marginTop: 6 }}>{t('dreame.tempAsciugDesc')}</div>
-                </div>
-              </div>
-
-              {/* Card 5: Pulisci manualmente — nessun sensore, disabilitato */}
-              <div style={{ ...cardSt, marginBottom: 0, opacity: 0.35 }}>
-                <div style={{ ...itemSt(false), display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                  <span style={{ fontSize: 16, fontWeight: 600, color: 'var(--text-primary)', flex: 1 }}>{t('dreame.cleanWashBase')}</span>
-                  <span style={{ fontSize: 17, color: 'var(--text-muted)' }}>›</span>
                 </div>
               </div>
             </div>
