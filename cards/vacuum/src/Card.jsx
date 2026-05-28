@@ -496,10 +496,12 @@ function BaseSheet({ open, onClose, cfg, t, callService, getState,
   const [autoWash, setAutoWash] = useState(false)
   const [asciugaOn, setAsciugaOn] = useState(false)
 
-  const selOpt = (entityId, option) =>
+  const selOpt  = (entityId, option) =>
     entityId && callService('select', 'select_option', { entity_id: entityId, option })
   const swToggle = (entityId, on) =>
     entityId && callService('switch', on ? 'turn_on' : 'turn_off', { entity_id: entityId })
+  const pressBtn = (entityId) =>
+    entityId && callService('button', 'press', { entity_id: entityId })
 
   useEffect(() => {
     if (!open) { setPage('main'); return }
@@ -561,9 +563,9 @@ function BaseSheet({ open, onClose, cfg, t, callService, getState,
               <div style={{ height: 1, background: 'var(--border)', margin: '0 -20px 26px' }}/>
               <div style={{ display: 'flex', justifyContent: 'space-around', marginBottom: 28 }}>
                 {[
-                  { label: t('dreame.svuotLabel'),     icon: '🗑️', onClick: () => setSvuotOpen(true)     },
-                  { label: t('dreame.lavRipLabel'),     icon: '🫧', onClick: () => setLavRipOpen(true)     },
-                  { label: t('dreame.tempAsciugLabel'), icon: '💨', onClick: () => setTempAsciugOpen(true) },
+                  { label: t('dreame.svuotaBtn'),     icon: '🗑️', onClick: () => pressBtn(cfg.startAutoEmptyEntity) },
+                  { label: t('dreame.lavaMocioBtn'),  icon: '🫧', onClick: () => pressBtn(cfg.startSelfWashEntity)  },
+                  { label: t('dreame.asciugaBtn'),    icon: '💨', onClick: () => pressBtn(cfg.startDryingEntity)    },
                 ].map(act => (
                   <div key={act.label} onClick={act.onClick} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12, cursor: 'pointer' }}>
                     <div style={{ width: 88, height: 88, borderRadius: '50%', background: 'var(--bg-elevated)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 30, transition: 'background .18s' }}>{act.icon}</div>
