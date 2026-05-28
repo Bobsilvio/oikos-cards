@@ -909,11 +909,11 @@ export default function VacuumCard() {
     <div style={{ background: '#fff', borderRadius: 22, overflow: 'hidden', boxShadow: '0 8px 40px rgba(0,0,0,.13)', fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', sans-serif", position: 'relative' }}>
 
       {/* ── Header ── */}
-      <div style={{ padding: '18px 18px 10px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      <div style={{ padding: '12px 18px 6px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <div style={{ width: 34 }} />
         <div style={{ textAlign: 'center', flex: 1 }}>
-          <div style={{ fontSize: 17, fontWeight: 700, color: '#111' }}>{cfg.name}</div>
-          <div style={{ fontSize: 13, color: stateColor, marginTop: 2, fontWeight: 500 }}>
+          <div style={{ fontSize: 16, fontWeight: 700, color: '#111' }}>{cfg.name}</div>
+          <div style={{ fontSize: 12, color: stateColor, marginTop: 1, fontWeight: 500 }}>
             {mainState === 'docked' ? t('state.docked') : mainState === 'cleaning' ? t('state.cleaning') : mainState === 'paused' ? t('state.paused') : mainState === 'returning' ? t('state.returning') : mainState === 'charging_completed' ? t('state.charging_completed') : mainState === 'sleeping' ? t('state.sleeping') : mainState === 'error' ? t('state.error') : mainState === 'idle' ? t('state.idle') : (mainState || '—')}
           </div>
         </div>
@@ -921,22 +921,22 @@ export default function VacuumCard() {
       </div>
 
       {/* ── Stats row ── */}
-      <div style={{ margin: '6px 16px 0', padding: '5px 0', background: '#f7f7f7', borderRadius: 10, display: 'flex' }}>
+      <div style={{ margin: '5px 16px 0', padding: '6px 0', background: '#f5f5f5', borderRadius: 22, display: 'flex' }}>
         {[
-          { val: cleanArea !== null ? Math.round(cleanArea) : (battery ?? '—'), unit: cleanArea !== null ? 'm²' : '%' },
-          { val: cleanTime !== null ? fmtMin(cleanTime).replace(' min', '').replace('h', '') : '—', unit: cleanTime !== null && cleanTime < 60 ? 'min' : cleanTime !== null ? 'h' : '' },
-          { val: battery !== null ? battery : '—', unit: '%', prefix: isCharging ? '⚡' : '' },
+          { icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#999" strokeWidth="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>, val: cleanArea !== null ? Math.round(cleanArea) : '0', unit: 'm²' },
+          { icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#999" strokeWidth="2"><circle cx="12" cy="12" r="9"/><polyline points="12,7 12,12 15,15"/></svg>, val: cleanTime !== null ? fmtMin(cleanTime).replace(' min','').replace('h','') : '0', unit: cleanTime !== null && cleanTime < 60 ? 'min' : 'h' },
+          { icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#999" strokeWidth="2"><rect x="2" y="7" width="18" height="11" rx="2"/><path d="M22 11v3" strokeLinecap="round"/></svg>, val: battery !== null ? battery : '—', unit: '%' },
         ].map((s, i) => (
-          <div key={i} style={{ display: 'flex', alignItems: 'baseline', gap: 3, padding: '0 12px', flex: 1, justifyContent: 'center', borderLeft: i > 0 ? '1px solid #e8e8e8' : 'none' }}>
-            {s.prefix && <span style={{ fontSize: 11 }}>{s.prefix}</span>}
-            <span style={{ fontSize: 14, fontWeight: 700, color: '#111' }}>{s.val}</span>
+          <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 4, padding: '0 10px', flex: 1, justifyContent: 'center', borderLeft: i > 0 ? '1px solid #e0e0e0' : 'none' }}>
+            {s.icon}
+            <span style={{ fontSize: 13, fontWeight: 700, color: '#222' }}>{s.val}</span>
             <span style={{ fontSize: 11, color: '#aaa' }}>{s.unit}</span>
           </div>
         ))}
       </div>
 
       {/* ── Map ── */}
-      <div style={{ marginTop: 10, position: 'relative', height: 260, background: '#eef2f7', overflow: 'hidden' }}>
+      <div style={{ marginTop: 8, position: 'relative', height: 340, background: '#eef2f7', overflow: 'hidden' }}>
         {cfg.cameraEntity ? (
           <img key={mapTs}
             src={`${haHost.current}/api/camera_proxy/${cfg.cameraEntity}?token=${getAttr(cfg.cameraEntity, 'access_token') ?? ''}&t=${mapTs}`}
