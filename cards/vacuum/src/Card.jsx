@@ -750,8 +750,10 @@ function MainSheet({ open, onClose, cfg, t, callService, getState,
 }) {
   const [tab, setTab] = useState('custom') // 'custom' | 'genius'
   const [mode, setMode] = useState(0)       // 0=aspira 1=mocio 2=aspira+lava 3=mocio-dopo 4=pers-stanza
-  const [massima, setMassima] = useState(false)
   const [freqSheetOpen, setFreqSheetOpen] = useState(false)
+
+  const massima = cfg.maxSuctionEntity ? getState(cfg.maxSuctionEntity) === 'on' : false
+  const toggleMassima = () => cfg.maxSuctionEntity && callService('switch', 'toggle', cfg.maxSuctionEntity)
 
   const cleanGeniusOn = cfg.cleanGeniusEntity ? getState(cfg.cleanGeniusEntity) !== 'off' : false
 
@@ -817,11 +819,7 @@ function MainSheet({ open, onClose, cfg, t, callService, getState,
                       <div style={{ flex: 1 }}>
                         <div style={{ fontSize: 15, fontWeight: 700, color: 'var(--text-primary)' }}>{t('dreame.massimaTitle')}</div>
                       </div>
-                      <IosToggle on={massima} onToggle={() => {
-                        const next = !massima
-                        setMassima(next)
-                        if (next) onSuction('turbo')
-                      }}/>
+                      <IosToggle on={massima} onToggle={toggleMassima}/>
                     </div>
                     <div style={{ fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.6 }}>{t('dreame.massimaDesc')}</div>
                   </div>
@@ -852,11 +850,7 @@ function MainSheet({ open, onClose, cfg, t, callService, getState,
                       <div style={{ flex: 1 }}>
                         <div style={{ fontSize: 15, fontWeight: 700, color: 'var(--text-primary)' }}>{t('dreame.massimaTitle')}</div>
                       </div>
-                      <IosToggle on={massima} onToggle={() => {
-                        const next = !massima
-                        setMassima(next)
-                        if (next) onSuction('turbo')
-                      }}/>
+                      <IosToggle on={massima} onToggle={toggleMassima}/>
                     </div>
                     <div style={{ fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.6 }}>{t('dreame.massimaDesc')}</div>
                   </div>

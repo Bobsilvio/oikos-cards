@@ -51,7 +51,8 @@ const { jsxs: d, jsx: r } = window.__OIKOS_SDK__.jsxRuntime, x = "oikos-card-cfg
   resumeEntity: "switch.ambrogio_resume_cleaning",
   cleanGeniusEntity: "select.ambrogio_cleangenius",
   deepCleanEntity: "switch.ambrogio_intensive_carpet_cleaning",
-  humidityEntity: "number.ambrogio_mop_pad_humidity",
+  maxSuctionEntity: "switch.ambrogio_max_suction_power",
+  humidityEntity: "number.ambrogio_wetness_level",
   mopPadLifeEntity: "",
   mopPadLifeDaysEntity: "",
   silverIonEntity: "",
@@ -86,7 +87,7 @@ function C(n) {
   return !n || !n.startsWith("vacuum.") ? null : n.replace(/^vacuum\./, "").replace(/_\d+$/, "");
 }
 function T(n) {
-  const t = (y) => `sensor.${n}_${y}`, a = (y) => `select.${n}_${y}`, l = (y) => `switch.${n}_${y}`;
+  const t = (y) => `sensor.${n}_${y}`, a = (y) => `select.${n}_${y}`, s = (y) => `switch.${n}_${y}`;
   return {
     cameraEntity: `camera.${n}_map`,
     batteryEntity: t("battery_level"),
@@ -106,7 +107,7 @@ function T(n) {
     filterDaysEntity: t("filter_time_left"),
     sensorDirtyEntity: t("sensor_dirty_left"),
     sensorDirtyDaysEntity: t("sensor_dirty_time_left"),
-    humidityEntity: `number.${n}_mop_pad_humidity`,
+    humidityEntity: `number.${n}_wetness_level`,
     mopPadLifeEntity: "",
     mopPadLifeDaysEntity: "",
     silverIonEntity: "",
@@ -133,16 +134,17 @@ function T(n) {
     startAutoEmptyEntity: `button.${n}_start_auto_empty`,
     startSelfWashEntity: `button.${n}_self_clean`,
     startDryingEntity: `button.${n}_manual_drying`,
-    autoDetergentEntity: l("auto_water_refilling"),
-    autoWashEntity: l("auto_mount_mop"),
-    dndEntity: l("dnd"),
-    carpetBoostEntity: l("carpet_boost"),
-    selfCleanSwitchEntity: l("self_clean"),
-    autoDryingEntity: l("auto_drying"),
-    obstacleEntity: l("obstacle_avoidance"),
-    resumeEntity: l("resume_cleaning"),
+    autoDetergentEntity: s("auto_water_refilling"),
+    autoWashEntity: s("auto_mount_mop"),
+    dndEntity: s("dnd"),
+    carpetBoostEntity: s("carpet_boost"),
+    selfCleanSwitchEntity: s("self_clean"),
+    autoDryingEntity: s("auto_drying"),
+    obstacleEntity: s("obstacle_avoidance"),
+    resumeEntity: s("resume_cleaning"),
     cleanGeniusEntity: a("cleangenius"),
-    deepCleanEntity: l("intensive_carpet_cleaning"),
+    deepCleanEntity: s("intensive_carpet_cleaning"),
+    maxSuctionEntity: s("max_suction_power"),
     totalAreaEntity: t("total_cleaned_area"),
     countEntity: t("cleaning_count"),
     totalTimeEntity: t("total_cleaning_time"),
@@ -246,7 +248,7 @@ const { useState: v } = window.__OIKOS_SDK__.React, { motion: w, AnimatePresence
     ]
   }
 ];
-function z({ saved: n, onClick: t, saveLabel: a, savedLabel: l }) {
+function z({ saved: n, onClick: t, saveLabel: a, savedLabel: s }) {
   return /* @__PURE__ */ r(
     "button",
     {
@@ -266,15 +268,15 @@ function z({ saved: n, onClick: t, saveLabel: a, savedLabel: l }) {
         color: n ? "var(--green)" : "var(--amber)",
         transition: "all .2s"
       },
-      children: n ? l : a
+      children: n ? s : a
     }
   );
 }
-function $({ rooms: n, onChange: t, dark: a, idLabel: l, nameLabel: y, idPlaceholder: u, namePlaceholder: m, addLabel: o, hintText: p }) {
-  const g = (i, s, e) => {
-    const h = n.map((E, c) => c === i ? { ...E, [s]: s === "id" ? parseInt(e) || 0 : e } : E);
+function $({ rooms: n, onChange: t, dark: a, idLabel: s, nameLabel: y, idPlaceholder: u, namePlaceholder: m, addLabel: o, hintText: p }) {
+  const g = (i, l, e) => {
+    const h = n.map((E, c) => c === i ? { ...E, [l]: l === "id" ? parseInt(e) || 0 : e } : E);
     t(h);
-  }, b = (i) => t(n.filter((s, e) => e !== i)), f = () => t([...n, { id: "", name: "" }]), _ = (i) => ({
+  }, b = (i) => t(n.filter((l, e) => e !== i)), f = () => t([...n, { id: "", name: "" }]), _ = (i) => ({
     background: "var(--bg-secondary, var(--bg-primary))",
     border: "1px solid var(--border-medium)",
     borderRadius: 7,
@@ -287,11 +289,11 @@ function $({ rooms: n, onChange: t, dark: a, idLabel: l, nameLabel: y, idPlaceho
   });
   return /* @__PURE__ */ d("div", { style: { display: "flex", flexDirection: "column", gap: 6 }, children: [
     /* @__PURE__ */ d("div", { style: { display: "grid", gridTemplateColumns: "52px 1fr 28px", gap: 6 }, children: [
-      /* @__PURE__ */ r("span", { style: { fontSize: 10, fontWeight: 600, color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: ".4px" }, children: l }),
+      /* @__PURE__ */ r("span", { style: { fontSize: 10, fontWeight: 600, color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: ".4px" }, children: s }),
       /* @__PURE__ */ r("span", { style: { fontSize: 10, fontWeight: 600, color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: ".4px" }, children: y }),
       /* @__PURE__ */ r("span", {})
     ] }),
-    /* @__PURE__ */ r(W, { initial: !1, children: n.map((i, s) => /* @__PURE__ */ r(
+    /* @__PURE__ */ r(W, { initial: !1, children: n.map((i, l) => /* @__PURE__ */ r(
       w.div,
       {
         initial: { opacity: 0, height: 0 },
@@ -306,7 +308,7 @@ function $({ rooms: n, onChange: t, dark: a, idLabel: l, nameLabel: y, idPlaceho
               type: "number",
               value: i.id,
               placeholder: u,
-              onChange: (e) => g(s, "id", e.target.value),
+              onChange: (e) => g(l, "id", e.target.value),
               style: _(!0),
               onFocus: (e) => e.target.style.borderColor = "var(--amber-border)",
               onBlur: (e) => e.target.style.borderColor = "var(--border-medium)"
@@ -317,7 +319,7 @@ function $({ rooms: n, onChange: t, dark: a, idLabel: l, nameLabel: y, idPlaceho
             {
               value: i.name,
               placeholder: m,
-              onChange: (e) => g(s, "name", e.target.value),
+              onChange: (e) => g(l, "name", e.target.value),
               style: _(!1),
               onFocus: (e) => e.target.style.borderColor = "var(--amber-border)",
               onBlur: (e) => e.target.style.borderColor = "var(--border-medium)"
@@ -326,7 +328,7 @@ function $({ rooms: n, onChange: t, dark: a, idLabel: l, nameLabel: y, idPlaceho
           /* @__PURE__ */ r(
             "button",
             {
-              onClick: () => b(s),
+              onClick: () => b(l),
               style: {
                 width: 28,
                 height: 28,
@@ -350,7 +352,7 @@ function $({ rooms: n, onChange: t, dark: a, idLabel: l, nameLabel: y, idPlaceho
           )
         ] })
       },
-      s
+      l
     )) }),
     /* @__PURE__ */ d("button", { onClick: f, style: {
       display: "flex",
@@ -374,8 +376,8 @@ function $({ rooms: n, onChange: t, dark: a, idLabel: l, nameLabel: y, idPlaceho
   ] });
 }
 function M({ dark: n }) {
-  const [t, a] = v(S), [l, y] = v(!1), [u, m] = v(null), { t: o } = I("card-vacuum"), p = (i, s) => {
-    a((e) => ({ ...e, [i]: s })), y(!1);
+  const [t, a] = v(S), [s, y] = v(!1), [u, m] = v(null), { t: o } = I("card-vacuum"), p = (i, l) => {
+    a((e) => ({ ...e, [i]: l })), y(!1);
   }, g = (i) => {
     a(i), y(!1);
   }, b = () => {
@@ -384,7 +386,7 @@ function M({ dark: n }) {
       m("err"), setTimeout(() => m(null), 3e3);
       return;
     }
-    a((s) => ({ ...s, ...T(i) })), y(!1), m(i), setTimeout(() => m(null), 4e3);
+    a((l) => ({ ...l, ...T(i) })), y(!1), m(i), setTimeout(() => m(null), 4e3);
   }, f = () => {
     D(t), y(!0), setTimeout(() => y(!1), 1500);
   }, _ = (i) => ({
@@ -399,7 +401,7 @@ function M({ dark: n }) {
     width: "100%"
   });
   return /* @__PURE__ */ d("div", { style: { display: "flex", flexDirection: "column", gap: 16 }, children: [
-    K.map(({ titleKey: i, fields: s }) => /* @__PURE__ */ d("div", { children: [
+    K.map(({ titleKey: i, fields: l }) => /* @__PURE__ */ d("div", { children: [
       /* @__PURE__ */ r("div", { style: {
         fontSize: 10,
         fontWeight: 700,
@@ -408,7 +410,7 @@ function M({ dark: n }) {
         color: "var(--text-muted)",
         marginBottom: 8
       }, children: o(`settings.groups.${i}`) }),
-      /* @__PURE__ */ r("div", { style: { display: "flex", flexDirection: "column", gap: 7 }, children: s.map(({ key: e, mono: h = !0, entity: E = !0 }) => /* @__PURE__ */ r("div", { children: E ? /* @__PURE__ */ r(R, { label: o(`settings.fields.${e}`), field: e, config: t, setConfig: g }) : /* @__PURE__ */ d("div", { style: { display: "flex", flexDirection: "column", gap: 3 }, children: [
+      /* @__PURE__ */ r("div", { style: { display: "flex", flexDirection: "column", gap: 7 }, children: l.map(({ key: e, mono: h = !0, entity: E = !0 }) => /* @__PURE__ */ r("div", { children: E ? /* @__PURE__ */ r(R, { label: o(`settings.fields.${e}`), field: e, config: t, setConfig: g }) : /* @__PURE__ */ d("div", { style: { display: "flex", flexDirection: "column", gap: 3 }, children: [
         /* @__PURE__ */ r("label", { style: {
           fontSize: 11,
           fontWeight: 600,
@@ -467,7 +469,7 @@ function M({ dark: n }) {
         {
           rooms: t.rooms || [],
           onChange: (i) => {
-            a((s) => ({ ...s, rooms: i })), y(!1);
+            a((l) => ({ ...l, rooms: i })), y(!1);
           },
           dark: n,
           idLabel: o("settings.roomIdLabel"),
@@ -479,7 +481,7 @@ function M({ dark: n }) {
         }
       )
     ] }),
-    /* @__PURE__ */ r(z, { onClick: f, saved: l, saveLabel: o("settings.saveButton"), savedLabel: o("settings.savedButton") })
+    /* @__PURE__ */ r(z, { onClick: f, saved: s, saveLabel: o("settings.saveButton"), savedLabel: o("settings.savedButton") })
   ] });
 }
 export {
