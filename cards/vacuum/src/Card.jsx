@@ -644,10 +644,10 @@ function BaseSheet({ open, onClose, cfg, t, callService, getState,
 // ── MainSheet — sub-panels per mode ───────────────────────────────────────────
 function SuctionRow({ suction, onSelect, t }) {
   const opts = [
-    { id: 'quiet',    label: t('dreame.suctionSilenz'), Ico: SvgSilenz    },
-    { id: 'standard', label: t('dreame.suctionStd'),    Ico: SvgStd       },
+    { id: 'quiet',    label: t('dreame.suctionSilenz'),    Ico: SvgSilenz    },
+    { id: 'standard', label: t('dreame.suctionStd'),      Ico: SvgStd       },
     { id: 'strong',   label: t('dreame.suctionIntensiva'), Ico: SvgIntensiva },
-    { id: 'max',      label: t('dreame.suctionMax'),    Ico: SvgMaxP      },
+    { id: 'turbo',    label: t('dreame.suctionMax'),      Ico: SvgMaxP      },
   ]
   return (
     <div>
@@ -663,8 +663,8 @@ function SuctionRow({ suction, onSelect, t }) {
 
 function PercorsoRow({ route, onSelect, mop, t }) {
   const baseOpts = [
-    { id: 'by_area', label: t('dreame.percVeloce'),   Ico: SvgPercVeloce  },
-    { id: 'by_time', label: t('dreame.percStandard'), Ico: SvgPercStd     },
+    { id: 'quick',    label: t('dreame.percVeloce'),   Ico: SvgPercVeloce  },
+    { id: 'standard', label: t('dreame.percStandard'), Ico: SvgPercStd     },
   ]
   const mopOpts = [
     ...baseOpts,
@@ -710,7 +710,7 @@ function MainSheet({ open, onClose, cfg, t, callService, getState,
   const [massima, setMassima] = useState(false)
   const [freqSheetOpen, setFreqSheetOpen] = useState(false)
 
-  const cleanGeniusOn = cfg.cleanGeniusEntity ? getState(cfg.cleanGeniusEntity) === 'on' : false
+  const cleanGeniusOn = cfg.cleanGeniusEntity ? getState(cfg.cleanGeniusEntity) !== 'off' : false
 
   useEffect(() => {
     if (!cfg.cleanGeniusEntity) return
@@ -719,7 +719,7 @@ function MainSheet({ open, onClose, cfg, t, callService, getState,
 
   const switchTab = (t2) => {
     setTab(t2)
-    if (cfg.cleanGeniusEntity) callService('switch', t2 === 'genius' ? 'turn_on' : 'turn_off', { entity_id: cfg.cleanGeniusEntity })
+    if (cfg.cleanGeniusEntity) callService('select', 'select_option', { entity_id: cfg.cleanGeniusEntity, option: t2 === 'genius' ? 'routine_cleaning' : 'off' })
   }
 
   const hasMop = mode === 1 || mode === 2 || mode === 3
