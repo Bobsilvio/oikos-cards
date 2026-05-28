@@ -23,6 +23,8 @@
     "sectionCommands": "Befehle",
     "climateEntity": "Klimaanlage",
     "climateHint": "climate.*-Entität von Home Assistant",
+    "indoorSensor": "Innentemperatursensor",
+    "indoorHint": "Optional — ersetzt die aktuelle Temperatur der Klimaanlage",
     "outdoorSensor": "Außentemperatursensor",
     "outdoorHint": "Optional — zeigt Außen-°C",
     "label": "Bezeichnung",

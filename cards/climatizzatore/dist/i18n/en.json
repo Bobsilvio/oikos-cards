@@ -23,6 +23,8 @@
     "sectionCommands": "Commands",
     "climateEntity": "Air conditioner",
     "climateHint": "Home Assistant climate.* entity",
+    "indoorSensor": "Indoor temperature sensor",
+    "indoorHint": "Optional — overrides the climate's current temperature",
     "outdoorSensor": "Outdoor temperature sensor",
     "outdoorHint": "Optional — shows outdoor °C",
     "label": "Label",

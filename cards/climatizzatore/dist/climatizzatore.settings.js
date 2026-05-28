@@ -1,5 +1,6 @@
-const { jsxs: s, jsx: e } = window.__OIKOS_SDK__.jsxRuntime, { useCardConfig: C, EntityField: r, useT: p, Section: c, Field: o, SettingsRow: d, TextField: w, Toggle: g, ColorCircles: y, ACCENT_COLORS: S, Slider: b } = window.__OIKOS_SDK__, f = {
+const { jsxs: a, jsx: e } = window.__OIKOS_SDK__.jsxRuntime, { useCardConfig: C, EntityField: r, useT: p, Section: c, Field: o, SettingsRow: d, TextField: y, Toggle: g, ColorCircles: f, ACCENT_COLORS: S, Slider: b } = window.__OIKOS_SDK__, w = {
   entityId: "",
+  indoorTempEntity: "",
   outdoorTempEntity: "",
   label: "",
   accentColor: "",
@@ -8,16 +9,25 @@ const { jsxs: s, jsx: e } = window.__OIKOS_SDK__.jsxRuntime, { useCardConfig: C,
   showHumidity: !0
 };
 function _({ cardId: h }) {
-  const [i, a] = C(h, f), { t } = p("card-climatizzatore"), l = (n, m) => a((u) => ({ ...u, [n]: m }));
-  return /* @__PURE__ */ s("div", { style: { display: "flex", flexDirection: "column", gap: 14 }, children: [
-    /* @__PURE__ */ s(c, { title: t("settings.sectionEntity"), children: [
+  const [i, l] = C(h, w), { t } = p("card-climatizzatore"), s = (n, m) => l((u) => ({ ...u, [n]: m }));
+  return /* @__PURE__ */ a("div", { style: { display: "flex", flexDirection: "column", gap: 14 }, children: [
+    /* @__PURE__ */ a(c, { title: t("settings.sectionEntity"), children: [
       /* @__PURE__ */ e(o, { label: t("settings.climateEntity"), hint: t("settings.climateHint"), children: /* @__PURE__ */ e(
         r,
         {
           field: "entityId",
           config: i,
-          setConfig: a,
+          setConfig: l,
           filterDomain: "climate"
+        }
+      ) }),
+      /* @__PURE__ */ e(o, { label: t("settings.indoorSensor"), hint: t("settings.indoorHint"), children: /* @__PURE__ */ e(
+        r,
+        {
+          field: "indoorTempEntity",
+          config: i,
+          setConfig: l,
+          filterDomain: "sensor"
         }
       ) }),
       /* @__PURE__ */ e(o, { label: t("settings.outdoorSensor"), hint: t("settings.outdoorHint"), children: /* @__PURE__ */ e(
@@ -25,43 +35,43 @@ function _({ cardId: h }) {
         {
           field: "outdoorTempEntity",
           config: i,
-          setConfig: a,
+          setConfig: l,
           filterDomain: "sensor"
         }
       ) })
     ] }),
-    /* @__PURE__ */ s(c, { title: t("settings.sectionAppearance"), children: [
+    /* @__PURE__ */ a(c, { title: t("settings.sectionAppearance"), children: [
       /* @__PURE__ */ e(o, { label: t("settings.label"), hint: t("settings.labelHint"), children: /* @__PURE__ */ e(
-        w,
+        y,
         {
           value: i.label,
-          onChange: (n) => l("label", n),
+          onChange: (n) => s("label", n),
           placeholder: "Es. Soggiorno"
         }
       ) }),
       /* @__PURE__ */ e(o, { label: t("settings.accentColor"), hint: t("settings.accentHint"), children: /* @__PURE__ */ e(
-        y,
+        f,
         {
           value: i.accentColor,
-          onChange: (n) => l("accentColor", n),
+          onChange: (n) => s("accentColor", n),
           colors: ["", ...S]
         }
       ) })
     ] }),
-    /* @__PURE__ */ s(c, { title: t("settings.sectionCommands"), children: [
+    /* @__PURE__ */ a(c, { title: t("settings.sectionCommands"), children: [
       /* @__PURE__ */ e(o, { label: t("settings.tempStep"), hint: t("settings.tempStepHint"), children: /* @__PURE__ */ e(
         b,
         {
           value: i.step,
-          onChange: (n) => l("step", n),
+          onChange: (n) => s("step", n),
           min: 0.1,
           max: 2,
           step: 0.1,
           format: (n) => `${n.toFixed(1)}°`
         }
       ) }),
-      /* @__PURE__ */ e(d, { label: t("settings.showFan"), children: /* @__PURE__ */ e(g, { value: i.showFan, onChange: (n) => l("showFan", n) }) }),
-      /* @__PURE__ */ e(d, { label: t("settings.showHumidity"), children: /* @__PURE__ */ e(g, { value: i.showHumidity, onChange: (n) => l("showHumidity", n) }) })
+      /* @__PURE__ */ e(d, { label: t("settings.showFan"), children: /* @__PURE__ */ e(g, { value: i.showFan, onChange: (n) => s("showFan", n) }) }),
+      /* @__PURE__ */ e(d, { label: t("settings.showHumidity"), children: /* @__PURE__ */ e(g, { value: i.showHumidity, onChange: (n) => s("showHumidity", n) }) })
     ] })
   ] });
 }

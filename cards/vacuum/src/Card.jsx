@@ -584,17 +584,21 @@ function BaseSheet({ open, onClose, cfg, t, callService, getState,
             style={{ position: 'absolute', inset: 0, overflowY: 'auto' }}>
             <div style={{ background: 'var(--bg-elevated)', minHeight: '100%' }}>
               <SettingsHeader title={t('dreame.baseSettingsTitle')} onBack={() => setPage('main')}/>
-              <div style={{ background: 'var(--bg-card)', borderRadius: 16, margin: '14px 14px 0', padding: 16 }}>
-                <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 10 }}>
-                  <div>
-                    <div style={{ fontSize: 16, fontWeight: 700, color: 'var(--text-primary)', marginBottom: 4 }}>{t('dreame.svuotTitle')}</div>
-                    <div onClick={() => setSvuotOpen(true)} style={{ fontSize: 14, color: A, cursor: 'pointer' }}>
-                      {svuotSel === 'always' ? t('dreame.svuotAlways') : svuotSel === 'manual' ? t('dreame.svuotManual') : t('dreame.svuotSmart')} ›
-                    </div>
+              {/* Svuotamento / lavaggio pad / asciugatura — picker rows */}
+              <div style={{ background: 'var(--bg-card)', borderRadius: 16, margin: '14px 14px 0', overflow: 'hidden' }}>
+                {[
+                  { title: t('dreame.svuotLabel'),  val: svuotSel === 'always' ? t('dreame.svuotAlways') : svuotSel === 'manual' ? t('dreame.svuotManual') : t('dreame.svuotSmart'),   onTap: () => setSvuotOpen(true)    },
+                  { title: t('dreame.lavRipLabel'), val: lavRipSel === 'high' ? t('dreame.lavRipHigh') : lavRipSel === 'low' ? t('dreame.lavRipLow') : t('dreame.lavRipMedium'),        onTap: () => setLavRipOpen(true)   },
+                  { title: t('dreame.tempAsciugLabel'), val: tempAsciugSel || '—',                                                                                                       onTap: () => setTempAsciugOpen(true) },
+                ].map((row, i) => (
+                  <div key={row.title} onClick={row.onTap}
+                    style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 16px', cursor: 'pointer', borderTop: i > 0 ? '1px solid var(--border)' : 'none' }}>
+                    <span style={{ fontSize: 16, color: 'var(--text-primary)' }}>{row.title}</span>
+                    <span style={{ fontSize: 14, color: A }}>{row.val} ›</span>
                   </div>
-                  <IosToggle on={true} onToggle={() => {}}/>
-                </div>
+                ))}
               </div>
+              {/* Switch rapidi */}
               <div style={{ background: 'var(--bg-card)', borderRadius: 16, margin: '14px 14px 0', padding: 16 }}>
                 {[
                   { label: t('dreame.autoDetergent'), on: autoDetergent, set: (fn) => { const v = typeof fn === 'function' ? fn(autoDetergent) : fn; setAutoDetergent(v); swToggle(cfg.autoDetergentEntity, v) } },
@@ -607,7 +611,7 @@ function BaseSheet({ open, onClose, cfg, t, callService, getState,
                   </div>
                 ))}
               </div>
-              <div onClick={() => setPage('washing')} style={{ background: 'var(--bg-card)', borderRadius: 16, margin: '10px 14px 0', padding: '16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', cursor: 'pointer' }}>
+              <div onClick={() => setPage('washing')} style={{ background: 'var(--bg-card)', borderRadius: 16, margin: '10px 14px 28px', padding: '16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', cursor: 'pointer' }}>
                 <span style={{ fontSize: 16, color: 'var(--text-primary)' }}>{t('dreame.washingSettingsTitle')}</span>
                 <span style={{ color: 'var(--text-muted)', fontSize: 17 }}>›</span>
               </div>

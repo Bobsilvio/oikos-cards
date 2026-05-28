@@ -19,6 +19,7 @@ registerCardTranslations('card-climatizzatore', { it, en })
 
 const DEFAULT_CONFIG = {
   entityId:    '',                     // climate.X
+  indoorTempEntity:  '',                // sensor.X (temp interna override, opzionale)
   outdoorTempEntity: '',                // sensor.X (temp esterna opzionale)
   label:       '',                     // override del friendly_name
   accentColor: '',                     // override colore — vuoto = auto da modalità
@@ -59,7 +60,10 @@ export default function ClimatizzatoreCard({ cardId = 'climatizzatore' }) {
   const attrs    = stateMeta?.attributes ?? {}
 
   const isOff         = hvacMode === 'off' || hvacMode === 'unavailable' || hvacMode === 'unknown'
-  const currentTemp   = attrs.current_temperature
+  const indoorOverride = config.indoorTempEntity ? getFloat(config.indoorTempEntity) : null
+  const currentTemp   = (indoorOverride != null && Number.isFinite(indoorOverride))
+    ? indoorOverride
+    : attrs.current_temperature
   const targetTemp    = attrs.temperature ?? attrs.target_temp
   const humidity      = attrs.current_humidity
   const minTemp       = attrs.min_temp ?? 16

@@ -23,6 +23,8 @@
     "sectionCommands": "Commandes",
     "climateEntity": "Climatiseur",
     "climateHint": "Entité climate.* de Home Assistant",
+    "indoorSensor": "Capteur de température intérieure",
+    "indoorHint": "Optionnel — remplace la température actuelle du climatiseur",
     "outdoorSensor": "Capteur de température extérieure",
     "outdoorHint": "Optionnel — affiche °C extérieurs",
     "label": "Étiquette",
