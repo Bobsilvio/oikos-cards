@@ -291,7 +291,10 @@
     "startRooms_one": "Start {{count}} room",
     "startRooms_other": "Start {{count}} rooms",
     "startZone": "Start zone",
-    "stopBtn": "Stop"
+    "stopBtn": "Stop",
+    "zonaConfirmMsg": "Zone cleaning can only be used in Customize mode. Switch to customize cleaning?",
+    "zonaConfirmCancel": "Cancel",
+    "zonaConfirmSwitch": "Switch"
   },
   "settings": {
     "groups": {

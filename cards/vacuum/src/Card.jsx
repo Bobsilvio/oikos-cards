@@ -1250,6 +1250,7 @@ export default function VacuumCard() {
   const [selectedRooms, setSelectedRooms] = useState([])
   const [zonaCiclo, setZonaCiclo] = useState(1)
   const [zonaRects, setZonaRects] = useState([{ x: 15, y: 15, w: 60, h: 50 }])
+  const [zonaConfirmOpen, setZonaConfirmOpen] = useState(false)
 
   // Sheet visibility
   const [mainOpen, setMainOpen] = useState(false)
@@ -1676,7 +1677,10 @@ export default function VacuumCard() {
             { id: 'all',  label: t('dreame.scopeAll')  },
             { id: 'zona', label: t('dreame.scopeZona') },
           ].map(({ id, label }) => (
-            <button key={id} onClick={() => setScope(id)} style={{
+            <button key={id} onClick={() => {
+              if (id === 'zona' && cleanGeniusOn) { setZonaConfirmOpen(true); return }
+              setScope(id)
+            }} style={{
               flex: 1, textAlign: 'center', padding: '9px 4px', borderRadius: 10,
               fontSize: 14, fontWeight: scope === id ? 700 : 500, cursor: 'pointer', border: 'none', transition: 'all .18s',
               background: scope === id ? 'var(--bg-card)' : 'transparent',
@@ -1751,6 +1755,23 @@ export default function VacuumCard() {
           </button>
         )}
       </div>
+
+      {/* ── Dialog: zona richiede modalità personalizzata ── */}
+      {zonaConfirmOpen && (
+        <div onClick={() => setZonaConfirmOpen(false)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,.45)', zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24 }}>
+          <div onClick={e => e.stopPropagation()} style={{ background: dark ? '#1c1c1e' : '#fff', borderRadius: 20, padding: '28px 24px 20px', maxWidth: 340, width: '100%', textAlign: 'center' }}>
+            <p style={{ fontSize: 16, fontWeight: 500, color: 'var(--text-primary)', lineHeight: 1.5, margin: '0 0 24px' }}>{t('dreame.zonaConfirmMsg')}</p>
+            <div style={{ display: 'flex', gap: 12 }}>
+              <button onClick={() => setZonaConfirmOpen(false)} style={{ flex: 1, padding: '13px 0', borderRadius: 14, border: 'none', background: dark ? '#3a3a3c' : '#e5e5ea', color: 'var(--text-primary)', fontSize: 15, fontWeight: 600, cursor: 'pointer' }}>{t('dreame.zonaConfirmCancel')}</button>
+              <button onClick={() => {
+                if (cfg.cleanGeniusEntity) callService('select', 'select_option', cfg.cleanGeniusEntity, { option: 'off' })
+                setScope('zona')
+                setZonaConfirmOpen(false)
+              }} style={{ flex: 1, padding: '13px 0', borderRadius: 14, border: 'none', background: '#d4b483', color: '#7a5c2e', fontSize: 15, fontWeight: 700, cursor: 'pointer' }}>{t('dreame.zonaConfirmSwitch')}</button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* ── Sheets ── */}
       <MainSheet
