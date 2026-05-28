@@ -940,13 +940,45 @@ export default function VacuumCard() {
           <img key={mapTs}
             src={`${haHost.current}/api/camera_proxy/${cfg.cameraEntity}?token=${getAttr(cfg.cameraEntity, 'access_token') ?? ''}&t=${mapTs}`}
             alt={t('map.alt')}
-            style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }}
+            style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block', filter: scope === 'room' ? 'brightness(1.35) saturate(0.65)' : 'none', transition: 'filter .25s' }}
             onError={e => { e.currentTarget.style.display = 'none' }}
           />
         ) : (
           <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 12 }}>
             <div style={{ fontSize: 48 }}>🤖</div>
             <div style={{ fontSize: 13, color: '#999' }}>{cfg.name}</div>
+          </div>
+        )}
+        {/* Room overlay on map */}
+        {scope === 'room' && rooms.filter(r => r.name).length > 0 && (
+          <div style={{ position: 'absolute', inset: 0, display: 'flex', flexWrap: 'wrap', alignContent: 'flex-start', gap: 8, padding: '10px 12px', pointerEvents: 'none' }}>
+            {rooms.filter(r => r.name).map(r => {
+              const idx = selectedRooms.indexOf(r.id)
+              const sel = idx >= 0
+              return (
+                <div key={r.id} onClick={() => toggleRoom(r.id)} style={{
+                  position: 'relative', pointerEvents: 'auto',
+                  padding: '7px 13px', borderRadius: 10, cursor: 'pointer',
+                  background: sel ? 'rgba(0,0,0,0.62)' : 'rgba(255,255,255,0.88)',
+                  color: sel ? '#fff' : '#222',
+                  fontSize: 13, fontWeight: 600,
+                  backdropFilter: 'blur(4px)',
+                  boxShadow: '0 2px 8px rgba(0,0,0,.18)',
+                  transition: 'background .15s',
+                }}>
+                  {r.name}
+                  {sel && (
+                    <div style={{
+                      position: 'absolute', top: -8, right: -8,
+                      width: 20, height: 20, borderRadius: '50%',
+                      background: '#5b9cf6', color: 'white',
+                      fontSize: 11, fontWeight: 800,
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    }}>{idx + 1}</div>
+                  )}
+                </div>
+              )
+            })}
           </div>
         )}
         {/* Map overlay buttons */}
@@ -1009,23 +1041,6 @@ export default function VacuumCard() {
           <button onClick={() => setZonaCiclo(p => p >= 3 ? 1 : p + 1)} style={{ width: 48, height: 48, borderRadius: '50%', background: ABG, border: 'none', cursor: 'pointer', fontSize: 15, fontWeight: 800, color: A, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: `0 2px 6px rgba(196,124,24,.18)` }}>
             x{zonaCiclo}
           </button>
-        </div>
-      )}
-
-      {/* ── Room chips ── */}
-      {scope === 'room' && rooms.length > 0 && (
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 7, padding: '10px 16px 0' }}>
-          {rooms.filter(r => r.name).map(r => {
-            const sel = selectedRooms.includes(r.id)
-            return (
-              <button key={r.id} onClick={() => toggleRoom(r.id)} style={{
-                padding: '6px 14px', borderRadius: 20, fontSize: 13, cursor: 'pointer', border: `2px solid ${sel ? A : 'transparent'}`,
-                background: sel ? '#fff5e6' : '#f5f5f5', color: sel ? A : '#555', fontWeight: sel ? 700 : 500,
-              }}>
-                {r.name}
-              </button>
-            )
-          })}
         </div>
       )}
 
