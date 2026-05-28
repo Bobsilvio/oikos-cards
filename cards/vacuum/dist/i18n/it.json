@@ -36,10 +36,10 @@
     "high": "Alta",
     "by_area": "Per area",
     "by_time": "Per tempo",
-    "by_rooms": "Per stanza",
+    "by_room": "Per stanza",
     "by_area_desc": "Lava il mocio ogni tot metro quadro pulito",
     "by_time_desc": "Lava il mocio ogni tot minuti di pulizia",
-    "by_rooms_desc": "Lava il mocio al termine di ogni stanza"
+    "by_room_desc": "Lava il mocio al termine di ogni stanza"
   },
   "route": {
     "intensive": "Intensivo",

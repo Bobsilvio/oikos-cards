@@ -36,10 +36,10 @@
     "high": "High",
     "by_area": "By area",
     "by_time": "By time",
-    "by_rooms": "By room",
+    "by_room": "By room",
     "by_area_desc": "Washes mop pad after cleaning a set area",
     "by_time_desc": "Washes mop pad after a set cleaning time",
-    "by_rooms_desc": "Washes mop pad after each room"
+    "by_room_desc": "Washes mop pad after each room"
   },
   "route": {
     "intensive": "Intensive",
