@@ -765,9 +765,9 @@ function BaseSheet({ open, onClose, cfg, t, callService, getState,
             <div style={{ background: 'var(--bg-elevated)', minHeight: '100%', paddingBottom: 32 }}>
               <SettingsHeader title={t('dreame.baseSettingsTitle')} onBack={() => setPage('main')}/>
 
-              {/* Card 1: Svuotamento automatico */}
-              <div style={cardSt}>
-                <div onClick={() => setSvuotOpen(true)} style={{ ...itemSt(false), cursor: 'pointer' }}>
+              {/* Card 1: Svuotamento automatico — disabilitato, nessun sensore */}
+              <div style={{ ...cardSt, opacity: 0.35 }}>
+                <div style={{ ...itemSt(false) }}>
                   <div style={rowSt}>
                     <span style={{ fontSize: 16, fontWeight: 600, color: 'var(--text-primary)' }}>{t('dreame.svuotAutoTitle')}</span>
                     <span style={{ fontSize: 14, color: A, whiteSpace: 'nowrap' }}>{svuotLabel} ›</span>
