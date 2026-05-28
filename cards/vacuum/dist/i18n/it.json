@@ -291,7 +291,10 @@
     "startRooms_one": "Avvia {{count}} stanza",
     "startRooms_other": "Avvia {{count}} stanze",
     "startZone": "Avvia zona",
-    "stopBtn": "Termina"
+    "stopBtn": "Termina",
+    "zonaConfirmMsg": "La pulizia a zone può essere utilizzata solo in modalità Personalizzata. Passare alla pulizia personalizzata?",
+    "zonaConfirmCancel": "Annulla",
+    "zonaConfirmSwitch": "Interruttore"
   },
   "settings": {
     "groups": {
