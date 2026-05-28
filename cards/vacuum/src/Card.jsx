@@ -476,12 +476,26 @@ function cPctToImgPx(pctX, pctY, cw, ch, iw, ih) {
   else               { rH = ch; rW = ch * imgAR;  oY = 0;           oX = (cw - rW) / 2 }
   return [(pctX / 100 * cw - oX) / rW * iw, (pctY / 100 * ch - oY) / rH * ih]
 }
-// Converte pixel immagine in coordinate vacuum usando calibration_points HA
 function imgPxToVac(px, py, cal) {
   const [p0, p1, p2] = cal
   const sX = (p1.map.x - p0.map.x) / (p1.vacuum.x - p0.vacuum.x || 1000)
   const sY = (p2.map.y - p0.map.y) / (p2.vacuum.y - p0.vacuum.y || 1000)
   return [(px - p0.map.x) / sX + p0.vacuum.x, (py - p0.map.y) / sY + p0.vacuum.y]
+}
+// Coordinate vacuum → pixel immagine (inverso di imgPxToVac)
+function vacToImgPx(vx, vy, cal) {
+  const [p0, p1, p2] = cal
+  const sX = (p1.map.x - p0.map.x) / (p1.vacuum.x - p0.vacuum.x || 1000)
+  const sY = (p2.map.y - p0.map.y) / (p2.vacuum.y - p0.vacuum.y || 1000)
+  return [(vx - p0.vacuum.x) * sX + p0.map.x, (vy - p0.vacuum.y) * sY + p0.map.y]
+}
+// Pixel immagine → coordinate container in px (inverso di cPctToImgPx)
+function imgPxToCont(px, py, cw, ch, iw, ih) {
+  const imgAR = iw / ih, conAR = cw / ch
+  let rW, rH, oX, oY
+  if (imgAR > conAR) { rW = cw; rH = cw / imgAR; oX = 0; oY = (ch - rH) / 2 }
+  else               { rH = ch; rW = ch * imgAR;  oY = 0; oX = (cw - rW) / 2 }
+  return [px / iw * rW + oX, py / ih * rH + oY]
 }
 
 function BaseSheet({ open, onClose, cfg, t, callService, getState,
@@ -1142,15 +1156,53 @@ export default function VacuumCard() {
             onUpdate={upd => setZonaRects(prev => prev.map((x, i) => i === idx ? upd : x))}
             onRemove={() => setZonaRects(prev => prev.filter((_, i) => i !== idx))}/>
         ))}
-        {scope === 'room' && selectedRooms.length > 0 && (
-          <div style={{ position: 'absolute', top: 10, left: 0, right: 0, display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 6, padding: '0 12px', pointerEvents: 'none' }}>
-            {rooms.filter(r => selectedRooms.indexOf(Number(r.id)) >= 0).map(r => (
-              <span key={r.id} style={{ background: A, color: 'white', padding: '4px 12px', borderRadius: 14, fontSize: 12, fontWeight: 700, boxShadow: '0 2px 8px rgba(0,0,0,.3)' }}>
-                {r.name}
-              </span>
-            ))}
-          </div>
-        )}
+        {scope === 'room' && (() => {
+          const segs = cfg.cameraEntity ? (getAttr(cfg.cameraEntity, 'segments') || null) : null
+          const cal  = cfg.cameraEntity ? (getAttr(cfg.cameraEntity, 'calibration_points') || []) : []
+          const natW = (mapImgRef.current?.naturalWidth  > 0 ? mapImgRef.current.naturalWidth  : null) ?? imgNatSize.current?.[0] ?? 0
+          const natH = (mapImgRef.current?.naturalHeight > 0 ? mapImgRef.current.naturalHeight : null) ?? imgNatSize.current?.[1] ?? 0
+          const { width: cw, height: ch } = mapContainerRef.current?.getBoundingClientRect() ?? { width: 375, height: 390 }
+
+          if (segs && cal.length >= 3 && natW > 0 && natH > 0) {
+            // Overlay SVG con poligoni stanza cliccabili
+            const segList = Array.isArray(segs) ? segs : Object.values(segs)
+            return (
+              <svg style={{ position: 'absolute', inset: 0, width: cw, height: ch, cursor: 'pointer' }}
+                   viewBox={`0 0 ${cw} ${ch}`}>
+                {segList.map(seg => {
+                  if (!seg?.outline?.length) return null
+                  const rid = Number(seg.id)
+                  const sel = selectedRooms.indexOf(rid) >= 0
+                  const pts = seg.outline.map(([vx, vy]) => {
+                    const [ipx, ipy] = vacToImgPx(vx, vy, cal)
+                    return imgPxToCont(ipx, ipy, cw, ch, natW, natH)
+                  })
+                  return (
+                    <polygon key={rid}
+                      points={pts.map(([x, y]) => `${x},${y}`).join(' ')}
+                      fill={sel ? 'rgba(245,158,11,0.32)' : 'rgba(255,255,255,0.04)'}
+                      stroke={sel ? 'rgba(245,158,11,0.9)' : 'rgba(255,255,255,0.15)'}
+                      strokeWidth={sel ? 2.5 : 1}
+                      style={{ transition: 'fill .18s, stroke .18s' }}
+                      onPointerDown={e => { e.stopPropagation(); toggleRoom(rid) }}
+                    />
+                  )
+                })}
+              </svg>
+            )
+          }
+          // Fallback: badge nomi stanze selezionate
+          if (selectedRooms.length === 0) return null
+          return (
+            <div style={{ position: 'absolute', top: 10, left: 0, right: 0, display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 6, padding: '0 12px', pointerEvents: 'none' }}>
+              {rooms.filter(r => selectedRooms.indexOf(Number(r.id)) >= 0).map(r => (
+                <span key={r.id} style={{ background: A, color: 'white', padding: '4px 12px', borderRadius: 14, fontSize: 12, fontWeight: 700, boxShadow: '0 2px 8px rgba(0,0,0,.3)' }}>
+                  {r.name}
+                </span>
+              ))}
+            </div>
+          )
+        })()}
       </div>
 
       {/* ── Room pill row ── */}
