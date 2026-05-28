@@ -1286,11 +1286,11 @@ export default function VacuumCard() {
           if (roomsAttr) {
             const arr = Array.isArray(roomsAttr) ? roomsAttr : Object.values(roomsAttr)
             roomList = arr.filter(r => r.x0 !== undefined && r.x1 !== undefined && r.visibility !== 'Hidden')
-              .map(r => ({ id: Number(r.room_id ?? r.id), x0: r.x0, y0: r.y0, x1: r.x1, y1: r.y1, outline: null }))
+              .map(r => ({ id: Number(r.room_id ?? r.id), x0: r.x0, y0: r.y0, x1: r.x1, y1: r.y1, cx: r.x ?? (r.x0+r.x1)/2, cy: r.y ?? (r.y0+r.y1)/2, outline: null }))
           } else if (segsAttr) {
             const arr = Array.isArray(segsAttr) ? segsAttr : Object.values(segsAttr)
             roomList = arr.filter(s => s?.outline?.length > 0)
-              .map(s => ({ id: Number(s.id), x0: null, y0: null, x1: null, y1: null, outline: s.outline }))
+              .map(s => ({ id: Number(s.id), x0: null, y0: null, x1: null, y1: null, cx: s.x ?? null, cy: s.y ?? null, outline: s.outline }))
           }
 
           // Nessun dato mappa o immagine non ancora caricata → fallback badge
@@ -1336,35 +1336,59 @@ export default function VacuumCard() {
             return [(vx + 10000) / 20000 * natW, (vy + 10000) / 20000 * natH]
           }
 
+          const mkPts = (rm) => rm.outline
+            ? rm.outline.map(([vx, vy]) => vacToImg(vx, vy))
+            : [vacToImg(rm.x0, rm.y0), vacToImg(rm.x1, rm.y0), vacToImg(rm.x1, rm.y1), vacToImg(rm.x0, rm.y1)]
+
+          const mkCenter = (rm, pts) => {
+            if (rm.cx !== null && rm.cy !== null) return vacToImg(rm.cx, rm.cy)
+            const xs = pts.map(([x]) => x), ys = pts.map(([,y]) => y)
+            return [(Math.min(...xs)+Math.max(...xs))/2, (Math.min(...ys)+Math.max(...ys))/2]
+          }
+
           // SVG viewBox = dimensioni immagine reale + preserveAspectRatio="xMidYMid meet"
           // corrisponde esattamente a objectFit:contain → nessuna conversione extra
+          const unsel = roomList.filter(rm => selectedRooms.indexOf(rm.id) < 0)
+          const sel   = roomList.filter(rm => selectedRooms.indexOf(rm.id) >= 0)
           return (
             <svg style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}
                  viewBox={`0 0 ${natW} ${natH}`}
                  preserveAspectRatio="xMidYMid meet">
-              {roomList.map(rm => {
-                const rid = rm.id
-                const sel = selectedRooms.indexOf(rid) >= 0
-                let pts
-                if (rm.outline) {
-                  pts = rm.outline.map(([vx, vy]) => vacToImg(vx, vy))
-                } else {
-                  pts = [
-                    vacToImg(rm.x0, rm.y0),
-                    vacToImg(rm.x1, rm.y0),
-                    vacToImg(rm.x1, rm.y1),
-                    vacToImg(rm.x0, rm.y1),
-                  ]
-                }
+              {/* Non-selezionate: bordo sottile, no fill */}
+              {unsel.map(rm => {
+                const pts = mkPts(rm)
                 return (
-                  <polygon key={rid}
-                    points={pts.map(([x, y]) => `${x},${y}`).join(' ')}
-                    fill={sel ? 'rgba(245,158,11,0.32)' : 'rgba(255,255,255,0.04)'}
-                    stroke={sel ? 'rgba(245,158,11,0.9)' : 'rgba(255,255,255,0.15)'}
-                    strokeWidth={sel ? 2.5 : 1}
-                    style={{ transition: 'fill .18s, stroke .18s', touchAction: 'none' }}
-                    onPointerDown={e => { e.stopPropagation(); toggleRoom(rid) }}
+                  <polygon key={rm.id}
+                    points={pts.map(([x,y]) => `${x},${y}`).join(' ')}
+                    fill="rgba(255,255,255,0.06)"
+                    stroke="rgba(255,255,255,0.35)"
+                    strokeWidth={1.5}
+                    style={{ touchAction: 'none' }}
+                    onPointerDown={e => { e.stopPropagation(); toggleRoom(rm.id) }}
                   />
+                )
+              })}
+              {/* Selezionate: fill blu + bordo + badge numerato */}
+              {sel.map(rm => {
+                const pts = mkPts(rm)
+                const [cx, cy] = mkCenter(rm, pts)
+                const idx = selectedRooms.indexOf(rm.id) + 1
+                return (
+                  <g key={rm.id}>
+                    <polygon
+                      points={pts.map(([x,y]) => `${x},${y}`).join(' ')}
+                      fill="rgba(37,99,235,0.38)"
+                      stroke="rgba(37,99,235,0.95)"
+                      strokeWidth={2.5}
+                      style={{ touchAction: 'none' }}
+                      onPointerDown={e => { e.stopPropagation(); toggleRoom(rm.id) }}
+                    />
+                    <circle cx={cx} cy={cy} r={14} fill="rgba(37,99,235,1)" pointerEvents="none"/>
+                    <text x={cx} y={cy} textAnchor="middle" dominantBaseline="central"
+                      style={{ fontSize: 14, fontWeight: 700, fill: 'white', pointerEvents: 'none', userSelect: 'none' }}>
+                      {idx}
+                    </text>
+                  </g>
                 )
               })}
             </svg>
