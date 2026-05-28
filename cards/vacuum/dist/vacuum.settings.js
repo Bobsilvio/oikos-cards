@@ -53,6 +53,7 @@ const { jsxs: c, jsx: a } = window.__OIKOS_SDK__.jsxRuntime, w = "oikos-card-cfg
   obstacleEntity: "switch.ambrogio_obstacle_avoidance",
   resumeEntity: "switch.ambrogio_resume_cleaning",
   cleanGeniusEntity: "select.ambrogio_cleangenius",
+  cleanGeniusModeEntity: "select.ambrogio_cleangenius_mode",
   deepCleanEntity: "switch.ambrogio_intensive_carpet_cleaning",
   maxSuctionEntity: "switch.ambrogio_max_suction_power",
   humidityEntity: "number.ambrogio_wetness_level",
@@ -149,6 +150,7 @@ function T(n) {
     obstacleEntity: s("obstacle_avoidance"),
     resumeEntity: s("resume_cleaning"),
     cleanGeniusEntity: r("cleangenius"),
+    cleanGeniusModeEntity: r("cleangenius_mode"),
     deepCleanEntity: s("intensive_carpet_cleaning"),
     maxSuctionEntity: s("max_suction_power"),
     totalAreaEntity: t("total_cleaned_area"),
@@ -278,7 +280,7 @@ function K({ saved: n, onClick: t, saveLabel: r, savedLabel: s }) {
     }
   );
 }
-function z({ rooms: n, onChange: t, dark: r, idLabel: s, nameLabel: y, idPlaceholder: m, namePlaceholder: u, addLabel: o, hintText: p }) {
+function M({ rooms: n, onChange: t, dark: r, idLabel: s, nameLabel: y, idPlaceholder: m, namePlaceholder: u, addLabel: o, hintText: p }) {
   const g = (i, l, e) => {
     const h = n.map((E, d) => d === i ? { ...E, [l]: l === "id" ? parseInt(e) || 0 : e } : E);
     t(h);
@@ -381,7 +383,7 @@ function z({ rooms: n, onChange: t, dark: r, idLabel: s, nameLabel: y, idPlaceho
     /* @__PURE__ */ a("p", { style: { fontSize: 10, color: "var(--text-muted)", lineHeight: 1.5, marginTop: 2 }, children: p })
   ] });
 }
-function A({ dark: n }) {
+function z({ dark: n }) {
   const [t, r] = v(S), [s, y] = v(!1), [m, u] = v(null), { t: o } = I("card-vacuum"), p = (i, l) => {
     r((e) => ({ ...e, [i]: l })), y(!1);
   }, g = (i) => {
@@ -471,7 +473,7 @@ function A({ dark: n }) {
         marginBottom: 8
       }, children: o("settings.groups.rooms") }),
       /* @__PURE__ */ a(
-        z,
+        M,
         {
           rooms: t.rooms || [],
           onChange: (i) => {
@@ -491,5 +493,5 @@ function A({ dark: n }) {
   ] });
 }
 export {
-  A as default
+  z as default
 };

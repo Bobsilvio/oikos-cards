@@ -198,7 +198,7 @@ function HumSlider({ value, onChange }) {
           {ticks.map(t => (
             <div key={t.pct} style={{ position: 'absolute', top: '50%', left: `${t.pct}%`, transform: 'translate(-50%,-50%)', width: 3, height: 11, borderRadius: 1.5, background: 'rgba(0,0,0,.18)', pointerEvents: 'none', zIndex: 2 }}/>
           ))}
-          <div style={{ position: 'absolute', top: -28, left: `${pct}%`, transform: 'translateX(-50%)', width: 36, height: 36, borderRadius: '50%', background: ABG, border: `2.5px solid ${A}`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12, fontWeight: 700, color: A, pointerEvents: 'none' }}>
+          <div style={{ position: 'absolute', top: -10, left: `${pct}%`, transform: 'translate(-50%, -50%)', width: 22, height: 22, borderRadius: '50%', background: A, border: `2px solid ${A}`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 10, fontWeight: 700, color: 'white', pointerEvents: 'none' }}>
             {value}
           </div>
         </div>
@@ -275,7 +275,7 @@ function RangeSlider({ value, min, max, onChange }) {
     <div style={{ position: 'relative', padding: '22px 0 6px', margin: '0 14px' }}>
       <div style={{ height: 4, borderRadius: 2, background: 'var(--border-medium)', position: 'relative' }}>
         <div style={{ height: '100%', borderRadius: 2, background: A, position: 'absolute', left: 0, top: 0, width: `${pct}%`, pointerEvents: 'none' }}/>
-        <div style={{ position: 'absolute', top: -24, left: `${pct}%`, transform: 'translateX(-50%)', width: 32, height: 32, borderRadius: '50%', background: ABG, border: `2px solid ${A}`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 700, color: A, pointerEvents: 'none' }}>
+        <div style={{ position: 'absolute', top: -10, left: `${pct}%`, transform: 'translate(-50%, -50%)', width: 22, height: 22, borderRadius: '50%', background: A, border: `2px solid ${A}`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 10, fontWeight: 700, color: 'white', pointerEvents: 'none' }}>
           {value}
         </div>
       </div>
@@ -913,7 +913,7 @@ function MainSheet({ open, onClose, cfg, t, callService, getState,
                 <div>
                   <SuctionRow suction={suction} onSelect={onSuction} t={t}/>
                   <MopSection humidity={humidity} onHumChange={onHumidity} onFrequenza={() => setFreqSheetOpen(true)} freqSel={rewashFreqSel} t={t}/>
-                  <PercorsoRow route={route} onSelect={onRoute} mop={true} t={t}/>
+                  <PercorsoRow route={route} onSelect={onRoute} mop={false} t={t}/>
                 </div>
               )}
               {/* Mocio dopo sub-panel */}
@@ -949,12 +949,12 @@ function MainSheet({ open, onClose, cfg, t, callService, getState,
                 <div style={{ fontSize: 17, fontWeight: 700, color: 'var(--text-primary)', marginBottom: 16 }}>{t('cleaning.geniusDesc')}</div>
                 <div style={{ display: 'flex', gap: 12 }}>
                   {[
-                    { id: 'sweeping_and_mopping',   Ico: SvgAspiraLava, label: t('cleanMode.sweeping_and_mopping')   },
-                    { id: 'mopping_after_sweeping',  Ico: SvgMocioDopo,  label: t('cleanMode.mopping_after_sweeping')  },
+                    { id: 'vacuum_and_mop',     Ico: SvgAspiraLava, label: t('cleanMode.sweeping_and_mopping')   },
+                    { id: 'mop_after_vacuum',   Ico: SvgMocioDopo,  label: t('cleanMode.mopping_after_sweeping')  },
                   ].map(({ id, Ico, label }) => {
-                    const active = getState(cfg.cleaningModeEntity) === id
+                    const active = getState(cfg.cleanGeniusModeEntity) === id
                     return (
-                      <div key={id} onClick={() => cfg.cleaningModeEntity && callService('select', 'select_option', cfg.cleaningModeEntity, { option: id })}
+                      <div key={id} onClick={() => cfg.cleanGeniusModeEntity && callService('select', 'select_option', cfg.cleanGeniusModeEntity, { option: id })}
                         style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10, padding: '16px 8px 20px', borderRadius: 16, background: active ? 'var(--bg-card)' : 'var(--bg-elevated)', cursor: 'pointer', position: 'relative', border: `2px solid ${active ? A : 'transparent'}`, transition: 'all .2s' }}>
                         <div style={{ color: active ? A : 'var(--text-secondary)' }}><Ico/></div>
                         <span style={{ fontSize: 11.5, textAlign: 'center', color: active ? 'var(--text-primary)' : 'var(--text-muted)', lineHeight: 1.4, fontWeight: active ? 700 : 500 }}>{label}</span>
@@ -964,11 +964,17 @@ function MainSheet({ open, onClose, cfg, t, callService, getState,
                   })}
                 </div>
               </div>
-              {cfg.deepCleanEntity && (
+              {cfg.cleanGeniusEntity && (
                 <div style={{ background: 'var(--bg-card)', borderRadius: 18, padding: '14px 16px', marginTop: 12, boxShadow: '0 2px 12px rgba(0,0,0,.06)' }}>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                     <div style={{ fontSize: 17, fontWeight: 700, color: 'var(--text-primary)' }}>{t('dreame.geniusDeepTitle')}</div>
-                    <IosToggle on={getState(cfg.deepCleanEntity) === 'on'} onToggle={() => callService('switch', 'toggle', cfg.deepCleanEntity)}/>
+                    <IosToggle on={getState(cfg.cleanGeniusEntity) === 'deep_cleaning'}
+                      onToggle={() => {
+                        if (!cfg.cleanGeniusEntity) return
+                        const cur = getState(cfg.cleanGeniusEntity)
+                        const next = cur === 'deep_cleaning' ? 'routine_cleaning' : 'deep_cleaning'
+                        callService('select', 'select_option', cfg.cleanGeniusEntity, { option: next })
+                      }}/>
                   </div>
                   <div style={{ marginTop: 10, fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.6 }}>{t('dreame.geniusDeepDesc')}</div>
                 </div>
