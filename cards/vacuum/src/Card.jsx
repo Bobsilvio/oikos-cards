@@ -460,9 +460,19 @@ function ImpostazioniSheet({ open, onClose, onMopExtend, onBase, cfg, t, callSer
   const isOn = (id) => id ? getState(id) === 'on' : false
   const tog  = (id) => id && callService('switch', 'toggle', id)
 
-  const navItems = [
-    { label: t('dreame.mopExtendTitle'), onClick: () => { onClose(); setTimeout(onMopExtend, 140) } },
-    { label: t('dreame.baseTitle'),      onClick: () => { onClose(); setTimeout(onBase, 140) } },
+  const menuCard1 = [
+    { label: t('dreame.menuCronologia'),  disabled: true  },
+    { label: t('dreame.menuProgrammata'), disabled: true  },
+    { label: t('dreame.menuTappeti'),     disabled: true  },
+    { label: t('dreame.menuPavimento'),   disabled: true  },
+    { label: t('dreame.mopExtendTitle'),  disabled: false, onClick: () => { onClose(); setTimeout(onMopExtend, 140) } },
+    { label: t('dreame.baseTitle'),       disabled: false, onClick: () => { onClose(); setTimeout(onBase, 140) } },
+  ]
+  const menuCard2 = [
+    { label: t('dreame.menuOstacoli'),   disabled: true },
+    { label: t('dreame.menuLingua'),     disabled: true },
+    { label: t('dreame.menuFotocamera'), disabled: true },
+    { label: t('dreame.menuPiuFunzioni'),disabled: true },
   ]
   const switchItems = [
     cfg.dndEntity             && { label: t('switches.dnd'),         e: cfg.dndEntity             },
@@ -473,31 +483,44 @@ function ImpostazioniSheet({ open, onClose, onMopExtend, onBase, cfg, t, callSer
     cfg.resumeEntity          && { label: t('switches.resume'),      e: cfg.resumeEntity          },
   ].filter(Boolean)
 
+  const MenuItem = ({ label, disabled, onClick, border }) => (
+    <div onClick={disabled ? undefined : onClick}
+      style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px',
+        borderTop: border ? '1px solid var(--border)' : 'none',
+        cursor: disabled ? 'default' : 'pointer',
+        opacity: disabled ? 0.35 : 1 }}>
+      <span style={{ fontSize: 16, color: 'var(--text-primary)' }}>{label}</span>
+      <span style={{ color: 'var(--text-muted)', fontSize: 17 }}>›</span>
+    </div>
+  )
+
   return (
     <FullSheet open={open} onClose={onClose} zIndex={1000}>
       <div style={{ flex: 1, overflowY: 'auto', minHeight: 0 }}>
-        <div style={{ background: 'var(--bg-elevated)', minHeight: '100%' }}>
+        <div style={{ background: 'var(--bg-elevated)', minHeight: '100%', paddingBottom: 32 }}>
           <SettingsHeader title={t('dreame.impostazioniTitle')} onBack={onClose}/>
           {/* Search bar */}
           <div style={{ margin: '12px 14px 0', background: 'var(--bg-card)', borderRadius: 12, padding: '10px 14px', display: 'flex', alignItems: 'center', gap: 10 }}>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" strokeWidth="2.2" strokeLinecap="round">
               <circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
             </svg>
-            <span style={{ fontSize: 15, color: 'var(--text-muted)' }}>Cerca</span>
+            <span style={{ fontSize: 15, color: 'var(--text-muted)' }}>{t('dreame.cerca')}</span>
           </div>
-          {/* Navigazione */}
+          {/* Card 1 */}
           <div style={{ background: 'var(--bg-card)', borderRadius: 16, margin: '12px 14px 0', overflow: 'hidden' }}>
-            {navItems.map((item, i) => (
-              <div key={item.label} onClick={item.onClick}
-                style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px', borderTop: i > 0 ? '1px solid var(--border)' : 'none', cursor: 'pointer' }}>
-                <span style={{ fontSize: 16, color: 'var(--text-primary)' }}>{item.label}</span>
-                <span style={{ color: 'var(--text-muted)', fontSize: 17 }}>›</span>
-              </div>
+            {menuCard1.map((item, i) => (
+              <MenuItem key={item.label} label={item.label} disabled={item.disabled} onClick={item.onClick} border={i > 0}/>
+            ))}
+          </div>
+          {/* Card 2 */}
+          <div style={{ background: 'var(--bg-card)', borderRadius: 16, margin: '12px 14px 0', overflow: 'hidden' }}>
+            {menuCard2.map((item, i) => (
+              <MenuItem key={item.label} label={item.label} disabled={item.disabled} border={i > 0}/>
             ))}
           </div>
           {/* Switch rapidi */}
           {switchItems.length > 0 && (
-            <div style={{ background: 'var(--bg-card)', borderRadius: 16, margin: '12px 14px 28px', overflow: 'hidden' }}>
+            <div style={{ background: 'var(--bg-card)', borderRadius: 16, margin: '12px 14px 0', overflow: 'hidden' }}>
               {switchItems.map((item, i) => (
                 <div key={item.e}
                   style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 16px', borderTop: i > 0 ? '1px solid var(--border)' : 'none' }}>
@@ -805,8 +828,8 @@ function BaseSheet({ open, onClose, cfg, t, callService, getState,
                 </div>
               </div>
 
-              {/* Card 5: Pulisci manualmente */}
-              <div style={{ ...cardSt, marginBottom: 0 }}>
+              {/* Card 5: Pulisci manualmente — nessun sensore, disabilitato */}
+              <div style={{ ...cardSt, marginBottom: 0, opacity: 0.35 }}>
                 <div style={{ ...itemSt(false), display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                   <span style={{ fontSize: 16, fontWeight: 600, color: 'var(--text-primary)', flex: 1 }}>{t('dreame.cleanWashBase')}</span>
                   <span style={{ fontSize: 17, color: 'var(--text-muted)' }}>›</span>
