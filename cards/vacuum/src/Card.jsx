@@ -467,6 +467,23 @@ const WASHQTY_UI = { water_saving: 'low', daily: 'medium', deep: 'high' }
 const WASHTEMP_HA = { cold: 'normal', warm: 'warm', hot: 'hot' }
 const WASHTEMP_UI = { normal: 'cold', mild: 'cold', warm: 'warm', hot: 'hot' }
 
+// ── Zona coordinate helpers ───────────────────────────────────────────────────
+// Converte posizione % nella container in pixel nell'immagine reale (objectFit:contain)
+function cPctToImgPx(pctX, pctY, cw, ch, iw, ih) {
+  const imgAR = iw / ih, conAR = cw / ch
+  let rW, rH, oX, oY
+  if (imgAR > conAR) { rW = cw; rH = cw / imgAR; oX = 0;           oY = (ch - rH) / 2 }
+  else               { rH = ch; rW = ch * imgAR;  oY = 0;           oX = (cw - rW) / 2 }
+  return [(pctX / 100 * cw - oX) / rW * iw, (pctY / 100 * ch - oY) / rH * ih]
+}
+// Converte pixel immagine in coordinate vacuum usando calibration_points HA
+function imgPxToVac(px, py, cal) {
+  const [p0, p1, p2] = cal
+  const sX = (p1.map.x - p0.map.x) / (p1.vacuum.x - p0.vacuum.x || 1000)
+  const sY = (p2.map.y - p0.map.y) / (p2.vacuum.y - p0.vacuum.y || 1000)
+  return [(px - p0.map.x) / sX + p0.vacuum.x, (py - p0.map.y) / sY + p0.vacuum.y]
+}
+
 function BaseSheet({ open, onClose, cfg, t, callService, getState,
   svuotOpen, setSvuotOpen, svuotSel, setSvuotSel,
   lavRipOpen, setLavRipOpen, lavRipSel, setLavRipSel,
@@ -908,6 +925,8 @@ export default function VacuumCard() {
   const [cfg] = useState(getVacuumConfig)
   const haHost = useRef(getHAConfig().host)
   const mapImgRef = useRef(null)
+  const mapContainerRef = useRef(null)
+  const imgNatSize = useRef(null)
 
   // Scope + rooms
   const [scope, setScope] = useState('all')
@@ -994,6 +1013,24 @@ export default function VacuumCard() {
       cmd('start')
     } else if (scope === 'room' && selectedRooms.length > 0) {
       callService('dreame_vacuum', 'vacuum_clean_segment', { entity_id: cfg.vacuumEntity, segments: selectedRooms, repeats: 1 })
+    } else if (scope === 'zona' && zonaRects.length > 0) {
+      const container = mapContainerRef.current
+      const ns = imgNatSize.current
+      const cal = cfg.cameraEntity ? (getAttr(cfg.cameraEntity, 'calibration_points') || []) : []
+      if (container && ns && cal.length >= 3) {
+        const { width: cw, height: ch } = container.getBoundingClientRect()
+        const zones = zonaRects.map(r => {
+          const [x0i, y0i] = cPctToImgPx(r.x,       r.y,       cw, ch, ns[0], ns[1])
+          const [x1i, y1i] = cPctToImgPx(r.x + r.w, r.y + r.h, cw, ch, ns[0], ns[1])
+          const [x0v, y0v] = imgPxToVac(x0i, y0i, cal)
+          const [x1v, y1v] = imgPxToVac(x1i, y1i, cal)
+          return [Math.round(x0v), Math.round(y0v), Math.round(x1v), Math.round(y1v)]
+        })
+        callService('dreame_vacuum', 'vacuum_clean_zone', { entity_id: cfg.vacuumEntity, zone: zones, repeats: zonaCiclo })
+      } else {
+        // fallback senza calibrazione: avvio pulizia normale
+        cmd('start')
+      }
     }
   }
 
@@ -1048,13 +1085,14 @@ export default function VacuumCard() {
       </div>
 
       {/* ── Map ── */}
-      <div style={{ marginTop: 8, position: 'relative', height: 390, background: 'var(--bg-elevated)', overflow: 'hidden' }}>
+      <div ref={mapContainerRef} style={{ marginTop: 8, position: 'relative', height: 390, background: 'var(--bg-elevated)', overflow: 'hidden' }}>
         {cfg.cameraEntity ? (
           <img ref={mapImgRef}
             alt={t('map.alt')}
             style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block',
               filter: scope === 'room' ? 'brightness(0.85) saturate(0.5)' : scope === 'zona' ? 'brightness(0.55) saturate(0.2)' : 'none',
               transition: 'filter .25s' }}
+            onLoad={e => { imgNatSize.current = [e.currentTarget.naturalWidth, e.currentTarget.naturalHeight] }}
             onError={e => { e.currentTarget.style.opacity = '0' }}
           />
         ) : (
