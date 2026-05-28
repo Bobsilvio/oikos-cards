@@ -51,6 +51,7 @@ const { jsxs: d, jsx: r } = window.__OIKOS_SDK__.jsxRuntime, x = "oikos-card-cfg
   resumeEntity: "switch.ambrogio_resume_cleaning",
   cleanGeniusEntity: "select.ambrogio_cleangenius",
   deepCleanEntity: "switch.ambrogio_intensive_carpet_cleaning",
+  humidityEntity: "number.ambrogio_mop_pad_humidity",
   mopPadLifeEntity: "",
   mopPadLifeDaysEntity: "",
   silverIonEntity: "",
@@ -105,6 +106,7 @@ function T(n) {
     filterDaysEntity: t("filter_time_left"),
     sensorDirtyEntity: t("sensor_dirty_left"),
     sensorDirtyDaysEntity: t("sensor_dirty_time_left"),
+    humidityEntity: `number.${n}_mop_pad_humidity`,
     mopPadLifeEntity: "",
     mopPadLifeDaysEntity: "",
     silverIonEntity: "",
@@ -268,7 +270,7 @@ function z({ saved: n, onClick: t, saveLabel: a, savedLabel: l }) {
     }
   );
 }
-function M({ rooms: n, onChange: t, dark: a, idLabel: l, nameLabel: y, idPlaceholder: u, namePlaceholder: m, addLabel: o, hintText: p }) {
+function $({ rooms: n, onChange: t, dark: a, idLabel: l, nameLabel: y, idPlaceholder: u, namePlaceholder: m, addLabel: o, hintText: p }) {
   const g = (i, s, e) => {
     const h = n.map((E, c) => c === i ? { ...E, [s]: s === "id" ? parseInt(e) || 0 : e } : E);
     t(h);
@@ -371,7 +373,7 @@ function M({ rooms: n, onChange: t, dark: a, idLabel: l, nameLabel: y, idPlaceho
     /* @__PURE__ */ r("p", { style: { fontSize: 10, color: "var(--text-muted)", lineHeight: 1.5, marginTop: 2 }, children: p })
   ] });
 }
-function $({ dark: n }) {
+function M({ dark: n }) {
   const [t, a] = v(S), [l, y] = v(!1), [u, m] = v(null), { t: o } = I("card-vacuum"), p = (i, s) => {
     a((e) => ({ ...e, [i]: s })), y(!1);
   }, g = (i) => {
@@ -461,7 +463,7 @@ function $({ dark: n }) {
         marginBottom: 8
       }, children: o("settings.groups.rooms") }),
       /* @__PURE__ */ r(
-        M,
+        $,
         {
           rooms: t.rooms || [],
           onChange: (i) => {
@@ -481,5 +483,5 @@ function $({ dark: n }) {
   ] });
 }
 export {
-  $ as default
+  M as default
 };

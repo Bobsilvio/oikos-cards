@@ -269,15 +269,20 @@ function SettingsHeader({ title, onBack }) {
 }
 
 // ── FrequenzaSheet ────────────────────────────────────────────────────────────
-function FrequenzaSheet({ open, onClose, selected, onSelect, t }) {
-  const opts = [
-    { id: 'standard', label: t('dreame.freqStandard'), desc: t('dreame.freqStandardDesc') },
+function FrequenzaSheet({ open, onClose, selected, onSelect, t, rewash = false }) {
+  const opts = rewash ? [
+    { id: 'by_area',  label: t('freq.by_area'),  desc: t('freq.by_area_desc')  },
+    { id: 'by_time',  label: t('freq.by_time'),  desc: t('freq.by_time_desc')  },
+    { id: 'by_rooms', label: t('freq.by_rooms'), desc: t('freq.by_rooms_desc') },
+  ] : [
+    { id: 'standard',    label: t('dreame.freqStandard'),    desc: t('dreame.freqStandardDesc')    },
     { id: 'intelligent', label: t('dreame.freqIntelligent'), desc: t('dreame.freqIntelligentDesc') },
-    { id: 'high', label: t('dreame.freqHigh'), desc: t('dreame.freqHighDesc') },
+    { id: 'high',        label: t('dreame.freqHigh'),        desc: t('dreame.freqHighDesc')        },
   ]
+  const title = rewash ? t('dreame.freqLavaggio') : t('dreame.freqTitle')
   return (
     <SubSheet open={open} onClose={onClose}>
-      <div style={{ fontSize: 17, fontWeight: 700, color: 'var(--text-primary)', textAlign: 'center', padding: '0 20px 18px' }}>{t('dreame.freqTitle')}</div>
+      <div style={{ fontSize: 17, fontWeight: 700, color: 'var(--text-primary)', textAlign: 'center', padding: '0 20px 18px' }}>{title}</div>
       {opts.map(o => (
         <RadioOption key={o.id} label={o.label} desc={o.desc} selected={selected === o.id}
           onClick={() => { onSelect(o.id); setTimeout(onClose, 280) }}/>
@@ -715,7 +720,7 @@ function PercorsoRow({ route, onSelect, mop, t }) {
         {t('dreame.percorso')}
         <div style={{ width: 20, height: 20, borderRadius: '50%', border: '1.5px solid #ccc', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12, color: 'var(--text-muted)', cursor: 'pointer' }}>?</div>
       </div>
-      <div style={{ display: 'flex', gap: 8, justifyContent: 'center', marginBottom: 22 }}>
+      <div style={{ display: 'flex', gap: 8, justifyContent: 'center', marginBottom: 22, flexWrap: 'wrap' }}>
         {opts.map(({ id, label, Ico, small }) => (
           <CircleItem key={id} label={label} active={route === id} onClick={() => onSelect(id)} small={small}><Ico/></CircleItem>
         ))}
@@ -725,7 +730,8 @@ function PercorsoRow({ route, onSelect, mop, t }) {
 }
 
 function MopSection({ humidity, onHumChange, onFrequenza, freqSel, t }) {
-  const freqLabel = freqSel === 'high' ? t('dreame.freqHigh') : freqSel === 'intelligent' ? t('dreame.freqIntelligent') : t('dreame.freqStandard')
+  const REWASH_LABELS = { by_area: 'freq.by_area', by_time: 'freq.by_time', by_rooms: 'freq.by_rooms' }
+  const freqLabel = REWASH_LABELS[freqSel] ? t(REWASH_LABELS[freqSel]) : freqSel
   return (
     <div>
       <div style={{ fontSize: 17, fontWeight: 700, color: 'var(--text-primary)', marginBottom: 16 }}>{t('dreame.umidita')}</div>
@@ -740,7 +746,7 @@ function MopSection({ humidity, onHumChange, onFrequenza, freqSel, t }) {
 }
 
 function MainSheet({ open, onClose, cfg, t, callService, getState,
-  suction, onSuction, route, onRoute, humidity, onHumidity, freqSel, onFrequenza, deepClean, onDeepClean,
+  suction, onSuction, route, onRoute, humidity, onHumidity, rewashFreqSel, onRewashFreq, deepClean, onDeepClean,
 }) {
   const [tab, setTab] = useState('custom') // 'custom' | 'genius'
   const [mode, setMode] = useState(0)       // 0=aspira 1=mocio 2=aspira+lava 3=mocio-dopo 4=pers-stanza
@@ -825,7 +831,7 @@ function MainSheet({ open, onClose, cfg, t, callService, getState,
               {/* Mocio sub-panel */}
               {mode === 1 && (
                 <div>
-                  <MopSection humidity={humidity} onHumChange={onHumidity} onFrequenza={() => setFreqSheetOpen(true)} freqSel={freqSel} t={t}/>
+                  <MopSection humidity={humidity} onHumChange={onHumidity} onFrequenza={() => setFreqSheetOpen(true)} freqSel={rewashFreqSel} t={t}/>
                   <PercorsoRow route={route} onSelect={onRoute} mop={true} t={t}/>
                 </div>
               )}
@@ -833,7 +839,7 @@ function MainSheet({ open, onClose, cfg, t, callService, getState,
               {mode === 2 && (
                 <div>
                   <SuctionRow suction={suction} onSelect={onSuction} t={t}/>
-                  <MopSection humidity={humidity} onHumChange={onHumidity} onFrequenza={() => setFreqSheetOpen(true)} freqSel={freqSel} t={t}/>
+                  <MopSection humidity={humidity} onHumChange={onHumidity} onFrequenza={() => setFreqSheetOpen(true)} freqSel={rewashFreqSel} t={t}/>
                   <PercorsoRow route={route} onSelect={onRoute} mop={true} t={t}/>
                 </div>
               )}
@@ -841,7 +847,20 @@ function MainSheet({ open, onClose, cfg, t, callService, getState,
               {mode === 3 && (
                 <div>
                   <SuctionRow suction={suction} onSelect={onSuction} t={t}/>
-                  <MopSection humidity={humidity} onHumChange={onHumidity} onFrequenza={() => setFreqSheetOpen(true)} freqSel={freqSel} t={t}/>
+                  <div style={{ background: 'var(--bg-elevated)', borderRadius: 16, padding: '14px 16px', marginBottom: 24 }}>
+                    <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 12, marginBottom: 8 }}>
+                      <div style={{ flex: 1 }}>
+                        <div style={{ fontSize: 15, fontWeight: 700, color: 'var(--text-primary)' }}>{t('dreame.massimaTitle')}</div>
+                      </div>
+                      <IosToggle on={massima} onToggle={() => {
+                        const next = !massima
+                        setMassima(next)
+                        if (next) onSuction('turbo')
+                      }}/>
+                    </div>
+                    <div style={{ fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.6 }}>{t('dreame.massimaDesc')}</div>
+                  </div>
+                  <MopSection humidity={humidity} onHumChange={onHumidity} onFrequenza={() => setFreqSheetOpen(true)} freqSel={rewashFreqSel} t={t}/>
                   <PercorsoRow route={route} onSelect={onRoute} mop={true} t={t}/>
                 </div>
               )}
@@ -890,7 +909,7 @@ function MainSheet({ open, onClose, cfg, t, callService, getState,
         </div>
       </FullSheet>
 
-      <FrequenzaSheet open={freqSheetOpen} onClose={() => setFreqSheetOpen(false)} selected={freqSel} onSelect={onFrequenza} t={t}/>
+      <FrequenzaSheet open={freqSheetOpen} onClose={() => setFreqSheetOpen(false)} selected={rewashFreqSel} onSelect={onRewashFreq} t={t} rewash={true}/>
     </>
   )
 }
@@ -995,8 +1014,12 @@ export default function VacuumCard() {
   const [mopLegs, setMopLegs] = useState(false)
   const [mopExtFreqOpen, setMopExtFreqOpen] = useState(false)
 
+  // Rewash frequency (auto_rewashing entity)
+  const [rewashFreqSel, setRewashFreqSel] = useState('by_area')
+
   // Cleaning options (mirror to HA via service calls)
   const [humidity, setHumidity] = useState(20)
+  const humDebounce = useRef(null)
   const [suctionLocal, setSuctionLocal] = useState('standard')
   const [routeLocal,   setRouteLocal]   = useState('standard')
 
@@ -1013,11 +1036,15 @@ export default function VacuumCard() {
   const cleanArea = getNum(cfg.cleanedAreaEntity)
   const cleanTime = getNum(cfg.cleaningTimeEntity)
 
-  const suctionHA = get(cfg.suctionLevelEntity)
-  const routeHA   = get(cfg.cleaningRouteEntity)
+  const suctionHA    = get(cfg.suctionLevelEntity)
+  const routeHA      = get(cfg.cleaningRouteEntity)
+  const rewashHA     = get(cfg.autoRewashingEntity)
+  const humHA        = getNum(cfg.humidityEntity)
   // Sync from HA when entity is available; otherwise keep local value
   useEffect(() => { if (suctionHA && suctionHA !== 'unavailable') setSuctionLocal(suctionHA) }, [suctionHA])
   useEffect(() => { if (routeHA   && routeHA   !== 'unavailable') setRouteLocal(routeHA)     }, [routeHA])
+  useEffect(() => { if (rewashHA  && rewashHA  !== 'unavailable') setRewashFreqSel(rewashHA) }, [rewashHA])
+  useEffect(() => { if (humHA !== null) setHumidity(humHA) }, [humHA])
 
   const suction = suctionLocal
   const route   = routeLocal
@@ -1078,8 +1105,16 @@ export default function VacuumCard() {
     setSelectedRooms(p => p.includes(nid) ? p.filter(r => r !== nid) : [...p, nid])
   }
 
-  const onSuction = (val) => { setSuctionLocal(val); cfg.suctionLevelEntity && callService('select', 'select_option', cfg.suctionLevelEntity, { option: val }) }
-  const onRoute   = (val) => { setRouteLocal(val);   cfg.cleaningRouteEntity && callService('select', 'select_option', cfg.cleaningRouteEntity, { option: val }) }
+  const onSuction    = (val) => { setSuctionLocal(val); cfg.suctionLevelEntity && callService('select', 'select_option', cfg.suctionLevelEntity, { option: val }) }
+  const onRoute      = (val) => { setRouteLocal(val);   cfg.cleaningRouteEntity && callService('select', 'select_option', cfg.cleaningRouteEntity, { option: val }) }
+  const onRewashFreq = (val) => { setRewashFreqSel(val); cfg.autoRewashingEntity && callService('select', 'select_option', cfg.autoRewashingEntity, { option: val }) }
+  const onHumidity   = (val) => {
+    setHumidity(val)
+    clearTimeout(humDebounce.current)
+    humDebounce.current = setTimeout(() => {
+      if (cfg.humidityEntity) callService('number', 'set_value', cfg.humidityEntity, { value: val })
+    }, 600)
+  }
 
   const isCharging  = mainState === 'docked' || mainState === 'charging_completed'
   const isCleaning  = mainState === 'cleaning'
@@ -1337,8 +1372,8 @@ export default function VacuumCard() {
         cfg={cfg} t={t} callService={callService} getState={getState}
         suction={suction} onSuction={onSuction}
         route={route} onRoute={onRoute}
-        humidity={humidity} onHumidity={setHumidity}
-        freqSel={freqSel} onFrequenza={setFreqSel}
+        humidity={humidity} onHumidity={onHumidity}
+        rewashFreqSel={rewashFreqSel} onRewashFreq={onRewashFreq}
         deepClean={cfg.deepCleanEntity ? getState(cfg.deepCleanEntity) === 'on' : false}
         onDeepClean={() => cfg.deepCleanEntity && callService('switch', 'toggle', cfg.deepCleanEntity)}
       />
