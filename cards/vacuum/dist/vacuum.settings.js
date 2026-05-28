@@ -36,6 +36,7 @@ const { jsxs: c, jsx: a } = window.__OIKOS_SDK__.jsxRuntime, w = "oikos-card-cfg
   dustCollectionEntity: "sensor.ambrogio_dust_collection",
   drainageEntity: "sensor.ambrogio_drainage_status",
   autoEmptyModeEntity: "select.ambrogio_auto_empty_mode",
+  washingModeEntity: "select.ambrogio_washing_mode",
   mopWashLevelEntity: "select.ambrogio_mop_wash_level",
   autoRewashingEntity: "select.ambrogio_auto_rewashing",
   selfCleanFreqEntity: "select.ambrogio_self_clean_frequency",
@@ -133,6 +134,7 @@ function T(n) {
     dustCollectionEntity: t("dust_collection"),
     drainageEntity: t("drainage_status"),
     autoEmptyModeEntity: r("auto_empty_mode"),
+    washingModeEntity: r("washing_mode"),
     mopWashLevelEntity: r("mop_wash_level"),
     autoRewashingEntity: r("auto_rewashing"),
     selfCleanFreqEntity: r("self_clean_frequency"),
@@ -159,7 +161,7 @@ function T(n) {
     firstCleanEntity: t("first_cleaning_date")
   };
 }
-const { useState: v } = window.__OIKOS_SDK__.React, { motion: x, AnimatePresence: W } = window.__OIKOS_SDK__.framerMotion, { Plus: B, Trash2: P, Wand2: L } = window.__OIKOS_SDK__.icons, { EntityField: R, useT: I } = window.__OIKOS_SDK__, $ = [
+const { useState: v } = window.__OIKOS_SDK__.React, { motion: x, AnimatePresence: W } = window.__OIKOS_SDK__.framerMotion, { Plus: B, Trash2: P, Wand2: L } = window.__OIKOS_SDK__.icons, { EntityField: R, useT: I } = window.__OIKOS_SDK__, M = [
   {
     titleKey: "main",
     fields: [
@@ -256,7 +258,7 @@ const { useState: v } = window.__OIKOS_SDK__.React, { motion: x, AnimatePresence
     ]
   }
 ];
-function K({ saved: n, onClick: t, saveLabel: r, savedLabel: s }) {
+function $({ saved: n, onClick: t, saveLabel: r, savedLabel: s }) {
   return /* @__PURE__ */ a(
     "button",
     {
@@ -280,7 +282,7 @@ function K({ saved: n, onClick: t, saveLabel: r, savedLabel: s }) {
     }
   );
 }
-function M({ rooms: n, onChange: t, dark: r, idLabel: s, nameLabel: y, idPlaceholder: m, namePlaceholder: u, addLabel: o, hintText: p }) {
+function K({ rooms: n, onChange: t, dark: r, idLabel: s, nameLabel: y, idPlaceholder: m, namePlaceholder: u, addLabel: o, hintText: p }) {
   const g = (i, l, e) => {
     const h = n.map((E, d) => d === i ? { ...E, [l]: l === "id" ? parseInt(e) || 0 : e } : E);
     t(h);
@@ -409,7 +411,7 @@ function z({ dark: n }) {
     width: "100%"
   });
   return /* @__PURE__ */ c("div", { style: { display: "flex", flexDirection: "column", gap: 16 }, children: [
-    $.map(({ titleKey: i, fields: l }) => /* @__PURE__ */ c("div", { children: [
+    M.map(({ titleKey: i, fields: l }) => /* @__PURE__ */ c("div", { children: [
       /* @__PURE__ */ a("div", { style: {
         fontSize: 10,
         fontWeight: 700,
@@ -473,7 +475,7 @@ function z({ dark: n }) {
         marginBottom: 8
       }, children: o("settings.groups.rooms") }),
       /* @__PURE__ */ a(
-        M,
+        K,
         {
           rooms: t.rooms || [],
           onChange: (i) => {
@@ -489,7 +491,7 @@ function z({ dark: n }) {
         }
       )
     ] }),
-    /* @__PURE__ */ a(K, { onClick: f, saved: s, saveLabel: o("settings.saveButton"), savedLabel: o("settings.savedButton") })
+    /* @__PURE__ */ a($, { onClick: f, saved: s, saveLabel: o("settings.saveButton"), savedLabel: o("settings.savedButton") })
   ] });
 }
 export {

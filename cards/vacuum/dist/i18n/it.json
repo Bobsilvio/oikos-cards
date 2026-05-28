@@ -333,6 +333,7 @@
       "lowWaterEntity": "Livello acqua",
       "dustCollectionEntity": "Raccolta polvere",
       "autoEmptyModeEntity": "Modalità svuotatura automatica",
+      "washingModeEntity": "Modalità lavaggio (quantità acqua)",
       "mopWashLevelEntity": "Livello lavaggio mocio",
       "autoRewashingEntity": "Frequenza ri-lavaggio mocio",
       "startAutoEmptyEntity": "Avvia svuotatura (button)",

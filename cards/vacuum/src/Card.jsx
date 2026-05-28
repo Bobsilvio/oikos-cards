@@ -518,8 +518,8 @@ const SVUOT_HA  = { off: 'off', standard: 'standard', high: 'high_frequency', lo
 const SVUOT_UI  = { off: 'off', standard: 'standard', high_frequency: 'high', low_frequency: 'low', smart: 'standard' }
 const LAVRIP_HA = { off: 'off', deepOnly: 'in_deep_mode', allModes: 'in_all_modes' }
 const LAVRIP_UI = { off: 'off', in_deep_mode: 'deepOnly', in_all_modes: 'allModes' }
-const WASHQTY_HA = { low: 'water_saving', medium: 'daily', high: 'deep' }
-const WASHQTY_UI = { water_saving: 'low', daily: 'medium', deep: 'high' }
+const WASHQTY_HA = { low: 'light', medium: 'standard', high: 'deep' }
+const WASHQTY_UI = { light: 'low', standard: 'medium', deep: 'high', ultra_washing: 'high' }
 const WASHTEMP_HA = { normal: 'normal', mild: 'mild', warm: 'warm', hot: 'hot' }
 const WASHTEMP_UI = { normal: 'normal', mild: 'mild', warm: 'warm', hot: 'hot' }
 
@@ -624,7 +624,7 @@ function BaseSheet({ open, onClose, cfg, t, callService, getState,
     const sv = g(cfg.autoEmptyModeEntity);   if (sv)  setSvuotSel(SVUOT_UI[sv]  || 'standard')
     const lr = g(cfg.autoRewashingEntity);   if (lr)  setLavRipSel(LAVRIP_UI[lr] || 'off')
     const dt = g(cfg.dryingTimeEntity);      if (dt && ['2h','3h','4h'].includes(dt)) setTempAsciugSel(dt)
-    const wq = g(cfg.mopWashLevelEntity);    if (wq)  setWashQty(WASHQTY_UI[wq]  || 'medium')
+    const wq = g(cfg.washingModeEntity);     if (wq)  setWashQty(WASHQTY_UI[wq]  || 'medium')
     const wt = g(cfg.waterTempEntity);       if (wt)  setWashTemp(WASHTEMP_UI[wt] || 'normal')
     const det = g(cfg.autoDetergentEntity);  if (det !== null) setAutoDetergent(det === 'on')
     const aw  = g(cfg.autoWashEntity);       if (aw  !== null) setAutoWash(aw  === 'on')
@@ -836,7 +836,7 @@ function BaseSheet({ open, onClose, cfg, t, callService, getState,
               <div style={{ fontSize: 14, color: 'var(--text-muted)', margin: '16px 14px 8px', lineHeight: 1.5 }}>{t('dreame.washQtyLabel')}</div>
               <div style={{ background: 'var(--bg-card)', borderRadius: 16, margin: '0 14px', overflow: 'hidden' }}>
                 {washQtyOpts.map((o, i) => (
-                  <div key={o.id} onClick={() => { setWashQty(o.id); selOpt(cfg.mopWashLevelEntity, WASHQTY_HA[o.id]) }}
+                  <div key={o.id} onClick={() => { setWashQty(o.id); selOpt(cfg.washingModeEntity, WASHQTY_HA[o.id]) }}
                     style={{ display: 'flex', alignItems: 'flex-start', gap: 14, padding: 16, cursor: 'pointer', borderTop: i > 0 ? '1px solid var(--border)' : 'none' }}>
                     <div style={{ width: 24, height: 24, borderRadius: '50%', border: `2px solid ${washQty === o.id ? A : '#ccc'}`,
                       flexShrink: 0, marginTop: 1, display: 'flex', alignItems: 'center', justifyContent: 'center',

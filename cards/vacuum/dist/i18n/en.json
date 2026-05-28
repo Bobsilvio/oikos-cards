@@ -333,6 +333,7 @@
       "lowWaterEntity": "Water level",
       "dustCollectionEntity": "Dust collection",
       "autoEmptyModeEntity": "Auto empty mode",
+      "washingModeEntity": "Washing mode (water quantity)",
       "mopWashLevelEntity": "Mop wash level",
       "autoRewashingEntity": "Auto rewashing frequency",
       "startAutoEmptyEntity": "Start auto-empty (button)",
