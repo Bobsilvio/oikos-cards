@@ -979,6 +979,8 @@ export default function VacuumCard() {
 
   // Cleaning options (mirror to HA via service calls)
   const [humidity, setHumidity] = useState(20)
+  const [suctionLocal, setSuctionLocal] = useState('standard')
+  const [routeLocal,   setRouteLocal]   = useState('standard')
 
   const get    = (id) => id ? (getState(id) ?? null) : null
   const getNum = (id) => { const v = get(id); return (v && v !== 'unavailable') ? parseFloat(v) : null }
@@ -993,8 +995,14 @@ export default function VacuumCard() {
   const cleanArea = getNum(cfg.cleanedAreaEntity)
   const cleanTime = getNum(cfg.cleaningTimeEntity)
 
-  const suction   = get(cfg.suctionLevelEntity)
-  const route     = get(cfg.cleaningRouteEntity)
+  const suctionHA = get(cfg.suctionLevelEntity)
+  const routeHA   = get(cfg.cleaningRouteEntity)
+  // Sync from HA when entity is available; otherwise keep local value
+  useEffect(() => { if (suctionHA && suctionHA !== 'unavailable') setSuctionLocal(suctionHA) }, [suctionHA])
+  useEffect(() => { if (routeHA   && routeHA   !== 'unavailable') setRouteLocal(routeHA)     }, [routeHA])
+
+  const suction = suctionLocal
+  const route   = routeLocal
   const progress  = getNum(cfg.cleaningProgressEntity)
 
   const stateColor = sc(mainState)
@@ -1052,8 +1060,8 @@ export default function VacuumCard() {
     setSelectedRooms(p => p.includes(nid) ? p.filter(r => r !== nid) : [...p, nid])
   }
 
-  const onSuction = (val) => cfg.suctionLevelEntity && callService('select', 'select_option', cfg.suctionLevelEntity, { option: val })
-  const onRoute   = (val) => cfg.cleaningRouteEntity && callService('select', 'select_option', cfg.cleaningRouteEntity, { option: val })
+  const onSuction = (val) => { setSuctionLocal(val); cfg.suctionLevelEntity && callService('select', 'select_option', cfg.suctionLevelEntity, { option: val }) }
+  const onRoute   = (val) => { setRouteLocal(val);   cfg.cleaningRouteEntity && callService('select', 'select_option', cfg.cleaningRouteEntity, { option: val }) }
 
   const isCharging  = mainState === 'docked' || mainState === 'charging_completed'
   const isCleaning  = mainState === 'cleaning'
