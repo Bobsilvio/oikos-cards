@@ -1,4 +1,4 @@
-const { jsx: t, jsxs: l, Fragment: N } = window.__OIKOS_SDK__.jsxRuntime, St = "Ultime 24 ore", $t = "Stanza", Dt = "in attesa di dati…", _t = "adesso", kt = "{{n}} min fa", At = "{{n}} ore fa", Ft = "{{n}} gg fa", Tt = "ieri", Ct = "l'altro ieri", Rt = "Configura le entità in ⚙", Bt = {
+const { jsx: t, jsxs: l, Fragment: W } = window.__OIKOS_SDK__.jsxRuntime, St = "Ultime 24 ore", $t = "Stanza", Dt = "in attesa di dati…", _t = "adesso", kt = "{{n}} min fa", At = "{{n}} ore fa", Ft = "{{n}} gg fa", Tt = "ieri", Ct = "l'altro ieri", Rt = "Configura le entità in ⚙", Bt = {
   range1h: "1 ora",
   range24h: "24 ore",
   range7d: "7 giorni",
@@ -39,7 +39,7 @@ const { jsx: t, jsxs: l, Fragment: N } = window.__OIKOS_SDK__.jsxRuntime, St = "
   addBadge: "+ Aggiungi badge",
   noGauges: "Nessun gauge configurato.",
   noBadges: "Nessun badge configurato."
-}, Nt = {
+}, Wt = {
   last24h: St,
   roomDefault: $t,
   waitingData: Dt,
@@ -52,7 +52,7 @@ const { jsx: t, jsxs: l, Fragment: N } = window.__OIKOS_SDK__.jsxRuntime, St = "
   configHint: Rt,
   modal: Bt,
   settings: Ht
-}, Wt = "Last 24 hours", Et = "Room", It = "waiting for data…", Lt = "now", zt = "{{n}} min ago", Ot = "{{n}}h ago", Pt = "{{n}}d ago", Kt = "yesterday", Gt = "2 days ago", Vt = "Configure entities in ⚙", jt = {
+}, Nt = "Last 24 hours", Et = "Room", It = "waiting for data…", Lt = "now", zt = "{{n}} min ago", Ot = "{{n}}h ago", Pt = "{{n}}d ago", Kt = "yesterday", Gt = "2 days ago", jt = "Configure entities in ⚙", Vt = {
   range1h: "1 hour",
   range24h: "24 hours",
   range7d: "7 days",
@@ -94,7 +94,7 @@ const { jsx: t, jsxs: l, Fragment: N } = window.__OIKOS_SDK__.jsxRuntime, St = "
   noGauges: "No gauges configured.",
   noBadges: "No badges configured."
 }, Jt = {
-  last24h: Wt,
+  last24h: Nt,
   roomDefault: Et,
   waitingData: It,
   timeNow: Lt,
@@ -103,8 +103,8 @@ const { jsx: t, jsxs: l, Fragment: N } = window.__OIKOS_SDK__.jsxRuntime, St = "
   timeDayAgo: Pt,
   timeYesterday: Kt,
   timeDayBeforeYesterday: Gt,
-  configHint: Vt,
-  modal: jt,
+  configHint: jt,
+  modal: Vt,
   settings: Yt
 }, { MdiIcon: Y, useT: Ut } = window.__OIKOS_SDK__;
 function Xt(n, e) {
@@ -310,11 +310,11 @@ function ge({ points: n, dark: e, uid: o, rangeHours: r, unit: s, noDataLabel: p
   }), k = r <= 1 ? 4 : r <= 24 ? 6 : 7, F = Array.from(
     { length: k },
     (f, A) => b + A / (k - 1) * x
-  ), T = 32, w = 120, g = 1e3, S = 100, R = (f) => (f - b) / x * g, C = (f) => S - 4 - (f - (d - D)) / (v + D * 2) * (S - 8), z = n.map((f) => ({ x: R(f.ts), y: C(f.v), v: f.v, ts: f.ts })), P = Mt(z), K = z.length > 1 ? `${P} L ${R(u).toFixed(1)},${S} L ${R(b).toFixed(1)},${S} Z` : "", I = e ? "#5b9cf6" : "#3b82f6", G = e ? "rgba(255,255,255,.06)" : "rgba(0,0,0,.06)", W = e ? "rgba(255,255,255,.35)" : "rgba(0,0,0,.35)", h = ee((f) => {
+  ), T = 32, w = 120, g = 1e3, S = 100, R = (f) => (f - b) / x * g, C = (f) => S - 4 - (f - (d - D)) / (v + D * 2) * (S - 8), z = n.map((f) => ({ x: R(f.ts), y: C(f.v), v: f.v, ts: f.ts })), P = Mt(z), K = z.length > 1 ? `${P} L ${R(u).toFixed(1)},${S} L ${R(b).toFixed(1)},${S} Z` : "", I = e ? "#5b9cf6" : "#3b82f6", G = e ? "rgba(255,255,255,.06)" : "rgba(0,0,0,.06)", N = e ? "rgba(255,255,255,.35)" : "rgba(0,0,0,.35)", h = ee((f) => {
     const A = f.currentTarget.getBoundingClientRect(), B = (f.clientX - A.left) / A.width, L = b + B * x;
     let O = z[0];
-    for (const V of z)
-      Math.abs(V.ts - L) < Math.abs(O.ts - L) && (O = V);
+    for (const j of z)
+      Math.abs(j.ts - L) < Math.abs(O.ts - L) && (O = j);
     _({ xPct: O.x / g * 100, v: O.v, ts: O.ts });
   }, [z, b, x]);
   return /* @__PURE__ */ l("div", { children: [
@@ -330,7 +330,7 @@ function ge({ points: n, dark: e, uid: o, rangeHours: r, unit: s, noDataLabel: p
         paddingTop: 2
       }, children: M.map((f, A) => /* @__PURE__ */ t("div", { style: {
         fontSize: 9,
-        color: W,
+        color: N,
         textAlign: "right",
         paddingRight: 5,
         fontFamily: "JetBrains Mono, monospace",
@@ -378,7 +378,7 @@ function ge({ points: n, dark: e, uid: o, rangeHours: r, unit: s, noDataLabel: p
                   style: { filter: `drop-shadow(0 1px 4px ${I}55)` }
                 }
               ),
-              a && /* @__PURE__ */ l(N, { children: [
+              a && /* @__PURE__ */ l(W, { children: [
                 /* @__PURE__ */ t(
                   "line",
                   {
@@ -426,20 +426,20 @@ function ge({ points: n, dark: e, uid: o, rangeHours: r, unit: s, noDataLabel: p
         }, children: [
           a.v % 1 === 0 ? a.v : a.v.toFixed(1),
           s ? ` ${s}` : "",
-          /* @__PURE__ */ t("span", { style: { fontSize: 9, color: W, marginLeft: 5 }, children: mt(a.ts, r) })
+          /* @__PURE__ */ t("span", { style: { fontSize: 9, color: N, marginLeft: 5 }, children: mt(a.ts, r) })
         ] })
       ] })
     ] }),
     /* @__PURE__ */ t("div", { style: { display: "flex", paddingLeft: T, marginTop: 3 }, children: /* @__PURE__ */ t("div", { style: { flex: 1, display: "flex", justifyContent: "space-between" }, children: F.map((f, A) => /* @__PURE__ */ t("div", { style: {
       fontSize: 9,
-      color: W,
+      color: N,
       fontFamily: "JetBrains Mono, monospace",
       ...A === 0 ? { textAlign: "left" } : A === F.length - 1 ? { textAlign: "right" } : { textAlign: "center" }
     }, children: mt(f, r) }, A)) }) })
   ] });
 }
 function pt({ entityId: n, label: e, unit: o, dark: r, onClose: s }) {
-  var I, G, W;
+  var I, G, N;
   const { haStates: p, fetchHistory: c, connected: a, getFloat: _ } = le(), { t: d } = se("card-room-sensor"), y = Qt().replace(/:/g, ""), [b, u] = X("24h"), [v, x] = X([]), [D, M] = X(!1), k = _(n), F = ((I = p == null ? void 0 : p[n]) == null ? void 0 : I.attributes) ?? {}, T = e || F.friendly_name || n, w = (G = p == null ? void 0 : p[n]) == null ? void 0 : G.last_updated, g = o || F.unit_of_measurement || "";
   if (qt(() => {
     var B;
@@ -451,7 +451,7 @@ function pt({ entityId: n, label: e, unit: o, dark: r, onClose: s }) {
   }, [n, b, a]), !n) return null;
   const S = (h) => h != null ? h === Math.floor(h) ? String(Math.round(h)) : h.toFixed(1) : "—", R = v.length ? Math.min(...v.map((h) => h.v)) : null, C = v.length ? Math.max(...v.map((h) => h.v)) : null, z = v.length ? v.reduce((h, f) => h + f.v, 0) / v.length : null;
   return ne(
-    /* @__PURE__ */ l(N, { children: [
+    /* @__PURE__ */ l(W, { children: [
       /* @__PURE__ */ t(
         "div",
         {
@@ -578,7 +578,7 @@ function pt({ entityId: n, label: e, unit: o, dark: r, onClose: s }) {
               points: v,
               dark: r,
               uid: y,
-              rangeHours: ((W = Q.find((h) => h.key === b)) == null ? void 0 : W.hours) ?? 24,
+              rangeHours: ((N = Q.find((h) => h.key === b)) == null ? void 0 : N.hours) ?? 24,
               unit: g,
               noDataLabel: d("modal.noData")
             }
@@ -623,7 +623,7 @@ function pt({ entityId: n, label: e, unit: o, dark: r, onClose: s }) {
   );
 }
 const { useState: Z, useEffect: nt, useId: ue, useRef: yt } = window.__OIKOS_SDK__.React, { useDashboard: he, useCardConfig: fe, registerCardTranslations: me, useT: pe } = window.__OIKOS_SDK__;
-me("card-room-sensor", { it: Nt, en: Jt });
+me("card-room-sensor", { it: Wt, en: Jt });
 const ye = {
   label: "",
   icon: "home",
@@ -714,7 +714,7 @@ function vt({ bars: n, rMin: e, rMax: o, dark: r, uid: s, t: p }) {
         style: { width: "100%", height: 64, display: "block", borderRadius: 6 },
         children: [
           /* @__PURE__ */ l("defs", { children: [
-            /* @__PURE__ */ t("linearGradient", { id: `tg-${s}`, x1: "0%", y1: "0%", x2: "100%", y2: "0%", children: w.length > 0 ? w.map((g, S) => /* @__PURE__ */ t("stop", { offset: `${g.pct}%`, stopColor: g.color }, S)) : /* @__PURE__ */ l(N, { children: [
+            /* @__PURE__ */ t("linearGradient", { id: `tg-${s}`, x1: "0%", y1: "0%", x2: "100%", y2: "0%", children: w.length > 0 ? w.map((g, S) => /* @__PURE__ */ t("stop", { offset: `${g.pct}%`, stopColor: g.color }, S)) : /* @__PURE__ */ l(W, { children: [
               /* @__PURE__ */ t("stop", { offset: "0%", stopColor: "#3b82f6" }),
               /* @__PURE__ */ t("stop", { offset: "100%", stopColor: "#ef4444" })
             ] }) }),
@@ -724,7 +724,7 @@ function vt({ bars: n, rMin: e, rMax: o, dark: r, uid: s, t: p }) {
             ] }),
             /* @__PURE__ */ t("mask", { id: `mk-${s}`, children: /* @__PURE__ */ t("rect", { x: "0", y: "0", width: 100, height: 56, fill: `url(#fm-${s})` }) })
           ] }),
-          y.length ? /* @__PURE__ */ l(N, { children: [
+          y.length ? /* @__PURE__ */ l(W, { children: [
             T && /* @__PURE__ */ t(
               "path",
               {
@@ -785,46 +785,46 @@ function ve({ cardId: n }) {
     });
     return m.observe(i), () => m.disconnect();
   }, []);
-  const x = c.gauges ?? [], D = c.badges ?? [], M = c.displayMode, k = c.rightSection, F = c.chartColor, T = c.flowEntity || ((it = (ot = c.gauges) == null ? void 0 : ot[0]) == null ? void 0 : it.entity) || "", w = c.historyEntity || ((rt = (at = c.gauges) == null ? void 0 : at[0]) == null ? void 0 : rt.entity) || "", g = yt([]), S = ((lt = x[0]) == null ? void 0 : lt.entity) ?? "", R = ((ct = (st = r == null ? void 0 : r[S]) == null ? void 0 : st.attributes) == null ? void 0 : ct.friendly_name) ?? "", C = c.label || R.replace(/\b(temperatura|umidità|temp|hum|sensor|sensore)\b/gi, "").trim() || a("roomDefault"), z = (dt = r == null ? void 0 : r[S]) == null ? void 0 : dt.last_updated, P = Xt(z, a), K = (c.icon || "home").replace(/^mdi:/, ""), G = M === "flow" || k === "history" ? M === "flow" ? T : w : null, { bars: W, loading: h } = be(G, s, p);
+  const x = c.gauges ?? [], D = c.badges ?? [], M = c.displayMode, k = c.rightSection, F = c.chartColor, T = c.flowEntity || ((it = (ot = c.gauges) == null ? void 0 : ot[0]) == null ? void 0 : it.entity) || "", w = c.historyEntity || ((rt = (at = c.gauges) == null ? void 0 : at[0]) == null ? void 0 : rt.entity) || "", g = yt([]), S = ((lt = x[0]) == null ? void 0 : lt.entity) ?? "", R = ((ct = (st = r == null ? void 0 : r[S]) == null ? void 0 : st.attributes) == null ? void 0 : ct.friendly_name) ?? "", C = c.label || R.replace(/\b(temperatura|umidità|temp|hum|sensor|sensore)\b/gi, "").trim() || a("roomDefault"), z = (dt = r == null ? void 0 : r[S]) == null ? void 0 : dt.last_updated, P = Xt(z, a), K = (c.icon || "home").replace(/^mdi:/, ""), G = M === "flow" || k === "history" ? M === "flow" ? T : w : null, { bars: N, loading: h } = be(G, s, p);
   if (nt(() => {
     const i = x.map((m, $) => {
       const E = g.current[$];
       if (!E || !m.entity) return null;
-      const j = (q) => {
+      const V = (q) => {
         var gt, ut;
         q.stopPropagation();
         const wt = (ut = (gt = r == null ? void 0 : r[m.entity]) == null ? void 0 : gt.attributes) == null ? void 0 : ut.friendly_name;
         y({ entityId: m.entity, label: m.label || wt || m.entity, unit: m.unit });
       };
-      return E.addEventListener("pointerup", j, { capture: !0 }), () => E.removeEventListener("pointerup", j, { capture: !0 });
+      return E.addEventListener("pointerup", V, { capture: !0 }), () => E.removeEventListener("pointerup", V, { capture: !0 });
     });
     return () => i.forEach((m) => m == null ? void 0 : m());
   }, [x.length, x.map((i) => i.entity).join(",")]), !x.length) return /* @__PURE__ */ t(Zt, { dark: e });
-  const f = e ? "rgba(255,255,255,.03)" : "#f7f9fc", A = e ? "rgba(255,255,255,.07)" : "#dde3ec", B = e ? "rgba(255,255,255,.06)" : "rgba(0,0,0,.06)", L = M === "gauge" && k === "badges", O = M === "gauge" && k === "history", V = M === "gauge" && k === "minigauge", H = x.find((i) => i.entity === T) ?? x[0];
-  return u ? /* @__PURE__ */ l(N, { children: [
+  const f = e ? "rgba(255,255,255,.03)" : "#f7f9fc", A = e ? "rgba(255,255,255,.07)" : "#dde3ec", B = e ? "rgba(255,255,255,.06)" : "rgba(0,0,0,.06)", L = M === "gauge" && k === "badges", O = M === "gauge" && k === "history", j = M === "gauge" && k === "minigauge", H = x.find((i) => i.entity === T) ?? x[0];
+  return u ? /* @__PURE__ */ l(W, { children: [
     /* @__PURE__ */ l("div", { ref: b, style: {
-      borderRadius: 20,
+      borderRadius: 18,
       background: f,
       border: `1px solid ${A}`,
       boxShadow: e ? "none" : "0 1px 8px rgba(0,0,0,.06)",
-      padding: "12px 14px",
+      padding: "10px 12px",
       overflow: "hidden"
     }, children: [
-      /* @__PURE__ */ l("div", { style: { display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }, children: [
+      /* @__PURE__ */ l("div", { style: { display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }, children: [
         /* @__PURE__ */ t("div", { style: {
-          width: 38,
-          height: 38,
+          width: 28,
+          height: 28,
           borderRadius: "50%",
           flexShrink: 0,
           background: e ? "rgba(255,255,255,.07)" : "#eef1f8",
-          border: `1.5px solid ${e ? "rgba(255,255,255,.11)" : "#dde3ec"}`,
+          border: `1px solid ${e ? "rgba(255,255,255,.11)" : "#dde3ec"}`,
           display: "flex",
           alignItems: "center",
           justifyContent: "center"
-        }, children: /* @__PURE__ */ t(Y, { name: K, size: 20, dark: e, opacity: e ? 0.72 : 0.52 }) }),
-        /* @__PURE__ */ l("div", { style: { flex: 1, minWidth: 0 }, children: [
+        }, children: /* @__PURE__ */ t(Y, { name: K, size: 15, dark: e, opacity: e ? 0.72 : 0.52 }) }),
+        /* @__PURE__ */ l("div", { style: { flex: 1, minWidth: 0, display: "flex", alignItems: "baseline", gap: 6, flexWrap: "wrap" }, children: [
           /* @__PURE__ */ t("div", { style: {
-            fontSize: 14,
+            fontSize: 13,
             fontWeight: 800,
             color: "var(--text-primary)",
             lineHeight: 1.2,
@@ -833,16 +833,16 @@ function ve({ cardId: n }) {
             textOverflow: "ellipsis",
             whiteSpace: "nowrap"
           }, children: C }),
-          P && /* @__PURE__ */ t("div", { style: { fontSize: 10, color: "var(--text-muted)", marginTop: 2 }, children: P }),
+          P && /* @__PURE__ */ t("div", { style: { fontSize: 10, color: "var(--text-muted)" }, children: P }),
           M === "flow" && /* @__PURE__ */ t("div", { style: { display: "flex", gap: 6, marginTop: 4, flexWrap: "wrap" }, children: x.map((i, m) => {
             const $ = i.entity ? o(i.entity) : null;
             if ($ == null) return null;
-            const E = Math.max(0, Math.min(1, ($ - i.min) / Math.max(i.max - i.min, 1))), j = i.color ?? et(tt(E));
+            const E = Math.max(0, Math.min(1, ($ - i.min) / Math.max(i.max - i.min, 1))), V = i.color ?? et(tt(E));
             return /* @__PURE__ */ l("span", { style: {
               fontSize: 12,
               fontWeight: 800,
               fontFamily: "JetBrains Mono, monospace",
-              color: j,
+              color: V,
               fontVariantNumeric: "tabular-nums"
             }, children: [
               $.toFixed(i.decimals ?? 1),
@@ -854,11 +854,11 @@ function ve({ cardId: n }) {
       M === "gauge" && /* @__PURE__ */ l("div", { style: {
         display: "flex",
         alignItems: "center",
-        gap: 8,
+        gap: 6,
         borderTop: `1px solid ${B}`,
-        paddingTop: 10
+        paddingTop: 8
       }, children: [
-        /* @__PURE__ */ t("div", { style: { flex: 1, display: "flex", flexWrap: "wrap", gap: 6, justifyContent: "space-around" }, children: x.map((i, m) => {
+        /* @__PURE__ */ t("div", { style: { flex: "0 0 auto", display: "flex", gap: 4 }, children: x.map((i, m) => {
           const $ = i.entity ? o(i.entity) : null;
           return /* @__PURE__ */ t(
             "div",
@@ -877,21 +877,21 @@ function ve({ cardId: n }) {
                   iconName: i.icon ?? "gauge",
                   color: i.color ?? "#3d8ea0",
                   dark: e,
-                  size: 60
+                  size: 68
                 }
               )
             },
             m
           );
         }) }),
-        (L || V || O) && /* @__PURE__ */ l(N, { children: [
-          /* @__PURE__ */ t("div", { style: { width: 1, alignSelf: "stretch", background: B, margin: "0 2px" } }),
-          /* @__PURE__ */ l("div", { style: { flexShrink: 0, display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }, children: [
-            L && D.map((i, m) => {
+        (L || j || O) && /* @__PURE__ */ l(W, { children: [
+          /* @__PURE__ */ t("div", { style: { width: 1, alignSelf: "stretch", background: B, margin: "0 4px" } }),
+          /* @__PURE__ */ l("div", { style: { flex: 1, minWidth: 0, display: "flex", flexDirection: "column", alignItems: "stretch", gap: 6 }, children: [
+            L && /* @__PURE__ */ t("div", { style: { display: "flex", gap: 10, justifyContent: "space-around", flexWrap: "wrap" }, children: D.map((i, m) => {
               const $ = i.entity ? o(i.entity) : null;
               return /* @__PURE__ */ t(xt, { value: $, iconName: i.icon ?? "circle", unit: i.unit ?? "", dark: e }, m);
-            }),
-            V && D.map((i, m) => {
+            }) }),
+            j && /* @__PURE__ */ t("div", { style: { display: "flex", gap: 8, justifyContent: "space-around", flexWrap: "wrap" }, children: D.map((i, m) => {
               const $ = i.entity ? o(i.entity) : null;
               return /* @__PURE__ */ t(
                 ft,
@@ -902,19 +902,19 @@ function ve({ cardId: n }) {
                   iconLeft: i.icon ?? "battery",
                   color: i.color ?? "#5b6b85",
                   dark: e,
-                  size: 34
+                  size: 38
                 },
                 m
               );
-            }),
-            O && /* @__PURE__ */ t("div", { style: { width: 90 }, children: /* @__PURE__ */ t(bt, { bars: W, loading: h, chartColor: F, dark: e, t: a }) })
+            }) }),
+            O && /* @__PURE__ */ t(bt, { bars: N, loading: h, chartColor: F, dark: e, t: a })
           ] })
         ] })
       ] }),
       M === "flow" && /* @__PURE__ */ t("div", { style: { borderTop: `1px solid ${B}`, paddingTop: 10 }, children: /* @__PURE__ */ t(
         vt,
         {
-          bars: W,
+          bars: N,
           rMin: (H == null ? void 0 : H.min) ?? 0,
           rMax: (H == null ? void 0 : H.max) ?? 100,
           dark: e,
@@ -933,7 +933,7 @@ function ve({ cardId: n }) {
         onClose: () => y(null)
       }
     )
-  ] }) : /* @__PURE__ */ l(N, { children: [
+  ] }) : /* @__PURE__ */ l(W, { children: [
     /* @__PURE__ */ l("div", { ref: b, style: {
       display: "flex",
       alignItems: "center",
@@ -971,12 +971,12 @@ function ve({ cardId: n }) {
         M === "flow" && /* @__PURE__ */ t("div", { style: { display: "flex", gap: 6, marginTop: 5, flexWrap: "wrap" }, children: x.map((i, m) => {
           const $ = i.entity ? o(i.entity) : null;
           if ($ == null) return null;
-          const E = Math.max(0, Math.min(1, ($ - i.min) / Math.max(i.max - i.min, 1))), j = i.color ?? et(tt(E)), q = i.decimals ?? 1;
+          const E = Math.max(0, Math.min(1, ($ - i.min) / Math.max(i.max - i.min, 1))), V = i.color ?? et(tt(E)), q = i.decimals ?? 1;
           return /* @__PURE__ */ l("span", { style: {
             fontSize: 13,
             fontWeight: 800,
             fontFamily: "JetBrains Mono, monospace",
-            color: j,
+            color: V,
             fontVariantNumeric: "tabular-nums"
           }, children: [
             $.toFixed(q),
@@ -984,7 +984,7 @@ function ve({ cardId: n }) {
           ] }, m);
         }) })
       ] }),
-      M === "gauge" && /* @__PURE__ */ l(N, { children: [
+      M === "gauge" && /* @__PURE__ */ l(W, { children: [
         /* @__PURE__ */ t(U, { dark: e }),
         x.map((i, m) => {
           const $ = i.entity ? o(i.entity) : null;
@@ -1013,12 +1013,12 @@ function ve({ cardId: n }) {
           );
         })
       ] }),
-      M === "flow" && /* @__PURE__ */ l(N, { children: [
+      M === "flow" && /* @__PURE__ */ l(W, { children: [
         /* @__PURE__ */ t(U, { dark: e, h: 60 }),
         /* @__PURE__ */ t(
           vt,
           {
-            bars: W,
+            bars: N,
             rMin: (H == null ? void 0 : H.min) ?? 0,
             rMax: (H == null ? void 0 : H.max) ?? 100,
             dark: e,
@@ -1027,14 +1027,14 @@ function ve({ cardId: n }) {
           }
         )
       ] }),
-      L && D.length > 0 && /* @__PURE__ */ l(N, { children: [
+      L && D.length > 0 && /* @__PURE__ */ l(W, { children: [
         /* @__PURE__ */ t(U, { dark: e }),
         /* @__PURE__ */ t("div", { style: { display: "flex", gap: 14, alignItems: "center" }, children: D.map((i, m) => {
           const $ = i.entity ? o(i.entity) : null;
           return /* @__PURE__ */ t(xt, { value: $, iconName: i.icon ?? "circle", unit: i.unit ?? "", dark: e }, m);
         }) })
       ] }),
-      V && D.length > 0 && /* @__PURE__ */ l(N, { children: [
+      j && D.length > 0 && /* @__PURE__ */ l(W, { children: [
         /* @__PURE__ */ t(U, { dark: e }),
         /* @__PURE__ */ t("div", { style: { display: "flex", gap: 10, alignItems: "center" }, children: D.map((i, m) => {
           const $ = i.entity ? o(i.entity) : null;
@@ -1053,9 +1053,9 @@ function ve({ cardId: n }) {
           );
         }) })
       ] }),
-      O && /* @__PURE__ */ l(N, { children: [
+      O && /* @__PURE__ */ l(W, { children: [
         /* @__PURE__ */ t(U, { dark: e, h: 56 }),
-        /* @__PURE__ */ t(bt, { bars: W, loading: h, chartColor: F, dark: e, t: a })
+        /* @__PURE__ */ t(bt, { bars: N, loading: h, chartColor: F, dark: e, t: a })
       ] })
     ] }),
     d && /* @__PURE__ */ t(

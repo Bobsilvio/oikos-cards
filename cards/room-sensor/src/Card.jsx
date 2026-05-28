@@ -295,32 +295,32 @@ export default function RoomSensorCard({ cardId }) {
     return (
       <>
       <div ref={containerRef} style={{
-        borderRadius: 20,
+        borderRadius: 18,
         background: bg,
         border: `1px solid ${bdr}`,
         boxShadow: dark ? 'none' : '0 1px 8px rgba(0,0,0,.06)',
-        padding: '12px 14px',
+        padding: '10px 12px',
         overflow: 'hidden',
       }}>
         {/* Header: icona + nome */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
           <div style={{
-            width: 38, height: 38, borderRadius: '50%', flexShrink: 0,
+            width: 28, height: 28, borderRadius: '50%', flexShrink: 0,
             background: dark ? 'rgba(255,255,255,.07)' : '#eef1f8',
-            border: `1.5px solid ${dark ? 'rgba(255,255,255,.11)' : '#dde3ec'}`,
+            border: `1px solid ${dark ? 'rgba(255,255,255,.11)' : '#dde3ec'}`,
             display: 'flex', alignItems: 'center', justifyContent: 'center',
           }}>
-            <MdiIcon name={iconName} size={20} dark={dark} opacity={dark ? 0.72 : 0.52}/>
+            <MdiIcon name={iconName} size={15} dark={dark} opacity={dark ? 0.72 : 0.52}/>
           </div>
-          <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{ flex: 1, minWidth: 0, display: 'flex', alignItems: 'baseline', gap: 6, flexWrap: 'wrap' }}>
             <div style={{
-              fontSize: 14, fontWeight: 800, color: 'var(--text-primary)',
+              fontSize: 13, fontWeight: 800, color: 'var(--text-primary)',
               lineHeight: 1.2, letterSpacing: '-0.2px',
               overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
             }}>
               {roomName}
             </div>
-            {timeAgo && <div style={{ fontSize: 10, color: 'var(--text-muted)', marginTop: 2 }}>{timeAgo}</div>}
+            {timeAgo && <div style={{ fontSize: 10, color: 'var(--text-muted)' }}>{timeAgo}</div>}
             {displayMode === 'flow' && (
               <div style={{ display: 'flex', gap: 6, marginTop: 4, flexWrap: 'wrap' }}>
                 {gauges.map((g, i) => {
@@ -346,11 +346,11 @@ export default function RoomSensorCard({ cardId }) {
         {/* Gauge + sezione destra in un'unica riga */}
         {displayMode === 'gauge' && (
           <div style={{
-            display: 'flex', alignItems: 'center', gap: 8,
-            borderTop: `1px solid ${sep}`, paddingTop: 10,
+            display: 'flex', alignItems: 'center', gap: 6,
+            borderTop: `1px solid ${sep}`, paddingTop: 8,
           }}>
             {/* Gauges */}
-            <div style={{ flex: 1, display: 'flex', flexWrap: 'wrap', gap: 6, justifyContent: 'space-around' }}>
+            <div style={{ flex: '0 0 auto', display: 'flex', gap: 4 }}>
               {gauges.map((g, i) => {
                 const value = g.entity ? getFloat(g.entity) : null
                 return (
@@ -359,7 +359,7 @@ export default function RoomSensorCard({ cardId }) {
                     <ArcGauge
                       value={value} min={g.min ?? 0} max={g.max ?? 100}
                       unit={g.unit ?? ''} iconName={g.icon ?? 'gauge'}
-                      color={g.color ?? '#3d8ea0'} dark={dark} size={60}
+                      color={g.color ?? '#3d8ea0'} dark={dark} size={68}
                     />
                   </div>
                 )
@@ -369,21 +369,27 @@ export default function RoomSensorCard({ cardId }) {
             {/* Separatore verticale + sezione destra */}
             {(showRightBadges || showRightMiniGauge || showRightHistory) && (
               <>
-                <div style={{ width: 1, alignSelf: 'stretch', background: sep, margin: '0 2px' }}/>
-                <div style={{ flexShrink: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
-                  {showRightBadges && badges.map((b, i) => {
-                    const value = b.entity ? getFloat(b.entity) : null
-                    return <SensorBadge key={i} value={value} iconName={b.icon ?? 'circle'} unit={b.unit ?? ''} dark={dark}/>
-                  })}
-                  {showRightMiniGauge && badges.map((b, i) => {
-                    const value = b.entity ? getFloat(b.entity) : null
-                    return <MiniGauge key={i} value={value} min={b.min ?? 0} max={b.max ?? 100}
-                      iconLeft={b.icon ?? 'battery'} color={b.color ?? '#5b6b85'} dark={dark} size={34}/>
-                  })}
-                  {showRightHistory && (
-                    <div style={{ width: 90 }}>
-                      <HistoryBars bars={histBars} loading={histLoading} chartColor={chartColor} dark={dark} t={t}/>
+                <div style={{ width: 1, alignSelf: 'stretch', background: sep, margin: '0 4px' }}/>
+                <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', alignItems: 'stretch', gap: 6 }}>
+                  {showRightBadges && (
+                    <div style={{ display: 'flex', gap: 10, justifyContent: 'space-around', flexWrap: 'wrap' }}>
+                      {badges.map((b, i) => {
+                        const value = b.entity ? getFloat(b.entity) : null
+                        return <SensorBadge key={i} value={value} iconName={b.icon ?? 'circle'} unit={b.unit ?? ''} dark={dark}/>
+                      })}
                     </div>
+                  )}
+                  {showRightMiniGauge && (
+                    <div style={{ display: 'flex', gap: 8, justifyContent: 'space-around', flexWrap: 'wrap' }}>
+                      {badges.map((b, i) => {
+                        const value = b.entity ? getFloat(b.entity) : null
+                        return <MiniGauge key={i} value={value} min={b.min ?? 0} max={b.max ?? 100}
+                          iconLeft={b.icon ?? 'battery'} color={b.color ?? '#5b6b85'} dark={dark} size={38}/>
+                      })}
+                    </div>
+                  )}
+                  {showRightHistory && (
+                    <HistoryBars bars={histBars} loading={histLoading} chartColor={chartColor} dark={dark} t={t}/>
                   )}
                 </div>
               </>
