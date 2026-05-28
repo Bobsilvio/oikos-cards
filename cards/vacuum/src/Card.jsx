@@ -843,7 +843,7 @@ export default function VacuumCard() {
   const { t } = useT('card-vacuum')
   const [cfg] = useState(getVacuumConfig)
   const haHost = useRef(getHAConfig().host)
-  const [mapTs, setMapTs] = useState(() => Date.now())
+  const mapImgRef = useRef(null)
 
   // Scope + rooms
   const [scope, setScope] = useState('all')
@@ -897,9 +897,15 @@ export default function VacuumCard() {
 
   const rooms = cfg.rooms || []
 
+  const camUrl = () =>
+    `${haHost.current}/api/camera_proxy/${cfg.cameraEntity}?token=${getAttr(cfg.cameraEntity, 'access_token') ?? ''}&t=${Date.now()}`
+
   useEffect(() => {
     if (!cfg.cameraEntity) return
-    const iv = setInterval(() => setMapTs(Date.now()), 5000)
+    if (mapImgRef.current) mapImgRef.current.src = camUrl()
+    const iv = setInterval(() => {
+      if (mapImgRef.current) mapImgRef.current.src = camUrl()
+    }, 5000)
     return () => clearInterval(iv)
   }, [cfg.cameraEntity])
 
@@ -966,11 +972,12 @@ export default function VacuumCard() {
       {/* ── Map ── */}
       <div style={{ marginTop: 8, position: 'relative', height: 340, background: 'var(--bg-elevated)', overflow: 'hidden' }}>
         {cfg.cameraEntity ? (
-          <img key={mapTs}
-            src={`${haHost.current}/api/camera_proxy/${cfg.cameraEntity}?token=${getAttr(cfg.cameraEntity, 'access_token') ?? ''}&t=${mapTs}`}
+          <img ref={mapImgRef}
             alt={t('map.alt')}
-            style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block', filter: scope === 'room' ? 'brightness(1.35) saturate(0.65)' : 'none', transition: 'filter .25s' }}
-            onError={e => { e.currentTarget.style.display = 'none' }}
+            style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block',
+              filter: scope === 'room' ? 'brightness(1.35) saturate(0.65)' : 'none',
+              transition: 'filter .25s' }}
+            onError={e => { e.currentTarget.style.opacity = '0' }}
           />
         ) : (
           <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 12 }}>
@@ -978,39 +985,31 @@ export default function VacuumCard() {
             <div style={{ fontSize: 13, color: 'var(--text-muted)' }}>{cfg.name}</div>
           </div>
         )}
-        {/* Room overlay on map */}
-        {scope === 'room' && rooms.filter(r => r.name).length > 0 && (
-          <div style={{ position: 'absolute', inset: 0, display: 'flex', flexWrap: 'wrap', alignContent: 'flex-start', gap: 8, padding: '10px 12px', pointerEvents: 'none' }}>
-            {rooms.filter(r => r.name).map(r => {
-              const idx = selectedRooms.indexOf(r.id)
-              const sel = idx >= 0
-              return (
-                <div key={r.id} onClick={() => toggleRoom(r.id)} style={{
-                  position: 'relative', pointerEvents: 'auto',
-                  padding: '7px 13px', borderRadius: 10, cursor: 'pointer',
-                  background: sel ? 'rgba(0,0,0,0.62)' : 'rgba(255,255,255,0.88)',
-                  color: sel ? '#fff' : '#222',
-                  fontSize: 13, fontWeight: 600,
-                  backdropFilter: 'blur(4px)',
-                  boxShadow: '0 2px 8px rgba(0,0,0,.18)',
-                  transition: 'background .15s',
-                }}>
-                  {r.name}
-                  {sel && (
-                    <div style={{
-                      position: 'absolute', top: -8, right: -8,
-                      width: 20, height: 20, borderRadius: '50%',
-                      background: 'var(--blue)', color: 'white',
-                      fontSize: 11, fontWeight: 800,
-                      display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    }}>{idx + 1}</div>
-                  )}
-                </div>
-              )
-            })}
-          </div>
-        )}
       </div>
+
+      {/* ── Room pill row (visible only in room scope) ── */}
+      {scope === 'room' && rooms.filter(r => r.name).length > 0 && (
+        <div style={{ overflowX: 'auto', scrollbarWidth: 'none', display: 'flex', gap: 6, padding: '8px 16px 0' }}>
+          {rooms.filter(r => r.name).map(r => {
+            const idx = selectedRooms.indexOf(r.id)
+            const sel = idx >= 0
+            return (
+              <div key={r.id} onClick={() => toggleRoom(r.id)} style={{
+                position: 'relative', flexShrink: 0, cursor: 'pointer',
+                padding: '5px 10px', borderRadius: 20,
+                background: sel ? A : 'var(--bg-elevated)',
+                color: sel ? 'white' : 'var(--text-secondary)',
+                fontSize: 11, fontWeight: sel ? 700 : 500,
+                border: `1px solid ${sel ? 'transparent' : 'var(--border)'}`,
+                transition: 'all .15s',
+              }}>
+                {sel && <span style={{ marginRight: 4, fontSize: 10, fontWeight: 800, opacity: 0.9 }}>{idx + 1}</span>}
+                {r.name}
+              </div>
+            )
+          })}
+        </div>
+      )}
 
       {/* ── Personalizza button ── */}
       <div style={{ padding: '10px 16px 0' }}>
