@@ -1682,7 +1682,7 @@ function Nn() {
             height: "100%",
             objectFit: "contain",
             display: "block",
-            filter: m === "room" ? "brightness(0.85) saturate(0.5)" : m === "zona" ? "brightness(0.55) saturate(0.2)" : "none",
+            filter: m === "room" ? "brightness(0.85) saturate(0.5)" : m === "zona" ? "brightness(0.7) saturate(0.3) hue-rotate(180deg) sepia(0.18)" : "none",
             transition: "filter .25s"
           },
           onLoad: (c) => {

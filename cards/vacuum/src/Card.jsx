@@ -1116,7 +1116,7 @@ export default function VacuumCard() {
           <img ref={mapImgRef}
             alt={t('map.alt')}
             style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block',
-              filter: scope === 'room' ? 'brightness(0.85) saturate(0.5)' : scope === 'zona' ? 'brightness(0.55) saturate(0.2)' : 'none',
+              filter: scope === 'room' ? 'brightness(0.85) saturate(0.5)' : scope === 'zona' ? 'brightness(0.7) saturate(0.3) hue-rotate(180deg) sepia(0.18)' : 'none',
               transition: 'filter .25s' }}
             onLoad={e => { imgNatSize.current = [e.currentTarget.naturalWidth, e.currentTarget.naturalHeight] }}
             onError={e => { e.currentTarget.style.opacity = '0' }}
