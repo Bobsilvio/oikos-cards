@@ -11,15 +11,15 @@ import en from './i18n/en.json'
 
 registerCardTranslations('card-vacuum', { it, en })
 
-// ── Palette ──────────────────────────────────────────────────────────────────
-const A    = '#c47c18'
-const ABG  = '#f5e8d0'
-const ASEL = '#fef3d0'
-const GRN  = '#34c759'
+// ── Palette (CSS variables Oikos) ────────────────────────────────────────────
+const A    = 'var(--amber)'
+const ABG  = 'var(--amber-light)'
+const ASEL = 'var(--amber-light)'
+const GRN  = 'var(--green)'
 
 const STATE_COLOR = {
-  docked: '#10b981', charging_completed: '#10b981', sleeping: '#94a3b8',
-  cleaning: A, paused: A, returning: '#3b82f6', error: '#ef4444', idle: '#94a3b8',
+  docked: 'var(--green)', charging_completed: 'var(--green)', sleeping: 'var(--text-muted)',
+  cleaning: A, paused: A, returning: 'var(--blue)', error: 'var(--red)', idle: 'var(--text-muted)',
 }
 const sc = (s) => STATE_COLOR[s] || '#94a3b8'
 
@@ -138,18 +138,18 @@ const SvgPercProfonda = () => (
 // ── Primitivi UI ─────────────────────────────────────────────────────────────
 
 function SheetHandle() {
-  return <div style={{ width: 38, height: 4, background: '#ddd', borderRadius: 2, margin: '12px auto 10px', flexShrink: 0 }}/>
+  return <div style={{ width: 38, height: 4, background: 'var(--border-medium)', borderRadius: 2, margin: '12px auto 10px', flexShrink: 0 }}/>
 }
 
 function IosToggle({ on, onToggle }) {
   return (
     <button onClick={e => { e.stopPropagation(); onToggle() }} style={{
       width: 51, height: 31, borderRadius: 16, border: 'none', flexShrink: 0,
-      background: on ? GRN : '#e0e0e0', position: 'relative', cursor: 'pointer',
+      background: on ? GRN : 'var(--border-medium)', position: 'relative', cursor: 'pointer',
       transition: 'background .2s', marginTop: 2,
     }}>
       <motion.div animate={{ x: on ? 20 : 0 }} transition={{ type: 'spring', stiffness: 500, damping: 30 }}
-        style={{ position: 'absolute', width: 25, height: 25, borderRadius: '50%', background: 'white', top: 3, left: 3, boxShadow: '0 1px 4px rgba(0,0,0,.2)' }}/>
+        style={{ position: 'absolute', width: 25, height: 25, borderRadius: '50%', background: 'var(--bg-card)', top: 3, left: 3, boxShadow: '0 1px 4px rgba(0,0,0,.2)' }}/>
     </button>
   )
 }
@@ -193,7 +193,7 @@ function HumSlider({ value, onChange }) {
   return (
     <div style={{ marginBottom: 8 }}>
       <div style={{ position: 'relative', padding: '18px 0 8px' }}>
-        <div style={{ height: 4, borderRadius: 2, background: '#e8e8e8', position: 'relative', margin: '0 18px' }}>
+        <div style={{ height: 4, borderRadius: 2, background: 'var(--border-medium)', position: 'relative', margin: '0 18px' }}>
           <div style={{ height: '100%', borderRadius: 2, background: A, position: 'absolute', left: 0, top: 0, width: `${pct}%`, pointerEvents: 'none' }}/>
           {ticks.map(t => (
             <div key={t.pct} style={{ position: 'absolute', top: '50%', left: `${t.pct}%`, transform: 'translate(-50%,-50%)', width: 3, height: 11, borderRadius: 1.5, background: 'rgba(0,0,0,.18)', pointerEvents: 'none', zIndex: 2 }}/>
@@ -205,7 +205,7 @@ function HumSlider({ value, onChange }) {
         <input type="range" min={1} max={32} value={value} onChange={e => onChange(Number(e.target.value))}
           style={{ position: 'absolute', width: 'calc(100% - 36px)', left: 18, opacity: 0, height: 32, top: -14, cursor: 'pointer', margin: 0 }}/>
       </div>
-      <div style={{ position: 'relative', height: 38, margin: '10px 18px 0', fontSize: 11, color: '#aaa' }}>
+      <div style={{ position: 'relative', height: 38, margin: '10px 18px 0', fontSize: 11, color: 'var(--text-muted)' }}>
         {labels.map(l => (
           <span key={l.pct} style={{ position: 'absolute', left: `${l.pct}%`, transform: 'translateX(-50%)', textAlign: 'center', whiteSpace: 'nowrap', fontWeight: 500, lineHeight: 1.35 }}>
             {l.txt.split('\n').map((s, i) => <span key={i}>{i > 0 && <br/>}{s}</span>)}
@@ -228,7 +228,7 @@ function SubSheet({ open, onClose, children }) {
           <motion.div key="sub-sheet" initial={{ y: '100%' }} animate={{ y: 0 }} exit={{ y: '100%' }}
             transition={{ type: 'spring', damping: 32, stiffness: 280 }}
             onClick={e => e.stopPropagation()}
-            style={{ width: '100%', maxWidth: 390, background: 'white', borderRadius: '26px 26px 0 0', overflowY: 'auto', maxHeight: '80vh' }}>
+            style={{ width: '100%', maxWidth: 390, background: 'var(--bg-card)', borderRadius: '26px 26px 0 0', overflowY: 'auto', maxHeight: '80vh' }}>
             <SheetHandle/>
             {children}
           </motion.div>
@@ -248,7 +248,7 @@ function FullSheet({ open, onClose, zIndex = 1000, children }) {
           <motion.div key="full-sheet" initial={{ y: '100%' }} animate={{ y: 0 }} exit={{ y: '100%' }}
             transition={{ type: 'spring', damping: 32, stiffness: 280 }}
             onClick={e => e.stopPropagation()}
-            style={{ width: '100%', maxWidth: 390, background: 'white', borderRadius: '26px 26px 0 0', height: '92vh', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+            style={{ width: '100%', maxWidth: 390, background: 'var(--bg-card)', borderRadius: '26px 26px 0 0', height: '92vh', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
             <SheetHandle/>
             {children}
           </motion.div>
@@ -260,9 +260,9 @@ function FullSheet({ open, onClose, zIndex = 1000, children }) {
 
 function SettingsHeader({ title, onBack }) {
   return (
-    <div style={{ background: 'white', display: 'flex', alignItems: 'center', gap: 8, padding: '14px 16px', borderBottom: '1px solid #ebebeb', position: 'sticky', top: 0, zIndex: 5, flexShrink: 0 }}>
-      <div onClick={onBack} style={{ fontSize: 28, lineHeight: 1, color: '#888', cursor: 'pointer', width: 28, flexShrink: 0 }}>‹</div>
-      <div style={{ fontSize: 17, fontWeight: 700, color: '#111', flex: 1, textAlign: 'center' }}>{title}</div>
+    <div style={{ background: 'var(--bg-card)', display: 'flex', alignItems: 'center', gap: 8, padding: '14px 16px', borderBottom: '1px solid var(--border)', position: 'sticky', top: 0, zIndex: 5, flexShrink: 0 }}>
+      <div onClick={onBack} style={{ fontSize: 28, lineHeight: 1, color: 'var(--text-muted)', cursor: 'pointer', width: 28, flexShrink: 0 }}>‹</div>
+      <div style={{ fontSize: 17, fontWeight: 700, color: 'var(--text-primary)', flex: 1, textAlign: 'center' }}>{title}</div>
       <div style={{ width: 28 }}/>
     </div>
   )
@@ -277,7 +277,7 @@ function FrequenzaSheet({ open, onClose, selected, onSelect, t }) {
   ]
   return (
     <SubSheet open={open} onClose={onClose}>
-      <div style={{ fontSize: 17, fontWeight: 700, color: '#111', textAlign: 'center', padding: '0 20px 18px' }}>{t('dreame.freqTitle')}</div>
+      <div style={{ fontSize: 17, fontWeight: 700, color: 'var(--text-primary)', textAlign: 'center', padding: '0 20px 18px' }}>{t('dreame.freqTitle')}</div>
       {opts.map(o => (
         <RadioOption key={o.id} label={o.label} desc={o.desc} selected={selected === o.id}
           onClick={() => { onSelect(o.id); setTimeout(onClose, 280) }}/>
@@ -296,7 +296,7 @@ function SvuotSheet({ open, onClose, selected, onSelect, t }) {
   ]
   return (
     <SubSheet open={open} onClose={onClose}>
-      <div style={{ fontSize: 17, fontWeight: 700, color: '#111', textAlign: 'center', padding: '0 20px 18px' }}>{t('dreame.svuotTitle')}</div>
+      <div style={{ fontSize: 17, fontWeight: 700, color: 'var(--text-primary)', textAlign: 'center', padding: '0 20px 18px' }}>{t('dreame.svuotTitle')}</div>
       {opts.map(o => (
         <RadioOption key={o.id} label={o.label} desc={o.desc} selected={selected === o.id}
           onClick={() => { onSelect(o.id); setTimeout(onClose, 280) }}/>
@@ -315,7 +315,7 @@ function LavRipSheet({ open, onClose, selected, onSelect, t }) {
   ]
   return (
     <SubSheet open={open} onClose={onClose}>
-      <div style={{ fontSize: 17, fontWeight: 700, color: '#111', textAlign: 'center', padding: '0 20px 18px' }}>{t('dreame.lavRipTitle')}</div>
+      <div style={{ fontSize: 17, fontWeight: 700, color: 'var(--text-primary)', textAlign: 'center', padding: '0 20px 18px' }}>{t('dreame.lavRipTitle')}</div>
       {opts.map(o => (
         <RadioOption key={o.id} label={o.label} desc={o.desc} selected={selected === o.id}
           onClick={() => { onSelect(o.id); setTimeout(onClose, 280) }}/>
@@ -330,14 +330,14 @@ function TempAsciugSheet({ open, onClose, selected, onSelect, t }) {
   const opts = [{ id: '2h', label: '2h' }, { id: '3h', label: '3h' }, { id: '4h', label: '4h' }]
   return (
     <SubSheet open={open} onClose={onClose}>
-      <div style={{ fontSize: 17, fontWeight: 700, color: '#111', textAlign: 'center', padding: '16px 20px 8px' }}>{t('dreame.tempAsciugTitle')}</div>
+      <div style={{ fontSize: 17, fontWeight: 700, color: 'var(--text-primary)', textAlign: 'center', padding: '16px 20px 8px' }}>{t('dreame.tempAsciugTitle')}</div>
       <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', padding: '22px 20px 36px' }}>
         {opts.map(o => (
           <div key={o.id} onClick={() => { onSelect(o.id); setTimeout(onClose, 280) }} style={{ display: 'flex', alignItems: 'center', gap: 10, cursor: 'pointer' }}>
             <div style={{ width: 28, height: 28, borderRadius: '50%', border: `2px solid ${selected === o.id ? A : '#ccc'}`, background: selected === o.id ? A : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all .18s' }}>
               {selected === o.id && <span style={{ fontSize: 13, color: 'white', fontWeight: 800 }}>✓</span>}
             </div>
-            <span style={{ fontSize: 18, fontWeight: 600, color: '#111' }}>{o.label}</span>
+            <span style={{ fontSize: 18, fontWeight: 600, color: 'var(--text-primary)' }}>{o.label}</span>
           </div>
         ))}
       </div>
@@ -351,45 +351,45 @@ function MopExtendSheet({ open, onClose, onFrequenza, freqSel, sideReach, setSid
   return (
     <FullSheet open={open} onClose={onClose} zIndex={1100}>
       <div style={{ flex: 1, overflowY: 'auto', minHeight: 0 }}>
-        <div style={{ background: '#f2f2f7', minHeight: '100%' }}>
+        <div style={{ background: 'var(--bg-elevated)', minHeight: '100%' }}>
           <SettingsHeader title={t('dreame.mopExtendTitle')} onBack={onClose}/>
           {/* SideReach */}
-          <div style={{ background: 'white', borderRadius: 16, margin: '14px 14px 0', padding: 16, boxShadow: '0 1px 3px rgba(0,0,0,.04)' }}>
+          <div style={{ background: 'var(--bg-card)', borderRadius: 16, margin: '14px 14px 0', padding: 16, boxShadow: '0 1px 3px rgba(0,0,0,.04)' }}>
             <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 10, marginBottom: 8 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 6, flex: 1 }}>
-                <span style={{ fontSize: 16, fontWeight: 700, color: '#111' }}>{t('dreame.sideReach')}</span>
-                <div style={{ width: 18, height: 18, borderRadius: '50%', border: '1.5px solid #ccc', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, color: '#aaa', flexShrink: 0 }}>?</div>
+                <span style={{ fontSize: 16, fontWeight: 700, color: 'var(--text-primary)' }}>{t('dreame.sideReach')}</span>
+                <div style={{ width: 18, height: 18, borderRadius: '50%', border: '1.5px solid #ccc', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, color: 'var(--text-muted)', flexShrink: 0 }}>?</div>
               </div>
               <IosToggle on={sideReach} onToggle={() => setSideReach(p => !p)}/>
             </div>
-            <div style={{ fontSize: 13, color: '#888', lineHeight: 1.6 }}>{t('dreame.sideReachDesc')}</div>
+            <div style={{ fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.6 }}>{t('dreame.sideReachDesc')}</div>
           </div>
           {/* MopExtend + nested */}
-          <div style={{ background: 'white', borderRadius: 16, margin: '14px 14px 0', padding: 16, boxShadow: '0 1px 3px rgba(0,0,0,.04)' }}>
+          <div style={{ background: 'var(--bg-card)', borderRadius: 16, margin: '14px 14px 0', padding: 16, boxShadow: '0 1px 3px rgba(0,0,0,.04)' }}>
             <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 10, marginBottom: 8 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 6, flex: 1 }}>
-                <span style={{ fontSize: 16, fontWeight: 700, color: '#111' }}>{t('dreame.mopExtendLabel')}</span>
-                <div style={{ width: 18, height: 18, borderRadius: '50%', border: '1.5px solid #ccc', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, color: '#aaa', flexShrink: 0 }}>?</div>
+                <span style={{ fontSize: 16, fontWeight: 700, color: 'var(--text-primary)' }}>{t('dreame.mopExtendLabel')}</span>
+                <div style={{ width: 18, height: 18, borderRadius: '50%', border: '1.5px solid #ccc', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, color: 'var(--text-muted)', flexShrink: 0 }}>?</div>
               </div>
               <IosToggle on={mopExtend} onToggle={() => setMopExtend(p => !p)}/>
             </div>
-            <div style={{ fontSize: 13, color: '#888', lineHeight: 1.6, marginBottom: 14 }}>{t('dreame.mopExtendDesc')}</div>
-            <div style={{ background: '#f7f7f9', borderRadius: 12, padding: '0 14px', border: '1px solid #efefef' }}>
+            <div style={{ fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.6, marginBottom: 14 }}>{t('dreame.mopExtendDesc')}</div>
+            <div style={{ background: 'var(--bg-elevated)', borderRadius: 12, padding: '0 14px', border: '1px solid var(--border)' }}>
               {[
                 { label: t('dreame.mopVoid'), on: mopVoid, set: setMopVoid },
                 { label: t('dreame.mopLegs'), on: mopLegs, set: setMopLegs },
               ].map((item, i) => (
                 <div key={item.label} style={{ padding: '14px 0', borderTop: i > 0 ? '1px solid #efefef' : 'none', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                  <span style={{ fontSize: 15, fontWeight: 600, color: '#111' }}>{item.label}</span>
+                  <span style={{ fontSize: 15, fontWeight: 600, color: 'var(--text-primary)' }}>{item.label}</span>
                   <IosToggle on={item.on} onToggle={() => item.set(p => !p)}/>
                 </div>
               ))}
             </div>
           </div>
           {/* Frequenza */}
-          <div style={{ background: 'white', borderRadius: 16, margin: '14px 14px 28px', padding: 16, boxShadow: '0 1px 3px rgba(0,0,0,.04)' }}>
+          <div style={{ background: 'var(--bg-card)', borderRadius: 16, margin: '14px 14px 28px', padding: 16, boxShadow: '0 1px 3px rgba(0,0,0,.04)' }}>
             <div onClick={onFrequenza} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', cursor: 'pointer' }}>
-              <span style={{ fontSize: 16, fontWeight: 700, color: '#111' }}>{t('dreame.frequenzaLabel')}</span>
+              <span style={{ fontSize: 16, fontWeight: 700, color: 'var(--text-primary)' }}>{t('dreame.frequenzaLabel')}</span>
               <span style={{ fontSize: 14, color: A, whiteSpace: 'nowrap' }}>{freqLabel} ›</span>
             </div>
           </div>
@@ -414,22 +414,22 @@ function ImpostazioniSheet({ open, onClose, onMopExtend, cfg, t, callService, ge
   return (
     <FullSheet open={open} onClose={onClose} zIndex={1000}>
       <div style={{ flex: 1, overflowY: 'auto', minHeight: 0 }}>
-        <div style={{ background: '#f2f2f7', minHeight: '100%' }}>
+        <div style={{ background: 'var(--bg-elevated)', minHeight: '100%' }}>
           <SettingsHeader title={t('dreame.impostazioniTitle')} onBack={onClose}/>
           {items.length > 0 && (
-            <div style={{ background: 'white', borderRadius: 16, margin: '10px 14px 0', overflow: 'hidden' }}>
+            <div style={{ background: 'var(--bg-card)', borderRadius: 16, margin: '10px 14px 0', overflow: 'hidden' }}>
               {items.map((item, i) => (
-                <div key={item.e} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 16, borderTop: i > 0 ? '1px solid #f2f2f2' : 'none' }}>
-                  <span style={{ fontSize: 16, color: '#111' }}>{item.label}</span>
+                <div key={item.e} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 16, borderTop: i > 0 ? '1px solid var(--border)' : 'none' }}>
+                  <span style={{ fontSize: 16, color: 'var(--text-primary)' }}>{item.label}</span>
                   <IosToggle on={isOn(item.e)} onToggle={() => callService('switch', 'toggle', item.e)}/>
                 </div>
               ))}
             </div>
           )}
-          <div style={{ background: 'white', borderRadius: 16, margin: '10px 14px 0', overflow: 'hidden' }}>
+          <div style={{ background: 'var(--bg-card)', borderRadius: 16, margin: '10px 14px 0', overflow: 'hidden' }}>
             <div onClick={() => { onClose(); setTimeout(onMopExtend, 120) }} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 16, cursor: 'pointer' }}>
-              <span style={{ fontSize: 16, color: '#111' }}>{t('dreame.mopExtendTitle')}</span>
-              <span style={{ color: '#c8c8cc', fontSize: 17 }}>›</span>
+              <span style={{ fontSize: 16, color: 'var(--text-primary)' }}>{t('dreame.mopExtendTitle')}</span>
+              <span style={{ color: 'var(--text-muted)', fontSize: 17 }}>›</span>
             </div>
           </div>
         </div>
@@ -508,21 +508,21 @@ function BaseSheet({ open, onClose, cfg, t, callService, getState,
           <motion.div animate={{ x: page === 'main' ? 0 : '-100%' }} transition={{ type: 'spring', damping: 30, stiffness: 280 }}
             style={{ position: 'absolute', inset: 0, overflowY: 'auto' }}>
             <div style={{ padding: '22px 20px 32px' }}>
-              <div style={{ fontSize: 22, fontWeight: 800, color: '#111', marginBottom: 22 }}>{t('dreame.baseTitle')}</div>
+              <div style={{ fontSize: 22, fontWeight: 800, color: 'var(--text-primary)', marginBottom: 22 }}>{t('dreame.baseTitle')}</div>
               {stItems.length > 0 && (
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px 12px', marginBottom: 26 }}>
                   {stItems.map(item => (
                     <div key={item.label} style={{ display: 'flex', alignItems: 'flex-start', gap: 10 }}>
-                      <div style={{ width: 12, height: 12, borderRadius: '50%', flexShrink: 0, marginTop: 4, background: OK.includes(item.val) ? '#34c759' : '#e03030' }}/>
+                      <div style={{ width: 12, height: 12, borderRadius: '50%', flexShrink: 0, marginTop: 4, background: OK.includes(item.val) ? '#34c759' : 'var(--red)' }}/>
                       <div>
-                        <div style={{ fontSize: 15, fontWeight: 600, color: '#111', lineHeight: 1.4 }}>{item.label}</div>
-                        <div style={{ fontSize: 13, color: OK.includes(item.val) ? '#34c759' : '#e03030', lineHeight: 1.4, marginTop: 3 }}>{item.val}</div>
+                        <div style={{ fontSize: 15, fontWeight: 600, color: 'var(--text-primary)', lineHeight: 1.4 }}>{item.label}</div>
+                        <div style={{ fontSize: 13, color: OK.includes(item.val) ? '#34c759' : 'var(--red)', lineHeight: 1.4, marginTop: 3 }}>{item.val}</div>
                       </div>
                     </div>
                   ))}
                 </div>
               )}
-              <div style={{ height: 1, background: '#efefef', margin: '0 -20px 26px' }}/>
+              <div style={{ height: 1, background: 'var(--border)', margin: '0 -20px 26px' }}/>
               <div style={{ display: 'flex', justifyContent: 'space-around', marginBottom: 28 }}>
                 {[
                   { label: t('dreame.svuotLabel'),     icon: '🗑️', onClick: () => setSvuotOpen(true)     },
@@ -530,8 +530,8 @@ function BaseSheet({ open, onClose, cfg, t, callService, getState,
                   { label: t('dreame.tempAsciugLabel'), icon: '💨', onClick: () => setTempAsciugOpen(true) },
                 ].map(act => (
                   <div key={act.label} onClick={act.onClick} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12, cursor: 'pointer' }}>
-                    <div style={{ width: 88, height: 88, borderRadius: '50%', background: '#f2f2f4', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 30, transition: 'background .18s' }}>{act.icon}</div>
-                    <span style={{ fontSize: 15, color: '#111', fontWeight: 500 }}>{act.label}</span>
+                    <div style={{ width: 88, height: 88, borderRadius: '50%', background: 'var(--bg-elevated)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 30, transition: 'background .18s' }}>{act.icon}</div>
+                    <span style={{ fontSize: 15, color: 'var(--text-primary)', fontWeight: 500 }}>{act.label}</span>
                   </div>
                 ))}
               </div>
@@ -544,12 +544,12 @@ function BaseSheet({ open, onClose, cfg, t, callService, getState,
           {/* PAGE SETTINGS */}
           <motion.div animate={{ x: page === 'settings' ? 0 : page === 'main' ? '100%' : '-100%' }} transition={{ type: 'spring', damping: 30, stiffness: 280 }}
             style={{ position: 'absolute', inset: 0, overflowY: 'auto' }}>
-            <div style={{ background: '#f2f2f7', minHeight: '100%' }}>
+            <div style={{ background: 'var(--bg-elevated)', minHeight: '100%' }}>
               <SettingsHeader title={t('dreame.baseSettingsTitle')} onBack={() => setPage('main')}/>
-              <div style={{ background: 'white', borderRadius: 16, margin: '14px 14px 0', padding: 16 }}>
+              <div style={{ background: 'var(--bg-card)', borderRadius: 16, margin: '14px 14px 0', padding: 16 }}>
                 <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 10 }}>
                   <div>
-                    <div style={{ fontSize: 16, fontWeight: 700, color: '#111', marginBottom: 4 }}>{t('dreame.svuotTitle')}</div>
+                    <div style={{ fontSize: 16, fontWeight: 700, color: 'var(--text-primary)', marginBottom: 4 }}>{t('dreame.svuotTitle')}</div>
                     <div onClick={() => setSvuotOpen(true)} style={{ fontSize: 14, color: A, cursor: 'pointer' }}>
                       {svuotSel === 'always' ? t('dreame.svuotAlways') : svuotSel === 'manual' ? t('dreame.svuotManual') : t('dreame.svuotSmart')} ›
                     </div>
@@ -557,21 +557,21 @@ function BaseSheet({ open, onClose, cfg, t, callService, getState,
                   <IosToggle on={true} onToggle={() => {}}/>
                 </div>
               </div>
-              <div style={{ background: 'white', borderRadius: 16, margin: '14px 14px 0', padding: 16 }}>
+              <div style={{ background: 'var(--bg-card)', borderRadius: 16, margin: '14px 14px 0', padding: 16 }}>
                 {[
                   { label: t('dreame.autoDetergent'), on: autoDetergent, set: (fn) => { const v = typeof fn === 'function' ? fn(autoDetergent) : fn; setAutoDetergent(v); swToggle(cfg.autoDetergentEntity, v) } },
                   { label: t('dreame.autoWash'),      on: autoWash,      set: (fn) => { const v = typeof fn === 'function' ? fn(autoWash)      : fn; setAutoWash(v);      swToggle(cfg.autoWashEntity,        v) } },
                   { label: t('dreame.asciuga'),       on: asciugaOn,     set: (fn) => { const v = typeof fn === 'function' ? fn(asciugaOn)     : fn; setAsciugaOn(v);     swToggle(cfg.autoDryingEntity,      v) } },
                 ].map((item, i) => (
-                  <div key={item.label} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingTop: i > 0 ? 14 : 0, marginTop: i > 0 ? 14 : 0, borderTop: i > 0 ? '1px solid #f2f2f2' : 'none' }}>
-                    <span style={{ fontSize: 16, fontWeight: 500, color: '#111' }}>{item.label}</span>
+                  <div key={item.label} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingTop: i > 0 ? 14 : 0, marginTop: i > 0 ? 14 : 0, borderTop: i > 0 ? '1px solid var(--border)' : 'none' }}>
+                    <span style={{ fontSize: 16, fontWeight: 500, color: 'var(--text-primary)' }}>{item.label}</span>
                     <IosToggle on={item.on} onToggle={() => item.set(p => !p)}/>
                   </div>
                 ))}
               </div>
-              <div onClick={() => setPage('washing')} style={{ background: 'white', borderRadius: 16, margin: '10px 14px 0', padding: '16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', cursor: 'pointer' }}>
-                <span style={{ fontSize: 16, color: '#111' }}>{t('dreame.washingSettingsTitle')}</span>
-                <span style={{ color: '#c8c8cc', fontSize: 17 }}>›</span>
+              <div onClick={() => setPage('washing')} style={{ background: 'var(--bg-card)', borderRadius: 16, margin: '10px 14px 0', padding: '16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', cursor: 'pointer' }}>
+                <span style={{ fontSize: 16, color: 'var(--text-primary)' }}>{t('dreame.washingSettingsTitle')}</span>
+                <span style={{ color: 'var(--text-muted)', fontSize: 17 }}>›</span>
               </div>
             </div>
           </motion.div>
@@ -579,30 +579,30 @@ function BaseSheet({ open, onClose, cfg, t, callService, getState,
           {/* PAGE WASHING */}
           <motion.div animate={{ x: page === 'washing' ? 0 : '100%' }} transition={{ type: 'spring', damping: 30, stiffness: 280 }}
             style={{ position: 'absolute', inset: 0, overflowY: 'auto' }}>
-            <div style={{ background: '#f2f2f7', minHeight: '100%' }}>
+            <div style={{ background: 'var(--bg-elevated)', minHeight: '100%' }}>
               <SettingsHeader title={t('dreame.washingSettingsTitle')} onBack={() => setPage('settings')}/>
-              <div style={{ fontSize: 14, color: '#888', margin: '16px 14px 8px', lineHeight: 1.5 }}>{t('dreame.washQtyLabel')}</div>
-              <div style={{ background: 'white', borderRadius: 16, margin: '0 14px', overflow: 'hidden' }}>
+              <div style={{ fontSize: 14, color: 'var(--text-muted)', margin: '16px 14px 8px', lineHeight: 1.5 }}>{t('dreame.washQtyLabel')}</div>
+              <div style={{ background: 'var(--bg-card)', borderRadius: 16, margin: '0 14px', overflow: 'hidden' }}>
                 {washQtyOpts.map((o, i) => (
-                  <div key={o.id} onClick={() => { setWashQty(o.id); selOpt(cfg.mopWashLevelEntity, WASHQTY_HA[o.id]) }} style={{ display: 'flex', alignItems: 'flex-start', gap: 14, padding: 16, cursor: 'pointer', borderTop: i > 0 ? '1px solid #f2f2f2' : 'none' }}>
+                  <div key={o.id} onClick={() => { setWashQty(o.id); selOpt(cfg.mopWashLevelEntity, WASHQTY_HA[o.id]) }} style={{ display: 'flex', alignItems: 'flex-start', gap: 14, padding: 16, cursor: 'pointer', borderTop: i > 0 ? '1px solid var(--border)' : 'none' }}>
                     <div style={{ width: 24, height: 24, borderRadius: '50%', border: `2px solid ${washQty === o.id ? A : '#ccc'}`, flexShrink: 0, marginTop: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', background: washQty === o.id ? A : 'transparent', transition: 'all .18s' }}>
                       {washQty === o.id && <span style={{ fontSize: 13, color: 'white', fontWeight: 800, lineHeight: 1 }}>✓</span>}
                     </div>
                     <div>
-                      <div style={{ fontSize: 16, fontWeight: 700, color: '#111', marginBottom: 4 }}>{o.label}</div>
-                      <div style={{ fontSize: 13, color: '#888', lineHeight: 1.5 }}>{o.desc}</div>
+                      <div style={{ fontSize: 16, fontWeight: 700, color: 'var(--text-primary)', marginBottom: 4 }}>{o.label}</div>
+                      <div style={{ fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.5 }}>{o.desc}</div>
                     </div>
                   </div>
                 ))}
               </div>
-              <div style={{ fontSize: 14, color: '#888', margin: '16px 14px 8px' }}>{t('dreame.washTempLabel')}</div>
-              <div style={{ background: 'white', borderRadius: 16, margin: '0 14px', overflow: 'hidden' }}>
+              <div style={{ fontSize: 14, color: 'var(--text-muted)', margin: '16px 14px 8px' }}>{t('dreame.washTempLabel')}</div>
+              <div style={{ background: 'var(--bg-card)', borderRadius: 16, margin: '0 14px', overflow: 'hidden' }}>
                 {washTempOpts.map((o, i) => (
-                  <div key={o.id} onClick={() => { setWashTemp(o.id); selOpt(cfg.waterTempEntity, WASHTEMP_HA[o.id]) }} style={{ display: 'flex', alignItems: 'center', gap: 14, padding: 16, cursor: 'pointer', borderTop: i > 0 ? '1px solid #f2f2f2' : 'none' }}>
+                  <div key={o.id} onClick={() => { setWashTemp(o.id); selOpt(cfg.waterTempEntity, WASHTEMP_HA[o.id]) }} style={{ display: 'flex', alignItems: 'center', gap: 14, padding: 16, cursor: 'pointer', borderTop: i > 0 ? '1px solid var(--border)' : 'none' }}>
                     <div style={{ width: 24, height: 24, borderRadius: '50%', border: `2px solid ${washTemp === o.id ? A : '#ccc'}`, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: washTemp === o.id ? A : 'transparent', transition: 'all .18s' }}>
                       {washTemp === o.id && <span style={{ fontSize: 13, color: 'white', fontWeight: 800, lineHeight: 1 }}>✓</span>}
                     </div>
-                    <span style={{ fontSize: 16, fontWeight: 700, color: '#111' }}>{o.label}</span>
+                    <span style={{ fontSize: 16, fontWeight: 700, color: 'var(--text-primary)' }}>{o.label}</span>
                   </div>
                 ))}
               </div>
@@ -632,7 +632,7 @@ function SuctionRow({ suction, onSelect, t }) {
   ]
   return (
     <div>
-      <div style={{ fontSize: 17, fontWeight: 700, color: '#111', marginBottom: 16, display: 'flex', alignItems: 'center', gap: 6 }}>{t('dreame.potenzaAspira')}</div>
+      <div style={{ fontSize: 17, fontWeight: 700, color: 'var(--text-primary)', marginBottom: 16, display: 'flex', alignItems: 'center', gap: 6 }}>{t('dreame.potenzaAspira')}</div>
       <div style={{ display: 'flex', gap: 8, justifyContent: 'center', marginBottom: 22 }}>
         {opts.map(({ id, label, Ico }) => (
           <CircleItem key={id} label={label} active={suction === id} onClick={() => onSelect(id)}><Ico/></CircleItem>
@@ -655,9 +655,9 @@ function PercorsoRow({ route, onSelect, mop, t }) {
   const opts = mop ? mopOpts : baseOpts
   return (
     <div>
-      <div style={{ fontSize: 17, fontWeight: 700, color: '#111', marginBottom: 16, display: 'flex', alignItems: 'center', gap: 6 }}>
+      <div style={{ fontSize: 17, fontWeight: 700, color: 'var(--text-primary)', marginBottom: 16, display: 'flex', alignItems: 'center', gap: 6 }}>
         {t('dreame.percorso')}
-        <div style={{ width: 20, height: 20, borderRadius: '50%', border: '1.5px solid #ccc', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12, color: '#aaa', cursor: 'pointer' }}>?</div>
+        <div style={{ width: 20, height: 20, borderRadius: '50%', border: '1.5px solid #ccc', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12, color: 'var(--text-muted)', cursor: 'pointer' }}>?</div>
       </div>
       <div style={{ display: 'flex', gap: 8, justifyContent: 'center', marginBottom: 22 }}>
         {opts.map(({ id, label, Ico, small }) => (
@@ -672,13 +672,13 @@ function MopSection({ humidity, onHumChange, onFrequenza, freqSel, t }) {
   const freqLabel = freqSel === 'high' ? t('dreame.freqHigh') : freqSel === 'intelligent' ? t('dreame.freqIntelligent') : t('dreame.freqStandard')
   return (
     <div>
-      <div style={{ fontSize: 17, fontWeight: 700, color: '#111', marginBottom: 16 }}>{t('dreame.umidita')}</div>
+      <div style={{ fontSize: 17, fontWeight: 700, color: 'var(--text-primary)', marginBottom: 16 }}>{t('dreame.umidita')}</div>
       <HumSlider value={humidity} onChange={onHumChange}/>
-      <div onClick={onFrequenza} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 0', borderTop: '1px solid #f0f0f0', borderBottom: '1px solid #f0f0f0', marginBottom: 16, cursor: 'pointer' }}>
-        <span style={{ fontSize: 16, fontWeight: 600, color: '#111' }}>{t('dreame.freqLavaggio')}</span>
-        <span style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 14, color: '#888' }}><span style={{ color: '#666' }}>{freqLabel}</span> ›</span>
+      <div onClick={onFrequenza} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 0', borderTop: '1px solid var(--border)', borderBottom: '1px solid var(--border)', marginBottom: 16, cursor: 'pointer' }}>
+        <span style={{ fontSize: 16, fontWeight: 600, color: 'var(--text-primary)' }}>{t('dreame.freqLavaggio')}</span>
+        <span style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 14, color: 'var(--text-muted)' }}><span style={{ color: 'var(--text-secondary)' }}>{freqLabel}</span> ›</span>
       </div>
-      {humidity >= 27 && <div style={{ fontSize: 13, color: '#d97706', lineHeight: 1.6, marginBottom: 16, marginTop: -8 }}>{t('dreame.humWarning')}</div>}
+      {humidity >= 27 && <div style={{ fontSize: 13, color: 'var(--amber)', lineHeight: 1.6, marginBottom: 16, marginTop: -8 }}>{t('dreame.humWarning')}</div>}
     </div>
   )
 }
@@ -718,7 +718,7 @@ function MainSheet({ open, onClose, cfg, t, callService, getState,
     <>
       <FullSheet open={open} onClose={onClose} zIndex={1000}>
         {/* Tabs */}
-        <div style={{ display: 'flex', margin: '0 16px 14px', background: '#f0f0f0', borderRadius: 14, padding: 4, gap: 3, flexShrink: 0 }}>
+        <div style={{ display: 'flex', margin: '0 16px 14px', background: 'var(--bg-elevated)', borderRadius: 14, padding: 4, gap: 3, flexShrink: 0 }}>
           {['genius', 'custom'].map(id => (
             <button key={id} onClick={() => switchTab(id)} style={{
               flex: 1, textAlign: 'center', padding: '11px 4px', borderRadius: 10,
@@ -752,14 +752,14 @@ function MainSheet({ open, onClose, cfg, t, callService, getState,
               {mode === 0 && (
                 <div>
                   <SuctionRow suction={suction} onSelect={onSuction} t={t}/>
-                  <div style={{ background: '#fafafa', borderRadius: 16, padding: '14px 16px', marginBottom: 24 }}>
+                  <div style={{ background: 'var(--bg-elevated)', borderRadius: 16, padding: '14px 16px', marginBottom: 24 }}>
                     <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 12, marginBottom: 8 }}>
                       <div style={{ flex: 1 }}>
-                        <div style={{ fontSize: 15, fontWeight: 700, color: '#111' }}>{t('dreame.massimaTitle')}</div>
+                        <div style={{ fontSize: 15, fontWeight: 700, color: 'var(--text-primary)' }}>{t('dreame.massimaTitle')}</div>
                       </div>
                       <IosToggle on={massima} onToggle={() => setMassima(p => !p)}/>
                     </div>
-                    <div style={{ fontSize: 13, color: '#888', lineHeight: 1.6 }}>{t('dreame.massimaDesc')}</div>
+                    <div style={{ fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.6 }}>{t('dreame.massimaDesc')}</div>
                   </div>
                   <PercorsoRow route={route} onSelect={onRoute} mop={false} t={t}/>
                 </div>
@@ -789,7 +789,7 @@ function MainSheet({ open, onClose, cfg, t, callService, getState,
               )}
               {/* Personalizza stanza */}
               {mode === 4 && (
-                <div style={{ textAlign: 'center', padding: '32px 16px', color: '#888', fontSize: 15 }}>
+                <div style={{ textAlign: 'center', padding: '32px 16px', color: 'var(--text-muted)', fontSize: 15 }}>
                   {t('dreame.modePersStanza')}
                 </div>
               )}
@@ -799,8 +799,8 @@ function MainSheet({ open, onClose, cfg, t, callService, getState,
           {/* GENIUS */}
           <div style={{ position: 'absolute', inset: 0, overflowY: 'auto', display: tab === 'genius' ? 'block' : 'none' }}>
             <div style={{ padding: '0 12px 80px' }}>
-              <div style={{ background: 'white', borderRadius: 18, padding: 16, boxShadow: '0 2px 12px rgba(0,0,0,.06)' }}>
-                <div style={{ fontSize: 17, fontWeight: 700, color: '#111', marginBottom: 16 }}>{t('cleaning.geniusDesc')}</div>
+              <div style={{ background: 'var(--bg-card)', borderRadius: 18, padding: 16, boxShadow: '0 2px 12px rgba(0,0,0,.06)' }}>
+                <div style={{ fontSize: 17, fontWeight: 700, color: 'var(--text-primary)', marginBottom: 16 }}>{t('cleaning.geniusDesc')}</div>
                 <div style={{ display: 'flex', gap: 12 }}>
                   {[
                     { id: 'sweeping_and_mopping',   Ico: SvgAspiraLava, label: t('cleanMode.sweeping_and_mopping')   },
@@ -819,12 +819,12 @@ function MainSheet({ open, onClose, cfg, t, callService, getState,
                 </div>
               </div>
               {cfg.deepCleanEntity && (
-                <div style={{ background: 'white', borderRadius: 18, padding: '14px 16px', marginTop: 12, boxShadow: '0 2px 12px rgba(0,0,0,.06)' }}>
+                <div style={{ background: 'var(--bg-card)', borderRadius: 18, padding: '14px 16px', marginTop: 12, boxShadow: '0 2px 12px rgba(0,0,0,.06)' }}>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <div style={{ fontSize: 17, fontWeight: 700, color: '#111' }}>{t('dreame.geniusDeepTitle')}</div>
+                    <div style={{ fontSize: 17, fontWeight: 700, color: 'var(--text-primary)' }}>{t('dreame.geniusDeepTitle')}</div>
                     <IosToggle on={getState(cfg.deepCleanEntity) === 'on'} onToggle={() => callService('switch', 'toggle', cfg.deepCleanEntity)}/>
                   </div>
-                  <div style={{ marginTop: 10, fontSize: 13, color: '#888', lineHeight: 1.6 }}>{t('dreame.geniusDeepDesc')}</div>
+                  <div style={{ marginTop: 10, fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.6 }}>{t('dreame.geniusDeepDesc')}</div>
                 </div>
               )}
             </div>
@@ -934,37 +934,37 @@ export default function VacuumCard() {
   }
 
   return (
-    <div style={{ background: '#fff', borderRadius: 22, overflow: 'hidden', boxShadow: '0 8px 40px rgba(0,0,0,.13)', fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', sans-serif", position: 'relative' }}>
+    <div style={{ background: 'var(--bg-card)', borderRadius: 22, overflow: 'hidden', border: '1px solid var(--border)', position: 'relative' }}>
 
       {/* ── Header ── */}
       <div style={{ padding: '12px 18px 6px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <div style={{ width: 34 }} />
         <div style={{ textAlign: 'center', flex: 1 }}>
-          <div style={{ fontSize: 16, fontWeight: 700, color: '#111' }}>{cfg.name}</div>
+          <div style={{ fontSize: 16, fontWeight: 700, color: 'var(--text-primary)' }}>{cfg.name}</div>
           <div style={{ fontSize: 12, color: stateColor, marginTop: 1, fontWeight: 500 }}>
             {mainState === 'docked' ? t('state.docked') : mainState === 'cleaning' ? t('state.cleaning') : mainState === 'paused' ? t('state.paused') : mainState === 'returning' ? t('state.returning') : mainState === 'charging_completed' ? t('state.charging_completed') : mainState === 'sleeping' ? t('state.sleeping') : mainState === 'error' ? t('state.error') : mainState === 'idle' ? t('state.idle') : (mainState || '—')}
           </div>
         </div>
-        <div onClick={() => setImpostazioniOpen(true)} style={{ width: 34, height: 34, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: 10, background: '#f5f5f5', color: '#666', fontSize: 20, cursor: 'pointer' }}>⋯</div>
+        <div onClick={() => setImpostazioniOpen(true)} style={{ width: 34, height: 34, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: 10, background: 'var(--bg-elevated)', color: 'var(--text-secondary)', fontSize: 20, cursor: 'pointer' }}>⋯</div>
       </div>
 
       {/* ── Stats row ── */}
-      <div style={{ margin: '5px 16px 0', padding: '6px 0', background: '#f5f5f5', borderRadius: 22, display: 'flex' }}>
+      <div style={{ margin: '5px 16px 0', padding: '6px 0', background: 'var(--bg-elevated)', borderRadius: 22, display: 'flex' }}>
         {[
           { icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#999" strokeWidth="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>, val: cleanArea !== null ? Math.round(cleanArea) : '0', unit: 'm²' },
           { icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#999" strokeWidth="2"><circle cx="12" cy="12" r="9"/><polyline points="12,7 12,12 15,15"/></svg>, val: cleanTime !== null ? fmtMin(cleanTime).replace(' min','').replace('h','') : '0', unit: cleanTime !== null && cleanTime < 60 ? 'min' : 'h' },
           { icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#999" strokeWidth="2"><rect x="2" y="7" width="18" height="11" rx="2"/><path d="M22 11v3" strokeLinecap="round"/></svg>, val: battery !== null ? battery : '—', unit: '%' },
         ].map((s, i) => (
-          <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 4, padding: '0 10px', flex: 1, justifyContent: 'center', borderLeft: i > 0 ? '1px solid #e0e0e0' : 'none' }}>
+          <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 4, padding: '0 10px', flex: 1, justifyContent: 'center', borderLeft: i > 0 ? '1px solid var(--border-medium)' : 'none' }}>
             {s.icon}
-            <span style={{ fontSize: 13, fontWeight: 700, color: '#222' }}>{s.val}</span>
-            <span style={{ fontSize: 11, color: '#aaa' }}>{s.unit}</span>
+            <span style={{ fontSize: 13, fontWeight: 700, color: 'var(--text-primary)' }}>{s.val}</span>
+            <span style={{ fontSize: 11, color: 'var(--text-muted)' }}>{s.unit}</span>
           </div>
         ))}
       </div>
 
       {/* ── Map ── */}
-      <div style={{ marginTop: 8, position: 'relative', height: 340, background: '#eef2f7', overflow: 'hidden' }}>
+      <div style={{ marginTop: 8, position: 'relative', height: 340, background: 'var(--bg-elevated)', overflow: 'hidden' }}>
         {cfg.cameraEntity ? (
           <img key={mapTs}
             src={`${haHost.current}/api/camera_proxy/${cfg.cameraEntity}?token=${getAttr(cfg.cameraEntity, 'access_token') ?? ''}&t=${mapTs}`}
@@ -975,7 +975,7 @@ export default function VacuumCard() {
         ) : (
           <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 12 }}>
             <div style={{ fontSize: 48 }}>🤖</div>
-            <div style={{ fontSize: 13, color: '#999' }}>{cfg.name}</div>
+            <div style={{ fontSize: 13, color: 'var(--text-muted)' }}>{cfg.name}</div>
           </div>
         )}
         {/* Room overlay on map */}
@@ -1000,7 +1000,7 @@ export default function VacuumCard() {
                     <div style={{
                       position: 'absolute', top: -8, right: -8,
                       width: 20, height: 20, borderRadius: '50%',
-                      background: '#5b9cf6', color: 'white',
+                      background: 'var(--blue)', color: 'white',
                       fontSize: 11, fontWeight: 800,
                       display: 'flex', alignItems: 'center', justifyContent: 'center',
                     }}>{idx + 1}</div>
@@ -1014,29 +1014,29 @@ export default function VacuumCard() {
 
       {/* ── Personalizza button ── */}
       <div style={{ padding: '10px 16px 0' }}>
-        <button onClick={() => setMainOpen(true)} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 16px', background: '#fff', borderRadius: 16, cursor: 'pointer', border: 'none', boxShadow: '0 2px 12px rgba(0,0,0,.10)' }}>
+        <button onClick={() => setMainOpen(true)} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 16px', background: 'var(--bg-card)', borderRadius: 16, cursor: 'pointer', border: 'none', boxShadow: '0 2px 12px rgba(0,0,0,.10)' }}>
           <svg width="22" height="22" viewBox="0 0 24 24" fill="#333">
             <rect x="2" y="2" width="9" height="9" rx="2"/>
             <rect x="13" y="2" width="9" height="9" rx="2"/>
             <rect x="2" y="13" width="9" height="9" rx="2"/>
             <rect x="13" y="13" width="9" height="9" rx="2"/>
           </svg>
-          <span style={{ fontSize: 15, fontWeight: 600, color: '#111' }}>{t('dreame.personalizzaBtn')}</span>
-          <span style={{ fontSize: 14, color: '#bbb' }}>›</span>
+          <span style={{ fontSize: 15, fontWeight: 600, color: 'var(--text-primary)' }}>{t('dreame.personalizzaBtn')}</span>
+          <span style={{ fontSize: 14, color: 'var(--text-muted)' }}>›</span>
         </button>
       </div>
 
       {/* ── Zona tooltip ── */}
       {scope === 'zona' && !zonaTooltipDismissed && (
-        <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10, padding: '12px 14px', background: '#e8f1ff', margin: '8px 16px 0', borderRadius: 12, fontSize: 13, color: '#2a5faa', lineHeight: 1.5 }}>
+        <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10, padding: '12px 14px', background: 'var(--blue-light)', margin: '8px 16px 0', borderRadius: 12, fontSize: 13, color: 'var(--blue)', lineHeight: 1.5 }}>
           <span style={{ flex: 1 }}>{t('dreame.zonaTooltip')}</span>
-          <span onClick={() => setZonaTooltipDismissed(true)} style={{ fontSize: 15, color: '#7aa0d4', cursor: 'pointer', flexShrink: 0, lineHeight: 1, marginTop: 1 }}>✕</span>
+          <span onClick={() => setZonaTooltipDismissed(true)} style={{ fontSize: 15, color: 'var(--text-muted)', cursor: 'pointer', flexShrink: 0, lineHeight: 1, marginTop: 1 }}>✕</span>
         </div>
       )}
 
       {/* ── Scope tabs ── */}
       <div style={{ padding: '8px 16px 0' }}>
-        <div style={{ display: 'flex', background: '#f0f0f0', borderRadius: 13, padding: 3, gap: 2 }}>
+        <div style={{ display: 'flex', background: 'var(--bg-elevated)', borderRadius: 13, padding: 3, gap: 2 }}>
           {[
             { id: 'room', label: t('dreame.scopeRoom') },
             { id: 'all',  label: t('dreame.scopeAll')  },
@@ -1058,7 +1058,7 @@ export default function VacuumCard() {
       {/* ── Zona controls ── */}
       {scope === 'zona' && (
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '10px 16px 0' }}>
-          <button onClick={() => setZonaCount(p => Math.min(p + 1, 3))} style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '11px 18px', background: '#5b9cf6', border: 'none', borderRadius: 22, color: 'white', fontSize: 14, fontWeight: 700, cursor: 'pointer', boxShadow: '0 2px 8px rgba(91,156,246,.35)' }}>
+          <button onClick={() => setZonaCount(p => Math.min(p + 1, 3))} style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '11px 18px', background: 'var(--blue)', border: 'none', borderRadius: 22, color: 'white', fontSize: 14, fontWeight: 700, cursor: 'pointer', boxShadow: '0 2px 8px rgba(91,156,246,.35)' }}>
             {t('dreame.zonaAdd')}
           </button>
           <button onClick={() => setZonaCiclo(p => p >= 3 ? 1 : p + 1)} style={{ width: 48, height: 48, borderRadius: '50%', background: ABG, border: 'none', cursor: 'pointer', fontSize: 15, fontWeight: 800, color: A, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: `0 2px 6px rgba(196,124,24,.18)` }}>
@@ -1071,12 +1071,12 @@ export default function VacuumCard() {
       {hasError && (
         <div style={{ display: 'flex', alignItems: 'center', gap: 6, margin: '8px 16px 0', padding: '8px 12px', borderRadius: 10, background: 'rgba(239,68,68,.07)', border: '1px solid rgba(239,68,68,.25)' }}>
           <span style={{ fontSize: 14 }}>⚠️</span>
-          <span style={{ fontSize: 12, color: '#ef4444', fontWeight: 600 }}>{error}</span>
+          <span style={{ fontSize: 12, color: 'var(--red)', fontWeight: 600 }}>{error}</span>
         </div>
       )}
 
       {/* ── Action bar ── */}
-      <div style={{ display: 'flex', alignItems: 'center', padding: '14px 20px 20px', borderTop: '1px solid #f0f0f0', marginTop: 12 }}>
+      <div style={{ display: 'flex', alignItems: 'center', padding: '14px 20px 20px', borderTop: '1px solid var(--border)', marginTop: 12 }}>
         {/* Pulisci / Pausa / Riprendi */}
         <button onClick={handleMainBtn} style={{ display: 'flex', alignItems: 'center', gap: 8, flex: 1, background: 'transparent', border: 'none', cursor: 'pointer', padding: 0 }}>
           <svg width="28" height="28" viewBox="0 0 28 28">
@@ -1087,15 +1087,15 @@ export default function VacuumCard() {
           </svg>
           <span style={{ fontSize: 17, fontWeight: 700, color: A }}>{btnLabel}</span>
         </button>
-        <div style={{ width: 1, height: 32, background: '#e8e8e8', margin: '0 8px' }}/>
+        <div style={{ width: 1, height: 32, background: 'var(--border-medium)', margin: '0 8px' }}/>
         {/* Base */}
         <button onClick={() => setBaseOpen(true)} style={{ display: 'flex', alignItems: 'center', gap: 8, flex: 1, justifyContent: 'center', background: 'transparent', border: 'none', cursor: 'pointer', padding: 0 }}>
           <span style={{ fontSize: 22 }}>🏠</span>
-          <span style={{ fontSize: 17, fontWeight: 600, color: '#333' }}>{t('dreame.baseBtn')}</span>
+          <span style={{ fontSize: 17, fontWeight: 600, color: 'var(--text-secondary)' }}>{t('dreame.baseBtn')}</span>
         </button>
         {/* Stop */}
         {(isCleaning || isPaused) && (
-          <button onClick={() => cmd('stop')} style={{ width: 22, height: 22, borderRadius: '50%', background: '#e8392e', border: 'none', cursor: 'pointer', flexShrink: 0, marginLeft: 8, boxShadow: '0 2px 6px rgba(232,57,46,.35)' }}/>
+          <button onClick={() => cmd('stop')} style={{ width: 22, height: 22, borderRadius: '50%', background: 'var(--red)', border: 'none', cursor: 'pointer', flexShrink: 0, marginLeft: 8, boxShadow: '0 2px 6px rgba(232,57,46,.35)' }}/>
         )}
       </div>
 
