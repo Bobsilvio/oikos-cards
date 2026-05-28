@@ -921,15 +921,16 @@ export default function VacuumCard() {
       </div>
 
       {/* ── Stats row ── */}
-      <div style={{ margin: '10px 16px 0', padding: '10px 0', background: '#f7f7f7', borderRadius: 14, display: 'flex' }}>
+      <div style={{ margin: '6px 16px 0', padding: '5px 0', background: '#f7f7f7', borderRadius: 10, display: 'flex' }}>
         {[
-          { val: cleanArea !== null ? Math.round(cleanArea) : (battery ?? '—'), unit: cleanArea !== null ? 'm²' : '%', icon: cleanArea !== null ? '📐' : '🔋' },
-          { val: cleanTime !== null ? fmtMin(cleanTime).replace(' min', '').replace('h', '') : '—', unit: cleanTime !== null && cleanTime < 60 ? 'min' : cleanTime !== null ? 'h' : '', icon: '⏱' },
-          { val: battery !== null ? battery : '—', unit: '%', icon: isCharging ? '⚡' : '🔋' },
+          { val: cleanArea !== null ? Math.round(cleanArea) : (battery ?? '—'), unit: cleanArea !== null ? 'm²' : '%' },
+          { val: cleanTime !== null ? fmtMin(cleanTime).replace(' min', '').replace('h', '') : '—', unit: cleanTime !== null && cleanTime < 60 ? 'min' : cleanTime !== null ? 'h' : '' },
+          { val: battery !== null ? battery : '—', unit: '%', prefix: isCharging ? '⚡' : '' },
         ].map((s, i) => (
-          <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '0 16px', flex: 1, justifyContent: 'center', borderLeft: i > 0 ? '1px solid #e0e0e0' : 'none' }}>
-            <span style={{ fontSize: 17, fontWeight: 800, color: '#111' }}>{s.val}</span>
-            <span style={{ fontSize: 12, color: '#888', marginTop: 1 }}>{s.unit}</span>
+          <div key={i} style={{ display: 'flex', alignItems: 'baseline', gap: 3, padding: '0 12px', flex: 1, justifyContent: 'center', borderLeft: i > 0 ? '1px solid #e8e8e8' : 'none' }}>
+            {s.prefix && <span style={{ fontSize: 11 }}>{s.prefix}</span>}
+            <span style={{ fontSize: 14, fontWeight: 700, color: '#111' }}>{s.val}</span>
+            <span style={{ fontSize: 11, color: '#aaa' }}>{s.unit}</span>
           </div>
         ))}
       </div>
