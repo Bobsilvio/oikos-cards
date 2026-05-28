@@ -515,6 +515,8 @@ function ImpostazioniSheet({ open, onClose, onMopExtend, onBase, cfg, t, callSer
 // ── BaseSheet ─────────────────────────────────────────────────────────────────
 const SVUOT_HA  = { smart: 'standard', always: 'high_frequency', manual: 'off' }
 const SVUOT_UI  = { standard: 'smart', high_frequency: 'always', off: 'manual', low_frequency: 'smart' }
+const REWASH_TO_HA = { by_area: 'Per area', by_time: 'Col tempo', by_rooms: 'Per zona' }
+const REWASH_FROM_HA = { 'Per area': 'by_area', 'Col tempo': 'by_time', 'Per zona': 'by_rooms' }
 const LAVRIP_HA = { low: 'off', medium: 'in_deep_mode', high: 'in_all_modes' }
 const LAVRIP_UI = { off: 'low', in_deep_mode: 'medium', in_all_modes: 'high' }
 const WASHQTY_HA = { low: 'water_saving', medium: 'daily', high: 'deep' }
@@ -1113,7 +1115,7 @@ export default function VacuumCard() {
   // Sync from HA when entity is available; otherwise keep local value
   useEffect(() => { if (suctionHA && suctionHA !== 'unavailable') setSuctionLocal(suctionHA) }, [suctionHA])
   useEffect(() => { if (routeHA   && routeHA   !== 'unavailable') setRouteLocal(routeHA)     }, [routeHA])
-  useEffect(() => { if (rewashHA  && rewashHA  !== 'unavailable') setRewashFreqSel(rewashHA) }, [rewashHA])
+  useEffect(() => { if (rewashHA && rewashHA !== 'unavailable') setRewashFreqSel(REWASH_FROM_HA[rewashHA] ?? rewashHA) }, [rewashHA])
   useEffect(() => { if (humHA !== null) setHumidity(humHA) }, [humHA])
 
   const suction = suctionLocal
@@ -1177,7 +1179,7 @@ export default function VacuumCard() {
 
   const onSuction    = (val) => { setSuctionLocal(val); cfg.suctionLevelEntity && callService('select', 'select_option', cfg.suctionLevelEntity, { option: val }) }
   const onRoute      = (val) => { setRouteLocal(val);   cfg.cleaningRouteEntity && callService('select', 'select_option', cfg.cleaningRouteEntity, { option: val }) }
-  const onRewashFreq = (val) => { setRewashFreqSel(val); cfg.selfCleanFreqEntity && callService('select', 'select_option', cfg.selfCleanFreqEntity, { option: val }) }
+  const onRewashFreq = (val) => { setRewashFreqSel(val); cfg.selfCleanFreqEntity && callService('select', 'select_option', cfg.selfCleanFreqEntity, { option: REWASH_TO_HA[val] ?? val }) }
   const onHumidity   = (val) => {
     setHumidity(val)
     clearTimeout(humDebounce.current)
