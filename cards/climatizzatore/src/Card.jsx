@@ -8,8 +8,8 @@
 import { useState, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
-  Power, Snowflake, Flame, Wind, Droplets, RefreshCcw,
-  Plus, Minus, Sun, Sparkles,
+  Power, PowerOff, Snowflake, Flame, Wind, Droplets, RefreshCcw,
+  Plus, Minus, Sun, Sparkles, AirVent,
 } from 'lucide-react'
 import { useDashboard, useCardConfig, registerCardTranslations, useT } from '@oikos/sdk'
 import it from './i18n/it.json'
@@ -30,7 +30,7 @@ const DEFAULT_CONFIG = {
 
 // Mappa modalità HVAC → preset visivo (le label vengono sovrascritte via t() nel componente)
 const MODE_PRESETS = {
-  off:       { modeKey: 'off',      color: '#94a3b8', icon: Power,      bg: 'rgba(148,163,184,.1)'   },
+  off:       { modeKey: 'off',      color: '#94a3b8', icon: AirVent,    bg: 'rgba(148,163,184,.1)'   },
   cool:      { modeKey: 'cool',     color: '#06b6d4', icon: Snowflake,  bg: 'rgba(6,182,212,.12)'    },
   heat:      { modeKey: 'heat',     color: '#ef4444', icon: Flame,      bg: 'rgba(239,68,68,.12)'    },
   heat_cool: { modeKey: 'auto',     color: '#8b5cf6', icon: Sparkles,   bg: 'rgba(139,92,246,.12)'   },
@@ -216,7 +216,7 @@ export default function ClimatizzatoreCard({ cardId = 'climatizzatore' }) {
             transition: 'all .15s',
           }}
         >
-          <Power size={16} strokeWidth={2.4}/>
+          {isOff ? <Power size={16} strokeWidth={2.4}/> : <PowerOff size={16} strokeWidth={2.4}/>}
         </button>
       </div>
 
