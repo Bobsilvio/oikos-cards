@@ -1762,8 +1762,8 @@ export default function VacuumCard() {
 
       {/* ── Dialog: zona richiede modalità personalizzata ── */}
       {zonaConfirmOpen && (
-        <div onClick={() => setZonaConfirmOpen(false)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,.45)', zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24 }}>
-          <div onClick={e => e.stopPropagation()} style={{ background: dark ? '#1c1c1e' : '#fff', borderRadius: 20, padding: '28px 24px 20px', maxWidth: 340, width: '100%', textAlign: 'center' }}>
+        <div onClick={() => setZonaConfirmOpen(false)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,.72)', backdropFilter: 'blur(4px)', WebkitBackdropFilter: 'blur(4px)', zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24 }}>
+          <div onClick={e => e.stopPropagation()} style={{ background: dark ? '#2c2c2e' : '#ffffff', borderRadius: 20, padding: '28px 24px 20px', maxWidth: 340, width: '100%', textAlign: 'center', boxShadow: '0 20px 60px rgba(0,0,0,.5)' }}>
             <p style={{ fontSize: 16, fontWeight: 500, color: 'var(--text-primary)', lineHeight: 1.5, margin: '0 0 24px' }}>{t('dreame.zonaConfirmMsg')}</p>
             <div style={{ display: 'flex', gap: 12 }}>
               <button onClick={() => setZonaConfirmOpen(false)} style={{ flex: 1, padding: '13px 0', borderRadius: 14, border: 'none', background: dark ? '#3a3a3c' : '#e5e5ea', color: 'var(--text-primary)', fontSize: 15, fontWeight: 600, cursor: 'pointer' }}>{t('dreame.zonaConfirmCancel')}</button>
