@@ -268,21 +268,71 @@ function SettingsHeader({ title, onBack }) {
   )
 }
 
+// ── RangeSlider ──────────────────────────────────────────────────────────────
+function RangeSlider({ value, min, max, onChange }) {
+  const pct = Math.min(100, Math.max(0, ((value - min) / (max - min)) * 100))
+  return (
+    <div style={{ position: 'relative', padding: '22px 0 6px', margin: '0 14px' }}>
+      <div style={{ height: 4, borderRadius: 2, background: 'var(--border-medium)', position: 'relative' }}>
+        <div style={{ height: '100%', borderRadius: 2, background: A, position: 'absolute', left: 0, top: 0, width: `${pct}%`, pointerEvents: 'none' }}/>
+        <div style={{ position: 'absolute', top: -24, left: `${pct}%`, transform: 'translateX(-50%)', width: 32, height: 32, borderRadius: '50%', background: ABG, border: `2px solid ${A}`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 700, color: A, pointerEvents: 'none' }}>
+          {value}
+        </div>
+      </div>
+      <input type="range" min={min} max={max} value={value} onChange={e => onChange(Number(e.target.value))}
+        style={{ position: 'absolute', width: '100%', left: 0, opacity: 0, height: 30, top: 0, cursor: 'pointer', margin: 0 }}/>
+    </div>
+  )
+}
+
 // ── FrequenzaSheet ────────────────────────────────────────────────────────────
-function FrequenzaSheet({ open, onClose, selected, onSelect, t, rewash = false }) {
-  const opts = rewash ? [
-    { id: 'by_area',  label: t('freq.by_area'),  desc: t('freq.by_area_desc')  },
-    { id: 'by_time',  label: t('freq.by_time'),  desc: t('freq.by_time_desc')  },
-    { id: 'by_rooms', label: t('freq.by_rooms'), desc: t('freq.by_rooms_desc') },
-  ] : [
+function FrequenzaSheet({ open, onClose, selected, onSelect, t, rewash = false,
+  areaVal = 10, timeVal = 10, onAreaChange, onTimeChange }) {
+  if (rewash) {
+    const opts = [
+      { id: 'by_area',  label: t('freq.by_area'),  unit: 'm²',  desc: t('freq.by_area_desc'),  min: 10, max: 35, val: areaVal, cb: onAreaChange },
+      { id: 'by_time',  label: t('freq.by_time'),  unit: 'min', desc: t('freq.by_time_desc'),  min: 10, max: 50, val: timeVal, cb: onTimeChange },
+      { id: 'by_rooms', label: t('freq.by_rooms'), unit: null,  desc: t('freq.by_rooms_desc'), min: 0,  max: 0,  val: null,    cb: null          },
+    ]
+    return (
+      <SubSheet open={open} onClose={onClose}>
+        <div style={{ fontSize: 17, fontWeight: 700, color: 'var(--text-primary)', textAlign: 'center', padding: '0 20px 18px' }}>{t('dreame.freqLavaggio')}</div>
+        <div style={{ padding: '0 12px 24px' }}>
+          {opts.map(o => {
+            const sel = selected === o.id
+            return (
+              <div key={o.id} onClick={() => onSelect(o.id)} style={{ background: sel ? ASEL : 'var(--bg-elevated)', borderRadius: 16, padding: '14px 16px', marginBottom: 10, cursor: 'pointer', transition: 'background .15s' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 6 }}>
+                  <div style={{ width: 22, height: 22, borderRadius: '50%', border: `2.5px solid ${sel ? A : '#ccc'}`, background: sel ? A : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, transition: 'all .15s' }}>
+                    {sel && <div style={{ width: 8, height: 8, borderRadius: '50%', background: 'white' }}/>}
+                  </div>
+                  <span style={{ fontSize: 16, fontWeight: 700, color: sel ? A : 'var(--text-primary)' }}>
+                    {o.label}
+                    {o.unit && <span style={{ fontSize: 12, fontWeight: 400, color: 'var(--text-muted)', marginLeft: 4 }}>{o.unit}</span>}
+                  </span>
+                </div>
+                <div style={{ fontSize: 13, color: sel ? A : 'var(--text-muted)', lineHeight: 1.5, paddingLeft: 34, opacity: 0.85 }}>{o.desc}</div>
+                {sel && o.cb && (
+                  <div style={{ marginTop: 14, paddingLeft: 0 }} onClick={e => e.stopPropagation()}>
+                    <RangeSlider value={o.val ?? o.min} min={o.min} max={o.max} onChange={o.cb}/>
+                  </div>
+                )}
+              </div>
+            )
+          })}
+        </div>
+      </SubSheet>
+    )
+  }
+
+  const opts = [
     { id: 'standard',    label: t('dreame.freqStandard'),    desc: t('dreame.freqStandardDesc')    },
     { id: 'intelligent', label: t('dreame.freqIntelligent'), desc: t('dreame.freqIntelligentDesc') },
     { id: 'high',        label: t('dreame.freqHigh'),        desc: t('dreame.freqHighDesc')        },
   ]
-  const title = rewash ? t('dreame.freqLavaggio') : t('dreame.freqTitle')
   return (
     <SubSheet open={open} onClose={onClose}>
-      <div style={{ fontSize: 17, fontWeight: 700, color: 'var(--text-primary)', textAlign: 'center', padding: '0 20px 18px' }}>{title}</div>
+      <div style={{ fontSize: 17, fontWeight: 700, color: 'var(--text-primary)', textAlign: 'center', padding: '0 20px 18px' }}>{t('dreame.freqTitle')}</div>
       {opts.map(o => (
         <RadioOption key={o.id} label={o.label} desc={o.desc} selected={selected === o.id}
           onClick={() => { onSelect(o.id); setTimeout(onClose, 280) }}/>
@@ -755,6 +805,31 @@ function MainSheet({ open, onClose, cfg, t, callService, getState,
   const massima = cfg.maxSuctionEntity ? getState(cfg.maxSuctionEntity) === 'on' : false
   const toggleMassima = () => cfg.maxSuctionEntity && callService('switch', 'toggle', cfg.maxSuctionEntity)
 
+  const [areaLocal, setAreaLocal] = useState(10)
+  const [timeLocal, setTimeLocal] = useState(10)
+  const areaDebounce = useRef(null)
+  const timeDebounce = useRef(null)
+
+  const areaHA = cfg.selfCleanAreaEntity ? parseFloat(getState(cfg.selfCleanAreaEntity)) : null
+  const timeHA = cfg.selfCleanTimeEntity ? parseFloat(getState(cfg.selfCleanTimeEntity)) : null
+  useEffect(() => { if (areaHA && !isNaN(areaHA)) setAreaLocal(areaHA) }, [areaHA])
+  useEffect(() => { if (timeHA && !isNaN(timeHA)) setTimeLocal(timeHA) }, [timeHA])
+
+  const onAreaChange = (val) => {
+    setAreaLocal(val)
+    clearTimeout(areaDebounce.current)
+    areaDebounce.current = setTimeout(() => {
+      if (cfg.selfCleanAreaEntity) callService('number', 'set_value', cfg.selfCleanAreaEntity, { value: val })
+    }, 600)
+  }
+  const onTimeChange = (val) => {
+    setTimeLocal(val)
+    clearTimeout(timeDebounce.current)
+    timeDebounce.current = setTimeout(() => {
+      if (cfg.selfCleanTimeEntity) callService('number', 'set_value', cfg.selfCleanTimeEntity, { value: val })
+    }, 600)
+  }
+
   const cleanGeniusOn = cfg.cleanGeniusEntity ? getState(cfg.cleanGeniusEntity) !== 'off' : false
 
   useEffect(() => {
@@ -903,7 +978,8 @@ function MainSheet({ open, onClose, cfg, t, callService, getState,
         </div>
       </FullSheet>
 
-      <FrequenzaSheet open={freqSheetOpen} onClose={() => setFreqSheetOpen(false)} selected={rewashFreqSel} onSelect={onRewashFreq} t={t} rewash={true}/>
+      <FrequenzaSheet open={freqSheetOpen} onClose={() => setFreqSheetOpen(false)} selected={rewashFreqSel} onSelect={onRewashFreq} t={t} rewash={true}
+        areaVal={areaLocal} timeVal={timeLocal} onAreaChange={onAreaChange} onTimeChange={onTimeChange}/>
     </>
   )
 }
@@ -1032,7 +1108,7 @@ export default function VacuumCard() {
 
   const suctionHA    = get(cfg.suctionLevelEntity)
   const routeHA      = get(cfg.cleaningRouteEntity)
-  const rewashHA     = get(cfg.autoRewashingEntity)
+  const rewashHA     = get(cfg.selfCleanFreqEntity)
   const humHA        = getNum(cfg.humidityEntity)
   // Sync from HA when entity is available; otherwise keep local value
   useEffect(() => { if (suctionHA && suctionHA !== 'unavailable') setSuctionLocal(suctionHA) }, [suctionHA])
@@ -1101,7 +1177,7 @@ export default function VacuumCard() {
 
   const onSuction    = (val) => { setSuctionLocal(val); cfg.suctionLevelEntity && callService('select', 'select_option', cfg.suctionLevelEntity, { option: val }) }
   const onRoute      = (val) => { setRouteLocal(val);   cfg.cleaningRouteEntity && callService('select', 'select_option', cfg.cleaningRouteEntity, { option: val }) }
-  const onRewashFreq = (val) => { setRewashFreqSel(val); cfg.autoRewashingEntity && callService('select', 'select_option', cfg.autoRewashingEntity, { option: val }) }
+  const onRewashFreq = (val) => { setRewashFreqSel(val); cfg.selfCleanFreqEntity && callService('select', 'select_option', cfg.selfCleanFreqEntity, { option: val }) }
   const onHumidity   = (val) => {
     setHumidity(val)
     clearTimeout(humDebounce.current)
