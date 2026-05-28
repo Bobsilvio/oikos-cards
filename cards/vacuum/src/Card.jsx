@@ -1061,6 +1061,7 @@ export default function VacuumCard() {
   const mapImgRef = useRef(null)
   const mapContainerRef = useRef(null)
   const imgNatSize = useRef(null)
+  const [imgLoaded, setImgLoaded] = useState(false)
 
   // Scope + rooms
   const [scope, setScope] = useState('all')
@@ -1257,7 +1258,7 @@ export default function VacuumCard() {
             style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block',
               filter: scope === 'room' ? 'brightness(0.85) saturate(0.5)' : scope === 'zona' ? 'brightness(0.7) saturate(0.3) hue-rotate(180deg) sepia(0.18)' : 'none',
               transition: 'filter .25s' }}
-            onLoad={e => { imgNatSize.current = [e.currentTarget.naturalWidth, e.currentTarget.naturalHeight] }}
+            onLoad={e => { imgNatSize.current = [e.currentTarget.naturalWidth, e.currentTarget.naturalHeight]; setImgLoaded(true) }}
             onError={e => { e.currentTarget.style.opacity = '0' }}
           />
         ) : (
@@ -1272,50 +1273,101 @@ export default function VacuumCard() {
             onRemove={() => setZonaRects(prev => prev.filter((_, i) => i !== idx))}/>
         ))}
         {scope === 'room' && (() => {
-          const segs = cfg.cameraEntity ? (getAttr(cfg.cameraEntity, 'segments') || null) : null
+          const natW = imgNatSize.current?.[0] ?? 0
+          const natH = imgNatSize.current?.[1] ?? 0
           const cal  = cfg.cameraEntity ? (getAttr(cfg.cameraEntity, 'calibration_points') || []) : []
-          const natW = (mapImgRef.current?.naturalWidth  > 0 ? mapImgRef.current.naturalWidth  : null) ?? imgNatSize.current?.[0] ?? 0
-          const natH = (mapImgRef.current?.naturalHeight > 0 ? mapImgRef.current.naturalHeight : null) ?? imgNatSize.current?.[1] ?? 0
-          const { width: cw, height: ch } = mapContainerRef.current?.getBoundingClientRect() ?? { width: 375, height: 390 }
 
-          if (segs && cal.length >= 3 && natW > 0 && natH > 0) {
-            // Overlay SVG con poligoni stanza cliccabili
-            const segList = Array.isArray(segs) ? segs : Object.values(segs)
+          // Tasshack/Dreame: attributo 'rooms' con x0,y0,x1,y1 in coordinate vacuum
+          const roomsAttr = cfg.cameraEntity ? (getAttr(cfg.cameraEntity, 'rooms') || null) : null
+          // Fallback: attributo 'segments' con array outline
+          const segsAttr  = cfg.cameraEntity ? (getAttr(cfg.cameraEntity, 'segments') || null) : null
+
+          let roomList = []
+          if (roomsAttr) {
+            const arr = Array.isArray(roomsAttr) ? roomsAttr : Object.values(roomsAttr)
+            roomList = arr.filter(r => r.x0 !== undefined && r.x1 !== undefined)
+              .map(r => ({ id: Number(r.room_id ?? r.id), x0: r.x0, y0: r.y0, x1: r.x1, y1: r.y1, outline: null }))
+          } else if (segsAttr) {
+            const arr = Array.isArray(segsAttr) ? segsAttr : Object.values(segsAttr)
+            roomList = arr.filter(s => s?.outline?.length > 0)
+              .map(s => ({ id: Number(s.id), x0: null, y0: null, x1: null, y1: null, outline: s.outline }))
+          }
+
+          // Nessun dato mappa o immagine non ancora caricata → fallback badge
+          if (roomList.length === 0 || natW === 0 || natH === 0) {
+            if (selectedRooms.length === 0) return null
             return (
-              <svg style={{ position: 'absolute', inset: 0, width: cw, height: ch, cursor: 'pointer' }}
-                   viewBox={`0 0 ${cw} ${ch}`}>
-                {segList.map(seg => {
-                  if (!seg?.outline?.length) return null
-                  const rid = Number(seg.id)
-                  const sel = selectedRooms.indexOf(rid) >= 0
-                  const pts = seg.outline.map(([vx, vy]) => {
-                    const [ipx, ipy] = vacToImgPx(vx, vy, cal)
-                    return imgPxToCont(ipx, ipy, cw, ch, natW, natH)
-                  })
-                  return (
-                    <polygon key={rid}
-                      points={pts.map(([x, y]) => `${x},${y}`).join(' ')}
-                      fill={sel ? 'rgba(245,158,11,0.32)' : 'rgba(255,255,255,0.04)'}
-                      stroke={sel ? 'rgba(245,158,11,0.9)' : 'rgba(255,255,255,0.15)'}
-                      strokeWidth={sel ? 2.5 : 1}
-                      style={{ transition: 'fill .18s, stroke .18s' }}
-                      onPointerDown={e => { e.stopPropagation(); toggleRoom(rid) }}
-                    />
-                  )
-                })}
-              </svg>
+              <div style={{ position: 'absolute', top: 10, left: 0, right: 0, display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 6, padding: '0 12px', pointerEvents: 'none' }}>
+                {rooms.filter(r => selectedRooms.indexOf(Number(r.id)) >= 0).map(r => (
+                  <span key={r.id} style={{ background: A, color: 'white', padding: '4px 12px', borderRadius: 14, fontSize: 12, fontWeight: 700, boxShadow: '0 2px 8px rgba(0,0,0,.3)' }}>
+                    {r.name}
+                  </span>
+                ))}
+              </div>
             )
           }
-          // Fallback: badge nomi stanze selezionate
-          if (selectedRooms.length === 0) return null
+
+          // Auto-calibra dai bounds delle stanze se mancano calibration_points
+          let effectiveCal = cal
+          if (cal.length < 3) {
+            const bxRooms = roomList.filter(r => r.x0 !== null)
+            if (bxRooms.length > 0) {
+              const allVX = bxRooms.flatMap(r => [r.x0, r.x1])
+              const allVY = bxRooms.flatMap(r => [r.y0, r.y1])
+              const mnX = Math.min(...allVX), mxX = Math.max(...allVX)
+              const mnY = Math.min(...allVY), mxY = Math.max(...allVY)
+              const pad = 0.05
+              const px = natW * pad, py = natH * pad
+              effectiveCal = [
+                { vacuum: { x: mnX, y: mnY }, map: { x: px,        y: natH - py } },
+                { vacuum: { x: mxX, y: mnY }, map: { x: natW - px, y: natH - py } },
+                { vacuum: { x: mnX, y: mxY }, map: { x: px,        y: py        } },
+              ]
+            }
+          }
+
+          const vacToImg = (vx, vy) => {
+            if (effectiveCal.length >= 3) {
+              const [p0, p1, p2] = effectiveCal
+              const sX = (p1.map.x - p0.map.x) / (p1.vacuum.x - p0.vacuum.x || 1)
+              const sY = (p2.map.y - p0.map.y) / (p2.vacuum.y - p0.vacuum.y || 1)
+              return [(vx - p0.vacuum.x) * sX + p0.map.x, (vy - p0.vacuum.y) * sY + p0.map.y]
+            }
+            return [(vx + 10000) / 20000 * natW, (vy + 10000) / 20000 * natH]
+          }
+
+          // SVG viewBox = dimensioni immagine reale + preserveAspectRatio="xMidYMid meet"
+          // corrisponde esattamente a objectFit:contain → nessuna conversione extra
           return (
-            <div style={{ position: 'absolute', top: 10, left: 0, right: 0, display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 6, padding: '0 12px', pointerEvents: 'none' }}>
-              {rooms.filter(r => selectedRooms.indexOf(Number(r.id)) >= 0).map(r => (
-                <span key={r.id} style={{ background: A, color: 'white', padding: '4px 12px', borderRadius: 14, fontSize: 12, fontWeight: 700, boxShadow: '0 2px 8px rgba(0,0,0,.3)' }}>
-                  {r.name}
-                </span>
-              ))}
-            </div>
+            <svg style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}
+                 viewBox={`0 0 ${natW} ${natH}`}
+                 preserveAspectRatio="xMidYMid meet">
+              {roomList.map(rm => {
+                const rid = rm.id
+                const sel = selectedRooms.indexOf(rid) >= 0
+                let pts
+                if (rm.outline) {
+                  pts = rm.outline.map(([vx, vy]) => vacToImg(vx, vy))
+                } else {
+                  pts = [
+                    vacToImg(rm.x0, rm.y0),
+                    vacToImg(rm.x1, rm.y0),
+                    vacToImg(rm.x1, rm.y1),
+                    vacToImg(rm.x0, rm.y1),
+                  ]
+                }
+                return (
+                  <polygon key={rid}
+                    points={pts.map(([x, y]) => `${x},${y}`).join(' ')}
+                    fill={sel ? 'rgba(245,158,11,0.32)' : 'rgba(255,255,255,0.04)'}
+                    stroke={sel ? 'rgba(245,158,11,0.9)' : 'rgba(255,255,255,0.15)'}
+                    strokeWidth={sel ? 2.5 : 1}
+                    style={{ transition: 'fill .18s, stroke .18s', touchAction: 'none' }}
+                    onPointerDown={e => { e.stopPropagation(); toggleRoom(rid) }}
+                  />
+                )
+              })}
+            </svg>
           )
         })()}
       </div>
