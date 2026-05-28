@@ -456,7 +456,7 @@ function MopExtendSheet({ open, onClose, onFrequenza, freqSel, sideReach, setSid
 }
 
 // ── ImpostazioniSheet ─────────────────────────────────────────────────────────
-function ImpostazioniSheet({ open, onClose, onMopExtend, onBase, cfg, t, callService, getState }) {
+function ImpostazioniSheet({ open, onClose, onMopExtend, onBase, onBaseSettings, cfg, t, callService, getState }) {
   const isOn = (id) => id ? getState(id) === 'on' : false
   const tog  = (id) => id && callService('switch', 'toggle', id)
 
@@ -466,7 +466,7 @@ function ImpostazioniSheet({ open, onClose, onMopExtend, onBase, cfg, t, callSer
     { label: t('dreame.menuTappeti'),     disabled: true  },
     { label: t('dreame.menuPavimento'),   disabled: true  },
     { label: t('dreame.mopExtendTitle'),  disabled: false, onClick: () => { onClose(); setTimeout(onMopExtend, 140) } },
-    { label: t('dreame.baseTitle'),       disabled: false, onClick: () => { onClose(); setTimeout(onBase, 140) } },
+    { label: t('dreame.baseTitle'),       disabled: false, onClick: () => { onClose(); setTimeout(onBaseSettings || onBase, 140) } },
   ]
   const menuCard2 = [
     { label: t('dreame.menuOstacoli'),   disabled: true },
@@ -625,6 +625,7 @@ function BaseSheet({ open, onClose, cfg, t, callService, getState,
   svuotOpen, setSvuotOpen, svuotSel, setSvuotSel,
   lavRipOpen, setLavRipOpen, lavRipSel, setLavRipSel,
   tempAsciugOpen, setTempAsciugOpen, tempAsciugSel, setTempAsciugSel,
+  startPage = 'main',
 }) {
   const [page, setPage] = useState('main')
   const [washQty, setWashQty] = useState('medium')
@@ -643,6 +644,7 @@ function BaseSheet({ open, onClose, cfg, t, callService, getState,
 
   useEffect(() => {
     if (!open) { setPage('main'); return }
+    setPage(startPage)
     const g = (id) => id ? getState(id) : null
     const sv = g(cfg.autoEmptyModeEntity);   if (sv)  setSvuotSel(SVUOT_UI[sv]  || 'standard')
     const lr = g(cfg.autoRewashingEntity);   if (lr)  setLavRipSel(LAVRIP_UI[lr] || 'off')
@@ -1255,6 +1257,7 @@ export default function VacuumCard() {
   // Sheet visibility
   const [mainOpen, setMainOpen] = useState(false)
   const [baseOpen, setBaseOpen] = useState(false)
+  const [baseStartPage, setBaseStartPage] = useState('main')
   const [impostazioniOpen, setImpostazioniOpen] = useState(false)
   const [mopExtendOpen, setMopExtendOpen] = useState(false)
 
@@ -1311,6 +1314,7 @@ export default function VacuumCard() {
   const progress  = getNum(cfg.cleaningProgressEntity)
 
   const stateColor = sc(mainState)
+  const cleanGeniusOn = cfg.cleanGeniusEntity ? get(cfg.cleanGeniusEntity) !== 'off' : false
 
   const rooms = cfg.rooms || []
 
@@ -1749,7 +1753,7 @@ export default function VacuumCard() {
             <span style={{ fontSize: 17, fontWeight: 600, color: 'var(--red)' }}>{t('dreame.stopBtn')}</span>
           </button>
         ) : (
-          <button onClick={() => setBaseOpen(true)} style={{ display: 'flex', alignItems: 'center', gap: 8, flex: 1, justifyContent: 'center', background: 'transparent', border: 'none', cursor: 'pointer', padding: 0 }}>
+          <button onClick={() => { setBaseStartPage('main'); setBaseOpen(true) }} style={{ display: 'flex', alignItems: 'center', gap: 8, flex: 1, justifyContent: 'center', background: 'transparent', border: 'none', cursor: 'pointer', padding: 0 }}>
             <span style={{ fontSize: 22 }}>🏠</span>
             <span style={{ fontSize: 17, fontWeight: 600, color: 'var(--text-secondary)' }}>{t('dreame.baseBtn')}</span>
           </button>
@@ -1790,11 +1794,13 @@ export default function VacuumCard() {
         svuotOpen={svuotOpen} setSvuotOpen={setSvuotOpen} svuotSel={svuotSel} setSvuotSel={setSvuotSel}
         lavRipOpen={lavRipOpen} setLavRipOpen={setLavRipOpen} lavRipSel={lavRipSel} setLavRipSel={setLavRipSel}
         tempAsciugOpen={tempAsciugOpen} setTempAsciugOpen={setTempAsciugOpen} tempAsciugSel={tempAsciugSel} setTempAsciugSel={setTempAsciugSel}
+        startPage={baseStartPage}
       />
       <ImpostazioniSheet
         open={impostazioniOpen} onClose={() => setImpostazioniOpen(false)}
-        onMopExtend={() => setMopExtendOpen(true)}
+        onMopExtend={() => { setImpostazioniOpen(false); setTimeout(() => setMopExtendOpen(true), 140) }}
         onBase={() => setBaseOpen(true)}
+        onBaseSettings={() => { setBaseStartPage('settings'); setBaseOpen(true) }}
         cfg={cfg} t={t} callService={callService} getState={getState}
       />
       <MopExtendSheet
