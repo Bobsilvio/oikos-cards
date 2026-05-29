@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Plus, Trash2, Wand2 } from 'lucide-react'
+import { Plus, Trash2, Wand2, ChevronRight } from 'lucide-react'
 import { EntityField, useT } from '@oikos/sdk'
 import { getVacuumConfig, saveVacuumConfig, derivePrefix, buildEntityMap } from './vacuumStore'
 
@@ -207,10 +207,16 @@ export default function VacuumSettings({ dark }) {
   const [cfg, setCfg] = useState(getVacuumConfig)
   const [saved, setSaved] = useState(false)
   const [autoMsg, setAutoMsg] = useState(null)
+  const [openGroups, setOpenGroups] = useState(new Set())
   const { t } = useT('card-vacuum')
 
   const set = (key, value) => { setCfg(c => ({ ...c, [key]: value })); setSaved(false) }
   const entitySetConfig = fn => { setCfg(fn); setSaved(false) }
+  const toggleGroup = (key) => setOpenGroups(prev => {
+    const next = new Set(prev)
+    next.has(key) ? next.delete(key) : next.add(key)
+    return next
+  })
 
   const handleAutoPopulate = () => {
     const prefix = derivePrefix(cfg.vacuumEntity)
@@ -235,79 +241,114 @@ export default function VacuumSettings({ dark }) {
     outline: 'none', width: '100%',
   })
 
-  return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-      {GROUP_KEYS.map(({ titleKey, fields }) => (
-        <div key={titleKey}>
-          <div style={{ fontSize: 10, fontWeight: 700, textTransform: 'uppercase',
-            letterSpacing: '.6px', color: 'var(--text-muted)', marginBottom: 8 }}>
-            {t(`settings.groups.${titleKey}`)}
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 7 }}>
-            {fields.map(({ key, mono = true, entity = true }) => (
-              <div key={key}>
-                {entity ? (
-                  <EntityField label={t(`settings.fields.${key}`)} field={key} config={cfg} setConfig={entitySetConfig}/>
-                ) : (
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
-                    <label style={{ fontSize: 11, fontWeight: 600, color: 'var(--text-muted)',
-                      textTransform: 'uppercase', letterSpacing: '.4px' }}>{t(`settings.fields.${key}`)}</label>
-                    <input
-                      value={cfg[key] || ''}
-                      onChange={e => { set(key, e.target.value); setSaved(false) }}
-                      spellCheck={false}
-                      style={inputStyle(mono)}
-                      onFocus={e => e.target.style.borderColor = 'var(--amber-border)'}
-                      onBlur={e => e.target.style.borderColor = 'var(--border-medium)'}
-                    />
-                  </div>
-                )}
-                {key === 'vacuumEntity' && (
-                  <div style={{ marginTop: 6, display: 'flex', flexDirection: 'column', gap: 5 }}>
-                    <motion.button whileTap={{ scale: .97 }} onClick={handleAutoPopulate} style={{
-                      display: 'flex', alignItems: 'center', gap: 6,
-                      padding: '7px 13px', borderRadius: 8, alignSelf: 'flex-start',
-                      fontSize: 12, fontWeight: 700, cursor: 'pointer',
-                      border: '1px solid rgba(139,92,246,.4)',
-                      background: 'rgba(139,92,246,.1)', color: '#7c3aed',
-                    }}>
-                      <Wand2 size={13}/> {t('settings.autoPopulate')}
-                    </motion.button>
-                    {autoMsg === 'err' && (
-                      <span style={{ fontSize: 11, color: '#ef4444' }}>{t('settings.autoPopulateNeedEntity')}</span>
-                    )}
-                    {autoMsg && autoMsg !== 'err' && (
-                      <span style={{ fontSize: 11, color: '#10b981' }}>
-                        {t('settings.autoPopulateHint', { prefix: autoMsg })}
-                      </span>
-                    )}
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
+  const renderField = ({ key, mono = true, entity = true }) => (
+    <div key={key}>
+      {entity ? (
+        <EntityField label={t(`settings.fields.${key}`)} field={key} config={cfg} setConfig={entitySetConfig}/>
+      ) : (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+          <label style={{ fontSize: 11, fontWeight: 600, color: 'var(--text-muted)',
+            textTransform: 'uppercase', letterSpacing: '.4px' }}>{t(`settings.fields.${key}`)}</label>
+          <input
+            value={cfg[key] || ''}
+            onChange={e => { set(key, e.target.value); setSaved(false) }}
+            spellCheck={false}
+            style={inputStyle(mono)}
+            onFocus={e => e.target.style.borderColor = 'var(--amber-border)'}
+            onBlur={e => e.target.style.borderColor = 'var(--border-medium)'}
+          />
         </div>
-      ))}
+      )}
+    </div>
+  )
 
-      <div>
-        <div style={{ fontSize: 10, fontWeight: 700, textTransform: 'uppercase',
-          letterSpacing: '.6px', color: 'var(--text-muted)', marginBottom: 8 }}>
-          {t('settings.groups.rooms')}
+  // Gruppi collassabili: main senza name/vacuumEntity, poi tutti gli altri
+  const collapsibleGroups = [
+    ...GROUP_KEYS.map(g =>
+      g.titleKey === 'main'
+        ? { ...g, fields: g.fields.filter(f => f.key !== 'name' && f.key !== 'vacuumEntity') }
+        : g
+    ).filter(g => g.fields.length > 0),
+    { titleKey: 'rooms', fields: null },
+  ]
+
+  const groupHeaderStyle = (open) => ({
+    display: 'flex', alignItems: 'center', gap: 6, cursor: 'pointer',
+    fontSize: 10, fontWeight: 700, textTransform: 'uppercase',
+    letterSpacing: '.6px', color: 'var(--text-muted)',
+    userSelect: 'none', padding: '4px 0',
+  })
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+
+      {/* Sempre visibili: name + vacuumEntity + auto-popola */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 7, marginBottom: 8 }}>
+        {renderField({ key: 'name', mono: false, entity: false })}
+        <EntityField label={t('settings.fields.vacuumEntity')} field="vacuumEntity" config={cfg} setConfig={entitySetConfig}/>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
+          <motion.button whileTap={{ scale: .97 }} onClick={handleAutoPopulate} style={{
+            display: 'flex', alignItems: 'center', gap: 6,
+            padding: '7px 13px', borderRadius: 8, alignSelf: 'flex-start',
+            fontSize: 12, fontWeight: 700, cursor: 'pointer',
+            border: '1px solid rgba(139,92,246,.4)',
+            background: 'rgba(139,92,246,.1)', color: '#7c3aed',
+          }}>
+            <Wand2 size={13}/> {t('settings.autoPopulate')}
+          </motion.button>
+          {autoMsg === 'err' && (
+            <span style={{ fontSize: 11, color: '#ef4444' }}>{t('settings.autoPopulateNeedEntity')}</span>
+          )}
+          {autoMsg && autoMsg !== 'err' && (
+            <span style={{ fontSize: 11, color: '#10b981' }}>
+              {t('settings.autoPopulateHint', { prefix: autoMsg })}
+            </span>
+          )}
         </div>
-        <RoomsEditor
-          rooms={cfg.rooms || []}
-          onChange={rooms => { setCfg(c => ({ ...c, rooms })); setSaved(false) }}
-          dark={dark}
-          idLabel={t('settings.roomIdLabel')}
-          nameLabel={t('settings.roomNameLabel')}
-          idPlaceholder={t('settings.roomIdPlaceholder')}
-          namePlaceholder={t('settings.roomNamePlaceholder')}
-          addLabel={t('settings.addRoom')}
-          hintText={t('settings.roomsHint')}
-        />
       </div>
 
-      <SaveButton onClick={handleSave} saved={saved} saveLabel={t('settings.saveButton')} savedLabel={t('settings.savedButton')}/>
+      {/* Gruppi collassabili */}
+      {collapsibleGroups.map(({ titleKey, fields }) => {
+        const open = openGroups.has(titleKey)
+        return (
+          <div key={titleKey} style={{ borderTop: '1px solid var(--border-medium)', paddingTop: 8 }}>
+            <div onClick={() => toggleGroup(titleKey)} style={groupHeaderStyle(open)}>
+              <ChevronRight size={12} style={{ transition: 'transform .18s', transform: open ? 'rotate(90deg)' : 'rotate(0deg)', flexShrink: 0 }}/>
+              {t(`settings.groups.${titleKey}`)}
+            </div>
+            <AnimatePresence initial={false}>
+              {open && (
+                <motion.div key={`body-${titleKey}`}
+                  initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }} transition={{ duration: .18 }}
+                  style={{ overflow: 'hidden' }}>
+                  <div style={{ paddingTop: 8, display: 'flex', flexDirection: 'column', gap: 7 }}>
+                    {titleKey === 'rooms' ? (
+                      <RoomsEditor
+                        rooms={cfg.rooms || []}
+                        onChange={rooms => { setCfg(c => ({ ...c, rooms })); setSaved(false) }}
+                        dark={dark}
+                        idLabel={t('settings.roomIdLabel')}
+                        nameLabel={t('settings.roomNameLabel')}
+                        idPlaceholder={t('settings.roomIdPlaceholder')}
+                        namePlaceholder={t('settings.roomNamePlaceholder')}
+                        addLabel={t('settings.addRoom')}
+                        hintText={t('settings.roomsHint')}
+                      />
+                    ) : (
+                      fields.map(renderField)
+                    )}
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        )
+      })}
+
+      <div style={{ marginTop: 8 }}>
+        <SaveButton onClick={handleSave} saved={saved} saveLabel={t('settings.saveButton')} savedLabel={t('settings.savedButton')}/>
+      </div>
     </div>
   )
 }
