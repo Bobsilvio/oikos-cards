@@ -3,8 +3,9 @@
  * v2.0.0 — Rewrite completo: map + bottom sheet + pagine navigate
  */
 import { useState, useEffect, useRef, useMemo } from 'react'
+import { createPortal } from 'react-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { useDashboard, getHAConfig, registerCardTranslations, useT } from '@oikos/sdk'
+import { useDashboard, getHAConfig, registerCardTranslations, useT, getOverlayRoot } from '@oikos/sdk'
 import { getVacuumConfig } from './vacuumStore'
 import it from './i18n/it.json'
 import en from './i18n/en.json'
@@ -218,12 +219,38 @@ function HumSlider({ value, onChange }) {
 
 // ── Sheet wrappers ────────────────────────────────────────────────────────────
 
+// Su mobile i sheet vengono portati in #oikos-overlay (getOverlayRoot) con
+// position:fixed così coprono l'intero schermo invece di restare confinati
+// dentro la card (root con isolation:isolate + overflow:hidden). Su desktop
+// restano absolute dentro la card come prima.
+function useIsMobile(bp = 700) {
+  const [m, setM] = useState(() =>
+    typeof window !== 'undefined' && !!window.matchMedia && window.matchMedia(`(max-width:${bp}px)`).matches)
+  useEffect(() => {
+    if (typeof window === 'undefined' || !window.matchMedia) return
+    const mq = window.matchMedia(`(max-width:${bp}px)`)
+    const h = (e) => setM(e.matches)
+    mq.addEventListener('change', h)
+    return () => mq.removeEventListener('change', h)
+  }, [bp])
+  return m
+}
+
+// Wrappa il contenuto del sheet: su mobile lo porta nell'overlay root a tutto
+// schermo, su desktop lo lascia inline (absolute dentro la card).
+function withSheetPortal(isMobile, node) {
+  if (!isMobile) return node
+  const root = getOverlayRoot()
+  return root ? createPortal(node, root) : node
+}
+
 function SubSheet({ open, onClose, children, zIndex = 1100 }) {
-  return (
+  const isMobile = useIsMobile()
+  return withSheetPortal(isMobile, (
     <AnimatePresence>
       {open && (
         <motion.div key="sub-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-          style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,.78)', zIndex, display: 'flex', alignItems: 'flex-end' }}>
+          style={{ position: isMobile ? 'fixed' : 'absolute', inset: 0, background: 'rgba(0,0,0,.78)', zIndex, pointerEvents: 'auto', display: 'flex', alignItems: 'flex-end' }}>
           <motion.div key="sub-sheet" initial={{ y: '100%' }} animate={{ y: 0 }} exit={{ y: '100%' }}
             transition={{ type: 'spring', damping: 32, stiffness: 280 }}
             onClick={e => e.stopPropagation()}
@@ -240,15 +267,16 @@ function SubSheet({ open, onClose, children, zIndex = 1100 }) {
         </motion.div>
       )}
     </AnimatePresence>
-  )
+  ))
 }
 
 function FullSheet({ open, onClose, zIndex = 10, children }) {
-  return (
+  const isMobile = useIsMobile()
+  return withSheetPortal(isMobile, (
     <AnimatePresence>
       {open && (
         <motion.div key="full-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-          style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,.78)', zIndex, display: 'flex', alignItems: 'flex-end' }}>
+          style={{ position: isMobile ? 'fixed' : 'absolute', inset: 0, background: 'rgba(0,0,0,.78)', zIndex, pointerEvents: 'auto', display: 'flex', alignItems: 'flex-end' }}>
           <motion.div key="full-sheet" initial={{ y: '100%' }} animate={{ y: 0 }} exit={{ y: '100%' }}
             transition={{ type: 'spring', damping: 32, stiffness: 280 }}
             onClick={e => e.stopPropagation()}
@@ -259,7 +287,7 @@ function FullSheet({ open, onClose, zIndex = 10, children }) {
         </motion.div>
       )}
     </AnimatePresence>
-  )
+  ))
 }
 
 function SettingsHeader({ title, onBack }) {
