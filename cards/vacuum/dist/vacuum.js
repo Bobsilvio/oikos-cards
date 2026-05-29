@@ -1049,7 +1049,7 @@ function _e({ open: d, onClose: o, children: n, zIndex: t = 1100 }) {
       animate: { opacity: 1 },
       exit: { opacity: 0 },
       onClick: o,
-      style: { position: "fixed", inset: 0, background: "rgba(0,0,0,.85)", backdropFilter: "blur(6px)", WebkitBackdropFilter: "blur(6px)", zIndex: t, display: "flex", alignItems: "flex-end" },
+      style: { position: "absolute", inset: 0, background: "rgba(0,0,0,.55)", zIndex: t, display: "flex", alignItems: "flex-end" },
       children: /* @__PURE__ */ i(
         oe.div,
         {
@@ -1078,7 +1078,7 @@ function Ve({ open: d, onClose: o, zIndex: n = 10, children: t }) {
       animate: { opacity: 1 },
       exit: { opacity: 0 },
       onClick: o,
-      style: { position: "fixed", inset: 0, background: "rgba(0,0,0,.85)", backdropFilter: "blur(6px)", WebkitBackdropFilter: "blur(6px)", zIndex: n, display: "flex", alignItems: "flex-end" },
+      style: { position: "absolute", inset: 0, background: "rgba(0,0,0,.55)", zIndex: n, display: "flex", alignItems: "flex-end" },
       children: /* @__PURE__ */ i(
         oe.div,
         {
@@ -1087,7 +1087,7 @@ function Ve({ open: d, onClose: o, zIndex: n = 10, children: t }) {
           exit: { y: "100%" },
           transition: { type: "spring", damping: 32, stiffness: 280 },
           onClick: (l) => l.stopPropagation(),
-          style: { width: "100%", background: "var(--bg-card)", borderRadius: "26px 26px 0 0", height: "92%", overflow: "hidden", display: "flex", flexDirection: "column" },
+          style: { width: "100%", background: "var(--bg-card)", borderRadius: "26px 26px 0 0", height: "100%", overflow: "hidden", display: "flex", flexDirection: "column" },
           children: [
             /* @__PURE__ */ e(Mt, {}),
             t
