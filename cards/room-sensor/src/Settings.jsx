@@ -6,7 +6,7 @@
 import {
   useDashboard, useCardConfig, MdiIconPicker,
   EntityField as _EntityField,
-  Field, Section, TextField, NumberField, Pills, useT,
+  Field, Section, TextField, NumberField, Pills, SettingsRow, Toggle, useT,
 } from '@oikos/sdk'
 import { useState } from 'react'
 import { ChevronDown, ChevronRight } from 'lucide-react'
@@ -21,6 +21,7 @@ const DEFAULT = {
   flowEntity:    '',
   historyEntity: '',
   chartColor:    '#e07060',
+  showMinMax:    false,
 }
 
 const GAUGE_DEFAULT = {
@@ -422,6 +423,13 @@ export default function RoomSensorSettings({ cardId }) {
               ]}
             />
           </Field>
+        )}
+
+        {/* Min/Max sul grafico (flow o storico) */}
+        {(cfg.displayMode === 'flow' || (isGauge && cfg.rightSection === 'history')) && (
+          <SettingsRow label={t('settings.showMinMax')} hint={t('settings.showMinMaxHint')}>
+            <Toggle value={!!cfg.showMinMax} onChange={v => set('showMinMax', v)}/>
+          </SettingsRow>
         )}
 
         {/* Storico: entità + colore */}

@@ -9,6 +9,8 @@
   "timeYesterday": "yesterday",
   "timeDayBeforeYesterday": "2 days ago",
   "configHint": "Configure entities in ⚙",
+  "statMinShort": "min",
+  "statMaxShort": "max",
 
   "modal": {
     "range1h": "1 hour",
@@ -35,6 +37,8 @@
     "flowEntity": "Entity for flow chart",
     "historyEntity": "Entity for history",
     "barColor": "Bar color",
+    "showMinMax": "Show min and max",
+    "showMinMaxHint": "Lines with minimum and maximum value on the chart",
     "styleGauge": "Gauge",
     "styleFlow": "Flow",
     "styleNone": "None",

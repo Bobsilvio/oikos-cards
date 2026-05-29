@@ -33,6 +33,7 @@ const DEFAULT = {
   flowEntity:    '',
   historyEntity: '',
   chartColor:    '#e07060',
+  showMinMax:    false,
 }
 
 // ── Costruisce bucket orari da serie storica ──────────────────────────────────
@@ -68,8 +69,33 @@ function SensorBadge({ value, iconName, unit, dark }) {
   )
 }
 
+// ── Linea Min/Max orizzontale (overlay assoluto, pos = px dal fondo) ──────────
+function MinMaxLine({ pos, value, unit, color, label, dark }) {
+  return (
+    <div style={{
+      position: 'absolute', left: 0, right: 0, bottom: pos,
+      borderTop: `1px dashed ${color}`,
+      pointerEvents: 'none',
+      display: 'flex', justifyContent: 'flex-end',
+    }}>
+      <span style={{
+        transform: 'translateY(-50%)',
+        fontSize: 8, fontWeight: 700, lineHeight: 1,
+        padding: '1px 4px', borderRadius: 4,
+        background: dark ? 'rgba(22,27,34,.85)' : 'rgba(255,255,255,.85)',
+        color: 'var(--text-muted)',
+        fontFamily: 'JetBrains Mono, monospace',
+        fontVariantNumeric: 'tabular-nums',
+        whiteSpace: 'nowrap',
+      }}>
+        {label} {value.toFixed(1)}{unit}
+      </span>
+    </div>
+  )
+}
+
 // ── Bar chart storico ─────────────────────────────────────────────────────────
-function HistoryBars({ bars, loading, chartColor, dark, t, unit = '' }) {
+function HistoryBars({ bars, loading, chartColor, dark, t, unit = '', showMinMax = false }) {
   const CHART_H = 52
   const nowH    = new Date().getHours()
   const valid   = bars.filter(b => b.v != null)
@@ -77,6 +103,7 @@ function HistoryBars({ bars, loading, chartColor, dark, t, unit = '' }) {
   const maxV    = valid.length ? Math.max(...valid.map(b => b.v)) : 1
   const range   = Math.max(maxV - minV, 0.1)
   const empty   = dark ? 'rgba(255,255,255,.07)' : 'rgba(0,0,0,.06)'
+  const lineCol = dark ? 'rgba(255,255,255,.4)' : 'rgba(0,0,0,.32)'
 
   const [selected, setSelected] = useState(null)
   const wrapRef = useRef(null)
@@ -125,6 +152,7 @@ function HistoryBars({ bars, loading, chartColor, dark, t, unit = '' }) {
         onPointerLeave={handlePointerLeave}
         onPointerCancel={handlePointerLeave}
         style={{
+          position: 'relative',
           display: 'flex', alignItems: 'flex-end', gap: 2, height: CHART_H,
           cursor: 'crosshair', touchAction: 'pan-y',
         }}
@@ -154,13 +182,21 @@ function HistoryBars({ bars, loading, chartColor, dark, t, unit = '' }) {
             />
           )
         })}
+
+        {/* Linee Min/Max */}
+        {showMinMax && valid.length > 0 && !selBar && (
+          <>
+            <MinMaxLine pos={CHART_H} value={maxV} unit={unit} color={lineCol} label={t('statMaxShort')} dark={dark}/>
+            <MinMaxLine pos={6}      value={minV} unit={unit} color={lineCol} label={t('statMinShort')} dark={dark}/>
+          </>
+        )}
       </div>
     </div>
   )
 }
 
 // ── Flow chart ────────────────────────────────────────────────────────────────
-function FlowChart({ bars, rMin, rMax, dark, uid, t, unit = '' }) {
+function FlowChart({ bars, rMin, rMax, dark, uid, t, unit = '', showMinMax = false }) {
   const W = 100, H = 56
   const PAD_TOP = 3, PAD_BOT = 2
 
@@ -230,7 +266,7 @@ function FlowChart({ bars, rMin, rMax, dark, uid, t, unit = '' }) {
         onPointerDown={handleMove}
         onPointerLeave={handleLeave}
         onPointerCancel={handleLeave}
-        style={{ touchAction: 'pan-y', cursor: validPts.length ? 'crosshair' : 'default' }}
+        style={{ position: 'relative', touchAction: 'pan-y', cursor: validPts.length ? 'crosshair' : 'default' }}
       >
       <svg
         viewBox={`0 0 ${W} ${H}`}
@@ -286,6 +322,21 @@ function FlowChart({ bars, rMin, rMax, dark, uid, t, unit = '' }) {
           </>
         )}
       </svg>
+
+      {/* Linee Min/Max (overlay HTML — SVG text si deformerebbe con preserveAspectRatio=none) */}
+      {showMinMax && validPts.length > 0 && !selPt && (() => {
+        const yToPos = (v) => {
+          const yVb = (H - PAD_BOT) - ((v - vMin) / vRange) * (H - PAD_TOP - PAD_BOT)
+          return SVG_H - (yVb / H) * SVG_H
+        }
+        const lineCol = dark ? 'rgba(255,255,255,.4)' : 'rgba(0,0,0,.32)'
+        return (
+          <>
+            <MinMaxLine pos={yToPos(dataMax)} value={dataMax} unit={unit} color={lineCol} label={t('statMaxShort')} dark={dark}/>
+            <MinMaxLine pos={yToPos(dataMin)} value={dataMin} unit={unit} color={lineCol} label={t('statMinShort')} dark={dark}/>
+          </>
+        )
+      })()}
       </div>
     </div>
   )
@@ -494,7 +545,7 @@ export default function RoomSensorCard({ cardId }) {
                     </div>
                   )}
                   {showRightHistory && (
-                    <HistoryBars bars={histBars} loading={histLoading} chartColor={chartColor} dark={dark} t={t} unit={historyUnit}/>
+                    <HistoryBars bars={histBars} loading={histLoading} chartColor={chartColor} dark={dark} t={t} unit={historyUnit} showMinMax={cfg.showMinMax}/>
                   )}
                 </div>
               </>
@@ -506,7 +557,7 @@ export default function RoomSensorCard({ cardId }) {
         {displayMode === 'flow' && (
           <div style={{ borderTop: `1px solid ${sep}`, paddingTop: 10 }}>
             <FlowChart bars={histBars} rMin={flowGauge?.min ?? 0} rMax={flowGauge?.max ?? 100}
-              dark={dark} uid={uid} t={t} unit={historyUnit}/>
+              dark={dark} uid={uid} t={t} unit={historyUnit} showMinMax={cfg.showMinMax}/>
           </div>
         )}
       </div>
@@ -601,7 +652,7 @@ export default function RoomSensorCard({ cardId }) {
         <>
           <VSep dark={dark} h={60}/>
           <FlowChart bars={histBars} rMin={flowGauge?.min ?? 0} rMax={flowGauge?.max ?? 100}
-            dark={dark} uid={uid} t={t} unit={historyUnit}/>
+            dark={dark} uid={uid} t={t} unit={historyUnit} showMinMax={cfg.showMinMax}/>
         </>
       )}
 
@@ -636,7 +687,7 @@ export default function RoomSensorCard({ cardId }) {
       {showRightHistory && (
         <>
           <VSep dark={dark} h={56}/>
-          <HistoryBars bars={histBars} loading={histLoading} chartColor={chartColor} dark={dark} t={t} unit={historyUnit}/>
+          <HistoryBars bars={histBars} loading={histLoading} chartColor={chartColor} dark={dark} t={t} unit={historyUnit} showMinMax={cfg.showMinMax}/>
         </>
       )}
     </div>
