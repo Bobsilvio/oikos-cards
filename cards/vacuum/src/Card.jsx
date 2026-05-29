@@ -249,7 +249,7 @@ function SubSheet({ open, onClose, children, zIndex = 1100 }) {
   return withSheetPortal(isMobile, (
     <AnimatePresence>
       {open && (
-        <motion.div key="sub-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+        <motion.div key="sub-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0, pointerEvents: 'none' }}
           style={{ position: isMobile ? 'fixed' : 'absolute', inset: 0, background: 'rgba(0,0,0,.78)', zIndex, pointerEvents: 'auto', display: 'flex', alignItems: 'flex-end' }}>
           <motion.div key="sub-sheet" initial={{ y: '100%' }} animate={{ y: 0 }} exit={{ y: '100%' }}
             transition={{ type: 'spring', damping: 32, stiffness: 280 }}
@@ -275,7 +275,7 @@ function FullSheet({ open, onClose, zIndex = 10, children }) {
   return withSheetPortal(isMobile, (
     <AnimatePresence>
       {open && (
-        <motion.div key="full-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+        <motion.div key="full-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0, pointerEvents: 'none' }}
           style={{ position: isMobile ? 'fixed' : 'absolute', inset: 0, background: 'rgba(0,0,0,.78)', zIndex, pointerEvents: 'auto', display: 'flex', alignItems: 'flex-end' }}>
           <motion.div key="full-sheet" initial={{ y: '100%' }} animate={{ y: 0 }} exit={{ y: '100%' }}
             transition={{ type: 'spring', damping: 32, stiffness: 280 }}
@@ -1609,6 +1609,7 @@ export default function VacuumCard() {
   const [floorOpen, setFloorOpen] = useState(false)
   const [mopExtendOpen, setMopExtendOpen] = useState(false)
   const [showHistory, setShowHistory] = useState(false)
+  const isMobileCard = useIsMobile()
 
   // Base sub-sheets
   const [svuotOpen, setSvuotOpen] = useState(false)
@@ -1746,14 +1747,26 @@ export default function VacuumCard() {
   return (
     <div style={{ background: 'var(--bg-card)', borderRadius: 22, overflow: 'hidden', border: '1px solid var(--border)', position: 'relative', isolation: 'isolate' }}>
 
-      {/* ── Cronologia inline ── */}
-      {showHistory && (
-        <div style={{ height: 560, position: 'relative', zIndex: 1200 }}>
-          <CronologiaView
-            onBack={() => setShowHistory(false)}
-            cfg={cfg} t={t} haStates={haStates} getState={getState}
-          />
-        </div>
+      {/* ── Cronologia ── desktop: inline nella card. mobile: portata a tutto
+          schermo nell'overlay (z sopra ImpostazioniSheet, che resta sotto →
+          il back torna al menu ⋯). */}
+      {showHistory && (isMobileCard
+        ? withSheetPortal(true, (
+            <div style={{ position: 'fixed', inset: 0, zIndex: 1300, background: 'var(--bg-panel)', pointerEvents: 'auto', display: 'flex', flexDirection: 'column' }}>
+              <CronologiaView
+                onBack={() => setShowHistory(false)}
+                cfg={cfg} t={t} haStates={haStates} getState={getState}
+              />
+            </div>
+          ))
+        : (
+            <div style={{ height: 560, position: 'relative', zIndex: 1200 }}>
+              <CronologiaView
+                onBack={() => setShowHistory(false)}
+                cfg={cfg} t={t} haStates={haStates} getState={getState}
+              />
+            </div>
+          )
       )}
 
       {showHistory ? null : <>
