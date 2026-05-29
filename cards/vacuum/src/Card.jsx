@@ -229,7 +229,13 @@ function SubSheet({ open, onClose, children, zIndex = 1100 }) {
             transition={{ type: 'spring', damping: 32, stiffness: 280 }}
             onClick={e => e.stopPropagation()}
             style={{ width: '100%', background: 'var(--bg-card)', borderRadius: '26px 26px 0 0', overflowY: 'auto', maxHeight: '80%' }}>
-            <SheetHandle/>
+            <div style={{ display: 'flex', alignItems: 'center', padding: '10px 14px 2px', flexShrink: 0 }}>
+              <div style={{ flex: 1 }}/>
+              <div style={{ width: 38, height: 4, background: 'var(--border-medium)', borderRadius: 2 }}/>
+              <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
+                <div onClick={onClose} style={{ width: 28, height: 28, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: 8, background: 'var(--bg-elevated)', color: 'var(--text-secondary)', cursor: 'pointer', fontSize: 13, fontWeight: 700 }}>✕</div>
+              </div>
+            </div>
             {children}
           </motion.div>
         </motion.div>
