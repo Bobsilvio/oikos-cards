@@ -6,10 +6,17 @@
 import {
   useDashboard, useCardConfig, MdiIconPicker,
   EntityField as _EntityField,
-  Field, Section, TextField, NumberField, Pills, SettingsRow, Toggle, useT,
+  Field, Section, TextField, NumberField, Pills, SettingsRow, Toggle,
+  registerCardTranslations, useT,
 } from '@oikos/sdk'
 import { useState } from 'react'
 import { ChevronDown, ChevronRight } from 'lucide-react'
+import it from './i18n/it.json'
+import en from './i18n/en.json'
+
+// Registra anche nel bundle settings: il pannello impostazioni è un chunk
+// separato e potrebbe caricarsi senza il card entry, lasciando il registry vuoto.
+registerCardTranslations('card-room-sensor', { it, en })
 
 const DEFAULT = {
   label:         '',
