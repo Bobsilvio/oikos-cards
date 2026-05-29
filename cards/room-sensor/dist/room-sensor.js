@@ -1,4 +1,4 @@
-const { jsx: t, jsxs: s, Fragment: O } = window.__OIKOS_SDK__.jsxRuntime, kt = "Ultime 24 ore", Tt = "Stanza", Ct = "in attesa di dati…", Ht = "adesso", Bt = "{{n}} min fa", Rt = "{{n}} ore fa", Nt = "{{n}} gg fa", Wt = "ieri", Pt = "l'altro ieri", Lt = "Configura le entità in ⚙", Et = "min", It = "max", Ot = {
+const { jsx: t, jsxs: s, Fragment: O } = window.__OIKOS_SDK__.jsxRuntime, kt = "Ultime 24 ore", Tt = "Stanza", Ht = "in attesa di dati…", Bt = "adesso", Ct = "{{n}} min fa", Rt = "{{n}} ore fa", Nt = "{{n}} gg fa", Wt = "ieri", Pt = "l'altro ieri", Lt = "Configura le entità in ⚙", Et = "min", It = "max", Ot = {
   range1h: "1 ora",
   range24h: "24 ore",
   range7d: "7 giorni",
@@ -44,9 +44,9 @@ const { jsx: t, jsxs: s, Fragment: O } = window.__OIKOS_SDK__.jsxRuntime, kt = "
 }, Vt = {
   last24h: kt,
   roomDefault: Tt,
-  waitingData: Ct,
-  timeNow: Ht,
-  timeMinAgo: Bt,
+  waitingData: Ht,
+  timeNow: Bt,
+  timeMinAgo: Ct,
   timeHAgo: Rt,
   timeDayAgo: Nt,
   timeYesterday: Wt,
@@ -121,11 +121,11 @@ function re(n, e) {
   return o < 90 ? e("timeNow") : o < 3600 ? e("timeMinAgo", { n: Math.floor(o / 60) }) : o < 86400 ? e("timeHAgo", { n: Math.floor(o / 3600) }) : o < 172800 ? e("timeYesterday") : o < 259200 ? e("timeDayBeforeYesterday") : e("timeDayAgo", { n: Math.floor(o / 86400) });
 }
 function bt({ value: n, min: e, max: o, unit: a, iconName: c, color: u, dark: d, size: r = 72 }) {
-  const H = r / 2, h = r / 2, D = (r - r * 0.18) / 2, S = r * 0.092, $ = 135, w = 270, f = (M) => M * Math.PI / 180, b = (M) => ({ x: H + D * Math.cos(f(M)), y: h + D * Math.sin(f(M)) }), m = (M) => {
+  const B = r / 2, h = r / 2, D = (r - r * 0.18) / 2, S = r * 0.092, $ = 135, w = 270, f = (M) => M * Math.PI / 180, b = (M) => ({ x: B + D * Math.cos(f(M)), y: h + D * Math.sin(f(M)) }), m = (M) => {
     if (M <= 0) return "";
     const p = Math.min(M, 359.99), F = p > 180 ? 1 : 0, y = b($), _ = b($ + p);
     return `M${y.x.toFixed(2)} ${y.y.toFixed(2)} A${D} ${D} 0 ${F} 1 ${_.x.toFixed(2)} ${_.y.toFixed(2)}`;
-  }, B = n != null ? Math.max(0, Math.min(1, (n - e) / (o - e))) : 0, C = d ? "rgba(255,255,255,.09)" : "rgba(0,0,0,.06)", A = n != null ? n === Math.floor(n) ? String(Math.round(n)) : n.toFixed(1) : "—";
+  }, C = n != null ? Math.max(0, Math.min(1, (n - e) / (o - e))) : 0, H = d ? "rgba(255,255,255,.09)" : "rgba(0,0,0,.06)", A = n != null ? n === Math.floor(n) ? String(Math.round(n)) : n.toFixed(1) : "—";
   return /* @__PURE__ */ s("div", { style: { position: "relative", width: r, height: r, flexShrink: 0 }, children: [
     /* @__PURE__ */ s("svg", { width: r, height: r, style: { position: "absolute", inset: 0, overflow: "visible" }, children: [
       /* @__PURE__ */ t(
@@ -133,15 +133,15 @@ function bt({ value: n, min: e, max: o, unit: a, iconName: c, color: u, dark: d,
         {
           d: m(w),
           fill: "none",
-          stroke: C,
+          stroke: H,
           strokeWidth: S,
           strokeLinecap: "round"
         }
       ),
-      n != null && B > 0.01 && /* @__PURE__ */ t(
+      n != null && C > 0.01 && /* @__PURE__ */ t(
         "path",
         {
-          d: m(B * w),
+          d: m(C * w),
           fill: "none",
           stroke: u,
           strokeWidth: S,
@@ -175,11 +175,11 @@ function bt({ value: n, min: e, max: o, unit: a, iconName: c, color: u, dark: d,
   ] });
 }
 function Mt({ value: n, min: e = 0, max: o = 100, iconName: a, iconLeft: c, color: u, dark: d, size: r = 34 }) {
-  const H = r / 2, h = r / 2, D = (r - r * 0.16) / 2, S = r * 0.08, $ = -255, w = 340, f = (M) => M * Math.PI / 180, b = (M) => ({ x: H + D * Math.cos(f(M)), y: h + D * Math.sin(f(M)) }), m = (M) => {
+  const B = r / 2, h = r / 2, D = (r - r * 0.16) / 2, S = r * 0.08, $ = -255, w = 340, f = (M) => M * Math.PI / 180, b = (M) => ({ x: B + D * Math.cos(f(M)), y: h + D * Math.sin(f(M)) }), m = (M) => {
     if (M <= 0) return "";
     const p = Math.min(M, 359.99), F = p > 180 ? 1 : 0, y = b($), _ = b($ + p);
     return `M${y.x.toFixed(2)} ${y.y.toFixed(2)} A${D} ${D} 0 ${F} 1 ${_.x.toFixed(2)} ${_.y.toFixed(2)}`;
-  }, B = n != null ? Math.max(0, Math.min(1, (n - e) / Math.max(o - e, 1))) : 0, C = d ? "rgba(255,255,255,.10)" : "rgba(0,0,0,.07)", A = n != null ? n === Math.floor(n) ? String(Math.round(n)) : n.toFixed(0) : "—";
+  }, C = n != null ? Math.max(0, Math.min(1, (n - e) / Math.max(o - e, 1))) : 0, H = d ? "rgba(255,255,255,.10)" : "rgba(0,0,0,.07)", A = n != null ? n === Math.floor(n) ? String(Math.round(n)) : n.toFixed(0) : "—";
   return /* @__PURE__ */ s("div", { style: { display: "flex", alignItems: "center", gap: 6, flexShrink: 0 }, children: [
     c && /* @__PURE__ */ t(Y, { name: c, size: Math.round(r * 0.52), dark: d, opacity: 0.55 }),
     /* @__PURE__ */ s("div", { style: { position: "relative", width: r, height: r, flexShrink: 0 }, children: [
@@ -189,15 +189,15 @@ function Mt({ value: n, min: e = 0, max: o = 100, iconName: a, iconLeft: c, colo
           {
             d: m(w),
             fill: "none",
-            stroke: C,
+            stroke: H,
             strokeWidth: S,
             strokeLinecap: "round"
           }
         ),
-        n != null && B > 0.01 && /* @__PURE__ */ t(
+        n != null && C > 0.01 && /* @__PURE__ */ t(
           "path",
           {
-            d: m(B * w),
+            d: m(C * w),
             fill: "none",
             stroke: u,
             strokeWidth: S,
@@ -229,8 +229,8 @@ function At(n) {
     return `M ${n[0].x.toFixed(2)},${n[0].y.toFixed(2)} L ${n[1].x.toFixed(2)},${n[1].y.toFixed(2)}`;
   let e = `M ${n[0].x.toFixed(2)},${n[0].y.toFixed(2)}`;
   for (let o = 1; o < n.length; o++) {
-    const a = n[Math.max(0, o - 2)], c = n[o - 1], u = n[o], d = n[Math.min(n.length - 1, o + 1)], r = (c.x + (u.x - a.x) / 6).toFixed(2), H = (c.y + (u.y - a.y) / 6).toFixed(2), h = (u.x - (d.x - c.x) / 6).toFixed(2), D = (u.y - (d.y - c.y) / 6).toFixed(2);
-    e += ` C ${r},${H} ${h},${D} ${u.x.toFixed(2)},${u.y.toFixed(2)}`;
+    const a = n[Math.max(0, o - 2)], c = n[o - 1], u = n[o], d = n[Math.min(n.length - 1, o + 1)], r = (c.x + (u.x - a.x) / 6).toFixed(2), B = (c.y + (u.y - a.y) / 6).toFixed(2), h = (u.x - (d.x - c.x) / 6).toFixed(2), D = (u.y - (d.y - c.y) / 6).toFixed(2);
+    e += ` C ${r},${B} ${h},${D} ${u.x.toFixed(2)},${u.y.toFixed(2)}`;
   }
   return e;
 }
@@ -251,7 +251,7 @@ function q(n) {
     const [o, a] = U[e - 1], [c, u] = U[e];
     if (n <= c) {
       const d = (n - o) / (c - o);
-      return a.map((r, H) => Math.round(r + d * (u[H] - r)));
+      return a.map((r, B) => Math.round(r + d * (u[B] - r)));
     }
   }
   return U[U.length - 1][1];
@@ -303,7 +303,7 @@ function wt(n, e) {
   return e <= 1 ? o.toLocaleTimeString("it-IT", { hour: "2-digit", minute: "2-digit" }) : e <= 24 ? o.toLocaleTimeString("it-IT", { hour: "2-digit", minute: "2-digit" }) : o.toLocaleDateString("it-IT", { day: "2-digit", month: "2-digit" });
 }
 function Me({ points: n, dark: e, uid: o, rangeHours: a, unit: c, noDataLabel: u }) {
-  const d = de(null), [r, H] = Z(null);
+  const d = de(null), [r, B] = Z(null);
   if (!n.length) return /* @__PURE__ */ t("div", { style: {
     height: 120,
     display: "flex",
@@ -315,15 +315,15 @@ function Me({ points: n, dark: e, uid: o, rangeHours: a, unit: c, noDataLabel: u
   const h = Math.min(...n.map((l) => l.v)), D = Math.max(...n.map((l) => l.v)), S = n[0].ts, $ = n[n.length - 1].ts, w = Math.max(D - h, 0.5), f = Math.max($ - S, 1), b = w * 0.15, m = Array.from({ length: 4 }, (l, x) => {
     const W = h - b + x / 3 * (w + b * 2);
     return parseFloat(W.toFixed(1));
-  }), B = a <= 1 ? 4 : a <= 24 ? 6 : 7, C = Array.from(
-    { length: B },
-    (l, x) => S + x / (B - 1) * f
+  }), C = a <= 1 ? 4 : a <= 24 ? 6 : 7, H = Array.from(
+    { length: C },
+    (l, x) => S + x / (C - 1) * f
   ), A = 32, M = 120, p = 1e3, F = 100, y = (l) => (l - S) / f * p, _ = (l) => F - 4 - (l - (h - b)) / (w + b * 2) * (F - 8), R = n.map((l) => ({ x: y(l.ts), y: _(l.v), v: l.v, ts: l.ts })), N = At(R), P = R.length > 1 ? `${N} L ${y($).toFixed(1)},${F} L ${y(S).toFixed(1)},${F} Z` : "", E = e ? "#5b9cf6" : "#3b82f6", k = e ? "rgba(255,255,255,.06)" : "rgba(0,0,0,.06)", I = e ? "rgba(255,255,255,.35)" : "rgba(0,0,0,.35)", g = he((l) => {
     const x = l.currentTarget.getBoundingClientRect(), W = (l.clientX - x.left) / x.width, L = S + W * f;
     let V = R[0];
     for (const K of R)
       Math.abs(K.ts - L) < Math.abs(V.ts - L) && (V = K);
-    H({ xPct: V.x / p * 100, v: V.v, ts: V.ts });
+    B({ xPct: V.x / p * 100, v: V.v, ts: V.ts });
   }, [R, S, f]);
   return /* @__PURE__ */ s("div", { children: [
     /* @__PURE__ */ s("div", { style: { display: "flex", gap: 0 }, children: [
@@ -353,7 +353,7 @@ function Me({ points: n, dark: e, uid: o, rangeHours: a, unit: c, noDataLabel: u
             preserveAspectRatio: "none",
             style: { width: "100%", height: M, display: "block", cursor: "crosshair" },
             onMouseMove: g,
-            onMouseLeave: () => H(null),
+            onMouseLeave: () => B(null),
             children: [
               /* @__PURE__ */ t("defs", { children: /* @__PURE__ */ s("linearGradient", { id: `afill-${o}`, x1: "0", y1: "0", x2: "0", y2: "1", children: [
                 /* @__PURE__ */ t("stop", { offset: "0%", stopColor: E, stopOpacity: "0.25" }),
@@ -438,17 +438,17 @@ function Me({ points: n, dark: e, uid: o, rangeHours: a, unit: c, noDataLabel: u
         ] })
       ] })
     ] }),
-    /* @__PURE__ */ t("div", { style: { display: "flex", paddingLeft: A, marginTop: 3 }, children: /* @__PURE__ */ t("div", { style: { flex: 1, display: "flex", justifyContent: "space-between" }, children: C.map((l, x) => /* @__PURE__ */ t("div", { style: {
+    /* @__PURE__ */ t("div", { style: { display: "flex", paddingLeft: A, marginTop: 3 }, children: /* @__PURE__ */ t("div", { style: { flex: 1, display: "flex", justifyContent: "space-between" }, children: H.map((l, x) => /* @__PURE__ */ t("div", { style: {
       fontSize: 9,
       color: I,
       fontFamily: "JetBrains Mono, monospace",
-      ...x === 0 ? { textAlign: "left" } : x === C.length - 1 ? { textAlign: "right" } : { textAlign: "center" }
+      ...x === 0 ? { textAlign: "left" } : x === H.length - 1 ? { textAlign: "right" } : { textAlign: "center" }
     }, children: wt(l, a) }, x)) }) })
   ] });
 }
 function St({ entityId: n, label: e, unit: o, dark: a, onClose: c }) {
   var E, k, I;
-  const { haStates: u, fetchHistory: d, connected: r, getFloat: H } = ye(), { t: h } = xe("card-room-sensor"), D = ce().replace(/:/g, ""), [S, $] = Z("24h"), [w, f] = Z([]), [b, m] = Z(!1), B = H(n), C = ((E = u == null ? void 0 : u[n]) == null ? void 0 : E.attributes) ?? {}, A = e || C.friendly_name || n, M = (k = u == null ? void 0 : u[n]) == null ? void 0 : k.last_updated, p = o || C.unit_of_measurement || "";
+  const { haStates: u, fetchHistory: d, connected: r, getFloat: B } = ye(), { t: h } = xe("card-room-sensor"), D = ce().replace(/:/g, ""), [S, $] = Z("24h"), [w, f] = Z([]), [b, m] = Z(!1), C = B(n), H = ((E = u == null ? void 0 : u[n]) == null ? void 0 : E.attributes) ?? {}, A = e || H.friendly_name || n, M = (k = u == null ? void 0 : u[n]) == null ? void 0 : k.last_updated, p = o || H.unit_of_measurement || "";
   if (se(() => {
     var W;
     if (!n || !d || !r) return;
@@ -520,7 +520,7 @@ function St({ entityId: n, label: e, unit: o, dark: a, onClose: c }) {
               fontVariantNumeric: "tabular-nums",
               lineHeight: 1
             }, children: [
-              F(B),
+              F(C),
               /* @__PURE__ */ t("span", { style: { fontSize: 14, fontWeight: 600, color: "var(--text-muted)", marginLeft: 3 }, children: p })
             ] }),
             /* @__PURE__ */ t(
@@ -669,21 +669,17 @@ function $t({ value: n, iconName: e, unit: o, dark: a }) {
 function et({ pos: n, value: e, unit: o, color: a, label: c, dark: u }) {
   return /* @__PURE__ */ t("div", { style: {
     position: "absolute",
-    left: 0,
     right: 0,
     bottom: n,
-    borderTop: `1px dashed ${a}`,
-    pointerEvents: "none",
-    display: "flex",
-    justifyContent: "flex-end"
+    transform: "translateY(50%)",
+    pointerEvents: "none"
   }, children: /* @__PURE__ */ s("span", { style: {
-    transform: "translateY(-50%)",
     fontSize: 8,
     fontWeight: 700,
     lineHeight: 1,
     padding: "1px 4px",
     borderRadius: 4,
-    background: u ? "rgba(22,27,34,.85)" : "rgba(255,255,255,.85)",
+    background: u ? "rgba(22,27,34,.7)" : "rgba(255,255,255,.7)",
     color: "var(--text-muted)",
     fontFamily: "JetBrains Mono, monospace",
     fontVariantNumeric: "tabular-nums",
@@ -696,17 +692,17 @@ function et({ pos: n, value: e, unit: o, color: a, label: c, dark: u }) {
   ] }) });
 }
 function Dt({ bars: n, loading: e, chartColor: o, dark: a, t: c, unit: u = "", showMinMax: d = !1 }) {
-  const H = (/* @__PURE__ */ new Date()).getHours(), h = n.filter((y) => y.v != null), D = h.length ? Math.min(...h.map((y) => y.v)) : 0, S = h.length ? Math.max(...h.map((y) => y.v)) : 1, $ = Math.max(S - D, 0.1), w = a ? "rgba(255,255,255,.07)" : "rgba(0,0,0,.06)", f = a ? "rgba(255,255,255,.4)" : "rgba(0,0,0,.32)", [b, m] = J(null), B = tt(null), C = e || !n.length ? Array.from({ length: 24 }, (y, _) => ({ h: _, v: null })) : n, A = (y) => {
-    const _ = B.current;
+  const B = (/* @__PURE__ */ new Date()).getHours(), h = n.filter((y) => y.v != null), D = h.length ? Math.min(...h.map((y) => y.v)) : 0, S = h.length ? Math.max(...h.map((y) => y.v)) : 1, $ = Math.max(S - D, 0.1), w = a ? "rgba(255,255,255,.07)" : "rgba(0,0,0,.06)", f = a ? "rgba(255,255,255,.4)" : "rgba(0,0,0,.32)", [b, m] = J(null), C = tt(null), H = e || !n.length ? Array.from({ length: 24 }, (y, _) => ({ h: _, v: null })) : n, A = (y) => {
+    const _ = C.current;
     if (!_) return;
     const R = _.getBoundingClientRect(), N = y.clientX - R.left;
     if (N < 0 || N > R.width) {
       m(null);
       return;
     }
-    const P = Math.max(0, Math.min(C.length - 1, Math.floor(N / R.width * C.length)));
+    const P = Math.max(0, Math.min(H.length - 1, Math.floor(N / R.width * H.length)));
     m(P);
-  }, M = () => m(null), p = b != null ? C[b] : null, F = p ? p.v != null ? `${String(p.h).padStart(2, "0")}:00 · ${p.v.toFixed(1)}${u}` : `${String(p.h).padStart(2, "0")}:00 · —` : c("last24h");
+  }, M = () => m(null), p = b != null ? H[b] : null, F = p ? p.v != null ? `${String(p.h).padStart(2, "0")}:00 · ${p.v.toFixed(1)}${u}` : `${String(p.h).padStart(2, "0")}:00 · —` : c("last24h");
   return /* @__PURE__ */ s("div", { style: { flex: 1, minWidth: 0, paddingLeft: 4 }, children: [
     /* @__PURE__ */ t("div", { style: {
       fontSize: 10,
@@ -725,7 +721,7 @@ function Dt({ bars: n, loading: e, chartColor: o, dark: a, t: c, unit: u = "", s
     /* @__PURE__ */ s(
       "div",
       {
-        ref: B,
+        ref: C,
         onPointerMove: A,
         onPointerDown: A,
         onPointerLeave: M,
@@ -740,8 +736,8 @@ function Dt({ bars: n, loading: e, chartColor: o, dark: a, t: c, unit: u = "", s
           touchAction: "pan-y"
         },
         children: [
-          C.map((y, _) => {
-            const R = y.v != null ? Math.max(6, (y.v - D) / $ * 52) : 4, N = y.h === H, P = b === _, E = y.v != null ? N ? o : `${o}bb` : w;
+          H.map((y, _) => {
+            const R = y.v != null ? Math.max(6, (y.v - D) / $ * 52) : 4, N = y.h === B, P = b === _, E = y.v != null ? N ? o : `${o}bb` : w;
             return /* @__PURE__ */ t(
               "div",
               {
@@ -770,14 +766,14 @@ function Dt({ bars: n, loading: e, chartColor: o, dark: a, t: c, unit: u = "", s
   ] });
 }
 function _t({ bars: n, rMin: e, rMax: o, dark: a, uid: c, t: u, unit: d = "", showMinMax: r = !1 }) {
-  const $ = n.filter((l) => l.v != null), w = $.length ? Math.min(...$.map((l) => l.v)) : e, f = $.length ? Math.max(...$.map((l) => l.v)) : o, b = Math.max((f - w) * 0.15, 0.5), m = w - b, B = f + b, C = Math.max(B - m, 1), A = $.map((l, x) => ({
+  const $ = n.filter((l) => l.v != null), w = $.length ? Math.min(...$.map((l) => l.v)) : e, f = $.length ? Math.max(...$.map((l) => l.v)) : o, b = Math.max((f - w) * 0.15, 0.5), m = w - b, C = f + b, H = Math.max(C - m, 1), A = $.map((l, x) => ({
     x: $.length > 1 ? x / ($.length - 1) * 100 : 100 / 2,
-    y: 54 - (l.v - m) / C * 51,
+    y: 54 - (l.v - m) / H * 51,
     v: l.v,
     h: l.h
   })), M = At(A), p = A.length > 1 ? `${M} L 100,56 L 0,56 Z` : "", F = A.map((l, x) => ({
     pct: (x / Math.max(A.length - 1, 1) * 100).toFixed(1),
-    color: Q(q(Math.max(0, Math.min(1, (l.v - m) / C))))
+    color: Q(q(Math.max(0, Math.min(1, (l.v - m) / H))))
   })), y = 64, [_, R] = J(null), N = tt(null), P = (l) => {
     const x = N.current;
     if (!x || A.length === 0) return;
@@ -788,7 +784,7 @@ function _t({ bars: n, rMin: e, rMax: o, dark: a, uid: c, t: u, unit: d = "", sh
     }
     const V = Math.max(0, Math.min(A.length - 1, Math.round(L * (A.length - 1))));
     R(V);
-  }, E = () => R(null), k = _ != null ? A[_] : null, I = k ? Q(q(Math.max(0, Math.min(1, (k.v - m) / C)))) : null, g = k ? `${String(k.h).padStart(2, "0")}:00 · ${k.v.toFixed(1)}${d}` : u("last24h");
+  }, E = () => R(null), k = _ != null ? A[_] : null, I = k ? Q(q(Math.max(0, Math.min(1, (k.v - m) / H)))) : null, g = k ? `${String(k.h).padStart(2, "0")}:00 · ${k.v.toFixed(1)}${d}` : u("last24h");
   return /* @__PURE__ */ s("div", { style: { flex: 1, minWidth: 0, paddingLeft: 2 }, children: [
     /* @__PURE__ */ t("div", { style: {
       fontSize: 10,
@@ -897,7 +893,7 @@ function _t({ bars: n, rMin: e, rMax: o, dark: a, uid: c, t: u, unit: d = "", sh
           ),
           r && $.length > 0 && !k && (() => {
             const l = (W) => {
-              const L = 54 - (W - m) / C * 51;
+              const L = 54 - (W - m) / H * 51;
               return y - L / 56 * y;
             }, x = a ? "rgba(255,255,255,.4)" : "rgba(0,0,0,.32)";
             return /* @__PURE__ */ s(O, { children: [
@@ -918,14 +914,14 @@ function ke(n, e, o) {
       return;
     }
     d(!0);
-    const r = /* @__PURE__ */ new Date(), H = new Date(r.getTime() - 24 * 3600 * 1e3);
-    e([n], H, r).then((h) => c(Fe(h == null ? void 0 : h[n]))).catch(() => {
+    const r = /* @__PURE__ */ new Date(), B = new Date(r.getTime() - 24 * 3600 * 1e3);
+    e([n], B, r).then((h) => c(Fe(h == null ? void 0 : h[n]))).catch(() => {
     }).finally(() => d(!1));
   }, [n, o]), { bars: a, loading: u };
 }
 function Te({ cardId: n }) {
   var rt, lt, st, ct, dt, ht, ut, gt, ft, mt, pt, yt;
-  const { dark: e, getFloat: o, haStates: a, fetchHistory: c, connected: u } = Se(), [d] = $e(n, Ae), { t: r } = _e("card-room-sensor"), H = we().replace(/:/g, ""), [h, D] = J(null), S = tt(null), [$, w] = J(!1);
+  const { dark: e, getFloat: o, haStates: a, fetchHistory: c, connected: u } = Se(), [d] = $e(n, Ae), { t: r } = _e("card-room-sensor"), B = we().replace(/:/g, ""), [h, D] = J(null), S = tt(null), [$, w] = J(!1);
   at(() => {
     const i = S.current;
     if (!i) return;
@@ -934,7 +930,7 @@ function Te({ cardId: n }) {
     });
     return v.observe(i), () => v.disconnect();
   }, []);
-  const f = d.gauges ?? [], b = d.badges ?? [], m = d.displayMode, B = d.rightSection, C = d.chartColor, A = d.flowEntity || ((lt = (rt = d.gauges) == null ? void 0 : rt[0]) == null ? void 0 : lt.entity) || "", M = d.historyEntity || ((ct = (st = d.gauges) == null ? void 0 : st[0]) == null ? void 0 : ct.entity) || "", p = tt([]), F = ((dt = f[0]) == null ? void 0 : dt.entity) ?? "", y = ((ut = (ht = a == null ? void 0 : a[F]) == null ? void 0 : ht.attributes) == null ? void 0 : ut.friendly_name) ?? "", _ = d.label || y.replace(/\b(temperatura|umidità|temp|hum|sensor|sensore)\b/gi, "").trim() || r("roomDefault"), R = (gt = a == null ? void 0 : a[F]) == null ? void 0 : gt.last_updated, N = re(R, r), P = (d.icon || "home").replace(/^mdi:/, ""), k = m === "flow" || B === "history" ? m === "flow" ? A : M : null, { bars: I, loading: g } = ke(k, c, u), l = ((ft = f.find((i) => i.entity === k)) == null ? void 0 : ft.unit) ?? ((mt = b.find((i) => i.entity === k)) == null ? void 0 : mt.unit) ?? ((yt = (pt = a == null ? void 0 : a[k]) == null ? void 0 : pt.attributes) == null ? void 0 : yt.unit_of_measurement) ?? "";
+  const f = d.gauges ?? [], b = d.badges ?? [], m = d.displayMode, C = d.rightSection, H = d.chartColor, A = d.flowEntity || ((lt = (rt = d.gauges) == null ? void 0 : rt[0]) == null ? void 0 : lt.entity) || "", M = d.historyEntity || ((ct = (st = d.gauges) == null ? void 0 : st[0]) == null ? void 0 : ct.entity) || "", p = tt([]), F = ((dt = f[0]) == null ? void 0 : dt.entity) ?? "", y = ((ut = (ht = a == null ? void 0 : a[F]) == null ? void 0 : ht.attributes) == null ? void 0 : ut.friendly_name) ?? "", _ = d.label || y.replace(/\b(temperatura|umidità|temp|hum|sensor|sensore)\b/gi, "").trim() || r("roomDefault"), R = (gt = a == null ? void 0 : a[F]) == null ? void 0 : gt.last_updated, N = re(R, r), P = (d.icon || "home").replace(/^mdi:/, ""), k = m === "flow" || C === "history" ? m === "flow" ? A : M : null, { bars: I, loading: g } = ke(k, c, u), l = ((ft = f.find((i) => i.entity === k)) == null ? void 0 : ft.unit) ?? ((mt = b.find((i) => i.entity === k)) == null ? void 0 : mt.unit) ?? ((yt = (pt = a == null ? void 0 : a[k]) == null ? void 0 : pt.attributes) == null ? void 0 : yt.unit_of_measurement) ?? "";
   if (at(() => {
     const i = f.map((v, T) => {
       const G = p.current[T];
@@ -949,7 +945,7 @@ function Te({ cardId: n }) {
     });
     return () => i.forEach((v) => v == null ? void 0 : v());
   }, [f.length, f.map((i) => i.entity).join(",")]), !f.length) return /* @__PURE__ */ t(le, { dark: e });
-  const x = e ? "rgba(255,255,255,.03)" : "#f7f9fc", W = e ? "rgba(255,255,255,.07)" : "#dde3ec", L = e ? "rgba(255,255,255,.06)" : "rgba(0,0,0,.06)", V = m === "gauge" && B === "badges", K = m === "gauge" && B === "history", nt = m === "gauge" && B === "minigauge", z = f.find((i) => i.entity === A) ?? f[0];
+  const x = e ? "rgba(255,255,255,.03)" : "#f7f9fc", W = e ? "rgba(255,255,255,.07)" : "#dde3ec", L = e ? "rgba(255,255,255,.06)" : "rgba(0,0,0,.06)", V = m === "gauge" && C === "badges", K = m === "gauge" && C === "history", nt = m === "gauge" && C === "minigauge", z = f.find((i) => i.entity === A) ?? f[0];
   return $ ? /* @__PURE__ */ s(O, { children: [
     /* @__PURE__ */ s("div", { ref: S, style: {
       borderRadius: 18,
@@ -1056,7 +1052,7 @@ function Te({ cardId: n }) {
                 v
               );
             }) }),
-            K && /* @__PURE__ */ t(Dt, { bars: I, loading: g, chartColor: C, dark: e, t: r, unit: l, showMinMax: d.showMinMax })
+            K && /* @__PURE__ */ t(Dt, { bars: I, loading: g, chartColor: H, dark: e, t: r, unit: l, showMinMax: d.showMinMax })
           ] })
         ] })
       ] }),
@@ -1067,7 +1063,7 @@ function Te({ cardId: n }) {
           rMin: (z == null ? void 0 : z.min) ?? 0,
           rMax: (z == null ? void 0 : z.max) ?? 100,
           dark: e,
-          uid: H,
+          uid: B,
           t: r,
           unit: l,
           showMinMax: d.showMinMax
@@ -1173,7 +1169,7 @@ function Te({ cardId: n }) {
             rMin: (z == null ? void 0 : z.min) ?? 0,
             rMax: (z == null ? void 0 : z.max) ?? 100,
             dark: e,
-            uid: H,
+            uid: B,
             t: r,
             unit: l,
             showMinMax: d.showMinMax
@@ -1208,7 +1204,7 @@ function Te({ cardId: n }) {
       ] }),
       K && /* @__PURE__ */ s(O, { children: [
         /* @__PURE__ */ t(X, { dark: e, h: 56 }),
-        /* @__PURE__ */ t(Dt, { bars: I, loading: g, chartColor: C, dark: e, t: r, unit: l, showMinMax: d.showMinMax })
+        /* @__PURE__ */ t(Dt, { bars: I, loading: g, chartColor: H, dark: e, t: r, unit: l, showMinMax: d.showMinMax })
       ] })
     ] }),
     h && /* @__PURE__ */ t(

@@ -69,20 +69,18 @@ function SensorBadge({ value, iconName, unit, dark }) {
   )
 }
 
-// ── Linea Min/Max orizzontale (overlay assoluto, pos = px dal fondo) ──────────
+// ── Etichetta Min/Max (overlay assoluto, pos = px dal fondo) — solo numero ─────
 function MinMaxLine({ pos, value, unit, color, label, dark }) {
   return (
     <div style={{
-      position: 'absolute', left: 0, right: 0, bottom: pos,
-      borderTop: `1px dashed ${color}`,
+      position: 'absolute', right: 0, bottom: pos,
+      transform: 'translateY(50%)',
       pointerEvents: 'none',
-      display: 'flex', justifyContent: 'flex-end',
     }}>
       <span style={{
-        transform: 'translateY(-50%)',
         fontSize: 8, fontWeight: 700, lineHeight: 1,
         padding: '1px 4px', borderRadius: 4,
-        background: dark ? 'rgba(22,27,34,.85)' : 'rgba(255,255,255,.85)',
+        background: dark ? 'rgba(22,27,34,.7)' : 'rgba(255,255,255,.7)',
         color: 'var(--text-muted)',
         fontFamily: 'JetBrains Mono, monospace',
         fontVariantNumeric: 'tabular-nums',
