@@ -1,4 +1,4 @@
-const { jsx: t, jsxs: s, Fragment: W } = window.__OIKOS_SDK__.jsxRuntime, At = "Ultime 24 ore", Ft = "Stanza", Tt = "in attesa di dati…", Rt = "adesso", Bt = "{{n}} min fa", Ct = "{{n}} ore fa", Ht = "{{n}} gg fa", Nt = "ieri", Wt = "l'altro ieri", Et = "Configura le entità in ⚙", It = {
+const { jsx: t, jsxs: s, Fragment: O } = window.__OIKOS_SDK__.jsxRuntime, At = "Ultime 24 ore", Ft = "Stanza", Tt = "in attesa di dati…", Rt = "adesso", Bt = "{{n}} min fa", Ct = "{{n}} ore fa", Ht = "{{n}} gg fa", Nt = "ieri", Wt = "l'altro ieri", Et = "Configura le entità in ⚙", Lt = {
   range1h: "1 ora",
   range24h: "24 ore",
   range7d: "7 giorni",
@@ -9,7 +9,7 @@ const { jsx: t, jsxs: s, Fragment: W } = window.__OIKOS_SDK__.jsxRuntime, At = "
   statAvg: "Media",
   statMax: "Max",
   close: "Chiudi"
-}, Lt = {
+}, Pt = {
   sectionRoom: "Stanza",
   sectionGauge: "Gauge",
   sectionDisplay: "Visualizzazione",
@@ -39,7 +39,7 @@ const { jsx: t, jsxs: s, Fragment: W } = window.__OIKOS_SDK__.jsxRuntime, At = "
   addBadge: "+ Aggiungi badge",
   noGauges: "Nessun gauge configurato.",
   noBadges: "Nessun badge configurato."
-}, Pt = {
+}, It = {
   last24h: At,
   roomDefault: Ft,
   waitingData: Tt,
@@ -50,9 +50,9 @@ const { jsx: t, jsxs: s, Fragment: W } = window.__OIKOS_SDK__.jsxRuntime, At = "
   timeYesterday: Nt,
   timeDayBeforeYesterday: Wt,
   configHint: Et,
-  modal: It,
-  settings: Lt
-}, zt = "Last 24 hours", Ot = "Room", Kt = "waiting for data…", Gt = "now", Vt = "{{n}} min ago", jt = "{{n}}h ago", Yt = "{{n}}d ago", Jt = "yesterday", Ut = "2 days ago", Xt = "Configure entities in ⚙", Zt = {
+  modal: Lt,
+  settings: Pt
+}, Ot = "Last 24 hours", zt = "Room", Vt = "waiting for data…", Gt = "now", Kt = "{{n}} min ago", jt = "{{n}}h ago", Yt = "{{n}}d ago", Jt = "yesterday", Ut = "2 days ago", Xt = "Configure entities in ⚙", Zt = {
   range1h: "1 hour",
   range24h: "24 hours",
   range7d: "7 days",
@@ -94,11 +94,11 @@ const { jsx: t, jsxs: s, Fragment: W } = window.__OIKOS_SDK__.jsxRuntime, At = "
   noGauges: "No gauges configured.",
   noBadges: "No badges configured."
 }, Qt = {
-  last24h: zt,
-  roomDefault: Ot,
-  waitingData: Kt,
+  last24h: Ot,
+  roomDefault: zt,
+  waitingData: Vt,
   timeNow: Gt,
-  timeMinAgo: Vt,
+  timeMinAgo: Kt,
   timeHAgo: jt,
   timeDayAgo: Yt,
   timeYesterday: Jt,
@@ -112,31 +112,31 @@ function ee(n, e) {
   const o = (Date.now() - new Date(n).getTime()) / 1e3;
   return o < 90 ? e("timeNow") : o < 3600 ? e("timeMinAgo", { n: Math.floor(o / 60) }) : o < 86400 ? e("timeHAgo", { n: Math.floor(o / 3600) }) : o < 172800 ? e("timeYesterday") : o < 259200 ? e("timeDayBeforeYesterday") : e("timeDayAgo", { n: Math.floor(o / 86400) });
 }
-function bt({ value: n, min: e, max: o, unit: a, iconName: c, color: p, dark: u, size: r = 72 }) {
-  const $ = r / 2, d = r / 2, b = (r - r * 0.18) / 2, M = r * 0.092, B = 135, v = 270, g = (w) => w * Math.PI / 180, S = (w) => ({ x: $ + b * Math.cos(g(w)), y: d + b * Math.sin(g(w)) }), m = (w) => {
-    if (w <= 0) return "";
-    const l = Math.min(w, 359.99), y = l > 180 ? 1 : 0, F = S(B), A = S(B + l);
-    return `M${F.x.toFixed(2)} ${F.y.toFixed(2)} A${b} ${b} 0 ${y} 1 ${A.x.toFixed(2)} ${A.y.toFixed(2)}`;
-  }, D = n != null ? Math.max(0, Math.min(1, (n - e) / (o - e))) : 0, R = u ? "rgba(255,255,255,.09)" : "rgba(0,0,0,.06)", k = n != null ? n === Math.floor(n) ? String(Math.round(n)) : n.toFixed(1) : "—";
-  return /* @__PURE__ */ s("div", { style: { position: "relative", width: r, height: r, flexShrink: 0 }, children: [
-    /* @__PURE__ */ s("svg", { width: r, height: r, style: { position: "absolute", inset: 0, overflow: "visible" }, children: [
+function vt({ value: n, min: e, max: o, unit: r, iconName: d, color: p, dark: f, size: a = 72 }) {
+  const D = a / 2, g = a / 2, A = (a - a * 0.18) / 2, h = a * 0.092, H = 135, v = 270, m = (M) => M * Math.PI / 180, b = (M) => ({ x: D + A * Math.cos(m(M)), y: g + A * Math.sin(m(M)) }), y = (M) => {
+    if (M <= 0) return "";
+    const u = Math.min(M, 359.99), w = u > 180 ? 1 : 0, R = b(H), S = b(H + u);
+    return `M${R.x.toFixed(2)} ${R.y.toFixed(2)} A${A} ${A} 0 ${w} 1 ${S.x.toFixed(2)} ${S.y.toFixed(2)}`;
+  }, F = n != null ? Math.max(0, Math.min(1, (n - e) / (o - e))) : 0, $ = f ? "rgba(255,255,255,.09)" : "rgba(0,0,0,.06)", T = n != null ? n === Math.floor(n) ? String(Math.round(n)) : n.toFixed(1) : "—";
+  return /* @__PURE__ */ s("div", { style: { position: "relative", width: a, height: a, flexShrink: 0 }, children: [
+    /* @__PURE__ */ s("svg", { width: a, height: a, style: { position: "absolute", inset: 0, overflow: "visible" }, children: [
       /* @__PURE__ */ t(
         "path",
         {
-          d: m(v),
+          d: y(v),
           fill: "none",
-          stroke: R,
-          strokeWidth: M,
+          stroke: $,
+          strokeWidth: h,
           strokeLinecap: "round"
         }
       ),
-      n != null && D > 0.01 && /* @__PURE__ */ t(
+      n != null && F > 0.01 && /* @__PURE__ */ t(
         "path",
         {
-          d: m(D * v),
+          d: y(F * v),
           fill: "none",
           stroke: p,
-          strokeWidth: M,
+          strokeWidth: h,
           strokeLinecap: "round",
           style: { filter: `drop-shadow(0 0 3px ${p}80)` }
         }
@@ -149,50 +149,50 @@ function bt({ value: n, min: e, max: o, unit: a, iconName: c, color: p, dark: u,
       flexDirection: "column",
       alignItems: "center",
       justifyContent: "center",
-      paddingBottom: r * 0.04,
+      paddingBottom: a * 0.04,
       gap: 1
     }, children: [
-      /* @__PURE__ */ t(Y, { name: c, size: Math.round(r * 0.22), dark: u, opacity: 0.55 }),
+      /* @__PURE__ */ t(Y, { name: d, size: Math.round(a * 0.22), dark: f, opacity: 0.55 }),
       /* @__PURE__ */ t("span", { style: {
-        fontSize: r * 0.235,
+        fontSize: a * 0.235,
         fontWeight: 800,
         color: "var(--text-primary)",
         lineHeight: 1.05,
         fontFamily: "JetBrains Mono, Fira Code, monospace",
         letterSpacing: "-0.5px",
         fontVariantNumeric: "tabular-nums"
-      }, children: k }),
-      /* @__PURE__ */ t("span", { style: { fontSize: r * 0.14, color: "var(--text-muted)", lineHeight: 1 }, children: a })
+      }, children: T }),
+      /* @__PURE__ */ t("span", { style: { fontSize: a * 0.14, color: "var(--text-muted)", lineHeight: 1 }, children: r })
     ] })
   ] });
 }
-function vt({ value: n, min: e = 0, max: o = 100, iconName: a, iconLeft: c, color: p, dark: u, size: r = 34 }) {
-  const $ = r / 2, d = r / 2, b = (r - r * 0.16) / 2, M = r * 0.08, B = -255, v = 340, g = (w) => w * Math.PI / 180, S = (w) => ({ x: $ + b * Math.cos(g(w)), y: d + b * Math.sin(g(w)) }), m = (w) => {
-    if (w <= 0) return "";
-    const l = Math.min(w, 359.99), y = l > 180 ? 1 : 0, F = S(B), A = S(B + l);
-    return `M${F.x.toFixed(2)} ${F.y.toFixed(2)} A${b} ${b} 0 ${y} 1 ${A.x.toFixed(2)} ${A.y.toFixed(2)}`;
-  }, D = n != null ? Math.max(0, Math.min(1, (n - e) / Math.max(o - e, 1))) : 0, R = u ? "rgba(255,255,255,.10)" : "rgba(0,0,0,.07)", k = n != null ? n === Math.floor(n) ? String(Math.round(n)) : n.toFixed(0) : "—";
+function bt({ value: n, min: e = 0, max: o = 100, iconName: r, iconLeft: d, color: p, dark: f, size: a = 34 }) {
+  const D = a / 2, g = a / 2, A = (a - a * 0.16) / 2, h = a * 0.08, H = -255, v = 340, m = (M) => M * Math.PI / 180, b = (M) => ({ x: D + A * Math.cos(m(M)), y: g + A * Math.sin(m(M)) }), y = (M) => {
+    if (M <= 0) return "";
+    const u = Math.min(M, 359.99), w = u > 180 ? 1 : 0, R = b(H), S = b(H + u);
+    return `M${R.x.toFixed(2)} ${R.y.toFixed(2)} A${A} ${A} 0 ${w} 1 ${S.x.toFixed(2)} ${S.y.toFixed(2)}`;
+  }, F = n != null ? Math.max(0, Math.min(1, (n - e) / Math.max(o - e, 1))) : 0, $ = f ? "rgba(255,255,255,.10)" : "rgba(0,0,0,.07)", T = n != null ? n === Math.floor(n) ? String(Math.round(n)) : n.toFixed(0) : "—";
   return /* @__PURE__ */ s("div", { style: { display: "flex", alignItems: "center", gap: 6, flexShrink: 0 }, children: [
-    c && /* @__PURE__ */ t(Y, { name: c, size: Math.round(r * 0.52), dark: u, opacity: 0.55 }),
-    /* @__PURE__ */ s("div", { style: { position: "relative", width: r, height: r, flexShrink: 0 }, children: [
-      /* @__PURE__ */ s("svg", { width: r, height: r, style: { position: "absolute", inset: 0, overflow: "visible" }, children: [
+    d && /* @__PURE__ */ t(Y, { name: d, size: Math.round(a * 0.52), dark: f, opacity: 0.55 }),
+    /* @__PURE__ */ s("div", { style: { position: "relative", width: a, height: a, flexShrink: 0 }, children: [
+      /* @__PURE__ */ s("svg", { width: a, height: a, style: { position: "absolute", inset: 0, overflow: "visible" }, children: [
         /* @__PURE__ */ t(
           "path",
           {
-            d: m(v),
+            d: y(v),
             fill: "none",
-            stroke: R,
-            strokeWidth: M,
+            stroke: $,
+            strokeWidth: h,
             strokeLinecap: "round"
           }
         ),
-        n != null && D > 0.01 && /* @__PURE__ */ t(
+        n != null && F > 0.01 && /* @__PURE__ */ t(
           "path",
           {
-            d: m(D * v),
+            d: y(F * v),
             fill: "none",
             stroke: p,
-            strokeWidth: M,
+            strokeWidth: h,
             strokeLinecap: "round"
           }
         )
@@ -203,30 +203,30 @@ function vt({ value: n, min: e = 0, max: o = 100, iconName: a, iconLeft: c, colo
         display: "flex",
         alignItems: "center",
         justifyContent: "center"
-      }, children: a && !c ? /* @__PURE__ */ t(Y, { name: a, size: Math.round(r * 0.44), dark: u, opacity: 0.7 }) : /* @__PURE__ */ t("span", { style: {
-        fontSize: r * 0.38,
+      }, children: r && !d ? /* @__PURE__ */ t(Y, { name: r, size: Math.round(a * 0.44), dark: f, opacity: 0.7 }) : /* @__PURE__ */ t("span", { style: {
+        fontSize: a * 0.38,
         fontWeight: 700,
         color: "var(--text-primary)",
         fontFamily: "JetBrains Mono, Fira Code, monospace",
         fontVariantNumeric: "tabular-nums",
         letterSpacing: "-0.5px",
         lineHeight: 1
-      }, children: k }) })
+      }, children: T }) })
     ] })
   ] });
 }
-function _t(n) {
+function kt(n) {
   if (!n || n.length < 2) return "";
   if (n.length === 2)
     return `M ${n[0].x.toFixed(2)},${n[0].y.toFixed(2)} L ${n[1].x.toFixed(2)},${n[1].y.toFixed(2)}`;
   let e = `M ${n[0].x.toFixed(2)},${n[0].y.toFixed(2)}`;
   for (let o = 1; o < n.length; o++) {
-    const a = n[Math.max(0, o - 2)], c = n[o - 1], p = n[o], u = n[Math.min(n.length - 1, o + 1)], r = (c.x + (p.x - a.x) / 6).toFixed(2), $ = (c.y + (p.y - a.y) / 6).toFixed(2), d = (p.x - (u.x - c.x) / 6).toFixed(2), b = (p.y - (u.y - c.y) / 6).toFixed(2);
-    e += ` C ${r},${$} ${d},${b} ${p.x.toFixed(2)},${p.y.toFixed(2)}`;
+    const r = n[Math.max(0, o - 2)], d = n[o - 1], p = n[o], f = n[Math.min(n.length - 1, o + 1)], a = (d.x + (p.x - r.x) / 6).toFixed(2), D = (d.y + (p.y - r.y) / 6).toFixed(2), g = (p.x - (f.x - d.x) / 6).toFixed(2), A = (p.y - (f.y - d.y) / 6).toFixed(2);
+    e += ` C ${a},${D} ${g},${A} ${p.x.toFixed(2)},${p.y.toFixed(2)}`;
   }
   return e;
 }
-const J = [
+const U = [
   [0, [59, 130, 246]],
   // blue-400   ≤ min
   [0.3, [6, 182, 212]],
@@ -238,20 +238,20 @@ const J = [
   [1, [239, 68, 68]]
   // red-500    ≥ max
 ];
-function et(n) {
-  for (let e = 1; e < J.length; e++) {
-    const [o, a] = J[e - 1], [c, p] = J[e];
-    if (n <= c) {
-      const u = (n - o) / (c - o);
-      return a.map((r, $) => Math.round(r + u * (p[$] - r)));
+function q(n) {
+  for (let e = 1; e < U.length; e++) {
+    const [o, r] = U[e - 1], [d, p] = U[e];
+    if (n <= d) {
+      const f = (n - o) / (d - o);
+      return r.map((a, D) => Math.round(a + f * (p[D] - a)));
     }
   }
-  return J[J.length - 1][1];
+  return U[U.length - 1][1];
 }
-function nt([n, e, o], a = 1) {
-  return `rgba(${n},${e},${o},${a})`;
+function Q([n, e, o], r = 1) {
+  return `rgba(${n},${e},${o},${r})`;
 }
-function U({ dark: n, h: e = 44 }) {
+function X({ dark: n, h: e = 44 }) {
   return /* @__PURE__ */ t("div", { style: {
     width: 1,
     height: e,
@@ -274,16 +274,16 @@ function ne({ dark: n, text: e }) {
     color: "var(--text-muted)"
   }, children: e ?? o("configHint") });
 }
-const { useState: Z, useEffect: oe, useId: ie, useRef: ae, useCallback: re } = window.__OIKOS_SDK__.React, { createPortal: le } = window.__OIKOS_SDK__.ReactDOM, { X: se, TrendingUp: ce, TrendingDown: de, Minus: ge } = window.__OIKOS_SDK__.icons, { useDashboard: ue, useT: he } = window.__OIKOS_SDK__, tt = [
+const { useState: Z, useEffect: oe, useId: ie, useRef: re, useCallback: ae } = window.__OIKOS_SDK__.React, { createPortal: le } = window.__OIKOS_SDK__.ReactDOM, { X: se, TrendingUp: ce, TrendingDown: de, Minus: ue } = window.__OIKOS_SDK__.icons, { useDashboard: ge, useT: he } = window.__OIKOS_SDK__, ot = [
   { key: "1h", tKey: "modal.range1h", hours: 1 },
   { key: "24h", tKey: "modal.range24h", hours: 24 },
   { key: "7d", tKey: "modal.range7d", hours: 168 }
 ];
 function fe(n, e) {
   return ((n == null ? void 0 : n[e]) ?? []).map((o) => {
-    const a = typeof o.lu == "number" ? o.lu * 1e3 : Date.parse(o.lu ?? o.last_updated ?? o.last_changed), c = parseFloat(o.s ?? o.state);
-    return !isNaN(c) && !isNaN(a) ? { ts: a, v: c } : null;
-  }).filter(Boolean).sort((o, a) => o.ts - a.ts);
+    const r = typeof o.lu == "number" ? o.lu * 1e3 : Date.parse(o.lu ?? o.last_updated ?? o.last_changed), d = parseFloat(o.s ?? o.state);
+    return !isNaN(d) && !isNaN(r) ? { ts: r, v: d } : null;
+  }).filter(Boolean).sort((o, r) => o.ts - r.ts);
 }
 function me(n, e) {
   if (!n || !e) return null;
@@ -294,8 +294,8 @@ function Mt(n, e) {
   const o = new Date(n);
   return e <= 1 ? o.toLocaleTimeString("it-IT", { hour: "2-digit", minute: "2-digit" }) : e <= 24 ? o.toLocaleTimeString("it-IT", { hour: "2-digit", minute: "2-digit" }) : o.toLocaleDateString("it-IT", { day: "2-digit", month: "2-digit" });
 }
-function pe({ points: n, dark: e, uid: o, rangeHours: a, unit: c, noDataLabel: p }) {
-  const u = ae(null), [r, $] = Z(null);
+function pe({ points: n, dark: e, uid: o, rangeHours: r, unit: d, noDataLabel: p }) {
+  const f = re(null), [a, D] = Z(null);
   if (!n.length) return /* @__PURE__ */ t("div", { style: {
     height: 120,
     display: "flex",
@@ -304,89 +304,89 @@ function pe({ points: n, dark: e, uid: o, rangeHours: a, unit: c, noDataLabel: p
     fontSize: 11,
     color: "var(--text-muted)"
   }, children: p });
-  const d = Math.min(...n.map((f) => f.v)), b = Math.max(...n.map((f) => f.v)), M = n[0].ts, B = n[n.length - 1].ts, v = Math.max(b - d, 0.5), g = Math.max(B - M, 1), S = v * 0.15, m = Array.from({ length: 4 }, (f, T) => {
-    const H = d - S + T / 3 * (v + S * 2);
-    return parseFloat(H.toFixed(1));
-  }), D = a <= 1 ? 4 : a <= 24 ? 6 : 7, R = Array.from(
-    { length: D },
-    (f, T) => M + T / (D - 1) * g
-  ), k = 32, w = 120, l = 1e3, y = 100, F = (f) => (f - M) / g * l, A = (f) => y - 4 - (f - (d - S)) / (v + S * 2) * (y - 8), C = n.map((f) => ({ x: F(f.ts), y: A(f.v), v: f.v, ts: f.ts })), L = _t(C), G = C.length > 1 ? `${L} L ${F(B).toFixed(1)},${y} L ${F(M).toFixed(1)},${y} Z` : "", P = e ? "#5b9cf6" : "#3b82f6", O = e ? "rgba(255,255,255,.06)" : "rgba(0,0,0,.06)", E = e ? "rgba(255,255,255,.35)" : "rgba(0,0,0,.35)", h = re((f) => {
-    const T = f.currentTarget.getBoundingClientRect(), H = (f.clientX - T.left) / T.width, z = M + H * g;
-    let K = C[0];
-    for (const V of C)
-      Math.abs(V.ts - z) < Math.abs(K.ts - z) && (K = V);
-    $({ xPct: K.x / l * 100, v: K.v, ts: K.ts });
-  }, [C, M, g]);
+  const g = Math.min(...n.map((c) => c.v)), A = Math.max(...n.map((c) => c.v)), h = n[0].ts, H = n[n.length - 1].ts, v = Math.max(A - g, 0.5), m = Math.max(H - h, 1), b = v * 0.15, y = Array.from({ length: 4 }, (c, B) => {
+    const N = g - b + B / 3 * (v + b * 2);
+    return parseFloat(N.toFixed(1));
+  }), F = r <= 1 ? 4 : r <= 24 ? 6 : 7, $ = Array.from(
+    { length: F },
+    (c, B) => h + B / (F - 1) * m
+  ), T = 32, M = 120, u = 1e3, w = 100, R = (c) => (c - h) / m * u, S = (c) => w - 4 - (c - (g - b)) / (v + b * 2) * (w - 8), C = n.map((c) => ({ x: R(c.ts), y: S(c.v), v: c.v, ts: c.ts })), W = kt(C), V = C.length > 1 ? `${W} L ${R(H).toFixed(1)},${w} L ${R(h).toFixed(1)},${w} Z` : "", k = e ? "#5b9cf6" : "#3b82f6", E = e ? "rgba(255,255,255,.06)" : "rgba(0,0,0,.06)", L = e ? "rgba(255,255,255,.35)" : "rgba(0,0,0,.35)", l = ae((c) => {
+    const B = c.currentTarget.getBoundingClientRect(), N = (c.clientX - B.left) / B.width, P = h + N * m;
+    let G = C[0];
+    for (const K of C)
+      Math.abs(K.ts - P) < Math.abs(G.ts - P) && (G = K);
+    D({ xPct: G.x / u * 100, v: G.v, ts: G.ts });
+  }, [C, h, m]);
   return /* @__PURE__ */ s("div", { children: [
     /* @__PURE__ */ s("div", { style: { display: "flex", gap: 0 }, children: [
       /* @__PURE__ */ t("div", { style: {
-        width: k,
+        width: T,
         flexShrink: 0,
-        height: w,
+        height: M,
         display: "flex",
         flexDirection: "column-reverse",
         justifyContent: "space-between",
         paddingBottom: 2,
         paddingTop: 2
-      }, children: m.map((f, T) => /* @__PURE__ */ t("div", { style: {
+      }, children: y.map((c, B) => /* @__PURE__ */ t("div", { style: {
         fontSize: 9,
-        color: E,
+        color: L,
         textAlign: "right",
         paddingRight: 5,
         fontFamily: "JetBrains Mono, monospace",
         lineHeight: 1
-      }, children: f % 1 === 0 ? f : f.toFixed(1) }, T)) }),
+      }, children: c % 1 === 0 ? c : c.toFixed(1) }, B)) }),
       /* @__PURE__ */ s("div", { style: { flex: 1, position: "relative" }, children: [
         /* @__PURE__ */ s(
           "svg",
           {
-            ref: u,
-            viewBox: `0 0 ${l} ${y}`,
+            ref: f,
+            viewBox: `0 0 ${u} ${w}`,
             preserveAspectRatio: "none",
-            style: { width: "100%", height: w, display: "block", cursor: "crosshair" },
-            onMouseMove: h,
-            onMouseLeave: () => $(null),
+            style: { width: "100%", height: M, display: "block", cursor: "crosshair" },
+            onMouseMove: l,
+            onMouseLeave: () => D(null),
             children: [
               /* @__PURE__ */ t("defs", { children: /* @__PURE__ */ s("linearGradient", { id: `afill-${o}`, x1: "0", y1: "0", x2: "0", y2: "1", children: [
-                /* @__PURE__ */ t("stop", { offset: "0%", stopColor: P, stopOpacity: "0.25" }),
-                /* @__PURE__ */ t("stop", { offset: "100%", stopColor: P, stopOpacity: "0" })
+                /* @__PURE__ */ t("stop", { offset: "0%", stopColor: k, stopOpacity: "0.25" }),
+                /* @__PURE__ */ t("stop", { offset: "100%", stopColor: k, stopOpacity: "0" })
               ] }) }),
-              m.map((f, T) => {
-                const H = A(f);
+              y.map((c, B) => {
+                const N = S(c);
                 return /* @__PURE__ */ t(
                   "line",
                   {
                     x1: "0",
-                    y1: H,
-                    x2: l,
-                    y2: H,
-                    stroke: O,
+                    y1: N,
+                    x2: u,
+                    y2: N,
+                    stroke: E,
                     strokeWidth: "0.8"
                   },
-                  T
+                  B
                 );
               }),
-              G && /* @__PURE__ */ t("path", { d: G, fill: `url(#afill-${o})` }),
+              V && /* @__PURE__ */ t("path", { d: V, fill: `url(#afill-${o})` }),
               /* @__PURE__ */ t(
                 "path",
                 {
-                  d: L,
+                  d: W,
                   fill: "none",
-                  stroke: P,
+                  stroke: k,
                   strokeWidth: "1.8",
                   strokeLinecap: "round",
-                  style: { filter: `drop-shadow(0 1px 4px ${P}55)` }
+                  style: { filter: `drop-shadow(0 1px 4px ${k}55)` }
                 }
               ),
-              r && /* @__PURE__ */ s(W, { children: [
+              a && /* @__PURE__ */ s(O, { children: [
                 /* @__PURE__ */ t(
                   "line",
                   {
-                    x1: r.xPct / 100 * l,
+                    x1: a.xPct / 100 * u,
                     y1: "0",
-                    x2: r.xPct / 100 * l,
-                    y2: y,
-                    stroke: P,
+                    x2: a.xPct / 100 * u,
+                    y2: w,
+                    stroke: k,
                     strokeWidth: "0.8",
                     strokeDasharray: "3,3",
                     opacity: "0.7"
@@ -395,10 +395,10 @@ function pe({ points: n, dark: e, uid: o, rangeHours: a, unit: c, noDataLabel: p
                 /* @__PURE__ */ t(
                   "circle",
                   {
-                    cx: r.xPct / 100 * l,
-                    cy: A(r.v),
+                    cx: a.xPct / 100 * u,
+                    cy: S(a.v),
                     r: "3",
-                    fill: P,
+                    fill: k,
                     stroke: e ? "#0f1620" : "#fff",
                     strokeWidth: "1.5"
                   }
@@ -407,10 +407,10 @@ function pe({ points: n, dark: e, uid: o, rangeHours: a, unit: c, noDataLabel: p
             ]
           }
         ),
-        r && /* @__PURE__ */ s("div", { style: {
+        a && /* @__PURE__ */ s("div", { style: {
           position: "absolute",
           top: 6,
-          left: `${Math.min(Math.max(r.xPct, 8), 78)}%`,
+          left: `${Math.min(Math.max(a.xPct, 8), 78)}%`,
           transform: "translateX(-50%)",
           background: e ? "rgba(15,22,32,.92)" : "rgba(255,255,255,.95)",
           border: `1px solid ${e ? "rgba(255,255,255,.12)" : "#e2e8f0"}`,
@@ -424,38 +424,38 @@ function pe({ points: n, dark: e, uid: o, rangeHours: a, unit: c, noDataLabel: p
           pointerEvents: "none",
           boxShadow: "0 2px 8px rgba(0,0,0,.2)"
         }, children: [
-          r.v % 1 === 0 ? r.v : r.v.toFixed(1),
-          c ? ` ${c}` : "",
-          /* @__PURE__ */ t("span", { style: { fontSize: 9, color: E, marginLeft: 5 }, children: Mt(r.ts, a) })
+          a.v % 1 === 0 ? a.v : a.v.toFixed(1),
+          d ? ` ${d}` : "",
+          /* @__PURE__ */ t("span", { style: { fontSize: 9, color: L, marginLeft: 5 }, children: Mt(a.ts, r) })
         ] })
       ] })
     ] }),
-    /* @__PURE__ */ t("div", { style: { display: "flex", paddingLeft: k, marginTop: 3 }, children: /* @__PURE__ */ t("div", { style: { flex: 1, display: "flex", justifyContent: "space-between" }, children: R.map((f, T) => /* @__PURE__ */ t("div", { style: {
+    /* @__PURE__ */ t("div", { style: { display: "flex", paddingLeft: T, marginTop: 3 }, children: /* @__PURE__ */ t("div", { style: { flex: 1, display: "flex", justifyContent: "space-between" }, children: $.map((c, B) => /* @__PURE__ */ t("div", { style: {
       fontSize: 9,
-      color: E,
+      color: L,
       fontFamily: "JetBrains Mono, monospace",
-      ...T === 0 ? { textAlign: "left" } : T === R.length - 1 ? { textAlign: "right" } : { textAlign: "center" }
-    }, children: Mt(f, a) }, T)) }) })
+      ...B === 0 ? { textAlign: "left" } : B === $.length - 1 ? { textAlign: "right" } : { textAlign: "center" }
+    }, children: Mt(c, r) }, B)) }) })
   ] });
 }
-function wt({ entityId: n, label: e, unit: o, dark: a, onClose: c }) {
-  var P, O, E;
-  const { haStates: p, fetchHistory: u, connected: r, getFloat: $ } = ue(), { t: d } = he("card-room-sensor"), b = ie().replace(/:/g, ""), [M, B] = Z("24h"), [v, g] = Z([]), [S, m] = Z(!1), D = $(n), R = ((P = p == null ? void 0 : p[n]) == null ? void 0 : P.attributes) ?? {}, k = e || R.friendly_name || n, w = (O = p == null ? void 0 : p[n]) == null ? void 0 : O.last_updated, l = o || R.unit_of_measurement || "";
+function wt({ entityId: n, label: e, unit: o, dark: r, onClose: d }) {
+  var k, E, L;
+  const { haStates: p, fetchHistory: f, connected: a, getFloat: D } = ge(), { t: g } = he("card-room-sensor"), A = ie().replace(/:/g, ""), [h, H] = Z("24h"), [v, m] = Z([]), [b, y] = Z(!1), F = D(n), $ = ((k = p == null ? void 0 : p[n]) == null ? void 0 : k.attributes) ?? {}, T = e || $.friendly_name || n, M = (E = p == null ? void 0 : p[n]) == null ? void 0 : E.last_updated, u = o || $.unit_of_measurement || "";
   if (oe(() => {
-    var H;
-    if (!n || !u || !r) return;
-    m(!0), g([]);
-    const h = ((H = tt.find((z) => z.key === M)) == null ? void 0 : H.hours) ?? 24, f = /* @__PURE__ */ new Date(), T = new Date(f.getTime() - h * 3600 * 1e3);
-    u([n], T, f).then((z) => g(fe(z, n))).catch(() => {
-    }).finally(() => m(!1));
-  }, [n, M, r]), !n) return null;
-  const y = (h) => h != null ? h === Math.floor(h) ? String(Math.round(h)) : h.toFixed(1) : "—", F = v.length ? Math.min(...v.map((h) => h.v)) : null, A = v.length ? Math.max(...v.map((h) => h.v)) : null, C = v.length ? v.reduce((h, f) => h + f.v, 0) / v.length : null;
+    var N;
+    if (!n || !f || !a) return;
+    y(!0), m([]);
+    const l = ((N = ot.find((P) => P.key === h)) == null ? void 0 : N.hours) ?? 24, c = /* @__PURE__ */ new Date(), B = new Date(c.getTime() - l * 3600 * 1e3);
+    f([n], B, c).then((P) => m(fe(P, n))).catch(() => {
+    }).finally(() => y(!1));
+  }, [n, h, a]), !n) return null;
+  const w = (l) => l != null ? l === Math.floor(l) ? String(Math.round(l)) : l.toFixed(1) : "—", R = v.length ? Math.min(...v.map((l) => l.v)) : null, S = v.length ? Math.max(...v.map((l) => l.v)) : null, C = v.length ? v.reduce((l, c) => l + c.v, 0) / v.length : null;
   return le(
-    /* @__PURE__ */ s(W, { children: [
+    /* @__PURE__ */ s(O, { children: [
       /* @__PURE__ */ t(
         "div",
         {
-          onClick: c,
+          onClick: d,
           style: {
             position: "fixed",
             inset: 0,
@@ -472,7 +472,7 @@ function wt({ entityId: n, label: e, unit: o, dark: a, onClose: c }) {
         left: 0,
         right: 0,
         zIndex: 451,
-        background: a ? "#0f1620" : "#ffffff",
+        background: r ? "#0f1620" : "#ffffff",
         borderRadius: "22px 22px 0 0",
         boxShadow: "0 -8px 48px rgba(0,0,0,.3)",
         maxHeight: "78dvh",
@@ -483,14 +483,14 @@ function wt({ entityId: n, label: e, unit: o, dark: a, onClose: c }) {
           width: 36,
           height: 4,
           borderRadius: 99,
-          background: a ? "rgba(255,255,255,.14)" : "#e2e8f0"
+          background: r ? "rgba(255,255,255,.14)" : "#e2e8f0"
         } }) }),
         /* @__PURE__ */ s("div", { style: {
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
           padding: "8px 16px 14px",
-          borderBottom: `1px solid ${a ? "rgba(255,255,255,.07)" : "#f1f5f9"}`,
+          borderBottom: `1px solid ${r ? "rgba(255,255,255,.07)" : "#f1f5f9"}`,
           flexShrink: 0
         }, children: [
           /* @__PURE__ */ s("div", { children: [
@@ -499,8 +499,8 @@ function wt({ entityId: n, label: e, unit: o, dark: a, onClose: c }) {
               fontWeight: 800,
               color: "var(--text-primary)",
               letterSpacing: "-0.3px"
-            }, children: k }),
-            w && /* @__PURE__ */ t("div", { style: { fontSize: 11, color: "var(--text-muted)", marginTop: 2 }, children: d("modal.updatedAt", { time: me(w, d) }) })
+            }, children: T }),
+            M && /* @__PURE__ */ t("div", { style: { fontSize: 11, color: "var(--text-muted)", marginTop: 2 }, children: g("modal.updatedAt", { time: me(M, g) }) })
           ] }),
           /* @__PURE__ */ s("div", { style: { display: "flex", alignItems: "center", gap: 14 }, children: [
             /* @__PURE__ */ s("div", { style: {
@@ -512,21 +512,21 @@ function wt({ entityId: n, label: e, unit: o, dark: a, onClose: c }) {
               fontVariantNumeric: "tabular-nums",
               lineHeight: 1
             }, children: [
-              y(D),
-              /* @__PURE__ */ t("span", { style: { fontSize: 14, fontWeight: 600, color: "var(--text-muted)", marginLeft: 3 }, children: l })
+              w(F),
+              /* @__PURE__ */ t("span", { style: { fontSize: 14, fontWeight: 600, color: "var(--text-muted)", marginLeft: 3 }, children: u })
             ] }),
             /* @__PURE__ */ t(
               "button",
               {
-                onClick: c,
-                "aria-label": d("modal.close"),
+                onClick: d,
+                "aria-label": g("modal.close"),
                 style: {
                   width: 32,
                   height: 32,
                   borderRadius: 9,
                   flexShrink: 0,
-                  border: `1px solid ${a ? "rgba(255,255,255,.1)" : "#e2e8f0"}`,
-                  background: a ? "rgba(255,255,255,.06)" : "#f8fafc",
+                  border: `1px solid ${r ? "rgba(255,255,255,.1)" : "#e2e8f0"}`,
+                  background: r ? "rgba(255,255,255,.06)" : "#f8fafc",
                   color: "var(--text-muted)",
                   cursor: "pointer",
                   display: "flex",
@@ -539,63 +539,63 @@ function wt({ entityId: n, label: e, unit: o, dark: a, onClose: c }) {
           ] })
         ] }),
         /* @__PURE__ */ s("div", { style: { flex: 1, overflowY: "auto", padding: "14px 16px 32px" }, children: [
-          /* @__PURE__ */ t("div", { style: { display: "flex", gap: 6, marginBottom: 14 }, children: tt.map((h) => /* @__PURE__ */ t(
+          /* @__PURE__ */ t("div", { style: { display: "flex", gap: 6, marginBottom: 14 }, children: ot.map((l) => /* @__PURE__ */ t(
             "button",
             {
-              onClick: () => B(h.key),
+              onClick: () => H(l.key),
               style: {
                 padding: "5px 14px",
                 borderRadius: 8,
                 cursor: "pointer",
                 fontSize: 12,
                 fontWeight: 700,
-                border: M === h.key ? "1.5px solid var(--amber-border)" : `1px solid ${a ? "rgba(255,255,255,.1)" : "#e2e8f0"}`,
-                background: M === h.key ? "rgba(245,158,11,.12)" : "transparent",
-                color: M === h.key ? "var(--amber)" : "var(--text-muted)",
+                border: h === l.key ? "1.5px solid var(--amber-border)" : `1px solid ${r ? "rgba(255,255,255,.1)" : "#e2e8f0"}`,
+                background: h === l.key ? "rgba(245,158,11,.12)" : "transparent",
+                color: h === l.key ? "var(--amber)" : "var(--text-muted)",
                 transition: "all .12s"
               },
-              children: d(h.tKey)
+              children: g(l.tKey)
             },
-            h.key
+            l.key
           )) }),
           /* @__PURE__ */ t("div", { style: {
             borderRadius: 14,
             overflow: "hidden",
-            background: a ? "rgba(255,255,255,.03)" : "#f7f9fc",
-            border: `1px solid ${a ? "rgba(255,255,255,.06)" : "#eef1f7"}`,
+            background: r ? "rgba(255,255,255,.03)" : "#f7f9fc",
+            border: `1px solid ${r ? "rgba(255,255,255,.06)" : "#eef1f7"}`,
             padding: "12px 12px 4px",
             marginBottom: 12
-          }, children: S ? /* @__PURE__ */ t("div", { style: {
+          }, children: b ? /* @__PURE__ */ t("div", { style: {
             height: 100,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
             fontSize: 11,
             color: "var(--text-muted)"
-          }, children: d("modal.loading") }) : /* @__PURE__ */ t(
+          }, children: g("modal.loading") }) : /* @__PURE__ */ t(
             pe,
             {
               points: v,
-              dark: a,
-              uid: b,
-              rangeHours: ((E = tt.find((h) => h.key === M)) == null ? void 0 : E.hours) ?? 24,
-              unit: l,
-              noDataLabel: d("modal.noData")
+              dark: r,
+              uid: A,
+              rangeHours: ((L = ot.find((l) => l.key === h)) == null ? void 0 : L.hours) ?? 24,
+              unit: u,
+              noDataLabel: g("modal.noData")
             }
           ) }),
-          !S && v.length > 0 && /* @__PURE__ */ t("div", { style: { display: "flex", gap: 8 }, children: [
-            { label: d("modal.statMin"), value: y(F), icon: de, color: "#3b82f6" },
-            { label: d("modal.statAvg"), value: y(C), icon: ge, color: "var(--text-muted)" },
-            { label: d("modal.statMax"), value: y(A), icon: ce, color: "#ef4444" }
-          ].map((h) => /* @__PURE__ */ s("div", { style: {
+          !b && v.length > 0 && /* @__PURE__ */ t("div", { style: { display: "flex", gap: 8 }, children: [
+            { label: g("modal.statMin"), value: w(R), icon: de, color: "#3b82f6" },
+            { label: g("modal.statAvg"), value: w(C), icon: ue, color: "var(--text-muted)" },
+            { label: g("modal.statMax"), value: w(S), icon: ce, color: "#ef4444" }
+          ].map((l) => /* @__PURE__ */ s("div", { style: {
             flex: 1,
             textAlign: "center",
             padding: "10px 8px 12px",
             borderRadius: 13,
-            background: a ? "rgba(255,255,255,.04)" : "#f7f9fc",
-            border: `1px solid ${a ? "rgba(255,255,255,.07)" : "#eef1f7"}`
+            background: r ? "rgba(255,255,255,.04)" : "#f7f9fc",
+            border: `1px solid ${r ? "rgba(255,255,255,.07)" : "#eef1f7"}`
           }, children: [
-            /* @__PURE__ */ t(h.icon, { size: 13, style: { color: h.color, marginBottom: 5 } }),
+            /* @__PURE__ */ t(l.icon, { size: 13, style: { color: l.color, marginBottom: 5 } }),
             /* @__PURE__ */ s("div", { style: {
               fontSize: 20,
               fontWeight: 900,
@@ -604,11 +604,11 @@ function wt({ entityId: n, label: e, unit: o, dark: a, onClose: c }) {
               fontVariantNumeric: "tabular-nums",
               lineHeight: 1.1
             }, children: [
-              h.value,
-              /* @__PURE__ */ t("span", { style: { fontSize: 10, color: "var(--text-muted)", marginLeft: 2 }, children: l })
+              l.value,
+              /* @__PURE__ */ t("span", { style: { fontSize: 10, color: "var(--text-muted)", marginLeft: 2 }, children: u })
             ] }),
-            /* @__PURE__ */ t("div", { style: { fontSize: 10, color: "var(--text-muted)", marginTop: 3 }, children: h.label })
-          ] }, h.label)) }),
+            /* @__PURE__ */ t("div", { style: { fontSize: 10, color: "var(--text-muted)", marginTop: 3 }, children: l.label })
+          ] }, l.label)) }),
           /* @__PURE__ */ t("div", { style: {
             marginTop: 16,
             fontSize: 10,
@@ -622,8 +622,8 @@ function wt({ entityId: n, label: e, unit: o, dark: a, onClose: c }) {
     document.body
   );
 }
-const { useState: X, useEffect: ot, useId: ye, useRef: it } = window.__OIKOS_SDK__.React, { useDashboard: xe, useCardConfig: be, registerCardTranslations: ve, useT: Me } = window.__OIKOS_SDK__;
-ve("card-room-sensor", { it: Pt, en: Qt });
+const { useState: J, useEffect: it, useId: ye, useRef: tt } = window.__OIKOS_SDK__.React, { useDashboard: xe, useCardConfig: ve, registerCardTranslations: be, useT: Me } = window.__OIKOS_SDK__;
+be("card-room-sensor", { it: It, en: Qt });
 const we = {
   label: "",
   icon: "home",
@@ -636,15 +636,15 @@ const we = {
   chartColor: "#e07060"
 };
 function Se(n) {
-  const e = Array.from({ length: 24 }, (o, a) => ({ h: a, sum: 0, n: 0 }));
+  const e = Array.from({ length: 24 }, (o, r) => ({ h: r, sum: 0, n: 0 }));
   return (n ?? []).forEach((o) => {
-    const a = typeof o.lu == "number" ? o.lu * 1e3 : Date.parse(o.lu ?? o.last_updated ?? o.last_changed), c = parseFloat(o.s ?? o.state);
-    isNaN(c) || isNaN(a) || (e[new Date(a).getHours()].sum += c, e[new Date(a).getHours()].n += 1);
+    const r = typeof o.lu == "number" ? o.lu * 1e3 : Date.parse(o.lu ?? o.last_updated ?? o.last_changed), d = parseFloat(o.s ?? o.state);
+    isNaN(d) || isNaN(r) || (e[new Date(r).getHours()].sum += d, e[new Date(r).getHours()].n += 1);
   }), e.map((o) => ({ h: o.h, v: o.n > 0 ? o.sum / o.n : null }));
 }
-function St({ value: n, iconName: e, unit: o, dark: a }) {
+function St({ value: n, iconName: e, unit: o, dark: r }) {
   return n == null ? null : /* @__PURE__ */ s("div", { style: { display: "flex", flexDirection: "column", alignItems: "center", gap: 3, minWidth: 28 }, children: [
-    /* @__PURE__ */ t(Y, { name: e, size: 18, dark: a, opacity: 0.5 }),
+    /* @__PURE__ */ t(Y, { name: e, size: 18, dark: r, opacity: 0.5 }),
     /* @__PURE__ */ s("span", { style: {
       fontSize: 11,
       fontWeight: 700,
@@ -657,41 +657,41 @@ function St({ value: n, iconName: e, unit: o, dark: a }) {
     ] })
   ] });
 }
-function $t({ bars: n, loading: e, chartColor: o, dark: a, t: c, unit: p = "" }) {
-  const r = (/* @__PURE__ */ new Date()).getHours(), $ = n.filter((l) => l.v != null), d = $.length ? Math.min(...$.map((l) => l.v)) : 0, b = $.length ? Math.max(...$.map((l) => l.v)) : 1, M = Math.max(b - d, 0.1), B = a ? "rgba(255,255,255,.07)" : "rgba(0,0,0,.06)", [v, g] = X(null), S = it(null), m = e || !n.length ? Array.from({ length: 24 }, (l, y) => ({ h: y, v: null })) : n, D = (l) => {
-    const y = S.current;
-    if (!y) return;
-    const F = y.getBoundingClientRect(), A = l.clientX - F.left;
-    if (A < 0 || A > F.width) {
-      g(null);
+function $t({ bars: n, loading: e, chartColor: o, dark: r, t: d, unit: p = "" }) {
+  const a = (/* @__PURE__ */ new Date()).getHours(), D = n.filter((u) => u.v != null), g = D.length ? Math.min(...D.map((u) => u.v)) : 0, A = D.length ? Math.max(...D.map((u) => u.v)) : 1, h = Math.max(A - g, 0.1), H = r ? "rgba(255,255,255,.07)" : "rgba(0,0,0,.06)", [v, m] = J(null), b = tt(null), y = e || !n.length ? Array.from({ length: 24 }, (u, w) => ({ h: w, v: null })) : n, F = (u) => {
+    const w = b.current;
+    if (!w) return;
+    const R = w.getBoundingClientRect(), S = u.clientX - R.left;
+    if (S < 0 || S > R.width) {
+      m(null);
       return;
     }
-    const C = Math.max(0, Math.min(m.length - 1, Math.floor(A / F.width * m.length)));
-    g(C);
-  }, R = () => g(null), k = v != null ? m[v] : null, w = k ? k.v != null ? `${String(k.h).padStart(2, "0")}:00 · ${k.v.toFixed(1)}${p}` : `${String(k.h).padStart(2, "0")}:00 · —` : c("last24h");
+    const C = Math.max(0, Math.min(y.length - 1, Math.floor(S / R.width * y.length)));
+    m(C);
+  }, $ = () => m(null), T = v != null ? y[v] : null, M = T ? T.v != null ? `${String(T.h).padStart(2, "0")}:00 · ${T.v.toFixed(1)}${p}` : `${String(T.h).padStart(2, "0")}:00 · —` : d("last24h");
   return /* @__PURE__ */ s("div", { style: { flex: 1, minWidth: 0, paddingLeft: 4 }, children: [
     /* @__PURE__ */ t("div", { style: {
       fontSize: 10,
       fontWeight: 700,
-      color: k ? o : "var(--text-muted)",
+      color: T ? o : "var(--text-muted)",
       marginBottom: 7,
       textTransform: "uppercase",
       letterSpacing: ".07em",
-      fontFamily: k ? "JetBrains Mono, monospace" : "inherit",
+      fontFamily: T ? "JetBrains Mono, monospace" : "inherit",
       fontVariantNumeric: "tabular-nums",
       whiteSpace: "nowrap",
       overflow: "hidden",
       textOverflow: "ellipsis",
       transition: "color .15s"
-    }, children: w }),
+    }, children: M }),
     /* @__PURE__ */ t(
       "div",
       {
-        ref: S,
-        onPointerMove: D,
-        onPointerDown: D,
-        onPointerLeave: R,
-        onPointerCancel: R,
+        ref: b,
+        onPointerMove: F,
+        onPointerDown: F,
+        onPointerLeave: $,
+        onPointerCancel: $,
         style: {
           display: "flex",
           alignItems: "flex-end",
@@ -700,148 +700,204 @@ function $t({ bars: n, loading: e, chartColor: o, dark: a, t: c, unit: p = "" })
           cursor: "crosshair",
           touchAction: "pan-y"
         },
-        children: m.map((l, y) => {
-          const F = l.v != null ? Math.max(6, (l.v - d) / M * 52) : 4, A = l.h === r, C = v === y, L = l.v != null ? A ? o : `${o}bb` : B;
+        children: y.map((u, w) => {
+          const R = u.v != null ? Math.max(6, (u.v - g) / h * 52) : 4, S = u.h === a, C = v === w, W = u.v != null ? S ? o : `${o}bb` : H;
           return /* @__PURE__ */ t(
             "div",
             {
               style: {
                 flex: 1,
-                height: F,
+                height: R,
                 borderRadius: "3px 3px 0 0",
-                background: C ? o : L,
+                background: C ? o : W,
                 opacity: v != null && !C ? 0.45 : 1,
                 transform: C ? "scaleY(1.06)" : "scaleY(1)",
                 transformOrigin: "bottom",
                 transition: "height .35s cubic-bezier(.4,0,.2,1), opacity .15s, transform .15s, background .15s",
-                boxShadow: C ? `0 0 10px ${o}aa` : l.v != null && A ? `0 0 8px ${o}66` : "none"
+                boxShadow: C ? `0 0 10px ${o}aa` : u.v != null && S ? `0 0 8px ${o}66` : "none"
               }
             },
-            l.h
+            u.h
           );
         })
       }
     )
   ] });
 }
-function Dt({ bars: n, rMin: e, rMax: o, dark: a, uid: c, t: p }) {
-  const b = n.filter((l) => l.v != null), M = b.length ? Math.min(...b.map((l) => l.v)) : e, B = b.length ? Math.max(...b.map((l) => l.v)) : o, v = Math.max((B - M) * 0.15, 0.5), g = M - v, S = B + v, m = Math.max(S - g, 1), D = b.map((l, y) => ({
-    x: b.length > 1 ? y / (b.length - 1) * 100 : 100 / 2,
-    y: 54 - (l.v - g) / m * 51,
-    v: l.v
-  })), R = _t(D), k = D.length > 1 ? `${R} L 100,56 L 0,56 Z` : "", w = D.map((l, y) => ({
-    pct: (y / Math.max(D.length - 1, 1) * 100).toFixed(1),
-    color: nt(et(Math.max(0, Math.min(1, (l.v - g) / m))))
-  }));
+function Dt({ bars: n, rMin: e, rMax: o, dark: r, uid: d, t: p, unit: f = "" }) {
+  const h = n.filter((l) => l.v != null), H = h.length ? Math.min(...h.map((l) => l.v)) : e, v = h.length ? Math.max(...h.map((l) => l.v)) : o, m = Math.max((v - H) * 0.15, 0.5), b = H - m, y = v + m, F = Math.max(y - b, 1), $ = h.map((l, c) => ({
+    x: h.length > 1 ? c / (h.length - 1) * 100 : 100 / 2,
+    y: 54 - (l.v - b) / F * 51,
+    v: l.v,
+    h: l.h
+  })), T = kt($), M = $.length > 1 ? `${T} L 100,56 L 0,56 Z` : "", u = $.map((l, c) => ({
+    pct: (c / Math.max($.length - 1, 1) * 100).toFixed(1),
+    color: Q(q(Math.max(0, Math.min(1, (l.v - b) / F))))
+  })), w = 64, [R, S] = J(null), C = tt(null), W = (l) => {
+    const c = C.current;
+    if (!c || $.length === 0) return;
+    const B = c.getBoundingClientRect(), N = (l.clientX - B.left) / B.width;
+    if (N < 0 || N > 1) {
+      S(null);
+      return;
+    }
+    const P = Math.max(0, Math.min($.length - 1, Math.round(N * ($.length - 1))));
+    S(P);
+  }, V = () => S(null), k = R != null ? $[R] : null, E = k ? Q(q(Math.max(0, Math.min(1, (k.v - b) / F)))) : null, L = k ? `${String(k.h).padStart(2, "0")}:00 · ${k.v.toFixed(1)}${f}` : p("last24h");
   return /* @__PURE__ */ s("div", { style: { flex: 1, minWidth: 0, paddingLeft: 2 }, children: [
     /* @__PURE__ */ t("div", { style: {
       fontSize: 10,
       fontWeight: 700,
-      color: "var(--text-muted)",
+      color: k ? E || "var(--text-primary)" : "var(--text-muted)",
       marginBottom: 4,
       textTransform: "uppercase",
-      letterSpacing: ".07em"
-    }, children: p("last24h") }),
-    /* @__PURE__ */ s(
-      "svg",
+      letterSpacing: ".07em",
+      fontFamily: k ? "JetBrains Mono, monospace" : "inherit",
+      fontVariantNumeric: "tabular-nums",
+      whiteSpace: "nowrap",
+      overflow: "hidden",
+      textOverflow: "ellipsis",
+      transition: "color .15s"
+    }, children: L }),
+    /* @__PURE__ */ t(
+      "div",
       {
-        viewBox: "0 0 100 56",
-        preserveAspectRatio: "none",
-        style: { width: "100%", height: 64, display: "block", borderRadius: 6 },
-        children: [
-          /* @__PURE__ */ s("defs", { children: [
-            /* @__PURE__ */ t("linearGradient", { id: `tg-${c}`, x1: "0%", y1: "0%", x2: "100%", y2: "0%", children: w.length > 0 ? w.map((l, y) => /* @__PURE__ */ t("stop", { offset: `${l.pct}%`, stopColor: l.color }, y)) : /* @__PURE__ */ s(W, { children: [
-              /* @__PURE__ */ t("stop", { offset: "0%", stopColor: "#3b82f6" }),
-              /* @__PURE__ */ t("stop", { offset: "100%", stopColor: "#ef4444" })
-            ] }) }),
-            /* @__PURE__ */ s("linearGradient", { id: `fm-${c}`, x1: "0%", y1: "0%", x2: "0%", y2: "100%", children: [
-              /* @__PURE__ */ t("stop", { offset: "0%", stopColor: "white", stopOpacity: "0.45" }),
-              /* @__PURE__ */ t("stop", { offset: "100%", stopColor: "white", stopOpacity: "0" })
-            ] }),
-            /* @__PURE__ */ t("mask", { id: `mk-${c}`, children: /* @__PURE__ */ t("rect", { x: "0", y: "0", width: 100, height: 56, fill: `url(#fm-${c})` }) })
-          ] }),
-          b.length ? /* @__PURE__ */ s(W, { children: [
-            k && /* @__PURE__ */ t(
-              "path",
-              {
-                d: k,
-                fill: `url(#tg-${c})`,
-                mask: `url(#mk-${c})`
-              }
-            ),
-            /* @__PURE__ */ t(
-              "path",
-              {
-                d: R,
-                fill: "none",
-                stroke: `url(#tg-${c})`,
-                strokeWidth: "2",
-                strokeLinecap: "round",
-                strokeLinejoin: "round",
-                style: { filter: "drop-shadow(0 1px 3px rgba(0,0,0,.2))" }
-              }
-            )
-          ] }) : /* @__PURE__ */ t(
-            "text",
-            {
-              x: 100 / 2,
-              y: 56 / 2,
-              textAnchor: "middle",
-              fontSize: "6",
-              fill: a ? "rgba(255,255,255,.25)" : "rgba(0,0,0,.2)",
-              children: p("waitingData")
-            }
-          )
-        ]
+        ref: C,
+        onPointerMove: W,
+        onPointerDown: W,
+        onPointerLeave: V,
+        onPointerCancel: V,
+        style: { touchAction: "pan-y", cursor: h.length ? "crosshair" : "default" },
+        children: /* @__PURE__ */ s(
+          "svg",
+          {
+            viewBox: "0 0 100 56",
+            preserveAspectRatio: "none",
+            style: { width: "100%", height: w, display: "block", borderRadius: 6 },
+            children: [
+              /* @__PURE__ */ s("defs", { children: [
+                /* @__PURE__ */ t("linearGradient", { id: `tg-${d}`, x1: "0%", y1: "0%", x2: "100%", y2: "0%", children: u.length > 0 ? u.map((l, c) => /* @__PURE__ */ t("stop", { offset: `${l.pct}%`, stopColor: l.color }, c)) : /* @__PURE__ */ s(O, { children: [
+                  /* @__PURE__ */ t("stop", { offset: "0%", stopColor: "#3b82f6" }),
+                  /* @__PURE__ */ t("stop", { offset: "100%", stopColor: "#ef4444" })
+                ] }) }),
+                /* @__PURE__ */ s("linearGradient", { id: `fm-${d}`, x1: "0%", y1: "0%", x2: "0%", y2: "100%", children: [
+                  /* @__PURE__ */ t("stop", { offset: "0%", stopColor: "white", stopOpacity: "0.45" }),
+                  /* @__PURE__ */ t("stop", { offset: "100%", stopColor: "white", stopOpacity: "0" })
+                ] }),
+                /* @__PURE__ */ t("mask", { id: `mk-${d}`, children: /* @__PURE__ */ t("rect", { x: "0", y: "0", width: 100, height: 56, fill: `url(#fm-${d})` }) })
+              ] }),
+              h.length ? /* @__PURE__ */ s(O, { children: [
+                M && /* @__PURE__ */ t(
+                  "path",
+                  {
+                    d: M,
+                    fill: `url(#tg-${d})`,
+                    mask: `url(#mk-${d})`
+                  }
+                ),
+                /* @__PURE__ */ t(
+                  "path",
+                  {
+                    d: T,
+                    fill: "none",
+                    stroke: `url(#tg-${d})`,
+                    strokeWidth: "2",
+                    strokeLinecap: "round",
+                    strokeLinejoin: "round",
+                    style: { filter: "drop-shadow(0 1px 3px rgba(0,0,0,.2))" }
+                  }
+                ),
+                k && /* @__PURE__ */ s("g", { vectorEffect: "non-scaling-stroke", children: [
+                  /* @__PURE__ */ t(
+                    "line",
+                    {
+                      x1: k.x,
+                      y1: 0,
+                      x2: k.x,
+                      y2: 56,
+                      stroke: E,
+                      strokeWidth: "1",
+                      strokeDasharray: "2 2",
+                      opacity: "0.6",
+                      vectorEffect: "non-scaling-stroke"
+                    }
+                  ),
+                  /* @__PURE__ */ t(
+                    "circle",
+                    {
+                      cx: k.x,
+                      cy: k.y,
+                      r: "3.5",
+                      fill: r ? "#161b22" : "#ffffff",
+                      stroke: E,
+                      strokeWidth: "2",
+                      vectorEffect: "non-scaling-stroke"
+                    }
+                  )
+                ] })
+              ] }) : /* @__PURE__ */ t(
+                "text",
+                {
+                  x: 100 / 2,
+                  y: 56 / 2,
+                  textAnchor: "middle",
+                  fontSize: "6",
+                  fill: r ? "rgba(255,255,255,.25)" : "rgba(0,0,0,.2)",
+                  children: p("waitingData")
+                }
+              )
+            ]
+          }
+        )
       }
     )
   ] });
 }
 function $e(n, e, o) {
-  const [a, c] = X([]), [p, u] = X(!1);
-  return ot(() => {
+  const [r, d] = J([]), [p, f] = J(!1);
+  return it(() => {
     if (!n || !e || !o) {
-      c([]);
+      d([]);
       return;
     }
-    u(!0);
-    const r = /* @__PURE__ */ new Date(), $ = new Date(r.getTime() - 24 * 3600 * 1e3);
-    e([n], $, r).then((d) => c(Se(d == null ? void 0 : d[n]))).catch(() => {
-    }).finally(() => u(!1));
-  }, [n, o]), { bars: a, loading: p };
+    f(!0);
+    const a = /* @__PURE__ */ new Date(), D = new Date(a.getTime() - 24 * 3600 * 1e3);
+    e([n], D, a).then((g) => d(Se(g == null ? void 0 : g[n]))).catch(() => {
+    }).finally(() => f(!1));
+  }, [n, o]), { bars: r, loading: p };
 }
 function De({ cardId: n }) {
-  var at, rt, lt, st, ct, dt, gt, ut, ht, ft, mt, pt;
-  const { dark: e, getFloat: o, haStates: a, fetchHistory: c, connected: p } = xe(), [u] = be(n, we), { t: r } = Me("card-room-sensor"), $ = ye().replace(/:/g, ""), [d, b] = X(null), M = it(null), [B, v] = X(!1);
-  ot(() => {
-    const i = M.current;
+  var rt, at, lt, st, ct, dt, ut, gt, ht, ft, mt, pt;
+  const { dark: e, getFloat: o, haStates: r, fetchHistory: d, connected: p } = xe(), [f] = ve(n, we), { t: a } = Me("card-room-sensor"), D = ye().replace(/:/g, ""), [g, A] = J(null), h = tt(null), [H, v] = J(!1);
+  it(() => {
+    const i = h.current;
     if (!i) return;
     const x = new ResizeObserver(([_]) => {
       v(_.contentRect.width < 480);
     });
     return x.observe(i), () => x.disconnect();
   }, []);
-  const g = u.gauges ?? [], S = u.badges ?? [], m = u.displayMode, D = u.rightSection, R = u.chartColor, k = u.flowEntity || ((rt = (at = u.gauges) == null ? void 0 : at[0]) == null ? void 0 : rt.entity) || "", w = u.historyEntity || ((st = (lt = u.gauges) == null ? void 0 : lt[0]) == null ? void 0 : st.entity) || "", l = it([]), y = ((ct = g[0]) == null ? void 0 : ct.entity) ?? "", F = ((gt = (dt = a == null ? void 0 : a[y]) == null ? void 0 : dt.attributes) == null ? void 0 : gt.friendly_name) ?? "", A = u.label || F.replace(/\b(temperatura|umidità|temp|hum|sensor|sensore)\b/gi, "").trim() || r("roomDefault"), C = (ut = a == null ? void 0 : a[y]) == null ? void 0 : ut.last_updated, L = ee(C, r), G = (u.icon || "home").replace(/^mdi:/, ""), O = m === "flow" || D === "history" ? m === "flow" ? k : w : null, { bars: E, loading: h } = $e(O, c, p), f = ((ht = g.find((i) => i.entity === O)) == null ? void 0 : ht.unit) ?? ((ft = S.find((i) => i.entity === O)) == null ? void 0 : ft.unit) ?? ((pt = (mt = a == null ? void 0 : a[O]) == null ? void 0 : mt.attributes) == null ? void 0 : pt.unit_of_measurement) ?? "";
-  if (ot(() => {
-    const i = g.map((x, _) => {
-      const I = l.current[_];
-      if (!I || !x.entity) return null;
-      const j = (Q) => {
+  const m = f.gauges ?? [], b = f.badges ?? [], y = f.displayMode, F = f.rightSection, $ = f.chartColor, T = f.flowEntity || ((at = (rt = f.gauges) == null ? void 0 : rt[0]) == null ? void 0 : at.entity) || "", M = f.historyEntity || ((st = (lt = f.gauges) == null ? void 0 : lt[0]) == null ? void 0 : st.entity) || "", u = tt([]), w = ((ct = m[0]) == null ? void 0 : ct.entity) ?? "", R = ((ut = (dt = r == null ? void 0 : r[w]) == null ? void 0 : dt.attributes) == null ? void 0 : ut.friendly_name) ?? "", S = f.label || R.replace(/\b(temperatura|umidità|temp|hum|sensor|sensore)\b/gi, "").trim() || a("roomDefault"), C = (gt = r == null ? void 0 : r[w]) == null ? void 0 : gt.last_updated, W = ee(C, a), V = (f.icon || "home").replace(/^mdi:/, ""), E = y === "flow" || F === "history" ? y === "flow" ? T : M : null, { bars: L, loading: l } = $e(E, d, p), c = ((ht = m.find((i) => i.entity === E)) == null ? void 0 : ht.unit) ?? ((ft = b.find((i) => i.entity === E)) == null ? void 0 : ft.unit) ?? ((pt = (mt = r == null ? void 0 : r[E]) == null ? void 0 : mt.attributes) == null ? void 0 : pt.unit_of_measurement) ?? "";
+  if (it(() => {
+    const i = m.map((x, _) => {
+      const z = u.current[_];
+      if (!z || !x.entity) return null;
+      const j = (nt) => {
         var yt, xt;
-        Q.stopPropagation();
-        const kt = (xt = (yt = a == null ? void 0 : a[x.entity]) == null ? void 0 : yt.attributes) == null ? void 0 : xt.friendly_name;
-        b({ entityId: x.entity, label: x.label || kt || x.entity, unit: x.unit });
+        nt.stopPropagation();
+        const _t = (xt = (yt = r == null ? void 0 : r[x.entity]) == null ? void 0 : yt.attributes) == null ? void 0 : xt.friendly_name;
+        A({ entityId: x.entity, label: x.label || _t || x.entity, unit: x.unit });
       };
-      return I.addEventListener("pointerup", j, { capture: !0 }), () => I.removeEventListener("pointerup", j, { capture: !0 });
+      return z.addEventListener("pointerup", j, { capture: !0 }), () => z.removeEventListener("pointerup", j, { capture: !0 });
     });
     return () => i.forEach((x) => x == null ? void 0 : x());
-  }, [g.length, g.map((i) => i.entity).join(",")]), !g.length) return /* @__PURE__ */ t(ne, { dark: e });
-  const T = e ? "rgba(255,255,255,.03)" : "#f7f9fc", H = e ? "rgba(255,255,255,.07)" : "#dde3ec", z = e ? "rgba(255,255,255,.06)" : "rgba(0,0,0,.06)", K = m === "gauge" && D === "badges", V = m === "gauge" && D === "history", q = m === "gauge" && D === "minigauge", N = g.find((i) => i.entity === k) ?? g[0];
-  return B ? /* @__PURE__ */ s(W, { children: [
-    /* @__PURE__ */ s("div", { ref: M, style: {
+  }, [m.length, m.map((i) => i.entity).join(",")]), !m.length) return /* @__PURE__ */ t(ne, { dark: e });
+  const B = e ? "rgba(255,255,255,.03)" : "#f7f9fc", N = e ? "rgba(255,255,255,.07)" : "#dde3ec", P = e ? "rgba(255,255,255,.06)" : "rgba(0,0,0,.06)", G = y === "gauge" && F === "badges", K = y === "gauge" && F === "history", et = y === "gauge" && F === "minigauge", I = m.find((i) => i.entity === T) ?? m[0];
+  return H ? /* @__PURE__ */ s(O, { children: [
+    /* @__PURE__ */ s("div", { ref: h, style: {
       borderRadius: 18,
-      background: T,
-      border: `1px solid ${H}`,
+      background: B,
+      border: `1px solid ${N}`,
       boxShadow: e ? "none" : "0 1px 8px rgba(0,0,0,.06)",
       padding: "10px 12px",
       overflow: "hidden"
@@ -857,7 +913,7 @@ function De({ cardId: n }) {
           display: "flex",
           alignItems: "center",
           justifyContent: "center"
-        }, children: /* @__PURE__ */ t(Y, { name: G, size: 15, dark: e, opacity: e ? 0.72 : 0.52 }) }),
+        }, children: /* @__PURE__ */ t(Y, { name: V, size: 15, dark: e, opacity: e ? 0.72 : 0.52 }) }),
         /* @__PURE__ */ s("div", { style: { flex: 1, minWidth: 0, display: "flex", alignItems: "baseline", gap: 6, flexWrap: "wrap" }, children: [
           /* @__PURE__ */ t("div", { style: {
             fontSize: 13,
@@ -868,12 +924,12 @@ function De({ cardId: n }) {
             overflow: "hidden",
             textOverflow: "ellipsis",
             whiteSpace: "nowrap"
-          }, children: A }),
-          L && /* @__PURE__ */ t("div", { style: { fontSize: 10, color: "var(--text-muted)" }, children: L }),
-          m === "flow" && /* @__PURE__ */ t("div", { style: { display: "flex", gap: 6, marginTop: 4, flexWrap: "wrap" }, children: g.map((i, x) => {
+          }, children: S }),
+          W && /* @__PURE__ */ t("div", { style: { fontSize: 10, color: "var(--text-muted)" }, children: W }),
+          y === "flow" && /* @__PURE__ */ t("div", { style: { display: "flex", gap: 6, marginTop: 4, flexWrap: "wrap" }, children: m.map((i, x) => {
             const _ = i.entity ? o(i.entity) : null;
             if (_ == null) return null;
-            const I = Math.max(0, Math.min(1, (_ - i.min) / Math.max(i.max - i.min, 1))), j = i.color ?? nt(et(I));
+            const z = Math.max(0, Math.min(1, (_ - i.min) / Math.max(i.max - i.min, 1))), j = i.color ?? Q(q(z));
             return /* @__PURE__ */ s("span", { style: {
               fontSize: 12,
               fontWeight: 800,
@@ -887,24 +943,24 @@ function De({ cardId: n }) {
           }) })
         ] })
       ] }),
-      m === "gauge" && /* @__PURE__ */ s("div", { style: {
+      y === "gauge" && /* @__PURE__ */ s("div", { style: {
         display: "flex",
         alignItems: "center",
         gap: 6,
-        borderTop: `1px solid ${z}`,
+        borderTop: `1px solid ${P}`,
         paddingTop: 8
       }, children: [
-        /* @__PURE__ */ t("div", { style: { flex: "0 0 auto", display: "flex", gap: 4 }, children: g.map((i, x) => {
+        /* @__PURE__ */ t("div", { style: { flex: "0 0 auto", display: "flex", gap: 4 }, children: m.map((i, x) => {
           const _ = i.entity ? o(i.entity) : null;
           return /* @__PURE__ */ t(
             "div",
             {
-              ref: (I) => {
-                l.current[x] = I;
+              ref: (z) => {
+                u.current[x] = z;
               },
               style: { cursor: "pointer", touchAction: "manipulation" },
               children: /* @__PURE__ */ t(
-                bt,
+                vt,
                 {
                   value: _,
                   min: i.min ?? 0,
@@ -920,17 +976,17 @@ function De({ cardId: n }) {
             x
           );
         }) }),
-        (K || q || V) && /* @__PURE__ */ s(W, { children: [
-          /* @__PURE__ */ t("div", { style: { width: 1, alignSelf: "stretch", background: z, margin: "0 4px" } }),
+        (G || et || K) && /* @__PURE__ */ s(O, { children: [
+          /* @__PURE__ */ t("div", { style: { width: 1, alignSelf: "stretch", background: P, margin: "0 4px" } }),
           /* @__PURE__ */ s("div", { style: { flex: 1, minWidth: 0, display: "flex", flexDirection: "column", alignItems: "stretch", gap: 6 }, children: [
-            K && /* @__PURE__ */ t("div", { style: { display: "flex", gap: 10, justifyContent: "space-around", flexWrap: "wrap" }, children: S.map((i, x) => {
+            G && /* @__PURE__ */ t("div", { style: { display: "flex", gap: 10, justifyContent: "space-around", flexWrap: "wrap" }, children: b.map((i, x) => {
               const _ = i.entity ? o(i.entity) : null;
               return /* @__PURE__ */ t(St, { value: _, iconName: i.icon ?? "circle", unit: i.unit ?? "", dark: e }, x);
             }) }),
-            q && /* @__PURE__ */ t("div", { style: { display: "flex", gap: 8, justifyContent: "space-around", flexWrap: "wrap" }, children: S.map((i, x) => {
+            et && /* @__PURE__ */ t("div", { style: { display: "flex", gap: 8, justifyContent: "space-around", flexWrap: "wrap" }, children: b.map((i, x) => {
               const _ = i.entity ? o(i.entity) : null;
               return /* @__PURE__ */ t(
-                vt,
+                bt,
                 {
                   value: _,
                   min: i.min ?? 0,
@@ -943,44 +999,45 @@ function De({ cardId: n }) {
                 x
               );
             }) }),
-            V && /* @__PURE__ */ t($t, { bars: E, loading: h, chartColor: R, dark: e, t: r, unit: f })
+            K && /* @__PURE__ */ t($t, { bars: L, loading: l, chartColor: $, dark: e, t: a, unit: c })
           ] })
         ] })
       ] }),
-      m === "flow" && /* @__PURE__ */ t("div", { style: { borderTop: `1px solid ${z}`, paddingTop: 10 }, children: /* @__PURE__ */ t(
+      y === "flow" && /* @__PURE__ */ t("div", { style: { borderTop: `1px solid ${P}`, paddingTop: 10 }, children: /* @__PURE__ */ t(
         Dt,
         {
-          bars: E,
-          rMin: (N == null ? void 0 : N.min) ?? 0,
-          rMax: (N == null ? void 0 : N.max) ?? 100,
+          bars: L,
+          rMin: (I == null ? void 0 : I.min) ?? 0,
+          rMax: (I == null ? void 0 : I.max) ?? 100,
           dark: e,
-          uid: $,
-          t: r
+          uid: D,
+          t: a,
+          unit: c
         }
       ) })
     ] }),
-    d && /* @__PURE__ */ t(
+    g && /* @__PURE__ */ t(
       wt,
       {
-        entityId: d.entityId,
-        label: d.label,
-        unit: d.unit,
+        entityId: g.entityId,
+        label: g.label,
+        unit: g.unit,
         dark: e,
-        onClose: () => b(null)
+        onClose: () => A(null)
       }
     )
-  ] }) : /* @__PURE__ */ s(W, { children: [
-    /* @__PURE__ */ s("div", { ref: M, style: {
+  ] }) : /* @__PURE__ */ s(O, { children: [
+    /* @__PURE__ */ s("div", { ref: h, style: {
       display: "flex",
       alignItems: "center",
       borderRadius: 20,
       overflow: "hidden",
-      background: T,
-      border: `1px solid ${H}`,
+      background: B,
+      border: `1px solid ${N}`,
       boxShadow: e ? "none" : "0 1px 8px rgba(0,0,0,.06)",
       paddingRight: 16,
       gap: 12,
-      minHeight: m === "flow" ? 100 : 88
+      minHeight: y === "flow" ? 100 : 88
     }, children: [
       /* @__PURE__ */ t("div", { style: {
         width: 72,
@@ -993,7 +1050,7 @@ function De({ cardId: n }) {
         display: "flex",
         alignItems: "center",
         justifyContent: "center"
-      }, children: /* @__PURE__ */ t(Y, { name: G, size: 30, dark: e, opacity: e ? 0.72 : 0.52 }) }),
+      }, children: /* @__PURE__ */ t(Y, { name: V, size: 30, dark: e, opacity: e ? 0.72 : 0.52 }) }),
       /* @__PURE__ */ s("div", { style: { flex: "0 0 auto", minWidth: 70 }, children: [
         /* @__PURE__ */ t("div", { style: {
           fontSize: 15,
@@ -1002,12 +1059,12 @@ function De({ cardId: n }) {
           lineHeight: 1.2,
           whiteSpace: "nowrap",
           letterSpacing: "-0.25px"
-        }, children: A }),
-        L && /* @__PURE__ */ t("div", { style: { fontSize: 10, color: "var(--text-muted)", marginTop: 3 }, children: L }),
-        m === "flow" && /* @__PURE__ */ t("div", { style: { display: "flex", gap: 6, marginTop: 5, flexWrap: "wrap" }, children: g.map((i, x) => {
+        }, children: S }),
+        W && /* @__PURE__ */ t("div", { style: { fontSize: 10, color: "var(--text-muted)", marginTop: 3 }, children: W }),
+        y === "flow" && /* @__PURE__ */ t("div", { style: { display: "flex", gap: 6, marginTop: 5, flexWrap: "wrap" }, children: m.map((i, x) => {
           const _ = i.entity ? o(i.entity) : null;
           if (_ == null) return null;
-          const I = Math.max(0, Math.min(1, (_ - i.min) / Math.max(i.max - i.min, 1))), j = i.color ?? nt(et(I)), Q = i.decimals ?? 1;
+          const z = Math.max(0, Math.min(1, (_ - i.min) / Math.max(i.max - i.min, 1))), j = i.color ?? Q(q(z)), nt = i.decimals ?? 1;
           return /* @__PURE__ */ s("span", { style: {
             fontSize: 13,
             fontWeight: 800,
@@ -1015,24 +1072,24 @@ function De({ cardId: n }) {
             color: j,
             fontVariantNumeric: "tabular-nums"
           }, children: [
-            _.toFixed(Q),
+            _.toFixed(nt),
             i.unit
           ] }, x);
         }) })
       ] }),
-      m === "gauge" && /* @__PURE__ */ s(W, { children: [
-        /* @__PURE__ */ t(U, { dark: e }),
-        g.map((i, x) => {
+      y === "gauge" && /* @__PURE__ */ s(O, { children: [
+        /* @__PURE__ */ t(X, { dark: e }),
+        m.map((i, x) => {
           const _ = i.entity ? o(i.entity) : null;
           return /* @__PURE__ */ t(
             "div",
             {
-              ref: (I) => {
-                l.current[x] = I;
+              ref: (z) => {
+                u.current[x] = z;
               },
               style: { cursor: "pointer", display: "flex", touchAction: "manipulation" },
               children: /* @__PURE__ */ t(
-                bt,
+                vt,
                 {
                   value: _,
                   min: i.min ?? 0,
@@ -1049,33 +1106,34 @@ function De({ cardId: n }) {
           );
         })
       ] }),
-      m === "flow" && /* @__PURE__ */ s(W, { children: [
-        /* @__PURE__ */ t(U, { dark: e, h: 60 }),
+      y === "flow" && /* @__PURE__ */ s(O, { children: [
+        /* @__PURE__ */ t(X, { dark: e, h: 60 }),
         /* @__PURE__ */ t(
           Dt,
           {
-            bars: E,
-            rMin: (N == null ? void 0 : N.min) ?? 0,
-            rMax: (N == null ? void 0 : N.max) ?? 100,
+            bars: L,
+            rMin: (I == null ? void 0 : I.min) ?? 0,
+            rMax: (I == null ? void 0 : I.max) ?? 100,
             dark: e,
-            uid: $,
-            t: r
+            uid: D,
+            t: a,
+            unit: c
           }
         )
       ] }),
-      K && S.length > 0 && /* @__PURE__ */ s(W, { children: [
-        /* @__PURE__ */ t(U, { dark: e }),
-        /* @__PURE__ */ t("div", { style: { display: "flex", gap: 14, alignItems: "center" }, children: S.map((i, x) => {
+      G && b.length > 0 && /* @__PURE__ */ s(O, { children: [
+        /* @__PURE__ */ t(X, { dark: e }),
+        /* @__PURE__ */ t("div", { style: { display: "flex", gap: 14, alignItems: "center" }, children: b.map((i, x) => {
           const _ = i.entity ? o(i.entity) : null;
           return /* @__PURE__ */ t(St, { value: _, iconName: i.icon ?? "circle", unit: i.unit ?? "", dark: e }, x);
         }) })
       ] }),
-      q && S.length > 0 && /* @__PURE__ */ s(W, { children: [
-        /* @__PURE__ */ t(U, { dark: e }),
-        /* @__PURE__ */ t("div", { style: { display: "flex", gap: 10, alignItems: "center" }, children: S.map((i, x) => {
+      et && b.length > 0 && /* @__PURE__ */ s(O, { children: [
+        /* @__PURE__ */ t(X, { dark: e }),
+        /* @__PURE__ */ t("div", { style: { display: "flex", gap: 10, alignItems: "center" }, children: b.map((i, x) => {
           const _ = i.entity ? o(i.entity) : null;
           return /* @__PURE__ */ t(
-            vt,
+            bt,
             {
               value: _,
               min: i.min ?? 0,
@@ -1089,19 +1147,19 @@ function De({ cardId: n }) {
           );
         }) })
       ] }),
-      V && /* @__PURE__ */ s(W, { children: [
-        /* @__PURE__ */ t(U, { dark: e, h: 56 }),
-        /* @__PURE__ */ t($t, { bars: E, loading: h, chartColor: R, dark: e, t: r, unit: f })
+      K && /* @__PURE__ */ s(O, { children: [
+        /* @__PURE__ */ t(X, { dark: e, h: 56 }),
+        /* @__PURE__ */ t($t, { bars: L, loading: l, chartColor: $, dark: e, t: a, unit: c })
       ] })
     ] }),
-    d && /* @__PURE__ */ t(
+    g && /* @__PURE__ */ t(
       wt,
       {
-        entityId: d.entityId,
-        label: d.label,
-        unit: d.unit,
+        entityId: g.entityId,
+        label: g.label,
+        unit: g.unit,
         dark: e,
-        onClose: () => b(null)
+        onClose: () => A(null)
       }
     )
   ] });

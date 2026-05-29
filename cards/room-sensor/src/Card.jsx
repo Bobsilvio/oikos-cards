@@ -160,7 +160,7 @@ function HistoryBars({ bars, loading, chartColor, dark, t, unit = '' }) {
 }
 
 // ── Flow chart ────────────────────────────────────────────────────────────────
-function FlowChart({ bars, rMin, rMax, dark, uid, t }) {
+function FlowChart({ bars, rMin, rMax, dark, uid, t, unit = '' }) {
   const W = 100, H = 56
   const PAD_TOP = 3, PAD_BOT = 2
 
@@ -177,6 +177,7 @@ function FlowChart({ bars, rMin, rMax, dark, uid, t }) {
     x: validPts.length > 1 ? (i / (validPts.length - 1)) * W : W / 2,
     y: (H - PAD_BOT) - ((b.v - vMin) / vRange) * (H - PAD_TOP - PAD_BOT),
     v: b.v,
+    h: b.h,
   }))
 
   const linePath = smoothPath(pts)
@@ -187,18 +188,54 @@ function FlowChart({ bars, rMin, rMax, dark, uid, t }) {
     color: rgbStr(tempColor(Math.max(0, Math.min(1, (p.v - vMin) / vRange)))),
   }))
 
+  const SVG_H = 64
+  const [selected, setSelected] = useState(null)
+  const wrapRef = useRef(null)
+
+  const handleMove = (e) => {
+    const el = wrapRef.current
+    if (!el || pts.length === 0) return
+    const rect = el.getBoundingClientRect()
+    const ratio = (e.clientX - rect.left) / rect.width
+    if (ratio < 0 || ratio > 1) { setSelected(null); return }
+    const idx = Math.max(0, Math.min(pts.length - 1, Math.round(ratio * (pts.length - 1))))
+    setSelected(idx)
+  }
+  const handleLeave = () => setSelected(null)
+
+  const selPt = selected != null ? pts[selected] : null
+  const selColor = selPt
+    ? rgbStr(tempColor(Math.max(0, Math.min(1, (selPt.v - vMin) / vRange))))
+    : null
+  const headerText = selPt
+    ? `${String(selPt.h).padStart(2,'0')}:00 · ${selPt.v.toFixed(1)}${unit}`
+    : t('last24h')
+
   return (
     <div style={{ flex: 1, minWidth: 0, paddingLeft: 2 }}>
       <div style={{
-        fontSize: 10, fontWeight: 700, color: 'var(--text-muted)',
+        fontSize: 10, fontWeight: 700,
+        color: selPt ? (selColor || 'var(--text-primary)') : 'var(--text-muted)',
         marginBottom: 4, textTransform: 'uppercase', letterSpacing: '.07em',
+        fontFamily: selPt ? 'JetBrains Mono, monospace' : 'inherit',
+        fontVariantNumeric: 'tabular-nums',
+        whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
+        transition: 'color .15s',
       }}>
-        {t('last24h')}
+        {headerText}
       </div>
+      <div
+        ref={wrapRef}
+        onPointerMove={handleMove}
+        onPointerDown={handleMove}
+        onPointerLeave={handleLeave}
+        onPointerCancel={handleLeave}
+        style={{ touchAction: 'pan-y', cursor: validPts.length ? 'crosshair' : 'default' }}
+      >
       <svg
         viewBox={`0 0 ${W} ${H}`}
         preserveAspectRatio="none"
-        style={{ width: '100%', height: 64, display: 'block', borderRadius: 6 }}
+        style={{ width: '100%', height: SVG_H, display: 'block', borderRadius: 6 }}
       >
         <defs>
           <linearGradient id={`tg-${uid}`} x1="0%" y1="0%" x2="100%" y2="0%">
@@ -234,9 +271,22 @@ function FlowChart({ bars, rMin, rMax, dark, uid, t }) {
               strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
               style={{ filter: 'drop-shadow(0 1px 3px rgba(0,0,0,.2))' }}
             />
+            {/* Marker selezione: linea verticale + punto (vectorEffect mantiene spessore costante nonostante lo stretch) */}
+            {selPt && (
+              <g vectorEffect="non-scaling-stroke">
+                <line x1={selPt.x} y1={0} x2={selPt.x} y2={H}
+                  stroke={selColor} strokeWidth="1" strokeDasharray="2 2"
+                  opacity="0.6" vectorEffect="non-scaling-stroke"/>
+                <circle cx={selPt.x} cy={selPt.y} r="3.5"
+                  fill={dark ? '#161b22' : '#ffffff'}
+                  stroke={selColor} strokeWidth="2"
+                  vectorEffect="non-scaling-stroke"/>
+              </g>
+            )}
           </>
         )}
       </svg>
+      </div>
     </div>
   )
 }
@@ -456,7 +506,7 @@ export default function RoomSensorCard({ cardId }) {
         {displayMode === 'flow' && (
           <div style={{ borderTop: `1px solid ${sep}`, paddingTop: 10 }}>
             <FlowChart bars={histBars} rMin={flowGauge?.min ?? 0} rMax={flowGauge?.max ?? 100}
-              dark={dark} uid={uid} t={t}/>
+              dark={dark} uid={uid} t={t} unit={historyUnit}/>
           </div>
         )}
       </div>
@@ -551,7 +601,7 @@ export default function RoomSensorCard({ cardId }) {
         <>
           <VSep dark={dark} h={60}/>
           <FlowChart bars={histBars} rMin={flowGauge?.min ?? 0} rMax={flowGauge?.max ?? 100}
-            dark={dark} uid={uid} t={t}/>
+            dark={dark} uid={uid} t={t} unit={historyUnit}/>
         </>
       )}
 
