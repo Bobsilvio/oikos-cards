@@ -69,7 +69,7 @@ function SensorBadge({ value, iconName, unit, dark }) {
 }
 
 // ── Bar chart storico ─────────────────────────────────────────────────────────
-function HistoryBars({ bars, loading, chartColor, dark, t }) {
+function HistoryBars({ bars, loading, chartColor, dark, t, unit = '' }) {
   const CHART_H = 52
   const nowH    = new Date().getHours()
   const valid   = bars.filter(b => b.v != null)
@@ -78,30 +78,78 @@ function HistoryBars({ bars, loading, chartColor, dark, t }) {
   const range   = Math.max(maxV - minV, 0.1)
   const empty   = dark ? 'rgba(255,255,255,.07)' : 'rgba(0,0,0,.06)'
 
+  const [selected, setSelected] = useState(null)
+  const wrapRef = useRef(null)
+  const data = (loading || !bars.length
+    ? Array.from({ length: 24 }, (_, i) => ({ h: i, v: null }))
+    : bars
+  )
+
+  // Selezione/hover via pointer move sull'intero contenitore (più affidabile
+  // su mobile e su barre molto strette rispetto a onMouseEnter per bar).
+  const handlePointerMove = (e) => {
+    const el = wrapRef.current
+    if (!el) return
+    const rect = el.getBoundingClientRect()
+    const x    = e.clientX - rect.left
+    if (x < 0 || x > rect.width) { setSelected(null); return }
+    const idx  = Math.max(0, Math.min(data.length - 1, Math.floor((x / rect.width) * data.length)))
+    setSelected(idx)
+  }
+  const handlePointerLeave = () => setSelected(null)
+
+  const selBar = selected != null ? data[selected] : null
+  const headerText = selBar
+    ? (selBar.v != null
+        ? `${String(selBar.h).padStart(2,'0')}:00 · ${selBar.v.toFixed(1)}${unit}`
+        : `${String(selBar.h).padStart(2,'0')}:00 · —`)
+    : t('last24h')
+
   return (
     <div style={{ flex: 1, minWidth: 0, paddingLeft: 4 }}>
       <div style={{
-        fontSize: 10, fontWeight: 700, color: 'var(--text-muted)',
+        fontSize: 10, fontWeight: 700,
+        color: selBar ? chartColor : 'var(--text-muted)',
         marginBottom: 7, textTransform: 'uppercase', letterSpacing: '.07em',
+        fontFamily: selBar ? 'JetBrains Mono, monospace' : 'inherit',
+        fontVariantNumeric: 'tabular-nums',
+        whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
+        transition: 'color .15s',
       }}>
-        {t('last24h')}
+        {headerText}
       </div>
-      <div style={{ display: 'flex', alignItems: 'flex-end', gap: 2, height: CHART_H }}>
-        {(loading || !bars.length
-          ? Array.from({ length: 24 }, (_, i) => ({ h: i, v: null }))
-          : bars
-        ).map(b => {
+      <div
+        ref={wrapRef}
+        onPointerMove={handlePointerMove}
+        onPointerDown={handlePointerMove}
+        onPointerLeave={handlePointerLeave}
+        onPointerCancel={handlePointerLeave}
+        style={{
+          display: 'flex', alignItems: 'flex-end', gap: 2, height: CHART_H,
+          cursor: 'crosshair', touchAction: 'pan-y',
+        }}
+      >
+        {data.map((b, i) => {
           const h = b.v != null ? Math.max(6, ((b.v - minV) / range) * CHART_H) : 4
+          const isNow = b.h === nowH
+          const isSel = selected === i
+          const baseBg = b.v != null
+            ? (isNow ? chartColor : `${chartColor}bb`)
+            : empty
           return (
             <div key={b.h}
-              title={b.v != null ? `${b.h}:00 — ${b.v.toFixed(1)}` : `${b.h}:00`}
               style={{
                 flex: 1, height: h, borderRadius: '3px 3px 0 0',
-                background: b.v != null
-                  ? (b.h === nowH ? chartColor : `${chartColor}bb`)
-                  : empty,
-                transition: 'height .35s cubic-bezier(.4,0,.2,1)',
-                boxShadow: b.v != null && b.h === nowH ? `0 0 8px ${chartColor}66` : 'none',
+                background: isSel
+                  ? chartColor
+                  : baseBg,
+                opacity: selected != null && !isSel ? 0.45 : 1,
+                transform: isSel ? 'scaleY(1.06)' : 'scaleY(1)',
+                transformOrigin: 'bottom',
+                transition: 'height .35s cubic-bezier(.4,0,.2,1), opacity .15s, transform .15s, background .15s',
+                boxShadow: isSel
+                  ? `0 0 10px ${chartColor}aa`
+                  : (b.v != null && isNow ? `0 0 8px ${chartColor}66` : 'none'),
               }}
             />
           )
