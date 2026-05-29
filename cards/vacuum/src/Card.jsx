@@ -227,7 +227,7 @@ function SubSheet({ open, onClose, children, zIndex = 1100 }) {
           <motion.div key="sub-sheet" initial={{ y: '100%' }} animate={{ y: 0 }} exit={{ y: '100%' }}
             transition={{ type: 'spring', damping: 32, stiffness: 280 }}
             onClick={e => e.stopPropagation()}
-            style={{ width: '100%', background: 'var(--bg-card)', borderRadius: '26px 26px 0 0', overflowY: 'auto', maxHeight: '80%' }}>
+            style={{ width: '100%', background: 'var(--bg-panel)', borderRadius: '26px 26px 0 0', overflowY: 'auto', maxHeight: '80%' }}>
             <div style={{ display: 'flex', alignItems: 'center', padding: '10px 14px 2px', flexShrink: 0 }}>
               <div style={{ flex: 1 }}/>
               <div style={{ width: 38, height: 4, background: 'var(--border-medium)', borderRadius: 2 }}/>
@@ -252,7 +252,7 @@ function FullSheet({ open, onClose, zIndex = 10, children }) {
           <motion.div key="full-sheet" initial={{ y: '100%' }} animate={{ y: 0 }} exit={{ y: '100%' }}
             transition={{ type: 'spring', damping: 32, stiffness: 280 }}
             onClick={e => e.stopPropagation()}
-            style={{ width: '100%', background: 'var(--bg-card)', borderRadius: '26px 26px 0 0', height: '92%', overflow: 'hidden', display: 'flex', flexDirection: 'column', position: 'relative' }}>
+            style={{ width: '100%', background: 'var(--bg-panel)', borderRadius: '26px 26px 0 0', height: '92%', overflow: 'hidden', display: 'flex', flexDirection: 'column', position: 'relative' }}>
             <div onClick={onClose} style={{ position: 'absolute', top: 12, right: 14, zIndex: 20, width: 30, height: 30, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: 8, background: 'var(--bg-elevated)', color: 'var(--text-secondary)', cursor: 'pointer', fontSize: 13, fontWeight: 700 }}>✕</div>
             {children}
           </motion.div>
@@ -264,7 +264,7 @@ function FullSheet({ open, onClose, zIndex = 10, children }) {
 
 function SettingsHeader({ title, onBack }) {
   return (
-    <div style={{ background: 'var(--bg-card)', display: 'flex', alignItems: 'center', gap: 8, padding: '14px 16px', borderBottom: '1px solid var(--border)', position: 'sticky', top: 0, zIndex: 5, flexShrink: 0 }}>
+    <div style={{ background: 'var(--bg-panel)', display: 'flex', alignItems: 'center', gap: 8, padding: '14px 16px', borderBottom: '1px solid var(--border)', position: 'sticky', top: 0, zIndex: 5, flexShrink: 0 }}>
       <div onClick={onBack} style={{ fontSize: 28, lineHeight: 1, color: 'var(--text-muted)', cursor: 'pointer', width: 28, flexShrink: 0 }}>‹</div>
       <div style={{ fontSize: 17, fontWeight: 700, color: 'var(--text-primary)', flex: 1, textAlign: 'center' }}>{title}</div>
       <div onClick={onBack} style={{ width: 28, height: 28, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: 8, background: 'var(--bg-elevated)', color: 'var(--text-secondary)', cursor: 'pointer', fontSize: 13, fontWeight: 700, flexShrink: 0 }}>✕</div>
