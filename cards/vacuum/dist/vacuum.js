@@ -1045,7 +1045,6 @@ function _e({ open: s, onClose: o, children: n, zIndex: t = 1100 }) {
       initial: { opacity: 0 },
       animate: { opacity: 1 },
       exit: { opacity: 0 },
-      onClick: o,
       style: { position: "absolute", inset: 0, background: "rgba(0,0,0,.78)", zIndex: t, display: "flex", alignItems: "flex-end" },
       children: /* @__PURE__ */ i(
         oe.div,
@@ -1078,9 +1077,8 @@ function Ve({ open: s, onClose: o, zIndex: n = 10, children: t }) {
       initial: { opacity: 0 },
       animate: { opacity: 1 },
       exit: { opacity: 0 },
-      onClick: o,
       style: { position: "absolute", inset: 0, background: "rgba(0,0,0,.78)", zIndex: n, display: "flex", alignItems: "flex-end" },
-      children: /* @__PURE__ */ e(
+      children: /* @__PURE__ */ i(
         oe.div,
         {
           initial: { y: "100%" },
@@ -1088,8 +1086,11 @@ function Ve({ open: s, onClose: o, zIndex: n = 10, children: t }) {
           exit: { y: "100%" },
           transition: { type: "spring", damping: 32, stiffness: 280 },
           onClick: (l) => l.stopPropagation(),
-          style: { width: "100%", background: "var(--bg-card)", borderRadius: "26px 26px 0 0", height: "92%", overflow: "hidden", display: "flex", flexDirection: "column" },
-          children: t
+          style: { width: "100%", background: "var(--bg-card)", borderRadius: "26px 26px 0 0", height: "92%", overflow: "hidden", display: "flex", flexDirection: "column", position: "relative" },
+          children: [
+            /* @__PURE__ */ e("div", { onClick: o, style: { position: "absolute", top: 12, right: 14, zIndex: 20, width: 30, height: 30, display: "flex", alignItems: "center", justifyContent: "center", borderRadius: 8, background: "var(--bg-elevated)", color: "var(--text-secondary)", cursor: "pointer", fontSize: 13, fontWeight: 700 }, children: "✕" }),
+            t
+          ]
         },
         "full-sheet"
       )

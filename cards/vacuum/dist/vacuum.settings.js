@@ -263,7 +263,7 @@ const { useState: v } = window.__OIKOS_SDK__.React, { motion: x, AnimatePresence
     ]
   }
 ];
-function $({ saved: n, onClick: t, saveLabel: r, savedLabel: o }) {
+function K({ saved: n, onClick: t, saveLabel: r, savedLabel: o }) {
   return /* @__PURE__ */ a(
     "button",
     {
@@ -287,7 +287,7 @@ function $({ saved: n, onClick: t, saveLabel: r, savedLabel: o }) {
     }
   );
 }
-function K({ rooms: n, onChange: t, dark: r, idLabel: o, nameLabel: y, idPlaceholder: d, namePlaceholder: u, addLabel: s, hintText: p }) {
+function $({ rooms: n, onChange: t, dark: r, idLabel: o, nameLabel: y, idPlaceholder: d, namePlaceholder: u, addLabel: s, hintText: p }) {
   const g = (i, l, e) => {
     const h = n.map((E, m) => m === i ? { ...E, [l]: l === "id" ? parseInt(e) || 0 : e } : E);
     t(h);
@@ -425,50 +425,52 @@ function z({ dark: n }) {
         color: "var(--text-muted)",
         marginBottom: 8
       }, children: s(`settings.groups.${i}`) }),
-      /* @__PURE__ */ a("div", { style: { display: "flex", flexDirection: "column", gap: 7 }, children: l.map(({ key: e, mono: h = !0, entity: E = !0 }) => /* @__PURE__ */ a("div", { children: E ? /* @__PURE__ */ a(M, { label: s(`settings.fields.${e}`), field: e, config: t, setConfig: g }) : /* @__PURE__ */ c("div", { style: { display: "flex", flexDirection: "column", gap: 3 }, children: [
-        /* @__PURE__ */ a("label", { style: {
-          fontSize: 11,
-          fontWeight: 600,
-          color: "var(--text-muted)",
-          textTransform: "uppercase",
-          letterSpacing: ".4px"
-        }, children: s(`settings.fields.${e}`) }),
-        /* @__PURE__ */ a(
-          "input",
-          {
-            value: t[e] || "",
-            onChange: (m) => {
-              p(e, m.target.value), y(!1);
-            },
-            spellCheck: !1,
-            style: _(h),
-            onFocus: (m) => m.target.style.borderColor = "var(--amber-border)",
-            onBlur: (m) => m.target.style.borderColor = "var(--border-medium)"
-          }
-        )
-      ] }) }, e)) }),
-      i === "main" && /* @__PURE__ */ c("div", { style: { marginTop: 10, display: "flex", flexDirection: "column", gap: 5 }, children: [
-        /* @__PURE__ */ c(x.button, { whileTap: { scale: 0.97 }, onClick: b, style: {
-          display: "flex",
-          alignItems: "center",
-          gap: 6,
-          padding: "7px 13px",
-          borderRadius: 8,
-          alignSelf: "flex-start",
-          fontSize: 12,
-          fontWeight: 700,
-          cursor: "pointer",
-          border: "1px solid rgba(139,92,246,.4)",
-          background: "rgba(139,92,246,.1)",
-          color: "#7c3aed"
-        }, children: [
-          /* @__PURE__ */ a(L, { size: 13 }),
-          " ",
-          s("settings.autoPopulate")
+      /* @__PURE__ */ a("div", { style: { display: "flex", flexDirection: "column", gap: 7 }, children: l.map(({ key: e, mono: h = !0, entity: E = !0 }) => /* @__PURE__ */ c("div", { children: [
+        E ? /* @__PURE__ */ a(M, { label: s(`settings.fields.${e}`), field: e, config: t, setConfig: g }) : /* @__PURE__ */ c("div", { style: { display: "flex", flexDirection: "column", gap: 3 }, children: [
+          /* @__PURE__ */ a("label", { style: {
+            fontSize: 11,
+            fontWeight: 600,
+            color: "var(--text-muted)",
+            textTransform: "uppercase",
+            letterSpacing: ".4px"
+          }, children: s(`settings.fields.${e}`) }),
+          /* @__PURE__ */ a(
+            "input",
+            {
+              value: t[e] || "",
+              onChange: (m) => {
+                p(e, m.target.value), y(!1);
+              },
+              spellCheck: !1,
+              style: _(h),
+              onFocus: (m) => m.target.style.borderColor = "var(--amber-border)",
+              onBlur: (m) => m.target.style.borderColor = "var(--border-medium)"
+            }
+          )
         ] }),
-        d === "err" && /* @__PURE__ */ a("span", { style: { fontSize: 11, color: "#ef4444" }, children: s("settings.autoPopulateNeedEntity") }),
-        d && d !== "err" && /* @__PURE__ */ a("span", { style: { fontSize: 11, color: "#10b981" }, children: s("settings.autoPopulateHint", { prefix: d }) })
-      ] })
+        e === "vacuumEntity" && /* @__PURE__ */ c("div", { style: { marginTop: 6, display: "flex", flexDirection: "column", gap: 5 }, children: [
+          /* @__PURE__ */ c(x.button, { whileTap: { scale: 0.97 }, onClick: b, style: {
+            display: "flex",
+            alignItems: "center",
+            gap: 6,
+            padding: "7px 13px",
+            borderRadius: 8,
+            alignSelf: "flex-start",
+            fontSize: 12,
+            fontWeight: 700,
+            cursor: "pointer",
+            border: "1px solid rgba(139,92,246,.4)",
+            background: "rgba(139,92,246,.1)",
+            color: "#7c3aed"
+          }, children: [
+            /* @__PURE__ */ a(L, { size: 13 }),
+            " ",
+            s("settings.autoPopulate")
+          ] }),
+          d === "err" && /* @__PURE__ */ a("span", { style: { fontSize: 11, color: "#ef4444" }, children: s("settings.autoPopulateNeedEntity") }),
+          d && d !== "err" && /* @__PURE__ */ a("span", { style: { fontSize: 11, color: "#10b981" }, children: s("settings.autoPopulateHint", { prefix: d }) })
+        ] })
+      ] }, e)) })
     ] }, i)),
     /* @__PURE__ */ c("div", { children: [
       /* @__PURE__ */ a("div", { style: {
@@ -480,7 +482,7 @@ function z({ dark: n }) {
         marginBottom: 8
       }, children: s("settings.groups.rooms") }),
       /* @__PURE__ */ a(
-        K,
+        $,
         {
           rooms: t.rooms || [],
           onChange: (i) => {
@@ -496,7 +498,7 @@ function z({ dark: n }) {
         }
       )
     ] }),
-    /* @__PURE__ */ a($, { onClick: f, saved: o, saveLabel: s("settings.saveButton"), savedLabel: s("settings.savedButton") })
+    /* @__PURE__ */ a(K, { onClick: f, saved: o, saveLabel: s("settings.saveButton"), savedLabel: s("settings.savedButton") })
   ] });
 }
 export {

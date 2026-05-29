@@ -223,7 +223,6 @@ function SubSheet({ open, onClose, children, zIndex = 1100 }) {
     <AnimatePresence>
       {open && (
         <motion.div key="sub-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-          onClick={onClose}
           style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,.78)', zIndex, display: 'flex', alignItems: 'flex-end' }}>
           <motion.div key="sub-sheet" initial={{ y: '100%' }} animate={{ y: 0 }} exit={{ y: '100%' }}
             transition={{ type: 'spring', damping: 32, stiffness: 280 }}
@@ -249,12 +248,12 @@ function FullSheet({ open, onClose, zIndex = 10, children }) {
     <AnimatePresence>
       {open && (
         <motion.div key="full-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-          onClick={onClose}
           style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,.78)', zIndex, display: 'flex', alignItems: 'flex-end' }}>
           <motion.div key="full-sheet" initial={{ y: '100%' }} animate={{ y: 0 }} exit={{ y: '100%' }}
             transition={{ type: 'spring', damping: 32, stiffness: 280 }}
             onClick={e => e.stopPropagation()}
-            style={{ width: '100%', background: 'var(--bg-card)', borderRadius: '26px 26px 0 0', height: '92%', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+            style={{ width: '100%', background: 'var(--bg-card)', borderRadius: '26px 26px 0 0', height: '92%', overflow: 'hidden', display: 'flex', flexDirection: 'column', position: 'relative' }}>
+            <div onClick={onClose} style={{ position: 'absolute', top: 12, right: 14, zIndex: 20, width: 30, height: 30, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: 8, background: 'var(--bg-elevated)', color: 'var(--text-secondary)', cursor: 'pointer', fontSize: 13, fontWeight: 700 }}>✕</div>
             {children}
           </motion.div>
         </motion.div>

@@ -262,30 +262,30 @@ export default function VacuumSettings({ dark }) {
                     />
                   </div>
                 )}
+                {key === 'vacuumEntity' && (
+                  <div style={{ marginTop: 6, display: 'flex', flexDirection: 'column', gap: 5 }}>
+                    <motion.button whileTap={{ scale: .97 }} onClick={handleAutoPopulate} style={{
+                      display: 'flex', alignItems: 'center', gap: 6,
+                      padding: '7px 13px', borderRadius: 8, alignSelf: 'flex-start',
+                      fontSize: 12, fontWeight: 700, cursor: 'pointer',
+                      border: '1px solid rgba(139,92,246,.4)',
+                      background: 'rgba(139,92,246,.1)', color: '#7c3aed',
+                    }}>
+                      <Wand2 size={13}/> {t('settings.autoPopulate')}
+                    </motion.button>
+                    {autoMsg === 'err' && (
+                      <span style={{ fontSize: 11, color: '#ef4444' }}>{t('settings.autoPopulateNeedEntity')}</span>
+                    )}
+                    {autoMsg && autoMsg !== 'err' && (
+                      <span style={{ fontSize: 11, color: '#10b981' }}>
+                        {t('settings.autoPopulateHint', { prefix: autoMsg })}
+                      </span>
+                    )}
+                  </div>
+                )}
               </div>
             ))}
           </div>
-          {titleKey === 'main' && (
-            <div style={{ marginTop: 10, display: 'flex', flexDirection: 'column', gap: 5 }}>
-              <motion.button whileTap={{ scale: .97 }} onClick={handleAutoPopulate} style={{
-                display: 'flex', alignItems: 'center', gap: 6,
-                padding: '7px 13px', borderRadius: 8, alignSelf: 'flex-start',
-                fontSize: 12, fontWeight: 700, cursor: 'pointer',
-                border: '1px solid rgba(139,92,246,.4)',
-                background: 'rgba(139,92,246,.1)', color: '#7c3aed',
-              }}>
-                <Wand2 size={13}/> {t('settings.autoPopulate')}
-              </motion.button>
-              {autoMsg === 'err' && (
-                <span style={{ fontSize: 11, color: '#ef4444' }}>{t('settings.autoPopulateNeedEntity')}</span>
-              )}
-              {autoMsg && autoMsg !== 'err' && (
-                <span style={{ fontSize: 11, color: '#10b981' }}>
-                  {t('settings.autoPopulateHint', { prefix: autoMsg })}
-                </span>
-              )}
-            </div>
-          )}
         </div>
       ))}
 
