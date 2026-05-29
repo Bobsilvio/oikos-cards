@@ -1081,7 +1081,10 @@ function BaseSheet({ open, onClose, cfg, t, callService, getState,
           <motion.div animate={{ x: page === 'settings' ? 0 : page === 'main' ? '100%' : '-100%' }} transition={SP}
             style={{ position: 'absolute', inset: 0, overflowY: 'auto' }}>
             <div style={{ background: 'var(--bg-elevated)', minHeight: '100%', paddingBottom: 32 }}>
-              <SettingsHeader title={t('dreame.baseSettingsTitle')} onBack={() => setPage('main')}/>
+              {/* Back dipende dal percorso: se la pagina settings è la root
+                  (aperta da ⋯ → Stazione base, startPage='settings') chiude e
+                  torna al menu ⋯; se si arriva da Base → Impostazioni base torna a 'main'. */}
+              <SettingsHeader title={t('dreame.baseSettingsTitle')} onBack={startPage === 'settings' ? onClose : () => setPage('main')}/>
 
               {/* Card 1: Svuotamento automatico — select.ambrogio_auto_empty_mode */}
               <div style={cardSt}>

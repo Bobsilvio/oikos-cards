@@ -497,7 +497,7 @@ const ni = {
   roomIdPlaceholder: "ID",
   roomNamePlaceholder: "Nome stanza",
   roomsHint: "L'ID HA si trova nelle entità select.*_room_N_name dove N è il numero. Integrazione Tasshack: usa vacuum.send_command → clean_segment."
-}, Ci = {
+}, ki = {
   state: ni,
   suction: ai,
   cleanMode: oi,
@@ -520,7 +520,7 @@ const ni = {
   dreame: Si,
   floor: zi,
   settings: Ei
-}, ki = {
+}, Ci = {
   docked: "Docked",
   cleaning: "Cleaning",
   paused: "Paused",
@@ -926,7 +926,7 @@ const ni = {
   roomNamePlaceholder: "Room name",
   roomsHint: "The HA ID is found in select.*_room_N_name entities where N is the number. Tasshack integration: use vacuum.send_command → clean_segment."
 }, Zi = {
-  state: ki,
+  state: Ci,
   suction: _i,
   cleanMode: Di,
   waterTemp: Ai,
@@ -949,7 +949,7 @@ const ni = {
   floor: Qi,
   settings: Vi
 }, { useState: x, useEffect: ee, useRef: me, useMemo: St } = window.__OIKOS_SDK__.React, { motion: ae, AnimatePresence: _t } = window.__OIKOS_SDK__.framerMotion, { useDashboard: Ui, getHAConfig: Fn, registerCardTranslations: Yi, useT: Ki } = window.__OIKOS_SDK__;
-Yi("card-vacuum", { it: Ci, en: Zi });
+Yi("card-vacuum", { it: ki, en: Zi });
 const h = "var(--amber)", dt = "var(--amber-light)", Dt = "var(--amber-light)", Xi = "var(--green)", Ji = {
   docked: "var(--green)",
   charging_completed: "var(--green)",
@@ -1215,17 +1215,17 @@ function Mt({
     return /* @__PURE__ */ i(we, { open: s, onClose: o, children: [
       /* @__PURE__ */ e("div", { style: { fontSize: 17, fontWeight: 700, color: "var(--text-primary)", textAlign: "center", padding: "0 20px 18px" }, children: l("dreame.freqLavaggio") }),
       /* @__PURE__ */ e("div", { style: { padding: "0 12px 24px" }, children: z.map((y) => {
-        const k = n === y.id;
-        return /* @__PURE__ */ i("div", { onClick: () => t(y.id), style: { background: k ? Dt : "var(--bg-elevated)", borderRadius: 16, padding: "14px 16px", marginBottom: 10, cursor: "pointer", transition: "background .15s" }, children: [
+        const C = n === y.id;
+        return /* @__PURE__ */ i("div", { onClick: () => t(y.id), style: { background: C ? Dt : "var(--bg-elevated)", borderRadius: 16, padding: "14px 16px", marginBottom: 10, cursor: "pointer", transition: "background .15s" }, children: [
           /* @__PURE__ */ i("div", { style: { display: "flex", alignItems: "center", gap: 12, marginBottom: 6 }, children: [
-            /* @__PURE__ */ e("div", { style: { width: 22, height: 22, borderRadius: "50%", border: `2.5px solid ${k ? h : "#ccc"}`, background: k ? h : "transparent", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, transition: "all .15s" }, children: k && /* @__PURE__ */ e("div", { style: { width: 8, height: 8, borderRadius: "50%", background: "white" } }) }),
-            /* @__PURE__ */ i("span", { style: { fontSize: 16, fontWeight: 700, color: k ? h : "var(--text-primary)" }, children: [
+            /* @__PURE__ */ e("div", { style: { width: 22, height: 22, borderRadius: "50%", border: `2.5px solid ${C ? h : "#ccc"}`, background: C ? h : "transparent", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, transition: "all .15s" }, children: C && /* @__PURE__ */ e("div", { style: { width: 8, height: 8, borderRadius: "50%", background: "white" } }) }),
+            /* @__PURE__ */ i("span", { style: { fontSize: 16, fontWeight: 700, color: C ? h : "var(--text-primary)" }, children: [
               y.label,
               y.unit && /* @__PURE__ */ e("span", { style: { fontSize: 12, fontWeight: 400, color: "var(--text-muted)", marginLeft: 4 }, children: y.unit })
             ] })
           ] }),
-          /* @__PURE__ */ e("div", { style: { fontSize: 13, color: k ? h : "var(--text-muted)", lineHeight: 1.5, paddingLeft: 34, opacity: 0.85 }, children: y.desc }),
-          k && y.cb && /* @__PURE__ */ e("div", { style: { marginTop: 14, paddingLeft: 0 }, onClick: (_) => _.stopPropagation(), children: /* @__PURE__ */ e(yn, { value: y.val ?? y.min, min: y.min, max: y.max, onChange: y.cb }) })
+          /* @__PURE__ */ e("div", { style: { fontSize: 13, color: C ? h : "var(--text-muted)", lineHeight: 1.5, paddingLeft: 34, opacity: 0.85 }, children: y.desc }),
+          C && y.cb && /* @__PURE__ */ e("div", { style: { marginTop: 14, paddingLeft: 0 }, onClick: (_) => _.stopPropagation(), children: /* @__PURE__ */ e(yn, { value: y.val ?? y.min, min: y.min, max: y.max, onChange: y.cb }) })
         ] }, y.id);
       }) })
     ] });
@@ -1311,7 +1311,7 @@ function bn({ open: s, onClose: o, selected: n, onSelect: t, t: l }) {
   ] });
 }
 function xn({ open: s, onClose: o, onFrequenza: n, freqSel: t, sideReach: l, setSideReach: r, mopExtend: a, setMopExtend: b, mopVoid: m, setMopVoid: u, mopLegs: E, setMopLegs: z, t: y }) {
-  const k = y(t === "high" ? "dreame.freqHigh" : t === "intelligent" ? "dreame.freqIntelligent" : "dreame.freqStandard");
+  const C = y(t === "high" ? "dreame.freqHigh" : t === "intelligent" ? "dreame.freqIntelligent" : "dreame.freqStandard");
   return /* @__PURE__ */ e(ze, { open: s, onClose: o, zIndex: 1100, children: /* @__PURE__ */ e("div", { style: { flex: 1, overflowY: "auto", minHeight: 0 }, children: /* @__PURE__ */ i("div", { style: { background: "var(--bg-elevated)", minHeight: "100%" }, children: [
     /* @__PURE__ */ e(Se, { title: y("dreame.mopExtendTitle"), onBack: o }),
     /* @__PURE__ */ i("div", { style: { background: "var(--bg-card)", borderRadius: 16, margin: "14px 14px 0", padding: 16, boxShadow: "0 1px 3px rgba(0,0,0,.04)" }, children: [
@@ -1344,7 +1344,7 @@ function xn({ open: s, onClose: o, onFrequenza: n, freqSel: t, sideReach: l, set
     /* @__PURE__ */ e("div", { style: { background: "var(--bg-card)", borderRadius: 16, margin: "14px 14px 28px", padding: 16, boxShadow: "0 1px 3px rgba(0,0,0,.04)" }, children: /* @__PURE__ */ i("div", { onClick: n, style: { display: "flex", alignItems: "center", justifyContent: "space-between", cursor: "pointer" }, children: [
       /* @__PURE__ */ e("span", { style: { fontSize: 16, fontWeight: 700, color: "var(--text-primary)" }, children: y("dreame.frequenzaLabel") }),
       /* @__PURE__ */ i("span", { style: { fontSize: 14, color: h, whiteSpace: "nowrap" }, children: [
-        k,
+        C,
         " ›"
       ] })
     ] }) })
@@ -1366,10 +1366,10 @@ function wn({ onBack: s, cfg: o, t: n, haStates: t, getState: l }) {
   ), m = (p) => {
     const f = p == null ? void 0 : p.match(/^(\d{2})-(\d{2}) (\d{2}:\d{2})$/);
     return f ? `${f[2]}/${f[1]} ${f[3]}` : p || "";
-  }, u = (p) => n(p === "Zone cleaning" ? "dreame.cronologiaZoneClean" : p === "Room cleaning" ? "dreame.cronologiaRoomClean" : "dreame.cronologiaCleaning"), E = (p) => !p || p === "Default mode" ? n("dreame.cronologiaDefaultMode") : p.toLowerCase().includes("cleangenius") ? n("dreame.cronologiaCleangenius") : p, z = a(o.totalAreaEntity), y = a(o.totalTimeEntity), k = a(o.countEntity), _ = [
+  }, u = (p) => n(p === "Zone cleaning" ? "dreame.cronologiaZoneClean" : p === "Room cleaning" ? "dreame.cronologiaRoomClean" : "dreame.cronologiaCleaning"), E = (p) => !p || p === "Default mode" ? n("dreame.cronologiaDefaultMode") : p.toLowerCase().includes("cleangenius") ? n("dreame.cronologiaCleangenius") : p, z = a(o.totalAreaEntity), y = a(o.totalTimeEntity), C = a(o.countEntity), _ = [
     { val: z !== null ? Math.round(z).toLocaleString() : "—", unit: "m²", label: n("dreame.cronologiaTotalArea") },
     { val: y !== null ? Math.round(y).toLocaleString() : "—", unit: "min", label: n("dreame.cronologiaDuration") },
-    { val: k !== null ? Math.round(k) : "—", unit: "", label: n("dreame.cronologiaCycles") }
+    { val: C !== null ? Math.round(C) : "—", unit: "", label: n("dreame.cronologiaCycles") }
   ];
   return /* @__PURE__ */ i("div", { style: { display: "flex", flexDirection: "column", height: "100%" }, children: [
     /* @__PURE__ */ i("div", { style: {
@@ -1492,10 +1492,10 @@ function Ue({ on: s, onToggle: o, label: n, desc: t, warning: l, border: r }) {
     /* @__PURE__ */ e("div", { style: { flexShrink: 0, marginTop: 2 }, children: /* @__PURE__ */ e(O, { on: s, onToggle: o }) })
   ] }) });
 }
-function Cn({ open: s, onClose: o, cfg: n, t, callService: l, getState: r }) {
+function kn({ open: s, onClose: o, cfg: n, t, callService: l, getState: r }) {
   const [a, b] = x(!1), m = (p) => p ? r(p) === "on" : !1, u = (p) => p && l("switch", "toggle", p), E = n.autoRecleaningEntity ? r(n.autoRecleaningEntity) : null, z = En[E] || "off", y = (p) => {
     n.autoRecleaningEntity && l("select", "select_option", n.autoRecleaningEntity, { option: zn[p] }), b(!1);
-  }, k = t(z === "off" ? "floor.reclOff" : z === "deepOnly" ? "floor.reclDeepOnly" : "floor.reclAllModes"), _ = [
+  }, C = t(z === "off" ? "floor.reclOff" : z === "deepOnly" ? "floor.reclDeepOnly" : "floor.reclAllModes"), _ = [
     { val: "off", label: t("floor.reclOff"), desc: t("floor.reclOffDesc") },
     { val: "deepOnly", label: t("floor.reclDeepOnly"), desc: t("floor.reclDeepOnlyDesc") },
     { val: "allModes", label: t("floor.reclAllModes"), desc: t("floor.reclAllModesDesc") }
@@ -1516,7 +1516,7 @@ function Cn({ open: s, onClose: o, cfg: n, t, callService: l, getState: r }) {
                 /* @__PURE__ */ e("div", { style: { fontSize: 13, color: "var(--text-muted)", lineHeight: 1.5 }, children: t("floor.autoReclDesc") })
               ] }),
               /* @__PURE__ */ i("div", { style: { display: "flex", alignItems: "center", gap: 4, flexShrink: 0 }, children: [
-                /* @__PURE__ */ e("span", { style: { fontSize: 14, color: "var(--text-muted)" }, children: k }),
+                /* @__PURE__ */ e("span", { style: { fontSize: 14, color: "var(--text-muted)" }, children: C }),
                 /* @__PURE__ */ e("span", { style: { color: "var(--text-muted)", fontSize: 17, lineHeight: 1 }, children: "›" })
               ] })
             ] })
@@ -1561,8 +1561,8 @@ function Cn({ open: s, onClose: o, cfg: n, t, callService: l, getState: r }) {
     ] }) })
   ] });
 }
-function kn({ open: s, onClose: o, onMopExtend: n, onBase: t, onBaseSettings: l, onCronologia: r, onCarpet: a, onFloor: b, cfg: m, t: u, callService: E, getState: z }) {
-  const y = (w) => w ? z(w) === "on" : !1, k = (w) => w && E("switch", "toggle", w), _ = [
+function Cn({ open: s, onClose: o, onMopExtend: n, onBase: t, onBaseSettings: l, onCronologia: r, onCarpet: a, onFloor: b, cfg: m, t: u, callService: E, getState: z }) {
+  const y = (w) => w ? z(w) === "on" : !1, C = (w) => w && E("switch", "toggle", w), _ = [
     { label: u("dreame.menuCronologia"), disabled: !m.historyEntity, onClick: r },
     { label: u("dreame.menuProgrammata"), disabled: !0 },
     { label: u("dreame.menuTappeti"), disabled: !1, onClick: a },
@@ -1617,7 +1617,7 @@ function kn({ open: s, onClose: o, onMopExtend: n, onBase: t, onBaseSettings: l,
         style: { display: "flex", alignItems: "center", justifyContent: "space-between", padding: "14px 16px", borderTop: M > 0 ? "1px solid var(--border)" : "none" },
         children: [
           /* @__PURE__ */ e("span", { style: { fontSize: 16, color: "var(--text-primary)" }, children: w.label }),
-          /* @__PURE__ */ e(O, { on: y(w.e), onToggle: () => k(w.e) })
+          /* @__PURE__ */ e(O, { on: y(w.e), onToggle: () => C(w.e) })
         ]
       },
       w.e
@@ -1625,12 +1625,12 @@ function kn({ open: s, onClose: o, onMopExtend: n, onBase: t, onBaseSettings: l,
   ] }) }) });
 }
 const _n = { off: "off", standard: "standard", high: "high_frequency", low: "low_frequency" }, Dn = { off: "off", standard: "standard", high_frequency: "high", low_frequency: "low", smart: "standard" }, An = { off: "off", deepOnly: "in_deep_mode", allModes: "in_all_modes" }, Mn = { off: "off", in_deep_mode: "deepOnly", in_all_modes: "allModes" }, Wn = { low: "light", medium: "standard", high: "deep" }, Tn = { light: "low", standard: "medium", deep: "high", ultra_washing: "high" }, Rn = { normal: "normal", mild: "mild", warm: "warm", hot: "hot" }, Ln = { normal: "normal", mild: "mild", warm: "warm", hot: "hot" };
-function Ct(s, o, n, t, l, r) {
+function kt(s, o, n, t, l, r) {
   const a = l / r, b = n / t;
   let m, u, E, z;
   return a > b ? (m = n, u = n / a, E = 0, z = (t - u) / 2) : (u = t, m = t * a, z = 0, E = (n - m) / 2), [(s / 100 * n - E) / m * l, (o / 100 * t - z) / u * r];
 }
-function kt(s, o, n) {
+function Ct(s, o, n) {
   const [t, l, r] = n, a = (l.map.x - t.map.x) / (l.vacuum.x - t.vacuum.x || 1e3), b = (r.map.y - t.map.y) / (r.vacuum.y - t.vacuum.y || 1e3);
   return [(s - t.map.x) / a + t.vacuum.x, (o - t.map.y) / b + t.vacuum.y];
 }
@@ -1681,7 +1681,7 @@ function Pn({
   lavRipOpen: E,
   setLavRipOpen: z,
   lavRipSel: y,
-  setLavRipSel: k,
+  setLavRipSel: C,
   tempAsciugOpen: _,
   setTempAsciugOpen: p,
   tempAsciugSel: f,
@@ -1698,15 +1698,15 @@ function Pn({
     const c = (Pe) => Pe ? r(Pe) : null, I = c(n.autoEmptyModeEntity);
     I && u(Dn[I] || "standard");
     const be = c(n.autoRewashingEntity);
-    be && k(Mn[be] || "off");
-    const Ce = c(n.dryingTimeEntity);
-    Ce && ["2h", "3h", "4h"].includes(Ce) && A(Ce);
+    be && C(Mn[be] || "off");
+    const ke = c(n.dryingTimeEntity);
+    ke && ["2h", "3h", "4h"].includes(ke) && A(ke);
     const Re = c(n.washingModeEntity);
     Re && oe(Tn[Re] || "medium");
     const Le = c(n.waterTempEntity);
     Le && te(Ln[Le] || "normal");
-    const ke = c(n.autoDetergentEntity);
-    ke !== null && ie(ke === "on");
+    const Ce = c(n.autoDetergentEntity);
+    Ce !== null && ie(Ce === "on");
     const Ie = c(n.autoWashEntity);
     Ie !== null && re(Ie === "on");
     const Be = c(n.autoDryingEntity);
@@ -1818,7 +1818,7 @@ function Pn({
           transition: Ee,
           style: { position: "absolute", inset: 0, overflowY: "auto" },
           children: /* @__PURE__ */ i("div", { style: { background: "var(--bg-elevated)", minHeight: "100%", paddingBottom: 32 }, children: [
-            /* @__PURE__ */ e(Se, { title: t("dreame.baseSettingsTitle"), onBack: () => F("main") }),
+            /* @__PURE__ */ e(Se, { title: t("dreame.baseSettingsTitle"), onBack: w === "settings" ? o : () => F("main") }),
             /* @__PURE__ */ e("div", { style: ce, children: /* @__PURE__ */ i("div", { onClick: () => b(!0), style: { ...V(!1), cursor: "pointer" }, children: [
               /* @__PURE__ */ i("div", { style: Z, children: [
                 /* @__PURE__ */ e("span", { style: { fontSize: 16, fontWeight: 600, color: "var(--text-primary)" }, children: t("dreame.svuotAutoTitle") }),
@@ -2000,7 +2000,7 @@ function Pn({
         onClose: () => z(!1),
         selected: y,
         onSelect: (c) => {
-          k(c), Y(n.autoRewashingEntity, An[c]);
+          C(c), Y(n.autoRewashingEntity, An[c]);
         },
         t
       }
@@ -2077,7 +2077,7 @@ function Hn({
   humidity: E,
   onHumidity: z,
   rewashFreqSel: y,
-  onRewashFreq: k,
+  onRewashFreq: C,
   deepClean: _,
   onDeepClean: p
 }) {
@@ -2212,7 +2212,7 @@ function Hn({
         open: F,
         onClose: () => q(!1),
         selected: y,
-        onSelect: k,
+        onSelect: C,
         t,
         rewash: !0,
         areaVal: te,
@@ -2229,16 +2229,16 @@ function On({ rect: s, num: o, onUpdate: n, onRemove: t }) {
     a.stopPropagation();
     const b = a.currentTarget;
     b.setPointerCapture(a.pointerId);
-    const { width: m, height: u } = b.parentElement.getBoundingClientRect(), E = a.clientX, z = a.clientY, y = s.x, k = s.y, _ = s.w, p = s.h, f = (w) => {
-      n({ x: Math.max(0, Math.min(100 - _, y + (w.clientX - E) / m * 100)), y: Math.max(0, Math.min(100 - p, k + (w.clientY - z) / u * 100)), w: _, h: p });
+    const { width: m, height: u } = b.parentElement.getBoundingClientRect(), E = a.clientX, z = a.clientY, y = s.x, C = s.y, _ = s.w, p = s.h, f = (w) => {
+      n({ x: Math.max(0, Math.min(100 - _, y + (w.clientX - E) / m * 100)), y: Math.max(0, Math.min(100 - p, C + (w.clientY - z) / u * 100)), w: _, h: p });
     }, A = () => b.removeEventListener("pointermove", f);
     b.addEventListener("pointermove", f), b.addEventListener("pointerup", A, { once: !0 });
   }, r = (a) => {
     a.stopPropagation();
     const b = a.currentTarget;
     b.setPointerCapture(a.pointerId);
-    const { width: m, height: u } = b.parentElement.parentElement.getBoundingClientRect(), E = a.clientX, z = a.clientY, { x: y, y: k, w: _, h: p } = s, f = (w) => {
-      n({ x: y, y: k, w: Math.max(10, Math.min(100 - y, _ + (w.clientX - E) / m * 100)), h: Math.max(8, Math.min(100 - k, p + (w.clientY - z) / u * 100)) });
+    const { width: m, height: u } = b.parentElement.parentElement.getBoundingClientRect(), E = a.clientX, z = a.clientY, { x: y, y: C, w: _, h: p } = s, f = (w) => {
+      n({ x: y, y: C, w: Math.max(10, Math.min(100 - y, _ + (w.clientX - E) / m * 100)), h: Math.max(8, Math.min(100 - C, p + (w.clientY - z) / u * 100)) });
     }, A = () => b.removeEventListener("pointermove", f);
     b.addEventListener("pointermove", f), b.addEventListener("pointerup", A, { once: !0 });
   };
@@ -2304,7 +2304,7 @@ function On({ rect: s, num: o, onUpdate: n, onRemove: t }) {
   ] });
 }
 function jn() {
-  const { dark: s, callService: o, getState: n, getAttr: t, haStates: l } = Ui(), { t: r } = Ki("card-vacuum"), [a] = x(ii), b = me(window.location.origin), m = me(null), u = me(null), E = me(null), [z, y] = x(!1), [k, _] = x(1), [p, f] = x(!1), [A, w] = x("all"), [M, F] = x([]), [q, oe] = x(1), [R, te] = x([{ x: 15, y: 15, w: 60, h: 50 }]), [he, ie] = x(!1), [ye, re] = x(!1), [fe, N] = x(!1), [P, le] = x("main"), [Y, se] = x(!1), [de, ve] = x(!1), [D, Q] = x(!1), [K, G] = x(!1), [We, Te] = x(!1), [Ke, Xe] = x(!1), [Ee, ce] = x("standard"), [V, Z] = x(!1), [c, I] = x("off"), [be, Ce] = x(!1), [Re, Le] = x("3h"), [ke, Ie] = x("high"), [Be, qe] = x(!0), [Pe, Wt] = x(!0), [Tt, Rt] = x(!1), [Lt, It] = x(!1), [Bt, pt] = x(!1), [qt, ut] = x("by_area"), [Pt, mt] = x(20), gt = me(null), [Ht, ht] = x("standard"), [Ot, yt] = x("standard"), X = (d) => d ? n(d) ?? null : null, _e = (d) => {
+  const { dark: s, callService: o, getState: n, getAttr: t, haStates: l } = Ui(), { t: r } = Ki("card-vacuum"), [a] = x(ii), b = me(window.location.origin), m = me(null), u = me(null), E = me(null), [z, y] = x(!1), [C, _] = x(1), [p, f] = x(!1), [A, w] = x("all"), [M, F] = x([]), [q, oe] = x(1), [R, te] = x([{ x: 15, y: 15, w: 60, h: 50 }]), [he, ie] = x(!1), [ye, re] = x(!1), [fe, N] = x(!1), [P, le] = x("main"), [Y, se] = x(!1), [de, ve] = x(!1), [D, Q] = x(!1), [K, G] = x(!1), [We, Te] = x(!1), [Ke, Xe] = x(!1), [Ee, ce] = x("standard"), [V, Z] = x(!1), [c, I] = x("off"), [be, ke] = x(!1), [Re, Le] = x("3h"), [Ce, Ie] = x("high"), [Be, qe] = x(!0), [Pe, Wt] = x(!0), [Tt, Rt] = x(!1), [Lt, It] = x(!1), [Bt, pt] = x(!1), [qt, ut] = x("by_area"), [Pt, mt] = x(20), gt = me(null), [Ht, ht] = x("standard"), [Ot, yt] = x("standard"), X = (d) => d ? n(d) ?? null : null, _e = (d) => {
     const S = X(d);
     return S && S !== "unavailable" ? parseFloat(S) : null;
   }, Ft = X(a.vacuumEntity), jt = X(a.stateEntity), H = Ft || jt, ft = _e(a.batteryEntity);
@@ -2337,8 +2337,8 @@ function jn() {
     else if (A === "zona" && R.length > 0) {
       const W = u.current, L = m.current, j = ((L == null ? void 0 : L.naturalWidth) > 0 ? L.naturalWidth : null) ?? ((d = E.current) == null ? void 0 : d[0]) ?? 0, $ = ((L == null ? void 0 : L.naturalHeight) > 0 ? L.naturalHeight : null) ?? ((S = E.current) == null ? void 0 : S[1]) ?? 0, pe = a.cameraEntity ? t(a.cameraEntity, "calibration_points") || [] : [], { width: J, height: ue } = (W == null ? void 0 : W.getBoundingClientRect()) ?? { width: 375, height: 390 }, nt = R.map((B) => {
         if (j > 0 && $ > 0 && pe.length >= 3) {
-          const [Qe, at] = Ct(B.x, B.y, J, ue, j, $), [Ve, Ze] = Ct(B.x + B.w, B.y + B.h, J, ue, j, $), [g, v] = kt(Qe, at, pe), [C, T] = kt(Ve, Ze, pe);
-          return [Math.round(g), Math.round(v), Math.round(C), Math.round(T)];
+          const [Qe, at] = kt(B.x, B.y, J, ue, j, $), [Ve, Ze] = kt(B.x + B.w, B.y + B.h, J, ue, j, $), [g, v] = Ct(Qe, at, pe), [k, T] = Ct(Ve, Ze, pe);
+          return [Math.round(g), Math.round(v), Math.round(k), Math.round(T)];
         }
         return [
           Math.round(B.x / 100 * 12e3 - 6e3),
@@ -2424,7 +2424,7 @@ function jn() {
         /* @__PURE__ */ e("div", { style: { height: 5, borderRadius: 99, background: "var(--bg-elevated)", overflow: "hidden" }, children: /* @__PURE__ */ e("div", { style: { height: "100%", borderRadius: 99, background: h, width: `${Math.min(100, Math.max(0, et))}%`, transition: "width .6s ease" } }) })
       ] }),
       /* @__PURE__ */ i("div", { ref: u, style: { marginTop: 8, position: "relative", height: 390, background: "var(--bg-elevated)", overflow: "hidden" }, children: [
-        /* @__PURE__ */ i("div", { style: { width: "100%", height: "100%", transform: `scale(${k})`, transformOrigin: "center center", transition: "transform .2s" }, children: [
+        /* @__PURE__ */ i("div", { style: { width: "100%", height: "100%", transform: `scale(${C})`, transformOrigin: "center center", transition: "transform .2s" }, children: [
           a.cameraEntity ? /* @__PURE__ */ e(
             "img",
             {
@@ -2464,15 +2464,15 @@ function jn() {
             const d = ((Ve = E.current) == null ? void 0 : Ve[0]) ?? 0, S = ((Ze = E.current) == null ? void 0 : Ze[1]) ?? 0, W = a.cameraEntity ? t(a.cameraEntity, "calibration_points") || [] : [], L = a.cameraEntity && t(a.cameraEntity, "rooms") || null, j = a.cameraEntity && t(a.cameraEntity, "segments") || null;
             let $ = [];
             if (L ? $ = (Array.isArray(L) ? L : Object.values(L)).filter((v) => v.x0 !== void 0 && v.x1 !== void 0 && v.visibility !== "Hidden").map((v) => ({ id: Number(v.room_id ?? v.id), x0: v.x0, y0: v.y0, x1: v.x1, y1: v.y1, cx: v.x ?? (v.x0 + v.x1) / 2, cy: v.y ?? (v.y0 + v.y1) / 2, outline: null })) : j && ($ = (Array.isArray(j) ? j : Object.values(j)).filter((v) => {
-              var C;
-              return ((C = v == null ? void 0 : v.outline) == null ? void 0 : C.length) > 0;
+              var k;
+              return ((k = v == null ? void 0 : v.outline) == null ? void 0 : k.length) > 0;
             }).map((v) => ({ id: Number(v.id), x0: null, y0: null, x1: null, y1: null, cx: v.x ?? null, cy: v.y ?? null, outline: v.outline }))), $.length === 0 || d === 0 || S === 0)
               return M.length === 0 ? null : /* @__PURE__ */ e("div", { style: { position: "absolute", top: 10, left: 0, right: 0, display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 6, padding: "0 12px", pointerEvents: "none" }, children: tt.filter((g) => M.indexOf(Number(g.id)) >= 0).map((g) => /* @__PURE__ */ e("span", { style: { background: h, color: "white", padding: "4px 12px", borderRadius: 14, fontSize: 12, fontWeight: 700, boxShadow: "0 2px 8px rgba(0,0,0,.3)" }, children: g.name }, g.id)) });
             let pe = W;
             if (W.length < 3) {
               const g = $.filter((v) => v.x0 !== null);
               if (g.length > 0) {
-                const v = g.flatMap((Me) => [Me.x0, Me.x1]), C = g.flatMap((Me) => [Me.y0, Me.y1]), T = Math.min(...v), U = Math.max(...v), ne = Math.min(...C), Ae = Math.max(...C), xt = 0.05, ot = d * xt, rt = S * xt;
+                const v = g.flatMap((Me) => [Me.x0, Me.x1]), k = g.flatMap((Me) => [Me.y0, Me.y1]), T = Math.min(...v), U = Math.max(...v), ne = Math.min(...k), Ae = Math.max(...k), xt = 0.05, ot = d * xt, rt = S * xt;
                 pe = [
                   { vacuum: { x: T, y: ne }, map: { x: ot, y: S - rt } },
                   { vacuum: { x: U, y: ne }, map: { x: d - ot, y: S - rt } },
@@ -2482,15 +2482,15 @@ function jn() {
             }
             const J = (g, v) => {
               if (pe.length >= 3) {
-                const [C, T, U] = pe, ne = (T.map.x - C.map.x) / (T.vacuum.x - C.vacuum.x || 1), Ae = (U.map.y - C.map.y) / (U.vacuum.y - C.vacuum.y || 1);
-                return [(g - C.vacuum.x) * ne + C.map.x, (v - C.vacuum.y) * Ae + C.map.y];
+                const [k, T, U] = pe, ne = (T.map.x - k.map.x) / (T.vacuum.x - k.vacuum.x || 1), Ae = (U.map.y - k.map.y) / (U.vacuum.y - k.vacuum.y || 1);
+                return [(g - k.vacuum.x) * ne + k.map.x, (v - k.vacuum.y) * Ae + k.map.y];
               }
               return [(g + 1e4) / 2e4 * d, (v + 1e4) / 2e4 * S];
-            }, ue = (g) => g.outline ? g.outline.map(([v, C]) => J(v, C)) : [J(g.x0, g.y0), J(g.x1, g.y0), J(g.x1, g.y1), J(g.x0, g.y1)], nt = (g, v) => {
+            }, ue = (g) => g.outline ? g.outline.map(([v, k]) => J(v, k)) : [J(g.x0, g.y0), J(g.x1, g.y0), J(g.x1, g.y1), J(g.x0, g.y1)], nt = (g, v) => {
               if (g.cx !== null && g.cy !== null) return J(g.cx, g.cy);
-              const C = v.map(([U]) => U), T = v.map(([, U]) => U);
-              return [(Math.min(...C) + Math.max(...C)) / 2, (Math.min(...T) + Math.max(...T)) / 2];
-            }, B = $.filter((g) => M.indexOf(g.id) < 0), Qe = $.filter((g) => M.indexOf(g.id) >= 0), at = `M0,0 L${d},0 L${d},${S} L0,${S} Z` + (B.length > 0 ? " " + B.map((g) => `M${ue(g).map(([C, T]) => `${C},${T}`).join(" L")} Z`).join(" ") : "");
+              const k = v.map(([U]) => U), T = v.map(([, U]) => U);
+              return [(Math.min(...k) + Math.max(...k)) / 2, (Math.min(...T) + Math.max(...T)) / 2];
+            }, B = $.filter((g) => M.indexOf(g.id) < 0), Qe = $.filter((g) => M.indexOf(g.id) >= 0), at = `M0,0 L${d},0 L${d},${S} L0,${S} Z` + (B.length > 0 ? " " + B.map((g) => `M${ue(g).map(([k, T]) => `${k},${T}`).join(" L")} Z`).join(" ") : "");
             return /* @__PURE__ */ i(
               "svg",
               {
@@ -2504,7 +2504,7 @@ function jn() {
                     return /* @__PURE__ */ e("g", { clipPath: "url(#oikos-vac-clip)", pointerEvents: "none", children: /* @__PURE__ */ e(
                       "polygon",
                       {
-                        points: v.map(([C, T]) => `${C},${T}`).join(" "),
+                        points: v.map(([k, T]) => `${k},${T}`).join(" "),
                         fill: "rgba(37,99,235,0.38)",
                         stroke: "rgba(37,99,235,0.95)",
                         strokeWidth: 2.5
@@ -2512,7 +2512,7 @@ function jn() {
                     ) }, `vis-${g.id}`);
                   }),
                   Qe.map((g) => {
-                    const v = ue(g), [C, T] = nt(g, v), U = M.indexOf(g.id) + 1;
+                    const v = ue(g), [k, T] = nt(g, v), U = M.indexOf(g.id) + 1;
                     return /* @__PURE__ */ i("g", { children: [
                       /* @__PURE__ */ e(
                         "polygon",
@@ -2526,11 +2526,11 @@ function jn() {
                           }
                         }
                       ),
-                      /* @__PURE__ */ e("circle", { cx: C, cy: T, r: 14, fill: "rgba(37,99,235,1)", pointerEvents: "none" }),
+                      /* @__PURE__ */ e("circle", { cx: k, cy: T, r: 14, fill: "rgba(37,99,235,1)", pointerEvents: "none" }),
                       /* @__PURE__ */ e(
                         "text",
                         {
-                          x: C,
+                          x: k,
                           y: T,
                           textAnchor: "middle",
                           dominantBaseline: "central",
@@ -2545,13 +2545,13 @@ function jn() {
                     return /* @__PURE__ */ e(
                       "polygon",
                       {
-                        points: v.map(([C, T]) => `${C},${T}`).join(" "),
+                        points: v.map(([k, T]) => `${k},${T}`).join(" "),
                         fill: "rgba(255,255,255,0.06)",
                         stroke: "rgba(255,255,255,0.35)",
                         strokeWidth: 1.5,
                         style: { touchAction: "none" },
-                        onPointerDown: (C) => {
-                          C.stopPropagation(), it(g.id);
+                        onPointerDown: (k) => {
+                          k.stopPropagation(), it(g.id);
                         }
                       },
                       `unsel-${g.id}`
@@ -2738,7 +2738,7 @@ function jn() {
       }
     ),
     /* @__PURE__ */ e(
-      kn,
+      Cn,
       {
         open: Y,
         onClose: () => se(!1),
@@ -2774,7 +2774,7 @@ function jn() {
         lavRipSel: c,
         setLavRipSel: I,
         tempAsciugOpen: be,
-        setTempAsciugOpen: Ce,
+        setTempAsciugOpen: ke,
         tempAsciugSel: Re,
         setTempAsciugSel: Le,
         startPage: P
@@ -2792,7 +2792,7 @@ function jn() {
       }
     ),
     /* @__PURE__ */ e(
-      Cn,
+      kn,
       {
         open: D,
         onClose: () => Q(!1),
@@ -2808,7 +2808,7 @@ function jn() {
         open: K,
         onClose: () => G(!1),
         onFrequenza: () => pt(!0),
-        freqSel: ke,
+        freqSel: Ce,
         sideReach: Be,
         setSideReach: qe,
         mopExtend: Pe,
@@ -2820,7 +2820,7 @@ function jn() {
         t: r
       }
     ),
-    /* @__PURE__ */ e(Mt, { open: Bt, onClose: () => pt(!1), selected: ke, onSelect: Ie, t: r })
+    /* @__PURE__ */ e(Mt, { open: Bt, onClose: () => pt(!1), selected: Ce, onSelect: Ie, t: r })
   ] });
 }
 export {
