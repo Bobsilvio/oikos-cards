@@ -114,6 +114,11 @@
   "switches": {
     "dnd": "Nicht stören",
     "carpetBoost": "Teppich-Boost",
+    "carpetBoostDesc": "Der Roboter erhöht die Saugleistung für Teppiche, außer wenn die Saugstufe auf Leise eingestellt ist.",
+    "cleanCarpetsFirst": "Teppiche zuerst reinigen",
+    "cleanCarpetsFirstDesc": "Der Roboter reinigt zuerst die Teppiche und dann andere Bereiche.",
+    "intensiveCarpet": "Intensive Teppichreinigung",
+    "intensiveCarpetDesc": "Der Roboter verlangsamt und reinigt Teppiche zweimal mit einer Querbewegung, was die Reinigungseffizienz leicht verringern kann.",
     "selfClean": "Selbstreinigung",
     "autoDrying": "Auto-Trocknung",
     "obstacle": "Hindernisse vermeiden",
@@ -124,6 +129,26 @@
     "totalArea": "Gesamtfl.",
     "totalTime": "Gesamtstd.",
     "firstClean": "Erste Reinigung:"
+  },
+  "floor": {
+    "collisionAvoidance": "Kollisionsvermeidungsmodus",
+    "collisionAvoidanceDesc": "Nach Aktivierung reduziert der Roboter Kollisionen mit Wänden, Möbeln und Hindernissen; Effizienz und Abdeckung können leicht sinken.",
+    "autoReclLabel": "Automatische Wiederholungsreinigung",
+    "autoReclDesc": "Nach Aktivierung reinigt der Roboter im CleanGenius-Modus stark verschmutzte Bereiche nach der Hauptreinigung erneut.",
+    "autoReclTitle": "Automatische Wiederholungsreinigung",
+    "reclOff": "Aus",
+    "reclOffDesc": "Automatische Wiederholungsreinigung deaktiviert.",
+    "reclDeepOnly": "Nur im CleanGenius Tiefenreinigungsmodus",
+    "reclDeepOnlyDesc": "Nur im CleanGenius Tiefenreinigungsmodus aktiv.",
+    "reclAllModes": "In beiden CleanGenius-Modi",
+    "reclAllModesDesc": "In allen CleanGenius-Modi aktiv.",
+    "autoMountMop": "Automatisches An-/Abkoppeln der Wischpads",
+    "autoMountMopDesc": "Der Roboter koppelt die Wischpads je nach Reinigungsmodus automatisch an oder ab.",
+    "floorDirection": "Bodenrichtungsreinigung",
+    "floorDirectionDesc": "Der Roboter reinigt entlang der Bodenrichtung, um Reibung an Bodenfugen zu minimieren.",
+    "floorDirectionWarning": "Bei Bereichen mit mehreren Reinigungsdurchgängen wird ein S-förmiges Kreuzmuster verwendet.",
+    "stainAvoidance": "Fleckenerkennung (Laborfunktion)",
+    "stainAvoidanceDesc": "Der Roboter erkennt und behandelt Flecken auf dem Boden während der Reinigung."
   },
   "settings": {
     "groups": {

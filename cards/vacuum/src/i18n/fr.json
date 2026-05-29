@@ -113,7 +113,12 @@
   },
   "switches": {
     "dnd": "Ne pas déranger",
-    "carpetBoost": "Boost tapis",
+    "carpetBoost": "Amélioration tapis",
+    "carpetBoostDesc": "Le robot augmente la puissance d'aspiration pour les tapis, sauf quand l'aspiration est réglée sur Silencieux.",
+    "cleanCarpetsFirst": "Nettoyer d'abord les tapis",
+    "cleanCarpetsFirstDesc": "Le robot nettoie d'abord les tapis, puis les autres zones.",
+    "intensiveCarpet": "Nettoyage intensif des tapis",
+    "intensiveCarpetDesc": "Le robot réduit sa vitesse et nettoie les tapis deux fois avec un mouvement transversal, ce qui peut légèrement réduire l'efficacité.",
     "selfClean": "Auto-nettoyage",
     "autoDrying": "Auto-séchage",
     "obstacle": "Évit. obstacles",
@@ -124,6 +129,26 @@
     "totalArea": "Surface tot.",
     "totalTime": "Heures tot.",
     "firstClean": "Premier nettoyage :"
+  },
+  "floor": {
+    "collisionAvoidance": "Mode de prévention des collisions",
+    "collisionAvoidanceDesc": "Après activation, le robot réduit les collisions avec les murs, meubles et obstacles ; l'efficacité et la couverture de nettoyage seront légèrement réduites.",
+    "autoReclLabel": "Nettoyage automatique répété",
+    "autoReclDesc": "Après activation, en mode CleanGenius, le robot re-nettoie les zones très sales à la fin de la tâche originale.",
+    "autoReclTitle": "Nettoyage automatique répété",
+    "reclOff": "Éteindre",
+    "reclOffDesc": "Le nettoyage automatique répété est désactivé.",
+    "reclDeepOnly": "Uniquement en mode CleanGenius Nettoyage profond",
+    "reclDeepOnlyDesc": "Actif uniquement en mode CleanGenius Nettoyage profond.",
+    "reclAllModes": "Dans les deux modes CleanGenius",
+    "reclAllModesDesc": "Actif dans tous les modes CleanGenius.",
+    "autoMountMop": "Fixation/détachement automatique des tampons",
+    "autoMountMopDesc": "Le robot fixe ou détache automatiquement les tampons selon le mode de nettoyage sélectionné.",
+    "floorDirection": "Nettoyage dans la direction du sol",
+    "floorDirectionDesc": "Le robot nettoie dans la direction du sol pour minimiser la friction contre les joints.",
+    "floorDirectionWarning": "Quand une zone nécessite plus de passages, un schéma en S croisé est utilisé.",
+    "stainAvoidance": "Reconnaissance des taches (fonction laboratoire)",
+    "stainAvoidanceDesc": "Le robot reconnaît et tente de traiter les taches sur le sol pendant le nettoyage."
   },
   "settings": {
     "groups": {

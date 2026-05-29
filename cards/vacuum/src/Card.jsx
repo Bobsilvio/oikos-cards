@@ -579,16 +579,202 @@ function CronologiaView({ onBack, cfg, t, haStates, getState }) {
   )
 }
 
+// ── CarpetSheet ───────────────────────────────────────────────────────────────
+function CarpetSheet({ open, onClose, cfg, t, callService, getState }) {
+  const isOn = (id) => id ? getState(id) === 'on' : false
+  const tog  = (id) => id && callService('switch', 'toggle', id)
+
+  const items = [
+    cfg.cleanCarpetsFirstEntity && {
+      e: cfg.cleanCarpetsFirstEntity,
+      label: t('switches.cleanCarpetsFirst'),
+      desc:  t('switches.cleanCarpetsFirstDesc'),
+    },
+    cfg.carpetBoostEntity && {
+      e: cfg.carpetBoostEntity,
+      label: t('switches.carpetBoost'),
+      desc:  t('switches.carpetBoostDesc'),
+    },
+    cfg.deepCleanEntity && {
+      e: cfg.deepCleanEntity,
+      label: t('switches.intensiveCarpet'),
+      desc:  t('switches.intensiveCarpetDesc'),
+    },
+  ].filter(Boolean)
+
+  return (
+    <FullSheet open={open} onClose={onClose} zIndex={1000}>
+      <div style={{ flex: 1, overflowY: 'auto', minHeight: 0 }}>
+        <div style={{ background: 'var(--bg-elevated)', minHeight: '100%', paddingBottom: 32 }}>
+          <SettingsHeader title={t('dreame.menuTappeti')} onBack={onClose}/>
+          <div style={{ margin: '12px 14px 0', background: 'var(--bg-card)', borderRadius: 12, padding: '12px 14px' }}>
+            <span style={{ fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.5 }}>
+              {t('dreame.carpetSettingsDesc')}
+            </span>
+          </div>
+          {items.length > 0 && (
+            <>
+              <p style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '.6px', margin: '16px 14px 6px' }}>
+                {t('dreame.carpetMetodiTitle')}
+              </p>
+              <div style={{ background: 'var(--bg-card)', borderRadius: 16, margin: '0 14px', overflow: 'hidden' }}>
+                {items.map((item, i) => (
+                  <div key={item.e} style={{ padding: '14px 16px', borderTop: i > 0 ? '1px solid var(--border)' : 'none' }}>
+                    <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 12 }}>
+                      <div style={{ flex: 1 }}>
+                        <div style={{ fontSize: 15, fontWeight: 600, color: 'var(--text-primary)', marginBottom: 4 }}>{item.label}</div>
+                        <div style={{ fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.5 }}>{item.desc}</div>
+                      </div>
+                      <div style={{ flexShrink: 0, marginTop: 2 }}>
+                        <IosToggle on={isOn(item.e)} onToggle={() => tog(item.e)}/>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+    </FullSheet>
+  )
+}
+
+// ── FloorSheet ────────────────────────────────────────────────────────────────
+const AUTORECL_HA = { off: 'off', deepOnly: 'in_deep_mode', allModes: 'in_all_modes' }
+const AUTORECL_UI = { off: 'off', in_deep_mode: 'deepOnly', in_all_modes: 'allModes' }
+
+function FloorSheet({ open, onClose, cfg, t, callService, getState }) {
+  const [reclOpen, setReclOpen] = useState(false)
+  const isOn = (id) => id ? getState(id) === 'on' : false
+  const tog  = (id) => id && callService('switch', 'toggle', id)
+
+  const reclHA  = cfg.autoRecleaningEntity ? getState(cfg.autoRecleaningEntity) : null
+  const reclUI  = AUTORECL_UI[reclHA] || 'off'
+  const setRecl = (uiVal) => {
+    cfg.autoRecleaningEntity && callService('select', 'select_option', cfg.autoRecleaningEntity, { option: AUTORECL_HA[uiVal] })
+    setReclOpen(false)
+  }
+  const reclLabel = reclUI === 'off' ? t('floor.reclOff') : reclUI === 'deepOnly' ? t('floor.reclDeepOnly') : t('floor.reclAllModes')
+
+  const reclOpts = [
+    { val: 'off',      label: t('floor.reclOff'),      desc: t('floor.reclOffDesc') },
+    { val: 'deepOnly', label: t('floor.reclDeepOnly'),  desc: t('floor.reclDeepOnlyDesc') },
+    { val: 'allModes', label: t('floor.reclAllModes'),  desc: t('floor.reclAllModesDesc') },
+  ]
+
+  const SwitchRow = ({ e, label, desc, warning, border }) => (
+    <div style={{ padding: '14px 16px', borderTop: border ? '1px solid var(--border)' : 'none' }}>
+      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 12 }}>
+        <div style={{ flex: 1 }}>
+          <div style={{ fontSize: 15, fontWeight: 600, color: 'var(--text-primary)', marginBottom: 4 }}>{label}</div>
+          <div style={{ fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.5 }}>{desc}</div>
+          {warning && (
+            <div style={{ display: 'flex', alignItems: 'flex-start', gap: 6, marginTop: 6 }}>
+              <span style={{ fontSize: 13, color: 'var(--amber)', flexShrink: 0 }}>ⓘ</span>
+              <span style={{ fontSize: 12, color: 'var(--amber)', lineHeight: 1.5 }}>{warning}</span>
+            </div>
+          )}
+        </div>
+        <div style={{ flexShrink: 0, marginTop: 2 }}>
+          <IosToggle on={isOn(e)} onToggle={() => tog(e)}/>
+        </div>
+      </div>
+    </div>
+  )
+
+  return (
+    <FullSheet open={open} onClose={onClose} zIndex={1000}>
+      <div style={{ flex: 1, overflowY: 'auto', minHeight: 0 }}>
+        <div style={{ background: 'var(--bg-elevated)', minHeight: '100%', paddingBottom: 32 }}>
+          <SettingsHeader title={t('dreame.menuPavimento')} onBack={onClose}/>
+
+          {/* Card 1 — Prevenzione collisioni (da sola) */}
+          {cfg.collisionAvoidanceEntity && (
+            <div style={{ background: 'var(--bg-card)', borderRadius: 16, margin: '12px 14px 0', overflow: 'hidden' }}>
+              <SwitchRow e={cfg.collisionAvoidanceEntity} label={t('floor.collisionAvoidance')} desc={t('floor.collisionAvoidanceDesc')}/>
+            </div>
+          )}
+
+          {/* Card 2 — Ripulitura automatica + Mocio + Direzione pavimento */}
+          {(cfg.autoRecleaningEntity || cfg.autoWashEntity || cfg.floorDirectionEntity) && (
+            <div style={{ background: 'var(--bg-card)', borderRadius: 16, margin: '12px 14px 0', overflow: 'hidden' }}>
+              {/* Selettore ripulitura — riga tappabile con valore corrente */}
+              {cfg.autoRecleaningEntity && (
+                <div onClick={() => setReclOpen(true)}
+                  style={{ padding: '14px 16px', cursor: 'pointer' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8 }}>
+                    <div style={{ flex: 1 }}>
+                      <div style={{ fontSize: 15, fontWeight: 600, color: 'var(--text-primary)', marginBottom: 4 }}>{t('floor.autoReclLabel')}</div>
+                      <div style={{ fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.5 }}>{t('floor.autoReclDesc')}</div>
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 4, flexShrink: 0 }}>
+                      <span style={{ fontSize: 14, color: 'var(--text-muted)' }}>{reclLabel}</span>
+                      <span style={{ color: 'var(--text-muted)', fontSize: 17, lineHeight: 1 }}>›</span>
+                    </div>
+                  </div>
+                </div>
+              )}
+              {cfg.autoWashEntity && (
+                <SwitchRow e={cfg.autoWashEntity} label={t('floor.autoMountMop')} desc={t('floor.autoMountMopDesc')} border={!!cfg.autoRecleaningEntity}/>
+              )}
+              {cfg.floorDirectionEntity && (
+                <SwitchRow e={cfg.floorDirectionEntity} label={t('floor.floorDirection')} desc={t('floor.floorDirectionDesc')} warning={t('floor.floorDirectionWarning')} border={!!(cfg.autoRecleaningEntity || cfg.autoWashEntity)}/>
+              )}
+            </div>
+          )}
+
+          {/* Card 3 — Riconoscimento macchie (da sola) */}
+          {cfg.stainAvoidanceEntity && (
+            <div style={{ background: 'var(--bg-card)', borderRadius: 16, margin: '12px 14px 0', overflow: 'hidden' }}>
+              <SwitchRow e={cfg.stainAvoidanceEntity} label={t('floor.stainAvoidance')} desc={t('floor.stainAvoidanceDesc')}/>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* SubSheet selettore ripulitura */}
+      <SubSheet open={reclOpen} onClose={() => setReclOpen(false)} zIndex={1100}>
+        <div style={{ padding: '4px 0 16px' }}>
+          <p style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '.6px', margin: '8px 16px 10px' }}>
+            {t('floor.autoReclTitle')}
+          </p>
+          {reclOpts.map((opt) => {
+            const sel = reclUI === opt.val
+            return (
+              <div key={opt.val} onClick={() => setRecl(opt.val)}
+                style={{ padding: '12px 16px', cursor: 'pointer', background: sel ? 'var(--amber-light, rgba(245,158,11,.06))' : 'transparent' }}>
+                <div style={{ display: 'flex', alignItems: 'flex-start', gap: 12 }}>
+                  <div style={{ width: 20, height: 20, borderRadius: '50%', flexShrink: 0, marginTop: 2,
+                    border: `2px solid ${sel ? 'var(--amber)' : 'var(--border-medium)'}`,
+                    background: sel ? 'var(--amber)' : 'transparent',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    {sel && <div style={{ width: 7, height: 7, borderRadius: '50%', background: '#fff' }}/>}
+                  </div>
+                  <div style={{ flex: 1 }}>
+                    <div style={{ fontSize: 15, fontWeight: sel ? 700 : 600, color: sel ? 'var(--amber)' : 'var(--text-primary)', marginBottom: 3 }}>{opt.label}</div>
+                    <div style={{ fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.5 }}>{opt.desc}</div>
+                  </div>
+                </div>
+              </div>
+            )
+          })}
+        </div>
+      </SubSheet>
+    </FullSheet>
+  )
+}
+
 // ── ImpostazioniSheet ─────────────────────────────────────────────────────────
-function ImpostazioniSheet({ open, onClose, onMopExtend, onBase, onBaseSettings, onCronologia, cfg, t, callService, getState }) {
+function ImpostazioniSheet({ open, onClose, onMopExtend, onBase, onBaseSettings, onCronologia, onCarpet, onFloor, cfg, t, callService, getState }) {
   const isOn = (id) => id ? getState(id) === 'on' : false
   const tog  = (id) => id && callService('switch', 'toggle', id)
 
   const menuCard1 = [
     { label: t('dreame.menuCronologia'),  disabled: !cfg.historyEntity, onClick: () => { onClose(); setTimeout(onCronologia, 140) } },
     { label: t('dreame.menuProgrammata'), disabled: true  },
-    { label: t('dreame.menuTappeti'),     disabled: true  },
-    { label: t('dreame.menuPavimento'),   disabled: true  },
+    { label: t('dreame.menuTappeti'),     disabled: false, onClick: () => { onClose(); setTimeout(onCarpet, 140) } },
+    { label: t('dreame.menuPavimento'),   disabled: false, onClick: () => { onClose(); setTimeout(onFloor, 140) } },
     { label: t('dreame.mopExtendTitle'),  disabled: false, onClick: () => { onClose(); setTimeout(onMopExtend, 140) } },
     { label: t('dreame.baseTitle'),       disabled: false, onClick: () => { onClose(); setTimeout(onBaseSettings || onBase, 140) } },
   ]
@@ -1383,6 +1569,8 @@ export default function VacuumCard() {
   const [baseOpen, setBaseOpen] = useState(false)
   const [baseStartPage, setBaseStartPage] = useState('main')
   const [impostazioniOpen, setImpostazioniOpen] = useState(false)
+  const [carpetOpen, setCarpetOpen] = useState(false)
+  const [floorOpen, setFloorOpen] = useState(false)
   const [mopExtendOpen, setMopExtendOpen] = useState(false)
   const [showHistory, setShowHistory] = useState(false)
 
@@ -1941,6 +2129,16 @@ export default function VacuumCard() {
         onBase={() => setBaseOpen(true)}
         onBaseSettings={() => { setBaseStartPage('settings'); setBaseOpen(true) }}
         onCronologia={() => setShowHistory(true)}
+        onCarpet={() => setCarpetOpen(true)}
+        onFloor={() => setFloorOpen(true)}
+        cfg={cfg} t={t} callService={callService} getState={getState}
+      />
+      <CarpetSheet
+        open={carpetOpen} onClose={() => setCarpetOpen(false)}
+        cfg={cfg} t={t} callService={callService} getState={getState}
+      />
+      <FloorSheet
+        open={floorOpen} onClose={() => setFloorOpen(false)}
         cfg={cfg} t={t} callService={callService} getState={getState}
       />
       <MopExtendSheet
