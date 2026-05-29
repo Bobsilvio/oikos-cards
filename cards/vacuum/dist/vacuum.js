@@ -1560,9 +1560,7 @@ function En({ open: s, onClose: o, cfg: n, t, callService: l, getState: r }) {
 }
 function kn({ open: s, onClose: o, onMopExtend: n, onBase: t, onBaseSettings: l, onCronologia: r, onCarpet: a, onFloor: b, cfg: g, t: u, callService: k, getState: E }) {
   const f = (w) => w ? E(w) === "on" : !1, _ = (w) => w && k("switch", "toggle", w), D = [
-    { label: u("dreame.menuCronologia"), disabled: !g.historyEntity, onClick: () => {
-      o(), setTimeout(r, 140);
-    } },
+    { label: u("dreame.menuCronologia"), disabled: !g.historyEntity, onClick: r },
     { label: u("dreame.menuProgrammata"), disabled: !0 },
     { label: u("dreame.menuTappeti"), disabled: !1, onClick: () => {
       o(), setTimeout(a, 140);

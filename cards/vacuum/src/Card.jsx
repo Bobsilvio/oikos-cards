@@ -771,7 +771,7 @@ function ImpostazioniSheet({ open, onClose, onMopExtend, onBase, onBaseSettings,
   const tog  = (id) => id && callService('switch', 'toggle', id)
 
   const menuCard1 = [
-    { label: t('dreame.menuCronologia'),  disabled: !cfg.historyEntity, onClick: () => { onClose(); setTimeout(onCronologia, 140) } },
+    { label: t('dreame.menuCronologia'),  disabled: !cfg.historyEntity, onClick: onCronologia },
     { label: t('dreame.menuProgrammata'), disabled: true  },
     { label: t('dreame.menuTappeti'),     disabled: false, onClick: () => { onClose(); setTimeout(onCarpet, 140) } },
     { label: t('dreame.menuPavimento'),   disabled: false, onClick: () => { onClose(); setTimeout(onFloor, 140) } },
