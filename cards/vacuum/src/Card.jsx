@@ -644,6 +644,31 @@ function CarpetSheet({ open, onClose, cfg, t, callService, getState }) {
 const AUTORECL_HA = { off: 'off', deepOnly: 'in_deep_mode', allModes: 'in_all_modes' }
 const AUTORECL_UI = { off: 'off', in_deep_mode: 'deepOnly', in_all_modes: 'allModes' }
 
+// Hoisted a livello modulo: se definito dentro FloorSheet veniva ricreato a ogni
+// render → remount del sottoalbero → l'animazione del knob IosToggle rigiocava
+// (toggle che "lampeggiano" / si muovono da soli ad ogni update di stato).
+function FloorSwitchRow({ on, onToggle, label, desc, warning, border }) {
+  return (
+    <div style={{ padding: '14px 16px', borderTop: border ? '1px solid var(--border)' : 'none' }}>
+      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 12 }}>
+        <div style={{ flex: 1 }}>
+          <div style={{ fontSize: 15, fontWeight: 600, color: 'var(--text-primary)', marginBottom: 4 }}>{label}</div>
+          <div style={{ fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.5 }}>{desc}</div>
+          {warning && (
+            <div style={{ display: 'flex', alignItems: 'flex-start', gap: 6, marginTop: 6 }}>
+              <span style={{ fontSize: 13, color: 'var(--amber)', flexShrink: 0 }}>ⓘ</span>
+              <span style={{ fontSize: 12, color: 'var(--amber)', lineHeight: 1.5 }}>{warning}</span>
+            </div>
+          )}
+        </div>
+        <div style={{ flexShrink: 0, marginTop: 2 }}>
+          <IosToggle on={on} onToggle={onToggle}/>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 function FloorSheet({ open, onClose, cfg, t, callService, getState }) {
   const [reclOpen, setReclOpen] = useState(false)
   const isOn = (id) => id ? getState(id) === 'on' : false
@@ -663,26 +688,6 @@ function FloorSheet({ open, onClose, cfg, t, callService, getState }) {
     { val: 'allModes', label: t('floor.reclAllModes'),  desc: t('floor.reclAllModesDesc') },
   ]
 
-  const SwitchRow = ({ e, label, desc, warning, border }) => (
-    <div style={{ padding: '14px 16px', borderTop: border ? '1px solid var(--border)' : 'none' }}>
-      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 12 }}>
-        <div style={{ flex: 1 }}>
-          <div style={{ fontSize: 15, fontWeight: 600, color: 'var(--text-primary)', marginBottom: 4 }}>{label}</div>
-          <div style={{ fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.5 }}>{desc}</div>
-          {warning && (
-            <div style={{ display: 'flex', alignItems: 'flex-start', gap: 6, marginTop: 6 }}>
-              <span style={{ fontSize: 13, color: 'var(--amber)', flexShrink: 0 }}>ⓘ</span>
-              <span style={{ fontSize: 12, color: 'var(--amber)', lineHeight: 1.5 }}>{warning}</span>
-            </div>
-          )}
-        </div>
-        <div style={{ flexShrink: 0, marginTop: 2 }}>
-          <IosToggle on={isOn(e)} onToggle={() => tog(e)}/>
-        </div>
-      </div>
-    </div>
-  )
-
   return (
     <FullSheet open={open} onClose={onClose} zIndex={1000}>
       <div style={{ flex: 1, overflowY: 'auto', minHeight: 0 }}>
@@ -692,7 +697,7 @@ function FloorSheet({ open, onClose, cfg, t, callService, getState }) {
           {/* Card 1 — Prevenzione collisioni (da sola) */}
           {cfg.collisionAvoidanceEntity && (
             <div style={{ background: 'var(--bg-card)', borderRadius: 16, margin: '12px 14px 0', overflow: 'hidden' }}>
-              <SwitchRow e={cfg.collisionAvoidanceEntity} label={t('floor.collisionAvoidance')} desc={t('floor.collisionAvoidanceDesc')}/>
+              <FloorSwitchRow on={isOn(cfg.collisionAvoidanceEntity)} onToggle={() => tog(cfg.collisionAvoidanceEntity)} label={t('floor.collisionAvoidance')} desc={t('floor.collisionAvoidanceDesc')}/>
             </div>
           )}
 
@@ -716,10 +721,10 @@ function FloorSheet({ open, onClose, cfg, t, callService, getState }) {
                 </div>
               )}
               {cfg.autoWashEntity && (
-                <SwitchRow e={cfg.autoWashEntity} label={t('floor.autoMountMop')} desc={t('floor.autoMountMopDesc')} border={!!cfg.autoRecleaningEntity}/>
+                <FloorSwitchRow on={isOn(cfg.autoWashEntity)} onToggle={() => tog(cfg.autoWashEntity)} label={t('floor.autoMountMop')} desc={t('floor.autoMountMopDesc')} border={!!cfg.autoRecleaningEntity}/>
               )}
               {cfg.floorDirectionEntity && (
-                <SwitchRow e={cfg.floorDirectionEntity} label={t('floor.floorDirection')} desc={t('floor.floorDirectionDesc')} warning={t('floor.floorDirectionWarning')} border={!!(cfg.autoRecleaningEntity || cfg.autoWashEntity)}/>
+                <FloorSwitchRow on={isOn(cfg.floorDirectionEntity)} onToggle={() => tog(cfg.floorDirectionEntity)} label={t('floor.floorDirection')} desc={t('floor.floorDirectionDesc')} warning={t('floor.floorDirectionWarning')} border={!!(cfg.autoRecleaningEntity || cfg.autoWashEntity)}/>
               )}
             </div>
           )}
@@ -727,7 +732,7 @@ function FloorSheet({ open, onClose, cfg, t, callService, getState }) {
           {/* Card 3 — Riconoscimento macchie (da sola) */}
           {cfg.stainAvoidanceEntity && (
             <div style={{ background: 'var(--bg-card)', borderRadius: 16, margin: '12px 14px 0', overflow: 'hidden' }}>
-              <SwitchRow e={cfg.stainAvoidanceEntity} label={t('floor.stainAvoidance')} desc={t('floor.stainAvoidanceDesc')}/>
+              <FloorSwitchRow on={isOn(cfg.stainAvoidanceEntity)} onToggle={() => tog(cfg.stainAvoidanceEntity)} label={t('floor.stainAvoidance')} desc={t('floor.stainAvoidanceDesc')}/>
             </div>
           )}
         </div>
@@ -773,10 +778,10 @@ function ImpostazioniSheet({ open, onClose, onMopExtend, onBase, onBaseSettings,
   const menuCard1 = [
     { label: t('dreame.menuCronologia'),  disabled: !cfg.historyEntity, onClick: onCronologia },
     { label: t('dreame.menuProgrammata'), disabled: true  },
-    { label: t('dreame.menuTappeti'),     disabled: false, onClick: () => { onClose(); setTimeout(onCarpet, 140) } },
-    { label: t('dreame.menuPavimento'),   disabled: false, onClick: () => { onClose(); setTimeout(onFloor, 140) } },
-    { label: t('dreame.mopExtendTitle'),  disabled: false, onClick: () => { onClose(); setTimeout(onMopExtend, 140) } },
-    { label: t('dreame.baseTitle'),       disabled: false, onClick: () => { onClose(); setTimeout(onBaseSettings || onBase, 140) } },
+    { label: t('dreame.menuTappeti'),     disabled: false, onClick: onCarpet },
+    { label: t('dreame.menuPavimento'),   disabled: false, onClick: onFloor },
+    { label: t('dreame.mopExtendTitle'),  disabled: false, onClick: onMopExtend },
+    { label: t('dreame.baseTitle'),       disabled: false, onClick: onBaseSettings || onBase },
   ]
   const menuCard2 = [
     { label: t('dreame.menuOstacoli'),   disabled: true },
@@ -2115,6 +2120,18 @@ export default function VacuumCard() {
         deepClean={cfg.deepCleanEntity ? getState(cfg.deepCleanEntity) === 'on' : false}
         onDeepClean={() => cfg.deepCleanEntity && callService('switch', 'toggle', cfg.deepCleanEntity)}
       />
+      <ImpostazioniSheet
+        open={impostazioniOpen} onClose={() => setImpostazioniOpen(false)}
+        onMopExtend={() => setMopExtendOpen(true)}
+        onBase={() => setBaseOpen(true)}
+        onBaseSettings={() => { setBaseStartPage('settings'); setBaseOpen(true) }}
+        onCronologia={() => setShowHistory(true)}
+        onCarpet={() => setCarpetOpen(true)}
+        onFloor={() => setFloorOpen(true)}
+        cfg={cfg} t={t} callService={callService} getState={getState}
+      />
+      {/* BaseSheet DOPO ImpostazioniSheet: stesso zIndex 1000, l'ordine DOM lo
+          mette sopra al menu, che resta aperto sotto → il back torna al menu. */}
       <BaseSheet
         open={baseOpen} onClose={() => setBaseOpen(false)}
         cfg={cfg} t={t} callService={callService} getState={getState}
@@ -2122,16 +2139,6 @@ export default function VacuumCard() {
         lavRipOpen={lavRipOpen} setLavRipOpen={setLavRipOpen} lavRipSel={lavRipSel} setLavRipSel={setLavRipSel}
         tempAsciugOpen={tempAsciugOpen} setTempAsciugOpen={setTempAsciugOpen} tempAsciugSel={tempAsciugSel} setTempAsciugSel={setTempAsciugSel}
         startPage={baseStartPage}
-      />
-      <ImpostazioniSheet
-        open={impostazioniOpen} onClose={() => setImpostazioniOpen(false)}
-        onMopExtend={() => { setImpostazioniOpen(false); setTimeout(() => setMopExtendOpen(true), 140) }}
-        onBase={() => setBaseOpen(true)}
-        onBaseSettings={() => { setBaseStartPage('settings'); setBaseOpen(true) }}
-        onCronologia={() => setShowHistory(true)}
-        onCarpet={() => setCarpetOpen(true)}
-        onFloor={() => setFloorOpen(true)}
-        cfg={cfg} t={t} callService={callService} getState={getState}
       />
       <CarpetSheet
         open={carpetOpen} onClose={() => setCarpetOpen(false)}
