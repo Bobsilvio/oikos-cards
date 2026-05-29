@@ -309,6 +309,13 @@ export default function RoomSensorCard({ cardId }) {
     : null
 
   const { bars: histBars, loading: histLoading } = useHistory(historyEnt, fetchHistory, connected)
+  // Unit del sensore storico (per tooltip barre): cerca tra gauges, fallback su badges, fallback su attribute HA
+  const historyUnit = (
+    gauges.find(g => g.entity === historyEnt)?.unit
+    ?? badges.find(b => b.entity === historyEnt)?.unit
+    ?? haStates?.[historyEnt]?.attributes?.unit_of_measurement
+    ?? ''
+  )
 
   useEffect(() => {
     const cleanups = gauges.map((g, i) => {
@@ -437,7 +444,7 @@ export default function RoomSensorCard({ cardId }) {
                     </div>
                   )}
                   {showRightHistory && (
-                    <HistoryBars bars={histBars} loading={histLoading} chartColor={chartColor} dark={dark} t={t}/>
+                    <HistoryBars bars={histBars} loading={histLoading} chartColor={chartColor} dark={dark} t={t} unit={historyUnit}/>
                   )}
                 </div>
               </>
@@ -579,7 +586,7 @@ export default function RoomSensorCard({ cardId }) {
       {showRightHistory && (
         <>
           <VSep dark={dark} h={56}/>
-          <HistoryBars bars={histBars} loading={histLoading} chartColor={chartColor} dark={dark} t={t}/>
+          <HistoryBars bars={histBars} loading={histLoading} chartColor={chartColor} dark={dark} t={t} unit={historyUnit}/>
         </>
       )}
     </div>
