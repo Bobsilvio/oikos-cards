@@ -67,6 +67,7 @@ const { jsxs: c, jsx: a } = window.__OIKOS_SDK__.jsxRuntime, w = "oikos-card-cfg
   countEntity: "sensor.ambrogio_cleaning_count",
   totalTimeEntity: "sensor.ambrogio_total_cleaning_time",
   firstCleanEntity: "sensor.ambrogio_first_cleaning_date",
+  historyEntity: "sensor.ambrogio_cleaning_history",
   rooms: [
     { id: 9, name: "Camera da Letto" },
     { id: 1, name: "Bagno Grande" },
@@ -160,7 +161,8 @@ function T(n) {
     totalAreaEntity: t("total_cleaned_area"),
     countEntity: t("cleaning_count"),
     totalTimeEntity: t("total_cleaning_time"),
-    firstCleanEntity: t("first_cleaning_date")
+    firstCleanEntity: t("first_cleaning_date"),
+    historyEntity: t("cleaning_history")
   };
 }
 const { useState: v } = window.__OIKOS_SDK__.React, { motion: x, AnimatePresence: W } = window.__OIKOS_SDK__.framerMotion, { Plus: B, Trash2: P, Wand2: L } = window.__OIKOS_SDK__.icons, { EntityField: M, useT: R } = window.__OIKOS_SDK__, I = [
@@ -256,7 +258,8 @@ const { useState: v } = window.__OIKOS_SDK__.React, { motion: x, AnimatePresence
       { key: "totalAreaEntity" },
       { key: "countEntity" },
       { key: "totalTimeEntity" },
-      { key: "firstCleanEntity" }
+      { key: "firstCleanEntity" },
+      { key: "historyEntity" }
     ]
   }
 ];

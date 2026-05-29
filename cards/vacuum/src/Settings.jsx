@@ -99,6 +99,7 @@ const GROUP_KEYS = [
       { key: 'countEntity'      },
       { key: 'totalTimeEntity'  },
       { key: 'firstCleanEntity' },
+      { key: 'historyEntity'    },
     ],
   },
 ]

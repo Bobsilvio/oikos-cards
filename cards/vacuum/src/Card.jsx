@@ -2,7 +2,7 @@
  * VacuumCard — Dreame-style UI
  * v2.0.0 — Rewrite completo: map + bottom sheet + pagine navigate
  */
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useDashboard, getHAConfig, registerCardTranslations, useT } from '@oikos/sdk'
 import { getVacuumConfig } from './vacuumStore'
@@ -455,13 +455,134 @@ function MopExtendSheet({ open, onClose, onFrequenza, freqSel, sideReach, setSid
   )
 }
 
+// ── CronologiaSheet ───────────────────────────────────────────────────────────
+function CronologiaSheet({ open, onClose, cfg, t, haStates, getState }) {
+  const historyAttrs = useMemo(() =>
+    (cfg.historyEntity && haStates?.[cfg.historyEntity]?.attributes) || {}
+  , [cfg.historyEntity, haStates])
+
+  const getNum = (id) => {
+    const v = id ? (getState(id) ?? null) : null
+    return (v && v !== 'unavailable') ? parseFloat(v) : null
+  }
+
+  const sessions = useMemo(() => {
+    return Object.entries(historyAttrs)
+      .filter(([key]) => /^\d{2}-\d{2} \d{2}:\d{2}$/.test(key))
+      .map(([key, val]) => {
+        const v = (typeof val === 'object' && val !== null) ? val : {}
+        return { dateKey: key, ...v }
+      })
+      .sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0))
+  }, [historyAttrs])
+
+  const fmtDate = (key) => {
+    const m = key?.match(/^(\d{2})-(\d{2}) (\d{2}:\d{2})$/)
+    return m ? `${m[2]}/${m[1]} ${m[3]}` : (key || '')
+  }
+
+  const statusLabel = (s) => {
+    if (s === 'Zone cleaning') return t('dreame.cronologiaZoneClean')
+    if (s === 'Room cleaning') return t('dreame.cronologiaRoomClean')
+    return t('dreame.cronologiaCleaning')
+  }
+
+  const methodLabel = (m) => {
+    if (!m || m === 'Default mode') return t('dreame.cronologiaDefaultMode')
+    if (m.toLowerCase().includes('cleangenius')) return t('dreame.cronologiaCleangenius')
+    return m
+  }
+
+  const totalArea  = getNum(cfg.totalAreaEntity)
+  const totalTime  = getNum(cfg.totalTimeEntity)
+  const totalCount = getNum(cfg.countEntity)
+
+  const stats = [
+    { val: totalArea  !== null ? Math.round(totalArea).toLocaleString()  : '—', unit: 'm²',  label: t('dreame.cronologiaTotalArea') },
+    { val: totalTime  !== null ? Math.round(totalTime).toLocaleString()  : '—', unit: 'min', label: t('dreame.cronologiaDuration')  },
+    { val: totalCount !== null ? Math.round(totalCount)                  : '—', unit: '',    label: t('dreame.cronologiaCycles')    },
+  ]
+
+  return (
+    <FullSheet open={open} onClose={onClose} zIndex={1050}>
+      <div style={{ flex: 1, overflowY: 'auto', minHeight: 0 }}>
+        <div style={{ background: 'var(--bg-elevated)', minHeight: '100%', paddingBottom: 32 }}>
+          <SettingsHeader title={t('dreame.menuCronologia')} onBack={onClose}/>
+
+          {/* Statistiche totali */}
+          <div style={{ background: 'var(--bg-card)', borderRadius: 16, margin: '14px 14px 0', padding: '18px 8px' }}>
+            <div style={{ display: 'flex', alignItems: 'stretch' }}>
+              {stats.map((s, i) => (
+                <div key={i} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center',
+                  borderLeft: i > 0 ? '1px solid var(--border)' : 'none', padding: '0 8px' }}>
+                  <div style={{ display: 'flex', alignItems: 'baseline', gap: 2 }}>
+                    <span style={{ fontSize: 28, fontWeight: 800, color: 'var(--text-primary)', lineHeight: 1.1 }}>{s.val}</span>
+                    {s.unit && <span style={{ fontSize: 11, color: 'var(--text-muted)', fontWeight: 500, marginLeft: 1 }}>{s.unit}</span>}
+                  </div>
+                  <span style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 4 }}>{s.label}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Lista sessioni */}
+          <div style={{ marginTop: 14 }}>
+            {sessions.length === 0 ? (
+              <div style={{ textAlign: 'center', padding: '32px 16px', color: 'var(--text-muted)', fontSize: 15 }}>
+                {t('dreame.cronologiaNoData')}
+              </div>
+            ) : sessions.map((s, i) => (
+              <div key={s.dateKey ?? i}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '10px 16px 4px' }}>
+                  <span style={{ fontSize: 12, color: 'var(--text-muted)', fontWeight: 500 }}>
+                    {methodLabel(s.cleanup_method)}
+                  </span>
+                  <span style={{
+                    fontSize: 11, fontWeight: 700, padding: '3px 10px', borderRadius: 20,
+                    background: s.completed ? 'rgba(52,199,89,.12)' : 'rgba(239,68,68,.10)',
+                    color: s.completed ? '#34c759' : '#ef4444',
+                  }}>
+                    {s.completed ? t('dreame.cronologiaCompleted') : t('dreame.cronologiaInterrupted')}
+                  </span>
+                </div>
+                <div style={{ background: 'var(--bg-card)', borderRadius: 16, margin: '0 14px 6px',
+                  padding: '14px 16px', display: 'flex', alignItems: 'center', gap: 12 }}>
+                  <div style={{ width: 10, height: 10, borderRadius: '50%', flexShrink: 0,
+                    background: s.completed ? '#34c759' : '#ef4444' }}/>
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                      <span style={{ fontSize: 15, fontWeight: 700, color: 'var(--text-primary)' }}>
+                        {statusLabel(s.status)}
+                      </span>
+                      {s.status === 'Cleaning' && (
+                        <span style={{ fontSize: 15 }}>🐻</span>
+                      )}
+                    </div>
+                    <div style={{ fontSize: 13, color: 'var(--text-muted)', marginTop: 3 }}>
+                      {fmtDate(s.dateKey)}
+                      {s.cleaned_area  ? ` | ${s.cleaned_area}`  : ''}
+                      {s.cleaning_time ? ` | ${s.cleaning_time}` : ''}
+                    </div>
+                  </div>
+                  <span style={{ color: 'var(--text-muted)', fontSize: 17, flexShrink: 0 }}>›</span>
+                </div>
+              </div>
+            ))}
+          </div>
+
+        </div>
+      </div>
+    </FullSheet>
+  )
+}
+
 // ── ImpostazioniSheet ─────────────────────────────────────────────────────────
-function ImpostazioniSheet({ open, onClose, onMopExtend, onBase, onBaseSettings, cfg, t, callService, getState }) {
+function ImpostazioniSheet({ open, onClose, onMopExtend, onBase, onBaseSettings, onCronologia, cfg, t, callService, getState }) {
   const isOn = (id) => id ? getState(id) === 'on' : false
   const tog  = (id) => id && callService('switch', 'toggle', id)
 
   const menuCard1 = [
-    { label: t('dreame.menuCronologia'),  disabled: true  },
+    { label: t('dreame.menuCronologia'),  disabled: !cfg.historyEntity, onClick: () => { onClose(); setTimeout(onCronologia, 140) } },
     { label: t('dreame.menuProgrammata'), disabled: true  },
     { label: t('dreame.menuTappeti'),     disabled: true  },
     { label: t('dreame.menuPavimento'),   disabled: true  },
@@ -1236,7 +1357,7 @@ function ZonaRect({ rect, num, onUpdate, onRemove }) {
 
 // ── VacuumCard — componente principale ────────────────────────────────────────
 export default function VacuumCard() {
-  const { dark, callService, getState, getAttr } = useDashboard()
+  const { dark, callService, getState, getAttr, haStates } = useDashboard()
   const { t } = useT('card-vacuum')
   const [cfg] = useState(getVacuumConfig)
   const haHost = useRef(window.location.origin)
@@ -1260,6 +1381,7 @@ export default function VacuumCard() {
   const [baseStartPage, setBaseStartPage] = useState('main')
   const [impostazioniOpen, setImpostazioniOpen] = useState(false)
   const [mopExtendOpen, setMopExtendOpen] = useState(false)
+  const [cronologiaOpen, setCronologiaOpen] = useState(false)
 
   // Base sub-sheets
   const [svuotOpen, setSvuotOpen] = useState(false)
@@ -1801,7 +1923,12 @@ export default function VacuumCard() {
         onMopExtend={() => { setImpostazioniOpen(false); setTimeout(() => setMopExtendOpen(true), 140) }}
         onBase={() => setBaseOpen(true)}
         onBaseSettings={() => { setBaseStartPage('settings'); setBaseOpen(true) }}
+        onCronologia={() => setCronologiaOpen(true)}
         cfg={cfg} t={t} callService={callService} getState={getState}
+      />
+      <CronologiaSheet
+        open={cronologiaOpen} onClose={() => setCronologiaOpen(false)}
+        cfg={cfg} t={t} haStates={haStates} getState={getState}
       />
       <MopExtendSheet
         open={mopExtendOpen} onClose={() => setMopExtendOpen(false)}

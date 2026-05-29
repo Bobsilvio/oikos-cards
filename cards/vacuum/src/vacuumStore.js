@@ -69,6 +69,7 @@ export const VACUUM_DEFAULTS = {
   countEntity:           'sensor.ambrogio_cleaning_count',
   totalTimeEntity:       'sensor.ambrogio_total_cleaning_time',
   firstCleanEntity:      'sensor.ambrogio_first_cleaning_date',
+  historyEntity:         'sensor.ambrogio_cleaning_history',
   rooms: [
     { id: 9, name: 'Camera da Letto' },
     { id: 1, name: 'Bagno Grande'    },
@@ -171,5 +172,6 @@ export function buildEntityMap(prefix) {
     countEntity:            s('cleaning_count'),
     totalTimeEntity:        s('total_cleaning_time'),
     firstCleanEntity:       s('first_cleaning_date'),
+    historyEntity:          s('cleaning_history'),
   }
 }
