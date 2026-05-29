@@ -224,7 +224,7 @@ function SubSheet({ open, onClose, children, zIndex = 1100 }) {
       {open && (
         <motion.div key="sub-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
           onClick={onClose}
-          style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,.55)', zIndex, display: 'flex', alignItems: 'flex-end' }}>
+          style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,.78)', zIndex, display: 'flex', alignItems: 'flex-end' }}>
           <motion.div key="sub-sheet" initial={{ y: '100%' }} animate={{ y: 0 }} exit={{ y: '100%' }}
             transition={{ type: 'spring', damping: 32, stiffness: 280 }}
             onClick={e => e.stopPropagation()}
@@ -244,12 +244,11 @@ function FullSheet({ open, onClose, zIndex = 10, children }) {
       {open && (
         <motion.div key="full-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
           onClick={onClose}
-          style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,.55)', zIndex, display: 'flex', alignItems: 'flex-end' }}>
+          style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,.78)', zIndex, display: 'flex', alignItems: 'flex-end' }}>
           <motion.div key="full-sheet" initial={{ y: '100%' }} animate={{ y: 0 }} exit={{ y: '100%' }}
             transition={{ type: 'spring', damping: 32, stiffness: 280 }}
             onClick={e => e.stopPropagation()}
-            style={{ width: '100%', background: 'var(--bg-card)', borderRadius: '26px 26px 0 0', height: '100%', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
-            <SheetHandle/>
+            style={{ width: '100%', background: 'var(--bg-card)', borderRadius: '26px 26px 0 0', height: '92%', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
             {children}
           </motion.div>
         </motion.div>
@@ -263,7 +262,7 @@ function SettingsHeader({ title, onBack }) {
     <div style={{ background: 'var(--bg-card)', display: 'flex', alignItems: 'center', gap: 8, padding: '14px 16px', borderBottom: '1px solid var(--border)', position: 'sticky', top: 0, zIndex: 5, flexShrink: 0 }}>
       <div onClick={onBack} style={{ fontSize: 28, lineHeight: 1, color: 'var(--text-muted)', cursor: 'pointer', width: 28, flexShrink: 0 }}>‹</div>
       <div style={{ fontSize: 17, fontWeight: 700, color: 'var(--text-primary)', flex: 1, textAlign: 'center' }}>{title}</div>
-      <div style={{ width: 28 }}/>
+      <div onClick={onBack} style={{ width: 28, height: 28, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: 8, background: 'var(--bg-elevated)', color: 'var(--text-secondary)', cursor: 'pointer', fontSize: 13, fontWeight: 700, flexShrink: 0 }}>✕</div>
     </div>
   )
 }
@@ -500,13 +499,13 @@ function CronologiaView({ onBack, cfg, t, haStates, getState }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
       {/* Header */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '14px 16px 10px',
+      <div style={{ background: 'var(--bg-card)', display: 'flex', alignItems: 'center', gap: 8, padding: '14px 16px 10px',
         borderBottom: '1px solid var(--border)', flexShrink: 0 }}>
         <div onClick={onBack} style={{ fontSize: 28, lineHeight: 1, color: 'var(--text-muted)', cursor: 'pointer', width: 28 }}>‹</div>
         <div style={{ fontSize: 17, fontWeight: 700, color: 'var(--text-primary)', flex: 1, textAlign: 'center' }}>
           {t('dreame.menuCronologia')}
         </div>
-        <div style={{ width: 28 }}/>
+        <div onClick={onBack} style={{ width: 28, height: 28, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: 8, background: 'var(--bg-elevated)', color: 'var(--text-secondary)', cursor: 'pointer', fontSize: 13, fontWeight: 700 }}>✕</div>
       </div>
 
       {/* Scrollable body */}
@@ -1520,7 +1519,7 @@ export default function VacuumCard() {
 
       {/* ── Cronologia inline ── */}
       {showHistory && (
-        <div style={{ height: 560 }}>
+        <div style={{ height: 560, position: 'relative', zIndex: 1200 }}>
           <CronologiaView
             onBack={() => setShowHistory(false)}
             cfg={cfg} t={t} haStates={haStates} getState={getState}
