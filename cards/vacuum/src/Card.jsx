@@ -150,7 +150,7 @@ function IosToggle({ on, onToggle }) {
       transition: 'background .2s', marginTop: 2,
     }}>
       <motion.div animate={{ x: on ? 20 : 0 }} transition={{ type: 'spring', stiffness: 500, damping: 30 }}
-        style={{ position: 'absolute', width: 25, height: 25, borderRadius: '50%', background: 'var(--bg-card)', top: 3, left: 3, boxShadow: '0 1px 4px rgba(0,0,0,.2)' }}/>
+        style={{ position: 'absolute', width: 25, height: 25, borderRadius: '50%', background: 'var(--knob)', top: 3, left: 3, boxShadow: '0 1px 4px rgba(0,0,0,.2)' }}/>
     </button>
   )
 }
@@ -250,7 +250,7 @@ function SubSheet({ open, onClose, children, zIndex = 1100 }) {
     <AnimatePresence>
       {open && (
         <motion.div key="sub-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0, pointerEvents: 'none' }}
-          style={{ position: isMobile ? 'fixed' : 'absolute', inset: 0, background: 'rgba(0,0,0,.78)', zIndex, pointerEvents: 'auto', display: 'flex', alignItems: 'flex-end' }}>
+          style={{ position: isMobile ? 'fixed' : 'absolute', inset: 0, background: 'var(--overlay-scrim)', zIndex, pointerEvents: 'auto', display: 'flex', alignItems: 'flex-end' }}>
           <motion.div key="sub-sheet" initial={{ y: '100%' }} animate={{ y: 0 }} exit={{ y: '100%' }}
             transition={{ type: 'spring', damping: 32, stiffness: 280 }}
             onClick={e => e.stopPropagation()}
@@ -276,7 +276,7 @@ function FullSheet({ open, onClose, zIndex = 10, children }) {
     <AnimatePresence>
       {open && (
         <motion.div key="full-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0, pointerEvents: 'none' }}
-          style={{ position: isMobile ? 'fixed' : 'absolute', inset: 0, background: 'rgba(0,0,0,.78)', zIndex, pointerEvents: 'auto', display: 'flex', alignItems: 'flex-end' }}>
+          style={{ position: isMobile ? 'fixed' : 'absolute', inset: 0, background: 'var(--overlay-scrim)', zIndex, pointerEvents: 'auto', display: 'flex', alignItems: 'flex-end' }}>
           <motion.div key="full-sheet" initial={{ y: '100%' }} animate={{ y: 0 }} exit={{ y: '100%' }}
             transition={{ type: 'spring', damping: 32, stiffness: 280 }}
             onClick={e => e.stopPropagation()}
@@ -574,8 +574,8 @@ function CronologiaView({ onBack, cfg, t, haStates, getState }) {
                 </span>
                 <span style={{
                   fontSize: 11, fontWeight: 700, padding: '3px 10px', borderRadius: 20,
-                  background: s.completed ? 'rgba(52,199,89,.12)' : 'rgba(239,68,68,.10)',
-                  color: s.completed ? '#34c759' : '#ef4444',
+                  background: s.completed ? 'var(--green-light)' : 'var(--red-light)',
+                  color: s.completed ? 'var(--green)' : 'var(--red)',
                 }}>
                   {s.completed ? t('dreame.cronologiaCompleted') : t('dreame.cronologiaInterrupted')}
                 </span>
@@ -583,7 +583,7 @@ function CronologiaView({ onBack, cfg, t, haStates, getState }) {
               <div style={{ background: 'var(--bg-card)', borderRadius: 14, margin: '0 14px 6px',
                 padding: '12px 14px', display: 'flex', alignItems: 'center', gap: 10 }}>
                 <div style={{ width: 9, height: 9, borderRadius: '50%', flexShrink: 0,
-                  background: s.completed ? '#34c759' : '#ef4444' }}/>
+                  background: s.completed ? 'var(--green)' : 'var(--red)' }}/>
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
                     <span style={{ fontSize: 14, fontWeight: 700, color: 'var(--text-primary)' }}>
@@ -1055,11 +1055,11 @@ function BaseSheet({ open, onClose, cfg, t, callService, getState,
                 {baseStatusItems.map(item => (
                   <div key={item.label} style={{ display: 'flex', alignItems: 'flex-start', gap: 10 }}>
                     <div style={{ width: 10, height: 10, borderRadius: '50%', flexShrink: 0, marginTop: 5,
-                      background: item.isOk === null ? '#8e8e93' : item.isOk ? '#34c759' : '#ef4444' }}/>
+                      background: item.isOk === null ? 'var(--text-muted)' : item.isOk ? 'var(--green)' : 'var(--red)' }}/>
                     <div>
                       <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-primary)', lineHeight: 1.4 }}>{item.label}</div>
                       {item.isOk === false && item.val && item.val !== 'unavailable' && (
-                        <div style={{ fontSize: 12, color: '#ef4444', lineHeight: 1.4, marginTop: 2 }}>
+                        <div style={{ fontSize: 12, color: 'var(--red)', lineHeight: 1.4, marginTop: 2 }}>
                           {t(`stationStatus.${item.val}`, { defaultValue: item.val })}
                         </div>
                       )}
@@ -2101,7 +2101,7 @@ export default function VacuumCard() {
 
       {/* ── Error banner ── */}
       {hasError && (
-        <div style={{ display: 'flex', alignItems: 'center', gap: 6, margin: '8px 16px 0', padding: '8px 12px', borderRadius: 10, background: 'rgba(239,68,68,.07)', border: '1px solid rgba(239,68,68,.25)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 6, margin: '8px 16px 0', padding: '8px 12px', borderRadius: 10, background: 'var(--red-light)', border: '1px solid var(--red-border)' }}>
           <span style={{ fontSize: 14 }}>⚠️</span>
           <span style={{ fontSize: 12, color: 'var(--red)', fontWeight: 600 }}>{error}</span>
         </div>
@@ -2136,11 +2136,11 @@ export default function VacuumCard() {
 
       {/* ── Dialog: zona richiede modalità personalizzata ── */}
       {zonaConfirmOpen && (
-        <div onClick={() => setZonaConfirmOpen(false)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,.72)', backdropFilter: 'blur(4px)', WebkitBackdropFilter: 'blur(4px)', zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24 }}>
-          <div onClick={e => e.stopPropagation()} style={{ background: dark ? '#2c2c2e' : '#ffffff', borderRadius: 20, padding: '28px 24px 20px', maxWidth: 340, width: '100%', textAlign: 'center', boxShadow: '0 20px 60px rgba(0,0,0,.5)' }}>
+        <div onClick={() => setZonaConfirmOpen(false)} style={{ position: 'fixed', inset: 0, background: 'var(--overlay-scrim)', backdropFilter: 'blur(4px)', WebkitBackdropFilter: 'blur(4px)', zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24 }}>
+          <div onClick={e => e.stopPropagation()} style={{ background: 'var(--bg-panel)', borderRadius: 20, padding: '28px 24px 20px', maxWidth: 340, width: '100%', textAlign: 'center', boxShadow: '0 20px 60px rgba(0,0,0,.5)' }}>
             <p style={{ fontSize: 16, fontWeight: 500, color: 'var(--text-primary)', lineHeight: 1.5, margin: '0 0 24px' }}>{t('dreame.zonaConfirmMsg')}</p>
             <div style={{ display: 'flex', gap: 12 }}>
-              <button onClick={() => setZonaConfirmOpen(false)} style={{ flex: 1, padding: '13px 0', borderRadius: 14, border: 'none', background: dark ? '#3a3a3c' : '#e5e5ea', color: 'var(--text-primary)', fontSize: 15, fontWeight: 600, cursor: 'pointer' }}>{t('dreame.zonaConfirmCancel')}</button>
+              <button onClick={() => setZonaConfirmOpen(false)} style={{ flex: 1, padding: '13px 0', borderRadius: 14, border: 'none', background: 'var(--bg-elevated)', color: 'var(--text-primary)', fontSize: 15, fontWeight: 600, cursor: 'pointer' }}>{t('dreame.zonaConfirmCancel')}</button>
               <button onClick={() => {
                 if (cfg.cleanGeniusEntity) callService('select', 'select_option', cfg.cleanGeniusEntity, { option: 'off' })
                 setScope('zona')
