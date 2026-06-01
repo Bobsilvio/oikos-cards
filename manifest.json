@@ -6,6 +6,7 @@
   "cards": [
     {
       "id": "air-quality",
+      "type": "card",
       "name": "Qualità dell'aria",
       "version": "1.0.2",
       "author": "Oikos",
@@ -31,6 +32,7 @@
     },
     {
       "id": "climatizzatore",
+      "type": "card",
       "name": "Climatizzatore",
       "version": "1.0.4",
       "author": "Oikos",
@@ -58,6 +60,7 @@
     },
     {
       "id": "clock",
+      "type": "card",
       "name": "Clock",
       "version": "1.0.2",
       "author": "Oikos",
@@ -83,6 +86,7 @@
     },
     {
       "id": "light-control",
+      "type": "card",
       "name": "Light Control",
       "version": "1.0.14",
       "author": "Oikos",
@@ -109,6 +113,7 @@
     },
     {
       "id": "person",
+      "type": "card",
       "name": "Persona",
       "version": "1.3.9",
       "author": "Oikos",
@@ -135,6 +140,7 @@
     },
     {
       "id": "room-sensor",
+      "type": "card",
       "name": "Room Sensor",
       "version": "1.1.1",
       "author": "Oikos",
@@ -162,6 +168,7 @@
     },
     {
       "id": "thermostat",
+      "type": "card",
       "name": "Termostato",
       "version": "1.0.4",
       "author": "Oikos",
@@ -187,6 +194,7 @@
     },
     {
       "id": "tigo-panels",
+      "type": "card",
       "name": "Tigo Panels",
       "version": "1.0.2",
       "author": "Oikos",
@@ -212,6 +220,7 @@
     },
     {
       "id": "vacuum",
+      "type": "card",
       "name": "Dreame Vacuum",
       "version": "2.14.0",
       "author": "Oikos",
@@ -238,6 +247,7 @@
     },
     {
       "id": "yesterday",
+      "type": "card",
       "name": "Fotovoltaico — Ieri",
       "version": "1.0.4",
       "author": "Oikos",
