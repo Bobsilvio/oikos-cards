@@ -65,6 +65,7 @@ function collectCards() {
 
     out.push({
       id:          mf.id,
+      type:        mf.type        ?? 'card',   // card | chip | badge
       name:        mf.name        ?? mf.id,
       version:     mf.version     ?? '0.0.0',
       author:      mf.author      ?? null,
