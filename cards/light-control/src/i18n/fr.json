@@ -1,0 +1,37 @@
+{
+  "lightControl": {
+    "toggle": "Allumer/Éteindre",
+    "turnOn": "Allumer",
+    "turnOff": "Éteindre",
+    "unavailable": "Indisponible",
+    "on": "Allumée",
+    "onWithBrightness": "Allumée · {{n}}%",
+    "off": "Éteinte",
+    "emptyStatePrefix": "Configurez une entité",
+    "emptyStateSuffix": "dans les réglages de la carte.",
+    "settings": {
+      "sectionEntity": "Entité",
+      "lightLabel": "Lumière",
+      "lightHint": "light.* (aussi switch.* / input_boolean.* pour marche/arrêt uniquement)",
+      "labelLabel": "Étiquette",
+      "labelHint": "Vide = friendly_name HA",
+      "labelPlaceholder": "ex. Lampe du salon",
+      "sectionAppearance": "Apparence",
+      "layoutLabel": "Disposition",
+      "layoutHint": "Cercles autour de l'icône, ou barres horizontales",
+      "layoutCircle": "Cercles",
+      "layoutBars": "Barres",
+      "layoutFilled": "Pilule",
+      "iconLabel": "Icône",
+      "iconHint": "Material Design Icon (mdi:*)",
+      "sectionControls": "Contrôles",
+      "sectionControlsHint": "Désactivez les contrôles que vous ne voulez pas afficher. Ceux non pris en charge par l'entité sont masqués automatiquement.",
+      "brightnessLabel": "Luminosité",
+      "brightnessHint": "Curseur + arc autour de l'icône",
+      "colorLabel": "Couleur",
+      "colorHint": "Sélecteur de couleurs prédéfinies",
+      "colorTempLabel": "Température (K)",
+      "colorTempHint": "Dégradé chaud→froid pour les lumières color_temp"
+    }
+  }
+}

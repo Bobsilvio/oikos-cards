@@ -1,0 +1,37 @@
+{
+  "lightControl": {
+    "toggle": "Encender/Apagar",
+    "turnOn": "Encender",
+    "turnOff": "Apagar",
+    "unavailable": "No disponible",
+    "on": "Encendida",
+    "onWithBrightness": "Encendida · {{n}}%",
+    "off": "Apagada",
+    "emptyStatePrefix": "Configura una entidad",
+    "emptyStateSuffix": "en los ajustes de la tarjeta.",
+    "settings": {
+      "sectionEntity": "Entidad",
+      "lightLabel": "Luz",
+      "lightHint": "light.* (también switch.* / input_boolean.* solo para encendido/apagado)",
+      "labelLabel": "Etiqueta",
+      "labelHint": "Vacío = friendly_name de HA",
+      "labelPlaceholder": "ej. Lámpara del salón",
+      "sectionAppearance": "Apariencia",
+      "layoutLabel": "Diseño",
+      "layoutHint": "Círculos alrededor del icono, o barras horizontales",
+      "layoutCircle": "Círculos",
+      "layoutBars": "Barras",
+      "layoutFilled": "Píldora",
+      "iconLabel": "Icono",
+      "iconHint": "Material Design Icon (mdi:*)",
+      "sectionControls": "Controles",
+      "sectionControlsHint": "Desactiva los controles que no quieras mostrar. Los no compatibles con la entidad se ocultan automáticamente.",
+      "brightnessLabel": "Brillo",
+      "brightnessHint": "Deslizador + arco alrededor del icono",
+      "colorLabel": "Color",
+      "colorHint": "Selector de colores preestablecidos",
+      "colorTempLabel": "Temperatura (K)",
+      "colorTempHint": "Degradado cálido→frío para luces color_temp"
+    }
+  }
+}

@@ -88,7 +88,7 @@
       "id": "light-control",
       "type": "card",
       "name": "Light Control",
-      "version": "1.0.14",
+      "version": "1.0.15",
       "author": "Oikos",
       "description": "Controllo luce HA: on/off, luminosità e colore con sezioni disattivabili.",
       "description_en": "HA light control: on/off, brightness and color with toggleable sections.",

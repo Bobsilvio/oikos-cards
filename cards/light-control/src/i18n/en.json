@@ -1,0 +1,37 @@
+{
+  "lightControl": {
+    "toggle": "Toggle",
+    "turnOn": "Turn on",
+    "turnOff": "Turn off",
+    "unavailable": "Unavailable",
+    "on": "On",
+    "onWithBrightness": "On · {{n}}%",
+    "off": "Off",
+    "emptyStatePrefix": "Configure a",
+    "emptyStateSuffix": "entity in the card settings.",
+    "settings": {
+      "sectionEntity": "Entity",
+      "lightLabel": "Light",
+      "lightHint": "light.* (also switch.* / input_boolean.* for on/off only)",
+      "labelLabel": "Label",
+      "labelHint": "Empty = HA friendly_name",
+      "labelPlaceholder": "e.g. Living room lamp",
+      "sectionAppearance": "Appearance",
+      "layoutLabel": "Layout",
+      "layoutHint": "Rings around the icon, or horizontal bars",
+      "layoutCircle": "Rings",
+      "layoutBars": "Bars",
+      "layoutFilled": "Pill",
+      "iconLabel": "Icon",
+      "iconHint": "Material Design Icon (mdi:*)",
+      "sectionControls": "Controls",
+      "sectionControlsHint": "Disable the controls you don't want to show. Those not supported by the entity are hidden automatically.",
+      "brightnessLabel": "Brightness",
+      "brightnessHint": "Slider + arc around the icon",
+      "colorLabel": "Color",
+      "colorHint": "Preset color picker",
+      "colorTempLabel": "Temperature (K)",
+      "colorTempHint": "Warm→cool gradient for color_temp lights"
+    }
+  }
+}

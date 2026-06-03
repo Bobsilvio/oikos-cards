@@ -1,6 +1,10 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
-import { useCardConfig, useDashboard, useStyles, MdiIcon } from '@oikos/sdk'
+import { useCardConfig, useDashboard, useStyles, MdiIcon, registerCardTranslations, useT } from '@oikos/sdk'
+import it from './i18n/it.json'
+import en from './i18n/en.json'
+
+registerCardTranslations('card-light-control', { it, en })
 
 const DEFAULT = {
   entityId: '',
@@ -85,7 +89,7 @@ function hueToRgb(h) {
 function FilledPill({
   innerRef, icon, label, accentRgb, thumbPct, rainbow, customGradient, thumbColor,
   onPointerDown, onPointerMove, onPointerUp, onIconClick,
-  isOn, dark, disabled, showFill = true,
+  isOn, dark, disabled, showFill = true, toggleLabel,
 }) {
   const HEIGHT = 64
   const pct = Math.max(0, Math.min(1, thumbPct ?? 0))
@@ -153,7 +157,7 @@ function FilledPill({
           <button
             onClick={(e) => { e.stopPropagation(); onIconClick?.() }}
             onPointerDown={(e) => e.stopPropagation()}
-            aria-label="Toggle"
+            aria-label={toggleLabel}
             style={{
               width: 36, height: 36, borderRadius: '50%',
               border: 'none',
@@ -231,6 +235,7 @@ function PillBar({
 }
 
 export default function LightControl({ cardId = 'light-control' }) {
+  const { t } = useT('card-light-control')
   const s = useStyles()
   const { dark, getState, getAttr, callService } = useDashboard()
   const [config] = useCardConfig(cardId, DEFAULT)
@@ -256,7 +261,7 @@ export default function LightControl({ cardId = 'light-control' }) {
   if (!config.entityId) {
     return (
       <div style={{ ...s.card, color: s.tokens.color.muted, fontSize: 12, fontStyle: 'italic' }}>
-        Configura un'entità <code>light.*</code> nelle impostazioni della card.
+        {t('lightControl.emptyStatePrefix')} <code>light.*</code> {t('lightControl.emptyStateSuffix')}
       </div>
     )
   }
@@ -461,7 +466,7 @@ export default function LightControl({ cardId = 'light-control' }) {
             <button
               onClick={(e) => { e.stopPropagation(); toggle() }}
               onPointerDown={(e) => e.stopPropagation()}
-              aria-label={isOn ? 'Spegni' : 'Accendi'}
+              aria-label={isOn ? t('lightControl.turnOff') : t('lightControl.turnOn')}
               style={{
                 width: 36, height: 36, borderRadius: '50%',
                 border: 'none',
@@ -620,7 +625,7 @@ export default function LightControl({ cardId = 'light-control' }) {
           <button
             onClick={toggle}
             disabled={busy || state === 'unavailable'}
-            aria-label={isOn ? 'Spegni' : 'Accendi'}
+            aria-label={isOn ? t('lightControl.turnOff') : t('lightControl.turnOn')}
             style={{
               width: 36, height: 36, borderRadius: '50%',
               border: 'none',
@@ -651,7 +656,7 @@ export default function LightControl({ cardId = 'light-control' }) {
             </div>
             {state === 'unavailable' && (
               <div style={{ ...s.tokens.font.hint, color: s.tokens.color.muted, marginTop: 2 }}>
-                Non disponibile
+                {t('lightControl.unavailable')}
               </div>
             )}
           </div>
@@ -858,7 +863,7 @@ export default function LightControl({ cardId = 'light-control' }) {
         <motion.button
           onClick={toggle}
           disabled={busy || state === 'unavailable'}
-          aria-label={isOn ? 'Spegni' : 'Accendi'}
+          aria-label={isOn ? t('lightControl.turnOff') : t('lightControl.turnOn')}
           animate={isOn ? { scale: [1, 1.04, 1] } : { scale: 1 }}
           transition={{ duration: 2.6, repeat: isOn ? Infinity : 0, ease: 'easeInOut' }}
           style={{
@@ -909,10 +914,10 @@ export default function LightControl({ cardId = 'light-control' }) {
             boxShadow: isOn ? `0 0 8px ${accent}` : 'none',
           }}/>
           {state === 'unavailable'
-            ? 'Non disponibile'
+            ? t('lightControl.unavailable')
             : isOn
-              ? (showBrightness ? `Acceso · ${brightness}%` : 'Acceso')
-              : 'Spento'}
+              ? (showBrightness ? t('lightControl.onWithBrightness', { n: brightness }) : t('lightControl.on'))
+              : t('lightControl.off')}
         </div>
       </div>
 

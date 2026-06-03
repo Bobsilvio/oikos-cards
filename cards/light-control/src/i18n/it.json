@@ -1,0 +1,37 @@
+{
+  "lightControl": {
+    "toggle": "Accendi/Spegni",
+    "turnOn": "Accendi",
+    "turnOff": "Spegni",
+    "unavailable": "Non disponibile",
+    "on": "Acceso",
+    "onWithBrightness": "Acceso · {{n}}%",
+    "off": "Spento",
+    "emptyStatePrefix": "Configura un'entità",
+    "emptyStateSuffix": "nelle impostazioni della card.",
+    "settings": {
+      "sectionEntity": "Entità",
+      "lightLabel": "Luce",
+      "lightHint": "light.* (anche switch.* / input_boolean.* per solo on/off)",
+      "labelLabel": "Etichetta",
+      "labelHint": "Vuoto = friendly_name HA",
+      "labelPlaceholder": "es. Lampada salotto",
+      "sectionAppearance": "Aspetto",
+      "layoutLabel": "Layout",
+      "layoutHint": "Cerchi attorno icona, oppure barre orizzontali",
+      "layoutCircle": "Cerchi",
+      "layoutBars": "Barre",
+      "layoutFilled": "Pill",
+      "iconLabel": "Icona",
+      "iconHint": "Material Design Icon (mdi:*)",
+      "sectionControls": "Controlli",
+      "sectionControlsHint": "Disattiva i controlli che non vuoi mostrare. Quelli non supportati dall'entità vengono nascosti automaticamente.",
+      "brightnessLabel": "Luminosità",
+      "brightnessHint": "Slider + arco intorno all'icona",
+      "colorLabel": "Colore",
+      "colorHint": "Selettore colori preset",
+      "colorTempLabel": "Temperatura (K)",
+      "colorTempHint": "Gradiente caldo→freddo per luci color_temp"
+    }
+  }
+}

@@ -1,4 +1,78 @@
-const { jsxs: t, jsx: e } = window.__OIKOS_SDK__.jsxRuntime, { useCardConfig: b, useDashboard: g, EntityField: p, MdiIconPicker: C, Section: a, Field: i, TextField: m, Toggle: r, Pills: f } = window.__OIKOS_SDK__, v = {
+const { jsxs: a, jsx: l } = window.__OIKOS_SDK__.jsxRuntime, d = {
+  toggle: "Accendi/Spegni",
+  turnOn: "Accendi",
+  turnOff: "Spegni",
+  unavailable: "Non disponibile",
+  on: "Acceso",
+  onWithBrightness: "Acceso · {{n}}%",
+  off: "Spento",
+  emptyStatePrefix: "Configura un'entità",
+  emptyStateSuffix: "nelle impostazioni della card.",
+  settings: {
+    sectionEntity: "Entità",
+    lightLabel: "Luce",
+    lightHint: "light.* (anche switch.* / input_boolean.* per solo on/off)",
+    labelLabel: "Etichetta",
+    labelHint: "Vuoto = friendly_name HA",
+    labelPlaceholder: "es. Lampada salotto",
+    sectionAppearance: "Aspetto",
+    layoutLabel: "Layout",
+    layoutHint: "Cerchi attorno icona, oppure barre orizzontali",
+    layoutCircle: "Cerchi",
+    layoutBars: "Barre",
+    layoutFilled: "Pill",
+    iconLabel: "Icona",
+    iconHint: "Material Design Icon (mdi:*)",
+    sectionControls: "Controlli",
+    sectionControlsHint: "Disattiva i controlli che non vuoi mostrare. Quelli non supportati dall'entità vengono nascosti automaticamente.",
+    brightnessLabel: "Luminosità",
+    brightnessHint: "Slider + arco intorno all'icona",
+    colorLabel: "Colore",
+    colorHint: "Selettore colori preset",
+    colorTempLabel: "Temperatura (K)",
+    colorTempHint: "Gradiente caldo→freddo per luci color_temp"
+  }
+}, C = {
+  lightControl: d
+}, p = {
+  toggle: "Toggle",
+  turnOn: "Turn on",
+  turnOff: "Turn off",
+  unavailable: "Unavailable",
+  on: "On",
+  onWithBrightness: "On · {{n}}%",
+  off: "Off",
+  emptyStatePrefix: "Configure a",
+  emptyStateSuffix: "entity in the card settings.",
+  settings: {
+    sectionEntity: "Entity",
+    lightLabel: "Light",
+    lightHint: "light.* (also switch.* / input_boolean.* for on/off only)",
+    labelLabel: "Label",
+    labelHint: "Empty = HA friendly_name",
+    labelPlaceholder: "e.g. Living room lamp",
+    sectionAppearance: "Appearance",
+    layoutLabel: "Layout",
+    layoutHint: "Rings around the icon, or horizontal bars",
+    layoutCircle: "Rings",
+    layoutBars: "Bars",
+    layoutFilled: "Pill",
+    iconLabel: "Icon",
+    iconHint: "Material Design Icon (mdi:*)",
+    sectionControls: "Controls",
+    sectionControlsHint: "Disable the controls you don't want to show. Those not supported by the entity are hidden automatically.",
+    brightnessLabel: "Brightness",
+    brightnessHint: "Slider + arc around the icon",
+    colorLabel: "Color",
+    colorHint: "Preset color picker",
+    colorTempLabel: "Temperature (K)",
+    colorTempHint: "Warm→cool gradient for color_temp lights"
+  }
+}, y = {
+  lightControl: p
+}, { useCardConfig: f, useDashboard: m, EntityField: L, MdiIconPicker: H, Section: r, Field: n, TextField: T, Toggle: s, Pills: S, registerCardTranslations: v, useT: _ } = window.__OIKOS_SDK__;
+v("card-light-control", { it: C, en: y });
+const A = {
   entityId: "",
   label: "",
   icon: "mdi:lightbulb",
@@ -7,75 +81,75 @@ const { jsxs: t, jsx: e } = window.__OIKOS_SDK__.jsxRuntime, { useCardConfig: b,
   enableColor: !0,
   enableColorTemp: !0
 };
-function _({ cardId: h }) {
-  const { dark: s } = g(), [n, c] = b(h, v), o = (l, d) => c((u) => ({ ...u, [l]: d }));
-  return /* @__PURE__ */ t("div", { style: { display: "flex", flexDirection: "column", gap: 14 }, children: [
-    /* @__PURE__ */ t(a, { title: "Entità", children: [
-      /* @__PURE__ */ e(i, { label: "Luce", hint: "light.* (anche switch.* / input_boolean.* per solo on/off)", children: /* @__PURE__ */ e(
-        p,
+function x({ cardId: g }) {
+  const { t } = _("card-light-control"), { dark: h } = m(), [o, c] = f(g, A), i = (e, b) => c((u) => ({ ...u, [e]: b }));
+  return /* @__PURE__ */ a("div", { style: { display: "flex", flexDirection: "column", gap: 14 }, children: [
+    /* @__PURE__ */ a(r, { title: t("lightControl.settings.sectionEntity"), children: [
+      /* @__PURE__ */ l(n, { label: t("lightControl.settings.lightLabel"), hint: t("lightControl.settings.lightHint"), children: /* @__PURE__ */ l(
+        L,
         {
           field: "entityId",
-          config: n,
+          config: o,
           setConfig: c,
           filterDomain: "light"
         }
       ) }),
-      /* @__PURE__ */ e(i, { label: "Etichetta", hint: "Vuoto = friendly_name HA", children: /* @__PURE__ */ e(
-        m,
+      /* @__PURE__ */ l(n, { label: t("lightControl.settings.labelLabel"), hint: t("lightControl.settings.labelHint"), children: /* @__PURE__ */ l(
+        T,
         {
-          value: n.label,
-          onChange: (l) => o("label", l),
-          placeholder: "es. Lampada salotto"
+          value: o.label,
+          onChange: (e) => i("label", e),
+          placeholder: t("lightControl.settings.labelPlaceholder")
         }
       ) })
     ] }),
-    /* @__PURE__ */ t(a, { title: "Aspetto", children: [
-      /* @__PURE__ */ e(i, { label: "Layout", hint: "Cerchi attorno icona, oppure barre orizzontali", children: /* @__PURE__ */ e(
-        f,
+    /* @__PURE__ */ a(r, { title: t("lightControl.settings.sectionAppearance"), children: [
+      /* @__PURE__ */ l(n, { label: t("lightControl.settings.layoutLabel"), hint: t("lightControl.settings.layoutHint"), children: /* @__PURE__ */ l(
+        S,
         {
           options: [
-            { value: "circle", label: "Cerchi" },
-            { value: "bars", label: "Barre" },
-            { value: "filled", label: "Pill" }
+            { value: "circle", label: t("lightControl.settings.layoutCircle") },
+            { value: "bars", label: t("lightControl.settings.layoutBars") },
+            { value: "filled", label: t("lightControl.settings.layoutFilled") }
           ],
-          value: n.layout || "circle",
-          onChange: (l) => o("layout", l)
+          value: o.layout || "circle",
+          onChange: (e) => i("layout", e)
         }
       ) }),
-      /* @__PURE__ */ e(i, { label: "Icona", hint: "Material Design Icon (mdi:*)", children: /* @__PURE__ */ e(
-        C,
+      /* @__PURE__ */ l(n, { label: t("lightControl.settings.iconLabel"), hint: t("lightControl.settings.iconHint"), children: /* @__PURE__ */ l(
+        H,
         {
-          value: n.icon || "mdi:lightbulb",
-          onChange: (l) => o("icon", l),
-          dark: s
+          value: o.icon || "mdi:lightbulb",
+          onChange: (e) => i("icon", e),
+          dark: h
         }
       ) })
     ] }),
-    /* @__PURE__ */ t(a, { title: "Controlli", hint: "Disattiva i controlli che non vuoi mostrare. Quelli non supportati dall'entità vengono nascosti automaticamente.", children: [
-      /* @__PURE__ */ e(i, { label: "Luminosità", hint: "Slider + arco intorno all'icona", children: /* @__PURE__ */ e(
-        r,
+    /* @__PURE__ */ a(r, { title: t("lightControl.settings.sectionControls"), hint: t("lightControl.settings.sectionControlsHint"), children: [
+      /* @__PURE__ */ l(n, { label: t("lightControl.settings.brightnessLabel"), hint: t("lightControl.settings.brightnessHint"), children: /* @__PURE__ */ l(
+        s,
         {
-          value: n.enableBrightness,
-          onChange: (l) => o("enableBrightness", l)
+          value: o.enableBrightness,
+          onChange: (e) => i("enableBrightness", e)
         }
       ) }),
-      /* @__PURE__ */ e(i, { label: "Colore", hint: "Selettore colori preset", children: /* @__PURE__ */ e(
-        r,
+      /* @__PURE__ */ l(n, { label: t("lightControl.settings.colorLabel"), hint: t("lightControl.settings.colorHint"), children: /* @__PURE__ */ l(
+        s,
         {
-          value: n.enableColor,
-          onChange: (l) => o("enableColor", l)
+          value: o.enableColor,
+          onChange: (e) => i("enableColor", e)
         }
       ) }),
-      /* @__PURE__ */ e(i, { label: "Temperatura (K)", hint: "Gradiente caldo→freddo per luci color_temp", children: /* @__PURE__ */ e(
-        r,
+      /* @__PURE__ */ l(n, { label: t("lightControl.settings.colorTempLabel"), hint: t("lightControl.settings.colorTempHint"), children: /* @__PURE__ */ l(
+        s,
         {
-          value: n.enableColorTemp,
-          onChange: (l) => o("enableColorTemp", l)
+          value: o.enableColorTemp,
+          onChange: (e) => i("enableColorTemp", e)
         }
       ) })
     ] })
   ] });
 }
 export {
-  _ as default
+  x as default
 };

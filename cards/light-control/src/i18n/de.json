@@ -1,0 +1,37 @@
+{
+  "lightControl": {
+    "toggle": "Ein-/Ausschalten",
+    "turnOn": "Einschalten",
+    "turnOff": "Ausschalten",
+    "unavailable": "Nicht verfügbar",
+    "on": "An",
+    "onWithBrightness": "An · {{n}}%",
+    "off": "Aus",
+    "emptyStatePrefix": "Konfiguriere eine",
+    "emptyStateSuffix": "Entität in den Karteneinstellungen.",
+    "settings": {
+      "sectionEntity": "Entität",
+      "lightLabel": "Licht",
+      "lightHint": "light.* (auch switch.* / input_boolean.* nur für Ein/Aus)",
+      "labelLabel": "Beschriftung",
+      "labelHint": "Leer = friendly_name HA",
+      "labelPlaceholder": "z. B. Wohnzimmerlampe",
+      "sectionAppearance": "Aussehen",
+      "layoutLabel": "Layout",
+      "layoutHint": "Kreise um das Symbol oder horizontale Balken",
+      "layoutCircle": "Kreise",
+      "layoutBars": "Balken",
+      "layoutFilled": "Pille",
+      "iconLabel": "Symbol",
+      "iconHint": "Material Design Icon (mdi:*)",
+      "sectionControls": "Steuerungen",
+      "sectionControlsHint": "Deaktiviere die Steuerungen, die du nicht anzeigen möchtest. Nicht von der Entität unterstützte werden automatisch ausgeblendet.",
+      "brightnessLabel": "Helligkeit",
+      "brightnessHint": "Schieberegler + Bogen um das Symbol",
+      "colorLabel": "Farbe",
+      "colorHint": "Vordefinierte Farbauswahl",
+      "colorTempLabel": "Temperatur (K)",
+      "colorTempHint": "Warm→Kalt-Verlauf für color_temp-Lichter"
+    }
+  }
+}
