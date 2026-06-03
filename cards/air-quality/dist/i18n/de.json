@@ -3,7 +3,6 @@
   "label": "AQI Heute",
   "description": "Sensoren mit aktuellem Zustand und Durchschnitt alle 30 Minuten",
   "sensorDefault": "Sensor",
-
   "settings": {
     "sectionHeader": "Kopfzeile",
     "sectionAqi": "Luftqualität",
@@ -27,6 +26,9 @@
     "moveDown": "Nach unten",
     "delete": "Löschen",
     "noSensors": "Kein Sensor konfiguriert. Füge einen hinzu.",
-    "addSensor": "+ Sensor hinzufügen"
+    "addSensor": "+ Sensor hinzufügen",
+    "fieldLabel": "Bezeichnung",
+    "fieldTitle": "Titel",
+    "fieldDescription": "Beschreibung"
   }
 }

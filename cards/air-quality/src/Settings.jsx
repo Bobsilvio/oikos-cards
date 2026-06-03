@@ -145,13 +145,13 @@ export default function AirQualitySettings({ cardId }) {
 
       {/* ── 1. Header ── */}
       <Section title={t('settings.sectionHeader')}>
-        <Field label="Label">
+        <Field label={t('settings.fieldLabel')}>
           <TextField value={cfg.label} onChange={v => set('label', v)} placeholder={t('label')}/>
         </Field>
-        <Field label="Titolo">
+        <Field label={t('settings.fieldTitle')}>
           <TextField value={cfg.title} onChange={v => set('title', v)} placeholder={t('title')}/>
         </Field>
-        <Field label="Descrizione">
+        <Field label={t('settings.fieldDescription')}>
           <TextField
             value={cfg.description}
             onChange={v => set('description', v)}

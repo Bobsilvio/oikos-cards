@@ -3,7 +3,6 @@
   "label": "AQI Hoy",
   "description": "Sensores con el estado actual y media cada 30 minutos",
   "sensorDefault": "Sensor",
-
   "settings": {
     "sectionHeader": "Encabezado",
     "sectionAqi": "Calidad del aire",
@@ -27,6 +26,9 @@
     "moveDown": "Bajar",
     "delete": "Eliminar",
     "noSensors": "Ningún sensor configurado. Añade uno.",
-    "addSensor": "+ Añadir sensor"
+    "addSensor": "+ Añadir sensor",
+    "fieldLabel": "Etiqueta",
+    "fieldTitle": "Título",
+    "fieldDescription": "Descripción"
   }
 }

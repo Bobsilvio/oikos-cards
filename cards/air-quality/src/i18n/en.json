@@ -3,7 +3,6 @@
   "label": "Today AQI",
   "description": "Sensors with current status and 30-minute average",
   "sensorDefault": "Sensor",
-
   "settings": {
     "sectionHeader": "Header",
     "sectionAqi": "Air Quality",
@@ -27,6 +26,9 @@
     "moveDown": "Move down",
     "delete": "Delete",
     "noSensors": "No sensors configured. Add one.",
-    "addSensor": "+ Add sensor"
+    "addSensor": "+ Add sensor",
+    "fieldLabel": "Label",
+    "fieldTitle": "Title",
+    "fieldDescription": "Description"
   }
 }

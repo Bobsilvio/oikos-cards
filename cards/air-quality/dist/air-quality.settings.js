@@ -91,9 +91,9 @@ function O({ cardId: i }) {
   const { dark: c } = F(), [s, a] = w(i, I), { t } = T("card-air-quality"), o = (n, d) => a((b) => ({ ...b, [n]: d })), g = s.sensors ?? [], p = (n, d) => o("sensors", g.map((b, M) => M === n ? d : b)), r = (n) => o("sensors", g.filter((d, b) => b !== n)), u = () => o("sensors", [...g, { ...A }]), D = (n) => o("sensors", _(g, n, n - 1)), E = (n) => o("sensors", _(g, n, n + 1)), l = !!s.aqiEntity;
   return /* @__PURE__ */ f("div", { style: { display: "flex", flexDirection: "column", gap: 14 }, children: [
     /* @__PURE__ */ f(y, { title: t("settings.sectionHeader"), children: [
-      /* @__PURE__ */ e(h, { label: "Label", children: /* @__PURE__ */ e(v, { value: s.label, onChange: (n) => o("label", n), placeholder: t("label") }) }),
-      /* @__PURE__ */ e(h, { label: "Titolo", children: /* @__PURE__ */ e(v, { value: s.title, onChange: (n) => o("title", n), placeholder: t("title") }) }),
-      /* @__PURE__ */ e(h, { label: "Descrizione", children: /* @__PURE__ */ e(
+      /* @__PURE__ */ e(h, { label: t("settings.fieldLabel"), children: /* @__PURE__ */ e(v, { value: s.label, onChange: (n) => o("label", n), placeholder: t("label") }) }),
+      /* @__PURE__ */ e(h, { label: t("settings.fieldTitle"), children: /* @__PURE__ */ e(v, { value: s.title, onChange: (n) => o("title", n), placeholder: t("title") }) }),
+      /* @__PURE__ */ e(h, { label: t("settings.fieldDescription"), children: /* @__PURE__ */ e(
         v,
         {
           value: s.description,
