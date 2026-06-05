@@ -1,4 +1,4 @@
-const { jsxs: u, jsx: n, Fragment: G } = window.__OIKOS_SDK__.jsxRuntime, Ht = {
+const { jsxs: u, jsx: n, Fragment: V } = window.__OIKOS_SDK__.jsxRuntime, Lt = {
   toggle: "Accendi/Spegni",
   turnOn: "Accendi",
   turnOff: "Spegni",
@@ -32,9 +32,9 @@ const { jsxs: u, jsx: n, Fragment: G } = window.__OIKOS_SDK__.jsxRuntime, Ht = {
     colorTempLabel: "Temperatura (K)",
     colorTempHint: "Gradiente caldo→freddo per luci color_temp"
   }
-}, Lt = {
-  lightControl: Ht
 }, Dt = {
+  lightControl: Lt
+}, Ot = {
   toggle: "Toggle",
   turnOn: "Turn on",
   turnOff: "Turn off",
@@ -68,11 +68,11 @@ const { jsxs: u, jsx: n, Fragment: G } = window.__OIKOS_SDK__.jsxRuntime, Ht = {
     colorTempLabel: "Temperature (K)",
     colorTempHint: "Warm→cool gradient for color_temp lights"
   }
-}, Ot = {
-  lightControl: Dt
-}, { useState: V, useEffect: mt, useRef: st } = window.__OIKOS_SDK__.React, { motion: Bt } = window.__OIKOS_SDK__.framerMotion, { useCardConfig: At, useDashboard: Kt, useStyles: Wt, MdiIcon: N, registerCardTranslations: zt, useT: Nt } = window.__OIKOS_SDK__;
-zt("card-light-control", { it: Lt, en: Ot });
-const Ut = {
+}, Bt = {
+  lightControl: Ot
+}, { useState: Y, useEffect: mt, useRef: st } = window.__OIKOS_SDK__.React, { motion: At } = window.__OIKOS_SDK__.framerMotion, { useCardConfig: Kt, useDashboard: Wt, useStyles: zt, MdiIcon: N, registerCardTranslations: Nt, useT: Ut } = window.__OIKOS_SDK__;
+Nt("card-light-control", { it: Dt, en: Bt });
+const jt = {
   entityId: "",
   label: "",
   icon: "mdi:lightbulb",
@@ -86,12 +86,12 @@ function yt(s) {
   let t, d, h;
   return o <= 66 ? (t = 255, d = 99.4708 * Math.log(o) - 161.1196, h = o <= 19 ? 0 : 138.5177 * Math.log(o - 10) - 305.0448) : (t = 329.6987 * Math.pow(o - 60, -0.1332), d = 288.1222 * Math.pow(o - 60, -0.0755), h = 255), [t, d, h].map((c) => Math.max(0, Math.min(255, Math.round(c))));
 }
-const jt = ["brightness", "color_temp", "hs", "rgb", "rgbw", "rgbww", "xy", "white"], Ft = ["hs", "rgb", "rgbw", "rgbww", "xy"], w = 240, y = w / 2, M = 14, xt = 12, ct = 102, Gt = 78, Y = 96, U = ([s, o, t]) => `rgb(${s}, ${o}, ${t})`;
+const Ft = ["brightness", "color_temp", "hs", "rgb", "rgbw", "rgbww", "xy", "white"], Gt = ["hs", "rgb", "rgbw", "rgbww", "xy"], w = 240, y = w / 2, M = 14, xt = 12, ct = 102, Vt = 78, X = 96, U = ([s, o, t]) => `rgb(${s}, ${o}, ${t})`;
 function vt(s, o) {
   const t = (s - 90) * Math.PI / 180;
   return [y + o * Math.cos(t), y + o * Math.sin(t)];
 }
-function Vt(s, o) {
+function Yt(s, o) {
   let t = Math.atan2(o - y, s - y) * 180 / Math.PI + 90;
   return t < 0 && (t += 360), t % 360;
 }
@@ -108,7 +108,7 @@ function wt(s) {
   let d, h, c;
   return s < 60 ? [d, h, c] = [o, t, 0] : s < 120 ? [d, h, c] = [t, o, 0] : s < 180 ? [d, h, c] = [0, o, t] : s < 240 ? [d, h, c] = [0, t, o] : s < 300 ? [d, h, c] = [t, 0, o] : [d, h, c] = [o, 0, t], [Math.round(d * 255), Math.round(h * 255), Math.round(c * 255)];
 }
-function X({
+function Q({
   innerRef: s,
   disabled: o,
   background: t,
@@ -165,8 +165,8 @@ function X({
     }
   );
 }
-function Xt({ cardId: s = "light-control" }) {
-  const { t: o } = Nt("card-light-control"), t = Wt(), { dark: d, getState: h, getAttr: c, callService: p } = Kt(), [r] = At(s, Ut), [C, E] = V(!1), [P, H] = V(null), [B, j] = V(null), [A, K] = V(null), b = st(null), Q = st(null), S = st({ brightness: null, color: null }), ut = r.entityId ? c(r.entityId, "brightness") : void 0;
+function Qt({ cardId: s = "light-control" }) {
+  const { t: o } = Ut("card-light-control"), t = zt(), { dark: d, getState: h, getAttr: c, callService: p } = Wt(), [r] = Kt(s, jt), [C, E] = Y(!1), [P, H] = Y(null), [B, j] = Y(null), [A, K] = Y(null), b = st(null), Z = st(null), S = st({ brightness: null, color: null }), ut = r.entityId ? c(r.entityId, "brightness") : void 0;
   mt(() => {
     b.current !== "brightness" && H(null);
   }, [ut]);
@@ -181,22 +181,22 @@ function Xt({ cardId: s = "light-control" }) {
       " ",
       o("lightControl.emptyStateSuffix")
     ] });
-  const L = h(r.entityId), e = L === "on", Ct = c(r.entityId, "friendly_name"), Z = r.label || Ct || r.entityId, F = r.entityId.split(".")[0], q = c(r.entityId, "supported_color_modes") || [], St = c(r.entityId, "rgb_color"), _t = F === "light" && q.some((l) => jt.includes(l)), It = F === "light" && q.some((l) => Ft.includes(l)), Mt = F === "light" && q.includes("color_temp"), g = r.enableBrightness && _t, T = r.enableColor && It, J = r.enableColorTemp && Mt, W = c(r.entityId, "min_color_temp_kelvin") || 2e3, tt = c(r.entityId, "max_color_temp_kelvin") || 6500;
-  let et = c(r.entityId, "color_temp_kelvin");
-  if (et == null) {
+  const L = h(r.entityId), e = L === "on", Ct = c(r.entityId, "friendly_name"), q = r.label || Ct || r.entityId, F = r.entityId.split(".")[0], J = c(r.entityId, "supported_color_modes") || [], St = c(r.entityId, "rgb_color"), _t = F === "light" && J.some((l) => Ft.includes(l)), It = F === "light" && J.some((l) => Gt.includes(l)), Mt = F === "light" && J.includes("color_temp"), g = r.enableBrightness && _t, T = r.enableColor && It, tt = r.enableColorTemp && Mt, W = c(r.entityId, "min_color_temp_kelvin") || 2e3, et = c(r.entityId, "max_color_temp_kelvin") || 6500;
+  let ot = c(r.entityId, "color_temp_kelvin");
+  if (ot == null) {
     const l = c(r.entityId, "color_temp");
-    l && (et = Math.round(1e6 / l));
+    l && (ot = Math.round(1e6 / l));
   }
-  const D = b.current === "colortemp" && A != null ? A : et ?? Math.round((W + tt) / 2), ot = Math.max(0, Math.min(1, (D - W) / (tt - W || 1))), z = ct, O = g && T ? Gt : ct, R = b.current === "brightness" && P != null ? P : Math.round((ut ?? (e ? 255 : 0)) / 255 * 100), x = b.current === "color" && B ? B : St, a = e ? x ? U(x) : t.tokens.color.amber : t.tokens.color.muted, Pt = d ? "rgba(255,255,255,.08)" : "rgba(0,0,0,.08)", nt = 2 * Math.PI * z, Tt = R / 100 * 360, ft = vt(Tt, z), Rt = x ? dt(x) : 0, ht = vt(Rt, O), rt = () => {
+  const D = b.current === "colortemp" && A != null ? A : ot ?? Math.round((W + et) / 2), nt = Math.max(0, Math.min(1, (D - W) / (et - W || 1))), z = ct, O = g && T ? Vt : ct, R = b.current === "brightness" && P != null ? P : Math.round((ut ?? (e ? 255 : 0)) / 255 * 100), x = b.current === "color" && B ? B : St, a = e ? x ? U(x) : t.tokens.color.amber : t.tokens.color.muted, Pt = d ? "rgba(255,255,255,.08)" : "rgba(0,0,0,.08)", rt = 2 * Math.PI * z, Tt = R / 100 * 360, ft = vt(Tt, z), Rt = x ? dt(x) : 0, ht = vt(Rt, O), it = () => {
     if (C || L === "unavailable") return;
     E(!0);
     const l = e ? "turn_off" : "turn_on";
     Promise.resolve(p(F, l, r.entityId)).catch((i) => console.error("[LightControl]", i)).finally(() => setTimeout(() => E(!1), 250));
   }, $t = (l) => {
-    const i = Q.current.getBoundingClientRect(), f = (l.clientX - i.left) / i.width * w, v = (l.clientY - i.top) / i.height * w;
-    return Vt(f, v);
-  }, it = (l) => {
-    if (!b.current || !Q.current) return;
+    const i = Z.current.getBoundingClientRect(), f = (l.clientX - i.left) / i.width * w, v = (l.clientY - i.top) / i.height * w;
+    return Yt(f, v);
+  }, lt = (l) => {
+    if (!b.current || !Z.current) return;
     const i = $t(l);
     if (b.current === "brightness") {
       const f = Math.max(1, Math.min(100, Math.round(i / 360 * 100)));
@@ -210,21 +210,21 @@ function Xt({ cardId: s = "light-control" }) {
         i.currentTarget.setPointerCapture(i.pointerId);
       } catch {
       }
-      b.current = l, it(i);
+      b.current = l, lt(i);
     }
   }, m = () => {
     var i, f, v;
     const l = b.current;
     if (b.current = null, l === "brightness" && P != null) {
       const I = Math.max(1, Math.round(P / 100 * 255));
-      (i = p("light", "turn_on", r.entityId, { brightness: I })) == null || i.catch((lt) => console.error("[LightControl]", lt)), setTimeout(() => H(null), 600);
+      (i = p("light", "turn_on", r.entityId, { brightness: I })) == null || i.catch((G) => console.error("[LightControl]", G)), setTimeout(() => H(null), 600);
     } else l === "color" && B ? ((f = p("light", "turn_on", r.entityId, { rgb_color: B })) == null || f.catch((I) => console.error("[LightControl]", I)), setTimeout(() => j(null), 600)) : l === "colortemp" && A != null && ((v = p("light", "turn_on", r.entityId, { color_temp_kelvin: A })) == null || v.catch((I) => console.error("[LightControl]", I)), setTimeout(() => K(null), 600));
   }, bt = `radial-gradient(circle, transparent ${O - M / 2}px, #000 ${O - M / 2 + 1}px, #000 ${O + M / 2}px, transparent ${O + M / 2 + 1}px)`, _ = (l) => {
     if (!b.current) return;
     const i = S.current[b.current];
     if (!i) return;
     const f = i.getBoundingClientRect(), v = Math.max(0, Math.min(1, (l.clientX - f.left) / f.width));
-    b.current === "brightness" ? H(Math.max(1, Math.round(v * 100))) : b.current === "colortemp" ? K(Math.round(W + v * (tt - W))) : j(wt(v * 360));
+    b.current === "brightness" ? H(Math.max(1, Math.round(v * 100))) : b.current === "colortemp" ? K(Math.round(W + v * (et - W))) : j(wt(v * 360));
   }, $ = (l) => (i) => {
     if (e) {
       i.preventDefault();
@@ -236,10 +236,10 @@ function Xt({ cardId: s = "light-control" }) {
     }
   };
   if (r.layout === "filled") {
-    const l = x ? dt(x) / 360 : 0, i = R / 100, [f, v, I] = x || [245, 158, 11], lt = 28, Et = 64, pt = 30;
+    const l = x ? dt(x) / 360 : 0, i = R / 100, f = g ? i : e ? 1 : 0, [v, I, G] = x || [245, 158, 11], Et = 28, Ht = 64, pt = 30;
     return /* @__PURE__ */ u("div", { style: {
       position: "relative",
-      borderRadius: lt,
+      borderRadius: Et,
       background: d ? "#1c2230" : "#e5e7eb",
       overflow: "hidden",
       opacity: e ? 1 : 0.6,
@@ -259,18 +259,18 @@ function Xt({ cardId: s = "light-control" }) {
           onPointerCancel: g ? m : void 0,
           style: {
             position: "relative",
-            height: Et,
+            height: Ht,
             touchAction: "none",
             cursor: g && e ? "pointer" : "default"
           },
           children: [
-            g && /* @__PURE__ */ n("div", { style: {
+            f > 0 && /* @__PURE__ */ n("div", { style: {
               position: "absolute",
               top: 0,
               bottom: 0,
               left: 0,
-              width: `${i * 100}%`,
-              background: `linear-gradient(90deg, rgba(${f},${v},${I},0.35) 0%, rgb(${f},${v},${I}) 100%)`,
+              width: `${f * 100}%`,
+              background: `linear-gradient(90deg, rgba(${v},${I},${G},0.35) 0%, rgb(${v},${I},${G}) 100%)`,
               transition: "width .15s ease-out"
             } }),
             g && e && /* @__PURE__ */ n("div", { style: {
@@ -299,7 +299,7 @@ function Xt({ cardId: s = "light-control" }) {
                 "button",
                 {
                   onClick: (k) => {
-                    k.stopPropagation(), rt();
+                    k.stopPropagation(), it();
                   },
                   onPointerDown: (k) => k.stopPropagation(),
                   "aria-label": o(e ? "lightControl.turnOff" : "lightControl.turnOn"),
@@ -338,7 +338,7 @@ function Xt({ cardId: s = "light-control" }) {
                 whiteSpace: "nowrap",
                 flex: 1,
                 minWidth: 0
-              }, children: Z }),
+              }, children: q }),
               e && g && /* @__PURE__ */ u("span", { style: {
                 color: "#fff",
                 opacity: 0.85,
@@ -354,7 +354,7 @@ function Xt({ cardId: s = "light-control" }) {
           ]
         }
       ),
-      T && /* @__PURE__ */ u(G, { children: [
+      T && /* @__PURE__ */ u(V, { children: [
         /* @__PURE__ */ n("div", { style: { height: 1, background: "rgba(255,255,255,.06)" } }),
         /* @__PURE__ */ u(
           "div",
@@ -406,7 +406,7 @@ function Xt({ cardId: s = "light-control" }) {
           }
         )
       ] }),
-      J && /* @__PURE__ */ u(G, { children: [
+      tt && /* @__PURE__ */ u(V, { children: [
         /* @__PURE__ */ n("div", { style: { height: 1, background: "rgba(255,255,255,.06)" } }),
         /* @__PURE__ */ u(
           "div",
@@ -442,12 +442,12 @@ function Xt({ cardId: s = "light-control" }) {
                 justifyContent: "center",
                 pointerEvents: "none"
               }, children: /* @__PURE__ */ n(N, { name: "mdi:thermometer", size: 12, color: "#fff", dark: !0 }) }),
-              e && /* @__PURE__ */ u(G, { children: [
+              e && /* @__PURE__ */ u(V, { children: [
                 /* @__PURE__ */ n("div", { style: {
                   position: "absolute",
                   top: 4,
                   bottom: 4,
-                  left: `calc(${ot * 100}% - 2px)`,
+                  left: `calc(${nt * 100}% - 2px)`,
                   width: 4,
                   borderRadius: 2,
                   background: "#fff",
@@ -492,7 +492,7 @@ function Xt({ cardId: s = "light-control" }) {
         /* @__PURE__ */ n(
           "button",
           {
-            onClick: rt,
+            onClick: it,
             disabled: C || L === "unavailable",
             "aria-label": o(e ? "lightControl.turnOff" : "lightControl.turnOn"),
             style: {
@@ -528,7 +528,7 @@ function Xt({ cardId: s = "light-control" }) {
             overflow: "hidden",
             textOverflow: "ellipsis",
             whiteSpace: "nowrap"
-          }, children: Z }),
+          }, children: q }),
           L === "unavailable" && /* @__PURE__ */ n("div", { style: { ...t.tokens.font.hint, color: t.tokens.color.muted, marginTop: 2 }, children: o("lightControl.unavailable") })
         ] }),
         e && g && /* @__PURE__ */ u("span", { style: {
@@ -541,7 +541,7 @@ function Xt({ cardId: s = "light-control" }) {
         ] })
       ] }),
       g && /* @__PURE__ */ n(
-        X,
+        Q,
         {
           innerRef: (f) => {
             S.current.brightness = f;
@@ -559,7 +559,7 @@ function Xt({ cardId: s = "light-control" }) {
         }
       ),
       T && /* @__PURE__ */ n(
-        X,
+        Q,
         {
           innerRef: (f) => {
             S.current.color = f;
@@ -577,16 +577,16 @@ function Xt({ cardId: s = "light-control" }) {
           desaturate: !0
         }
       ),
-      J && /* @__PURE__ */ u(G, { children: [
+      tt && /* @__PURE__ */ u(V, { children: [
         /* @__PURE__ */ n(
-          X,
+          Q,
           {
             innerRef: (f) => {
               S.current.colortemp = f;
             },
             disabled: !e,
             background: at,
-            thumbPct: ot,
+            thumbPct: nt,
             thumbFill: U(yt(D)),
             thumbStroke: "#fff",
             onPointerDown: $("colortemp"),
@@ -642,7 +642,7 @@ function Xt({ cardId: s = "light-control" }) {
       /* @__PURE__ */ u(
         "svg",
         {
-          ref: Q,
+          ref: Z,
           width: w,
           height: w,
           viewBox: `0 0 ${w} ${w}`,
@@ -670,8 +670,8 @@ function Xt({ cardId: s = "light-control" }) {
                 stroke: a,
                 strokeWidth: M,
                 strokeLinecap: "round",
-                strokeDasharray: nt,
-                strokeDashoffset: nt - nt * (e ? R : 0) / 100,
+                strokeDasharray: rt,
+                strokeDashoffset: rt - rt * (e ? R : 0) / 100,
                 pointerEvents: "none",
                 style: {
                   transition: b.current === "brightness" ? "stroke .15s" : "stroke-dashoffset .4s cubic-bezier(.4,0,.2,1), stroke .25s",
@@ -691,7 +691,7 @@ function Xt({ cardId: s = "light-control" }) {
                 pointerEvents: "stroke",
                 style: { cursor: e ? "grab" : "not-allowed" },
                 onPointerDown: gt("brightness"),
-                onPointerMove: it,
+                onPointerMove: lt,
                 onPointerUp: m,
                 onPointerCancel: m
               }
@@ -708,7 +708,7 @@ function Xt({ cardId: s = "light-control" }) {
                 pointerEvents: "stroke",
                 style: { cursor: e ? "grab" : "not-allowed" },
                 onPointerDown: gt("color"),
-                onPointerMove: it,
+                onPointerMove: lt,
                 onPointerUp: m,
                 onPointerCancel: m
               }
@@ -741,19 +741,19 @@ function Xt({ cardId: s = "light-control" }) {
         }
       ),
       /* @__PURE__ */ n(
-        Bt.button,
+        At.button,
         {
-          onClick: rt,
+          onClick: it,
           disabled: C || L === "unavailable",
           "aria-label": o(e ? "lightControl.turnOff" : "lightControl.turnOn"),
           animate: e ? { scale: [1, 1.04, 1] } : { scale: 1 },
           transition: { duration: 2.6, repeat: e ? 1 / 0 : 0, ease: "easeInOut" },
           style: {
             position: "absolute",
-            top: (w - Y) / 2,
-            left: (w - Y) / 2,
-            width: Y,
-            height: Y,
+            top: (w - X) / 2,
+            left: (w - X) / 2,
+            width: X,
+            height: X,
             borderRadius: "50%",
             border: "none",
             background: e ? `radial-gradient(circle, ${a}45 0%, ${a}10 65%, transparent 100%)` : d ? "rgba(255,255,255,.04)" : "rgba(0,0,0,.04)",
@@ -785,7 +785,7 @@ function Xt({ cardId: s = "light-control" }) {
         overflow: "hidden",
         textOverflow: "ellipsis",
         whiteSpace: "nowrap"
-      }, children: Z }),
+      }, children: q }),
       /* @__PURE__ */ u("div", { style: {
         ...t.tokens.font.label,
         color: e ? a : t.tokens.color.muted,
@@ -805,16 +805,16 @@ function Xt({ cardId: s = "light-control" }) {
         L === "unavailable" ? o("lightControl.unavailable") : e ? g ? o("lightControl.onWithBrightness", { n: R }) : o("lightControl.on") : o("lightControl.off")
       ] })
     ] }),
-    J && /* @__PURE__ */ u("div", { style: { width: "100%", display: "flex", flexDirection: "column", gap: 4 }, children: [
+    tt && /* @__PURE__ */ u("div", { style: { width: "100%", display: "flex", flexDirection: "column", gap: 4 }, children: [
       /* @__PURE__ */ n(
-        X,
+        Q,
         {
           innerRef: (l) => {
             S.current.colortemp = l;
           },
           disabled: !e,
           background: at,
-          thumbPct: ot,
+          thumbPct: nt,
           thumbFill: U(yt(D)),
           thumbStroke: "#fff",
           onPointerDown: $("colortemp"),
@@ -838,5 +838,5 @@ function Xt({ cardId: s = "light-control" }) {
   ] });
 }
 export {
-  Xt as default
+  Qt as default
 };

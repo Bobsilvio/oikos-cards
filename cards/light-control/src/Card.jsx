@@ -402,6 +402,9 @@ export default function LightControl({ cardId = 'light-control' }) {
   if (config.layout === 'filled') {
     const huePct = displayRgb ? rgbToHueAngle(displayRgb) / 360 : 0
     const brightPct = brightness / 100
+    // Switch / luci on-off (senza brightness): quando accese riempiamo al 100%
+    // col colore accento, così cambiano colore e non solo opacità.
+    const fillPct = showBrightness ? brightPct : (isOn ? 1 : 0)
     const [ar, ag, ab] = displayRgb || [245, 158, 11]
     const hasSubBars = showColor || showColorTemp
     const PILL_RADIUS = 28
@@ -434,10 +437,10 @@ export default function LightControl({ cardId = 'light-control' }) {
             cursor: showBrightness && isOn ? 'pointer' : 'default',
           }}
         >
-          {showBrightness && (
+          {fillPct > 0 && (
             <div style={{
               position: 'absolute', top: 0, bottom: 0, left: 0,
-              width: `${brightPct * 100}%`,
+              width: `${fillPct * 100}%`,
               background: `linear-gradient(90deg, rgba(${ar},${ag},${ab},0.35) 0%, rgb(${ar},${ag},${ab}) 100%)`,
               transition: 'width .15s ease-out',
             }}/>
