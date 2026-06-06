@@ -20,6 +20,7 @@ const DEFAULT_CONFIG = {
   entityId:          '',
   indoorTempEntity:  '',
   outdoorTempEntity: '',
+  humidityEntity:    '',
   label:             '',
   accentColor:       '',
   step:              0.5,
@@ -55,6 +56,14 @@ export default function ClimatizzatoreSettings({ cardId }) {
         <Field label={t('settings.outdoorSensor')} hint={t('settings.outdoorHint')}>
           <EntityField
             field="outdoorTempEntity"
+            config={config}
+            setConfig={setConfig}
+            filterDomain="sensor"
+          />
+        </Field>
+        <Field label={t('settings.humiditySensor')} hint={t('settings.humidityHint')}>
+          <EntityField
+            field="humidityEntity"
             config={config}
             setConfig={setConfig}
             filterDomain="sensor"

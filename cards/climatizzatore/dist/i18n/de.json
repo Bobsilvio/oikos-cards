@@ -27,6 +27,8 @@
     "indoorHint": "Optional — ersetzt die aktuelle Temperatur der Klimaanlage",
     "outdoorSensor": "Außentemperatursensor",
     "outdoorHint": "Optional — zeigt Außen-°C",
+    "humiditySensor": "Luftfeuchtesensor Zuhause",
+    "humidityHint": "Optional — ersetzt die Luftfeuchte des Klimageräts",
     "label": "Bezeichnung",
     "labelHint": "Leer = verwendet den friendly_name",
     "accentColor": "Akzentfarbe",

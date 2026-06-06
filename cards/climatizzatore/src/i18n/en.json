@@ -27,6 +27,8 @@
     "indoorHint": "Optional — overrides the climate's current temperature",
     "outdoorSensor": "Outdoor temperature sensor",
     "outdoorHint": "Optional — shows outdoor °C",
+    "humiditySensor": "Home humidity sensor",
+    "humidityHint": "Optional — overrides the AC humidity",
     "label": "Label",
     "labelHint": "Empty = use friendly_name",
     "accentColor": "Accent color",

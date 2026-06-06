@@ -21,6 +21,7 @@ const DEFAULT_CONFIG = {
   entityId:    '',                     // climate.X
   indoorTempEntity:  '',                // sensor.X (temp interna override, opzionale)
   outdoorTempEntity: '',                // sensor.X (temp esterna opzionale)
+  humidityEntity:    '',                // sensor.X (umidità casa override, opzionale)
   label:       '',                     // override del friendly_name
   accentColor: '',                     // override colore — vuoto = auto da modalità
   step:        0.5,                    // step +/- target
@@ -65,7 +66,10 @@ export default function ClimatizzatoreCard({ cardId = 'climatizzatore' }) {
     ? indoorOverride
     : attrs.current_temperature
   const targetTemp    = attrs.temperature ?? attrs.target_temp
-  const humidity      = attrs.current_humidity
+  const humidityOverride = config.humidityEntity ? getFloat(config.humidityEntity) : null
+  const humidity      = (humidityOverride != null && Number.isFinite(humidityOverride))
+    ? humidityOverride
+    : attrs.current_humidity
   const minTemp       = attrs.min_temp ?? 16
   const maxTemp       = attrs.max_temp ?? 32
   const hvacModes     = attrs.hvac_modes ?? ['off', 'cool', 'heat', 'auto', 'dry', 'fan_only']

@@ -27,6 +27,8 @@
     "indoorHint": "Opzionale — sostituisce la temperatura attuale del climatizzatore",
     "outdoorSensor": "Sensore temperatura esterna",
     "outdoorHint": "Opzionale — mostra °C esterni",
+    "humiditySensor": "Sensore umidità casa",
+    "humidityHint": "Opzionale — sostituisce l'umidità del climatizzatore",
     "label": "Etichetta",
     "labelHint": "Vuoto = usa il friendly_name",
     "accentColor": "Colore accento",
