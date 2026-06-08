@@ -28,7 +28,8 @@
         "salute"
       ],
       "package": null,
-      "tier": "free"
+      "tier": "free",
+      "changelog": null
     },
     {
       "id": "climatizzatore",
@@ -56,7 +57,8 @@
         "aria-condizionata"
       ],
       "package": null,
-      "tier": "free"
+      "tier": "free",
+      "changelog": null
     },
     {
       "id": "clock",
@@ -82,7 +84,8 @@
         "demo"
       ],
       "package": null,
-      "tier": "free"
+      "tier": "free",
+      "changelog": null
     },
     {
       "id": "light-control",
@@ -109,7 +112,8 @@
         "home"
       ],
       "package": null,
-      "tier": "free"
+      "tier": "free",
+      "changelog": null
     },
     {
       "id": "person",
@@ -136,7 +140,8 @@
         "tracking"
       ],
       "package": null,
-      "tier": "free"
+      "tier": "free",
+      "changelog": null
     },
     {
       "id": "room-sensor",
@@ -164,7 +169,8 @@
         "stanza"
       ],
       "package": null,
-      "tier": "free"
+      "tier": "free",
+      "changelog": null
     },
     {
       "id": "thermostat",
@@ -190,7 +196,8 @@
         "climate"
       ],
       "package": null,
-      "tier": "free"
+      "tier": "free",
+      "changelog": null
     },
     {
       "id": "tigo-panels",
@@ -216,7 +223,8 @@
         "tigo"
       ],
       "package": null,
-      "tier": "free"
+      "tier": "free",
+      "changelog": null
     },
     {
       "id": "vacuum",
@@ -243,7 +251,8 @@
         "dreame"
       ],
       "package": null,
-      "tier": "free"
+      "tier": "free",
+      "changelog": null
     },
     {
       "id": "yesterday",
@@ -270,7 +279,8 @@
         "storico"
       ],
       "package": null,
-      "tier": "free"
+      "tier": "free",
+      "changelog": null
     }
   ]
 }

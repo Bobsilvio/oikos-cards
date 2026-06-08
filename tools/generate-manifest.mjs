@@ -25,6 +25,36 @@ function readJson(path) {
   try { return JSON.parse(readFileSync(path, 'utf8')) } catch { return null }
 }
 
+// Parsa un CHANGELOG.md in stile "Keep a Changelog" → array di voci compatte
+// { version, date, changes: [...] }. Tiene solo le ultime `max` versioni così
+// il manifest aggregato non esplode.
+function parseChangelog(dir, max = 10) {
+  const p = join(dir, 'CHANGELOG.md')
+  if (!existsSync(p)) return null
+  let text
+  try { text = readFileSync(p, 'utf8') } catch { return null }
+  const entries = []
+  let cur = null
+  for (const raw of text.split('\n')) {
+    const line = raw.trim()
+    const h = line.match(/^##\s+\[?v?([0-9][0-9A-Za-z.\-]*)\]?\s*(?:[-–—]\s*(.+))?$/)
+    if (h) {
+      if (cur) entries.push(cur)
+      cur = { version: h[1], date: (h[2] || '').trim() || null, changes: [] }
+      continue
+    }
+    if (!cur) continue
+    const b = line.match(/^[-*]\s+(.+)$/)
+    if (b) {
+      const txt = b[1].replace(/\*\*(.+?)\*\*/g, '$1').replace(/\*(.+?)\*/g, '$1').replace(/`(.+?)`/g, '$1').trim()
+      if (txt) cur.changes.push(txt)
+    }
+  }
+  if (cur) entries.push(cur)
+  const filtered = entries.filter(e => e.changes.length > 0).slice(0, max)
+  return filtered.length ? filtered : null
+}
+
 function collectCards() {
   const cardsDir = join(ROOT, 'cards')
   if (!existsSync(cardsDir)) return []
@@ -83,6 +113,7 @@ function collectCards() {
       tags:        mf.tags ?? [],
       package:     mf.package ?? null,
       tier:        mf.tier ?? 'free',
+      changelog:   parseChangelog(dir),
     })
   }
   return out.sort((a, b) => a.id.localeCompare(b.id))
