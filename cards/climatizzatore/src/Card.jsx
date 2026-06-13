@@ -14,8 +14,11 @@ import {
 import { useDashboard, useCardConfig, registerCardTranslations, useT } from '@oikos/sdk'
 import it from './i18n/it.json'
 import en from './i18n/en.json'
+import de from './i18n/de.json'
+import es from './i18n/es.json'
+import fr from './i18n/fr.json'
 
-registerCardTranslations('card-climatizzatore', { it, en })
+registerCardTranslations('card-climatizzatore', { it, en, de, es, fr })
 
 const DEFAULT_CONFIG = {
   entityId:    '',                     // climate.X

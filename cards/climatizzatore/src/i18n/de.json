@@ -36,6 +36,7 @@
     "tempStep": "Temperaturschritt (°C)",
     "tempStepHint": "Inkrement/Dekrement Tasten +/-",
     "showFan": "Lüfter anzeigen",
-    "showHumidity": "Luftfeuchtigkeit anzeigen"
+    "showHumidity": "Luftfeuchtigkeit anzeigen",
+    "labelPlaceholder": "z.B. Wohnzimmer"
   }
 }

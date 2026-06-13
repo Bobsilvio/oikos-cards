@@ -76,7 +76,7 @@ export default function ClimatizzatoreSettings({ cardId }) {
           <TextField
             value={config.label}
             onChange={v => set('label', v)}
-            placeholder="Es. Soggiorno"
+            placeholder={t('settings.labelPlaceholder')}
           />
         </Field>
         <Field label={t('settings.accentColor')} hint={t('settings.accentHint')}>

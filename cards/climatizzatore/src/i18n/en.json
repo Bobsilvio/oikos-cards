@@ -36,6 +36,7 @@
     "tempStep": "Temperature step (°C)",
     "tempStepHint": "Increment/decrement for +/- buttons",
     "showFan": "Show fan",
-    "showHumidity": "Show humidity"
+    "showHumidity": "Show humidity",
+    "labelPlaceholder": "e.g. Living room"
   }
 }

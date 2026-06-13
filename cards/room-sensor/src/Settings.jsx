@@ -100,14 +100,14 @@ function GaugeRow({ gauge, index, total, dark, onChange, onRemove, onMoveUp, onM
 
           {/* Label opzionale */}
           <Field label={t('settings.roomName')}>
-            <TextField value={gauge.label} onChange={v => set('label', v)} placeholder="es. Temperatura"/>
+            <TextField value={gauge.label} onChange={v => set('label', v)} placeholder={t('settings.gaugeLabelPlaceholder')}/>
           </Field>
 
           {/* Unit + decimali + colore */}
           <div style={{ display: 'flex', gap: 8 }}>
             <div style={{ flex: 1 }}>
               <Field label="Unit">
-                <TextField value={gauge.unit} onChange={v => set('unit', v)} placeholder="es. °C"/>
+                <TextField value={gauge.unit} onChange={v => set('unit', v)} placeholder={t('settings.gaugeUnitPlaceholder')}/>
               </Field>
             </div>
             <div style={{ flex: 1 }}>
@@ -211,7 +211,7 @@ function BadgeRow({ badge, index, total, dark, onChange, onRemove, onMoveUp, onM
           <div style={{ display: 'flex', gap: 8 }}>
             <div style={{ flex: 1 }}>
               <Field label="Unit">
-                <TextField value={badge.unit} onChange={v => set('unit', v)} placeholder="es. %"/>
+                <TextField value={badge.unit} onChange={v => set('unit', v)} placeholder={t('settings.badgeUnitPlaceholder')}/>
               </Field>
             </div>
             <div style={{ flex: 1 }}>

@@ -9,8 +9,11 @@ import { useDashboard, getHAConfig, registerCardTranslations, useT, getOverlayRo
 import { getVacuumConfig } from './vacuumStore'
 import it from './i18n/it.json'
 import en from './i18n/en.json'
+import de from './i18n/de.json'
+import es from './i18n/es.json'
+import fr from './i18n/fr.json'
 
-registerCardTranslations('card-vacuum', { it, en })
+registerCardTranslations('card-vacuum', { it, en, de, es, fr })
 
 // ── Palette (CSS variables Oikos) ────────────────────────────────────────────
 const A    = 'var(--amber)'
@@ -188,9 +191,10 @@ function RadioOption({ label, desc, selected, onClick }) {
 }
 
 function HumSlider({ value, onChange }) {
+  const { t } = useT('card-vacuum')
   const pct = ((value - 1) / 31) * 100
   const ticks = [{ pct: 12.9 }, { pct: 48.4 }, { pct: 83.9 }]
-  const labels = [{ pct: 12.9, txt: 'Leggerm.\nasciutto' }, { pct: 48.4, txt: 'Umido' }, { pct: 83.9, txt: 'Bagnato' }]
+  const labels = [{ pct: 12.9, txt: t('humSlider.lightlyDry') }, { pct: 48.4, txt: t('humSlider.moist') }, { pct: 83.9, txt: t('humSlider.wet') }]
   return (
     <div style={{ marginBottom: 8 }}>
       <div style={{ position: 'relative', padding: '18px 0 8px' }}>

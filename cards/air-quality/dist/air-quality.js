@@ -1,16 +1,16 @@
-const { jsxs: S, jsx: n, Fragment: O } = window.__OIKOS_SDK__.jsxRuntime;
-function W(e) {
+const { jsxs: b, jsx: n, Fragment: F } = window.__OIKOS_SDK__.jsxRuntime;
+function H(e) {
   if (!e || e.length < 2) return "";
   if (e.length === 2)
     return `M ${e[0].x.toFixed(2)},${e[0].y.toFixed(2)} L ${e[1].x.toFixed(2)},${e[1].y.toFixed(2)}`;
   let r = `M ${e[0].x.toFixed(2)},${e[0].y.toFixed(2)}`;
   for (let l = 1; l < e.length; l++) {
-    const x = e[Math.max(0, l - 2)], c = e[l - 1], f = e[l], a = e[Math.min(e.length - 1, l + 1)], i = (c.x + (f.x - x.x) / 6).toFixed(2), d = (c.y + (f.y - x.y) / 6).toFixed(2), u = (f.x - (a.x - c.x) / 6).toFixed(2), h = (f.y - (a.y - c.y) / 6).toFixed(2);
-    r += ` C ${i},${d} ${u},${h} ${f.x.toFixed(2)},${f.y.toFixed(2)}`;
+    const m = e[Math.max(0, l - 2)], c = e[l - 1], u = e[l], a = e[Math.min(e.length - 1, l + 1)], i = (c.x + (u.x - m.x) / 6).toFixed(2), d = (c.y + (u.y - m.y) / 6).toFixed(2), f = (u.x - (a.x - c.x) / 6).toFixed(2), h = (u.y - (a.y - c.y) / 6).toFixed(2);
+    r += ` C ${i},${d} ${f},${h} ${u.x.toFixed(2)},${u.y.toFixed(2)}`;
   }
   return r;
 }
-const L = "Casa Out", T = "Oggi AQI", _ = "Sensori con lo stato attuale e media ogni 30 minuti", R = "Sensore", Q = {
+const W = "Casa Out", Q = "Oggi AQI", T = "Sensori con lo stato attuale e media ogni 30 minuti", U = "Sensore", _ = {
   sectionHeader: "Header",
   sectionAqi: "Qualità Aria",
   sectionSensors: "Sensori",
@@ -36,14 +36,16 @@ const L = "Casa Out", T = "Oggi AQI", _ = "Sensori con lo stato attuale e media 
   addSensor: "+ Aggiungi sensore",
   fieldLabel: "Etichetta",
   fieldTitle: "Titolo",
-  fieldDescription: "Descrizione"
+  fieldDescription: "Descrizione",
+  sensorLabelPlaceholder: "es. CO2",
+  sensorUnitPlaceholder: "es. ppm"
 }, B = {
-  title: L,
-  label: T,
-  description: _,
-  sensorDefault: R,
-  settings: Q
-}, N = "House Out", U = "Today AQI", P = "Sensors with current status and 30-minute average", K = "Sensor", j = {
+  title: W,
+  label: Q,
+  description: T,
+  sensorDefault: U,
+  settings: _
+}, P = "House Out", z = "Today AQI", N = "Sensors with current status and 30-minute average", R = "Sensor", j = {
   sectionHeader: "Header",
   sectionAqi: "Air Quality",
   sectionSensors: "Sensors",
@@ -69,16 +71,123 @@ const L = "Casa Out", T = "Oggi AQI", _ = "Sensori con lo stato attuale e media 
   addSensor: "+ Add sensor",
   fieldLabel: "Label",
   fieldTitle: "Title",
-  fieldDescription: "Description"
-}, z = {
-  title: N,
-  label: U,
-  description: P,
-  sensorDefault: K,
+  fieldDescription: "Description",
+  sensorLabelPlaceholder: "e.g. CO2",
+  sensorUnitPlaceholder: "e.g. ppm"
+}, K = {
+  title: P,
+  label: z,
+  description: N,
+  sensorDefault: R,
   settings: j
-}, { useState: D, useEffect: E, useId: G } = window.__OIKOS_SDK__.React, { useDashboard: F, useCardConfig: V, registerCardTranslations: Z, useT: J } = window.__OIKOS_SDK__;
-Z("card-air-quality", { it: B, en: z });
-const w = ["#16a34a", "#84cc16", "#eab308", "#f97316", "#dc2626"], X = {
+}, Z = "Haus Außen", G = "AQI Heute", V = "Sensoren mit aktuellem Zustand und Durchschnitt alle 30 Minuten", J = "Sensor", X = {
+  sectionHeader: "Kopfzeile",
+  sectionAqi: "Luftqualität",
+  sectionSensors: "Sensoren",
+  aqiEntity: "Numerische AQI-Entität (Kreis)",
+  classEntity: "Klassifizierungs-Entität (Text)",
+  minAqi: "AQI Min",
+  maxAqi: "AQI Max",
+  invertedAqi: "AQI invertiert (niedrig = gut)",
+  colorFromClass: "Farbe aus der Klassifizierung",
+  sensorN: "Sensor {{n}} — {{label}}",
+  sensorEntity: "Sensor-Entität",
+  sensorLabel: "Bezeichnung",
+  sensorUnit: "Einheit",
+  sensorDecimals: "Dezimalstellen",
+  sensorMin: "Min",
+  sensorMax: "Max",
+  sensorInverted: "Invertiert",
+  invertedHint: "Hoch = gut (z.B. O2)",
+  moveUp: "Nach oben",
+  moveDown: "Nach unten",
+  delete: "Löschen",
+  noSensors: "Kein Sensor konfiguriert. Füge einen hinzu.",
+  addSensor: "+ Sensor hinzufügen",
+  fieldLabel: "Bezeichnung",
+  fieldTitle: "Titel",
+  fieldDescription: "Beschreibung",
+  sensorLabelPlaceholder: "z.B. CO2",
+  sensorUnitPlaceholder: "z.B. ppm"
+}, Y = {
+  title: Z,
+  label: G,
+  description: V,
+  sensorDefault: J,
+  settings: X
+}, ee = "Casa Ext.", te = "AQI Hoy", ne = "Sensores con el estado actual y media cada 30 minutos", ie = "Sensor", oe = {
+  sectionHeader: "Encabezado",
+  sectionAqi: "Calidad del aire",
+  sectionSensors: "Sensores",
+  aqiEntity: "Entidad AQI numérica (círculo)",
+  classEntity: "Entidad clasificación (texto)",
+  minAqi: "AQI Mín",
+  maxAqi: "AQI Máx",
+  invertedAqi: "AQI invertido (bajo = bueno)",
+  colorFromClass: "Color desde la clasificación",
+  sensorN: "Sensor {{n}} — {{label}}",
+  sensorEntity: "Entidad sensor",
+  sensorLabel: "Etiqueta",
+  sensorUnit: "Unidad",
+  sensorDecimals: "Decimales",
+  sensorMin: "Mín",
+  sensorMax: "Máx",
+  sensorInverted: "Invertido",
+  invertedHint: "Alto = bueno (ej. O2)",
+  moveUp: "Subir",
+  moveDown: "Bajar",
+  delete: "Eliminar",
+  noSensors: "Ningún sensor configurado. Añade uno.",
+  addSensor: "+ Añadir sensor",
+  fieldLabel: "Etiqueta",
+  fieldTitle: "Título",
+  fieldDescription: "Descripción",
+  sensorLabelPlaceholder: "ej. CO2",
+  sensorUnitPlaceholder: "ej. ppm"
+}, se = {
+  title: ee,
+  label: te,
+  description: ne,
+  sensorDefault: ie,
+  settings: oe
+}, re = "Maison Ext.", ae = "AQI Aujourd'hui", le = "Capteurs avec l'état actuel et moyenne toutes les 30 minutes", ce = "Capteur", de = {
+  sectionHeader: "En-tête",
+  sectionAqi: "Qualité de l'air",
+  sectionSensors: "Capteurs",
+  aqiEntity: "Entité AQI numérique (cercle)",
+  classEntity: "Entité classification (texte)",
+  minAqi: "AQI Min",
+  maxAqi: "AQI Max",
+  invertedAqi: "AQI inversé (bas = bon)",
+  colorFromClass: "Couleur depuis la classification",
+  sensorN: "Capteur {{n}} — {{label}}",
+  sensorEntity: "Entité capteur",
+  sensorLabel: "Étiquette",
+  sensorUnit: "Unité",
+  sensorDecimals: "Décimales",
+  sensorMin: "Min",
+  sensorMax: "Max",
+  sensorInverted: "Inversé",
+  invertedHint: "Haut = bon (ex. O2)",
+  moveUp: "Monter",
+  moveDown: "Descendre",
+  delete: "Supprimer",
+  noSensors: "Aucun capteur configuré. Ajoutez-en un.",
+  addSensor: "+ Ajouter un capteur",
+  fieldLabel: "Étiquette",
+  fieldTitle: "Titre",
+  fieldDescription: "Description",
+  sensorLabelPlaceholder: "ex. CO2",
+  sensorUnitPlaceholder: "ex. ppm"
+}, ue = {
+  title: re,
+  label: ae,
+  description: le,
+  sensorDefault: ce,
+  settings: de
+}, { useState: I, useEffect: w, useId: fe } = window.__OIKOS_SDK__.React, { useDashboard: L, useCardConfig: pe, registerCardTranslations: he, useT: ge } = window.__OIKOS_SDK__;
+he("card-air-quality", { it: B, en: K, de: Y, es: se, fr: ue });
+const E = ["#16a34a", "#84cc16", "#eab308", "#f97316", "#dc2626"], me = {
   eccellente: "#16a34a",
   ottimo: "#16a34a",
   buono: "#84cc16",
@@ -88,7 +197,7 @@ const w = ["#16a34a", "#84cc16", "#eab308", "#f97316", "#dc2626"], X = {
   pessimo: "#f97316",
   critico: "#dc2626",
   nocivo: "#dc2626"
-}, Y = {
+}, xe = {
   label: "",
   title: "",
   aqiEntity: "",
@@ -99,7 +208,7 @@ const w = ["#16a34a", "#84cc16", "#eab308", "#f97316", "#dc2626"], X = {
   aqiColorFromClassification: !1,
   description: "",
   sensors: []
-}, tt = {
+}, ye = {
   entity: "",
   label: "",
   unit: "",
@@ -108,36 +217,36 @@ const w = ["#16a34a", "#84cc16", "#eab308", "#f97316", "#dc2626"], X = {
   max: 100,
   inverted: !1
 };
-function k(e, r, l, x) {
+function $(e, r, l, m) {
   const c = Math.max(0, Math.min(1, (e - r) / Math.max(l - r, 1)));
-  return x ? c : 1 - c;
+  return m ? c : 1 - c;
 }
 function C(e) {
   return e >= 0.8 ? 1 : e >= 0.6 ? 2 : e >= 0.4 ? 3 : e >= 0.2 ? 4 : 5;
 }
-function $(e) {
-  return w[e - 1] ?? w[4];
+function q(e) {
+  return E[e - 1] ?? E[4];
 }
-function et(e) {
+function ve(e) {
   if (!e) return null;
   const r = e.toLowerCase().trim();
-  return X[r] ?? null;
+  return me[r] ?? null;
 }
-function nt({ value: e, min: r, max: l, inverted: x, fromClassification: c, clsColor: f }) {
-  if (c && f) return f;
-  if (e == null) return w[2];
-  const a = k(e, r, l, x);
-  return $(C(a));
+function be({ value: e, min: r, max: l, inverted: m, fromClassification: c, clsColor: u }) {
+  if (c && u) return u;
+  if (e == null) return E[2];
+  const a = $(e, r, l, m);
+  return q(C(a));
 }
-function it({ value: e, min: r, max: l, inverted: x, color: c, uid: f, size: a = 140 }) {
-  const i = (a - 10) / 2, d = a / 2, u = a / 2, h = 2 * Math.PI * i;
+function Se({ value: e, min: r, max: l, inverted: m, color: c, uid: u, size: a = 140 }) {
+  const i = (a - 10) / 2, d = a / 2, f = a / 2, h = 2 * Math.PI * i;
   if (e == null)
-    return /* @__PURE__ */ S("svg", { width: a, height: a, viewBox: `0 0 ${a} ${a}`, style: { display: "block" }, children: [
+    return /* @__PURE__ */ b("svg", { width: a, height: a, viewBox: `0 0 ${a} ${a}`, style: { display: "block" }, children: [
       /* @__PURE__ */ n(
         "circle",
         {
           cx: d,
-          cy: u,
+          cy: f,
           r: i,
           fill: "none",
           stroke: "var(--border-color)",
@@ -148,7 +257,7 @@ function it({ value: e, min: r, max: l, inverted: x, color: c, uid: f, size: a =
         "text",
         {
           x: d,
-          y: u,
+          y: f,
           textAnchor: "middle",
           dominantBaseline: "central",
           fill: "var(--text-muted)",
@@ -157,18 +266,18 @@ function it({ value: e, min: r, max: l, inverted: x, color: c, uid: f, size: a =
         }
       )
     ] });
-  const p = k(e, r, l, x), o = c, g = h * (1 - p);
-  return /* @__PURE__ */ S("svg", { width: a, height: a, viewBox: `0 0 ${a} ${a}`, style: { display: "block" }, children: [
-    /* @__PURE__ */ n("defs", { children: /* @__PURE__ */ S("radialGradient", { id: `aqr-bg-${f}`, cx: "50%", cy: "50%", r: "50%", children: [
+  const p = $(e, r, l, m), o = c, g = h * (1 - p);
+  return /* @__PURE__ */ b("svg", { width: a, height: a, viewBox: `0 0 ${a} ${a}`, style: { display: "block" }, children: [
+    /* @__PURE__ */ n("defs", { children: /* @__PURE__ */ b("radialGradient", { id: `aqr-bg-${u}`, cx: "50%", cy: "50%", r: "50%", children: [
       /* @__PURE__ */ n("stop", { offset: "0%", stopColor: o, stopOpacity: "0.13" }),
       /* @__PURE__ */ n("stop", { offset: "100%", stopColor: o, stopOpacity: "0" })
     ] }) }),
-    /* @__PURE__ */ n("circle", { cx: d, cy: u, r: i, fill: `url(#aqr-bg-${f})` }),
+    /* @__PURE__ */ n("circle", { cx: d, cy: f, r: i, fill: `url(#aqr-bg-${u})` }),
     /* @__PURE__ */ n(
       "circle",
       {
         cx: d,
-        cy: u,
+        cy: f,
         r: i,
         fill: "none",
         stroke: o,
@@ -180,7 +289,7 @@ function it({ value: e, min: r, max: l, inverted: x, color: c, uid: f, size: a =
       "circle",
       {
         cx: d,
-        cy: u,
+        cy: f,
         r: i,
         fill: "none",
         stroke: o,
@@ -188,7 +297,7 @@ function it({ value: e, min: r, max: l, inverted: x, color: c, uid: f, size: a =
         strokeLinecap: "round",
         strokeDasharray: h,
         strokeDashoffset: g,
-        transform: `rotate(-90 ${d} ${u})`,
+        transform: `rotate(-90 ${d} ${f})`,
         style: { transition: "stroke-dashoffset .5s ease" }
       }
     ),
@@ -196,7 +305,7 @@ function it({ value: e, min: r, max: l, inverted: x, color: c, uid: f, size: a =
       "text",
       {
         x: d,
-        y: u,
+        y: f,
         textAnchor: "middle",
         dominantBaseline: "central",
         fill: o,
@@ -211,7 +320,7 @@ function it({ value: e, min: r, max: l, inverted: x, color: c, uid: f, size: a =
     )
   ] });
 }
-function ot({ text: e, color: r }) {
+function Ae({ text: e, color: r }) {
   return e ? /* @__PURE__ */ n("div", { style: {
     fontSize: 15,
     fontWeight: 700,
@@ -221,7 +330,7 @@ function ot({ text: e, color: r }) {
     marginTop: 1
   }, children: e }) : null;
 }
-function st({ series: e, min: r, max: l, inverted: x, color: c, dark: f, uid: a }) {
+function Me({ series: e, min: r, max: l, inverted: m, color: c, dark: u, uid: a }) {
   const h = e.filter((s) => s.v != null);
   if (!h.length)
     return /* @__PURE__ */ n(
@@ -245,30 +354,30 @@ function st({ series: e, min: r, max: l, inverted: x, color: c, dark: f, uid: a 
         )
       }
     );
-  const p = Math.min(...h.map((s) => s.v)), o = Math.max(...h.map((s) => s.v)), g = Math.max(o - p, 1), v = h.map((s, m) => ({
-    x: m / (h.length - 1) * 100,
+  const p = Math.min(...h.map((s) => s.v)), o = Math.max(...h.map((s) => s.v)), g = Math.max(o - p, 1), v = h.map((s, y) => ({
+    x: y / (h.length - 1) * 100,
     y: 34 - (s.v - p) / g * (36 - 2 * 2),
     v: s.v
-  })), M = W(v), q = M ? `${M} L 100,36 L 0,36 Z` : "", b = v.map((s, m) => {
-    const A = k(s.v, r, l, x), y = C(A);
-    return { pct: (m / (v.length - 1) * 100).toFixed(1), color: $(y) };
+  })), S = H(v), M = S ? `${S} L 100,36 L 0,36 Z` : "", A = v.map((s, y) => {
+    const D = $(s.v, r, l, m), x = C(D);
+    return { pct: (y / (v.length - 1) * 100).toFixed(1), color: q(x) };
   });
-  return /* @__PURE__ */ S(
+  return /* @__PURE__ */ b(
     "svg",
     {
       viewBox: "0 0 100 36",
       preserveAspectRatio: "none",
       style: { width: "100%", height: 36, display: "block" },
       children: [
-        /* @__PURE__ */ S("defs", { children: [
-          /* @__PURE__ */ n("linearGradient", { id: `aql-${a}`, x1: "0%", y1: "0%", x2: "100%", y2: "0%", children: b.map((s, m) => /* @__PURE__ */ n("stop", { offset: `${s.pct}%`, stopColor: s.color }, m)) }),
-          /* @__PURE__ */ S("linearGradient", { id: `aqa-${a}`, x1: "0%", y1: "0%", x2: "0%", y2: "100%", children: [
+        /* @__PURE__ */ b("defs", { children: [
+          /* @__PURE__ */ n("linearGradient", { id: `aql-${a}`, x1: "0%", y1: "0%", x2: "100%", y2: "0%", children: A.map((s, y) => /* @__PURE__ */ n("stop", { offset: `${s.pct}%`, stopColor: s.color }, y)) }),
+          /* @__PURE__ */ b("linearGradient", { id: `aqa-${a}`, x1: "0%", y1: "0%", x2: "0%", y2: "100%", children: [
             /* @__PURE__ */ n("stop", { offset: "0%", stopColor: c, stopOpacity: "0.25" }),
             /* @__PURE__ */ n("stop", { offset: "100%", stopColor: c, stopOpacity: "0" })
           ] }),
-          /* @__PURE__ */ n("mask", { id: `aqm-${a}`, children: /* @__PURE__ */ n("path", { d: q, fill: "white" }) })
+          /* @__PURE__ */ n("mask", { id: `aqm-${a}`, children: /* @__PURE__ */ n("path", { d: M, fill: "white" }) })
         ] }),
-        q && /* @__PURE__ */ n(
+        M && /* @__PURE__ */ n(
           "rect",
           {
             x: "0",
@@ -279,10 +388,10 @@ function st({ series: e, min: r, max: l, inverted: x, color: c, dark: f, uid: a 
             mask: `url(#aqm-${a})`
           }
         ),
-        M && /* @__PURE__ */ n(
+        S && /* @__PURE__ */ n(
           "path",
           {
-            d: M,
+            d: S,
             fill: "none",
             stroke: `url(#aql-${a})`,
             strokeWidth: "2",
@@ -294,7 +403,7 @@ function st({ series: e, min: r, max: l, inverted: x, color: c, dark: f, uid: a 
     }
   );
 }
-function rt({ zone: e, dark: r }) {
+function qe({ zone: e, dark: r }) {
   return /* @__PURE__ */ n("div", { style: {
     display: "flex",
     flexDirection: "column-reverse",
@@ -304,15 +413,15 @@ function rt({ zone: e, dark: r }) {
     width: 7,
     height: 7,
     borderRadius: "50%",
-    background: l <= e ? $(l) : r ? "rgba(255,255,255,.08)" : "#e5e7eb",
+    background: l <= e ? q(l) : r ? "rgba(255,255,255,.08)" : "#e5e7eb",
     transition: "background .2s",
     flexShrink: 0
   } }, l)) });
 }
-function at({ series: e, min: r, max: l, inverted: x, dark: c, uid: f }) {
+function $e({ series: e, min: r, max: l, inverted: m, dark: c, uid: u }) {
   const d = e.filter((s) => s.v != null);
   if (!d.length) {
-    const s = $(5);
+    const s = q(5);
     return /* @__PURE__ */ n(
       "svg",
       {
@@ -334,28 +443,28 @@ function at({ series: e, min: r, max: l, inverted: x, dark: c, uid: f }) {
       }
     );
   }
-  const u = Math.min(...d.map((s) => s.v)), h = Math.max(...d.map((s) => s.v)), p = Math.max(h - u, 0.5), o = d.map((s, m) => ({
-    x: m / (d.length - 1) * 100,
-    y: 19 - (s.v - u) / p * 18,
+  const f = Math.min(...d.map((s) => s.v)), h = Math.max(...d.map((s) => s.v)), p = Math.max(h - f, 0.5), o = d.map((s, y) => ({
+    x: y / (d.length - 1) * 100,
+    y: 19 - (s.v - f) / p * 18,
     v: s.v
-  })), g = W(o), v = d.reduce((s, m) => s + m.v, 0) / d.length, M = k(v, r, l, x), q = $(C(M)), b = o.map((s, m) => {
-    const A = k(s.v, r, l, x), y = C(A);
-    return { pct: (m / (o.length - 1) * 100).toFixed(1), color: $(y) };
+  })), g = H(o), v = d.reduce((s, y) => s + y.v, 0) / d.length, S = $(v, r, l, m), M = q(C(S)), A = o.map((s, y) => {
+    const D = $(s.v, r, l, m), x = C(D);
+    return { pct: (y / (o.length - 1) * 100).toFixed(1), color: q(x) };
   });
-  return /* @__PURE__ */ S(
+  return /* @__PURE__ */ b(
     "svg",
     {
       viewBox: "0 0 100 20",
       preserveAspectRatio: "none",
       style: { width: "100%", height: 20, display: "block" },
       children: [
-        /* @__PURE__ */ n("defs", { children: /* @__PURE__ */ n("linearGradient", { id: `ssl-${f}`, x1: "0%", y1: "0%", x2: "100%", y2: "0%", children: b.length > 1 ? b.map((s, m) => /* @__PURE__ */ n("stop", { offset: `${s.pct}%`, stopColor: s.color }, m)) : /* @__PURE__ */ n("stop", { offset: "0%", stopColor: q }) }) }),
+        /* @__PURE__ */ n("defs", { children: /* @__PURE__ */ n("linearGradient", { id: `ssl-${u}`, x1: "0%", y1: "0%", x2: "100%", y2: "0%", children: A.length > 1 ? A.map((s, y) => /* @__PURE__ */ n("stop", { offset: `${s.pct}%`, stopColor: s.color }, y)) : /* @__PURE__ */ n("stop", { offset: "0%", stopColor: M }) }) }),
         g && /* @__PURE__ */ n(
           "path",
           {
             d: g,
             fill: "none",
-            stroke: `url(#ssl-${f})`,
+            stroke: `url(#ssl-${u})`,
             strokeWidth: "1.5",
             strokeLinecap: "round",
             strokeLinejoin: "round",
@@ -366,17 +475,17 @@ function at({ series: e, min: r, max: l, inverted: x, dark: c, uid: f }) {
     }
   );
 }
-function I(e, r, l) {
-  const [x, c] = D([]), [f, a] = D(!1);
-  return E(() => {
+function O(e, r, l) {
+  const [m, c] = I([]), [u, a] = I(!1);
+  return w(() => {
     if (!e || !r || !l) {
       c([]);
       return;
     }
     a(!0);
     const i = /* @__PURE__ */ new Date(), d = new Date(i.getTime() - 24 * 3600 * 1e3);
-    r([e], d, i).then((u) => {
-      const h = ((u == null ? void 0 : u[e]) ?? []).map((o) => {
+    r([e], d, i).then((f) => {
+      const h = ((f == null ? void 0 : f[e]) ?? []).map((o) => {
         const g = typeof o.lu == "number" ? o.lu * 1e3 : Date.parse(o.lu ?? o.last_updated ?? o.last_changed), v = parseFloat(o.s ?? o.state);
         return { ts: g, v };
       }).filter((o) => !isNaN(o.v) && !isNaN(o.ts)).sort((o, g) => o.ts - g.ts), p = Array.from({ length: 24 }, (o, g) => ({ h: g, sum: 0, n: 0 }));
@@ -386,14 +495,14 @@ function I(e, r, l) {
       }), c(p.map((o) => ({ h: o.h, v: o.n > 0 ? o.sum / o.n : null })));
     }).catch(() => {
     }).finally(() => a(!1));
-  }, [e, l]), { series: x, loading: f };
+  }, [e, l]), { series: m, loading: u };
 }
-function lt({ sensor: e, dark: r, fetchHistory: l, connected: x, cardUid: c, index: f }) {
-  const { getFloat: a, openMoreInfo: i } = F(), d = `${c}s${f}`, { series: u } = I(e.entity, l, x), h = e.entity ? a(e.entity) : null, p = h ?? null, o = e.decimals ?? 1, g = p != null ? k(p, e.min, e.max, e.inverted ?? !1) : 0, v = C(g), M = $(v), q = p != null ? o === 0 ? Math.round(p).toString() : p.toFixed(o) : "—", b = !!e.entity;
-  return /* @__PURE__ */ S(
+function De({ sensor: e, dark: r, fetchHistory: l, connected: m, cardUid: c, index: u }) {
+  const { getFloat: a, openMoreInfo: i } = L(), d = `${c}s${u}`, { series: f } = O(e.entity, l, m), h = e.entity ? a(e.entity) : null, p = h ?? null, o = e.decimals ?? 1, g = p != null ? $(p, e.min, e.max, e.inverted ?? !1) : 0, v = C(g), S = q(v), M = p != null ? o === 0 ? Math.round(p).toString() : p.toFixed(o) : "—", A = !!e.entity;
+  return /* @__PURE__ */ b(
     "div",
     {
-      onClick: b ? () => i(e.entity) : void 0,
+      onClick: A ? () => i(e.entity) : void 0,
       style: {
         display: "flex",
         flexDirection: "column",
@@ -401,17 +510,17 @@ function lt({ sensor: e, dark: r, fetchHistory: l, connected: x, cardUid: c, ind
         gap: 4,
         minWidth: 0,
         flex: "1 1 0",
-        cursor: b ? "pointer" : "default",
+        cursor: A ? "pointer" : "default",
         transition: "opacity .15s"
       },
       onMouseEnter: (s) => {
-        b && (s.currentTarget.style.opacity = "0.75");
+        A && (s.currentTarget.style.opacity = "0.75");
       },
       onMouseLeave: (s) => {
-        b && (s.currentTarget.style.opacity = "1");
+        A && (s.currentTarget.style.opacity = "1");
       },
       children: [
-        /* @__PURE__ */ n(rt, { zone: v, dark: r }),
+        /* @__PURE__ */ n(qe, { zone: v, dark: r }),
         /* @__PURE__ */ n("div", { style: {
           fontSize: 10,
           color: "var(--text-muted)",
@@ -423,22 +532,22 @@ function lt({ sensor: e, dark: r, fetchHistory: l, connected: x, cardUid: c, ind
           textOverflow: "ellipsis",
           maxWidth: "100%"
         }, children: e.label || t("sensorDefault") }),
-        /* @__PURE__ */ S("div", { style: {
+        /* @__PURE__ */ b("div", { style: {
           fontSize: 15,
           fontWeight: 800,
-          color: M,
+          color: S,
           fontFamily: "JetBrains Mono, monospace",
           fontVariantNumeric: "tabular-nums",
           lineHeight: 1,
           whiteSpace: "nowrap"
         }, children: [
-          q,
+          M,
           p != null && e.unit && /* @__PURE__ */ n("sup", { style: { fontSize: 9, fontWeight: 700, color: "var(--text-muted)", marginLeft: 1 }, children: e.unit })
         ] }),
         /* @__PURE__ */ n("div", { style: { width: "100%", minWidth: 0 }, children: /* @__PURE__ */ n(
-          at,
+          $e,
           {
-            series: u,
+            series: f,
             min: e.min ?? 0,
             max: e.max ?? 100,
             inverted: e.inverted ?? !1,
@@ -450,23 +559,23 @@ function lt({ sensor: e, dark: r, fetchHistory: l, connected: x, cardUid: c, ind
     }
   );
 }
-function ct({ cardId: e }) {
-  const { dark: r, getFloat: l, getState: x, fetchHistory: c, connected: f, openMoreInfo: a } = F(), [i, d] = V(e, Y), { t: u } = J("card-air-quality"), h = G().replace(/:/g, "");
-  E(() => {
-    i.aqiMax === 500 && i.aqiMin === 0 && d((y) => ({ ...y, aqiMax: 100 }));
+function Ce({ cardId: e }) {
+  const { dark: r, getFloat: l, getState: m, fetchHistory: c, connected: u, openMoreInfo: a } = L(), [i, d] = pe(e, xe), { t: f } = ge("card-air-quality"), h = fe().replace(/:/g, "");
+  w(() => {
+    i.aqiMax === 500 && i.aqiMin === 0 && d((x) => ({ ...x, aqiMax: 100 }));
   }, []);
-  const p = !!i.aqiEntity, o = !!i.classificationEntity, { series: g } = I(i.aqiEntity, c, f), v = p ? l(i.aqiEntity) : null, M = o ? x(i.classificationEntity) : null, q = M ? et(M) : null, b = nt({
+  const p = !!i.aqiEntity, o = !!i.classificationEntity, { series: g } = O(i.aqiEntity, c, u), v = p ? l(i.aqiEntity) : null, S = o ? m(i.classificationEntity) : null, M = S ? ve(S) : null, A = be({
     value: v,
     min: i.aqiMin ?? 0,
     max: i.aqiMax ?? 100,
     inverted: i.aqiInverted ?? !0,
     fromClassification: i.aqiColorFromClassification ?? !1,
-    clsColor: q
-  }), s = i.sensors ?? [], m = r ? "rgba(255,255,255,.03)" : "#f7f9fc", A = r ? "rgba(255,255,255,.07)" : "#dde3ec";
-  return g.some((y) => y.v != null), /* @__PURE__ */ S("div", { style: {
+    clsColor: M
+  }), s = i.sensors ?? [], y = r ? "rgba(255,255,255,.03)" : "#f7f9fc", D = r ? "rgba(255,255,255,.07)" : "#dde3ec";
+  return g.some((x) => x.v != null), /* @__PURE__ */ b("div", { style: {
     borderRadius: 20,
-    background: m,
-    border: `1px solid ${A}`,
+    background: y,
+    border: `1px solid ${D}`,
     boxShadow: r ? "none" : "0 1px 8px rgba(0,0,0,.06)",
     padding: "14px 0",
     display: "flex",
@@ -474,36 +583,36 @@ function ct({ cardId: e }) {
     gap: 0,
     overflow: "hidden"
   }, children: [
-    /* @__PURE__ */ S("div", { style: {
+    /* @__PURE__ */ b("div", { style: {
       display: "grid",
       gridTemplateColumns: p ? "1fr auto 1fr" : "1fr",
       gap: 20,
       alignItems: "center",
       padding: "0 20px 14px"
     }, children: [
-      /* @__PURE__ */ S("div", { style: { textAlign: "left", display: "flex", flexDirection: "column", gap: 3 }, children: [
+      /* @__PURE__ */ b("div", { style: { textAlign: "left", display: "flex", flexDirection: "column", gap: 3 }, children: [
         /* @__PURE__ */ n("div", { style: {
           fontSize: 11,
           fontWeight: 600,
           color: "var(--text-muted)",
           letterSpacing: ".8px",
           textTransform: "uppercase"
-        }, children: i.label || u("label") }),
+        }, children: i.label || f("label") }),
         /* @__PURE__ */ n("div", { style: {
           fontSize: 18,
           fontWeight: 800,
           color: "var(--text-primary)",
           letterSpacing: "-0.4px",
           lineHeight: 1.15
-        }, children: i.title || u("title") }),
+        }, children: i.title || f("title") }),
         o && /* @__PURE__ */ n(
           "div",
           {
             onClick: () => a(i.classificationEntity),
             style: { cursor: "pointer", transition: "opacity .15s", alignSelf: "flex-start" },
-            onMouseEnter: (y) => y.currentTarget.style.opacity = "0.75",
-            onMouseLeave: (y) => y.currentTarget.style.opacity = "1",
-            children: /* @__PURE__ */ n(ot, { text: M, color: q })
+            onMouseEnter: (x) => x.currentTarget.style.opacity = "0.75",
+            onMouseLeave: (x) => x.currentTarget.style.opacity = "1",
+            children: /* @__PURE__ */ n(Ae, { text: S, color: M })
           }
         )
       ] }),
@@ -512,16 +621,16 @@ function ct({ cardId: e }) {
         {
           onClick: () => a(i.aqiEntity),
           style: { cursor: "pointer", transition: "opacity .15s", lineHeight: 0 },
-          onMouseEnter: (y) => y.currentTarget.style.opacity = "0.8",
-          onMouseLeave: (y) => y.currentTarget.style.opacity = "1",
+          onMouseEnter: (x) => x.currentTarget.style.opacity = "0.8",
+          onMouseLeave: (x) => x.currentTarget.style.opacity = "1",
           children: /* @__PURE__ */ n(
-            it,
+            Se,
             {
               value: v,
               min: i.aqiMin ?? 0,
               max: i.aqiMax ?? 100,
               inverted: i.aqiInverted ?? !0,
-              color: b,
+              color: A,
               uid: h,
               size: 140
             }
@@ -530,18 +639,18 @@ function ct({ cardId: e }) {
       )
     ] }),
     p && /* @__PURE__ */ n("div", { style: { padding: "0 16px 10px" }, children: /* @__PURE__ */ n(
-      st,
+      Me,
       {
         series: g,
         min: i.aqiMin ?? 0,
         max: i.aqiMax ?? 100,
         inverted: i.aqiInverted ?? !0,
-        color: b,
+        color: A,
         dark: r,
         uid: h
       }
     ) }),
-    s.length > 0 && /* @__PURE__ */ S(O, { children: [
+    s.length > 0 && /* @__PURE__ */ b(F, { children: [
       /* @__PURE__ */ n("div", { style: { height: 1, background: r ? "rgba(255,255,255,.07)" : "#dde3ec", margin: "0 0 8px" } }),
       i.description && /* @__PURE__ */ n("div", { style: {
         fontSize: 11,
@@ -556,17 +665,17 @@ function ct({ cardId: e }) {
         borderTop: `1px solid ${r ? "rgba(255,255,255,.06)" : "#e5e9f0"}`,
         paddingTop: 8,
         flexWrap: "wrap"
-      }, children: s.map((y, H) => /* @__PURE__ */ n(
-        lt,
+      }, children: s.map((x, k) => /* @__PURE__ */ n(
+        De,
         {
-          sensor: { ...tt, ...y },
+          sensor: { ...ye, ...x },
           dark: r,
           fetchHistory: c,
-          connected: f,
+          connected: u,
           cardUid: h,
-          index: H
+          index: k
         },
-        H
+        k
       )) })
     ] }),
     s.length === 0 && i.description && /* @__PURE__ */ n("div", { style: {
@@ -578,5 +687,5 @@ function ct({ cardId: e }) {
   ] });
 }
 export {
-  ct as default
+  Ce as default
 };

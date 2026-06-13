@@ -36,6 +36,7 @@
     "tempStep": "Paso de temperatura (°C)",
     "tempStepHint": "Incremento/decremento botones +/-",
     "showFan": "Mostrar ventilador",
-    "showHumidity": "Mostrar humedad"
+    "showHumidity": "Mostrar humedad",
+    "labelPlaceholder": "ej. Salón"
   }
 }

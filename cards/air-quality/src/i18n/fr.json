@@ -29,6 +29,8 @@
     "addSensor": "+ Ajouter un capteur",
     "fieldLabel": "Étiquette",
     "fieldTitle": "Titre",
-    "fieldDescription": "Description"
+    "fieldDescription": "Description",
+    "sensorLabelPlaceholder": "ex. CO2",
+    "sensorUnitPlaceholder": "ex. ppm"
   }
 }

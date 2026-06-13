@@ -36,6 +36,7 @@
     "tempStep": "Step temperatura (°C)",
     "tempStepHint": "Incremento/decremento bottoni +/-",
     "showFan": "Mostra ventola",
-    "showHumidity": "Mostra umidità"
+    "showHumidity": "Mostra umidità",
+    "labelPlaceholder": "Es. Soggiorno"
   }
 }

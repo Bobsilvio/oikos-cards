@@ -35,11 +35,11 @@ function x(i, c = !1) {
     padding: 0
   };
 }
-function _(i, c, s) {
+function _(i, c, o) {
   const a = [...i], [t] = a.splice(c, 1);
-  return a.splice(s, 0, t), a;
+  return a.splice(o, 0, t), a;
 }
-function R({ sensor: i, index: c, total: s, dark: a, onChange: t, onRemove: o, onMoveUp: g, onMoveDown: p, t: r }) {
+function R({ sensor: i, index: c, total: o, dark: a, onChange: t, onRemove: r, onMoveUp: g, onMoveDown: p, t: s }) {
   const u = (l, n) => t({ ...i, [l]: n });
   return /* @__PURE__ */ f("div", { style: {
     borderRadius: 12,
@@ -51,53 +51,53 @@ function R({ sensor: i, index: c, total: s, dark: a, onChange: t, onRemove: o, o
     gap: 8
   }, children: [
     /* @__PURE__ */ f("div", { style: { display: "flex", alignItems: "center", gap: 8 }, children: [
-      /* @__PURE__ */ e("span", { style: { flex: 1, fontSize: 11, fontWeight: 600, color: "var(--text-muted)" }, children: r("settings.sensorN", { n: c + 1, label: i.label || "" }).replace(" — ", i.label ? " — " : "") }),
+      /* @__PURE__ */ e("span", { style: { flex: 1, fontSize: 11, fontWeight: 600, color: "var(--text-muted)" }, children: s("settings.sensorN", { n: c + 1, label: i.label || "" }).replace(" — ", i.label ? " — " : "") }),
       /* @__PURE__ */ f("div", { style: { display: "flex", gap: 4 }, children: [
-        c > 0 && /* @__PURE__ */ e("button", { onClick: g, title: r("settings.moveUp"), style: x(a), children: "↑" }),
-        c < s - 1 && /* @__PURE__ */ e("button", { onClick: p, title: r("settings.moveDown"), style: x(a), children: "↓" }),
-        /* @__PURE__ */ e("button", { onClick: o, title: r("settings.delete"), style: x(a, !0), children: "✕" })
+        c > 0 && /* @__PURE__ */ e("button", { onClick: g, title: s("settings.moveUp"), style: x(a), children: "↑" }),
+        c < o - 1 && /* @__PURE__ */ e("button", { onClick: p, title: s("settings.moveDown"), style: x(a), children: "↓" }),
+        /* @__PURE__ */ e("button", { onClick: r, title: s("settings.delete"), style: x(a, !0), children: "✕" })
       ] })
     ] }),
     /* @__PURE__ */ e(
       C,
       {
-        label: r("settings.sensorEntity"),
+        label: s("settings.sensorEntity"),
         field: "entity",
         config: i,
         setConfig: (l) => t(typeof l == "function" ? l(i) : l),
         filterDomain: "sensor"
       }
     ),
-    /* @__PURE__ */ e(h, { label: r("settings.sensorLabel"), children: /* @__PURE__ */ e(v, { value: i.label, onChange: (l) => u("label", l), placeholder: "es. CO2" }) }),
+    /* @__PURE__ */ e(h, { label: s("settings.sensorLabel"), children: /* @__PURE__ */ e(v, { value: i.label, onChange: (l) => u("label", l), placeholder: s("settings.sensorLabelPlaceholder") }) }),
     /* @__PURE__ */ f("div", { style: { display: "flex", gap: 8 }, children: [
-      /* @__PURE__ */ e("div", { style: { flex: 1 }, children: /* @__PURE__ */ e(h, { label: r("settings.sensorUnit"), children: /* @__PURE__ */ e(v, { value: i.unit, onChange: (l) => u("unit", l), placeholder: "es. ppm" }) }) }),
-      /* @__PURE__ */ e("div", { style: { flex: 1 }, children: /* @__PURE__ */ e(h, { label: r("settings.sensorDecimals"), children: /* @__PURE__ */ e(m, { value: i.decimals ?? 1, onChange: (l) => u("decimals", l), min: 0, max: 4 }) }) })
+      /* @__PURE__ */ e("div", { style: { flex: 1 }, children: /* @__PURE__ */ e(h, { label: s("settings.sensorUnit"), children: /* @__PURE__ */ e(v, { value: i.unit, onChange: (l) => u("unit", l), placeholder: s("settings.sensorUnitPlaceholder") }) }) }),
+      /* @__PURE__ */ e("div", { style: { flex: 1 }, children: /* @__PURE__ */ e(h, { label: s("settings.sensorDecimals"), children: /* @__PURE__ */ e(m, { value: i.decimals ?? 1, onChange: (l) => u("decimals", l), min: 0, max: 4 }) }) })
     ] }),
     /* @__PURE__ */ f("div", { style: { display: "flex", gap: 8 }, children: [
-      /* @__PURE__ */ e("div", { style: { flex: 1 }, children: /* @__PURE__ */ e(h, { label: r("settings.sensorMin"), children: /* @__PURE__ */ e(m, { value: i.min ?? 0, onChange: (l) => u("min", l) }) }) }),
-      /* @__PURE__ */ e("div", { style: { flex: 1 }, children: /* @__PURE__ */ e(h, { label: r("settings.sensorMax"), children: /* @__PURE__ */ e(m, { value: i.max ?? 100, onChange: (l) => u("max", l) }) }) })
+      /* @__PURE__ */ e("div", { style: { flex: 1 }, children: /* @__PURE__ */ e(h, { label: s("settings.sensorMin"), children: /* @__PURE__ */ e(m, { value: i.min ?? 0, onChange: (l) => u("min", l) }) }) }),
+      /* @__PURE__ */ e("div", { style: { flex: 1 }, children: /* @__PURE__ */ e(h, { label: s("settings.sensorMax"), children: /* @__PURE__ */ e(m, { value: i.max ?? 100, onChange: (l) => u("max", l) }) }) })
     ] }),
     /* @__PURE__ */ e(
       S,
       {
-        label: r("settings.sensorInverted"),
-        hint: r("settings.invertedHint"),
+        label: s("settings.sensorInverted"),
+        hint: s("settings.invertedHint"),
         children: /* @__PURE__ */ e(q, { value: i.inverted ?? !1, onChange: (l) => u("inverted", l) })
       }
     )
   ] });
 }
-function O({ cardId: i }) {
-  const { dark: c } = F(), [s, a] = w(i, I), { t } = T("card-air-quality"), o = (n, d) => a((b) => ({ ...b, [n]: d })), g = s.sensors ?? [], p = (n, d) => o("sensors", g.map((b, M) => M === n ? d : b)), r = (n) => o("sensors", g.filter((d, b) => b !== n)), u = () => o("sensors", [...g, { ...A }]), D = (n) => o("sensors", _(g, n, n - 1)), E = (n) => o("sensors", _(g, n, n + 1)), l = !!s.aqiEntity;
+function U({ cardId: i }) {
+  const { dark: c } = F(), [o, a] = w(i, I), { t } = T("card-air-quality"), r = (n, d) => a((b) => ({ ...b, [n]: d })), g = o.sensors ?? [], p = (n, d) => r("sensors", g.map((b, M) => M === n ? d : b)), s = (n) => r("sensors", g.filter((d, b) => b !== n)), u = () => r("sensors", [...g, { ...A }]), D = (n) => r("sensors", _(g, n, n - 1)), E = (n) => r("sensors", _(g, n, n + 1)), l = !!o.aqiEntity;
   return /* @__PURE__ */ f("div", { style: { display: "flex", flexDirection: "column", gap: 14 }, children: [
     /* @__PURE__ */ f(y, { title: t("settings.sectionHeader"), children: [
-      /* @__PURE__ */ e(h, { label: t("settings.fieldLabel"), children: /* @__PURE__ */ e(v, { value: s.label, onChange: (n) => o("label", n), placeholder: t("label") }) }),
-      /* @__PURE__ */ e(h, { label: t("settings.fieldTitle"), children: /* @__PURE__ */ e(v, { value: s.title, onChange: (n) => o("title", n), placeholder: t("title") }) }),
+      /* @__PURE__ */ e(h, { label: t("settings.fieldLabel"), children: /* @__PURE__ */ e(v, { value: o.label, onChange: (n) => r("label", n), placeholder: t("label") }) }),
+      /* @__PURE__ */ e(h, { label: t("settings.fieldTitle"), children: /* @__PURE__ */ e(v, { value: o.title, onChange: (n) => r("title", n), placeholder: t("title") }) }),
       /* @__PURE__ */ e(h, { label: t("settings.fieldDescription"), children: /* @__PURE__ */ e(
         v,
         {
-          value: s.description,
-          onChange: (n) => o("description", n),
+          value: o.description,
+          onChange: (n) => r("description", n),
           placeholder: t("description")
         }
       ) })
@@ -108,7 +108,7 @@ function O({ cardId: i }) {
         {
           label: t("settings.aqiEntity"),
           field: "aqiEntity",
-          config: s,
+          config: o,
           setConfig: a,
           filterDomain: "sensor"
         }
@@ -118,17 +118,17 @@ function O({ cardId: i }) {
         {
           label: t("settings.classEntity"),
           field: "classificationEntity",
-          config: s,
+          config: o,
           setConfig: a,
           filterDomain: "sensor"
         }
       ),
       l && /* @__PURE__ */ f("div", { style: { display: "flex", gap: 8 }, children: [
-        /* @__PURE__ */ e("div", { style: { flex: 1 }, children: /* @__PURE__ */ e(h, { label: t("settings.minAqi"), children: /* @__PURE__ */ e(m, { value: s.aqiMin ?? 0, onChange: (n) => o("aqiMin", n), min: 0 }) }) }),
-        /* @__PURE__ */ e("div", { style: { flex: 1 }, children: /* @__PURE__ */ e(h, { label: t("settings.maxAqi"), children: /* @__PURE__ */ e(m, { value: s.aqiMax ?? 500, onChange: (n) => o("aqiMax", n), min: 1 }) }) })
+        /* @__PURE__ */ e("div", { style: { flex: 1 }, children: /* @__PURE__ */ e(h, { label: t("settings.minAqi"), children: /* @__PURE__ */ e(m, { value: o.aqiMin ?? 0, onChange: (n) => r("aqiMin", n), min: 0 }) }) }),
+        /* @__PURE__ */ e("div", { style: { flex: 1 }, children: /* @__PURE__ */ e(h, { label: t("settings.maxAqi"), children: /* @__PURE__ */ e(m, { value: o.aqiMax ?? 500, onChange: (n) => r("aqiMax", n), min: 1 }) }) })
       ] }),
-      /* @__PURE__ */ e(S, { label: t("settings.invertedAqi"), children: /* @__PURE__ */ e(q, { value: s.aqiInverted ?? !0, onChange: (n) => o("aqiInverted", n) }) }),
-      /* @__PURE__ */ e(S, { label: t("settings.colorFromClass"), children: /* @__PURE__ */ e(q, { value: s.aqiColorFromClassification ?? !1, onChange: (n) => o("aqiColorFromClassification", n) }) })
+      /* @__PURE__ */ e(S, { label: t("settings.invertedAqi"), children: /* @__PURE__ */ e(q, { value: o.aqiInverted ?? !0, onChange: (n) => r("aqiInverted", n) }) }),
+      /* @__PURE__ */ e(S, { label: t("settings.colorFromClass"), children: /* @__PURE__ */ e(q, { value: o.aqiColorFromClassification ?? !1, onChange: (n) => r("aqiColorFromClassification", n) }) })
     ] }),
     /* @__PURE__ */ f(y, { title: t("settings.sectionSensors"), children: [
       g.length === 0 && /* @__PURE__ */ e("div", { style: {
@@ -146,7 +146,7 @@ function O({ cardId: i }) {
           dark: c,
           t,
           onChange: (b) => p(d, b),
-          onRemove: () => r(d),
+          onRemove: () => s(d),
           onMoveUp: () => D(d),
           onMoveDown: () => E(d)
         },
@@ -181,5 +181,5 @@ function O({ cardId: i }) {
   ] });
 }
 export {
-  O as default
+  U as default
 };

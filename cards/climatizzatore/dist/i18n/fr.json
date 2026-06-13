@@ -36,6 +36,7 @@
     "tempStep": "Pas de température (°C)",
     "tempStepHint": "Incrément/décrément boutons +/-",
     "showFan": "Afficher ventilateur",
-    "showHumidity": "Afficher humidité"
+    "showHumidity": "Afficher humidité",
+    "labelPlaceholder": "ex. Salon"
   }
 }

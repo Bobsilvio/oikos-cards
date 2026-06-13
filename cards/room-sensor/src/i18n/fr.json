@@ -54,6 +54,9 @@
     "addGauge": "+ Ajouter une jauge",
     "addBadge": "+ Ajouter un badge",
     "noGauges": "Aucune jauge configurée.",
-    "noBadges": "Aucun badge configuré."
+    "noBadges": "Aucun badge configuré.",
+    "gaugeLabelPlaceholder": "ex. Température",
+    "gaugeUnitPlaceholder": "ex. °C",
+    "badgeUnitPlaceholder": "ex. %"
   }
 }

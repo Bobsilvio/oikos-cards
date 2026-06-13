@@ -426,5 +426,10 @@
     "roomIdPlaceholder": "ID",
     "roomNamePlaceholder": "Nome stanza",
     "roomsHint": "L'ID HA si trova nelle entità select.*_room_N_name dove N è il numero. Integrazione Tasshack: usa vacuum.send_command → clean_segment."
+  },
+  "humSlider": {
+    "lightlyDry": "Legg.\nasciutto",
+    "moist": "Umido",
+    "wet": "Bagnato"
   }
 }

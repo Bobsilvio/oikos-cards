@@ -85,13 +85,13 @@ function SensorRow({ sensor, index, total, dark, onChange, onRemove, onMoveUp, o
       />
 
       <Field label={t('settings.sensorLabel')}>
-        <TextField value={sensor.label} onChange={v => set('label', v)} placeholder="es. CO2"/>
+        <TextField value={sensor.label} onChange={v => set('label', v)} placeholder={t('settings.sensorLabelPlaceholder')}/>
       </Field>
 
       <div style={{ display: 'flex', gap: 8 }}>
         <div style={{ flex: 1 }}>
           <Field label={t('settings.sensorUnit')}>
-            <TextField value={sensor.unit} onChange={v => set('unit', v)} placeholder="es. ppm"/>
+            <TextField value={sensor.unit} onChange={v => set('unit', v)} placeholder={t('settings.sensorUnitPlaceholder')}/>
           </Field>
         </div>
         <div style={{ flex: 1 }}>
