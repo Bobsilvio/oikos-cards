@@ -13,5 +13,8 @@
     "time",
     "demo"
   ],
-  "tier": "free"
+  "tier": "free",
+  "description_de": "Digitale Uhr mit Tick-Zähler. Demonstriert useCardConfig und useStyles.",
+  "description_es": "Reloj digital con contador de ticks. Demuestra useCardConfig y useStyles.",
+  "description_fr": "Horloge numérique avec compteur de ticks. Illustre useCardConfig et useStyles."
 }

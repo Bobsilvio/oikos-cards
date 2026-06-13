@@ -16,5 +16,8 @@
   ],
   "configVersion": 1,
   "defaultWidth": "quarter",
-  "tier": "free"
+  "tier": "free",
+  "description_de": "270°-Anzeige mit blau→orange-Verlauf für HA-Thermostat. Ziel-Schieberegler, Ein/Aus-Schalter, Multi-Mode.",
+  "description_es": "Indicador de 270° con degradado azul→naranja para termostato HA. Deslizador de consigna, interruptor on/off, multi-modo.",
+  "description_fr": "Jauge 270° avec dégradé bleu→orange pour thermostat HA. Curseur de consigne, interrupteur on/off, multi-mode."
 }

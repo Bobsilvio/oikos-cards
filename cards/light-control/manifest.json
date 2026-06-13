@@ -16,5 +16,8 @@
   ],
   "configVersion": 1,
   "defaultWidth": "half",
-  "tier": "free"
+  "tier": "free",
+  "description_de": "HA-Lichtsteuerung: Ein/Aus, Helligkeit und Farbe mit umschaltbaren Bereichen.",
+  "description_es": "Control de luz HA: encendido/apagado, brillo y color con secciones desactivables.",
+  "description_fr": "Contrôle lumière HA : allumage/extinction, luminosité et couleur avec sections désactivables."
 }

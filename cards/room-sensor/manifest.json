@@ -17,5 +17,8 @@
   ],
   "configVersion": 1,
   "defaultWidth": "half",
-  "tier": "free"
+  "tier": "free",
+  "description_de": "Raumsensorkarte: mehrere Anzeigen, historisches Flussdiagramm, numerische Abzeichen, Mini-Akku-/Signalmesser.",
+  "description_es": "Tarjeta de sensor de habitación: varios indicadores, gráfico histórico de flujo, badges numéricos, mini-indicadores de batería/señal.",
+  "description_fr": "Carte capteur de pièce : plusieurs jauges, graphique de flux historique, badges numériques, mini-jauges batterie/signal."
 }

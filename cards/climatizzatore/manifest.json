@@ -18,5 +18,8 @@
   ],
   "configVersion": 1,
   "defaultWidth": "half",
-  "tier": "free"
+  "tier": "free",
+  "description_de": "Vollständige HA-Klimaanlagensteuerung: Ein/Aus, Modi (cool/heat/auto/dry/fan), Zieltemperatur ±, Lüftergeschwindigkeit, Temperatur und Luftfeuchtigkeit. Animiertes Symbol und dynamisches Farbthema je Modus.",
+  "description_es": "Control completo del climatizador HA: encendido, modos (cool/heat/auto/dry/fan), temperatura objetivo ±, velocidad del ventilador, temperatura actual y humedad. Icono animado y tema de color dinámico según el modo activo.",
+  "description_fr": "Contrôle complet du climatiseur HA : marche/arrêt, modes (cool/heat/auto/dry/fan), consigne ±, vitesse du ventilateur, température et humidité actuelles. Icône animée et thème de couleur dynamique selon le mode actif."
 }

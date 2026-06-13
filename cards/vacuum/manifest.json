@@ -17,5 +17,8 @@
   ],
   "configVersion": 1,
   "defaultWidth": "half",
-  "tier": "free"
+  "tier": "free",
+  "description_de": "Dreame Vacuum-Karte mit App-inspirierter Oberfläche: Karte, Reinigungsblatt (CleanGenius/Anpassen), Basisstation, MopExtend™-Einstellungen.",
+  "description_es": "Tarjeta Dreame Vacuum con interfaz inspirada en la app oficial: mapa, hoja de limpieza (CleanGenius/Personalizar), estación base, ajustes MopExtend™.",
+  "description_fr": "Carte Dreame Vacuum avec interface inspirée de l'app officielle : carte, fiche de nettoyage (CleanGenius/Personnaliser), station de base, paramètres MopExtend™."
 }

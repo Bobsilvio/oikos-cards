@@ -17,5 +17,8 @@
   ],
   "configVersion": 1,
   "defaultWidth": "quarter",
-  "tier": "free"
+  "tier": "free",
+  "description_de": "HA-Personenkarte: Avatar, Zone, Akku, Schritte/gefahrene km. Geteiltes Layout mit Google Maps live (rechts), dediziertes GPS-device_tracker-Feld, animiertes LIVE-Abzeichen.",
+  "description_es": "Tarjeta de persona HA: avatar, zona, batería, pasos/km recorridos. Diseño dividido con Google Maps en vivo (derecha), campo GPS device_tracker dedicado, badge LIVE animado.",
+  "description_fr": "Carte personne HA : avatar, zone, batterie, pas/km parcourus. Mise en page divisée avec Google Maps en direct (droite), champ GPS device_tracker dédié, badge LIVE animé."
 }

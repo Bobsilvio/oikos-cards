@@ -20,5 +20,8 @@
   ],
   "configVersion": 1,
   "defaultWidth": "half",
-  "tier": "free"
+  "tier": "free",
+  "description_de": "Tagesrückblick: Produktion/Verbrauch/Netzbezug/Einspeisung des Vortages mit stündlichem Diagramm.",
+  "description_es": "Resumen del día anterior: producción/consumo/importación/exportación con gráfico horario.",
+  "description_fr": "Récapitulatif de la veille : production/consommation/soutirage/injection avec graphique horaire."
 }

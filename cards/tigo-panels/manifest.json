@@ -19,5 +19,8 @@
   ],
   "configVersion": 1,
   "defaultWidth": "half",
-  "tier": "free"
+  "tier": "free",
+  "description_de": "Echtzeit-Monitor für Tigo-Optimierer: Schaltflächenraster mit Momentanleistung jedes Panels.",
+  "description_es": "Monitor en tiempo real de optimizadores Tigo: cuadrícula de botones con potencia instantánea de cada panel.",
+  "description_fr": "Moniteur temps réel des optimiseurs Tigo : grille de boutons affichant la puissance instantanée de chaque panneau."
 }

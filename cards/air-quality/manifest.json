@@ -16,5 +16,8 @@
   ],
   "configVersion": 1,
   "defaultWidth": "half",
-  "tier": "free"
+  "tier": "free",
+  "description_de": "Luftqualitätskarte: AQI mit farbigen Zonen, Klassifizierung, geglättetes 24h-Diagramm.",
+  "description_es": "Tarjeta de calidad del aire: AQI con zonas de colores, clasificación, gráfico suavizado de 24h.",
+  "description_fr": "Carte qualité de l'air : IQA avec zones colorées, classification, graphique lissé sur 24h."
 }
