@@ -17,6 +17,17 @@
   "unavailable": "Entität nicht verfügbar",
   "noEntity": "Konfiguriere eine climate.*-Entität in den Karteneinstellungen.",
 
+  "timer": {
+    "title":       "Abschalttimer",
+    "tabMin":      "Minuten",
+    "tabTime":     "Uhrzeit",
+    "placeholderMin": "z.B. 45",
+    "set":         "Setzen",
+    "cancel":      "Abbrechen",
+    "activeLabel": "Aus um",
+    "activeIn":    "in {{m}}"
+  },
+
   "settings": {
     "sectionEntity": "Entität",
     "sectionAppearance": "Aussehen",

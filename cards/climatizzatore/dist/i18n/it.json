@@ -17,6 +17,17 @@
   "unavailable": "Entità non disponibile",
   "noEntity": "Configura un'entità climate.* nelle impostazioni della card.",
 
+  "timer": {
+    "title":       "Timer spegnimento",
+    "tabMin":      "Minuti",
+    "tabTime":     "Orario",
+    "placeholderMin": "es. 45",
+    "set":         "Imposta",
+    "cancel":      "Annulla",
+    "activeLabel": "Spegni alle",
+    "activeIn":    "tra {{m}}"
+  },
+
   "settings": {
     "sectionEntity": "Entità",
     "sectionAppearance": "Aspetto",

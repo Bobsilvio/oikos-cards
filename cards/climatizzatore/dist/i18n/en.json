@@ -17,6 +17,17 @@
   "unavailable": "Entity unavailable",
   "noEntity": "Configure a climate.* entity in the card settings.",
 
+  "timer": {
+    "title":       "Off timer",
+    "tabMin":      "Minutes",
+    "tabTime":     "Time",
+    "placeholderMin": "e.g. 45",
+    "set":         "Set",
+    "cancel":      "Cancel",
+    "activeLabel": "Off at",
+    "activeIn":    "in {{m}}"
+  },
+
   "settings": {
     "sectionEntity": "Entity",
     "sectionAppearance": "Appearance",

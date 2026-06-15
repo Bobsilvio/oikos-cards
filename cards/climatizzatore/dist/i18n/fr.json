@@ -17,6 +17,17 @@
   "unavailable": "Entité non disponible",
   "noEntity": "Configurez une entité climate.* dans les paramètres de la carte.",
 
+  "timer": {
+    "title":       "Minuterie d'arrêt",
+    "tabMin":      "Minutes",
+    "tabTime":     "Heure",
+    "placeholderMin": "ex. 45",
+    "set":         "Définir",
+    "cancel":      "Annuler",
+    "activeLabel": "Éteindre à",
+    "activeIn":    "dans {{m}}"
+  },
+
   "settings": {
     "sectionEntity": "Entité",
     "sectionAppearance": "Apparence",

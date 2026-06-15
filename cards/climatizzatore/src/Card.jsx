@@ -5,11 +5,11 @@
  * (badge animato), fan speed, umidità (se disponibile). Tema colore cambia
  * dinamicamente in base alla modalità HVAC.
  */
-import { useState, useMemo } from 'react'
+import { useState, useEffect, useRef, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   Power, PowerOff, Snowflake, Flame, Wind, Droplets, RefreshCcw,
-  Plus, Minus, Sun, Sparkles, AirVent,
+  Plus, Minus, Sun, Sparkles, AirVent, Clock, X,
 } from 'lucide-react'
 import { useDashboard, useCardConfig, registerCardTranslations, useT } from '@oikos/sdk'
 import it from './i18n/it.json'
@@ -52,11 +52,21 @@ function fmtTemp(t, dec = 1) {
   return Math.abs(t) >= 100 ? t.toFixed(0) : t.toFixed(dec)
 }
 
+function fmtTargetTime(endsAt) {
+  return new Date(endsAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+}
+
 export default function ClimatizzatoreCard({ cardId = 'climatizzatore' }) {
   const { dark, getState, getFloat, getAttr, callService, haStates } = useDashboard()
   const [config] = useCardConfig(cardId, DEFAULT_CONFIG)
   const { t } = useT('card-climatizzatore')
   const [busy, setBusy] = useState(null) // 'temp' | 'mode' | 'power' | 'fan'
+  const [timerEndsAt, setTimerEndsAt]       = useState(null)
+  const [timerPanelOpen, setTimerPanelOpen] = useState(false)
+  const [timerInput, setTimerInput]         = useState('')
+  const [timerInputMode, setTimerInputMode] = useState('min')
+  const [, forceUpdate] = useState(0)
+  const timerRef = useRef(null)
 
   const id = config.entityId
   const stateMeta = id ? haStates?.[id] : null
@@ -124,11 +134,68 @@ export default function ClimatizzatoreCard({ cardId = 'climatizzatore' }) {
     callService('climate', 'set_fan_mode', id, { fan_mode: m }),
   )
 
+  const cancelTimer = () => {
+    clearTimeout(timerRef.current)
+    timerRef.current = null
+    setTimerEndsAt(null)
+    setTimerPanelOpen(false)
+  }
+
+  const startTimer = () => {
+    if (!timerInput) return
+    cancelTimer()
+    let ms
+    if (timerInputMode === 'min') {
+      const mins = parseInt(timerInput, 10)
+      if (!mins || mins < 1 || mins > 1440) return
+      ms = mins * 60_000
+    } else {
+      const parts = timerInput.split(':').map(Number)
+      const hh = parts[0]; const mm = parts[1]
+      if (isNaN(hh) || isNaN(mm)) return
+      const now = new Date()
+      const target = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hh, mm, 0)
+      if (target.getTime() <= Date.now()) target.setDate(target.getDate() + 1)
+      ms = target.getTime() - Date.now()
+    }
+    const endsAt = Date.now() + ms
+    setTimerEndsAt(endsAt)
+    setTimerPanelOpen(false)
+    setTimerInput('')
+    timerRef.current = setTimeout(() => {
+      callService('climate', 'set_hvac_mode', id, { hvac_mode: 'off' }).catch(() => {})
+      setTimerEndsAt(null)
+    }, ms)
+  }
+
   // ─── UI palette ───────────────────────────────────────────────────────────
   const cText  = dark ? 'rgba(255,255,255,.92)' : '#0f172a'
   const cMuted = dark ? 'rgba(255,255,255,.5)'  : '#64748b'
   const cardBg = dark ? 'rgba(255,255,255,.04)' : '#ffffff'
   const border = dark ? 'rgba(255,255,255,.08)' : '#e2e8f0'
+
+  useEffect(() => {
+    if (!timerEndsAt) return
+    const iv = setInterval(() => forceUpdate(n => n + 1), 60_000)
+    return () => clearInterval(iv)
+  }, [timerEndsAt])
+
+  useEffect(() => () => clearTimeout(timerRef.current), [])
+
+  useEffect(() => {
+    if (!isOff) return
+    clearTimeout(timerRef.current)
+    timerRef.current = null
+    setTimerEndsAt(null)
+    setTimerPanelOpen(false)
+  }, [isOff])
+
+  const timerMinsLeft = timerEndsAt
+    ? Math.max(0, Math.ceil((timerEndsAt - Date.now()) / 60_000))
+    : 0
+  const timerDurStr = timerMinsLeft >= 60
+    ? `${Math.floor(timerMinsLeft / 60)}h ${timerMinsLeft % 60}min`
+    : timerMinsLeft > 0 ? `${timerMinsLeft}min` : '…'
 
   if (!id) {
     return (
@@ -207,6 +274,24 @@ export default function ClimatizzatoreCard({ cardId = 'climatizzatore' }) {
           </div>
         </div>
 
+        {/* Timer spegnimento */}
+        {!isOff && (
+          <button
+            onClick={() => setTimerPanelOpen(v => !v)}
+            title={t('timer.title')}
+            style={{
+              width: 30, height: 30, borderRadius: 8, cursor: 'pointer',
+              background: (timerEndsAt || timerPanelOpen) ? `${accent}18` : 'transparent',
+              border: `1px solid ${(timerEndsAt || timerPanelOpen) ? `${accent}50` : border}`,
+              color: (timerEndsAt || timerPanelOpen) ? accent : cMuted,
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              transition: 'all .15s',
+            }}
+          >
+            <Clock size={13} strokeWidth={2}/>
+          </button>
+        )}
+
         {/* Power toggle */}
         <button
           onClick={togglePower}
@@ -226,6 +311,84 @@ export default function ClimatizzatoreCard({ cardId = 'climatizzatore' }) {
           {isOff ? <Power size={16} strokeWidth={2.4}/> : <PowerOff size={16} strokeWidth={2.4}/>}
         </button>
       </div>
+
+      {/* ── Timer panel ── */}
+      <AnimatePresence>
+        {timerPanelOpen && !isOff && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }}
+            style={{ overflow: 'hidden', marginBottom: 12 }}
+          >
+            <div style={{
+              padding: '10px 12px', borderRadius: 12,
+              background: dark ? 'rgba(255,255,255,.04)' : '#f8fafc',
+              border: `1px solid ${border}`,
+            }}>
+              {timerEndsAt ? (
+                <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                  <Clock size={16} style={{ color: accent, flexShrink: 0 }}/>
+                  <div style={{ flex: 1 }}>
+                    <div style={{ fontSize: 13, fontWeight: 700, color: cText }}>
+                      {t('timer.activeLabel')} {fmtTargetTime(timerEndsAt)}
+                    </div>
+                    <div style={{ fontSize: 10, color: cMuted }}>
+                      {t('timer.activeIn', { m: timerDurStr })}
+                    </div>
+                  </div>
+                  <button onClick={cancelTimer} style={{
+                    padding: '5px 12px', borderRadius: 8, fontSize: 11, fontWeight: 700, cursor: 'pointer',
+                    background: dark ? 'rgba(255,255,255,.08)' : '#f1f5f9',
+                    border: `1px solid ${border}`, color: cMuted,
+                  }}>
+                    {t('timer.cancel')}
+                  </button>
+                </div>
+              ) : (
+                <>
+                  <div style={{ display: 'flex', gap: 4, marginBottom: 8 }}>
+                    {['min', 'time'].map(m => (
+                      <button key={m}
+                        onClick={() => { setTimerInputMode(m); setTimerInput('') }}
+                        style={{
+                          flex: 1, padding: '5px 0', borderRadius: 8, cursor: 'pointer',
+                          fontSize: 10, fontWeight: 700, letterSpacing: '.04em', textTransform: 'uppercase',
+                          background: timerInputMode === m ? `${accent}18` : 'transparent',
+                          border: `1px solid ${timerInputMode === m ? `${accent}50` : border}`,
+                          color: timerInputMode === m ? accent : cMuted,
+                        }}
+                      >
+                        {m === 'min' ? t('timer.tabMin') : t('timer.tabTime')}
+                      </button>
+                    ))}
+                  </div>
+                  <div style={{ display: 'flex', gap: 6 }}>
+                    <input
+                      type={timerInputMode === 'min' ? 'number' : 'time'}
+                      value={timerInput}
+                      onChange={e => setTimerInput(e.target.value)}
+                      placeholder={timerInputMode === 'min' ? t('timer.placeholderMin') : ''}
+                      min={timerInputMode === 'min' ? 1 : undefined}
+                      max={timerInputMode === 'min' ? 1440 : undefined}
+                      style={{
+                        flex: 1, padding: '7px 10px', borderRadius: 8, fontSize: 13, fontWeight: 600,
+                        background: dark ? 'rgba(255,255,255,.08)' : '#ffffff',
+                        border: `1px solid ${border}`, color: cText, outline: 'none',
+                        colorScheme: dark ? 'dark' : 'light',
+                      }}
+                    />
+                    <button onClick={startTimer} style={{
+                      padding: '0 14px', borderRadius: 8, cursor: 'pointer',
+                      fontSize: 11, fontWeight: 700, background: accent, border: 'none', color: '#fff',
+                    }}>
+                      {t('timer.set')}
+                    </button>
+                  </div>
+                </>
+              )}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* ── Temperatura corrente ── */}
       <div style={{
@@ -299,7 +462,7 @@ export default function ClimatizzatoreCard({ cardId = 'climatizzatore' }) {
       </div>
 
       {/* ── Info row: umidità + outdoor + fan ── */}
-      {(humidity != null || outdoorTemp != null || (fanMode && config.showFan)) && (
+      {(humidity != null || outdoorTemp != null || (fanMode && config.showFan) || timerEndsAt) && (
         <div style={{
           display: 'flex', gap: 8, marginBottom: 12, flexWrap: 'wrap',
         }}>
@@ -320,6 +483,24 @@ export default function ClimatizzatoreCard({ cardId = 'climatizzatore' }) {
               dark={dark} icon={<Wind size={11}/>}
               value={fanMode} label={t('chipFan')}
             />
+          )}
+          {timerEndsAt && (
+            <div style={{
+              display: 'flex', alignItems: 'center', gap: 6,
+              padding: '5px 9px', borderRadius: 8,
+              background: `${accent}12`, border: `1px solid ${accent}40`,
+            }}>
+              <span style={{ color: accent, display: 'flex' }}><Clock size={11}/></span>
+              <span style={{ fontSize: 12, fontWeight: 800, color: cText, fontVariantNumeric: 'tabular-nums' }}>
+                {fmtTargetTime(timerEndsAt)}
+              </span>
+              <button onClick={cancelTimer} style={{
+                background: 'none', border: 'none', cursor: 'pointer',
+                color: cMuted, display: 'flex', padding: 0, marginLeft: 2,
+              }}>
+                <X size={11}/>
+              </button>
+            </div>
           )}
         </div>
       )}

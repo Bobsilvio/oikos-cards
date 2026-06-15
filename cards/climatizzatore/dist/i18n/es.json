@@ -17,6 +17,17 @@
   "unavailable": "Entidad no disponible",
   "noEntity": "Configura una entidad climate.* en los ajustes de la tarjeta.",
 
+  "timer": {
+    "title":       "Temporizador de apagado",
+    "tabMin":      "Minutos",
+    "tabTime":     "Hora",
+    "placeholderMin": "ej. 45",
+    "set":         "Fijar",
+    "cancel":      "Cancelar",
+    "activeLabel": "Apagar a las",
+    "activeIn":    "en {{m}}"
+  },
+
   "settings": {
     "sectionEntity": "Entidad",
     "sectionAppearance": "Apariencia",
