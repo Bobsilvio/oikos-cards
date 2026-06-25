@@ -1,33 +1,31 @@
 {
   "mode": {
-    "off":  "Spento",
+    "off": "Spento",
     "cool": "Raffredda",
     "heat": "Riscalda",
     "auto": "Auto",
-    "dry":  "Deumidifica",
+    "dry": "Deumidifica",
     "fan_only": "Ventola"
   },
   "tempCurrent": "Attuale",
-  "tempTarget":  "Target",
+  "tempTarget": "Target",
   "chipHumidity": "Umidità",
-  "chipOutdoor":  "Esterna",
-  "chipFan":      "Ventola",
-  "btnOn":  "Accendi",
+  "chipOutdoor": "Esterna",
+  "chipFan": "Ventola",
+  "btnOn": "Accendi",
   "btnOff": "Spegni",
   "unavailable": "Entità non disponibile",
   "noEntity": "Configura un'entità climate.* nelle impostazioni della card.",
-
   "timer": {
-    "title":       "Timer spegnimento",
-    "tabMin":      "Minuti",
-    "tabTime":     "Orario",
+    "title": "Timer spegnimento",
+    "tabMin": "Minuti",
+    "tabTime": "Orario",
     "placeholderMin": "es. 45",
-    "set":         "Imposta",
-    "cancel":      "Annulla",
+    "set": "Imposta",
+    "cancel": "Annulla",
     "activeLabel": "Spegni alle",
-    "activeIn":    "tra {{m}}"
+    "activeIn": "tra {{m}}"
   },
-
   "settings": {
     "sectionEntity": "Entità",
     "sectionAppearance": "Aspetto",
@@ -48,6 +46,8 @@
     "tempStepHint": "Incremento/decremento bottoni +/-",
     "showFan": "Mostra ventola",
     "showHumidity": "Mostra umidità",
-    "labelPlaceholder": "Es. Soggiorno"
+    "labelPlaceholder": "Es. Soggiorno",
+    "timerPackage": "Timer spegnimento (Home Assistant)",
+    "timerPackageDesc": "Installa il package per far funzionare il timer di spegnimento anche col pannello chiuso."
   }
 }

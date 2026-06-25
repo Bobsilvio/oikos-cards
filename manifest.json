@@ -38,7 +38,7 @@
       "id": "climatizzatore",
       "type": "card",
       "name": "Climatizzatore",
-      "version": "1.0.7",
+      "version": "1.0.8",
       "author": "Oikos",
       "description": "Controllo completo climatizzatore HA: power, modalità (cool/heat/auto/dry/fan), target ±, fan speed, temperatura corrente e umidità. Icona animata e tema colore dinamico per modalità attiva.",
       "description_en": "Full HA air conditioner control: power, modes (cool/heat/auto/dry/fan), target ±, fan speed, current temperature and humidity. Animated icon and dynamic color theme for active mode.",
@@ -64,7 +64,16 @@
       ],
       "package": null,
       "tier": "free",
-      "changelog": null
+      "changelog": [
+        {
+          "version": "1.0.8",
+          "date": null,
+          "changes": [
+            "Il timer di spegnimento ora funziona anche col pannello chiuso: prima girava solo nel browser (si fermava se chiudevi la pagina di Home Assistant). Ora gira lato Home Assistant.",
+            "Package del timer installabile dalle impostazioni della card (helper timer + automazione di spegnimento)."
+          ]
+        }
+      ]
     },
     {
       "id": "clock",

@@ -14,7 +14,9 @@ import {
   useCardConfig, EntityField, useT,
   Section, Field, SettingsRow, TextField, Toggle,
   ColorCircles, ACCENT_COLORS, Slider,
+  usePackageInstaller, PackageSection,
 } from '@oikos/sdk'
+import { CLIMA_TIMER_YAML } from './templateYaml'
 
 const DEFAULT_CONFIG = {
   entityId:          '',
@@ -32,9 +34,17 @@ export default function ClimatizzatoreSettings({ cardId }) {
   const [config, setConfig] = useCardConfig(cardId, DEFAULT_CONFIG)
   const { t } = useT('card-climatizzatore')
   const set = (k, v) => setConfig(p => ({ ...p, [k]: v }))
+  // Package HA per il timer di spegnimento (gira anche col pannello chiuso).
+  const pkg = usePackageInstaller({ name: 'oikos_climatizzatore_timer', yaml: CLIMA_TIMER_YAML })
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+
+      <PackageSection
+        pkg={pkg}
+        label={t('settings.timerPackage')}
+        description={t('settings.timerPackageDesc')}
+      />
 
       <Section title={t('settings.sectionEntity')}>
         <Field label={t('settings.climateEntity')} hint={t('settings.climateHint')}>

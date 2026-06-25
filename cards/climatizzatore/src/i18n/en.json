@@ -1,33 +1,31 @@
 {
   "mode": {
-    "off":  "Off",
+    "off": "Off",
     "cool": "Cool",
     "heat": "Heat",
     "auto": "Auto",
-    "dry":  "Dry",
+    "dry": "Dry",
     "fan_only": "Fan"
   },
   "tempCurrent": "Current",
-  "tempTarget":  "Target",
+  "tempTarget": "Target",
   "chipHumidity": "Humidity",
-  "chipOutdoor":  "Outdoor",
-  "chipFan":      "Fan",
-  "btnOn":  "Turn on",
+  "chipOutdoor": "Outdoor",
+  "chipFan": "Fan",
+  "btnOn": "Turn on",
   "btnOff": "Turn off",
   "unavailable": "Entity unavailable",
   "noEntity": "Configure a climate.* entity in the card settings.",
-
   "timer": {
-    "title":       "Off timer",
-    "tabMin":      "Minutes",
-    "tabTime":     "Time",
+    "title": "Off timer",
+    "tabMin": "Minutes",
+    "tabTime": "Time",
     "placeholderMin": "e.g. 45",
-    "set":         "Set",
-    "cancel":      "Cancel",
+    "set": "Set",
+    "cancel": "Cancel",
     "activeLabel": "Off at",
-    "activeIn":    "in {{m}}"
+    "activeIn": "in {{m}}"
   },
-
   "settings": {
     "sectionEntity": "Entity",
     "sectionAppearance": "Appearance",
@@ -48,6 +46,8 @@
     "tempStepHint": "Increment/decrement for +/- buttons",
     "showFan": "Show fan",
     "showHumidity": "Show humidity",
-    "labelPlaceholder": "e.g. Living room"
+    "labelPlaceholder": "e.g. Living room",
+    "timerPackage": "Off timer (Home Assistant)",
+    "timerPackageDesc": "Install the package so the off-timer works even when the panel is closed."
   }
 }

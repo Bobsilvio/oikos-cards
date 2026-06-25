@@ -1,33 +1,31 @@
 {
   "mode": {
-    "off":  "Apagado",
+    "off": "Apagado",
     "cool": "Enfriar",
     "heat": "Calentar",
     "auto": "Auto",
-    "dry":  "Deshumidificar",
+    "dry": "Deshumidificar",
     "fan_only": "Ventilador"
   },
   "tempCurrent": "Actual",
-  "tempTarget":  "Objetivo",
+  "tempTarget": "Objetivo",
   "chipHumidity": "Humedad",
-  "chipOutdoor":  "Exterior",
-  "chipFan":      "Ventilador",
-  "btnOn":  "Encender",
+  "chipOutdoor": "Exterior",
+  "chipFan": "Ventilador",
+  "btnOn": "Encender",
   "btnOff": "Apagar",
   "unavailable": "Entidad no disponible",
   "noEntity": "Configura una entidad climate.* en los ajustes de la tarjeta.",
-
   "timer": {
-    "title":       "Temporizador de apagado",
-    "tabMin":      "Minutos",
-    "tabTime":     "Hora",
+    "title": "Temporizador de apagado",
+    "tabMin": "Minutos",
+    "tabTime": "Hora",
     "placeholderMin": "ej. 45",
-    "set":         "Fijar",
-    "cancel":      "Cancelar",
+    "set": "Fijar",
+    "cancel": "Cancelar",
     "activeLabel": "Apagar a las",
-    "activeIn":    "en {{m}}"
+    "activeIn": "en {{m}}"
   },
-
   "settings": {
     "sectionEntity": "Entidad",
     "sectionAppearance": "Apariencia",
@@ -48,6 +46,8 @@
     "tempStepHint": "Incremento/decremento botones +/-",
     "showFan": "Mostrar ventilador",
     "showHumidity": "Mostrar humedad",
-    "labelPlaceholder": "ej. Salón"
+    "labelPlaceholder": "ej. Salón",
+    "timerPackage": "Temporizador de apagado (Home Assistant)",
+    "timerPackageDesc": "Instala el paquete para que el temporizador de apagado funcione incluso con el panel cerrado."
   }
 }

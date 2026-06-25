@@ -61,15 +61,24 @@ export default function ClimatizzatoreCard({ cardId = 'climatizzatore' }) {
   const [config] = useCardConfig(cardId, DEFAULT_CONFIG)
   const { t } = useT('card-climatizzatore')
   const [busy, setBusy] = useState(null) // 'temp' | 'mode' | 'power' | 'fan'
-  const [timerEndsAt, setTimerEndsAt]       = useState(null)
   const [timerPanelOpen, setTimerPanelOpen] = useState(false)
   const [timerInput, setTimerInput]         = useState('')
   const [timerInputMode, setTimerInputMode] = useState('min')
   const [, forceUpdate] = useState(0)
-  const timerRef = useRef(null)
 
   const id = config.entityId
   const stateMeta = id ? haStates?.[id] : null
+
+  // Timer di spegnimento gestito da Home Assistant (package): gira anche col
+  // pannello chiuso. La card lo avvia/annulla via servizi e lo legge dall'entità.
+  // input_text tiene il climate target → il timer è "di questa card" solo se
+  // punta a `id` (un timer attivo alla volta).
+  const TIMER_ENTITY = 'timer.oikos_climatizzatore'
+  const TIMER_TARGET = 'input_text.oikos_climatizzatore_target'
+  const timerIsMine = getState(TIMER_ENTITY) === 'active' && getState(TIMER_TARGET) === id
+  const timerFinishesAt = getAttr(TIMER_ENTITY, 'finishes_at')
+  const timerEndsAt = (timerIsMine && timerFinishesAt) ? Date.parse(timerFinishesAt) : null
+  const timerAvailable = getState(TIMER_ENTITY) != null && getState(TIMER_ENTITY) !== 'unavailable'
   const hvacMode = stateMeta?.state ?? 'unavailable'
   const attrs    = stateMeta?.attributes ?? {}
 
@@ -135,15 +144,12 @@ export default function ClimatizzatoreCard({ cardId = 'climatizzatore' }) {
   )
 
   const cancelTimer = () => {
-    clearTimeout(timerRef.current)
-    timerRef.current = null
-    setTimerEndsAt(null)
+    callService('timer', 'cancel', TIMER_ENTITY).catch(() => {})
     setTimerPanelOpen(false)
   }
 
   const startTimer = () => {
     if (!timerInput) return
-    cancelTimer()
     let ms
     if (timerInputMode === 'min') {
       const mins = parseInt(timerInput, 10)
@@ -158,14 +164,14 @@ export default function ClimatizzatoreCard({ cardId = 'climatizzatore' }) {
       if (target.getTime() <= Date.now()) target.setDate(target.getDate() + 1)
       ms = target.getTime() - Date.now()
     }
-    const endsAt = Date.now() + ms
-    setTimerEndsAt(endsAt)
+    // Avvia il timer LATO HA (sopravvive a pannello chiuso). Salva il climate
+    // target in input_text → l'automazione spegne quello a fine timer.
+    const secs = Math.max(60, Math.round(ms / 1000))
+    const dur = `${String(Math.floor(secs / 3600)).padStart(2, '0')}:${String(Math.floor((secs % 3600) / 60)).padStart(2, '0')}:${String(secs % 60).padStart(2, '0')}`
+    callService('input_text', 'set_value', TIMER_TARGET, { value: id })
+    callService('timer', 'start', TIMER_ENTITY, { duration: dur })
     setTimerPanelOpen(false)
     setTimerInput('')
-    timerRef.current = setTimeout(() => {
-      callService('climate', 'set_hvac_mode', id, { hvac_mode: 'off' }).catch(() => {})
-      setTimerEndsAt(null)
-    }, ms)
   }
 
   // ─── UI palette ───────────────────────────────────────────────────────────
@@ -180,14 +186,13 @@ export default function ClimatizzatoreCard({ cardId = 'climatizzatore' }) {
     return () => clearInterval(iv)
   }, [timerEndsAt])
 
-  useEffect(() => () => clearTimeout(timerRef.current), [])
-
+  // Spegnimento manuale → annulla il timer HA in sospeso (se era di questa card).
   useEffect(() => {
-    if (!isOff) return
-    clearTimeout(timerRef.current)
-    timerRef.current = null
-    setTimerEndsAt(null)
-    setTimerPanelOpen(false)
+    if (isOff) {
+      setTimerPanelOpen(false)
+      if (timerIsMine) callService('timer', 'cancel', TIMER_ENTITY).catch(() => {})
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOff])
 
   const timerMinsLeft = timerEndsAt

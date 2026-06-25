@@ -1,33 +1,31 @@
 {
   "mode": {
-    "off":  "Éteint",
+    "off": "Éteint",
     "cool": "Refroidir",
     "heat": "Chauffer",
     "auto": "Auto",
-    "dry":  "Déshumidifier",
+    "dry": "Déshumidifier",
     "fan_only": "Ventilateur"
   },
   "tempCurrent": "Actuelle",
-  "tempTarget":  "Cible",
+  "tempTarget": "Cible",
   "chipHumidity": "Humidité",
-  "chipOutdoor":  "Extérieure",
-  "chipFan":      "Ventilateur",
-  "btnOn":  "Allumer",
+  "chipOutdoor": "Extérieure",
+  "chipFan": "Ventilateur",
+  "btnOn": "Allumer",
   "btnOff": "Éteindre",
   "unavailable": "Entité non disponible",
   "noEntity": "Configurez une entité climate.* dans les paramètres de la carte.",
-
   "timer": {
-    "title":       "Minuterie d'arrêt",
-    "tabMin":      "Minutes",
-    "tabTime":     "Heure",
+    "title": "Minuterie d'arrêt",
+    "tabMin": "Minutes",
+    "tabTime": "Heure",
     "placeholderMin": "ex. 45",
-    "set":         "Définir",
-    "cancel":      "Annuler",
+    "set": "Définir",
+    "cancel": "Annuler",
     "activeLabel": "Éteindre à",
-    "activeIn":    "dans {{m}}"
+    "activeIn": "dans {{m}}"
   },
-
   "settings": {
     "sectionEntity": "Entité",
     "sectionAppearance": "Apparence",
@@ -48,6 +46,8 @@
     "tempStepHint": "Incrément/décrément boutons +/-",
     "showFan": "Afficher ventilateur",
     "showHumidity": "Afficher humidité",
-    "labelPlaceholder": "ex. Salon"
+    "labelPlaceholder": "ex. Salon",
+    "timerPackage": "Minuteur d’arrêt (Home Assistant)",
+    "timerPackageDesc": "Installe le package pour que le minuteur d’arrêt fonctionne même panneau fermé."
   }
 }

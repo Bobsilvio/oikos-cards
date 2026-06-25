@@ -1,33 +1,31 @@
 {
   "mode": {
-    "off":  "Aus",
+    "off": "Aus",
     "cool": "Kühlen",
     "heat": "Heizen",
     "auto": "Auto",
-    "dry":  "Entfeuchten",
+    "dry": "Entfeuchten",
     "fan_only": "Lüfter"
   },
   "tempCurrent": "Aktuell",
-  "tempTarget":  "Ziel",
+  "tempTarget": "Ziel",
   "chipHumidity": "Luftfeuchtigkeit",
-  "chipOutdoor":  "Außen",
-  "chipFan":      "Lüfter",
-  "btnOn":  "Einschalten",
+  "chipOutdoor": "Außen",
+  "chipFan": "Lüfter",
+  "btnOn": "Einschalten",
   "btnOff": "Ausschalten",
   "unavailable": "Entität nicht verfügbar",
   "noEntity": "Konfiguriere eine climate.*-Entität in den Karteneinstellungen.",
-
   "timer": {
-    "title":       "Abschalttimer",
-    "tabMin":      "Minuten",
-    "tabTime":     "Uhrzeit",
+    "title": "Abschalttimer",
+    "tabMin": "Minuten",
+    "tabTime": "Uhrzeit",
     "placeholderMin": "z.B. 45",
-    "set":         "Setzen",
-    "cancel":      "Abbrechen",
+    "set": "Setzen",
+    "cancel": "Abbrechen",
     "activeLabel": "Aus um",
-    "activeIn":    "in {{m}}"
+    "activeIn": "in {{m}}"
   },
-
   "settings": {
     "sectionEntity": "Entität",
     "sectionAppearance": "Aussehen",
@@ -48,6 +46,8 @@
     "tempStepHint": "Inkrement/Dekrement Tasten +/-",
     "showFan": "Lüfter anzeigen",
     "showHumidity": "Luftfeuchtigkeit anzeigen",
-    "labelPlaceholder": "z.B. Wohnzimmer"
+    "labelPlaceholder": "z.B. Wohnzimmer",
+    "timerPackage": "Ausschalt-Timer (Home Assistant)",
+    "timerPackageDesc": "Installiere das Paket, damit der Ausschalt-Timer auch bei geschlossenem Panel funktioniert."
   }
 }
