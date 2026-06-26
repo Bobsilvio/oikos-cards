@@ -38,7 +38,7 @@
       "id": "climatizzatore",
       "type": "card",
       "name": "Climatizzatore",
-      "version": "1.0.8",
+      "version": "1.0.9",
       "author": "Oikos",
       "description": "Controllo completo climatizzatore HA: power, modalità (cool/heat/auto/dry/fan), target ±, fan speed, temperatura corrente e umidità. Icona animata e tema colore dinamico per modalità attiva.",
       "description_en": "Full HA air conditioner control: power, modes (cool/heat/auto/dry/fan), target ±, fan speed, current temperature and humidity. Animated icon and dynamic color theme for active mode.",
@@ -65,6 +65,13 @@
       "package": null,
       "tier": "free",
       "changelog": [
+        {
+          "version": "1.0.9",
+          "date": null,
+          "changes": [
+            "Preset modes: ora la card mostra anche i preset del climatizzatore (es. Notte/Sleep, Eco, Boost, Comfort), ognuno con icona. Si attivano con un tocco. Disattivabili da impostazioni → \"Mostra preset\"."
+          ]
+        },
         {
           "version": "1.0.8",
           "date": null,

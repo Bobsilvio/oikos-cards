@@ -2,6 +2,11 @@
 
 Tutte le modifiche rilevanti di questa card.
 
+## [1.0.9]
+
+### Added
+- Preset modes: ora la card mostra anche i preset del climatizzatore (es. **Notte/Sleep**, Eco, Boost, Comfort), ognuno con icona. Si attivano con un tocco. Disattivabili da impostazioni → "Mostra preset".
+
 ## [1.0.8]
 
 ### Fixed

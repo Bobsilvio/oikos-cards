@@ -48,6 +48,18 @@
     "showHumidity": "Mostra umidità",
     "labelPlaceholder": "Es. Soggiorno",
     "timerPackage": "Timer spegnimento (Home Assistant)",
-    "timerPackageDesc": "Installa il package per far funzionare il timer di spegnimento anche col pannello chiuso."
-  }
+    "timerPackageDesc": "Installa il package per far funzionare il timer di spegnimento anche col pannello chiuso.",
+    "showPreset": "Mostra preset (eco, notte…)"
+  },
+  "preset": {
+    "none": "Normale",
+    "boost": "Boost",
+    "eco": "Eco",
+    "sleep": "Notte",
+    "comfort": "Comfort",
+    "away": "Assente",
+    "home": "Casa",
+    "activity": "Attività"
+  },
+  "chipPreset": "Preset"
 }

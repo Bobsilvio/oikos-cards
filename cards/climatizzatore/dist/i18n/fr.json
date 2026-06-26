@@ -48,6 +48,18 @@
     "showHumidity": "Afficher humidité",
     "labelPlaceholder": "ex. Salon",
     "timerPackage": "Minuteur d’arrêt (Home Assistant)",
-    "timerPackageDesc": "Installe le package pour que le minuteur d’arrêt fonctionne même panneau fermé."
-  }
+    "timerPackageDesc": "Installe le package pour que le minuteur d’arrêt fonctionne même panneau fermé.",
+    "showPreset": "Afficher les préréglages (éco, nuit…)"
+  },
+  "preset": {
+    "none": "Normal",
+    "boost": "Boost",
+    "eco": "Éco",
+    "sleep": "Nuit",
+    "comfort": "Confort",
+    "away": "Absent",
+    "home": "Maison",
+    "activity": "Activité"
+  },
+  "chipPreset": "Préréglage"
 }

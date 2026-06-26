@@ -10,6 +10,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import {
   Power, PowerOff, Snowflake, Flame, Wind, Droplets, RefreshCcw,
   Plus, Minus, Sun, Sparkles, AirVent, Clock, X,
+  Moon, Leaf, Zap, Gauge, Home,
 } from 'lucide-react'
 import { useDashboard, useCardConfig, registerCardTranslations, useT } from '@oikos/sdk'
 import it from './i18n/it.json'
@@ -30,6 +31,7 @@ const DEFAULT_CONFIG = {
   step:        0.5,                    // step +/- target
   showFan:     true,
   showHumidity: true,
+  showPreset:  true,                   // preset_modes (eco, boost, sleep/notte…)
 }
 
 // Mappa modalità HVAC → preset visivo (le label vengono sovrascritte via t() nel componente)
@@ -45,6 +47,15 @@ const MODE_PRESETS = {
 
 function modeOf(state) {
   return MODE_PRESETS[state] || MODE_PRESETS.off
+}
+
+// Icone per i preset_modes noti (sleep = modalità notte). Fallback Gauge.
+const PRESET_ICONS = {
+  none: Minus, boost: Zap, eco: Leaf, sleep: Moon,
+  comfort: Sun, away: Home, home: Home, activity: Gauge,
+}
+function presetIcon(p) {
+  return PRESET_ICONS[String(p).toLowerCase()] || Gauge
 }
 
 function fmtTemp(t, dec = 1) {
@@ -97,12 +108,22 @@ export default function ClimatizzatoreCard({ cardId = 'climatizzatore' }) {
   const hvacModes     = attrs.hvac_modes ?? ['off', 'cool', 'heat', 'auto', 'dry', 'fan_only']
   const fanModes      = attrs.fan_modes ?? null
   const fanMode       = attrs.fan_mode
+  const presetModes   = attrs.preset_modes ?? null
+  const presetMode    = attrs.preset_mode
 
   const outdoorTemp   = config.outdoorTempEntity ? getFloat(config.outdoorTempEntity) : null
 
   const preset = useMemo(() => modeOf(hvacMode), [hvacMode])
   const accent = config.accentColor || preset.color
   const displayLabel = config.label || attrs.friendly_name || 'Climatizzatore'
+
+  // Label preset: usa la traduzione se esiste (preset.sleep → "Notte"),
+  // altrimenti mostra il nome grezzo del device (es. "windFree").
+  const presetLabel = (p) => {
+    const k = String(p).toLowerCase()
+    const tk = t(`preset.${k}`)
+    return tk === `preset.${k}` ? p : tk
+  }
 
   const lastMode = useMemo(() => {
     // Se entità è OFF, ricorda ultima modalità non-off per il toggle ON
@@ -141,6 +162,10 @@ export default function ClimatizzatoreCard({ cardId = 'climatizzatore' }) {
 
   const setFanMode = (m) => safeCall('fan', () =>
     callService('climate', 'set_fan_mode', id, { fan_mode: m }),
+  )
+
+  const setPresetMode = (m) => safeCall('preset', () =>
+    callService('climate', 'set_preset_mode', id, { preset_mode: m }),
   )
 
   const cancelTimer = () => {
@@ -466,8 +491,8 @@ export default function ClimatizzatoreCard({ cardId = 'climatizzatore' }) {
         )}
       </div>
 
-      {/* ── Info row: umidità + outdoor + fan ── */}
-      {(humidity != null || outdoorTemp != null || (fanMode && config.showFan) || timerEndsAt) && (
+      {/* ── Info row: umidità + outdoor + fan + preset ── */}
+      {(humidity != null || outdoorTemp != null || (fanMode && config.showFan) || (config.showPreset && presetMode && presetMode !== 'none') || timerEndsAt) && (
         <div style={{
           display: 'flex', gap: 8, marginBottom: 12, flexWrap: 'wrap',
         }}>
@@ -489,6 +514,15 @@ export default function ClimatizzatoreCard({ cardId = 'climatizzatore' }) {
               value={fanMode} label={t('chipFan')}
             />
           )}
+          {config.showPreset && presetMode && presetMode !== 'none' && (() => {
+            const PIcon = presetIcon(presetMode)
+            return (
+              <InfoChip
+                dark={dark} icon={<PIcon size={11}/>}
+                value={presetLabel(presetMode)} label={t('chipPreset')}
+              />
+            )
+          })()}
           {timerEndsAt && (
             <div style={{
               display: 'flex', alignItems: 'center', gap: 6,
@@ -569,6 +603,36 @@ export default function ClimatizzatoreCard({ cardId = 'climatizzatore' }) {
               {fm}
             </button>
           ))}
+        </div>
+      )}
+
+      {/* ── Preset modes (eco, boost, sleep/notte… se disponibili e abilitati) ── */}
+      {config.showPreset && presetModes && presetModes.length > 0 && !isOff && (
+        <div style={{ display: 'flex', gap: 4, flexWrap: 'wrap', marginTop: 8 }}>
+          {presetModes.map(pm => {
+            const PIcon = presetIcon(pm)
+            const active = pm === presetMode
+            return (
+              <button
+                key={pm}
+                onClick={() => setPresetMode(pm)}
+                disabled={busy === 'preset' || pm === presetMode}
+                title={presetLabel(pm)}
+                style={{
+                  display: 'flex', alignItems: 'center', gap: 5,
+                  padding: '4px 10px', borderRadius: 99, cursor: 'pointer',
+                  fontSize: 10, fontWeight: 700, letterSpacing: '.02em',
+                  background: active ? `${accent}22` : 'transparent',
+                  border: `1px solid ${active ? `${accent}50` : border}`,
+                  color: active ? accent : cMuted,
+                  transition: 'all .15s',
+                }}
+              >
+                <PIcon size={11} strokeWidth={2}/>
+                {presetLabel(pm)}
+              </button>
+            )
+          })}
         </div>
       )}
 

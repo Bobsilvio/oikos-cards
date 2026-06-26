@@ -27,6 +27,7 @@ const DEFAULT_CONFIG = {
   accentColor:       '',
   step:              0.5,
   showFan:           true,
+  showPreset:        true,
   showHumidity:      true,
 }
 
@@ -109,6 +110,9 @@ export default function ClimatizzatoreSettings({ cardId }) {
         </Field>
         <SettingsRow label={t('settings.showFan')}>
           <Toggle value={config.showFan} onChange={v => set('showFan', v)}/>
+        </SettingsRow>
+        <SettingsRow label={t('settings.showPreset')}>
+          <Toggle value={config.showPreset !== false} onChange={v => set('showPreset', v)}/>
         </SettingsRow>
         <SettingsRow label={t('settings.showHumidity')}>
           <Toggle value={config.showHumidity} onChange={v => set('showHumidity', v)}/>

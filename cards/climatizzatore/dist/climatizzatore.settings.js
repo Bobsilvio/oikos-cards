@@ -28,7 +28,7 @@ automation:
       - service: climate.turn_off
         target:
           entity_id: "{{ target }}"
-`, { useCardConfig: y, EntityField: r, useT: z, Section: c, Field: o, SettingsRow: m, TextField: f, Toggle: d, ColorCircles: C, ACCENT_COLORS: b, Slider: k, usePackageInstaller: S, PackageSection: w } = window.__OIKOS_SDK__, v = {
+`, { useCardConfig: y, EntityField: r, useT: f, Section: c, Field: o, SettingsRow: m, TextField: z, Toggle: d, ColorCircles: C, ACCENT_COLORS: b, Slider: w, usePackageInstaller: k, PackageSection: S } = window.__OIKOS_SDK__, v = {
   entityId: "",
   indoorTempEntity: "",
   outdoorTempEntity: "",
@@ -37,13 +37,14 @@ automation:
   accentColor: "",
   step: 0.5,
   showFan: !0,
+  showPreset: !0,
   showHumidity: !0
 };
 function E({ cardId: g }) {
-  const [n, a] = y(g, v), { t } = z("card-climatizzatore"), s = (i, _) => a((u) => ({ ...u, [i]: _ })), h = S({ name: "oikos_climatizzatore_timer", yaml: p });
+  const [n, a] = y(g, v), { t } = f("card-climatizzatore"), s = (i, _) => a((u) => ({ ...u, [i]: _ })), h = k({ name: "oikos_climatizzatore_timer", yaml: p });
   return /* @__PURE__ */ l("div", { style: { display: "flex", flexDirection: "column", gap: 14 }, children: [
     /* @__PURE__ */ e(
-      w,
+      S,
       {
         pkg: h,
         label: t("settings.timerPackage"),
@@ -90,7 +91,7 @@ function E({ cardId: g }) {
     ] }),
     /* @__PURE__ */ l(c, { title: t("settings.sectionAppearance"), children: [
       /* @__PURE__ */ e(o, { label: t("settings.label"), hint: t("settings.labelHint"), children: /* @__PURE__ */ e(
-        f,
+        z,
         {
           value: n.label,
           onChange: (i) => s("label", i),
@@ -108,7 +109,7 @@ function E({ cardId: g }) {
     ] }),
     /* @__PURE__ */ l(c, { title: t("settings.sectionCommands"), children: [
       /* @__PURE__ */ e(o, { label: t("settings.tempStep"), hint: t("settings.tempStepHint"), children: /* @__PURE__ */ e(
-        k,
+        w,
         {
           value: n.step,
           onChange: (i) => s("step", i),
@@ -119,6 +120,7 @@ function E({ cardId: g }) {
         }
       ) }),
       /* @__PURE__ */ e(m, { label: t("settings.showFan"), children: /* @__PURE__ */ e(d, { value: n.showFan, onChange: (i) => s("showFan", i) }) }),
+      /* @__PURE__ */ e(m, { label: t("settings.showPreset"), children: /* @__PURE__ */ e(d, { value: n.showPreset !== !1, onChange: (i) => s("showPreset", i) }) }),
       /* @__PURE__ */ e(m, { label: t("settings.showHumidity"), children: /* @__PURE__ */ e(d, { value: n.showHumidity, onChange: (i) => s("showHumidity", i) }) })
     ] })
   ] });

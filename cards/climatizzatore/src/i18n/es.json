@@ -48,6 +48,18 @@
     "showHumidity": "Mostrar humedad",
     "labelPlaceholder": "ej. Salón",
     "timerPackage": "Temporizador de apagado (Home Assistant)",
-    "timerPackageDesc": "Instala el paquete para que el temporizador de apagado funcione incluso con el panel cerrado."
-  }
+    "timerPackageDesc": "Instala el paquete para que el temporizador de apagado funcione incluso con el panel cerrado.",
+    "showPreset": "Mostrar presets (eco, noche…)"
+  },
+  "preset": {
+    "none": "Normal",
+    "boost": "Boost",
+    "eco": "Eco",
+    "sleep": "Noche",
+    "comfort": "Confort",
+    "away": "Ausente",
+    "home": "Casa",
+    "activity": "Actividad"
+  },
+  "chipPreset": "Preset"
 }

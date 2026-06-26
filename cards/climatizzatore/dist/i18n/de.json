@@ -48,6 +48,18 @@
     "showHumidity": "Luftfeuchtigkeit anzeigen",
     "labelPlaceholder": "z.B. Wohnzimmer",
     "timerPackage": "Ausschalt-Timer (Home Assistant)",
-    "timerPackageDesc": "Installiere das Paket, damit der Ausschalt-Timer auch bei geschlossenem Panel funktioniert."
-  }
+    "timerPackageDesc": "Installiere das Paket, damit der Ausschalt-Timer auch bei geschlossenem Panel funktioniert.",
+    "showPreset": "Presets anzeigen (Eco, Nacht…)"
+  },
+  "preset": {
+    "none": "Normal",
+    "boost": "Boost",
+    "eco": "Eco",
+    "sleep": "Nacht",
+    "comfort": "Komfort",
+    "away": "Abwesend",
+    "home": "Zuhause",
+    "activity": "Aktivität"
+  },
+  "chipPreset": "Preset"
 }

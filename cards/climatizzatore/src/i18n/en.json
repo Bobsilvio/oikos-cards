@@ -48,6 +48,18 @@
     "showHumidity": "Show humidity",
     "labelPlaceholder": "e.g. Living room",
     "timerPackage": "Off timer (Home Assistant)",
-    "timerPackageDesc": "Install the package so the off-timer works even when the panel is closed."
-  }
+    "timerPackageDesc": "Install the package so the off-timer works even when the panel is closed.",
+    "showPreset": "Show presets (eco, sleep…)"
+  },
+  "preset": {
+    "none": "Normal",
+    "boost": "Boost",
+    "eco": "Eco",
+    "sleep": "Sleep",
+    "comfort": "Comfort",
+    "away": "Away",
+    "home": "Home",
+    "activity": "Activity"
+  },
+  "chipPreset": "Preset"
 }
