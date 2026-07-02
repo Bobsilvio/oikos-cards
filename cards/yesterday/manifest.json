@@ -1,7 +1,7 @@
 {
   "id": "yesterday",
   "name": "Fotovoltaico — Ieri",
-  "version": "1.0.4",
+  "version": "1.1.0",
   "author": "Oikos",
   "description": "Riepilogo produzione/consumo/prelievo/cessione del giorno precedente con grafico orario.",
   "description_en": "Previous day production/consumption/grid-draw/export summary with hourly chart.",

@@ -1,6 +1,6 @@
-const { jsxs: s, jsx: e } = window.__OIKOS_SDK__.jsxRuntime, m = (t, n = 0) => {
-  const l = parseFloat(t);
-  return isNaN(l) ? "—" : l.toLocaleString("it-IT", { minimumFractionDigits: n, maximumFractionDigits: n });
+const { jsxs: d, jsx: e } = window.__OIKOS_SDK__.jsxRuntime, x = (t, s = 0) => {
+  const c = parseFloat(t);
+  return isNaN(c) ? "—" : c.toLocaleString("it-IT", { minimumFractionDigits: s, maximumFractionDigits: s });
 }, q = () => {
   const t = /* @__PURE__ */ new Date();
   return t.setDate(t.getDate() - 1), t.toLocaleDateString("it-IT", { weekday: "long", day: "2-digit", month: "long", year: "numeric" });
@@ -44,9 +44,9 @@ const { jsxs: s, jsx: e } = window.__OIKOS_SDK__.jsxRuntime, m = (t, n = 0) => {
   stats: M,
   chart: tt,
   settings: et
-}, { useState: b, useEffect: it, useCallback: rt } = window.__OIKOS_SDK__.React, { TrendingUp: nt, Zap: at, Home: st, PlugZap: lt, Upload: dt } = window.__OIKOS_SDK__.icons, { LineChart: ct, Line: gt, XAxis: ut, YAxis: pt, Tooltip: ft, ResponsiveContainer: ht, Legend: yt } = window.__OIKOS_SDK__.recharts, { useDashboard: mt, getEntities: bt, registerCardTranslations: xt, useT: vt } = window.__OIKOS_SDK__;
+}, { useState: v, useEffect: rt, useCallback: nt } = window.__OIKOS_SDK__.React, { TrendingUp: it, Zap: at, Home: st, PlugZap: lt, Upload: dt } = window.__OIKOS_SDK__.icons, { LineChart: ct, Line: gt, XAxis: ut, YAxis: pt, Tooltip: ft, ResponsiveContainer: yt, Legend: ht } = window.__OIKOS_SDK__.recharts, { useDashboard: mt, getEntities: bt, registerCardTranslations: xt, useT: vt, getPlants: K } = window.__OIKOS_SDK__;
 xt("card-yesterday", { it: X, en: ot });
-function St() {
+function Tt() {
   try {
     const t = localStorage.getItem("oikos-graphics-quality") || "high";
     return { chartAnimActive: t !== "low", chartAnimDuration: t === "high" ? 1200 : t === "medium" ? 500 : 0 };
@@ -54,76 +54,82 @@ function St() {
     return { chartAnimActive: !0, chartAnimDuration: 1200 };
   }
 }
-function x({ dark: t, icon: n, iconColor: l, label: i, value: v }) {
-  return /* @__PURE__ */ s("div", { style: {
+function T({ dark: t, icon: s, iconColor: c, label: n, value: S }) {
+  return /* @__PURE__ */ d("div", { style: {
     background: t ? "rgba(255,255,255,.05)" : "rgba(0,0,0,.03)",
     border: `1px solid ${t ? "rgba(255,255,255,.08)" : "rgba(0,0,0,.07)"}`,
     borderRadius: 12,
     padding: "12px 10px",
     textAlign: "center"
   }, children: [
-    /* @__PURE__ */ e("div", { style: { display: "flex", justifyContent: "center", color: l || "var(--text-muted)" }, children: /* @__PURE__ */ e(n, { size: 18, strokeWidth: 2 }) }),
-    /* @__PURE__ */ e("div", { style: { fontSize: 19, fontWeight: 800, color: "var(--text-primary)", marginTop: 5, letterSpacing: "-.5px" }, children: v }),
-    /* @__PURE__ */ e("div", { style: { fontSize: 10, color: "var(--text-muted)", marginTop: 3, textTransform: "uppercase", letterSpacing: ".6px", lineHeight: 1.3 }, children: i })
+    /* @__PURE__ */ e("div", { style: { display: "flex", justifyContent: "center", color: c || "var(--text-muted)" }, children: /* @__PURE__ */ e(s, { size: 18, strokeWidth: 2 }) }),
+    /* @__PURE__ */ e("div", { style: { fontSize: 19, fontWeight: 800, color: "var(--text-primary)", marginTop: 5, letterSpacing: "-.5px" }, children: S }),
+    /* @__PURE__ */ e("div", { style: { fontSize: 10, color: "var(--text-muted)", marginTop: 3, textTransform: "uppercase", letterSpacing: ".6px", lineHeight: 1.3 }, children: n })
   ] });
 }
-function Tt() {
-  const { dark: t, fetchHistory: n, connected: l } = mt(), { t: i } = vt("card-yesterday"), { chartAnimActive: v, chartAnimDuration: F } = St(), [L, G] = b([]), [p, K] = b({ prod: 0, cons: 0, prel: 0, ced: 0 }), [O, w] = b(!1), [C, E] = b(!1), A = rt(async () => {
-    if (C || !n || !l) return;
-    w(!0);
-    const d = bt(), f = [
-      d.prodToday,
-      d.consToday,
-      d.gridFromToday,
-      d.gridToToday
-    ].filter(Boolean), a = /* @__PURE__ */ new Date();
-    a.setDate(a.getDate() - 1), a.setHours(0, 0, 0, 0);
-    const z = new Date(a);
-    z.setHours(23, 59, 59, 999);
+function kt() {
+  const { dark: t, fetchHistory: s, connected: c } = mt(), { t: n } = vt("card-yesterday"), { chartAnimActive: S, chartAnimDuration: O } = Tt(), [H, R] = v([]), [m, $] = v({ prod: 0, cons: 0, prel: 0, ced: 0 }), [P, C] = v(!1), [W, j] = v(!1), I = nt(async () => {
+    if (W || !s || !c) return;
+    C(!0);
+    const i = bt(), p = ((typeof K == "function" ? K() : []) || []).map((g) => g.dailyEnergyEntity).filter(Boolean), L = p.length > 0, B = [
+      ...L ? p : [i.prodToday],
+      i.consToday,
+      i.gridFromToday,
+      i.gridToToday
+    ].filter(Boolean), f = /* @__PURE__ */ new Date();
+    f.setDate(f.getDate() - 1), f.setHours(0, 0, 0, 0);
+    const E = new Date(f);
+    E.setHours(23, 59, 59, 999);
     try {
-      const u = await n(f, a, z);
-      if (!u || typeof u != "object") return;
-      const h = (c) => {
-        const o = u[c], g = new Array(24).fill(null);
-        if (!Array.isArray(o)) return g;
+      const g = await s(B, f, E);
+      if (!g || typeof g != "object") return;
+      const y = (l) => {
+        const o = g[l], a = new Array(24).fill(null);
+        if (!Array.isArray(o)) return a;
         o.forEach((r) => {
-          const B = typeof r.lu == "number" ? r.lu * 1e3 : Date.parse(r.lu ?? r.last_changed), Y = new Date(B).getHours(), I = parseFloat(r.s ?? r.state);
-          isNaN(I) || (g[Y] = I);
+          const u = typeof r.lu == "number" ? r.lu * 1e3 : Date.parse(r.lu ?? r.last_changed), A = new Date(u).getHours(), G = parseFloat(r.s ?? r.state);
+          isNaN(G) || (a[A] = G);
         });
-        let _ = null;
+        let h = null;
         for (let r = 0; r < 24; r++)
-          g[r] !== null ? _ = g[r] : _ !== null && (g[r] = _);
-        return g;
-      }, [R, $, P, j] = f, S = h(R), T = h($), k = h(P), D = h(j), N = Array.from({ length: 24 }, (c, o) => ({
+          a[r] !== null ? h = a[r] : h !== null && (a[r] = h);
+        return a;
+      }, k = L ? ((l) => {
+        const o = l.map((a) => y(a));
+        return Array.from({ length: 24 }, (a, h) => {
+          const r = o.map((u) => u[h]).filter((u) => u != null);
+          return r.length ? r.reduce((u, A) => u + A, 0) : null;
+        });
+      })(p) : y(i.prodToday), D = y(i.consToday), _ = y(i.gridFromToday), w = y(i.gridToToday), Y = Array.from({ length: 24 }, (l, o) => ({
         ora: `${String(o).padStart(2, "0")}:00`,
-        prod: S[o] != null ? +S[o].toFixed(2) : null,
-        cons: T[o] != null ? +T[o].toFixed(2) : null,
-        prel: k[o] != null ? +k[o].toFixed(2) : null,
-        ced: D[o] != null ? +D[o].toFixed(2) : null
+        prod: k[o] != null ? +k[o].toFixed(2) : null,
+        cons: D[o] != null ? +D[o].toFixed(2) : null,
+        prel: _[o] != null ? +_[o].toFixed(2) : null,
+        ced: w[o] != null ? +w[o].toFixed(2) : null
       }));
-      G(N);
-      const y = (c) => {
-        for (let o = c.length - 1; o >= 0; o--) if (c[o] !== null) return c[o];
+      R(Y);
+      const b = (l) => {
+        for (let o = l.length - 1; o >= 0; o--) if (l[o] !== null) return l[o];
         return 0;
       };
-      K({ prod: y(S), cons: y(T), prel: y(k), ced: y(D) }), E(!0);
-    } catch (u) {
-      console.error("[YesterdayCard] fetchHistory error", u);
+      $({ prod: b(k), cons: b(D), prel: b(_), ced: b(w) }), j(!0);
+    } catch (g) {
+      console.error("[YesterdayCard] fetchHistory error", g);
     } finally {
-      w(!1);
+      C(!1);
     }
-  }, [C, n, l]);
-  it(() => {
-    A();
-  }, [A]);
-  const W = ["#f59e0b", "#3b82f6", "#8b5cf6", "#10b981"], H = {
+  }, [W, s, c]);
+  rt(() => {
+    I();
+  }, [I]);
+  const z = ["#f59e0b", "#3b82f6", "#8b5cf6", "#10b981"], N = {
     backgroundColor: t ? "#1e293b" : "#fff",
     border: `1px solid ${t ? "rgba(255,255,255,.12)" : "#e2e8f0"}`,
     borderRadius: 10,
     fontSize: 12,
     color: t ? "#f8fafc" : "#0f172a"
   };
-  return /* @__PURE__ */ s("div", { style: { position: "relative", overflow: "hidden" }, children: [
+  return /* @__PURE__ */ d("div", { style: { position: "relative", overflow: "hidden" }, children: [
     /* @__PURE__ */ e("div", { style: {
       position: "absolute",
       top: 0,
@@ -132,7 +138,7 @@ function Tt() {
       height: 3,
       background: "linear-gradient(90deg,#f59e0b,#fbbf24)"
     } }),
-    /* @__PURE__ */ s("div", { style: { display: "flex", alignItems: "center", gap: 10, padding: "18px 20px 14px" }, children: [
+    /* @__PURE__ */ d("div", { style: { display: "flex", alignItems: "center", gap: 10, padding: "18px 20px 14px" }, children: [
       /* @__PURE__ */ e("div", { style: {
         width: 36,
         height: 36,
@@ -142,51 +148,51 @@ function Tt() {
         display: "flex",
         alignItems: "center",
         justifyContent: "center"
-      }, children: /* @__PURE__ */ e(nt, { size: 18, color: "#f59e0b" }) }),
-      /* @__PURE__ */ s("div", { children: [
-        /* @__PURE__ */ e("div", { style: { fontSize: 15, fontWeight: 800, color: "var(--text-primary)", letterSpacing: "-.3px" }, children: i("title") }),
+      }, children: /* @__PURE__ */ e(it, { size: 18, color: "#f59e0b" }) }),
+      /* @__PURE__ */ d("div", { children: [
+        /* @__PURE__ */ e("div", { style: { fontSize: 15, fontWeight: 800, color: "var(--text-primary)", letterSpacing: "-.3px" }, children: n("title") }),
         /* @__PURE__ */ e("div", { style: { fontSize: 11, color: "var(--text-muted)", marginTop: 1 }, children: q() })
       ] })
     ] }),
-    /* @__PURE__ */ s("div", { style: { padding: "0 16px 16px" }, children: [
-      /* @__PURE__ */ s("div", { style: { display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: 8, marginBottom: 14 }, children: [
-        /* @__PURE__ */ e(x, { dark: t, icon: at, iconColor: t ? "#fbbf24" : "#d97706", label: i("stats.production"), value: m(p.prod, 2) + " kWh" }),
-        /* @__PURE__ */ e(x, { dark: t, icon: st, iconColor: t ? "#60a5fa" : "#2563eb", label: i("stats.consumption"), value: m(p.cons, 2) + " kWh" }),
-        /* @__PURE__ */ e(x, { dark: t, icon: lt, iconColor: t ? "#a78bfa" : "#7c3aed", label: i("stats.fromGrid"), value: m(p.prel, 2) + " kWh" }),
-        /* @__PURE__ */ e(x, { dark: t, icon: dt, iconColor: t ? "#34d399" : "#059669", label: i("stats.toGrid"), value: m(p.ced, 2) + " kWh" })
+    /* @__PURE__ */ d("div", { style: { padding: "0 16px 16px" }, children: [
+      /* @__PURE__ */ d("div", { style: { display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: 8, marginBottom: 14 }, children: [
+        /* @__PURE__ */ e(T, { dark: t, icon: at, iconColor: t ? "#fbbf24" : "#d97706", label: n("stats.production"), value: x(m.prod, 2) + " kWh" }),
+        /* @__PURE__ */ e(T, { dark: t, icon: st, iconColor: t ? "#60a5fa" : "#2563eb", label: n("stats.consumption"), value: x(m.cons, 2) + " kWh" }),
+        /* @__PURE__ */ e(T, { dark: t, icon: lt, iconColor: t ? "#a78bfa" : "#7c3aed", label: n("stats.fromGrid"), value: x(m.prel, 2) + " kWh" }),
+        /* @__PURE__ */ e(T, { dark: t, icon: dt, iconColor: t ? "#34d399" : "#059669", label: n("stats.toGrid"), value: x(m.ced, 2) + " kWh" })
       ] }),
-      /* @__PURE__ */ s("div", { style: {
+      /* @__PURE__ */ d("div", { style: {
         background: t ? "rgba(255,255,255,.03)" : "rgba(0,0,0,.02)",
         border: `1px solid ${t ? "rgba(255,255,255,.07)" : "rgba(0,0,0,.06)"}`,
         borderRadius: 12,
         padding: "14px 8px 8px"
       }, children: [
-        /* @__PURE__ */ e("div", { style: { fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: ".8px", color: "var(--text-muted)", marginBottom: 12, paddingLeft: 8 }, children: i("chart.title") }),
-        O ? /* @__PURE__ */ e("div", { style: { textAlign: "center", padding: "40px 0", color: "var(--text-muted)", fontSize: 13 }, children: i("chart.loading") }) : /* @__PURE__ */ e(ht, { width: "100%", height: 220, children: /* @__PURE__ */ s(ct, { data: L, margin: { top: 5, right: 20, left: 0, bottom: 5 }, children: [
+        /* @__PURE__ */ e("div", { style: { fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: ".8px", color: "var(--text-muted)", marginBottom: 12, paddingLeft: 8 }, children: n("chart.title") }),
+        P ? /* @__PURE__ */ e("div", { style: { textAlign: "center", padding: "40px 0", color: "var(--text-muted)", fontSize: 13 }, children: n("chart.loading") }) : /* @__PURE__ */ e(yt, { width: "100%", height: 220, children: /* @__PURE__ */ d(ct, { data: H, margin: { top: 5, right: 20, left: 0, bottom: 5 }, children: [
           /* @__PURE__ */ e(ut, { dataKey: "ora", tick: { fill: "var(--text-muted)", fontSize: 10 }, tickLine: !1, axisLine: !1, interval: 3 }),
           /* @__PURE__ */ e(pt, { tick: { fill: "var(--text-muted)", fontSize: 10 }, tickLine: !1, axisLine: !1, width: 35 }),
-          /* @__PURE__ */ e(ft, { contentStyle: H, labelStyle: { fontWeight: 700 } }),
-          /* @__PURE__ */ e(yt, { wrapperStyle: { fontSize: 11, paddingTop: 8 } }),
+          /* @__PURE__ */ e(ft, { contentStyle: N, labelStyle: { fontWeight: 700 } }),
+          /* @__PURE__ */ e(ht, { wrapperStyle: { fontSize: 11, paddingTop: 8 } }),
           [
-            { key: "prod", label: i("stats.production") },
-            { key: "cons", label: i("stats.consumption") },
-            { key: "prel", label: i("stats.fromGrid") },
-            { key: "ced", label: i("stats.toGrid") }
-          ].map(({ key: d, label: f }, a) => /* @__PURE__ */ e(
+            { key: "prod", label: n("stats.production") },
+            { key: "cons", label: n("stats.consumption") },
+            { key: "prel", label: n("stats.fromGrid") },
+            { key: "ced", label: n("stats.toGrid") }
+          ].map(({ key: i, label: F }, p) => /* @__PURE__ */ e(
             gt,
             {
               type: "monotone",
-              dataKey: d,
-              name: f,
-              stroke: W[a],
+              dataKey: i,
+              name: F,
+              stroke: z[p],
               strokeWidth: 2,
               dot: !1,
               connectNulls: !0,
-              activeDot: { r: 4, fill: W[a] },
-              isAnimationActive: v,
-              animationDuration: F
+              activeDot: { r: 4, fill: z[p] },
+              isAnimationActive: S,
+              animationDuration: O
             },
-            d
+            i
           ))
         ] }) })
       ] })
@@ -194,5 +200,5 @@ function Tt() {
   ] });
 }
 export {
-  Tt as default
+  kt as default
 };

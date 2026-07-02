@@ -2,7 +2,7 @@
   "repo": "oikos-cards",
   "version": "0.1.0",
   "sdkVersion": "1.0.0",
-  "updated": "2026-06-26",
+  "updated": "2026-07-02",
   "cards": [
     {
       "id": "air-quality",
@@ -301,7 +301,7 @@
       "id": "yesterday",
       "type": "card",
       "name": "Fotovoltaico — Ieri",
-      "version": "1.0.4",
+      "version": "1.1.0",
       "author": "Oikos",
       "description": "Riepilogo produzione/consumo/prelievo/cessione del giorno precedente con grafico orario.",
       "description_en": "Previous day production/consumption/grid-draw/export summary with hourly chart.",
@@ -326,7 +326,15 @@
       ],
       "package": null,
       "tier": "free",
-      "changelog": null
+      "changelog": [
+        {
+          "version": "1.1.0",
+          "date": null,
+          "changes": [
+            "Supporto multi-impianto: se configuri più impianti fotovoltaici (Impostazioni → Impianti fotovoltaici), la produzione mostrata è la somma di tutti gli impianti. Con un solo impianto nulla cambia."
+          ]
+        }
+      ]
     }
   ]
 }

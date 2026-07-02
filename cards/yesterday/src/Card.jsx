@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import { TrendingUp, Zap, Home, PlugZap, Upload } from 'lucide-react'
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend } from 'recharts'
-import { useDashboard, getEntities, registerCardTranslations, useT } from '@oikos/sdk'
+import { useDashboard, getEntities, registerCardTranslations, useT, getPlants } from '@oikos/sdk'
 import { fmt, yesterdayIt } from './format'
 import it from './i18n/it.json'
 import en from './i18n/en.json'
@@ -45,8 +45,14 @@ export default function YesterdayCard() {
     setLoading(true)
 
     const ENTITIES = getEntities()
+    // Multi-inverter: se ci sono impianti globali con l'energia giornaliera,
+    // la produzione è la SOMMA delle loro serie orarie. Fallback: prodToday.
+    // guard su getPlants → pannelli vecchi senza la feature.
+    const plants = (typeof getPlants === 'function' ? getPlants() : []) || []
+    const plantProdIds = plants.map(p => p.dailyEnergyEntity).filter(Boolean)
+    const useAgg = plantProdIds.length > 0
     const ids = [
-      ENTITIES.prodToday,
+      ...(useAgg ? plantProdIds : [ENTITIES.prodToday]),
       ENTITIES.consToday,
       ENTITIES.gridFromToday,
       ENTITIES.gridToToday,
@@ -80,11 +86,18 @@ export default function YesterdayCard() {
         return vals
       }
 
-      const [idProd, idCons, idPrel, idCed] = ids
-      const prod = serieOraria(idProd)
-      const cons = serieOraria(idCons)
-      const prel = serieOraria(idPrel)
-      const ced  = serieOraria(idCed)
+      // Somma per ora le serie di più impianti (aggregato).
+      const sumSeries = (entIds) => {
+        const arrs = entIds.map(id => serieOraria(id))
+        return Array.from({ length: 24 }, (_, h) => {
+          const vals = arrs.map(a => a[h]).filter(v => v != null)
+          return vals.length ? vals.reduce((a, b) => a + b, 0) : null
+        })
+      }
+      const prod = useAgg ? sumSeries(plantProdIds) : serieOraria(ENTITIES.prodToday)
+      const cons = serieOraria(ENTITIES.consToday)
+      const prel = serieOraria(ENTITIES.gridFromToday)
+      const ced  = serieOraria(ENTITIES.gridToToday)
 
       const chart = Array.from({ length: 24 }, (_, h) => ({
         ora:  `${String(h).padStart(2, '0')}:00`,
