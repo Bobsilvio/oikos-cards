@@ -267,6 +267,47 @@
       "changelog": null
     },
     {
+      "id": "tile",
+      "type": "card",
+      "name": "Tile",
+      "version": "1.0.0",
+      "author": "Oikos",
+      "description": "Tile compatta e configurabile: una entità, uno stile, molti usi. Icona, stato, valore grande e due righe di dettaglio — per allarme, serratura, cancello, temperatura, batterie.",
+      "description_en": "Compact configurable tile: one entity, one style, many uses. Icon, status, large value and two detail lines — for alarm, lock, gate, temperature, batteries.",
+      "description_de": "Kompakte, konfigurierbare Kachel: eine Entität, ein Stil, viele Einsätze. Symbol, Status, großer Wert und zwei Detailzeilen — Alarm, Schloss, Tor, Temperatur, Batterien.",
+      "description_es": "Tarjeta compacta y configurable: una entidad, un estilo, muchos usos. Icono, estado, valor grande y dos líneas de detalle — alarma, cerradura, portón, temperatura, baterías.",
+      "description_fr": "Tuile compacte et configurable : une entité, un style, de multiples usages. Icône, état, grande valeur et deux lignes de détail — alarme, serrure, portail, température, batteries.",
+      "sdkVersion": "^1.0.0",
+      "hasSettings": true,
+      "path": "cards/tile",
+      "entry": "cards/tile/dist/tile.js",
+      "settings": "cards/tile/dist/tile.settings.js",
+      "manifest": "cards/tile/manifest.json",
+      "preview": null,
+      "previews": null,
+      "thumbnail": null,
+      "tags": [
+        "casa",
+        "generico",
+        "stato"
+      ],
+      "package": null,
+      "tier": "free",
+      "changelog": [
+        {
+          "version": "1.0.0",
+          "date": "2026-08-05",
+          "changes": [
+            "Prima versione. Tile compatta per una singola entità: icona in riquadro",
+            "Stato tradotto automaticamente (acceso, aperto, bloccato, in pulizia…) con",
+            "Colore di accento a scelta: il bordo e l'icona si accendono quando l'entità",
+            "Al tocco: dettagli entità, accendi/spegni, oppure niente.",
+            "Un'entità non disponibile mostra \"N/D\" invece di un valore inventato."
+          ]
+        }
+      ]
+    },
+    {
       "id": "vacuum",
       "type": "card",
       "name": "Dreame Vacuum",
