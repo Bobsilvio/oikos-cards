@@ -54,19 +54,19 @@ function HistoryChart({ points, dark, uid, rangeHours, unit, noDataLabel }) {
   const svgRef    = useRef(null)
   const [tip, setTip] = useState(null) // { x, v, ts } in px relativi al container
 
-  if (!points.length) return (
-    <div style={{
-      height: 120, display: 'flex', alignItems: 'center', justifyContent: 'center',
-      fontSize: 11, color: 'var(--text-muted)',
-    }}>
-      {noDataLabel}
-    </div>
-  )
-
-  const minV  = Math.min(...points.map(p => p.v))
-  const maxV  = Math.max(...points.map(p => p.v))
-  const minT  = points[0].ts
-  const maxT  = points[points.length - 1].ts
+  /*
+   * Nessun return prima degli hook.
+   *
+   * Qui c'era `if (!points.length) return …` PRIMA di useCallback: passando da
+   * "storico vuoto" a "storico pieno" cambiava il numero di hook fra due
+   * disegni, ed è l'errore React #310 — la card cade e non si riprende. Ora si
+   * calcola su un elenco vuoto senza schiantarsi e si esce dopo gli hook.
+   */
+  const empty = points.length === 0
+  const minV  = empty ? 0 : Math.min(...points.map(p => p.v))
+  const maxV  = empty ? 1 : Math.max(...points.map(p => p.v))
+  const minT  = empty ? 0 : points[0].ts
+  const maxT  = empty ? 1 : points[points.length - 1].ts
   const vRng  = Math.max(maxV - minV, 0.5)
   const tRng  = Math.max(maxT - minT, 1)
   const pad   = vRng * 0.15
@@ -114,6 +114,15 @@ function HistoryChart({ points, dark, uid, rangeHours, unit, noDataLabel }) {
     }
     setTip({ xPct: (nearest.x / VW) * 100, v: nearest.v, ts: nearest.ts })
   }, [pts, minT, tRng])
+
+  if (empty) return (
+    <div style={{
+      height: 120, display: 'flex', alignItems: 'center', justifyContent: 'center',
+      fontSize: 11, color: 'var(--text-muted)',
+    }}>
+      {noDataLabel}
+    </div>
+  )
 
   return (
     <div>

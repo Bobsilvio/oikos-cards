@@ -4,6 +4,12 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [1.1.5] - 2026-08-12
+### Fixed
+- **Il grafico dello storico poteva far cadere la card** quando i dati
+  arrivavano dopo il primo disegno: c'era un'uscita anticipata prima di un
+  hook, quindi il numero di hook cambiava fra due disegni (React #310).
+
 ## [1.1.4] - 2026-08-12
 ### Fixed
 - **La card poteva non aprirsi**, con l'errore «cannot access … before

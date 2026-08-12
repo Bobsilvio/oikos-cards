@@ -1,14 +1,14 @@
-const { jsxs: b, jsx: n, Fragment: F } = window.__OIKOS_SDK__.jsxRuntime;
-function H(e) {
+const { jsxs: v, jsx: t, Fragment: F } = window.__OIKOS_SDK__.jsxRuntime;
+function I(e) {
   if (!e || e.length < 2) return "";
   if (e.length === 2)
     return `M ${e[0].x.toFixed(2)},${e[0].y.toFixed(2)} L ${e[1].x.toFixed(2)},${e[1].y.toFixed(2)}`;
-  let r = `M ${e[0].x.toFixed(2)},${e[0].y.toFixed(2)}`;
-  for (let l = 1; l < e.length; l++) {
-    const m = e[Math.max(0, l - 2)], c = e[l - 1], u = e[l], a = e[Math.min(e.length - 1, l + 1)], i = (c.x + (u.x - m.x) / 6).toFixed(2), d = (c.y + (u.y - m.y) / 6).toFixed(2), f = (u.x - (a.x - c.x) / 6).toFixed(2), h = (u.y - (a.y - c.y) / 6).toFixed(2);
-    r += ` C ${i},${d} ${f},${h} ${u.x.toFixed(2)},${u.y.toFixed(2)}`;
+  let s = `M ${e[0].x.toFixed(2)},${e[0].y.toFixed(2)}`;
+  for (let a = 1; a < e.length; a++) {
+    const h = e[Math.max(0, a - 2)], l = e[a - 1], d = e[a], r = e[Math.min(e.length - 1, a + 1)], i = (l.x + (d.x - h.x) / 6).toFixed(2), c = (l.y + (d.y - h.y) / 6).toFixed(2), u = (d.x - (r.x - l.x) / 6).toFixed(2), p = (d.y - (r.y - l.y) / 6).toFixed(2);
+    s += ` C ${i},${c} ${u},${p} ${d.x.toFixed(2)},${d.y.toFixed(2)}`;
   }
-  return r;
+  return s;
 }
 const W = "Casa Out", Q = "Oggi AQI", T = "Sensori con lo stato attuale e media ogni 30 minuti", U = "Sensore", _ = {
   sectionHeader: "Header",
@@ -185,9 +185,9 @@ const W = "Casa Out", Q = "Oggi AQI", T = "Sensori con lo stato attuale e media 
   description: le,
   sensorDefault: ce,
   settings: de
-}, { useState: I, useEffect: w, useId: fe } = window.__OIKOS_SDK__.React, { useDashboard: L, useCardConfig: pe, registerCardTranslations: he, useT: ge } = window.__OIKOS_SDK__;
+}, { useState: k, useEffect: H, useId: fe } = window.__OIKOS_SDK__.React, { useDashboard: w, useCardConfig: pe, registerCardTranslations: he, useT: L } = window.__OIKOS_SDK__;
 he("card-air-quality", { it: B, en: K, de: Y, es: se, fr: ue });
-const E = ["#16a34a", "#84cc16", "#eab308", "#f97316", "#dc2626"], me = {
+const C = ["#16a34a", "#84cc16", "#eab308", "#f97316", "#dc2626"], ge = {
   eccellente: "#16a34a",
   ottimo: "#16a34a",
   buono: "#84cc16",
@@ -197,7 +197,7 @@ const E = ["#16a34a", "#84cc16", "#eab308", "#f97316", "#dc2626"], me = {
   pessimo: "#f97316",
   critico: "#dc2626",
   nocivo: "#dc2626"
-}, xe = {
+}, me = {
   label: "",
   title: "",
   aqiEntity: "",
@@ -208,7 +208,7 @@ const E = ["#16a34a", "#84cc16", "#eab308", "#f97316", "#dc2626"], me = {
   aqiColorFromClassification: !1,
   description: "",
   sensors: []
-}, ye = {
+}, xe = {
   entity: "",
   label: "",
   unit: "",
@@ -217,100 +217,100 @@ const E = ["#16a34a", "#84cc16", "#eab308", "#f97316", "#dc2626"], me = {
   max: 100,
   inverted: !1
 };
-function $(e, r, l, m) {
-  const c = Math.max(0, Math.min(1, (e - r) / Math.max(l - r, 1)));
-  return m ? c : 1 - c;
+function q(e, s, a, h) {
+  const l = Math.max(0, Math.min(1, (e - s) / Math.max(a - s, 1)));
+  return h ? l : 1 - l;
 }
-function C(e) {
+function D(e) {
   return e >= 0.8 ? 1 : e >= 0.6 ? 2 : e >= 0.4 ? 3 : e >= 0.2 ? 4 : 5;
 }
-function q(e) {
-  return E[e - 1] ?? E[4];
+function M(e) {
+  return C[e - 1] ?? C[4];
 }
-function ve(e) {
+function ye(e) {
   if (!e) return null;
-  const r = e.toLowerCase().trim();
-  return me[r] ?? null;
+  const s = e.toLowerCase().trim();
+  return ge[s] ?? null;
 }
-function be({ value: e, min: r, max: l, inverted: m, fromClassification: c, clsColor: u }) {
-  if (c && u) return u;
-  if (e == null) return E[2];
-  const a = $(e, r, l, m);
-  return q(C(a));
+function ve({ value: e, min: s, max: a, inverted: h, fromClassification: l, clsColor: d }) {
+  if (l && d) return d;
+  if (e == null) return C[2];
+  const r = q(e, s, a, h);
+  return M(D(r));
 }
-function Se({ value: e, min: r, max: l, inverted: m, color: c, uid: u, size: a = 140 }) {
-  const i = (a - 10) / 2, d = a / 2, f = a / 2, h = 2 * Math.PI * i;
+function be({ value: e, min: s, max: a, inverted: h, color: l, uid: d, size: r = 140 }) {
+  const i = (r - 10) / 2, c = r / 2, u = r / 2, p = 2 * Math.PI * i;
   if (e == null)
-    return /* @__PURE__ */ b("svg", { width: a, height: a, viewBox: `0 0 ${a} ${a}`, style: { display: "block" }, children: [
-      /* @__PURE__ */ n(
+    return /* @__PURE__ */ v("svg", { width: r, height: r, viewBox: `0 0 ${r} ${r}`, style: { display: "block" }, children: [
+      /* @__PURE__ */ t(
         "circle",
         {
-          cx: d,
-          cy: f,
+          cx: c,
+          cy: u,
           r: i,
           fill: "none",
           stroke: "var(--border-color)",
           strokeWidth: "6"
         }
       ),
-      /* @__PURE__ */ n(
+      /* @__PURE__ */ t(
         "text",
         {
-          x: d,
-          y: f,
+          x: c,
+          y: u,
           textAnchor: "middle",
           dominantBaseline: "central",
           fill: "var(--text-muted)",
-          style: { fontSize: a * 0.22, fontWeight: 800, fontFamily: "JetBrains Mono, monospace" },
+          style: { fontSize: r * 0.22, fontWeight: 800, fontFamily: "JetBrains Mono, monospace" },
           children: "—"
         }
       )
     ] });
-  const p = $(e, r, l, m), o = c, g = h * (1 - p);
-  return /* @__PURE__ */ b("svg", { width: a, height: a, viewBox: `0 0 ${a} ${a}`, style: { display: "block" }, children: [
-    /* @__PURE__ */ n("defs", { children: /* @__PURE__ */ b("radialGradient", { id: `aqr-bg-${u}`, cx: "50%", cy: "50%", r: "50%", children: [
-      /* @__PURE__ */ n("stop", { offset: "0%", stopColor: o, stopOpacity: "0.13" }),
-      /* @__PURE__ */ n("stop", { offset: "100%", stopColor: o, stopOpacity: "0" })
+  const m = q(e, s, a, h), n = l, f = p * (1 - m);
+  return /* @__PURE__ */ v("svg", { width: r, height: r, viewBox: `0 0 ${r} ${r}`, style: { display: "block" }, children: [
+    /* @__PURE__ */ t("defs", { children: /* @__PURE__ */ v("radialGradient", { id: `aqr-bg-${d}`, cx: "50%", cy: "50%", r: "50%", children: [
+      /* @__PURE__ */ t("stop", { offset: "0%", stopColor: n, stopOpacity: "0.13" }),
+      /* @__PURE__ */ t("stop", { offset: "100%", stopColor: n, stopOpacity: "0" })
     ] }) }),
-    /* @__PURE__ */ n("circle", { cx: d, cy: f, r: i, fill: `url(#aqr-bg-${u})` }),
-    /* @__PURE__ */ n(
+    /* @__PURE__ */ t("circle", { cx: c, cy: u, r: i, fill: `url(#aqr-bg-${d})` }),
+    /* @__PURE__ */ t(
       "circle",
       {
-        cx: d,
-        cy: f,
+        cx: c,
+        cy: u,
         r: i,
         fill: "none",
-        stroke: o,
+        stroke: n,
         strokeOpacity: "0.15",
         strokeWidth: "8"
       }
     ),
-    /* @__PURE__ */ n(
+    /* @__PURE__ */ t(
       "circle",
       {
-        cx: d,
-        cy: f,
+        cx: c,
+        cy: u,
         r: i,
         fill: "none",
-        stroke: o,
+        stroke: n,
         strokeWidth: "8",
         strokeLinecap: "round",
-        strokeDasharray: h,
-        strokeDashoffset: g,
-        transform: `rotate(-90 ${d} ${f})`,
+        strokeDasharray: p,
+        strokeDashoffset: f,
+        transform: `rotate(-90 ${c} ${u})`,
         style: { transition: "stroke-dashoffset .5s ease" }
       }
     ),
-    /* @__PURE__ */ n(
+    /* @__PURE__ */ t(
       "text",
       {
-        x: d,
-        y: f,
+        x: c,
+        y: u,
         textAnchor: "middle",
         dominantBaseline: "central",
-        fill: o,
+        fill: n,
         style: {
-          fontSize: a * 0.26,
+          fontSize: r * 0.26,
           fontWeight: 800,
           fontFamily: "JetBrains Mono, monospace",
           letterSpacing: "-1px"
@@ -320,33 +320,33 @@ function Se({ value: e, min: r, max: l, inverted: m, color: c, uid: u, size: a =
     )
   ] });
 }
-function Ae({ text: e, color: r }) {
-  return e ? /* @__PURE__ */ n("div", { style: {
+function Se({ text: e, color: s }) {
+  return e ? /* @__PURE__ */ t("div", { style: {
     fontSize: 15,
     fontWeight: 700,
-    color: r ?? "var(--text-secondary)",
+    color: s ?? "var(--text-secondary)",
     letterSpacing: "0.2px",
     lineHeight: 1,
     marginTop: 1
   }, children: e }) : null;
 }
-function Me({ series: e, min: r, max: l, inverted: m, color: c, dark: u, uid: a }) {
-  const h = e.filter((s) => s.v != null);
-  if (!h.length)
-    return /* @__PURE__ */ n(
+function Ae({ series: e, min: s, max: a, inverted: h, color: l, dark: d, uid: r }) {
+  const p = e.filter((o) => o.v != null);
+  if (!p.length)
+    return /* @__PURE__ */ t(
       "svg",
       {
         viewBox: "0 0 100 36",
         preserveAspectRatio: "none",
         style: { width: "100%", height: 36, display: "block" },
-        children: /* @__PURE__ */ n(
+        children: /* @__PURE__ */ t(
           "line",
           {
             x1: "0",
             y1: 36 / 2,
             x2: 100,
             y2: 36 / 2,
-            stroke: c,
+            stroke: l,
             strokeWidth: "1.5",
             strokeOpacity: "0.35",
             strokeDasharray: "3,3"
@@ -354,46 +354,46 @@ function Me({ series: e, min: r, max: l, inverted: m, color: c, dark: u, uid: a 
         )
       }
     );
-  const p = Math.min(...h.map((s) => s.v)), o = Math.max(...h.map((s) => s.v)), g = Math.max(o - p, 1), v = h.map((s, y) => ({
-    x: y / (h.length - 1) * 100,
-    y: 34 - (s.v - p) / g * (36 - 2 * 2),
-    v: s.v
-  })), S = H(v), M = S ? `${S} L 100,36 L 0,36 Z` : "", A = v.map((s, y) => {
-    const D = $(s.v, r, l, m), x = C(D);
-    return { pct: (y / (v.length - 1) * 100).toFixed(1), color: q(x) };
+  const m = Math.min(...p.map((o) => o.v)), n = Math.max(...p.map((o) => o.v)), f = Math.max(n - m, 1), b = p.map((o, g) => ({
+    x: g / (p.length - 1) * 100,
+    y: 34 - (o.v - m) / f * (36 - 2 * 2),
+    v: o.v
+  })), y = I(b), S = y ? `${y} L 100,36 L 0,36 Z` : "", A = b.map((o, g) => {
+    const $ = q(o.v, s, a, h), x = D($);
+    return { pct: (g / (b.length - 1) * 100).toFixed(1), color: M(x) };
   });
-  return /* @__PURE__ */ b(
+  return /* @__PURE__ */ v(
     "svg",
     {
       viewBox: "0 0 100 36",
       preserveAspectRatio: "none",
       style: { width: "100%", height: 36, display: "block" },
       children: [
-        /* @__PURE__ */ b("defs", { children: [
-          /* @__PURE__ */ n("linearGradient", { id: `aql-${a}`, x1: "0%", y1: "0%", x2: "100%", y2: "0%", children: A.map((s, y) => /* @__PURE__ */ n("stop", { offset: `${s.pct}%`, stopColor: s.color }, y)) }),
-          /* @__PURE__ */ b("linearGradient", { id: `aqa-${a}`, x1: "0%", y1: "0%", x2: "0%", y2: "100%", children: [
-            /* @__PURE__ */ n("stop", { offset: "0%", stopColor: c, stopOpacity: "0.25" }),
-            /* @__PURE__ */ n("stop", { offset: "100%", stopColor: c, stopOpacity: "0" })
+        /* @__PURE__ */ v("defs", { children: [
+          /* @__PURE__ */ t("linearGradient", { id: `aql-${r}`, x1: "0%", y1: "0%", x2: "100%", y2: "0%", children: A.map((o, g) => /* @__PURE__ */ t("stop", { offset: `${o.pct}%`, stopColor: o.color }, g)) }),
+          /* @__PURE__ */ v("linearGradient", { id: `aqa-${r}`, x1: "0%", y1: "0%", x2: "0%", y2: "100%", children: [
+            /* @__PURE__ */ t("stop", { offset: "0%", stopColor: l, stopOpacity: "0.25" }),
+            /* @__PURE__ */ t("stop", { offset: "100%", stopColor: l, stopOpacity: "0" })
           ] }),
-          /* @__PURE__ */ n("mask", { id: `aqm-${a}`, children: /* @__PURE__ */ n("path", { d: M, fill: "white" }) })
+          /* @__PURE__ */ t("mask", { id: `aqm-${r}`, children: /* @__PURE__ */ t("path", { d: S, fill: "white" }) })
         ] }),
-        M && /* @__PURE__ */ n(
+        S && /* @__PURE__ */ t(
           "rect",
           {
             x: "0",
             y: "0",
             width: 100,
             height: 36,
-            fill: `url(#aqa-${a})`,
-            mask: `url(#aqm-${a})`
+            fill: `url(#aqa-${r})`,
+            mask: `url(#aqm-${r})`
           }
         ),
-        S && /* @__PURE__ */ n(
+        y && /* @__PURE__ */ t(
           "path",
           {
-            d: S,
+            d: y,
             fill: "none",
-            stroke: `url(#aql-${a})`,
+            stroke: `url(#aql-${r})`,
             strokeWidth: "2",
             strokeLinecap: "round",
             strokeLinejoin: "round"
@@ -403,39 +403,39 @@ function Me({ series: e, min: r, max: l, inverted: m, color: c, dark: u, uid: a 
     }
   );
 }
-function qe({ zone: e, dark: r }) {
-  return /* @__PURE__ */ n("div", { style: {
+function Me({ zone: e, dark: s }) {
+  return /* @__PURE__ */ t("div", { style: {
     display: "flex",
     flexDirection: "column-reverse",
     alignItems: "center",
     gap: 3
-  }, children: [1, 2, 3, 4, 5].map((l) => /* @__PURE__ */ n("div", { style: {
+  }, children: [1, 2, 3, 4, 5].map((a) => /* @__PURE__ */ t("div", { style: {
     width: 7,
     height: 7,
     borderRadius: "50%",
-    background: l <= e ? q(l) : r ? "rgba(255,255,255,.08)" : "#e5e7eb",
+    background: a <= e ? M(a) : s ? "rgba(255,255,255,.08)" : "#e5e7eb",
     transition: "background .2s",
     flexShrink: 0
-  } }, l)) });
+  } }, a)) });
 }
-function $e({ series: e, min: r, max: l, inverted: m, dark: c, uid: u }) {
-  const d = e.filter((s) => s.v != null);
-  if (!d.length) {
-    const s = q(5);
-    return /* @__PURE__ */ n(
+function qe({ series: e, min: s, max: a, inverted: h, dark: l, uid: d }) {
+  const c = e.filter((o) => o.v != null);
+  if (!c.length) {
+    const o = M(5);
+    return /* @__PURE__ */ t(
       "svg",
       {
         viewBox: "0 0 100 20",
         preserveAspectRatio: "none",
         style: { width: "100%", height: 20, display: "block" },
-        children: /* @__PURE__ */ n(
+        children: /* @__PURE__ */ t(
           "line",
           {
             x1: "0",
             y1: 20 / 2,
             x2: 100,
             y2: 20 / 2,
-            stroke: s,
+            stroke: o,
             strokeWidth: "1",
             strokeOpacity: "0.35"
           }
@@ -443,28 +443,28 @@ function $e({ series: e, min: r, max: l, inverted: m, dark: c, uid: u }) {
       }
     );
   }
-  const f = Math.min(...d.map((s) => s.v)), h = Math.max(...d.map((s) => s.v)), p = Math.max(h - f, 0.5), o = d.map((s, y) => ({
-    x: y / (d.length - 1) * 100,
-    y: 19 - (s.v - f) / p * 18,
-    v: s.v
-  })), g = H(o), v = d.reduce((s, y) => s + y.v, 0) / d.length, S = $(v, r, l, m), M = q(C(S)), A = o.map((s, y) => {
-    const D = $(s.v, r, l, m), x = C(D);
-    return { pct: (y / (o.length - 1) * 100).toFixed(1), color: q(x) };
+  const u = Math.min(...c.map((o) => o.v)), p = Math.max(...c.map((o) => o.v)), m = Math.max(p - u, 0.5), n = c.map((o, g) => ({
+    x: g / (c.length - 1) * 100,
+    y: 19 - (o.v - u) / m * 18,
+    v: o.v
+  })), f = I(n), b = c.reduce((o, g) => o + g.v, 0) / c.length, y = q(b, s, a, h), S = M(D(y)), A = n.map((o, g) => {
+    const $ = q(o.v, s, a, h), x = D($);
+    return { pct: (g / (n.length - 1) * 100).toFixed(1), color: M(x) };
   });
-  return /* @__PURE__ */ b(
+  return /* @__PURE__ */ v(
     "svg",
     {
       viewBox: "0 0 100 20",
       preserveAspectRatio: "none",
       style: { width: "100%", height: 20, display: "block" },
       children: [
-        /* @__PURE__ */ n("defs", { children: /* @__PURE__ */ n("linearGradient", { id: `ssl-${u}`, x1: "0%", y1: "0%", x2: "100%", y2: "0%", children: A.length > 1 ? A.map((s, y) => /* @__PURE__ */ n("stop", { offset: `${s.pct}%`, stopColor: s.color }, y)) : /* @__PURE__ */ n("stop", { offset: "0%", stopColor: M }) }) }),
-        g && /* @__PURE__ */ n(
+        /* @__PURE__ */ t("defs", { children: /* @__PURE__ */ t("linearGradient", { id: `ssl-${d}`, x1: "0%", y1: "0%", x2: "100%", y2: "0%", children: A.length > 1 ? A.map((o, g) => /* @__PURE__ */ t("stop", { offset: `${o.pct}%`, stopColor: o.color }, g)) : /* @__PURE__ */ t("stop", { offset: "0%", stopColor: S }) }) }),
+        f && /* @__PURE__ */ t(
           "path",
           {
-            d: g,
+            d: f,
             fill: "none",
-            stroke: `url(#ssl-${u})`,
+            stroke: `url(#ssl-${d})`,
             strokeWidth: "1.5",
             strokeLinecap: "round",
             strokeLinejoin: "round",
@@ -475,34 +475,34 @@ function $e({ series: e, min: r, max: l, inverted: m, dark: c, uid: u }) {
     }
   );
 }
-function O(e, r, l) {
-  const [m, c] = I([]), [u, a] = I(!1);
-  return w(() => {
-    if (!e || !r || !l) {
-      c([]);
+function O(e, s, a) {
+  const [h, l] = k([]), [d, r] = k(!1);
+  return H(() => {
+    if (!e || !s || !a) {
+      l([]);
       return;
     }
-    a(!0);
-    const i = /* @__PURE__ */ new Date(), d = new Date(i.getTime() - 24 * 3600 * 1e3);
-    r([e], d, i).then((f) => {
-      const h = ((f == null ? void 0 : f[e]) ?? []).map((o) => {
-        const g = typeof o.lu == "number" ? o.lu * 1e3 : Date.parse(o.lu ?? o.last_updated ?? o.last_changed), v = parseFloat(o.s ?? o.state);
-        return { ts: g, v };
-      }).filter((o) => !isNaN(o.v) && !isNaN(o.ts)).sort((o, g) => o.ts - g.ts), p = Array.from({ length: 24 }, (o, g) => ({ h: g, sum: 0, n: 0 }));
-      h.forEach((o) => {
-        const g = new Date(o.ts).getHours();
-        p[g].sum += o.v, p[g].n += 1;
-      }), c(p.map((o) => ({ h: o.h, v: o.n > 0 ? o.sum / o.n : null })));
+    r(!0);
+    const i = /* @__PURE__ */ new Date(), c = new Date(i.getTime() - 24 * 3600 * 1e3);
+    s([e], c, i).then((u) => {
+      const p = ((u == null ? void 0 : u[e]) ?? []).map((n) => {
+        const f = typeof n.lu == "number" ? n.lu * 1e3 : Date.parse(n.lu ?? n.last_updated ?? n.last_changed), b = parseFloat(n.s ?? n.state);
+        return { ts: f, v: b };
+      }).filter((n) => !isNaN(n.v) && !isNaN(n.ts)).sort((n, f) => n.ts - f.ts), m = Array.from({ length: 24 }, (n, f) => ({ h: f, sum: 0, n: 0 }));
+      p.forEach((n) => {
+        const f = new Date(n.ts).getHours();
+        m[f].sum += n.v, m[f].n += 1;
+      }), l(m.map((n) => ({ h: n.h, v: n.n > 0 ? n.sum / n.n : null })));
     }).catch(() => {
-    }).finally(() => a(!1));
-  }, [e, l]), { series: m, loading: u };
+    }).finally(() => r(!1));
+  }, [e, a]), { series: h, loading: d };
 }
-function De({ sensor: e, dark: r, fetchHistory: l, connected: m, cardUid: c, index: u }) {
-  const { getFloat: a, openMoreInfo: i } = L(), d = `${c}s${u}`, { series: f } = O(e.entity, l, m), h = e.entity ? a(e.entity) : null, p = h ?? null, o = e.decimals ?? 1, g = p != null ? $(p, e.min, e.max, e.inverted ?? !1) : 0, v = C(g), S = q(v), M = p != null ? o === 0 ? Math.round(p).toString() : p.toFixed(o) : "—", A = !!e.entity;
-  return /* @__PURE__ */ b(
+function $e({ sensor: e, dark: s, fetchHistory: a, connected: h, cardUid: l, index: d }) {
+  const { t: r } = L("card-air-quality"), { getFloat: i, openMoreInfo: c } = w(), u = `${l}s${d}`, { series: p } = O(e.entity, a, h), m = e.entity ? i(e.entity) : null, n = m ?? null, f = e.decimals ?? 1, b = n != null ? q(n, e.min, e.max, e.inverted ?? !1) : 0, y = D(b), S = M(y), A = n != null ? f === 0 ? Math.round(n).toString() : n.toFixed(f) : "—", o = !!e.entity;
+  return /* @__PURE__ */ v(
     "div",
     {
-      onClick: A ? () => i(e.entity) : void 0,
+      onClick: o ? () => c(e.entity) : void 0,
       style: {
         display: "flex",
         flexDirection: "column",
@@ -510,18 +510,18 @@ function De({ sensor: e, dark: r, fetchHistory: l, connected: m, cardUid: c, ind
         gap: 4,
         minWidth: 0,
         flex: "1 1 0",
-        cursor: A ? "pointer" : "default",
+        cursor: o ? "pointer" : "default",
         transition: "opacity .15s"
       },
-      onMouseEnter: (s) => {
-        A && (s.currentTarget.style.opacity = "0.75");
+      onMouseEnter: (g) => {
+        o && (g.currentTarget.style.opacity = "0.75");
       },
-      onMouseLeave: (s) => {
-        A && (s.currentTarget.style.opacity = "1");
+      onMouseLeave: (g) => {
+        o && (g.currentTarget.style.opacity = "1");
       },
       children: [
-        /* @__PURE__ */ n(qe, { zone: v, dark: r }),
-        /* @__PURE__ */ n("div", { style: {
+        /* @__PURE__ */ t(Me, { zone: y, dark: s }),
+        /* @__PURE__ */ t("div", { style: {
           fontSize: 10,
           color: "var(--text-muted)",
           fontWeight: 600,
@@ -531,8 +531,8 @@ function De({ sensor: e, dark: r, fetchHistory: l, connected: m, cardUid: c, ind
           overflow: "hidden",
           textOverflow: "ellipsis",
           maxWidth: "100%"
-        }, children: e.label || t("sensorDefault") }),
-        /* @__PURE__ */ b("div", { style: {
+        }, children: e.label || r("sensorDefault") }),
+        /* @__PURE__ */ v("div", { style: {
           fontSize: 15,
           fontWeight: 800,
           color: S,
@@ -541,144 +541,144 @@ function De({ sensor: e, dark: r, fetchHistory: l, connected: m, cardUid: c, ind
           lineHeight: 1,
           whiteSpace: "nowrap"
         }, children: [
-          M,
-          p != null && e.unit && /* @__PURE__ */ n("sup", { style: { fontSize: 9, fontWeight: 700, color: "var(--text-muted)", marginLeft: 1 }, children: e.unit })
+          A,
+          n != null && e.unit && /* @__PURE__ */ t("sup", { style: { fontSize: 9, fontWeight: 700, color: "var(--text-muted)", marginLeft: 1 }, children: e.unit })
         ] }),
-        /* @__PURE__ */ n("div", { style: { width: "100%", minWidth: 0 }, children: /* @__PURE__ */ n(
-          $e,
+        /* @__PURE__ */ t("div", { style: { width: "100%", minWidth: 0 }, children: /* @__PURE__ */ t(
+          qe,
           {
-            series: f,
+            series: p,
             min: e.min ?? 0,
             max: e.max ?? 100,
             inverted: e.inverted ?? !1,
-            dark: r,
-            uid: d
+            dark: s,
+            uid: u
           }
         ) })
       ]
     }
   );
 }
-function Ce({ cardId: e }) {
-  const { dark: r, getFloat: l, getState: m, fetchHistory: c, connected: u, openMoreInfo: a } = L(), [i, d] = pe(e, xe), { t: f } = ge("card-air-quality"), h = fe().replace(/:/g, "");
-  w(() => {
-    i.aqiMax === 500 && i.aqiMin === 0 && d((x) => ({ ...x, aqiMax: 100 }));
+function De({ cardId: e }) {
+  const { dark: s, getFloat: a, getState: h, fetchHistory: l, connected: d, openMoreInfo: r } = w(), [i, c] = pe(e, me), { t: u } = L("card-air-quality"), p = fe().replace(/:/g, "");
+  H(() => {
+    i.aqiMax === 500 && i.aqiMin === 0 && c((x) => ({ ...x, aqiMax: 100 }));
   }, []);
-  const p = !!i.aqiEntity, o = !!i.classificationEntity, { series: g } = O(i.aqiEntity, c, u), v = p ? l(i.aqiEntity) : null, S = o ? m(i.classificationEntity) : null, M = S ? ve(S) : null, A = be({
-    value: v,
+  const m = !!i.aqiEntity, n = !!i.classificationEntity, { series: f } = O(i.aqiEntity, l, d), b = m ? a(i.aqiEntity) : null, y = n ? h(i.classificationEntity) : null, S = y ? ye(y) : null, A = ve({
+    value: b,
     min: i.aqiMin ?? 0,
     max: i.aqiMax ?? 100,
     inverted: i.aqiInverted ?? !0,
     fromClassification: i.aqiColorFromClassification ?? !1,
-    clsColor: M
-  }), s = i.sensors ?? [], y = r ? "rgba(255,255,255,.03)" : "#f7f9fc", D = r ? "rgba(255,255,255,.07)" : "#dde3ec";
-  return g.some((x) => x.v != null), /* @__PURE__ */ b("div", { style: {
+    clsColor: S
+  }), o = i.sensors ?? [], g = s ? "rgba(255,255,255,.03)" : "#f7f9fc", $ = s ? "rgba(255,255,255,.07)" : "#dde3ec";
+  return f.some((x) => x.v != null), /* @__PURE__ */ v("div", { style: {
     borderRadius: 20,
-    background: y,
-    border: `1px solid ${D}`,
-    boxShadow: r ? "none" : "0 1px 8px rgba(0,0,0,.06)",
+    background: g,
+    border: `1px solid ${$}`,
+    boxShadow: s ? "none" : "0 1px 8px rgba(0,0,0,.06)",
     padding: "14px 0",
     display: "flex",
     flexDirection: "column",
     gap: 0,
     overflow: "hidden"
   }, children: [
-    /* @__PURE__ */ b("div", { style: {
+    /* @__PURE__ */ v("div", { style: {
       display: "grid",
-      gridTemplateColumns: p ? "1fr auto 1fr" : "1fr",
+      gridTemplateColumns: m ? "1fr auto 1fr" : "1fr",
       gap: 20,
       alignItems: "center",
       padding: "0 20px 14px"
     }, children: [
-      /* @__PURE__ */ b("div", { style: { textAlign: "left", display: "flex", flexDirection: "column", gap: 3 }, children: [
-        /* @__PURE__ */ n("div", { style: {
+      /* @__PURE__ */ v("div", { style: { textAlign: "left", display: "flex", flexDirection: "column", gap: 3 }, children: [
+        /* @__PURE__ */ t("div", { style: {
           fontSize: 11,
           fontWeight: 600,
           color: "var(--text-muted)",
           letterSpacing: ".8px",
           textTransform: "uppercase"
-        }, children: i.label || f("label") }),
-        /* @__PURE__ */ n("div", { style: {
+        }, children: i.label || u("label") }),
+        /* @__PURE__ */ t("div", { style: {
           fontSize: 18,
           fontWeight: 800,
           color: "var(--text-primary)",
           letterSpacing: "-0.4px",
           lineHeight: 1.15
-        }, children: i.title || f("title") }),
-        o && /* @__PURE__ */ n(
+        }, children: i.title || u("title") }),
+        n && /* @__PURE__ */ t(
           "div",
           {
-            onClick: () => a(i.classificationEntity),
+            onClick: () => r(i.classificationEntity),
             style: { cursor: "pointer", transition: "opacity .15s", alignSelf: "flex-start" },
             onMouseEnter: (x) => x.currentTarget.style.opacity = "0.75",
             onMouseLeave: (x) => x.currentTarget.style.opacity = "1",
-            children: /* @__PURE__ */ n(Ae, { text: S, color: M })
+            children: /* @__PURE__ */ t(Se, { text: y, color: S })
           }
         )
       ] }),
-      p && /* @__PURE__ */ n(
+      m && /* @__PURE__ */ t(
         "div",
         {
-          onClick: () => a(i.aqiEntity),
+          onClick: () => r(i.aqiEntity),
           style: { cursor: "pointer", transition: "opacity .15s", lineHeight: 0 },
           onMouseEnter: (x) => x.currentTarget.style.opacity = "0.8",
           onMouseLeave: (x) => x.currentTarget.style.opacity = "1",
-          children: /* @__PURE__ */ n(
-            Se,
+          children: /* @__PURE__ */ t(
+            be,
             {
-              value: v,
+              value: b,
               min: i.aqiMin ?? 0,
               max: i.aqiMax ?? 100,
               inverted: i.aqiInverted ?? !0,
               color: A,
-              uid: h,
+              uid: p,
               size: 140
             }
           )
         }
       )
     ] }),
-    p && /* @__PURE__ */ n("div", { style: { padding: "0 16px 10px" }, children: /* @__PURE__ */ n(
-      Me,
+    m && /* @__PURE__ */ t("div", { style: { padding: "0 16px 10px" }, children: /* @__PURE__ */ t(
+      Ae,
       {
-        series: g,
+        series: f,
         min: i.aqiMin ?? 0,
         max: i.aqiMax ?? 100,
         inverted: i.aqiInverted ?? !0,
         color: A,
-        dark: r,
-        uid: h
+        dark: s,
+        uid: p
       }
     ) }),
-    s.length > 0 && /* @__PURE__ */ b(F, { children: [
-      /* @__PURE__ */ n("div", { style: { height: 1, background: r ? "rgba(255,255,255,.07)" : "#dde3ec", margin: "0 0 8px" } }),
-      i.description && /* @__PURE__ */ n("div", { style: {
+    o.length > 0 && /* @__PURE__ */ v(F, { children: [
+      /* @__PURE__ */ t("div", { style: { height: 1, background: s ? "rgba(255,255,255,.07)" : "#dde3ec", margin: "0 0 8px" } }),
+      i.description && /* @__PURE__ */ t("div", { style: {
         fontSize: 11,
         color: "var(--text-muted)",
         lineHeight: 1.4,
         padding: "0 20px 6px"
       }, children: i.description }),
-      /* @__PURE__ */ n("div", { style: {
+      /* @__PURE__ */ t("div", { style: {
         display: "flex",
         gap: 8,
         padding: "0 16px",
-        borderTop: `1px solid ${r ? "rgba(255,255,255,.06)" : "#e5e9f0"}`,
+        borderTop: `1px solid ${s ? "rgba(255,255,255,.06)" : "#e5e9f0"}`,
         paddingTop: 8,
         flexWrap: "wrap"
-      }, children: s.map((x, k) => /* @__PURE__ */ n(
-        De,
+      }, children: o.map((x, E) => /* @__PURE__ */ t(
+        $e,
         {
-          sensor: { ...ye, ...x },
-          dark: r,
-          fetchHistory: c,
-          connected: u,
-          cardUid: h,
-          index: k
+          sensor: { ...xe, ...x },
+          dark: s,
+          fetchHistory: l,
+          connected: d,
+          cardUid: p,
+          index: E
         },
-        k
+        E
       )) })
     ] }),
-    s.length === 0 && i.description && /* @__PURE__ */ n("div", { style: {
+    o.length === 0 && i.description && /* @__PURE__ */ t("div", { style: {
       fontSize: 11,
       color: "var(--text-muted)",
       lineHeight: 1.4,
@@ -687,5 +687,5 @@ function Ce({ cardId: e }) {
   ] });
 }
 export {
-  Ce as default
+  De as default
 };

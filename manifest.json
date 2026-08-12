@@ -8,7 +8,7 @@
       "id": "air-quality",
       "type": "card",
       "name": "Qualità dell'aria",
-      "version": "1.0.4",
+      "version": "1.0.5",
       "author": "Oikos",
       "description": "Card qualità aria: AQI con zone colorate, classificazione, grafico 24h smooth.",
       "description_en": "Air quality card: AQI with colored zones, classification, smooth 24h chart.",
@@ -32,7 +32,15 @@
       ],
       "package": null,
       "tier": "free",
-      "changelog": null
+      "changelog": [
+        {
+          "version": "1.0.5",
+          "date": "2026-08-12",
+          "changes": [
+            "La colonna di un sensore poteva far cadere la card: la funzione di"
+          ]
+        }
+      ]
     },
     {
       "id": "climatizzatore",
@@ -178,7 +186,7 @@
       "id": "room-sensor",
       "type": "card",
       "name": "Room Sensor",
-      "version": "1.1.4",
+      "version": "1.1.5",
       "author": "Oikos",
       "description": "Card sensore stanza: gauge multipli, flow chart storico, badge numerici, mini-gauge batteria/segnale.",
       "description_en": "Room sensor card: multiple gauges, history flow chart, numeric badges, mini battery/signal gauges.",
@@ -205,6 +213,13 @@
       "package": null,
       "tier": "free",
       "changelog": [
+        {
+          "version": "1.1.5",
+          "date": "2026-08-12",
+          "changes": [
+            "Il grafico dello storico poteva far cadere la card quando i dati"
+          ]
+        },
         {
           "version": "1.1.4",
           "date": "2026-08-12",

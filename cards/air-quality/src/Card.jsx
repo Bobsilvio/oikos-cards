@@ -331,6 +331,8 @@ function useSensorHistory(entityId, fetchHistory, connected) {
 }
 
 function SensorColumn({ sensor, dark, fetchHistory, connected, cardUid, index }) {
+  // `t` proprio: era usato più sotto senza averlo in scope.
+  const { t } = useT('card-air-quality')
   const { getFloat, openMoreInfo } = useDashboard()
   const uid = `${cardUid}s${index}`
   const { series } = useSensorHistory(sensor.entity, fetchHistory, connected)
