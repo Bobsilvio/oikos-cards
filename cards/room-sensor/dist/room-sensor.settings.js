@@ -1,4 +1,4 @@
-const { jsxs: s, jsx: e, Fragment: N } = window.__OIKOS_SDK__.jsxRuntime, L = "Ultime 24 ore", O = "Stanza", k = "in attesa di dati…", P = "adesso", K = "{{n}} min fa", Y = "{{n}} ore fa", W = "{{n}} gg fa", j = "ieri", V = "l'altro ieri", q = "Configura le entità in ⚙", J = "min", Q = "max", X = {
+const { jsxs: d, jsx: e, Fragment: N } = window.__OIKOS_SDK__.jsxRuntime, P = "Ultime 24 ore", K = "Stanza", Y = "in attesa di dati…", W = "adesso", j = "{{n}} min fa", V = "{{n}} ore fa", q = "{{n}} gg fa", J = "ieri", Q = "l'altro ieri", X = "Configura le entità in ⚙", Z = "min", ee = "max", te = {
   range1h: "1 ora",
   range24h: "24 ore",
   range7d: "7 giorni",
@@ -9,7 +9,7 @@ const { jsxs: s, jsx: e, Fragment: N } = window.__OIKOS_SDK__.jsxRuntime, L = "U
   statAvg: "Media",
   statMax: "Max",
   close: "Chiudi"
-}, Z = {
+}, ne = {
   sectionRoom: "Stanza",
   sectionGauge: "Gauge",
   sectionDisplay: "Visualizzazione",
@@ -44,22 +44,22 @@ const { jsxs: s, jsx: e, Fragment: N } = window.__OIKOS_SDK__.jsxRuntime, L = "U
   gaugeLabelPlaceholder: "es. Temperatura",
   gaugeUnitPlaceholder: "es. °C",
   badgeUnitPlaceholder: "es. %"
-}, ee = {
-  last24h: L,
-  roomDefault: O,
-  waitingData: k,
-  timeNow: P,
-  timeMinAgo: K,
-  timeHAgo: Y,
-  timeDayAgo: W,
-  timeYesterday: j,
-  timeDayBeforeYesterday: V,
-  configHint: q,
-  statMinShort: J,
-  statMaxShort: Q,
-  modal: X,
-  settings: Z
-}, te = "Last 24 hours", ne = "Room", oe = "waiting for data…", ie = "now", ae = "{{n}} min ago", le = "{{n}}h ago", re = "{{n}}d ago", se = "yesterday", de = "2 days ago", ge = "Configure entities in ⚙", ce = "min", ue = "max", he = {
+}, oe = {
+  last24h: P,
+  roomDefault: K,
+  waitingData: Y,
+  timeNow: W,
+  timeMinAgo: j,
+  timeHAgo: V,
+  timeDayAgo: q,
+  timeYesterday: J,
+  timeDayBeforeYesterday: Q,
+  configHint: X,
+  statMinShort: Z,
+  statMaxShort: ee,
+  modal: te,
+  settings: ne
+}, ie = "Last 24 hours", ae = "Room", le = "waiting for data…", re = "now", se = "{{n}} min ago", de = "{{n}}h ago", ce = "{{n}}d ago", ge = "yesterday", ue = "2 days ago", he = "Configure entities in ⚙", me = "min", ye = "max", pe = {
   range1h: "1 hour",
   range24h: "24 hours",
   range7d: "7 days",
@@ -70,7 +70,7 @@ const { jsxs: s, jsx: e, Fragment: N } = window.__OIKOS_SDK__.jsxRuntime, L = "U
   statAvg: "Avg",
   statMax: "Max",
   close: "Close"
-}, me = {
+}, be = {
   sectionRoom: "Room",
   sectionGauge: "Gauge",
   sectionDisplay: "Display",
@@ -105,24 +105,24 @@ const { jsxs: s, jsx: e, Fragment: N } = window.__OIKOS_SDK__.jsxRuntime, L = "U
   gaugeLabelPlaceholder: "e.g. Temperature",
   gaugeUnitPlaceholder: "e.g. °C",
   badgeUnitPlaceholder: "e.g. %"
-}, ye = {
-  last24h: te,
-  roomDefault: ne,
-  waitingData: oe,
-  timeNow: ie,
-  timeMinAgo: ae,
-  timeHAgo: le,
-  timeDayAgo: re,
-  timeYesterday: se,
-  timeDayBeforeYesterday: de,
-  configHint: ge,
-  statMinShort: ce,
-  statMaxShort: ue,
-  modal: he,
-  settings: me
-}, { useDashboard: pe, useCardConfig: be, MdiIconPicker: _, EntityField: U, Field: m, Section: G, TextField: B, NumberField: w, Pills: z, SettingsRow: fe, Toggle: ve, registerCardTranslations: xe, useT: we } = window.__OIKOS_SDK__, { useState: F } = window.__OIKOS_SDK__.React, { ChevronDown: $, ChevronRight: I } = window.__OIKOS_SDK__.icons;
-xe("card-room-sensor", { it: ee, en: ye });
-const Me = {
+}, fe = {
+  last24h: ie,
+  roomDefault: ae,
+  waitingData: le,
+  timeNow: re,
+  timeMinAgo: se,
+  timeHAgo: de,
+  timeDayAgo: ce,
+  timeYesterday: ge,
+  timeDayBeforeYesterday: ue,
+  configHint: he,
+  statMinShort: me,
+  statMaxShort: ye,
+  modal: pe,
+  settings: be
+}, { useDashboard: ve, useCardConfig: xe, MdiIconPicker: _, EntityField: I, Field: p, Section: G, TextField: B, NumberField: w, Pills: U, SettingsRow: we, Toggle: Me, registerCardTranslations: Ce, useT: Se } = window.__OIKOS_SDK__, { useState: z, useEffect: F, useRef: T } = window.__OIKOS_SDK__.React, { ChevronDown: H, ChevronRight: L } = window.__OIKOS_SDK__.icons;
+Ce("card-room-sensor", { it: oe, en: fe });
+const De = {
   label: "",
   icon: "home",
   gauges: [],
@@ -133,7 +133,7 @@ const Me = {
   historyEntity: "",
   chartColor: "#e07060",
   showMinMax: !1
-}, Ce = {
+}, Ge = {
   entity: "",
   icon: "gauge",
   unit: "",
@@ -142,7 +142,7 @@ const Me = {
   color: "#3d8ea0",
   decimals: 1,
   label: ""
-}, Se = {
+}, Ae = {
   entity: "",
   icon: "circle",
   decimals: 0,
@@ -151,9 +151,9 @@ const Me = {
   max: 100,
   color: "#5b6b85"
 };
-function De({ gauge: o, index: c, total: a, dark: d, onChange: l, onRemove: i, onMoveUp: h, onMoveDown: p, defaultOpen: u, t: r }) {
-  const y = (n, D) => l({ ...o, [n]: D }), [f, x] = F(!!u), M = d ? "rgba(255,255,255,.04)" : "#f4f6fa", C = d ? "rgba(255,255,255,.09)" : "#dde3ec", S = f ? $ : I;
-  return /* @__PURE__ */ s("div", { style: {
+function Be({ gauge: o, index: c, total: a, dark: s, onChange: l, onRemove: i, onMoveUp: g, onMoveDown: y, defaultOpen: u, t: r }) {
+  const m = (n, D) => l({ ...o, [n]: D }), [f, x] = z(!!u), M = s ? "rgba(255,255,255,.04)" : "#f4f6fa", C = s ? "rgba(255,255,255,.09)" : "#dde3ec", S = f ? H : L;
+  return /* @__PURE__ */ d("div", { style: {
     borderRadius: 12,
     border: `1px solid ${C}`,
     background: M,
@@ -162,18 +162,18 @@ function De({ gauge: o, index: c, total: a, dark: d, onChange: l, onRemove: i, o
     flexDirection: "column",
     gap: 8
   }, children: [
-    /* @__PURE__ */ s("div", { style: { display: "flex", alignItems: "center", gap: 8 }, children: [
+    /* @__PURE__ */ d("div", { style: { display: "flex", alignItems: "center", gap: 8 }, children: [
       /* @__PURE__ */ e(
         "button",
         {
           onClick: () => x((n) => !n),
           title: r(f ? "settings.collapse" : "settings.expand"),
-          style: v(d),
+          style: v(s),
           children: /* @__PURE__ */ e(S, { size: 14 })
         }
       ),
-      /* @__PURE__ */ e(_, { value: o.icon || "gauge", onChange: (n) => y("icon", n), dark: d, size: 28 }),
-      /* @__PURE__ */ s(
+      /* @__PURE__ */ e(_, { value: o.icon || "gauge", onChange: (n) => m("icon", n), dark: s, size: 28 }),
+      /* @__PURE__ */ d(
         "button",
         {
           onClick: () => x((n) => !n),
@@ -198,15 +198,15 @@ function De({ gauge: o, index: c, total: a, dark: d, onChange: l, onRemove: i, o
           ]
         }
       ),
-      /* @__PURE__ */ s("div", { style: { display: "flex", gap: 4 }, children: [
-        c > 0 && /* @__PURE__ */ e("button", { onClick: h, title: r("settings.moveUp"), style: v(d), children: "↑" }),
-        c < a - 1 && /* @__PURE__ */ e("button", { onClick: p, title: r("settings.moveDown"), style: v(d), children: "↓" }),
-        /* @__PURE__ */ e("button", { onClick: i, title: r("settings.delete"), style: v(d, !0), children: "✕" })
+      /* @__PURE__ */ d("div", { style: { display: "flex", gap: 4 }, children: [
+        c > 0 && /* @__PURE__ */ e("button", { onClick: g, title: r("settings.moveUp"), style: v(s), children: "↑" }),
+        c < a - 1 && /* @__PURE__ */ e("button", { onClick: y, title: r("settings.moveDown"), style: v(s), children: "↓" }),
+        /* @__PURE__ */ e("button", { onClick: i, title: r("settings.delete"), style: v(s, !0), children: "✕" })
       ] })
     ] }),
-    f && /* @__PURE__ */ s(N, { children: [
+    f && /* @__PURE__ */ d(N, { children: [
       /* @__PURE__ */ e(
-        U,
+        I,
         {
           label: r("settings.flowEntity"),
           field: "entity",
@@ -215,33 +215,32 @@ function De({ gauge: o, index: c, total: a, dark: d, onChange: l, onRemove: i, o
           filterDomain: "sensor"
         }
       ),
-      /* @__PURE__ */ e(m, { label: r("settings.roomName"), children: /* @__PURE__ */ e(B, { value: o.label, onChange: (n) => y("label", n), placeholder: r("settings.gaugeLabelPlaceholder") }) }),
-      /* @__PURE__ */ s("div", { style: { display: "flex", gap: 8 }, children: [
-        /* @__PURE__ */ e("div", { style: { flex: 1 }, children: /* @__PURE__ */ e(m, { label: "Unit", children: /* @__PURE__ */ e(B, { value: o.unit, onChange: (n) => y("unit", n), placeholder: r("settings.gaugeUnitPlaceholder") }) }) }),
-        /* @__PURE__ */ e("div", { style: { flex: 1 }, children: /* @__PURE__ */ e(m, { label: "Dec.", children: /* @__PURE__ */ e(w, { value: o.decimals ?? 1, onChange: (n) => y("decimals", n), min: 0, max: 4 }) }) }),
-        /* @__PURE__ */ e("div", { style: { flex: 1 }, children: /* @__PURE__ */ e(m, { label: r("settings.barColor"), children: /* @__PURE__ */ s("div", { style: { display: "flex", gap: 6, alignItems: "center" }, children: [
+      /* @__PURE__ */ e(p, { label: r("settings.roomName"), children: /* @__PURE__ */ e(B, { value: o.label, onChange: (n) => m("label", n), placeholder: r("settings.gaugeLabelPlaceholder") }) }),
+      /* @__PURE__ */ d("div", { style: { display: "flex", gap: 8 }, children: [
+        /* @__PURE__ */ e("div", { style: { flex: 1 }, children: /* @__PURE__ */ e(p, { label: "Unit", children: /* @__PURE__ */ e(B, { value: o.unit, onChange: (n) => m("unit", n), placeholder: r("settings.gaugeUnitPlaceholder") }) }) }),
+        /* @__PURE__ */ e("div", { style: { flex: 1 }, children: /* @__PURE__ */ e(p, { label: "Dec.", children: /* @__PURE__ */ e(w, { value: o.decimals ?? 1, onChange: (n) => m("decimals", n), min: 0, max: 4 }) }) }),
+        /* @__PURE__ */ e("div", { style: { flex: 1 }, children: /* @__PURE__ */ e(p, { label: r("settings.barColor"), children: /* @__PURE__ */ d("div", { style: { display: "flex", gap: 6, alignItems: "center" }, children: [
           /* @__PURE__ */ e(
-            "input",
+            R,
             {
-              type: "color",
               value: o.color || "#3d8ea0",
-              onChange: (n) => y("color", n.target.value),
+              onCommit: (n) => m("color", n),
               style: { width: 36, height: 32, borderRadius: 6, border: "1px solid var(--border-medium)", padding: 2, cursor: "pointer", background: "transparent" }
             }
           ),
           /* @__PURE__ */ e("code", { style: { fontSize: 9, color: "var(--text-muted)" }, children: o.color || "#3d8ea0" })
         ] }) }) })
       ] }),
-      /* @__PURE__ */ s("div", { style: { display: "flex", gap: 8 }, children: [
-        /* @__PURE__ */ e("div", { style: { flex: 1 }, children: /* @__PURE__ */ e(m, { label: "Min", children: /* @__PURE__ */ e(w, { value: o.min ?? 0, onChange: (n) => y("min", n) }) }) }),
-        /* @__PURE__ */ e("div", { style: { flex: 1 }, children: /* @__PURE__ */ e(m, { label: "Max", children: /* @__PURE__ */ e(w, { value: o.max ?? 100, onChange: (n) => y("max", n) }) }) })
+      /* @__PURE__ */ d("div", { style: { display: "flex", gap: 8 }, children: [
+        /* @__PURE__ */ e("div", { style: { flex: 1 }, children: /* @__PURE__ */ e(p, { label: "Min", children: /* @__PURE__ */ e(w, { value: o.min ?? 0, onChange: (n) => m("min", n) }) }) }),
+        /* @__PURE__ */ e("div", { style: { flex: 1 }, children: /* @__PURE__ */ e(p, { label: "Max", children: /* @__PURE__ */ e(w, { value: o.max ?? 100, onChange: (n) => m("max", n) }) }) })
       ] })
     ] })
   ] });
 }
-function Ge({ badge: o, index: c, total: a, dark: d, onChange: l, onRemove: i, onMoveUp: h, onMoveDown: p, defaultOpen: u, t: r }) {
-  const y = (n, D) => l({ ...o, [n]: D }), [f, x] = F(!!u), M = d ? "rgba(255,255,255,.04)" : "#f4f6fa", C = d ? "rgba(255,255,255,.09)" : "#dde3ec", S = f ? $ : I;
-  return /* @__PURE__ */ s("div", { style: {
+function Ee({ badge: o, index: c, total: a, dark: s, onChange: l, onRemove: i, onMoveUp: g, onMoveDown: y, defaultOpen: u, t: r }) {
+  const m = (n, D) => l({ ...o, [n]: D }), [f, x] = z(!!u), M = s ? "rgba(255,255,255,.04)" : "#f4f6fa", C = s ? "rgba(255,255,255,.09)" : "#dde3ec", S = f ? H : L;
+  return /* @__PURE__ */ d("div", { style: {
     borderRadius: 12,
     border: `1px solid ${C}`,
     background: M,
@@ -250,18 +249,18 @@ function Ge({ badge: o, index: c, total: a, dark: d, onChange: l, onRemove: i, o
     flexDirection: "column",
     gap: 8
   }, children: [
-    /* @__PURE__ */ s("div", { style: { display: "flex", alignItems: "center", gap: 8 }, children: [
+    /* @__PURE__ */ d("div", { style: { display: "flex", alignItems: "center", gap: 8 }, children: [
       /* @__PURE__ */ e(
         "button",
         {
           onClick: () => x((n) => !n),
           title: r(f ? "settings.collapse" : "settings.expand"),
-          style: v(d),
+          style: v(s),
           children: /* @__PURE__ */ e(S, { size: 14 })
         }
       ),
-      /* @__PURE__ */ e(_, { value: o.icon || "circle", onChange: (n) => y("icon", n), dark: d, size: 28 }),
-      /* @__PURE__ */ s(
+      /* @__PURE__ */ e(_, { value: o.icon || "circle", onChange: (n) => m("icon", n), dark: s, size: 28 }),
+      /* @__PURE__ */ d(
         "button",
         {
           onClick: () => x((n) => !n),
@@ -285,15 +284,15 @@ function Ge({ badge: o, index: c, total: a, dark: d, onChange: l, onRemove: i, o
           ]
         }
       ),
-      /* @__PURE__ */ s("div", { style: { display: "flex", gap: 4 }, children: [
-        c > 0 && /* @__PURE__ */ e("button", { onClick: h, title: r("settings.moveUp"), style: v(d), children: "↑" }),
-        c < a - 1 && /* @__PURE__ */ e("button", { onClick: p, title: r("settings.moveDown"), style: v(d), children: "↓" }),
-        /* @__PURE__ */ e("button", { onClick: i, title: r("settings.delete"), style: v(d, !0), children: "✕" })
+      /* @__PURE__ */ d("div", { style: { display: "flex", gap: 4 }, children: [
+        c > 0 && /* @__PURE__ */ e("button", { onClick: g, title: r("settings.moveUp"), style: v(s), children: "↑" }),
+        c < a - 1 && /* @__PURE__ */ e("button", { onClick: y, title: r("settings.moveDown"), style: v(s), children: "↓" }),
+        /* @__PURE__ */ e("button", { onClick: i, title: r("settings.delete"), style: v(s, !0), children: "✕" })
       ] })
     ] }),
-    f && /* @__PURE__ */ s(N, { children: [
+    f && /* @__PURE__ */ d(N, { children: [
       /* @__PURE__ */ e(
-        U,
+        I,
         {
           label: "Entity",
           field: "entity",
@@ -302,20 +301,19 @@ function Ge({ badge: o, index: c, total: a, dark: d, onChange: l, onRemove: i, o
           filterDomain: "sensor"
         }
       ),
-      /* @__PURE__ */ s("div", { style: { display: "flex", gap: 8 }, children: [
-        /* @__PURE__ */ e("div", { style: { flex: 1 }, children: /* @__PURE__ */ e(m, { label: "Unit", children: /* @__PURE__ */ e(B, { value: o.unit, onChange: (n) => y("unit", n), placeholder: r("settings.badgeUnitPlaceholder") }) }) }),
-        /* @__PURE__ */ e("div", { style: { flex: 1 }, children: /* @__PURE__ */ e(m, { label: "Dec.", children: /* @__PURE__ */ e(w, { value: o.decimals ?? 0, onChange: (n) => y("decimals", n), min: 0, max: 4 }) }) })
+      /* @__PURE__ */ d("div", { style: { display: "flex", gap: 8 }, children: [
+        /* @__PURE__ */ e("div", { style: { flex: 1 }, children: /* @__PURE__ */ e(p, { label: "Unit", children: /* @__PURE__ */ e(B, { value: o.unit, onChange: (n) => m("unit", n), placeholder: r("settings.badgeUnitPlaceholder") }) }) }),
+        /* @__PURE__ */ e("div", { style: { flex: 1 }, children: /* @__PURE__ */ e(p, { label: "Dec.", children: /* @__PURE__ */ e(w, { value: o.decimals ?? 0, onChange: (n) => m("decimals", n), min: 0, max: 4 }) }) })
       ] }),
-      /* @__PURE__ */ s("div", { style: { display: "flex", gap: 8 }, children: [
-        /* @__PURE__ */ e("div", { style: { flex: 1 }, children: /* @__PURE__ */ e(m, { label: "Min", children: /* @__PURE__ */ e(w, { value: o.min ?? 0, onChange: (n) => y("min", n) }) }) }),
-        /* @__PURE__ */ e("div", { style: { flex: 1 }, children: /* @__PURE__ */ e(m, { label: "Max", children: /* @__PURE__ */ e(w, { value: o.max ?? 100, onChange: (n) => y("max", n) }) }) }),
-        /* @__PURE__ */ e("div", { style: { flex: 1 }, children: /* @__PURE__ */ e(m, { label: r("settings.barColor"), children: /* @__PURE__ */ s("div", { style: { display: "flex", gap: 6, alignItems: "center" }, children: [
+      /* @__PURE__ */ d("div", { style: { display: "flex", gap: 8 }, children: [
+        /* @__PURE__ */ e("div", { style: { flex: 1 }, children: /* @__PURE__ */ e(p, { label: "Min", children: /* @__PURE__ */ e(w, { value: o.min ?? 0, onChange: (n) => m("min", n) }) }) }),
+        /* @__PURE__ */ e("div", { style: { flex: 1 }, children: /* @__PURE__ */ e(p, { label: "Max", children: /* @__PURE__ */ e(w, { value: o.max ?? 100, onChange: (n) => m("max", n) }) }) }),
+        /* @__PURE__ */ e("div", { style: { flex: 1 }, children: /* @__PURE__ */ e(p, { label: r("settings.barColor"), children: /* @__PURE__ */ d("div", { style: { display: "flex", gap: 6, alignItems: "center" }, children: [
           /* @__PURE__ */ e(
-            "input",
+            R,
             {
-              type: "color",
               value: o.color || "#5b6b85",
-              onChange: (n) => y("color", n.target.value),
+              onCommit: (n) => m("color", n),
               style: { width: 36, height: 32, borderRadius: 6, border: "1px solid var(--border-medium)", padding: 2, cursor: "pointer", background: "transparent" }
             }
           ),
@@ -343,12 +341,12 @@ function v(o, c = !1) {
   };
 }
 function A(o, c, a) {
-  const d = [...o], [l] = d.splice(c, 1);
-  return d.splice(a, 0, l), d;
+  const s = [...o], [l] = s.splice(c, 1);
+  return s.splice(a, 0, l), s;
 }
-function R({ label: o, value: c, onChange: a, gauges: d, dark: l, autoFirstLabel: i }) {
-  const h = d.filter((u) => u.entity);
-  return h.length ? /* @__PURE__ */ e(m, { label: o, children: /* @__PURE__ */ s(
+function $({ label: o, value: c, onChange: a, gauges: s, dark: l, autoFirstLabel: i }) {
+  const g = s.filter((u) => u.entity);
+  return g.length ? /* @__PURE__ */ e(p, { label: o, children: /* @__PURE__ */ d(
     "select",
     {
       value: c || "",
@@ -368,40 +366,63 @@ function R({ label: o, value: c, onChange: a, gauges: d, dark: l, autoFirstLabel
       onBlur: (u) => u.target.style.borderColor = "var(--border-medium)",
       children: [
         /* @__PURE__ */ e("option", { value: "", children: i }),
-        h.map((u, r) => /* @__PURE__ */ e("option", { value: u.entity, children: u.label || u.entity }, r))
+        g.map((u, r) => /* @__PURE__ */ e("option", { value: u.entity, children: u.label || u.entity }, r))
       ]
     }
   ) }) : null;
 }
-function Ae({ cardId: o }) {
-  const { dark: c } = pe(), [a, d] = be(o, Me), l = (t, g) => d((b) => ({ ...b, [t]: g })), { t: i } = we("card-room-sensor"), h = a.gauges ?? [], p = a.badges ?? [], u = a.displayMode !== "flow", r = u && (a.rightSection === "badges" || a.rightSection === "minigauge"), y = (t, g) => l("gauges", h.map((b, E) => E === t ? g : b)), f = (t) => l("gauges", h.filter((g, b) => b !== t)), x = () => l("gauges", [...h, { ...Ce }]), M = (t) => l("gauges", A(h, t, t - 1)), C = (t) => l("gauges", A(h, t, t + 1)), S = (t, g) => l("badges", p.map((b, E) => E === t ? g : b)), n = (t) => l("badges", p.filter((g, b) => b !== t)), D = () => l("badges", [...p, { ...Se }]), T = (t) => l("badges", A(p, t, t - 1)), H = (t) => l("badges", A(p, t, t + 1));
-  return /* @__PURE__ */ s("div", { style: { display: "flex", flexDirection: "column", gap: 14 }, children: [
-    /* @__PURE__ */ s(G, { title: i("settings.sectionRoom"), children: [
-      /* @__PURE__ */ e(m, { label: i("settings.roomName"), children: /* @__PURE__ */ e(B, { value: a.label, onChange: (t) => l("label", t), placeholder: "usa friendly_name da HA" }) }),
-      /* @__PURE__ */ e(m, { label: i("settings.roomIcon"), children: /* @__PURE__ */ e(_, { value: a.icon ?? "home", onChange: (t) => l("icon", t), dark: c, size: 32 }) })
+function R({ value: o, onCommit: c, style: a, delay: s = 120 }) {
+  const [l, i] = z(o), g = T(null), y = T(c);
+  y.current = c, F(() => {
+    i(o);
+  }, [o]), F(() => () => {
+    g.current && clearTimeout(g.current);
+  }, []);
+  const u = (r) => {
+    i(r), g.current && clearTimeout(g.current), g.current = setTimeout(() => {
+      var m;
+      return (m = y.current) == null ? void 0 : m.call(y, r);
+    }, s);
+  };
+  return /* @__PURE__ */ e(
+    "input",
+    {
+      type: "color",
+      value: l || "#000000",
+      onChange: (r) => u(r.target.value),
+      style: a
+    }
+  );
+}
+function Ne({ cardId: o }) {
+  const { dark: c } = ve(), [a, s] = xe(o, De), l = (t, h) => s((b) => ({ ...b, [t]: h })), { t: i } = Se("card-room-sensor"), g = a.gauges ?? [], y = a.badges ?? [], u = a.displayMode !== "flow", r = u && (a.rightSection === "badges" || a.rightSection === "minigauge"), m = (t, h) => l("gauges", g.map((b, E) => E === t ? h : b)), f = (t) => l("gauges", g.filter((h, b) => b !== t)), x = () => l("gauges", [...g, { ...Ge }]), M = (t) => l("gauges", A(g, t, t - 1)), C = (t) => l("gauges", A(g, t, t + 1)), S = (t, h) => l("badges", y.map((b, E) => E === t ? h : b)), n = (t) => l("badges", y.filter((h, b) => b !== t)), D = () => l("badges", [...y, { ...Ae }]), O = (t) => l("badges", A(y, t, t - 1)), k = (t) => l("badges", A(y, t, t + 1));
+  return /* @__PURE__ */ d("div", { style: { display: "flex", flexDirection: "column", gap: 14 }, children: [
+    /* @__PURE__ */ d(G, { title: i("settings.sectionRoom"), children: [
+      /* @__PURE__ */ e(p, { label: i("settings.roomName"), children: /* @__PURE__ */ e(B, { value: a.label, onChange: (t) => l("label", t), placeholder: "usa friendly_name da HA" }) }),
+      /* @__PURE__ */ e(p, { label: i("settings.roomIcon"), children: /* @__PURE__ */ e(_, { value: a.icon ?? "home", onChange: (t) => l("icon", t), dark: c, size: 32 }) })
     ] }),
-    /* @__PURE__ */ s(G, { title: i("settings.sectionGauge"), children: [
-      h.length === 0 && /* @__PURE__ */ e("div", { style: {
+    /* @__PURE__ */ d(G, { title: i("settings.sectionGauge"), children: [
+      g.length === 0 && /* @__PURE__ */ e("div", { style: {
         fontSize: 11,
         color: "var(--text-muted)",
         fontStyle: "italic",
         padding: "6px 0"
       }, children: i("settings.noGauges") }),
-      h.map((t, g) => /* @__PURE__ */ e(
-        De,
+      g.map((t, h) => /* @__PURE__ */ e(
+        Be,
         {
           gauge: t,
-          index: g,
-          total: h.length,
+          index: h,
+          total: g.length,
           dark: c,
           defaultOpen: !t.entity,
-          onChange: (b) => y(g, b),
-          onRemove: () => f(g),
-          onMoveUp: () => M(g),
-          onMoveDown: () => C(g),
+          onChange: (b) => m(h, b),
+          onRemove: () => f(h),
+          onMoveUp: () => M(h),
+          onMoveDown: () => C(h),
           t: i
         },
-        g
+        h
       )),
       /* @__PURE__ */ e(
         "button",
@@ -429,9 +450,9 @@ function Ae({ cardId: o }) {
         }
       )
     ] }),
-    /* @__PURE__ */ s(G, { title: i("settings.sectionDisplay"), children: [
-      /* @__PURE__ */ e(m, { label: i("settings.mainStyle"), children: /* @__PURE__ */ e(
-        z,
+    /* @__PURE__ */ d(G, { title: i("settings.sectionDisplay"), children: [
+      /* @__PURE__ */ e(p, { label: i("settings.mainStyle"), children: /* @__PURE__ */ e(
+        U,
         {
           value: a.displayMode ?? "gauge",
           onChange: (t) => l("displayMode", t),
@@ -442,18 +463,18 @@ function Ae({ cardId: o }) {
         }
       ) }),
       a.displayMode === "flow" && /* @__PURE__ */ e(
-        R,
+        $,
         {
           label: i("settings.flowEntity"),
           value: a.flowEntity,
           onChange: (t) => l("flowEntity", t),
-          gauges: h,
+          gauges: g,
           dark: c,
           autoFirstLabel: i("settings.autoFirst")
         }
       ),
-      u && /* @__PURE__ */ e(m, { label: i("settings.rightSection"), children: /* @__PURE__ */ e(
-        z,
+      u && /* @__PURE__ */ e(p, { label: i("settings.rightSection"), children: /* @__PURE__ */ e(
+        U,
         {
           value: a.rightSection ?? "none",
           onChange: (t) => l("rightSection", t),
@@ -465,26 +486,25 @@ function Ae({ cardId: o }) {
           ]
         }
       ) }),
-      (a.displayMode === "flow" || u && a.rightSection === "history") && /* @__PURE__ */ e(fe, { label: i("settings.showMinMax"), hint: i("settings.showMinMaxHint"), children: /* @__PURE__ */ e(ve, { value: !!a.showMinMax, onChange: (t) => l("showMinMax", t) }) }),
-      u && a.rightSection === "history" && /* @__PURE__ */ s(N, { children: [
+      (a.displayMode === "flow" || u && a.rightSection === "history") && /* @__PURE__ */ e(we, { label: i("settings.showMinMax"), hint: i("settings.showMinMaxHint"), children: /* @__PURE__ */ e(Me, { value: !!a.showMinMax, onChange: (t) => l("showMinMax", t) }) }),
+      u && a.rightSection === "history" && /* @__PURE__ */ d(N, { children: [
         /* @__PURE__ */ e(
-          R,
+          $,
           {
             label: i("settings.historyEntity"),
             value: a.historyEntity,
             onChange: (t) => l("historyEntity", t),
-            gauges: h,
+            gauges: g,
             dark: c,
             autoFirstLabel: i("settings.autoFirst")
           }
         ),
-        /* @__PURE__ */ e(m, { label: i("settings.barColor"), children: /* @__PURE__ */ s("div", { style: { display: "flex", gap: 8, alignItems: "center" }, children: [
+        /* @__PURE__ */ e(p, { label: i("settings.barColor"), children: /* @__PURE__ */ d("div", { style: { display: "flex", gap: 8, alignItems: "center" }, children: [
           /* @__PURE__ */ e(
-            "input",
+            R,
             {
-              type: "color",
               value: a.chartColor ?? "#e07060",
-              onChange: (t) => l("chartColor", t.target.value),
+              onCommit: (t) => l("chartColor", t),
               style: { width: 36, height: 32, borderRadius: 6, border: "1px solid var(--border-medium)", padding: 2, cursor: "pointer", background: "transparent" }
             }
           ),
@@ -492,28 +512,28 @@ function Ae({ cardId: o }) {
         ] }) })
       ] })
     ] }),
-    r && /* @__PURE__ */ s(G, { title: a.rightSection === "minigauge" ? i("settings.sectionMiniGauge") : "Badge", children: [
-      p.length === 0 && /* @__PURE__ */ e("div", { style: {
+    r && /* @__PURE__ */ d(G, { title: a.rightSection === "minigauge" ? i("settings.sectionMiniGauge") : "Badge", children: [
+      y.length === 0 && /* @__PURE__ */ e("div", { style: {
         fontSize: 11,
         color: "var(--text-muted)",
         fontStyle: "italic",
         padding: "6px 0"
       }, children: i("settings.noBadges") }),
-      p.map((t, g) => /* @__PURE__ */ e(
-        Ge,
+      y.map((t, h) => /* @__PURE__ */ e(
+        Ee,
         {
           badge: t,
-          index: g,
-          total: p.length,
+          index: h,
+          total: y.length,
           dark: c,
           defaultOpen: !t.entity,
-          onChange: (b) => S(g, b),
-          onRemove: () => n(g),
-          onMoveUp: () => T(g),
-          onMoveDown: () => H(g),
+          onChange: (b) => S(h, b),
+          onRemove: () => n(h),
+          onMoveUp: () => O(h),
+          onMoveDown: () => k(h),
           t: i
         },
-        g
+        h
       )),
       /* @__PURE__ */ e(
         "button",
@@ -544,5 +564,5 @@ function Ae({ cardId: o }) {
   ] });
 }
 export {
-  Ae as default
+  Ne as default
 };

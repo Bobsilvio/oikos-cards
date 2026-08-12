@@ -9,7 +9,7 @@ import {
   Field, Section, TextField, NumberField, Pills, SettingsRow, Toggle,
   registerCardTranslations, useT,
 } from '@oikos/sdk'
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { ChevronDown, ChevronRight } from 'lucide-react'
 import it from './i18n/it.json'
 import en from './i18n/en.json'
@@ -118,10 +118,10 @@ function GaugeRow({ gauge, index, total, dark, onChange, onRemove, onMoveUp, onM
             <div style={{ flex: 1 }}>
               <Field label={t('settings.barColor')}>
                 <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
-                  <input
-                    type="color"
+                  <LiveColor
+                    
                     value={gauge.color || '#3d8ea0'}
-                    onChange={e => set('color', e.target.value)}
+                    onCommit={e => set('color', e)}
                     style={{ width: 36, height: 32, borderRadius: 6, border: '1px solid var(--border-medium)', padding: 2, cursor: 'pointer', background: 'transparent' }}
                   />
                   <code style={{ fontSize: 9, color: 'var(--text-muted)' }}>{gauge.color || '#3d8ea0'}</code>
@@ -236,10 +236,10 @@ function BadgeRow({ badge, index, total, dark, onChange, onRemove, onMoveUp, onM
             <div style={{ flex: 1 }}>
               <Field label={t('settings.barColor')}>
                 <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
-                  <input
-                    type="color"
+                  <LiveColor
+                    
                     value={badge.color || '#5b6b85'}
-                    onChange={e => set('color', e.target.value)}
+                    onCommit={e => set('color', e)}
                     style={{ width: 36, height: 32, borderRadius: 6, border: '1px solid var(--border-medium)', padding: 2, cursor: 'pointer', background: 'transparent' }}
                   />
                   <code style={{ fontSize: 9, color: 'var(--text-muted)' }}>{badge.color || '#5b6b85'}</code>
@@ -307,6 +307,26 @@ function EntityDropdown({ label, value, onChange, gauges, dark, autoFirstLabel }
 }
 
 // ── Componente principale ─────────────────────────────────────────────────────
+/**
+ * Selettore colore con scrittura accorpata: ogni movimento del mouse scriveva
+ * la configurazione della card — localStorage, POST e ridisegno. Ora si scrive
+ * quando ci si ferma.
+ */
+function LiveColor({ value, onCommit, style, delay = 120 }) {
+  const [local, setLocal] = useState(value)
+  const timer = useRef(null)
+  const cb = useRef(onCommit); cb.current = onCommit
+  useEffect(() => { setLocal(value) }, [value])
+  useEffect(() => () => { if (timer.current) clearTimeout(timer.current) }, [])
+  const handle = (v) => {
+    setLocal(v)
+    if (timer.current) clearTimeout(timer.current)
+    timer.current = setTimeout(() => cb.current?.(v), delay)
+  }
+  return <input type="color" value={local || '#000000'}
+    onChange={e => handle(e.target.value)} style={style}/>
+}
+
 export default function RoomSensorSettings({ cardId }) {
   const { dark } = useDashboard()
   const [cfg, setCfg] = useCardConfig(cardId, DEFAULT)
@@ -452,10 +472,10 @@ export default function RoomSensorSettings({ cardId }) {
             />
             <Field label={t('settings.barColor')}>
               <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-                <input
-                  type="color"
+                <LiveColor
+                  
                   value={cfg.chartColor ?? '#e07060'}
-                  onChange={e => set('chartColor', e.target.value)}
+                  onCommit={e => set('chartColor', e)}
                   style={{ width: 36, height: 32, borderRadius: 6, border: '1px solid var(--border-medium)', padding: 2, cursor: 'pointer', background: 'transparent' }}
                 />
                 <code style={{ fontSize: 10, color: 'var(--text-muted)' }}>{cfg.chartColor ?? '#e07060'}</code>
