@@ -19,12 +19,19 @@ import de from './i18n/de.json'
 import es from './i18n/es.json'
 import fr from './i18n/fr.json'
 
-registerCardTranslations('card-room-sensor', { it, en, de, es, fr })
 import {
   relTime, MdiIcon, ArcGauge, MiniGauge, VSep, EmptyState,
   smoothPath, tempColor, rgbStr,
 } from './roomSensorUtils'
 import SensorDetailModal from './SensorDetailModal'
+
+// Dopo TUTTI gli import: questa riga viene ESEGUITA, e stava in mezzo a
+// essi. Il bundler appiattisce i moduli e i JSON delle traduzioni
+// diventano costanti emesse nella posizione del loro import: la chiamata
+// finiva prima di quelle dichiarazioni e leggeva una costante non ancora
+// inizializzata — "cannot access X before initialization", con la card
+// che non si apriva.
+registerCardTranslations('card-room-sensor', { it, en, de, es, fr })
 
 const DEFAULT = {
   label:         '',
