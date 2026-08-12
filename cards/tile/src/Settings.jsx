@@ -7,9 +7,21 @@
  * entità configurata è già utilizzabile.
  */
 import {
-  useDashboard, useCardConfig, registerCardTranslations, useT,
-  EntityField, MdiIconPicker,
-  Section, Field, TextField, Toggle, Slider, Pills, ColorCircles, ACCENT_COLORS,
+  useDashboard,
+  useCardConfig,
+  registerCardTranslations,
+  useT,
+  EntityField,
+  MdiIconPicker,
+  Section,
+  Field,
+  TextField,
+  Toggle,
+  Slider,
+  Pills,
+  ColorCircles,
+  ACCENT_COLORS,
+  listPopupPanels,
 } from '@oikos/sdk'
 import it from './i18n/it.json'
 import en from './i18n/en.json'
@@ -20,6 +32,50 @@ import { DEFAULT } from './Card'
 import { DEFAULT_ACTIVE } from './tileUtils'
 
 registerCardTranslations('card-tile', { it, en, de, es, fr })
+
+/**
+ * Scelta del pannello popup da aprire.
+ *
+ * L'elenco arriva dall'SDK: gli id delle istanze sono stringhe generate, non
+ * digitabili a mano. Se il pannello è impostato come non visibile lo diciamo,
+ * perché è proprio quello il caso d'uso — un popup che esiste solo per essere
+ * richiamato da qui.
+ */
+function PopupPicker({ cfg, set, t }) {
+  // Pannelli su dashboard più vecchie: l'export potrebbe non esserci ancora.
+  const panels = typeof listPopupPanels === 'function' ? listPopupPanels() : []
+
+  if (panels.length === 0) {
+    return (
+      <Field label={t('settings.popupPanel')} hint={t('settings.popupNone')}>
+        <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>{t('settings.popupNoneHint')}</div>
+      </Field>
+    )
+  }
+
+  return (
+    <Field label={t('settings.popupPanel')} hint={t('settings.popupHint')}>
+      <select
+        value={cfg.popupCardId || ''}
+        onChange={e => set('popupCardId', e.target.value)}
+        style={{
+          width: '100%', padding: '8px 10px', borderRadius: 9, fontSize: 12,
+          background: 'var(--bg-primary)', border: '1px solid var(--border-medium)',
+          color: 'var(--text-primary)', cursor: 'pointer',
+        }}
+      >
+        <option value="">{t('settings.popupChoose')}</option>
+        {panels.map(p => (
+          <option key={p.id} value={p.id}>
+            {(p.title || t('settings.popupUntitled'))}
+            {p.hidden ? ' · ' + t('settings.popupHidden') : ''}
+            {' — ' + p.page}
+          </option>
+        ))}
+      </select>
+    </Field>
+  )
+}
 
 export default function TileSettings({ cardId }) {
   const { dark } = useDashboard()
@@ -75,10 +131,14 @@ export default function TileSettings({ cardId }) {
             options={[
               { value: 'more-info', label: t('settings.tapMore') },
               { value: 'toggle',    label: t('settings.tapToggle') },
+              { value: 'popup',     label: t('settings.tapPopup') },
               { value: 'none',      label: t('settings.tapNone') },
             ]}
           />
         </Field>
+        {/* Il menù dei popup compare solo se serve: elencare pannelli quando
+            l'azione è un'altra è rumore. */}
+        {cfg.tapAction === 'popup' && <PopupPicker cfg={cfg} set={set} t={t}/>}
       </Section>
 
       <Section title={t('settings.sectionStatus')}>

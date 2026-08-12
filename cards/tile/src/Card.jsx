@@ -57,14 +57,15 @@ export const DEFAULT = {
   // Icona accessoria in basso a destra
   badgeIcon:     '',
   // Interazione
-  tapAction:     'more-info',   // 'more-info' | 'toggle' | 'none'
+  tapAction:     'more-info',   // 'more-info' | 'toggle' | 'popup' | 'none'
+  popupCardId:   '',            // istanza popup-panel da aprire con tapAction 'popup'
 }
 
 export default function TileCard({ cardId = 'tile' }) {
   // ── Hook: tutti qui sopra, nessuno dopo un return ────────────────────────
   const s = useStyles()
   const { t } = useT('card-tile')
-  const { getState, getAttr, callService, openMoreInfo } = useDashboard()
+  const { getState, getAttr, callService, openMoreInfo, openPopup } = useDashboard()
   const [cfg] = useCardConfig(cardId, DEFAULT)
 
   const tk = s.tokens
@@ -146,7 +147,7 @@ export default function TileCard({ cardId = 'tile' }) {
     return label ? `${label}: ${shown}` : shown
   }
 
-  const clickable = cfg.tapAction !== 'none'
+  const clickable = cfg.tapAction !== 'none' && !(cfg.tapAction === 'popup' && !cfg.popupCardId)
   const onClick = () => {
     if (cfg.tapAction === 'toggle') {
       const domain = cfg.entityId.split('.')[0]
@@ -166,6 +167,10 @@ export default function TileCard({ cardId = 'tile' }) {
         // altri, senza mappare ogni dominio al suo servizio.
         callService('homeassistant', 'toggle', cfg.entityId)
       }
+    } else if (cfg.tapAction === 'popup') {
+      // Apre un pannello popup già configurato altrove — anche uno impostato
+      // come «non mostrare nella pagina», che esiste solo per essere chiamato.
+      if (cfg.popupCardId) openPopup?.(cfg.popupCardId)
     } else if (cfg.tapAction === 'more-info') {
       openMoreInfo?.(cfg.entityId)
     }

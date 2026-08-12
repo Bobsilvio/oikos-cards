@@ -1,7 +1,7 @@
-const { jsxs: l, jsx: t, Fragment: h } = window.__OIKOS_SDK__.jsxRuntime, C = {
+const { jsxs: l, jsx: t, Fragment: h } = window.__OIKOS_SDK__.jsxRuntime, w = {
   title: "Tile non configurata",
   hint: "Scegli un'entità dalle impostazioni"
-}, _ = {
+}, H = {
   unavailable: "N/D",
   on: "Acceso",
   off: "Spento",
@@ -36,7 +36,7 @@ const { jsxs: l, jsx: t, Fragment: h } = window.__OIKOS_SDK__.jsxRuntime, C = {
   wet: "Bagnato",
   active: "Attivo",
   running: "In funzione"
-}, L = {
+}, _ = {
   sectionEntity: "Entità",
   entity: "Entità principale",
   label: "Titolo",
@@ -76,15 +76,23 @@ const { jsxs: l, jsx: t, Fragment: h } = window.__OIKOS_SDK__.jsxRuntime, C = {
   tapToggle: "Accendi/spegni",
   tapNone: "Niente",
   sectionTap: "Al tocco",
-  tapHint: "Vale su tutta la tile, non serve alcuna icona aggiuntiva. «Accendi/spegni» funziona su luci, prese, ventilatori, tapparelle e serrature."
-}, v = {
-  empty: C,
-  state: _,
-  settings: L
+  tapHint: "Vale su tutta la tile, non serve alcuna icona aggiuntiva. «Accendi/spegni» funziona su luci, prese, ventilatori, tapparelle e serrature.",
+  tapPopup: "Apri popup",
+  popupPanel: "Pannello da aprire",
+  popupHint: "Anche uno impostato come «non mostrare nella pagina».",
+  popupChoose: "Scegli un pannello…",
+  popupUntitled: "Senza titolo",
+  popupHidden: "nascosto",
+  popupNone: "Nessun pannello disponibile",
+  popupNoneHint: "Aggiungi prima una card «Popup Panel» a una pagina."
+}, S = {
+  empty: w,
+  state: H,
+  settings: _
 }, I = {
   title: "Tile not configured",
   hint: "Pick an entity in the settings"
-}, V = {
+}, L = {
   unavailable: "N/A",
   on: "On",
   off: "Off",
@@ -119,7 +127,7 @@ const { jsxs: l, jsx: t, Fragment: h } = window.__OIKOS_SDK__.jsxRuntime, C = {
   wet: "Wet",
   active: "Active",
   running: "Running"
-}, P = {
+}, V = {
   sectionEntity: "Entity",
   entity: "Main entity",
   label: "Title",
@@ -159,15 +167,23 @@ const { jsxs: l, jsx: t, Fragment: h } = window.__OIKOS_SDK__.jsxRuntime, C = {
   tapToggle: "Toggle",
   tapNone: "Nothing",
   sectionTap: "On tap",
-  tapHint: "Applies to the whole tile; no extra icon is needed. «Toggle» works on lights, switches, fans, covers and locks."
-}, f = {
+  tapHint: "Applies to the whole tile; no extra icon is needed. «Toggle» works on lights, switches, fans, covers and locks.",
+  tapPopup: "Open popup",
+  popupPanel: "Panel to open",
+  popupHint: "Including one set to «do not show on the page».",
+  popupChoose: "Choose a panel…",
+  popupUntitled: "Untitled",
+  popupHidden: "hidden",
+  popupNone: "No panels available",
+  popupNoneHint: "Add a «Popup Panel» card to a page first."
+}, A = {
   empty: I,
-  state: V,
-  settings: P
+  state: L,
+  settings: V
 }, k = {
   title: "Kachel nicht konfiguriert",
   hint: "Wähle eine Entität in den Einstellungen"
-}, D = {
+}, N = {
   unavailable: "K/A",
   on: "An",
   off: "Aus",
@@ -202,7 +218,7 @@ const { jsxs: l, jsx: t, Fragment: h } = window.__OIKOS_SDK__.jsxRuntime, C = {
   wet: "Nass",
   active: "Aktiv",
   running: "Läuft"
-}, H = {
+}, D = {
   sectionEntity: "Entität",
   entity: "Hauptentität",
   label: "Titel",
@@ -242,15 +258,23 @@ const { jsxs: l, jsx: t, Fragment: h } = window.__OIKOS_SDK__.jsxRuntime, C = {
   tapToggle: "Umschalten",
   tapNone: "Nichts",
   sectionTap: "Bei Berührung",
-  tapHint: "Gilt für die ganze Kachel, ein zusätzliches Symbol ist nicht nötig. «Ein/Aus» funktioniert bei Lampen, Steckdosen, Ventilatoren, Rollläden und Schlössern."
-}, S = {
+  tapHint: "Gilt für die ganze Kachel, ein zusätzliches Symbol ist nicht nötig. «Ein/Aus» funktioniert bei Lampen, Steckdosen, Ventilatoren, Rollläden und Schlössern.",
+  tapPopup: "Popup öffnen",
+  popupPanel: "Zu öffnendes Panel",
+  popupHint: "Auch eines mit «auf der Seite nicht anzeigen».",
+  popupChoose: "Panel wählen…",
+  popupUntitled: "Ohne Titel",
+  popupHidden: "ausgeblendet",
+  popupNone: "Keine Panels vorhanden",
+  popupNoneHint: "Füge zuerst eine «Popup Panel»-Karte zu einer Seite hinzu."
+}, y = {
   empty: k,
-  state: D,
-  settings: H
-}, O = {
+  state: N,
+  settings: D
+}, U = {
   title: "Tarjeta sin configurar",
   hint: "Elige una entidad en los ajustes"
-}, U = {
+}, O = {
   unavailable: "N/D",
   on: "Encendido",
   off: "Apagado",
@@ -285,7 +309,7 @@ const { jsxs: l, jsx: t, Fragment: h } = window.__OIKOS_SDK__.jsxRuntime, C = {
   wet: "Mojado",
   active: "Activo",
   running: "En marcha"
-}, N = {
+}, z = {
   sectionEntity: "Entidad",
   entity: "Entidad principal",
   label: "Título",
@@ -325,15 +349,23 @@ const { jsxs: l, jsx: t, Fragment: h } = window.__OIKOS_SDK__.jsxRuntime, C = {
   tapToggle: "Encender/apagar",
   tapNone: "Nada",
   sectionTap: "Al tocar",
-  tapHint: "Se aplica a toda la tarjeta, no hace falta ningún icono adicional. «Encender/apagar» funciona en luces, enchufes, ventiladores, persianas y cerraduras."
-}, A = {
-  empty: O,
-  state: U,
-  settings: N
-}, z = {
+  tapHint: "Se aplica a toda la tarjeta, no hace falta ningún icono adicional. «Encender/apagar» funciona en luces, enchufes, ventiladores, persianas y cerraduras.",
+  tapPopup: "Abrir ventana",
+  popupPanel: "Panel a abrir",
+  popupHint: "También uno con «no mostrar en la página».",
+  popupChoose: "Elige un panel…",
+  popupUntitled: "Sin título",
+  popupHidden: "oculto",
+  popupNone: "No hay paneles disponibles",
+  popupNoneHint: "Añade antes una tarjeta «Popup Panel» a una página."
+}, E = {
+  empty: U,
+  state: O,
+  settings: z
+}, R = {
   title: "Tuile non configurée",
   hint: "Choisissez une entité dans les réglages"
-}, R = {
+}, B = {
   unavailable: "N/D",
   on: "Allumé",
   off: "Éteint",
@@ -368,7 +400,7 @@ const { jsxs: l, jsx: t, Fragment: h } = window.__OIKOS_SDK__.jsxRuntime, C = {
   wet: "Mouillé",
   active: "Actif",
   running: "En marche"
-}, B = {
+}, M = {
   sectionEntity: "Entité",
   entity: "Entité principale",
   label: "Titre",
@@ -408,12 +440,20 @@ const { jsxs: l, jsx: t, Fragment: h } = window.__OIKOS_SDK__.jsxRuntime, C = {
   tapToggle: "Basculer",
   tapNone: "Rien",
   sectionTap: "Au toucher",
-  tapHint: "S'applique à toute la tuile, aucune icône supplémentaire n'est nécessaire. « Allumer/éteindre » fonctionne sur lumières, prises, ventilateurs, volets et serrures."
-}, y = {
-  empty: z,
-  state: R,
-  settings: B
-}, M = [
+  tapHint: "S'applique à toute la tuile, aucune icône supplémentaire n'est nécessaire. « Allumer/éteindre » fonctionne sur lumières, prises, ventilateurs, volets et serrures.",
+  tapPopup: "Ouvrir la fenêtre",
+  popupPanel: "Panneau à ouvrir",
+  popupHint: "Y compris un panneau « ne pas afficher sur la page ».",
+  popupChoose: "Choisis un panneau…",
+  popupUntitled: "Sans titre",
+  popupHidden: "masqué",
+  popupNone: "Aucun panneau disponible",
+  popupNoneHint: "Ajoute d’abord une carte « Popup Panel » à une page."
+}, P = {
+  empty: R,
+  state: B,
+  settings: M
+}, $ = [
   "on",
   "open",
   "opening",
@@ -438,9 +478,9 @@ const { jsxs: l, jsx: t, Fragment: h } = window.__OIKOS_SDK__.jsxRuntime, C = {
   "motion",
   "active",
   "running"
-], { useDashboard: J, useCardConfig: X, useStyles: Y, registerCardTranslations: $, useT: ee, MdiIcon: te } = window.__OIKOS_SDK__;
-$("card-tile", { it: v, en: f, de: S, es: A, fr: y });
-const F = {
+], { useDashboard: X, useCardConfig: ee, useStyles: te, registerCardTranslations: F, useT: ne, MdiIcon: ae } = window.__OIKOS_SDK__;
+F("card-tile", { it: S, en: A, de: y, es: E, fr: P });
+const j = {
   entityId: "",
   label: "",
   icon: "",
@@ -467,69 +507,103 @@ const F = {
   // Icona accessoria in basso a destra
   badgeIcon: "",
   // Interazione
-  tapAction: "more-info"
-  // 'more-info' | 'toggle' | 'none'
-}, { useDashboard: j, useCardConfig: K, registerCardTranslations: q, useT: Z, EntityField: d, MdiIconPicker: b, Section: r, Field: i, TextField: s, Toggle: p, Slider: G, Pills: m, ColorCircles: W, ACCENT_COLORS: Q } = window.__OIKOS_SDK__;
-q("card-tile", { it: v, en: f, de: S, es: A, fr: y });
-function ae({ cardId: E }) {
-  const { dark: g } = j(), [n, c] = K(E, F), { t: e } = Z("card-tile"), o = (a, u) => c((w) => ({ ...w, [a]: u })), T = (n.activeStates ?? []).join(", "), x = (a) => o("activeStates", a.split(",").map((u) => u.trim().toLowerCase()).filter(Boolean));
+  tapAction: "more-info",
+  // 'more-info' | 'toggle' | 'popup' | 'none'
+  popupCardId: ""
+  // istanza popup-panel da aprire con tapAction 'popup'
+}, { useDashboard: K, useCardConfig: q, registerCardTranslations: Z, useT: G, EntityField: g, MdiIconPicker: b, Section: u, Field: i, TextField: s, Toggle: m, Slider: W, Pills: v, ColorCircles: Q, ACCENT_COLORS: Y, listPopupPanels: f } = window.__OIKOS_SDK__;
+Z("card-tile", { it: S, en: A, de: y, es: E, fr: P });
+function J({ cfg: p, set: c, t: a }) {
+  const r = typeof f == "function" ? f() : [];
+  return r.length === 0 ? /* @__PURE__ */ t(i, { label: a("settings.popupPanel"), hint: a("settings.popupNone"), children: /* @__PURE__ */ t("div", { style: { fontSize: 11, color: "var(--text-muted)" }, children: a("settings.popupNoneHint") }) }) : /* @__PURE__ */ t(i, { label: a("settings.popupPanel"), hint: a("settings.popupHint"), children: /* @__PURE__ */ l(
+    "select",
+    {
+      value: p.popupCardId || "",
+      onChange: (e) => c("popupCardId", e.target.value),
+      style: {
+        width: "100%",
+        padding: "8px 10px",
+        borderRadius: 9,
+        fontSize: 12,
+        background: "var(--bg-primary)",
+        border: "1px solid var(--border-medium)",
+        color: "var(--text-primary)",
+        cursor: "pointer"
+      },
+      children: [
+        /* @__PURE__ */ t("option", { value: "", children: a("settings.popupChoose") }),
+        r.map((e) => /* @__PURE__ */ l("option", { value: e.id, children: [
+          e.title || a("settings.popupUntitled"),
+          e.hidden ? " · " + a("settings.popupHidden") : "",
+          " — " + e.page
+        ] }, e.id))
+      ]
+    }
+  ) });
+}
+function ie({ cardId: p }) {
+  const { dark: c } = K(), [a, r] = q(p, j), { t: e } = G("card-tile"), o = (n, d) => r((x) => ({ ...x, [n]: d })), T = (a.activeStates ?? []).join(", "), C = (n) => o("activeStates", n.split(",").map((d) => d.trim().toLowerCase()).filter(Boolean));
   return /* @__PURE__ */ l("div", { style: { display: "flex", flexDirection: "column", gap: 14 }, children: [
-    /* @__PURE__ */ l(r, { title: e("settings.sectionEntity"), children: [
+    /* @__PURE__ */ l(u, { title: e("settings.sectionEntity"), children: [
       /* @__PURE__ */ t(
-        d,
+        g,
         {
           label: e("settings.entity"),
           field: "entityId",
-          config: n,
-          setConfig: c
+          config: a,
+          setConfig: r
         }
       ),
       /* @__PURE__ */ t(i, { label: e("settings.label"), children: /* @__PURE__ */ t(
         s,
         {
-          value: n.label,
-          onChange: (a) => o("label", a),
+          value: a.label,
+          onChange: (n) => o("label", n),
           placeholder: e("settings.labelPh")
         }
       ) }),
-      /* @__PURE__ */ t(i, { label: e("settings.icon"), hint: e("settings.iconHint"), children: /* @__PURE__ */ t(b, { value: n.icon, onChange: (a) => o("icon", a), dark: g }) }),
+      /* @__PURE__ */ t(i, { label: e("settings.icon"), hint: e("settings.iconHint"), children: /* @__PURE__ */ t(b, { value: a.icon, onChange: (n) => o("icon", n), dark: c }) }),
       /* @__PURE__ */ t(i, { label: e("settings.accent"), children: /* @__PURE__ */ t(
-        W,
+        Q,
         {
-          value: n.accent,
-          onChange: (a) => o("accent", a),
-          colors: Q
+          value: a.accent,
+          onChange: (n) => o("accent", n),
+          colors: Y
         }
       ) })
     ] }),
-    /* @__PURE__ */ t(r, { title: e("settings.sectionTap"), children: /* @__PURE__ */ t(i, { label: e("settings.tap"), hint: e("settings.tapHint"), children: /* @__PURE__ */ t(
-      m,
-      {
-        value: n.tapAction,
-        onChange: (a) => o("tapAction", a),
-        options: [
-          { value: "more-info", label: e("settings.tapMore") },
-          { value: "toggle", label: e("settings.tapToggle") },
-          { value: "none", label: e("settings.tapNone") }
-        ]
-      }
-    ) }) }),
-    /* @__PURE__ */ l(r, { title: e("settings.sectionStatus"), children: [
-      /* @__PURE__ */ t(i, { label: e("settings.showStatus"), children: /* @__PURE__ */ t(p, { value: n.showStatus, onChange: (a) => o("showStatus", a) }) }),
-      n.showStatus && /* @__PURE__ */ l(h, { children: [
+    /* @__PURE__ */ l(u, { title: e("settings.sectionTap"), children: [
+      /* @__PURE__ */ t(i, { label: e("settings.tap"), hint: e("settings.tapHint"), children: /* @__PURE__ */ t(
+        v,
+        {
+          value: a.tapAction,
+          onChange: (n) => o("tapAction", n),
+          options: [
+            { value: "more-info", label: e("settings.tapMore") },
+            { value: "toggle", label: e("settings.tapToggle") },
+            { value: "popup", label: e("settings.tapPopup") },
+            { value: "none", label: e("settings.tapNone") }
+          ]
+        }
+      ) }),
+      a.tapAction === "popup" && /* @__PURE__ */ t(J, { cfg: a, set: o, t: e })
+    ] }),
+    /* @__PURE__ */ l(u, { title: e("settings.sectionStatus"), children: [
+      /* @__PURE__ */ t(i, { label: e("settings.showStatus"), children: /* @__PURE__ */ t(m, { value: a.showStatus, onChange: (n) => o("showStatus", n) }) }),
+      a.showStatus && /* @__PURE__ */ l(h, { children: [
         /* @__PURE__ */ t(i, { label: e("settings.onText"), children: /* @__PURE__ */ t(
           s,
           {
-            value: n.onText,
-            onChange: (a) => o("onText", a),
+            value: a.onText,
+            onChange: (n) => o("onText", n),
             placeholder: e("settings.textPh")
           }
         ) }),
         /* @__PURE__ */ t(i, { label: e("settings.offText"), children: /* @__PURE__ */ t(
           s,
           {
-            value: n.offText,
-            onChange: (a) => o("offText", a),
+            value: a.offText,
+            onChange: (n) => o("offText", n),
             placeholder: e("settings.textPh")
           }
         ) }),
@@ -537,41 +611,41 @@ function ae({ cardId: E }) {
           s,
           {
             value: T,
-            onChange: x,
-            placeholder: M.slice(0, 4).join(", "),
+            onChange: C,
+            placeholder: $.slice(0, 4).join(", "),
             mono: !0
           }
         ) })
       ] })
     ] }),
-    /* @__PURE__ */ l(r, { title: e("settings.sectionValue"), children: [
-      /* @__PURE__ */ t(i, { label: e("settings.showValue"), children: /* @__PURE__ */ t(p, { value: n.showValue, onChange: (a) => o("showValue", a) }) }),
-      n.showValue && /* @__PURE__ */ l(h, { children: [
+    /* @__PURE__ */ l(u, { title: e("settings.sectionValue"), children: [
+      /* @__PURE__ */ t(i, { label: e("settings.showValue"), children: /* @__PURE__ */ t(m, { value: a.showValue, onChange: (n) => o("showValue", n) }) }),
+      a.showValue && /* @__PURE__ */ l(h, { children: [
         /* @__PURE__ */ t(i, { label: e("settings.valueSource"), children: /* @__PURE__ */ t(
-          m,
+          v,
           {
-            value: n.valueSource,
-            onChange: (a) => o("valueSource", a),
+            value: a.valueSource,
+            onChange: (n) => o("valueSource", n),
             options: [
               { value: "state", label: e("settings.srcState") },
               { value: "attribute", label: e("settings.srcAttr") }
             ]
           }
         ) }),
-        n.valueSource === "attribute" && /* @__PURE__ */ t(i, { label: e("settings.valueAttr"), children: /* @__PURE__ */ t(
+        a.valueSource === "attribute" && /* @__PURE__ */ t(i, { label: e("settings.valueAttr"), children: /* @__PURE__ */ t(
           s,
           {
-            value: n.valueAttr,
-            onChange: (a) => o("valueAttr", a),
+            value: a.valueAttr,
+            onChange: (n) => o("valueAttr", n),
             placeholder: e("settings.valueAttrPh"),
             mono: !0
           }
         ) }),
         /* @__PURE__ */ t(i, { label: e("settings.decimals"), children: /* @__PURE__ */ t(
-          G,
+          W,
           {
-            value: n.decimals,
-            onChange: (a) => o("decimals", a),
+            value: a.decimals,
+            onChange: (n) => o("decimals", n),
             min: 0,
             max: 3,
             step: 1,
@@ -582,56 +656,56 @@ function ae({ cardId: E }) {
         /* @__PURE__ */ t(i, { label: e("settings.unit"), children: /* @__PURE__ */ t(
           s,
           {
-            value: n.unitOverride,
-            onChange: (a) => o("unitOverride", a),
+            value: a.unitOverride,
+            onChange: (n) => o("unitOverride", n),
             placeholder: e("settings.unitPh")
           }
         ) })
       ] })
     ] }),
-    /* @__PURE__ */ l(r, { title: e("settings.sectionSub"), collapsible: !0, defaultOpen: !1, children: [
+    /* @__PURE__ */ l(u, { title: e("settings.sectionSub"), collapsible: !0, defaultOpen: !1, children: [
       /* @__PURE__ */ t(i, { label: e("settings.sub1") }),
       /* @__PURE__ */ t(
-        d,
+        g,
         {
           label: e("settings.subEntity"),
           field: "sub1Entity",
-          config: n,
-          setConfig: c
+          config: a,
+          setConfig: r
         }
       ),
       /* @__PURE__ */ t(i, { label: e("settings.subLabel"), children: /* @__PURE__ */ t(
         s,
         {
-          value: n.sub1Label,
-          onChange: (a) => o("sub1Label", a),
+          value: a.sub1Label,
+          onChange: (n) => o("sub1Label", n),
           placeholder: e("settings.subLabelPh")
         }
       ) }),
-      /* @__PURE__ */ t(i, { label: e("settings.subUnit"), children: /* @__PURE__ */ t(s, { value: n.sub1Unit, onChange: (a) => o("sub1Unit", a) }) }),
+      /* @__PURE__ */ t(i, { label: e("settings.subUnit"), children: /* @__PURE__ */ t(s, { value: a.sub1Unit, onChange: (n) => o("sub1Unit", n) }) }),
       /* @__PURE__ */ t(i, { label: e("settings.sub2") }),
       /* @__PURE__ */ t(
-        d,
+        g,
         {
           label: e("settings.subEntity"),
           field: "sub2Entity",
-          config: n,
-          setConfig: c
+          config: a,
+          setConfig: r
         }
       ),
       /* @__PURE__ */ t(i, { label: e("settings.subLabel"), children: /* @__PURE__ */ t(
         s,
         {
-          value: n.sub2Label,
-          onChange: (a) => o("sub2Label", a),
+          value: a.sub2Label,
+          onChange: (n) => o("sub2Label", n),
           placeholder: e("settings.subLabelPh")
         }
       ) }),
-      /* @__PURE__ */ t(i, { label: e("settings.subUnit"), children: /* @__PURE__ */ t(s, { value: n.sub2Unit, onChange: (a) => o("sub2Unit", a) }) })
+      /* @__PURE__ */ t(i, { label: e("settings.subUnit"), children: /* @__PURE__ */ t(s, { value: a.sub2Unit, onChange: (n) => o("sub2Unit", n) }) })
     ] }),
-    /* @__PURE__ */ t(r, { title: e("settings.sectionExtra"), collapsible: !0, defaultOpen: !1, children: /* @__PURE__ */ t(i, { label: e("settings.badgeIcon"), hint: e("settings.badgeIconHint"), children: /* @__PURE__ */ t(b, { value: n.badgeIcon, onChange: (a) => o("badgeIcon", a), dark: g }) }) })
+    /* @__PURE__ */ t(u, { title: e("settings.sectionExtra"), collapsible: !0, defaultOpen: !1, children: /* @__PURE__ */ t(i, { label: e("settings.badgeIcon"), hint: e("settings.badgeIconHint"), children: /* @__PURE__ */ t(b, { value: a.badgeIcon, onChange: (n) => o("badgeIcon", n), dark: c }) }) })
   ] });
 }
 export {
-  ae as default
+  ie as default
 };

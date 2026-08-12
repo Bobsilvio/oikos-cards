@@ -79,6 +79,14 @@
     "tapToggle": "Umschalten",
     "tapNone": "Nichts",
     "sectionTap": "Bei Berührung",
-    "tapHint": "Gilt für die ganze Kachel, ein zusätzliches Symbol ist nicht nötig. «Ein/Aus» funktioniert bei Lampen, Steckdosen, Ventilatoren, Rollläden und Schlössern."
+    "tapHint": "Gilt für die ganze Kachel, ein zusätzliches Symbol ist nicht nötig. «Ein/Aus» funktioniert bei Lampen, Steckdosen, Ventilatoren, Rollläden und Schlössern.",
+    "tapPopup": "Popup öffnen",
+    "popupPanel": "Zu öffnendes Panel",
+    "popupHint": "Auch eines mit «auf der Seite nicht anzeigen».",
+    "popupChoose": "Panel wählen…",
+    "popupUntitled": "Ohne Titel",
+    "popupHidden": "ausgeblendet",
+    "popupNone": "Keine Panels vorhanden",
+    "popupNoneHint": "Füge zuerst eine «Popup Panel»-Karte zu einer Seite hinzu."
   }
 }

@@ -79,6 +79,14 @@
     "tapToggle": "Encender/apagar",
     "tapNone": "Nada",
     "sectionTap": "Al tocar",
-    "tapHint": "Se aplica a toda la tarjeta, no hace falta ningún icono adicional. «Encender/apagar» funciona en luces, enchufes, ventiladores, persianas y cerraduras."
+    "tapHint": "Se aplica a toda la tarjeta, no hace falta ningún icono adicional. «Encender/apagar» funciona en luces, enchufes, ventiladores, persianas y cerraduras.",
+    "tapPopup": "Abrir ventana",
+    "popupPanel": "Panel a abrir",
+    "popupHint": "También uno con «no mostrar en la página».",
+    "popupChoose": "Elige un panel…",
+    "popupUntitled": "Sin título",
+    "popupHidden": "oculto",
+    "popupNone": "No hay paneles disponibles",
+    "popupNoneHint": "Añade antes una tarjeta «Popup Panel» a una página."
   }
 }

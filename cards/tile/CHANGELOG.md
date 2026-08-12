@@ -4,6 +4,14 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [1.2.0] - 2026-08-12
+### Added
+- **Al tocco: «Apri popup».** La tile può aprire un pannello popup configurato
+  altrove, scelto da un menù — compresi quelli impostati come «non mostrare
+  nella pagina», che esistono solo per essere richiamati. Se non hai ancora
+  scelto il pannello la tile non è cliccabile: un tocco che non fa nulla è
+  peggio di un tocco che non c'è.
+
 ## [1.1.0] - 2026-08-12
 ### Fixed
 - **Il colore scelto non si vedeva sui sensori.** L'accento compariva solo a

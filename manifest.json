@@ -300,7 +300,7 @@
       "id": "tile",
       "type": "card",
       "name": "Tile",
-      "version": "1.1.0",
+      "version": "1.2.0",
       "author": "Oikos",
       "description": "Tile compatta e configurabile: una entità, uno stile, molti usi. Icona, stato, valore grande e due righe di dettaglio — per allarme, serratura, cancello, temperatura, batterie.",
       "description_en": "Compact configurable tile: one entity, one style, many uses. Icon, status, large value and two detail lines — for alarm, lock, gate, temperature, batteries.",
@@ -324,6 +324,13 @@
       "package": null,
       "tier": "free",
       "changelog": [
+        {
+          "version": "1.2.0",
+          "date": "2026-08-12",
+          "changes": [
+            "Al tocco: «Apri popup». La tile può aprire un pannello popup configurato"
+          ]
+        },
         {
           "version": "1.1.0",
           "date": "2026-08-12",

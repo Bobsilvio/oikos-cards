@@ -79,6 +79,14 @@
     "tapToggle": "Toggle",
     "tapNone": "Nothing",
     "sectionTap": "On tap",
-    "tapHint": "Applies to the whole tile; no extra icon is needed. «Toggle» works on lights, switches, fans, covers and locks."
+    "tapHint": "Applies to the whole tile; no extra icon is needed. «Toggle» works on lights, switches, fans, covers and locks.",
+    "tapPopup": "Open popup",
+    "popupPanel": "Panel to open",
+    "popupHint": "Including one set to «do not show on the page».",
+    "popupChoose": "Choose a panel…",
+    "popupUntitled": "Untitled",
+    "popupHidden": "hidden",
+    "popupNone": "No panels available",
+    "popupNoneHint": "Add a «Popup Panel» card to a page first."
   }
 }

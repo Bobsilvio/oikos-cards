@@ -79,6 +79,14 @@
     "tapToggle": "Accendi/spegni",
     "tapNone": "Niente",
     "sectionTap": "Al tocco",
-    "tapHint": "Vale su tutta la tile, non serve alcuna icona aggiuntiva. «Accendi/spegni» funziona su luci, prese, ventilatori, tapparelle e serrature."
+    "tapHint": "Vale su tutta la tile, non serve alcuna icona aggiuntiva. «Accendi/spegni» funziona su luci, prese, ventilatori, tapparelle e serrature.",
+    "tapPopup": "Apri popup",
+    "popupPanel": "Pannello da aprire",
+    "popupHint": "Anche uno impostato come «non mostrare nella pagina».",
+    "popupChoose": "Scegli un pannello…",
+    "popupUntitled": "Senza titolo",
+    "popupHidden": "nascosto",
+    "popupNone": "Nessun pannello disponibile",
+    "popupNoneHint": "Aggiungi prima una card «Popup Panel» a una pagina."
   }
 }

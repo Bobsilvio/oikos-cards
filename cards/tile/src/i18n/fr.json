@@ -79,6 +79,14 @@
     "tapToggle": "Basculer",
     "tapNone": "Rien",
     "sectionTap": "Au toucher",
-    "tapHint": "S'applique à toute la tuile, aucune icône supplémentaire n'est nécessaire. « Allumer/éteindre » fonctionne sur lumières, prises, ventilateurs, volets et serrures."
+    "tapHint": "S'applique à toute la tuile, aucune icône supplémentaire n'est nécessaire. « Allumer/éteindre » fonctionne sur lumières, prises, ventilateurs, volets et serrures.",
+    "tapPopup": "Ouvrir la fenêtre",
+    "popupPanel": "Panneau à ouvrir",
+    "popupHint": "Y compris un panneau « ne pas afficher sur la page ».",
+    "popupChoose": "Choisis un panneau…",
+    "popupUntitled": "Sans titre",
+    "popupHidden": "masqué",
+    "popupNone": "Aucun panneau disponible",
+    "popupNoneHint": "Ajoute d’abord une carte « Popup Panel » à une page."
   }
 }
