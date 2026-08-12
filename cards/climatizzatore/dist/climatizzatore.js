@@ -175,7 +175,7 @@ const { jsx: t, jsxs: l, Fragment: Pe } = window.__OIKOS_SDK__.jsxRuntime, Fe = 
   away: "Abwesend",
   home: "Zuhause",
   activity: "Aktivität"
-}, zt = "Preset", _t = {
+}, zt = "Preset", Ot = {
   mode: ut,
   tempCurrent: pt,
   tempTarget: ft,
@@ -190,7 +190,7 @@ const { jsx: t, jsxs: l, Fragment: Pe } = window.__OIKOS_SDK__.jsxRuntime, Fe = 
   settings: Ct,
   preset: wt,
   chipPreset: zt
-}, Ot = {
+}, _t = {
   off: "Apagado",
   cool: "Enfriar",
   heat: "Calentar",
@@ -240,7 +240,7 @@ const { jsx: t, jsxs: l, Fragment: Pe } = window.__OIKOS_SDK__.jsxRuntime, Fe = 
   home: "Casa",
   activity: "Actividad"
 }, Kt = "Preset", Lt = {
-  mode: Ot,
+  mode: _t,
   tempCurrent: Tt,
   tempTarget: kt,
   chipHumidity: Et,
@@ -319,7 +319,7 @@ const { jsx: t, jsxs: l, Fragment: Pe } = window.__OIKOS_SDK__.jsxRuntime, Fe = 
   preset: en,
   chipPreset: tn
 }, { useState: H, useEffect: le, useRef: Sn, useMemo: ce } = window.__OIKOS_SDK__.React, { motion: A, AnimatePresence: de } = window.__OIKOS_SDK__.framerMotion, { Power: on, PowerOff: rn, Snowflake: an, Flame: sn, Wind: be, Droplets: ye, RefreshCcw: ln, Plus: cn, Minus: ve, Sun: xe, Sparkles: me, AirVent: dn, Clock: X, X: mn, Moon: un, Leaf: pn, Zap: fn, Gauge: Se, Home: ue } = window.__OIKOS_SDK__.icons, { useDashboard: hn, useCardConfig: gn, registerCardTranslations: bn, useT: yn } = window.__OIKOS_SDK__;
-bn("card-climatizzatore", { it: Ye, en: mt, de: _t, es: Lt, fr: nn });
+bn("card-climatizzatore", { it: Ye, en: mt, de: Ot, es: Lt, fr: nn });
 const vn = {
   entityId: "",
   // climate.X
@@ -337,8 +337,14 @@ const vn = {
   // step +/- target
   showFan: !0,
   showHumidity: !0,
-  showPreset: !0
+  showPreset: !0,
   // preset_modes (eco, boost, sleep/notte…)
+  // Telefono: la card nasce per un riquadro largo. In una colonna stretta le
+  // cinque modalità in fila diventano illeggibili e i chip vanno a capo.
+  compact: "auto",
+  // 'auto' | 'always' | 'never'
+  hideOnSmall: []
+  // 'humidity' | 'outdoor' | 'fan' | 'preset'
 }, pe = {
   off: { modeKey: "off", color: "#94a3b8", icon: dn, bg: "rgba(148,163,184,.1)" },
   cool: { modeKey: "cool", color: "#06b6d4", icon: an, bg: "rgba(6,182,212,.12)" },
@@ -371,9 +377,9 @@ function ge(c) {
   return new Date(c).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
 }
 function $n({ cardId: c = "climatizzatore" }) {
-  const { dark: r, getState: w, getFloat: O, getAttr: $e, callService: b, haStates: R } = hn(), [a] = gn(c, vn), { t: o } = yn("card-climatizzatore"), [z, Q] = H(null), [I, M] = H(!1), [P, K] = H(""), [x, Ce] = H("min"), [, we] = H(0), p = a.entityId, _ = p ? R == null ? void 0 : R[p] : null, $ = "timer.oikos_climatizzatore", ee = "input_text.oikos_climatizzatore_target", te = w($) === "active" && w(ee) === p, ne = $e($, "finishes_at"), f = te && ne ? Date.parse(ne) : null;
+  const { dark: r, getState: w, getFloat: _, getAttr: $e, callService: b, haStates: R } = hn(), [a] = gn(c, vn), { t: o } = yn("card-climatizzatore"), [z, Q] = H(null), [I, M] = H(!1), [P, K] = H(""), [x, Ce] = H("min"), [, we] = H(0), p = a.entityId, O = p ? R == null ? void 0 : R[p] : null, $ = "timer.oikos_climatizzatore", ee = "input_text.oikos_climatizzatore_target", te = w($) === "active" && w(ee) === p, ne = $e($, "finishes_at"), f = te && ne ? Date.parse(ne) : null;
   w($) != null && w($);
-  const d = (_ == null ? void 0 : _.state) ?? "unavailable", h = (_ == null ? void 0 : _.attributes) ?? {}, s = d === "off" || d === "unavailable" || d === "unknown", L = a.indoorTempEntity ? O(a.indoorTempEntity) : null, ze = L != null && Number.isFinite(L) ? L : h.current_temperature, y = h.temperature ?? h.target_temp, N = a.humidityEntity ? O(a.humidityEntity) : null, B = N != null && Number.isFinite(N) ? N : h.current_humidity, j = h.min_temp ?? 16, V = h.max_temp ?? 32, _e = h.hvac_modes ?? ["off", "cool", "heat", "auto", "dry", "fan_only"], q = h.fan_modes ?? null, C = h.fan_mode, U = h.preset_modes ?? null, S = h.preset_mode, Z = a.outdoorTempEntity ? O(a.outdoorTempEntity) : null, F = ce(() => fe(d), [d]), n = a.accentColor || F.color, Oe = a.label || h.friendly_name || "Climatizzatore", G = (e) => {
+  const d = (O == null ? void 0 : O.state) ?? "unavailable", h = (O == null ? void 0 : O.attributes) ?? {}, s = d === "off" || d === "unavailable" || d === "unknown", L = a.indoorTempEntity ? _(a.indoorTempEntity) : null, ze = L != null && Number.isFinite(L) ? L : h.current_temperature, y = h.temperature ?? h.target_temp, N = a.humidityEntity ? _(a.humidityEntity) : null, B = N != null && Number.isFinite(N) ? N : h.current_humidity, j = h.min_temp ?? 16, V = h.max_temp ?? 32, Oe = h.hvac_modes ?? ["off", "cool", "heat", "auto", "dry", "fan_only"], q = h.fan_modes ?? null, C = h.fan_mode, U = h.preset_modes ?? null, S = h.preset_mode, Z = a.outdoorTempEntity ? _(a.outdoorTempEntity) : null, F = ce(() => fe(d), [d]), n = a.accentColor || F.color, _e = a.label || h.friendly_name || "Climatizzatore", G = (e) => {
     const i = String(e).toLowerCase(), m = o(`preset.${i}`);
     return m === `preset.${i}` ? e : m;
   }, Te = ce(() => d !== "off" ? d : "cool", [d]), T = async (e, i) => {
@@ -489,7 +495,7 @@ function $n({ cardId: c = "climatizzatore" }) {
               overflow: "hidden",
               textOverflow: "ellipsis",
               whiteSpace: "nowrap"
-            }, children: Oe }),
+            }, children: _e }),
             /* @__PURE__ */ t("div", { style: {
               fontSize: 10,
               color: n,
@@ -805,7 +811,7 @@ function $n({ cardId: c = "climatizzatore" }) {
           borderRadius: 11,
           background: r ? "rgba(255,255,255,.04)" : "#f1f5f9",
           border: `1px solid ${g}`
-        }, children: _e.filter((e) => e !== "off").map((e) => {
+        }, children: Oe.filter((e) => e !== "off").map((e) => {
           const i = fe(e), m = d === e, v = i.icon;
           return /* @__PURE__ */ l(
             "button",
@@ -935,7 +941,7 @@ function $n({ cardId: c = "climatizzatore" }) {
     fontStyle: "italic"
   }, children: o("noEntity") });
 }
-function D({ dark: c, icon: r, value: w, label: O }) {
+function D({ dark: c, icon: r, value: w, label: _ }) {
   return /* @__PURE__ */ l("div", { style: {
     display: "flex",
     alignItems: "center",
@@ -958,7 +964,7 @@ function D({ dark: c, icon: r, value: w, label: O }) {
       color: "var(--text-muted)",
       textTransform: "uppercase",
       letterSpacing: ".06em"
-    }, children: O })
+    }, children: _ })
   ] });
 }
 export {

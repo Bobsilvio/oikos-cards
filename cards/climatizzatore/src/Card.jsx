@@ -32,7 +32,16 @@ const DEFAULT_CONFIG = {
   showFan:     true,
   showHumidity: true,
   showPreset:  true,                   // preset_modes (eco, boost, sleep/notte…)
+  // Telefono: la card nasce per un riquadro largo. In una colonna stretta le
+  // cinque modalità in fila diventano illeggibili e i chip vanno a capo.
+  compact:     'auto',                 // 'auto' | 'always' | 'never'
+  hideOnSmall: [],                     // 'humidity' | 'outdoor' | 'fan' | 'preset'
 }
+
+// Sotto questa larghezza la card passa alla forma compatta. Misurata sulla
+// riga delle modalità: cinque voci con icona e testo sotto i 340px si
+// sovrappongono.
+const COMPACT_W = 340
 
 // Mappa modalità HVAC → preset visivo (le label vengono sovrascritte via t() nel componente)
 const MODE_PRESETS = {
