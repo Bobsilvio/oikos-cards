@@ -79,6 +79,28 @@ export function stateLabel(state, { t, onText, offText, activeStates }) {
 }
 
 /** Icona di default per dominio, quando l'utente non ne sceglie una. */
+
+/**
+ * Domini con un vero acceso/spento.
+ *
+ * Serve a decidere se lo spegnimento ha un senso. Un sensore di temperatura
+ * non è mai "acceso": trattarlo come spento significa mostrarlo perennemente
+ * grigio, e il colore scelto dall'utente non compariva mai.
+ */
+export const TOGGLE_DOMAINS = new Set([
+  'light', 'switch', 'fan', 'cover', 'lock', 'binary_sensor', 'climate',
+  'media_player', 'vacuum', 'input_boolean', 'automation', 'script',
+  'humidifier', 'water_heater', 'alarm_control_panel', 'person',
+  'device_tracker', 'siren', 'valve', 'lawn_mower',
+])
+
+/** true se per questa entità "spento" vuol dire qualcosa. */
+export function hasOnOff(entityId, activeStates) {
+  // Se l'utente ha elencato a mano gli stati attivi, sa lui cosa conta.
+  if (Array.isArray(activeStates) && activeStates.length) return true
+  return TOGGLE_DOMAINS.has(String(entityId || '').split('.')[0])
+}
+
 export function iconForDomain(entityId) {
   const domain = String(entityId || '').split('.')[0]
   return {

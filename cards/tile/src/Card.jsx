@@ -30,7 +30,7 @@ import de from './i18n/de.json'
 import es from './i18n/es.json'
 import fr from './i18n/fr.json'
 import {
-  fmtNumber, isActive, isUnknown, stateLabel, iconForDomain,
+  fmtNumber, isActive, isUnknown, stateLabel, iconForDomain, hasOnOff,
 } from './tileUtils'
 
 registerCardTranslations('card-tile', { it, en, de, es, fr })
@@ -90,9 +90,21 @@ export default function TileCard({ cardId = 'tile' }) {
   const active   = isActive(raw, cfg.activeStates)
   const accent   = cfg.accent || tk.color.green
 
-  // Un'entità non disponibile non è "spenta": si spegne tutto e si dice N/D,
-  // invece di mostrare uno stato inventato.
-  const tint = unknown ? tk.color.muted : (active ? accent : tk.color.muted)
+  /*
+   * Un'entità non disponibile non è "spenta": si spegne tutto e si dice N/D,
+   * invece di mostrare uno stato inventato.
+   *
+   * Per il resto il grigio significa "spento", e vale solo dove spento vuol
+   * dire qualcosa.
+   *
+   * Prima il colore scelto compariva SOLO a entità attiva: una tile su un
+   * sensore — temperatura, umidità, potenza — restava grigia per sempre, e
+   * l'accento sceglibile nelle impostazioni non si vedeva mai. Per quelle
+   * entità non esiste uno stato spento da rappresentare, quindi il colore si
+   * applica sempre.
+   */
+  const onOff = hasOnOff(cfg.entityId, cfg.activeStates)
+  const tint = unknown ? tk.color.muted : (!onOff || active ? accent : tk.color.muted)
 
   const title = cfg.label || getAttr(cfg.entityId, 'friendly_name') || cfg.entityId
   const icon  = cfg.icon || getAttr(cfg.entityId, 'icon') || iconForDomain(cfg.entityId)
@@ -167,9 +179,11 @@ export default function TileCard({ cardId = 'tile' }) {
         flexDirection: 'column',
         gap: tk.space.md,
         cursor: clickable ? 'pointer' : 'default',
-        // Il bordo si accende con l'accento solo quando l'entità è attiva:
-        // a colpo d'occhio si distingue una fila di tile spente da una accesa.
-        borderColor: active && !unknown ? withAlpha(accent, 0.35) : tk.color.border,
+        // Il bordo si accende con l'accento quando l'entità è attiva: a colpo
+        // d'occhio si distingue una fila di tile spente da una accesa. Resta
+        // un segnale di STATO, quindi su un sensore — che stato acceso/spento
+        // non ne ha — non si accende mai.
+        borderColor: onOff && active && !unknown ? withAlpha(accent, 0.35) : tk.color.border,
         transition: 'border-color .25s ease, transform .15s ease',
       }}
       onClick={clickable ? onClick : undefined}

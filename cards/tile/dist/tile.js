@@ -1,7 +1,7 @@
-const { jsxs: c, jsx: o } = window.__OIKOS_SDK__.jsxRuntime, R = {
+const { jsxs: c, jsx: o } = window.__OIKOS_SDK__.jsxRuntime, M = {
   title: "Tile non configurata",
   hint: "Scegli un'entità dalle impostazioni"
-}, M = {
+}, F = {
   unavailable: "N/D",
   on: "Acceso",
   off: "Spento",
@@ -36,7 +36,7 @@ const { jsxs: c, jsx: o } = window.__OIKOS_SDK__.jsxRuntime, R = {
   wet: "Bagnato",
   active: "Attivo",
   running: "In funzione"
-}, F = {
+}, W = {
   sectionEntity: "Entità",
   entity: "Entità principale",
   label: "Titolo",
@@ -77,14 +77,14 @@ const { jsxs: c, jsx: o } = window.__OIKOS_SDK__.jsxRuntime, R = {
   tapNone: "Niente",
   sectionTap: "Al tocco",
   tapHint: "Vale su tutta la tile, non serve alcuna icona aggiuntiva. «Accendi/spegni» funziona su luci, prese, ventilatori, tapparelle e serrature."
-}, W = {
-  empty: R,
-  state: M,
-  settings: F
 }, j = {
+  empty: M,
+  state: F,
+  settings: W
+}, K = {
   title: "Tile not configured",
   hint: "Pick an entity in the settings"
-}, K = {
+}, q = {
   unavailable: "N/A",
   on: "On",
   off: "Off",
@@ -119,7 +119,7 @@ const { jsxs: c, jsx: o } = window.__OIKOS_SDK__.jsxRuntime, R = {
   wet: "Wet",
   active: "Active",
   running: "Running"
-}, q = {
+}, G = {
   sectionEntity: "Entity",
   entity: "Main entity",
   label: "Title",
@@ -161,13 +161,13 @@ const { jsxs: c, jsx: o } = window.__OIKOS_SDK__.jsxRuntime, R = {
   sectionTap: "On tap",
   tapHint: "Applies to the whole tile; no extra icon is needed. «Toggle» works on lights, switches, fans, covers and locks."
 }, Z = {
-  empty: j,
-  state: K,
-  settings: q
-}, G = {
+  empty: K,
+  state: q,
+  settings: G
+}, Q = {
   title: "Kachel nicht konfiguriert",
   hint: "Wähle eine Entität in den Einstellungen"
-}, Q = {
+}, J = {
   unavailable: "K/A",
   on: "An",
   off: "Aus",
@@ -202,7 +202,7 @@ const { jsxs: c, jsx: o } = window.__OIKOS_SDK__.jsxRuntime, R = {
   wet: "Nass",
   active: "Aktiv",
   running: "Läuft"
-}, J = {
+}, X = {
   sectionEntity: "Entität",
   entity: "Hauptentität",
   label: "Titel",
@@ -243,14 +243,14 @@ const { jsxs: c, jsx: o } = window.__OIKOS_SDK__.jsxRuntime, R = {
   tapNone: "Nichts",
   sectionTap: "Bei Berührung",
   tapHint: "Gilt für die ganze Kachel, ein zusätzliches Symbol ist nicht nötig. «Ein/Aus» funktioniert bei Lampen, Steckdosen, Ventilatoren, Rollläden und Schlössern."
-}, X = {
-  empty: G,
-  state: Q,
-  settings: J
 }, Y = {
+  empty: Q,
+  state: J,
+  settings: X
+}, ee = {
   title: "Tarjeta sin configurar",
   hint: "Elige una entidad en los ajustes"
-}, ee = {
+}, te = {
   unavailable: "N/D",
   on: "Encendido",
   off: "Apagado",
@@ -285,7 +285,7 @@ const { jsxs: c, jsx: o } = window.__OIKOS_SDK__.jsxRuntime, R = {
   wet: "Mojado",
   active: "Activo",
   running: "En marcha"
-}, te = {
+}, ne = {
   sectionEntity: "Entidad",
   entity: "Entidad principal",
   label: "Título",
@@ -326,14 +326,14 @@ const { jsxs: c, jsx: o } = window.__OIKOS_SDK__.jsxRuntime, R = {
   tapNone: "Nada",
   sectionTap: "Al tocar",
   tapHint: "Se aplica a toda la tarjeta, no hace falta ningún icono adicional. «Encender/apagar» funciona en luces, enchufes, ventiladores, persianas y cerraduras."
-}, ne = {
-  empty: Y,
-  state: ee,
-  settings: te
 }, ae = {
+  empty: ee,
+  state: te,
+  settings: ne
+}, ie = {
   title: "Tuile non configurée",
   hint: "Choisissez une entité dans les réglages"
-}, ie = {
+}, oe = {
   unavailable: "N/D",
   on: "Allumé",
   off: "Éteint",
@@ -368,7 +368,7 @@ const { jsxs: c, jsx: o } = window.__OIKOS_SDK__.jsxRuntime, R = {
   wet: "Mouillé",
   active: "Actif",
   running: "En marche"
-}, oe = {
+}, re = {
   sectionEntity: "Entité",
   entity: "Entité principale",
   label: "Titre",
@@ -409,11 +409,11 @@ const { jsxs: c, jsx: o } = window.__OIKOS_SDK__.jsxRuntime, R = {
   tapNone: "Rien",
   sectionTap: "Au toucher",
   tapHint: "S'applique à toute la tuile, aucune icône supplémentaire n'est nécessaire. « Allumer/éteindre » fonctionne sur lumières, prises, ventilateurs, volets et serrures."
-}, re = {
-  empty: ae,
-  state: ie,
-  settings: oe
-}, z = /* @__PURE__ */ new Set(["unavailable", "unknown", "none", ""]), se = [
+}, se = {
+  empty: ie,
+  state: oe,
+  settings: re
+}, O = /* @__PURE__ */ new Set(["unavailable", "unknown", "none", ""]), le = [
   "on",
   "open",
   "opening",
@@ -439,20 +439,20 @@ const { jsxs: c, jsx: o } = window.__OIKOS_SDK__.jsxRuntime, R = {
   "active",
   "running"
 ];
-function le(n) {
+function ce(n) {
   if (n == null || n === "") return null;
   const t = parseFloat(n);
   return Number.isFinite(t) ? t : null;
 }
-function P(n, t = 1) {
-  const i = le(n);
+function N(n, t = 1) {
+  const i = ce(n);
   return i === null ? null : i.toFixed(Math.max(0, Math.min(3, t))).replace(/\.0+$/, "");
 }
 function $(n, t) {
-  return !n || z.has(n) ? !1 : (Array.isArray(t) && t.length ? t : se).includes(String(n).toLowerCase());
+  return !n || O.has(n) ? !1 : (Array.isArray(t) && t.length ? t : le).includes(String(n).toLowerCase());
 }
 function E(n) {
-  return n == null || z.has(String(n).toLowerCase());
+  return n == null || O.has(String(n).toLowerCase());
 }
 function C(n, { t, onText: i, offText: u, activeStates: s }) {
   if (E(n)) return t("state.unavailable");
@@ -462,7 +462,32 @@ function C(n, { t, onText: i, offText: u, activeStates: s }) {
   const d = `state.${String(n).toLowerCase()}`, e = t(d);
   return e !== d ? e : String(n).replace(/_/g, " ");
 }
-function ce(n) {
+const ue = /* @__PURE__ */ new Set([
+  "light",
+  "switch",
+  "fan",
+  "cover",
+  "lock",
+  "binary_sensor",
+  "climate",
+  "media_player",
+  "vacuum",
+  "input_boolean",
+  "automation",
+  "script",
+  "humidifier",
+  "water_heater",
+  "alarm_control_panel",
+  "person",
+  "device_tracker",
+  "siren",
+  "valve",
+  "lawn_mower"
+]);
+function de(n, t) {
+  return Array.isArray(t) && t.length ? !0 : ue.has(String(n || "").split(".")[0]);
+}
+function ge(n) {
   const t = String(n || "").split(".")[0];
   return {
     light: "lightbulb",
@@ -482,9 +507,9 @@ function ce(n) {
     water_heater: "water-boiler"
   }[t] || "square-rounded-outline";
 }
-const { useDashboard: ue, useCardConfig: de, useStyles: ge, registerCardTranslations: me, useT: he, MdiIcon: y } = window.__OIKOS_SDK__;
-me("card-tile", { it: W, en: Z, de: X, es: ne, fr: re });
-const pe = {
+const { useDashboard: me, useCardConfig: he, useStyles: pe, registerCardTranslations: be, useT: fe, MdiIcon: y } = window.__OIKOS_SDK__;
+be("card-tile", { it: j, en: Z, de: Y, es: ae, fr: se });
+const ye = {
   entityId: "",
   label: "",
   icon: "",
@@ -514,30 +539,30 @@ const pe = {
   tapAction: "more-info"
   // 'more-info' | 'toggle' | 'none'
 };
-function fe({ cardId: n = "tile" }) {
-  const t = ge(), { t: i } = he("card-tile"), { getState: u, getAttr: s, callService: h, openMoreInfo: d } = ue(), [e] = de(n, pe), a = t.tokens;
+function Ae({ cardId: n = "tile" }) {
+  const t = pe(), { t: i } = fe("card-tile"), { getState: u, getAttr: s, callService: h, openMoreInfo: d } = me(), [e] = he(n, ye), a = t.tokens;
   if (!e.entityId)
     return /* @__PURE__ */ c("div", { style: { ...t.card, display: "flex", alignItems: "center", gap: a.space.md }, children: [
-      /* @__PURE__ */ o("div", { style: N(a, a.color.muted, !1), children: /* @__PURE__ */ o(y, { name: "square-rounded-outline", size: 20, color: a.color.muted }) }),
+      /* @__PURE__ */ o("div", { style: z(a, a.color.muted, !1), children: /* @__PURE__ */ o(y, { name: "square-rounded-outline", size: 20, color: a.color.muted }) }),
       /* @__PURE__ */ c("div", { style: { ...t.colTight, minWidth: 0 }, children: [
         /* @__PURE__ */ o("div", { style: t.title, children: i("empty.title") }),
         /* @__PURE__ */ o("div", { style: t.hint, children: i("empty.hint") })
       ] })
     ] });
-  const p = u(e.entityId), A = E(p), b = $(p, e.activeStates), x = e.accent || a.color.green, g = A ? a.color.muted : b ? x : a.color.muted, _ = e.label || s(e.entityId, "friendly_name") || e.entityId, U = e.icon || s(e.entityId, "icon") || ce(e.entityId);
+  const p = u(e.entityId), A = E(p), b = $(p, e.activeStates), _ = e.accent || a.color.green, x = de(e.entityId, e.activeStates), g = A ? a.color.muted : !x || b ? _ : a.color.muted, k = e.label || s(e.entityId, "friendly_name") || e.entityId, U = e.icon || s(e.entityId, "icon") || ge(e.entityId);
   let l = e.showStatus ? C(p, { t: i, onText: e.onText, offText: e.offText, activeStates: e.activeStates }) : null;
-  const k = e.valueSource === "attribute" && e.valueAttr ? s(e.entityId, e.valueAttr) : p, f = e.showValue ? P(k, e.decimals) : null, I = e.unitOverride || s(e.entityId, "unit_of_measurement") || "";
-  f !== null && l !== null && l.replace(/\s+/g, "") === String(k).replace(/\s+/g, "") && (l = null);
+  const I = e.valueSource === "attribute" && e.valueAttr ? s(e.entityId, e.valueAttr) : p, f = e.showValue ? N(I, e.decimals) : null, T = e.unitOverride || s(e.entityId, "unit_of_measurement") || "";
+  f !== null && l !== null && l.replace(/\s+/g, "") === String(I).replace(/\s+/g, "") && (l = null);
   const S = [
-    T(e.sub1Entity, e.sub1Label, e.sub1Unit),
-    T(e.sub2Entity, e.sub2Label, e.sub2Unit)
+    L(e.sub1Entity, e.sub1Label, e.sub1Unit),
+    L(e.sub2Entity, e.sub2Label, e.sub2Unit)
   ].filter(Boolean);
-  function T(r, V, O) {
+  function L(r, V, B) {
     if (!r) return null;
-    const w = u(r), D = P(w, 0), B = O || s(r, "unit_of_measurement") || "", H = D !== null ? `${D}${B}` : E(w) ? i("state.unavailable") : C(w, { t: i, activeStates: e.activeStates });
-    return V ? `${V}: ${H}` : H;
+    const w = u(r), H = N(w, 0), R = B || s(r, "unit_of_measurement") || "", P = H !== null ? `${H}${R}` : E(w) ? i("state.unavailable") : C(w, { t: i, activeStates: e.activeStates });
+    return V ? `${V}: ${P}` : P;
   }
-  const m = e.tapAction !== "none", L = () => {
+  const m = e.tapAction !== "none", D = () => {
     e.tapAction === "toggle" ? e.entityId.split(".")[0] === "lock" ? h("lock", b ? "lock" : "unlock", e.entityId) : h("homeassistant", "toggle", e.entityId) : e.tapAction === "more-info" && (d == null || d(e.entityId));
   };
   return /* @__PURE__ */ c(
@@ -549,21 +574,23 @@ function fe({ cardId: n = "tile" }) {
         flexDirection: "column",
         gap: a.space.md,
         cursor: m ? "pointer" : "default",
-        // Il bordo si accende con l'accento solo quando l'entità è attiva:
-        // a colpo d'occhio si distingue una fila di tile spente da una accesa.
-        borderColor: b && !A ? v(x, 0.35) : a.color.border,
+        // Il bordo si accende con l'accento quando l'entità è attiva: a colpo
+        // d'occhio si distingue una fila di tile spente da una accesa. Resta
+        // un segnale di STATO, quindi su un sensore — che stato acceso/spento
+        // non ne ha — non si accende mai.
+        borderColor: x && b && !A ? v(_, 0.35) : a.color.border,
         transition: "border-color .25s ease, transform .15s ease"
       },
-      onClick: m ? L : void 0,
+      onClick: m ? D : void 0,
       role: m ? "button" : void 0,
       tabIndex: m ? 0 : void 0,
       onKeyDown: m ? (r) => {
-        (r.key === "Enter" || r.key === " ") && (r.preventDefault(), L());
+        (r.key === "Enter" || r.key === " ") && (r.preventDefault(), D());
       } : void 0,
-      "aria-label": m ? `${_}${l ? ` — ${l}` : ""}` : void 0,
+      "aria-label": m ? `${k}${l ? ` — ${l}` : ""}` : void 0,
       children: [
         /* @__PURE__ */ c("div", { style: { ...t.rowBetween, alignItems: "flex-start", gap: a.space.sm }, children: [
-          /* @__PURE__ */ o("div", { style: N(a, g, b && !A), children: /* @__PURE__ */ o(y, { name: U, size: 20, color: g }) }),
+          /* @__PURE__ */ o("div", { style: z(a, g, b && !A), children: /* @__PURE__ */ o(y, { name: U, size: 20, color: g }) }),
           l && /* @__PURE__ */ o("span", { style: {
             ...a.font.label,
             color: g,
@@ -573,10 +600,10 @@ function fe({ cardId: n = "tile" }) {
           }, children: l })
         ] }),
         /* @__PURE__ */ c("div", { style: { ...t.colTight, minWidth: 0 }, children: [
-          /* @__PURE__ */ o("div", { style: { ...t.title, overflowWrap: "anywhere" }, children: _ }),
+          /* @__PURE__ */ o("div", { style: { ...t.title, overflowWrap: "anywhere" }, children: k }),
           e.showValue && /* @__PURE__ */ c("div", { style: { display: "flex", alignItems: "baseline", gap: a.space.xs, minWidth: 0 }, children: [
-            /* @__PURE__ */ o("span", { style: { ...a.font.value, color: g, fontSize: be(f) }, children: f ?? "—" }),
-            f !== null && I && /* @__PURE__ */ o("span", { style: t.hint, children: I })
+            /* @__PURE__ */ o("span", { style: { ...a.font.value, color: g, fontSize: ve(f) }, children: f ?? "—" }),
+            f !== null && T && /* @__PURE__ */ o("span", { style: t.hint, children: T })
           ] }),
           S.length > 0 && /* @__PURE__ */ c("div", { style: { ...t.rowBetween, gap: a.space.sm, alignItems: "flex-end" }, children: [
             /* @__PURE__ */ o("span", { style: { ...t.hint, minWidth: 0, overflowWrap: "anywhere" }, children: S.join("  |  ") }),
@@ -588,7 +615,7 @@ function fe({ cardId: n = "tile" }) {
     }
   );
 }
-function N(n, t, i) {
+function z(n, t, i) {
   return {
     width: 42,
     height: 42,
@@ -606,11 +633,11 @@ function N(n, t, i) {
 function v(n, t) {
   return `color-mix(in srgb, ${n} ${Math.round(t * 100)}%, transparent)`;
 }
-function be(n) {
+function ve(n) {
   const t = String(n ?? "").length;
   return t > 6 ? 26 : t > 4 ? 32 : 38;
 }
 export {
-  pe as DEFAULT,
-  fe as default
+  ye as DEFAULT,
+  Ae as default
 };

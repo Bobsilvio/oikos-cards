@@ -4,6 +4,16 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [1.1.0] - 2026-08-12
+### Fixed
+- **Il colore scelto non si vedeva sui sensori.** L'accento compariva solo a
+  entità attiva, ma una tile su temperatura, umidità o potenza non è mai
+  «accesa»: restava grigia per sempre, e il colore impostato non appariva mai.
+  Ora il grigio vale solo dove «spento» significa qualcosa — luci, prese,
+  tapparelle, serrature e simili. Per i sensori il colore si applica sempre.
+- Il bordo acceso resta invece un segnale di stato, quindi su un sensore non si
+  illumina: là non avrebbe nulla da dire.
+
 ## [1.0.2] - 2026-08-12
 ### Changed
 - **«Al tocco» ha una sezione propria.** Stava sotto «Extra», subito dopo
