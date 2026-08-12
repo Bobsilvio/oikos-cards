@@ -77,6 +77,8 @@
     "tap": "On tap",
     "tapMore": "Details",
     "tapToggle": "Toggle",
-    "tapNone": "Nothing"
+    "tapNone": "Nothing",
+    "sectionTap": "On tap",
+    "tapHint": "Applies to the whole tile; no extra icon is needed. «Toggle» works on lights, switches, fans, covers and locks."
   }
 }

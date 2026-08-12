@@ -77,6 +77,8 @@
     "tap": "Bei Tippen",
     "tapMore": "Details",
     "tapToggle": "Umschalten",
-    "tapNone": "Nichts"
+    "tapNone": "Nichts",
+    "sectionTap": "Bei Berührung",
+    "tapHint": "Gilt für die ganze Kachel, ein zusätzliches Symbol ist nicht nötig. «Ein/Aus» funktioniert bei Lampen, Steckdosen, Ventilatoren, Rollläden und Schlössern."
   }
 }

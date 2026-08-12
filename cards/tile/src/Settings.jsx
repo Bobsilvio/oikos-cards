@@ -62,6 +62,25 @@ export default function TileSettings({ cardId }) {
         </Field>
       </Section>
 
+      {/* Sezione a sé. Stava sotto «Extra», appena dopo l'icona accessoria in
+          basso a destra, e si leggeva come se il tocco appartenesse a
+          QUELL'icona: un utente ha chiesto se dovesse aggiungere una seconda
+          icona per poter accendere e spegnere. Il tocco vale su tutta la
+          tile. */}
+      <Section title={t('settings.sectionTap')}>
+        <Field label={t('settings.tap')} hint={t('settings.tapHint')}>
+          <Pills
+            value={cfg.tapAction}
+            onChange={v => set('tapAction', v)}
+            options={[
+              { value: 'more-info', label: t('settings.tapMore') },
+              { value: 'toggle',    label: t('settings.tapToggle') },
+              { value: 'none',      label: t('settings.tapNone') },
+            ]}
+          />
+        </Field>
+      </Section>
+
       <Section title={t('settings.sectionStatus')}>
         <Field label={t('settings.showStatus')}>
           <Toggle value={cfg.showStatus} onChange={v => set('showStatus', v)} />
@@ -178,17 +197,6 @@ export default function TileSettings({ cardId }) {
       <Section title={t('settings.sectionExtra')} collapsible defaultOpen={false}>
         <Field label={t('settings.badgeIcon')} hint={t('settings.badgeIconHint')}>
           <MdiIconPicker value={cfg.badgeIcon} onChange={v => set('badgeIcon', v)} dark={dark} />
-        </Field>
-        <Field label={t('settings.tap')}>
-          <Pills
-            value={cfg.tapAction}
-            onChange={v => set('tapAction', v)}
-            options={[
-              { value: 'more-info', label: t('settings.tapMore') },
-              { value: 'toggle',    label: t('settings.tapToggle') },
-              { value: 'none',      label: t('settings.tapNone') },
-            ]}
-          />
         </Field>
       </Section>
 

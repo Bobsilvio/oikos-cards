@@ -77,6 +77,8 @@
     "tap": "Al tocar",
     "tapMore": "Detalles",
     "tapToggle": "Encender/apagar",
-    "tapNone": "Nada"
+    "tapNone": "Nada",
+    "sectionTap": "Al tocar",
+    "tapHint": "Se aplica a toda la tarjeta, no hace falta ningún icono adicional. «Encender/apagar» funciona en luces, enchufes, ventiladores, persianas y cerraduras."
   }
 }

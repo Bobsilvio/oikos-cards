@@ -77,6 +77,8 @@
     "tap": "Au toucher",
     "tapMore": "Détails",
     "tapToggle": "Basculer",
-    "tapNone": "Rien"
+    "tapNone": "Rien",
+    "sectionTap": "Au toucher",
+    "tapHint": "S'applique à toute la tuile, aucune icône supplémentaire n'est nécessaire. « Allumer/éteindre » fonctionne sur lumières, prises, ventilateurs, volets et serrures."
   }
 }

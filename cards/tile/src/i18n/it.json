@@ -77,6 +77,8 @@
     "tap": "Al tocco",
     "tapMore": "Dettagli",
     "tapToggle": "Accendi/spegni",
-    "tapNone": "Niente"
+    "tapNone": "Niente",
+    "sectionTap": "Al tocco",
+    "tapHint": "Vale su tutta la tile, non serve alcuna icona aggiuntiva. «Accendi/spegni» funziona su luci, prese, ventilatori, tapparelle e serrature."
   }
 }

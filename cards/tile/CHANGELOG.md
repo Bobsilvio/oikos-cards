@@ -4,6 +4,15 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [1.0.2] - 2026-08-12
+### Changed
+- **«Al tocco» ha una sezione propria.** Stava sotto «Extra», subito dopo
+  l'icona accessoria in basso a destra, e si leggeva come se il comportamento
+  al tocco appartenesse a quell'icona — c'è chi ha chiesto se servisse
+  aggiungere una seconda icona per poter accendere e spegnere. Non serve: il
+  tocco vale su tutta la tile, e l'icona principale si sceglie nella prima
+  sezione insieme all'entità.
+
 ## [1.0.1] - 2026-08-11
 ### Fixed
 - **Accendi/spegni non faceva nulla.** Con l'azione al tocco impostata su
