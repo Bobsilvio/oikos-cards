@@ -528,10 +528,7 @@ function ye({ cardId: n = "tile" }) {
     return D ? `${D}: ${P}` : P;
   }
   const m = e.tapAction !== "none", L = () => {
-    if (e.tapAction === "toggle") {
-      const r = e.entityId.split(".")[0];
-      h("homeassistant", "toggle", { entity_id: e.entityId }), r === "lock" && h("lock", b ? "lock" : "unlock", { entity_id: e.entityId });
-    } else e.tapAction === "more-info" && (d == null || d(e.entityId));
+    e.tapAction === "toggle" ? e.entityId.split(".")[0] === "lock" ? h("lock", b ? "lock" : "unlock", e.entityId) : h("homeassistant", "toggle", e.entityId) : e.tapAction === "more-info" && (d == null || d(e.entityId));
   };
   return /* @__PURE__ */ c(
     "div",

@@ -138,10 +138,22 @@ export default function TileCard({ cardId = 'tile' }) {
   const onClick = () => {
     if (cfg.tapAction === 'toggle') {
       const domain = cfg.entityId.split('.')[0]
-      // homeassistant.toggle funziona su light/switch/fan/cover/lock e altri,
-      // senza dover mappare ogni dominio al suo servizio specifico.
-      callService('homeassistant', 'toggle', { entity_id: cfg.entityId })
-      if (domain === 'lock') callService('lock', active ? 'lock' : 'unlock', { entity_id: cfg.entityId })
+      // L'entità è il TERZO argomento, non un oggetto dati.
+      //
+      // Era `callService('homeassistant', 'toggle', { entity_id: … })`: la
+      // firma dell'SDK è (domain, service, entityId, data), quindi l'oggetto
+      // finiva al posto dell'entity_id e Home Assistant riceveva una chiamata
+      // senza bersaglio. Nessun errore a schermo, nessuna luce che si accende
+      // — il clic semplicemente non faceva niente.
+      if (domain === 'lock') {
+        // Il dominio lock non ha un servizio toggle: `unlocked` è lo stato
+        // attivo, quindi da attivo si chiude.
+        callService('lock', active ? 'lock' : 'unlock', cfg.entityId)
+      } else {
+        // homeassistant.toggle copre light/switch/fan/cover/input_boolean e
+        // altri, senza mappare ogni dominio al suo servizio.
+        callService('homeassistant', 'toggle', cfg.entityId)
+      }
     } else if (cfg.tapAction === 'more-info') {
       openMoreInfo?.(cfg.entityId)
     }
