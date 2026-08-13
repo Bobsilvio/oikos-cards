@@ -99,7 +99,8 @@ export default function ClimatizzatoreCard({ cardId = 'climatizzatore' }) {
    */
   const rootRef = useRef(null)
   const [width, setWidth] = useState(0)
-  const [modeSheet, setModeSheet] = useState(false)
+  // Quale elenco è aperto: 'mode' | 'fan' | 'preset' | null.
+  const [sheet, setSheet] = useState(null)
 
   useEffect(() => {
     const el = rootRef.current
@@ -112,11 +113,11 @@ export default function ClimatizzatoreCard({ cardId = 'climatizzatore' }) {
   // Esc chiude l'elenco modalità. Con la tastiera è l'unico gesto che ci si
   // aspetta, e su tablet con tastiera esterna è il più rapido.
   useEffect(() => {
-    if (!modeSheet) return
-    const onKey = (e) => { if (e.key === 'Escape') setModeSheet(false) }
+    if (!sheet) return
+    const onKey = (e) => { if (e.key === 'Escape') setSheet(null) }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [modeSheet])
+  }, [sheet])
 
   const compact = config.compact === 'always'
     || (config.compact !== 'never' && width > 0 && width < COMPACT_W)
@@ -515,9 +516,11 @@ export default function ClimatizzatoreCard({ cardId = 'climatizzatore' }) {
               display: 'flex', alignItems: 'center', justifyContent: 'space-between',
               marginBottom: 4,
             }}>
-              <span style={{ fontSize: 9, fontWeight: 800, color: cMuted, letterSpacing: '.08em', textTransform: 'uppercase' }}>
-                {t('tempTarget')}
-              </span>
+              {!compact && (
+                <span style={{ fontSize: 9, fontWeight: 800, color: cMuted, letterSpacing: '.08em', textTransform: 'uppercase' }}>
+                  {t('tempTarget')}
+                </span>
+              )}
             </div>
             <div style={{
               display: 'flex', alignItems: 'center', gap: 4,
@@ -621,21 +624,35 @@ export default function ClimatizzatoreCard({ cardId = 'climatizzatore' }) {
           bersaglio grande invece di cinque piccoli, che è anche più facile da
           centrare col pollice. */}
       {compact ? (
-        <button
-          onClick={() => setModeSheet(true)}
-          style={{
-            display: 'flex', alignItems: 'center', gap: 10, width: '100%',
-            padding: '10px 12px', borderRadius: 12, cursor: 'pointer',
-            background: preset.bg, border: `1px solid ${accent}45`,
-            color: accent, textAlign: 'left',
-          }}
-        >
-          <preset.icon size={16} strokeWidth={2.2}/>
-          <span style={{ flex: 1, fontSize: 12, fontWeight: 800, letterSpacing: '.03em', textTransform: 'uppercase' }}>
-            {t(`mode.${preset.modeKey}`)}
-          </span>
-          <ChevronDown size={14} strokeWidth={2.5} style={{ opacity: .7 }}/>
-        </button>
+        /* Una riga sola per modalità, ventola e preset.
+           Acceso, ognuno di questi era una fila di pillole: tre righe per tre
+           scelte che si toccano di rado. Qui sono tre tasti che dicono il valore
+           corrente e aprono il proprio elenco — la card resta della stessa
+           altezza che ha da spenta. */
+        <div style={{ display: 'flex', gap: 6, minWidth: 0 }}>
+          <SheetButton
+            icon={<preset.icon size={15} strokeWidth={2.2}/>}
+            label={t(`mode.${preset.modeKey}`)}
+            onClick={() => setSheet('mode')}
+            accent={accent} bg={preset.bg} border={`${accent}45`} grow
+          />
+          {config.showFan && !hideSmall.has('fan') && fanModes?.length > 0 && !isOff && (
+            <SheetButton
+              icon={<Wind size={14} strokeWidth={2.2}/>}
+              label={String(fanMode ?? '—')}
+              onClick={() => setSheet('fan')}
+              accent={cText} bg="transparent" border={border}
+            />
+          )}
+          {config.showPreset && !hideSmall.has('preset') && presetModes?.length > 1 && !isOff && (
+            <SheetButton
+              icon={(() => { const PI = presetIcon(presetMode); return PI ? <PI size={14} strokeWidth={2.2}/> : null })()}
+              label={presetLabel(presetMode)}
+              onClick={() => setSheet('preset')}
+              accent={cText} bg="transparent" border={border}
+            />
+          )}
+        </div>
       ) : (
       <div style={{
         display: 'flex', gap: 4,
@@ -678,10 +695,44 @@ export default function ClimatizzatoreCard({ cardId = 'climatizzatore' }) {
           position:relative) invece di un portale: così eredita tema e bordi e
           non finisce sotto altre card quando la dashboard scorre. */}
       <AnimatePresence>
-        {compact && modeSheet && (
+        {compact && sheet && (() => {
+          /*
+           * Un solo elenco per tre scelte.
+           *
+           * Modalità, ventola e preset hanno la stessa forma — un valore
+           * corrente fra pochi possibili — quindi condividono la stessa
+           * finestra invece di averne tre quasi identiche da tenere allineate.
+           */
+          const spec = {
+            mode: {
+              title: t('modeTitle'),
+              items: hvacModes.filter(m => m !== 'off').map(m => {
+                const p = modeOf(m)
+                return { key: m, label: t(`mode.${p.modeKey}`), Icon: p.icon, color: p.color, bg: p.bg, active: hvacMode === m }
+              }),
+              pick: (k) => setHvacMode(k),
+            },
+            fan: {
+              title: t('chipFan'),
+              items: (fanModes || []).map(fm => ({
+                key: fm, label: String(fm), Icon: Wind, color: accent, bg: `${accent}18`, active: fm === fanMode,
+              })),
+              pick: (k) => setFanMode(k),
+            },
+            preset: {
+              title: t('chipPreset'),
+              items: (presetModes || []).map(pm => ({
+                key: pm, label: presetLabel(pm), Icon: presetIcon(pm), color: accent, bg: `${accent}18`, active: pm === presetMode,
+              })),
+              pick: (k) => setPresetMode(k),
+            },
+          }[sheet]
+          if (!spec) return null
+
+          return (
           <motion.div
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-            onClick={() => setModeSheet(false)}
+            onClick={() => setSheet(null)}
             style={{
               position: 'absolute', inset: 0, zIndex: 20,
               background: dark ? 'rgba(0,0,0,.55)' : 'rgba(255,255,255,.75)',
@@ -701,23 +752,18 @@ export default function ClimatizzatoreCard({ cardId = 'climatizzatore' }) {
                 boxShadow: '0 18px 40px rgba(0,0,0,.35)',
               }}
             >
-              {/* Riga di testa con la X.
-                  Senza, l'unico modo di uscire era toccare fuori dal pannello —
-                  ma il pannello riempie quasi tutta la card e di "fuori" ne
-                  resta una cornice di pochi pixel. Chi non voleva cambiare
-                  modalità restava bloccato. */}
-              <div style={{
-                display: 'flex', alignItems: 'center', gap: 8,
-                padding: '4px 4px 6px',
-              }}>
+              {/* Riga di testa con la X: il pannello riempie quasi tutta la
+                  card, e di "fuori da toccare" resta una cornice di pochi
+                  pixel. Senza, chi non voleva cambiare nulla restava bloccato. */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '4px 4px 6px' }}>
                 <span style={{
                   flex: 1, fontSize: 10, fontWeight: 800, letterSpacing: '.08em',
                   textTransform: 'uppercase', color: cMuted,
                 }}>
-                  {t('modeTitle')}
+                  {spec.title}
                 </span>
                 <button
-                  onClick={() => setModeSheet(false)}
+                  onClick={() => setSheet(null)}
                   aria-label={t('close')}
                   style={{
                     width: 26, height: 26, borderRadius: 8, flexShrink: 0, cursor: 'pointer',
@@ -730,37 +776,31 @@ export default function ClimatizzatoreCard({ cardId = 'climatizzatore' }) {
                 </button>
               </div>
 
-              {hvacModes.filter(m => m !== 'off').map(m => {
-                const p = modeOf(m)
-                const active = hvacMode === m
-                const Icon = p.icon
-                return (
-                  <button
-                    key={m}
-                    onClick={() => { setHvacMode(m); setModeSheet(false) }}
-                    style={{
-                      display: 'flex', alignItems: 'center', gap: 10,
-                      padding: '10px 12px', borderRadius: 10, cursor: 'pointer',
-                      background: active ? p.bg : 'transparent',
-                      border: `1px solid ${active ? `${p.color}55` : 'transparent'}`,
-                      color: active ? p.color : cText, textAlign: 'left',
-                    }}
-                  >
-                    <Icon size={15} strokeWidth={active ? 2.4 : 2}/>
-                    <span style={{ flex: 1, fontSize: 12.5, fontWeight: 700 }}>
-                      {t(`mode.${p.modeKey}`)}
-                    </span>
-                    {active && <Check size={14} strokeWidth={3}/>}
-                  </button>
-                )
-              })}
+              {spec.items.map(it => (
+                <button
+                  key={it.key}
+                  onClick={() => { spec.pick(it.key); setSheet(null) }}
+                  style={{
+                    display: 'flex', alignItems: 'center', gap: 10,
+                    padding: '10px 12px', borderRadius: 10, cursor: 'pointer',
+                    background: it.active ? it.bg : 'transparent',
+                    border: `1px solid ${it.active ? `${it.color}55` : 'transparent'}`,
+                    color: it.active ? it.color : cText, textAlign: 'left',
+                  }}
+                >
+                  {it.Icon && <it.Icon size={15} strokeWidth={it.active ? 2.4 : 2}/>}
+                  <span style={{ flex: 1, fontSize: 12.5, fontWeight: 700 }}>{it.label}</span>
+                  {it.active && <Check size={14} strokeWidth={3}/>}
+                </button>
+              ))}
             </motion.div>
           </motion.div>
-        )}
+          )
+        })()}
       </AnimatePresence>
 
       {/* ── Fan modes (se disponibili e abilitati) ── */}
-      {config.showFan && !hideSmall.has('fan') && fanModes && fanModes.length > 0 && !isOff && (
+      {!compact && config.showFan && !hideSmall.has('fan') && fanModes && fanModes.length > 0 && !isOff && (
         <div style={{
           display: 'flex', gap: 4, flexWrap: 'wrap', marginTop: 8,
         }}>
@@ -785,7 +825,7 @@ export default function ClimatizzatoreCard({ cardId = 'climatizzatore' }) {
       )}
 
       {/* ── Preset modes (eco, boost, sleep/notte… se disponibili e abilitati) ── */}
-      {config.showPreset && !hideSmall.has('preset') && presetModes && presetModes.length > 0 && !isOff && (
+      {!compact && config.showPreset && !hideSmall.has('preset') && presetModes && presetModes.length > 0 && !isOff && (
         <div style={{ display: 'flex', gap: 4, flexWrap: 'wrap', marginTop: 8 }}>
           {presetModes.map(pm => {
             const PIcon = presetIcon(pm)
@@ -838,6 +878,33 @@ export default function ClimatizzatoreCard({ cardId = 'climatizzatore' }) {
   )
 }
 
+
+
+/** Tasto che mostra il valore corrente e apre il proprio elenco. */
+function SheetButton({ icon, label, onClick, accent, bg, border, grow }) {
+  return (
+    <button
+      onClick={onClick}
+      style={{
+        display: 'flex', alignItems: 'center', gap: 7, minWidth: 0,
+        flex: grow ? 1 : '0 1 auto',
+        padding: '9px 11px', borderRadius: 11, cursor: 'pointer',
+        background: bg, border: `1px solid ${border}`, color: accent,
+        textAlign: 'left',
+      }}
+    >
+      {icon}
+      <span style={{
+        flex: 1, minWidth: 0, fontSize: 11.5, fontWeight: 800,
+        letterSpacing: '.02em', textTransform: 'uppercase',
+        whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
+      }}>
+        {label}
+      </span>
+      <ChevronDown size={13} strokeWidth={2.5} style={{ opacity: .7, flexShrink: 0 }}/>
+    </button>
+  )
+}
 
 /** Icona + numero, senza etichetta: nella riga compatta lo spazio è quello. */
 function MiniStat({ icon, value, c, m }) {

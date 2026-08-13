@@ -46,7 +46,7 @@
       "id": "climatizzatore",
       "type": "card",
       "name": "Climatizzatore",
-      "version": "1.1.2",
+      "version": "1.1.3",
       "author": "Oikos",
       "description": "Controllo completo climatizzatore HA: power, modalità (cool/heat/auto/dry/fan), target ±, fan speed, temperatura corrente e umidità. Icona animata e tema colore dinamico per modalità attiva.",
       "description_en": "Full HA air conditioner control: power, modes (cool/heat/auto/dry/fan), target ±, fan speed, current temperature and humidity. Animated icon and dynamic color theme for active mode.",
@@ -73,6 +73,15 @@
       "package": null,
       "tier": "free",
       "changelog": [
+        {
+          "version": "1.1.3",
+          "date": "2026-08-13",
+          "changes": [
+            "Compatto anche in funzione. Acceso, ventola e preset erano due file di",
+            "I tre elenchi sono la stessa finestra: hanno la stessa forma — un valore fra",
+            "Sparisce anche l'etichetta «TARGET» in compatto: i tasti − e + dicono già cos'è."
+          ]
+        },
         {
           "version": "1.1.2",
           "date": "2026-08-13",

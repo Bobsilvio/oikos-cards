@@ -2,6 +2,18 @@
 
 Tutte le modifiche rilevanti di questa card.
 
+## [1.1.3] - 2026-08-13
+### Changed
+- **Compatto anche in funzione.** Acceso, ventola e preset erano due file di
+  pillole: due righe intere per due scelte che si toccano di rado, e la card
+  cresceva del doppio rispetto a quando è spenta. Ora modalità, ventola e
+  preset sono **tre tasti su una riga sola**, ognuno mostra il valore corrente e
+  apre il proprio elenco. La card resta della stessa altezza accesa o spenta.
+- I tre elenchi sono la stessa finestra: hanno la stessa forma — un valore fra
+  pochi possibili — e tenerne tre quasi identiche allineate sarebbe solo un modo
+  per farle divergere.
+- Sparisce anche l'etichetta «TARGET» in compatto: i tasti − e + dicono già cos'è.
+
 ## [1.1.2] - 2026-08-13
 ### Changed
 - **Forma compatta più stretta.** Temperatura attuale, target e i dati di
