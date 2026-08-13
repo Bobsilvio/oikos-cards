@@ -4,6 +4,16 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [1.3.1] - 2026-08-13
+### Fixed
+- **Su porte, finestre e serrature si leggeva «Acceso/Spento».** Un
+  `binary_sensor` ha sempre stato `on` o `off`, ma quelle parole non si mostrano
+  mai così: Home Assistant le traduce secondo il `device_class` — una porta è
+  «Aperto/Chiuso», un movimento «Rilevato/Libero», una perdita «Bagnato/Asciutto».
+  La tile ignorava il device_class, quindi la stessa entità si leggeva in due
+  modi diversi a seconda di dove la guardavi. Su una serratura le due parole
+  dicono cose opposte.
+
 ## [1.3.0] - 2026-08-13
 ### Added
 - **Quattro disposizioni.** Non è vezzo grafico: una fila di serrature vuole

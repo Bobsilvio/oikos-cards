@@ -64,14 +64,56 @@ export function isUnknown(state) {
  * Il fallback grezzo è voluto: meglio "eco_mode" a schermo che una stringa
  * vuota, se una integrazione usa uno stato che non conosciamo.
  */
-export function stateLabel(state, { t, onText, offText, activeStates }) {
+
+/**
+ * device_class → coppia di stati da usare al posto di on/off.
+ *
+ * Un `binary_sensor` ha sempre stato `on` o `off`, ma quelle due parole non si
+ * mostrano mai così: Home Assistant le traduce secondo il device_class. Una
+ * porta è «Aperto/Chiuso», un movimento «Rilevato/Libero», una perdita
+ * «Bagnato/Asciutto».
+ *
+ * Senza questa mappa la stessa entità si leggeva in due modi diversi — nella
+ * pagina dell'integrazione «Chiuso», nella tile «Spento». Su una serratura le
+ * due parole dicono cose opposte.
+ */
+const BY_DEVICE_CLASS = {
+  door:            ['open', 'closed'],
+  garage_door:     ['open', 'closed'],
+  window:          ['open', 'closed'],
+  opening:         ['open', 'closed'],
+  lock:            ['unlocked', 'locked'],
+  moisture:        ['wet', 'dry'],
+  motion:          ['detected', 'clear'],
+  occupancy:       ['detected', 'clear'],
+  presence:        ['home', 'not_home'],
+  vibration:       ['detected', 'clear'],
+  sound:           ['detected', 'clear'],
+  smoke:           ['detected', 'clear'],
+  gas:             ['detected', 'clear'],
+  carbon_monoxide: ['detected', 'clear'],
+  tamper:          ['detected', 'clear'],
+  running:         ['running', 'off'],
+}
+
+export function stateLabel(state, { t, onText, offText, activeStates, deviceClass }) {
   if (isUnknown(state)) return t('state.unavailable')
 
   const active = isActive(state, activeStates)
   if (active && onText) return onText
   if (!active && offText) return offText
 
-  const key = `state.${String(state).toLowerCase()}`
+  // Il device_class conta prima del dizionario generico: `on` da solo non
+  // significa niente, `on` su una porta significa aperta.
+  const raw = String(state).toLowerCase()
+  const pair = BY_DEVICE_CLASS[String(deviceClass ?? '').toLowerCase()]
+  if (pair && (raw === 'on' || raw === 'off')) {
+    const mapped = `state.${pair[raw === 'on' ? 0 : 1]}`
+    const m = t(mapped)
+    if (m !== mapped) return m
+  }
+
+  const key = `state.${raw}`
   const translated = t(key)
   if (translated !== key) return translated
 

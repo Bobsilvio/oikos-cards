@@ -130,7 +130,10 @@ export default function TileCard({ cardId = 'tile' }) {
   const icon  = cfg.icon || getAttr(cfg.entityId, 'icon') || iconForDomain(cfg.entityId)
 
   let status = cfg.showStatus
-    ? stateLabel(raw, { t, onText: cfg.onText, offText: cfg.offText, activeStates: cfg.activeStates })
+    ? stateLabel(raw, {
+        t, onText: cfg.onText, offText: cfg.offText, activeStates: cfg.activeStates,
+        deviceClass: getAttr(cfg.entityId, 'device_class'),
+      })
     : null
 
   // Valore grande: null quando non è un numero — mai "NaN" a schermo.
@@ -164,7 +167,9 @@ export default function TileCard({ cardId = 'tile' }) {
     // tradotto: alcune entità utili (una modalità, un profilo) non sono numeri.
     const shown = num !== null
       ? `${num}${u}`
-      : (isUnknown(st) ? t('state.unavailable') : stateLabel(st, { t, activeStates: cfg.activeStates }))
+      : (isUnknown(st)
+          ? t('state.unavailable')
+          : stateLabel(st, { t, activeStates: cfg.activeStates, deviceClass: getAttr(entity, 'device_class') }))
     return label ? `${label}: ${shown}` : shown
   }
 
@@ -362,7 +367,7 @@ export default function TileCard({ cardId = 'tile' }) {
                     {getAttr(e, 'friendly_name') || e}
                   </span>
                   <span style={{ ...s.hint, color: on ? accent : tk.color.muted, whiteSpace: 'nowrap' }}>
-                    {stateLabel(st, { t, activeStates: cfg.activeStates })}
+                    {stateLabel(st, { t, activeStates: cfg.activeStates, deviceClass: getAttr(e, 'device_class') })}
                   </span>
                 </div>
               )

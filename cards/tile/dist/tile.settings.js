@@ -1,4 +1,4 @@
-const { jsxs: s, jsx: t, Fragment: f } = window.__OIKOS_SDK__.jsxRuntime, _ = {
+const { jsxs: s, jsx: t, Fragment: v } = window.__OIKOS_SDK__.jsxRuntime, _ = {
   title: "Tile non configurata",
   hint: "Scegli un'entità dalle impostazioni"
 }, L = {
@@ -24,7 +24,7 @@ const { jsxs: s, jsx: t, Fragment: f } = window.__OIKOS_SDK__.jsxRuntime, _ = {
   cool: "Raffrescamento",
   heat_cool: "Automatico",
   auto: "Automatico",
-  dry: "Deumidifica",
+  dry: "Asciutto",
   fan_only: "Ventilazione",
   disarmed: "Disinserito",
   armed_away: "Inserito totale",
@@ -99,7 +99,7 @@ const { jsxs: s, jsx: t, Fragment: f } = window.__OIKOS_SDK__.jsxRuntime, _ = {
   countHint: "La tile mostra quante ne sono attive — «4 · Luci» — invece del valore della singola entità.",
   countAdd: "Aggiungi entità",
   tapList: "Apri elenco"
-}, k = "{{count}} attive", C = {
+}, k = "{{count}} attive", T = {
   empty: _,
   state: L,
   settings: I,
@@ -205,7 +205,7 @@ const { jsxs: s, jsx: t, Fragment: f } = window.__OIKOS_SDK__.jsxRuntime, _ = {
   countHint: "The tile shows how many are active — «4 · Lights» — instead of a single entity's value.",
   countAdd: "Add entity",
   tapList: "Open list"
-}, N = "{{count}} on", T = {
+}, N = "{{count}} on", C = {
   empty: V,
   state: O,
   settings: D,
@@ -236,7 +236,7 @@ const { jsxs: s, jsx: t, Fragment: f } = window.__OIKOS_SDK__.jsxRuntime, _ = {
   cool: "Kühlen",
   heat_cool: "Automatik",
   auto: "Automatik",
-  dry: "Entfeuchten",
+  dry: "Trocken",
   fan_only: "Nur Lüfter",
   disarmed: "Deaktiviert",
   armed_away: "Scharf (extern)",
@@ -342,7 +342,7 @@ const { jsxs: s, jsx: t, Fragment: f } = window.__OIKOS_SDK__.jsxRuntime, _ = {
   cool: "Refrigeración",
   heat_cool: "Automático",
   auto: "Automático",
-  dry: "Deshumidificar",
+  dry: "Seco",
   fan_only: "Ventilación",
   disarmed: "Desarmado",
   armed_away: "Armado total",
@@ -448,7 +448,7 @@ const { jsxs: s, jsx: t, Fragment: f } = window.__OIKOS_SDK__.jsxRuntime, _ = {
   cool: "Refroidissement",
   heat_cool: "Automatique",
   auto: "Automatique",
-  dry: "Déshumidification",
+  dry: "Sec",
   fan_only: "Ventilation",
   disarmed: "Désarmé",
   armed_away: "Armé total",
@@ -554,7 +554,7 @@ const { jsxs: s, jsx: t, Fragment: f } = window.__OIKOS_SDK__.jsxRuntime, _ = {
   "active",
   "running"
 ], { useState: oe } = window.__OIKOS_SDK__.React, { useDashboard: se, useCardConfig: le, useStyles: ue, registerCardTranslations: Q, useT: re, MdiIcon: ce } = window.__OIKOS_SDK__;
-Q("card-tile", { it: C, en: T, de: P, es: H, fr: x });
+Q("card-tile", { it: T, en: C, de: P, es: H, fr: x });
 const Y = {
   entityId: "",
   label: "",
@@ -593,8 +593,8 @@ const Y = {
   // 'more-info' | 'toggle' | 'popup' | 'list' | 'none'
   popupCardId: ""
   // istanza popup-panel da aprire con tapAction 'popup'
-}, { useDashboard: J, useCardConfig: X, registerCardTranslations: ee, useT: te, EntityField: h, MdiIconPicker: v, Section: p, Field: o, TextField: r, Toggle: y, Slider: ne, Pills: m, ColorCircles: A, ACCENT_COLORS: S, listPopupPanels: E } = window.__OIKOS_SDK__;
-ee("card-tile", { it: C, en: T, de: P, es: H, fr: x });
+}, { useDashboard: J, useCardConfig: X, registerCardTranslations: ee, useT: te, EntityField: h, MdiIconPicker: f, Section: p, Field: o, TextField: r, Toggle: y, Slider: ne, Pills: m, ColorCircles: A, ACCENT_COLORS: S, listPopupPanels: E } = window.__OIKOS_SDK__;
+ee("card-tile", { it: T, en: C, de: P, es: H, fr: x });
 function ae({ cfg: g, set: d, t: a }) {
   const l = Array.isArray(g.countEntities) ? g.countEntities : [], e = (i, u) => {
     const c = [...l];
@@ -705,7 +705,7 @@ function de({ cardId: g }) {
           placeholder: e("settings.labelPh")
         }
       ) }),
-      /* @__PURE__ */ t(o, { label: e("settings.icon"), hint: e("settings.iconHint"), children: /* @__PURE__ */ t(v, { value: a.icon, onChange: (n) => i("icon", n), dark: d }) }),
+      /* @__PURE__ */ t(o, { label: e("settings.icon"), hint: e("settings.iconHint"), children: /* @__PURE__ */ t(f, { value: a.icon, onChange: (n) => i("icon", n), dark: d }) }),
       /* @__PURE__ */ t(o, { label: e("settings.accent"), children: /* @__PURE__ */ t(
         A,
         {
@@ -754,7 +754,7 @@ function de({ cardId: g }) {
     ] }),
     /* @__PURE__ */ s(p, { title: e("settings.sectionStatus"), children: [
       /* @__PURE__ */ t(o, { label: e("settings.showStatus"), children: /* @__PURE__ */ t(y, { value: a.showStatus, onChange: (n) => i("showStatus", n) }) }),
-      a.showStatus && /* @__PURE__ */ s(f, { children: [
+      a.showStatus && /* @__PURE__ */ s(v, { children: [
         /* @__PURE__ */ t(o, { label: e("settings.onText"), children: /* @__PURE__ */ t(
           r,
           {
@@ -784,7 +784,7 @@ function de({ cardId: g }) {
     ] }),
     /* @__PURE__ */ s(p, { title: e("settings.sectionValue"), children: [
       /* @__PURE__ */ t(o, { label: e("settings.showValue"), children: /* @__PURE__ */ t(y, { value: a.showValue, onChange: (n) => i("showValue", n) }) }),
-      a.showValue && /* @__PURE__ */ s(f, { children: [
+      a.showValue && /* @__PURE__ */ s(v, { children: [
         /* @__PURE__ */ t(o, { label: e("settings.valueSource"), children: /* @__PURE__ */ t(
           m,
           {
@@ -867,7 +867,7 @@ function de({ cardId: g }) {
       ) }),
       /* @__PURE__ */ t(o, { label: e("settings.subUnit"), children: /* @__PURE__ */ t(r, { value: a.sub2Unit, onChange: (n) => i("sub2Unit", n) }) })
     ] }),
-    /* @__PURE__ */ t(p, { title: e("settings.sectionExtra"), collapsible: !0, defaultOpen: !1, children: /* @__PURE__ */ t(o, { label: e("settings.badgeIcon"), hint: e("settings.badgeIconHint"), children: /* @__PURE__ */ t(v, { value: a.badgeIcon, onChange: (n) => i("badgeIcon", n), dark: d }) }) })
+    /* @__PURE__ */ t(p, { title: e("settings.sectionExtra"), collapsible: !0, defaultOpen: !1, children: /* @__PURE__ */ t(o, { label: e("settings.badgeIcon"), hint: e("settings.badgeIconHint"), children: /* @__PURE__ */ t(f, { value: a.badgeIcon, onChange: (n) => i("badgeIcon", n), dark: d }) }) })
   ] });
 }
 export {

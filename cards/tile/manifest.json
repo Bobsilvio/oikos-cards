@@ -1,7 +1,7 @@
 {
   "id": "tile",
   "name": "Tile",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "author": "Oikos",
   "description": "Tile compatta e configurabile: una entità, uno stile, molti usi. Icona, stato, valore grande e due righe di dettaglio — per allarme, serratura, cancello, temperatura, batterie.",
   "description_en": "Compact configurable tile: one entity, one style, many uses. Icon, status, large value and two detail lines — for alarm, lock, gate, temperature, batteries.",
