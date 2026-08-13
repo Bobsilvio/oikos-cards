@@ -87,6 +87,21 @@
     "popupUntitled": "Sin título",
     "popupHidden": "oculto",
     "popupNone": "No hay paneles disponibles",
-    "popupNoneHint": "Añade antes una tarjeta «Popup Panel» a una página."
-  }
+    "popupNoneHint": "Añade antes una tarjeta «Popup Panel» a una página.",
+    "sectionLayout": "Aspecto",
+    "layout": "Disposición",
+    "layoutHint": "Una fila de cerraduras quiere nombre y estado, una sonda quiere el número grande.",
+    "layoutValue": "Valor grande",
+    "layoutInline": "En línea",
+    "layoutState": "Icono y estado",
+    "layoutTint": "Tinte de estado",
+    "offAccent": "Color en inactivo",
+    "offAccentHint": "Con «Tinte de estado» toda la tarjeta toma este color cuando la entidad no está activa.",
+    "sectionCount": "Recuento",
+    "countEntities": "Entidades a contar",
+    "countHint": "La tarjeta muestra cuántas están activas — «4 · Luces» — en vez del valor de una sola entidad.",
+    "countAdd": "Añadir entidad",
+    "tapList": "Abrir lista"
+  },
+  "countOn": "{{count}} activas"
 }

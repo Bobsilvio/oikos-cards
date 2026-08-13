@@ -23,6 +23,7 @@
  *     colore esplicito.
  *   - nessuna stringa visibile hardcoded: tutto da useT
  */
+import { useState } from 'react'
 import { useDashboard, useCardConfig, useStyles, registerCardTranslations, useT, MdiIcon } from '@oikos/sdk'
 import it from './i18n/it.json'
 import en from './i18n/en.json'
@@ -56,8 +57,13 @@ export const DEFAULT = {
   sub2Entity:    '', sub2Label: '', sub2Unit: '',
   // Icona accessoria in basso a destra
   badgeIcon:     '',
+  // Aspetto
+  layout:        'value',       // 'value' | 'inline' | 'state' | 'stateTint'
+  offAccent:     '',            // colore a stato inattivo (solo layout 'stateTint')
+  // Conteggio: più entità osservate insieme ("4 · Luci"), con elenco al tocco
+  countEntities: [],
   // Interazione
-  tapAction:     'more-info',   // 'more-info' | 'toggle' | 'popup' | 'none'
+  tapAction:     'more-info',   // 'more-info' | 'toggle' | 'popup' | 'list' | 'none'
   popupCardId:   '',            // istanza popup-panel da aprire con tapAction 'popup'
 }
 
@@ -67,6 +73,8 @@ export default function TileCard({ cardId = 'tile' }) {
   const { t } = useT('card-tile')
   const { getState, getAttr, callService, openMoreInfo, openPopup } = useDashboard()
   const [cfg] = useCardConfig(cardId, DEFAULT)
+  // Prima di qualunque return: gli hook non possono stare dopo (SDK §3d).
+  const [listOpen, setListOpen] = useState(false)
 
   const tk = s.tokens
 
@@ -107,6 +115,17 @@ export default function TileCard({ cardId = 'tile' }) {
   const onOff = hasOnOff(cfg.entityId, cfg.activeStates)
   const tint = unknown ? tk.color.muted : (!onOff || active ? accent : tk.color.muted)
 
+  /*
+   * Conteggio su più entità.
+   *
+   * Con `countEntities` la tile smette di parlare di una sola entità e dice
+   * quante ne sono attive — «4 · Luci». L'entità principale resta quella che
+   * decide colore e azione al tocco, così una tile «Luci» può accendere o
+   * spegnere il gruppo e insieme dire quante ne sono accese.
+   */
+  const counted = Array.isArray(cfg.countEntities) ? cfg.countEntities.filter(Boolean) : []
+  const countOn = counted.filter(e => isActive(getState(e), cfg.activeStates)).length
+
   const title = cfg.label || getAttr(cfg.entityId, 'friendly_name') || cfg.entityId
   const icon  = cfg.icon || getAttr(cfg.entityId, 'icon') || iconForDomain(cfg.entityId)
 
@@ -118,7 +137,9 @@ export default function TileCard({ cardId = 'tile' }) {
   const valueRaw = cfg.valueSource === 'attribute' && cfg.valueAttr
     ? getAttr(cfg.entityId, cfg.valueAttr)
     : raw
-  const value = cfg.showValue ? fmtNumber(valueRaw, cfg.decimals) : null
+  const value = counted.length > 0
+    ? String(countOn)
+    : (cfg.showValue ? fmtNumber(valueRaw, cfg.decimals) : null)
   const unit  = cfg.unitOverride || getAttr(cfg.entityId, 'unit_of_measurement') || ''
 
   // Lo stato di un sensore numerico non sta nel dizionario, quindi stateLabel
@@ -147,7 +168,9 @@ export default function TileCard({ cardId = 'tile' }) {
     return label ? `${label}: ${shown}` : shown
   }
 
-  const clickable = cfg.tapAction !== 'none' && !(cfg.tapAction === 'popup' && !cfg.popupCardId)
+  const clickable = cfg.tapAction !== 'none'
+    && !(cfg.tapAction === 'popup' && !cfg.popupCardId)
+    && !(cfg.tapAction === 'list' && counted.length === 0)
   const onClick = () => {
     if (cfg.tapAction === 'toggle') {
       const domain = cfg.entityId.split('.')[0]
@@ -171,78 +194,182 @@ export default function TileCard({ cardId = 'tile' }) {
       // Apre un pannello popup già configurato altrove — anche uno impostato
       // come «non mostrare nella pagina», che esiste solo per essere chiamato.
       if (cfg.popupCardId) openPopup?.(cfg.popupCardId)
+    } else if (cfg.tapAction === 'list') {
+      setListOpen(true)
     } else if (cfg.tapAction === 'more-info') {
       openMoreInfo?.(cfg.entityId)
     }
   }
 
-  return (
-    <div
-      style={{
-        ...s.card,
-        display: 'flex',
-        flexDirection: 'column',
-        gap: tk.space.md,
-        cursor: clickable ? 'pointer' : 'default',
-        // Il bordo si accende con l'accento quando l'entità è attiva: a colpo
-        // d'occhio si distingue una fila di tile spente da una accesa. Resta
-        // un segnale di STATO, quindi su un sensore — che stato acceso/spento
-        // non ne ha — non si accende mai.
-        borderColor: onOff && active && !unknown ? withAlpha(accent, 0.35) : tk.color.border,
-        transition: 'border-color .25s ease, transform .15s ease',
-      }}
-      onClick={clickable ? onClick : undefined}
-      role={clickable ? 'button' : undefined}
-      tabIndex={clickable ? 0 : undefined}
-      onKeyDown={clickable ? (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onClick() } } : undefined}
-      aria-label={clickable ? `${title}${status ? ` — ${status}` : ''}` : undefined}
-    >
-      {/* Riga alta: chip icona + stato */}
-      <div style={{ ...s.rowBetween, alignItems: 'flex-start', gap: tk.space.sm }}>
-        <div style={chipStyle(tk, tint, active && !unknown)}>
-          <MdiIcon name={icon} size={20} color={tint} />
+  /*
+   * Quattro disposizioni per la stessa tile.
+   *
+   * Non è vezzo grafico: una fila di serrature vuole «nome + stato», una sonda
+   * vuole il numero grande, e una riga di scorciatoie vuole la forma bassa. Con
+   * una sola forma o si spreca spazio o si perde leggibilità, e chi affianca
+   * otto tile finisce per usarne quattro tipi diversi di card.
+   *
+   * 'stateTint' tinge tutta la tile: si legge lo stato di una fila di porte
+   * senza mettere a fuoco una parola.
+   */
+  const offAccent = cfg.offAccent || tk.color.muted
+  const tinted    = cfg.layout === 'stateTint'
+  const tintCol   = unknown ? tk.color.muted : (active || !onOff ? accent : offAccent)
+
+  const wrapper = {
+    ...s.card,
+    cursor: clickable ? 'pointer' : 'default',
+    transition: 'border-color .25s ease, background .25s ease',
+    ...(tinted
+      ? {
+          background: withAlpha(tintCol, 0.13),
+          borderColor: withAlpha(tintCol, 0.4),
+        }
+      : {
+          borderColor: onOff && active && !unknown ? withAlpha(accent, 0.35) : tk.color.border,
+        }),
+  }
+
+  const interactive = {
+    onClick: clickable ? onClick : undefined,
+    role: clickable ? 'button' : undefined,
+    tabIndex: clickable ? 0 : undefined,
+    onKeyDown: clickable
+      ? (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onClick() } }
+      : undefined,
+    'aria-label': clickable ? `${title}${status ? ` — ${status}` : ''}` : undefined,
+  }
+
+  const iconEl = <MdiIcon name={icon} size={20} color={tinted ? tintCol : tint} />
+
+  let body
+  if (cfg.layout === 'inline') {
+    // Bassa: icona, nome e valore su una riga. Per file di scorciatoie dove
+    // conta quante ne stanno in altezza, non quanto è grande il numero.
+    body = (
+      <div style={{ display: 'flex', alignItems: 'center', gap: tk.space.md, minWidth: 0 }}>
+        <div style={chipStyle(tk, tinted ? tintCol : tint, active && !unknown)}>{iconEl}</div>
+        <span style={{ ...s.title, flex: 1, minWidth: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+          {title}
+        </span>
+        <span style={{
+          fontSize: 20, fontWeight: 800, color: tinted ? tintCol : tint,
+          fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap',
+        }}>
+          {value ?? status ?? '—'}
+          {value !== null && unit && <small style={{ ...s.hint, marginLeft: 3 }}>{unit}</small>}
+        </span>
+      </div>
+    )
+  } else if (cfg.layout === 'state' || tinted) {
+    // Icona a sinistra, nome accanto, stato sotto: la forma giusta quando il
+    // dato è una parola e non un numero.
+    body = (
+      <div style={{ display: 'flex', alignItems: 'center', gap: tk.space.md, minWidth: 0 }}>
+        <div style={chipStyle(tk, tinted ? tintCol : tint, active && !unknown)}>{iconEl}</div>
+        <div style={{ minWidth: 0, flex: 1 }}>
+          <div style={{ ...s.title, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+            {title}
+          </div>
+          <div style={{ ...s.hint, color: tinted ? tintCol : tk.color.muted, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+            {counted.length > 0 ? t('countOn', { count: countOn }) : (status ?? '—')}
+          </div>
         </div>
-        {status && (
-          <span style={{
-            ...tk.font.label,
-            color: tint,
-            textAlign: 'right',
-            minWidth: 0,
-            overflowWrap: 'anywhere',
-          }}>
-            {status}
-          </span>
-        )}
+        {cfg.badgeIcon && <MdiIcon name={cfg.badgeIcon} size={18} color={tinted ? tintCol : tint} />}
       </div>
-
-      {/* Titolo + valore + sottotitoli */}
-      <div style={{ ...s.colTight, minWidth: 0 }}>
-        <div style={{ ...s.title, overflowWrap: 'anywhere' }}>{title}</div>
-
-        {cfg.showValue && (
-          <div style={{ display: 'flex', alignItems: 'baseline', gap: tk.space.xs, minWidth: 0 }}>
-            <span style={{ ...tk.font.value, color: tint, fontSize: valueFontSize(value) }}>
-              {value ?? '—'}
+    )
+  } else {
+    // 'value' — la forma originale: chip icona in alto, numero grande sotto.
+    body = (
+      <div style={{ display: 'flex', flexDirection: 'column', gap: tk.space.md }}>
+        <div style={{ ...s.rowBetween, alignItems: 'flex-start', gap: tk.space.sm }}>
+          <div style={chipStyle(tk, tint, active && !unknown)}>{iconEl}</div>
+          {status && (
+            <span style={{ ...tk.font.label, color: tint, textAlign: 'right', minWidth: 0, overflowWrap: 'anywhere' }}>
+              {status}
             </span>
-            {value !== null && unit && <span style={s.hint}>{unit}</span>}
-          </div>
-        )}
+          )}
+        </div>
 
-        {subs.length > 0 && (
-          <div style={{ ...s.rowBetween, gap: tk.space.sm, alignItems: 'flex-end' }}>
-            <span style={{ ...s.hint, minWidth: 0, overflowWrap: 'anywhere' }}>
-              {subs.join('  |  ')}
-            </span>
-            {cfg.badgeIcon && <MdiIcon name={cfg.badgeIcon} size={18} color={tint} />}
-          </div>
-        )}
+        <div style={{ ...s.colTight, minWidth: 0 }}>
+          <div style={{ ...s.title, overflowWrap: 'anywhere' }}>{title}</div>
 
-        {subs.length === 0 && cfg.badgeIcon && (
-          <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-            <MdiIcon name={cfg.badgeIcon} size={18} color={tint} />
-          </div>
-        )}
+          {(cfg.showValue || counted.length > 0) && (
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: tk.space.xs, minWidth: 0 }}>
+              <span style={{ ...tk.font.value, color: tint, fontSize: valueFontSize(value) }}>
+                {value ?? '—'}
+              </span>
+              {value !== null && unit && counted.length === 0 && <span style={s.hint}>{unit}</span>}
+            </div>
+          )}
+
+          {subs.length > 0 && (
+            <div style={{ ...s.rowBetween, gap: tk.space.sm, alignItems: 'flex-end' }}>
+              <span style={{ ...s.hint, minWidth: 0, overflowWrap: 'anywhere' }}>
+                {subs.join('  |  ')}
+              </span>
+              {cfg.badgeIcon && <MdiIcon name={cfg.badgeIcon} size={18} color={tint} />}
+            </div>
+          )}
+
+          {subs.length === 0 && cfg.badgeIcon && (
+            <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+              <MdiIcon name={cfg.badgeIcon} size={18} color={tint} />
+            </div>
+          )}
+        </div>
       </div>
+    )
+  }
+
+  return (
+    <div style={{ ...wrapper, position: 'relative' }} {...interactive}>
+      {body}
+
+      {/* Elenco delle entità osservate. Sta dentro la tile — che è
+          position:relative — invece che in un portale: eredita tema e bordi e
+          non finisce sotto altre card mentre la dashboard scorre. */}
+      {listOpen && (
+        <div
+          onClick={(e) => { e.stopPropagation(); setListOpen(false) }}
+          style={{
+            position: 'absolute', inset: 0, zIndex: 20,
+            borderRadius: tk.radius.lg,
+            background: 'var(--overlay-scrim)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            padding: tk.space.sm,
+          }}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              width: '100%', maxHeight: '100%', overflowY: 'auto',
+              display: 'flex', flexDirection: 'column', gap: 2,
+              padding: tk.space.xs, borderRadius: tk.radius.md,
+              background: 'var(--bg-card)', border: `1px solid ${tk.color.border}`,
+            }}
+          >
+            {counted.map(e => {
+              const st = getState(e)
+              const on = isActive(st, cfg.activeStates)
+              return (
+                <div key={e} style={{
+                  display: 'flex', alignItems: 'center', gap: tk.space.sm,
+                  padding: '7px 9px', borderRadius: tk.radius.sm, minWidth: 0,
+                }}>
+                  <MdiIcon name={iconForDomain(e)} size={15} color={on ? accent : tk.color.muted} />
+                  <span style={{ ...s.body, flex: 1, minWidth: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                    {getAttr(e, 'friendly_name') || e}
+                  </span>
+                  <span style={{ ...s.hint, color: on ? accent : tk.color.muted, whiteSpace: 'nowrap' }}>
+                    {stateLabel(st, { t, activeStates: cfg.activeStates })}
+                  </span>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      )}
     </div>
   )
 }

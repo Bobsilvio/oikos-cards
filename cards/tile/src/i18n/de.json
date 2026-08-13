@@ -87,6 +87,21 @@
     "popupUntitled": "Ohne Titel",
     "popupHidden": "ausgeblendet",
     "popupNone": "Keine Panels vorhanden",
-    "popupNoneHint": "Füge zuerst eine «Popup Panel»-Karte zu einer Seite hinzu."
-  }
+    "popupNoneHint": "Füge zuerst eine «Popup Panel»-Karte zu einer Seite hinzu.",
+    "sectionLayout": "Aussehen",
+    "layout": "Anordnung",
+    "layoutHint": "Eine Reihe Schlösser will Name und Zustand, ein Fühler die große Zahl.",
+    "layoutValue": "Große Zahl",
+    "layoutInline": "In einer Zeile",
+    "layoutState": "Symbol und Zustand",
+    "layoutTint": "Zustandsfarbe",
+    "offAccent": "Farbe im inaktiven Zustand",
+    "offAccentHint": "Mit «Zustandsfarbe» nimmt die ganze Kachel diese Farbe an, wenn die Entität nicht aktiv ist.",
+    "sectionCount": "Zählung",
+    "countEntities": "Zu zählende Entitäten",
+    "countHint": "Die Kachel zeigt, wie viele aktiv sind — «4 · Lichter» — statt des Werts einer einzelnen Entität.",
+    "countAdd": "Entität hinzufügen",
+    "tapList": "Liste öffnen"
+  },
+  "countOn": "{{count}} aktiv"
 }

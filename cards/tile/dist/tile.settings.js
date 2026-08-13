@@ -1,7 +1,7 @@
-const { jsxs: l, jsx: t, Fragment: h } = window.__OIKOS_SDK__.jsxRuntime, w = {
+const { jsxs: s, jsx: t, Fragment: f } = window.__OIKOS_SDK__.jsxRuntime, _ = {
   title: "Tile non configurata",
   hint: "Scegli un'entità dalle impostazioni"
-}, H = {
+}, L = {
   unavailable: "N/D",
   on: "Acceso",
   off: "Spento",
@@ -36,7 +36,7 @@ const { jsxs: l, jsx: t, Fragment: h } = window.__OIKOS_SDK__.jsxRuntime, w = {
   wet: "Bagnato",
   active: "Attivo",
   running: "In funzione"
-}, _ = {
+}, I = {
   sectionEntity: "Entità",
   entity: "Entità principale",
   label: "Titolo",
@@ -84,15 +84,30 @@ const { jsxs: l, jsx: t, Fragment: h } = window.__OIKOS_SDK__.jsxRuntime, w = {
   popupUntitled: "Senza titolo",
   popupHidden: "nascosto",
   popupNone: "Nessun pannello disponibile",
-  popupNoneHint: "Aggiungi prima una card «Popup Panel» a una pagina."
-}, S = {
-  empty: w,
-  state: H,
-  settings: _
-}, I = {
+  popupNoneHint: "Aggiungi prima una card «Popup Panel» a una pagina.",
+  sectionLayout: "Aspetto",
+  layout: "Disposizione",
+  layoutHint: "Una fila di serrature vuole nome e stato, una sonda vuole il numero grande.",
+  layoutValue: "Valore grande",
+  layoutInline: "In linea",
+  layoutState: "Icona e stato",
+  layoutTint: "Tinta di stato",
+  offAccent: "Colore a stato spento",
+  offAccentHint: "Con «Tinta di stato» tutta la tile prende questo colore quando l’entità non è attiva.",
+  sectionCount: "Conteggio",
+  countEntities: "Entità da contare",
+  countHint: "La tile mostra quante ne sono attive — «4 · Luci» — invece del valore della singola entità.",
+  countAdd: "Aggiungi entità",
+  tapList: "Apri elenco"
+}, k = "{{count}} attive", C = {
+  empty: _,
+  state: L,
+  settings: I,
+  countOn: k
+}, V = {
   title: "Tile not configured",
   hint: "Pick an entity in the settings"
-}, L = {
+}, O = {
   unavailable: "N/A",
   on: "On",
   off: "Off",
@@ -127,7 +142,7 @@ const { jsxs: l, jsx: t, Fragment: h } = window.__OIKOS_SDK__.jsxRuntime, w = {
   wet: "Wet",
   active: "Active",
   running: "Running"
-}, V = {
+}, D = {
   sectionEntity: "Entity",
   entity: "Main entity",
   label: "Title",
@@ -175,15 +190,30 @@ const { jsxs: l, jsx: t, Fragment: h } = window.__OIKOS_SDK__.jsxRuntime, w = {
   popupUntitled: "Untitled",
   popupHidden: "hidden",
   popupNone: "No panels available",
-  popupNoneHint: "Add a «Popup Panel» card to a page first."
-}, A = {
-  empty: I,
-  state: L,
-  settings: V
-}, k = {
+  popupNoneHint: "Add a «Popup Panel» card to a page first.",
+  sectionLayout: "Appearance",
+  layout: "Layout",
+  layoutHint: "A row of locks wants name and state, a probe wants the big number.",
+  layoutValue: "Large value",
+  layoutInline: "Inline",
+  layoutState: "Icon and state",
+  layoutTint: "State tint",
+  offAccent: "Inactive colour",
+  offAccentHint: "With «State tint» the whole tile takes this colour when the entity is not active.",
+  sectionCount: "Count",
+  countEntities: "Entities to count",
+  countHint: "The tile shows how many are active — «4 · Lights» — instead of a single entity's value.",
+  countAdd: "Add entity",
+  tapList: "Open list"
+}, N = "{{count}} on", T = {
+  empty: V,
+  state: O,
+  settings: D,
+  countOn: N
+}, z = {
   title: "Kachel nicht konfiguriert",
   hint: "Wähle eine Entität in den Einstellungen"
-}, N = {
+}, U = {
   unavailable: "K/A",
   on: "An",
   off: "Aus",
@@ -218,7 +248,7 @@ const { jsxs: l, jsx: t, Fragment: h } = window.__OIKOS_SDK__.jsxRuntime, w = {
   wet: "Nass",
   active: "Aktiv",
   running: "Läuft"
-}, D = {
+}, R = {
   sectionEntity: "Entität",
   entity: "Hauptentität",
   label: "Titel",
@@ -266,15 +296,30 @@ const { jsxs: l, jsx: t, Fragment: h } = window.__OIKOS_SDK__.jsxRuntime, w = {
   popupUntitled: "Ohne Titel",
   popupHidden: "ausgeblendet",
   popupNone: "Keine Panels vorhanden",
-  popupNoneHint: "Füge zuerst eine «Popup Panel»-Karte zu einer Seite hinzu."
-}, y = {
-  empty: k,
-  state: N,
-  settings: D
-}, U = {
+  popupNoneHint: "Füge zuerst eine «Popup Panel»-Karte zu einer Seite hinzu.",
+  sectionLayout: "Aussehen",
+  layout: "Anordnung",
+  layoutHint: "Eine Reihe Schlösser will Name und Zustand, ein Fühler die große Zahl.",
+  layoutValue: "Große Zahl",
+  layoutInline: "In einer Zeile",
+  layoutState: "Symbol und Zustand",
+  layoutTint: "Zustandsfarbe",
+  offAccent: "Farbe im inaktiven Zustand",
+  offAccentHint: "Mit «Zustandsfarbe» nimmt die ganze Kachel diese Farbe an, wenn die Entität nicht aktiv ist.",
+  sectionCount: "Zählung",
+  countEntities: "Zu zählende Entitäten",
+  countHint: "Die Kachel zeigt, wie viele aktiv sind — «4 · Lichter» — statt des Werts einer einzelnen Entität.",
+  countAdd: "Entität hinzufügen",
+  tapList: "Liste öffnen"
+}, $ = "{{count}} aktiv", P = {
+  empty: z,
+  state: U,
+  settings: R,
+  countOn: $
+}, F = {
   title: "Tarjeta sin configurar",
   hint: "Elige una entidad en los ajustes"
-}, O = {
+}, B = {
   unavailable: "N/D",
   on: "Encendido",
   off: "Apagado",
@@ -309,7 +354,7 @@ const { jsxs: l, jsx: t, Fragment: h } = window.__OIKOS_SDK__.jsxRuntime, w = {
   wet: "Mojado",
   active: "Activo",
   running: "En marcha"
-}, z = {
+}, K = {
   sectionEntity: "Entidad",
   entity: "Entidad principal",
   label: "Título",
@@ -357,15 +402,30 @@ const { jsxs: l, jsx: t, Fragment: h } = window.__OIKOS_SDK__.jsxRuntime, w = {
   popupUntitled: "Sin título",
   popupHidden: "oculto",
   popupNone: "No hay paneles disponibles",
-  popupNoneHint: "Añade antes una tarjeta «Popup Panel» a una página."
-}, E = {
-  empty: U,
-  state: O,
-  settings: z
-}, R = {
+  popupNoneHint: "Añade antes una tarjeta «Popup Panel» a una página.",
+  sectionLayout: "Aspecto",
+  layout: "Disposición",
+  layoutHint: "Una fila de cerraduras quiere nombre y estado, una sonda quiere el número grande.",
+  layoutValue: "Valor grande",
+  layoutInline: "En línea",
+  layoutState: "Icono y estado",
+  layoutTint: "Tinte de estado",
+  offAccent: "Color en inactivo",
+  offAccentHint: "Con «Tinte de estado» toda la tarjeta toma este color cuando la entidad no está activa.",
+  sectionCount: "Recuento",
+  countEntities: "Entidades a contar",
+  countHint: "La tarjeta muestra cuántas están activas — «4 · Luces» — en vez del valor de una sola entidad.",
+  countAdd: "Añadir entidad",
+  tapList: "Abrir lista"
+}, j = "{{count}} activas", H = {
+  empty: F,
+  state: B,
+  settings: K,
+  countOn: j
+}, q = {
   title: "Tuile non configurée",
   hint: "Choisissez une entité dans les réglages"
-}, B = {
+}, M = {
   unavailable: "N/D",
   on: "Allumé",
   off: "Éteint",
@@ -400,7 +460,7 @@ const { jsxs: l, jsx: t, Fragment: h } = window.__OIKOS_SDK__.jsxRuntime, w = {
   wet: "Mouillé",
   active: "Actif",
   running: "En marche"
-}, M = {
+}, Z = {
   sectionEntity: "Entité",
   entity: "Entité principale",
   label: "Titre",
@@ -448,12 +508,27 @@ const { jsxs: l, jsx: t, Fragment: h } = window.__OIKOS_SDK__.jsxRuntime, w = {
   popupUntitled: "Sans titre",
   popupHidden: "masqué",
   popupNone: "Aucun panneau disponible",
-  popupNoneHint: "Ajoute d’abord une carte « Popup Panel » à une page."
-}, P = {
-  empty: R,
-  state: B,
-  settings: M
-}, $ = [
+  popupNoneHint: "Ajoute d’abord une carte « Popup Panel » à une page.",
+  sectionLayout: "Apparence",
+  layout: "Disposition",
+  layoutHint: "Une rangée de serrures veut nom et état, une sonde veut le grand nombre.",
+  layoutValue: "Grande valeur",
+  layoutInline: "En ligne",
+  layoutState: "Icône et état",
+  layoutTint: "Teinte d’état",
+  offAccent: "Couleur à l’état inactif",
+  offAccentHint: "Avec « Teinte d’état », toute la tuile prend cette couleur quand l’entité n’est pas active.",
+  sectionCount: "Comptage",
+  countEntities: "Entités à compter",
+  countHint: "La tuile indique combien sont actives — « 4 · Lumières » — au lieu de la valeur d’une seule entité.",
+  countAdd: "Ajouter une entité",
+  tapList: "Ouvrir la liste"
+}, W = "{{count}} actives", x = {
+  empty: q,
+  state: M,
+  settings: Z,
+  countOn: W
+}, G = [
   "on",
   "open",
   "opening",
@@ -478,9 +553,9 @@ const { jsxs: l, jsx: t, Fragment: h } = window.__OIKOS_SDK__.jsxRuntime, w = {
   "motion",
   "active",
   "running"
-], { useDashboard: X, useCardConfig: ee, useStyles: te, registerCardTranslations: F, useT: ne, MdiIcon: ae } = window.__OIKOS_SDK__;
-F("card-tile", { it: S, en: A, de: y, es: E, fr: P });
-const j = {
+], { useState: oe } = window.__OIKOS_SDK__.React, { useDashboard: se, useCardConfig: le, useStyles: ue, registerCardTranslations: Q, useT: re, MdiIcon: ce } = window.__OIKOS_SDK__;
+Q("card-tile", { it: C, en: T, de: P, es: H, fr: x });
+const Y = {
   entityId: "",
   label: "",
   icon: "",
@@ -506,20 +581,88 @@ const j = {
   sub2Unit: "",
   // Icona accessoria in basso a destra
   badgeIcon: "",
+  // Aspetto
+  layout: "value",
+  // 'value' | 'inline' | 'state' | 'stateTint'
+  offAccent: "",
+  // colore a stato inattivo (solo layout 'stateTint')
+  // Conteggio: più entità osservate insieme ("4 · Luci"), con elenco al tocco
+  countEntities: [],
   // Interazione
   tapAction: "more-info",
-  // 'more-info' | 'toggle' | 'popup' | 'none'
+  // 'more-info' | 'toggle' | 'popup' | 'list' | 'none'
   popupCardId: ""
   // istanza popup-panel da aprire con tapAction 'popup'
-}, { useDashboard: K, useCardConfig: q, registerCardTranslations: Z, useT: G, EntityField: g, MdiIconPicker: b, Section: u, Field: i, TextField: s, Toggle: m, Slider: W, Pills: v, ColorCircles: Q, ACCENT_COLORS: Y, listPopupPanels: f } = window.__OIKOS_SDK__;
-Z("card-tile", { it: S, en: A, de: y, es: E, fr: P });
-function J({ cfg: p, set: c, t: a }) {
-  const r = typeof f == "function" ? f() : [];
-  return r.length === 0 ? /* @__PURE__ */ t(i, { label: a("settings.popupPanel"), hint: a("settings.popupNone"), children: /* @__PURE__ */ t("div", { style: { fontSize: 11, color: "var(--text-muted)" }, children: a("settings.popupNoneHint") }) }) : /* @__PURE__ */ t(i, { label: a("settings.popupPanel"), hint: a("settings.popupHint"), children: /* @__PURE__ */ l(
+}, { useDashboard: J, useCardConfig: X, registerCardTranslations: ee, useT: te, EntityField: h, MdiIconPicker: v, Section: p, Field: o, TextField: r, Toggle: y, Slider: ne, Pills: m, ColorCircles: A, ACCENT_COLORS: S, listPopupPanels: E } = window.__OIKOS_SDK__;
+ee("card-tile", { it: C, en: T, de: P, es: H, fr: x });
+function ae({ cfg: g, set: d, t: a }) {
+  const l = Array.isArray(g.countEntities) ? g.countEntities : [], e = (i, u) => {
+    const c = [...l];
+    c[i] = u, d("countEntities", c.filter(Boolean));
+  };
+  return /* @__PURE__ */ s("div", { style: { display: "flex", flexDirection: "column", gap: 6 }, children: [
+    l.map((i, u) => /* @__PURE__ */ s("div", { style: { display: "flex", gap: 6, alignItems: "center" }, children: [
+      /* @__PURE__ */ t("div", { style: { flex: 1, minWidth: 0 }, children: /* @__PURE__ */ t(
+        h,
+        {
+          label: "",
+          field: `__count_${u}`,
+          config: { [`__count_${u}`]: i },
+          setConfig: (c) => {
+            const n = typeof c == "function" ? c({ [`__count_${u}`]: i }) : c;
+            e(u, n[`__count_${u}`]);
+          }
+        }
+      ) }),
+      /* @__PURE__ */ t(
+        "button",
+        {
+          onClick: () => d("countEntities", l.filter((c, n) => n !== u)),
+          style: {
+            width: 30,
+            height: 30,
+            borderRadius: 8,
+            flexShrink: 0,
+            cursor: "pointer",
+            background: "transparent",
+            border: "1px solid var(--border-medium)",
+            color: "var(--red)",
+            fontSize: 15,
+            lineHeight: 1
+          },
+          children: "×"
+        }
+      )
+    ] }, u)),
+    /* @__PURE__ */ s(
+      "button",
+      {
+        onClick: () => d("countEntities", [...l, ""]),
+        style: {
+          padding: "7px 12px",
+          borderRadius: 9,
+          cursor: "pointer",
+          background: "transparent",
+          border: "1px dashed var(--border-medium)",
+          color: "var(--text-muted)",
+          fontSize: 12,
+          fontWeight: 600
+        },
+        children: [
+          "+ ",
+          a("settings.countAdd")
+        ]
+      }
+    )
+  ] });
+}
+function ie({ cfg: g, set: d, t: a }) {
+  const l = typeof E == "function" ? E() : [];
+  return l.length === 0 ? /* @__PURE__ */ t(o, { label: a("settings.popupPanel"), hint: a("settings.popupNone"), children: /* @__PURE__ */ t("div", { style: { fontSize: 11, color: "var(--text-muted)" }, children: a("settings.popupNoneHint") }) }) : /* @__PURE__ */ t(o, { label: a("settings.popupPanel"), hint: a("settings.popupHint"), children: /* @__PURE__ */ s(
     "select",
     {
-      value: p.popupCardId || "",
-      onChange: (e) => c("popupCardId", e.target.value),
+      value: g.popupCardId || "",
+      onChange: (e) => d("popupCardId", e.target.value),
       style: {
         width: "100%",
         padding: "8px 10px",
@@ -532,7 +675,7 @@ function J({ cfg: p, set: c, t: a }) {
       },
       children: [
         /* @__PURE__ */ t("option", { value: "", children: a("settings.popupChoose") }),
-        r.map((e) => /* @__PURE__ */ l("option", { value: e.id, children: [
+        l.map((e) => /* @__PURE__ */ s("option", { value: e.id, children: [
           e.title || a("settings.popupUntitled"),
           e.hidden ? " · " + a("settings.popupHidden") : "",
           " — " + e.page
@@ -541,111 +684,132 @@ function J({ cfg: p, set: c, t: a }) {
     }
   ) });
 }
-function ie({ cardId: p }) {
-  const { dark: c } = K(), [a, r] = q(p, j), { t: e } = G("card-tile"), o = (n, d) => r((x) => ({ ...x, [n]: d })), T = (a.activeStates ?? []).join(", "), C = (n) => o("activeStates", n.split(",").map((d) => d.trim().toLowerCase()).filter(Boolean));
-  return /* @__PURE__ */ l("div", { style: { display: "flex", flexDirection: "column", gap: 14 }, children: [
-    /* @__PURE__ */ l(u, { title: e("settings.sectionEntity"), children: [
+function de({ cardId: g }) {
+  const { dark: d } = J(), [a, l] = X(g, Y), { t: e } = te("card-tile"), i = (n, b) => l((w) => ({ ...w, [n]: b })), u = (a.activeStates ?? []).join(", "), c = (n) => i("activeStates", n.split(",").map((b) => b.trim().toLowerCase()).filter(Boolean));
+  return /* @__PURE__ */ s("div", { style: { display: "flex", flexDirection: "column", gap: 14 }, children: [
+    /* @__PURE__ */ s(p, { title: e("settings.sectionEntity"), children: [
       /* @__PURE__ */ t(
-        g,
+        h,
         {
           label: e("settings.entity"),
           field: "entityId",
           config: a,
-          setConfig: r
+          setConfig: l
         }
       ),
-      /* @__PURE__ */ t(i, { label: e("settings.label"), children: /* @__PURE__ */ t(
-        s,
+      /* @__PURE__ */ t(o, { label: e("settings.label"), children: /* @__PURE__ */ t(
+        r,
         {
           value: a.label,
-          onChange: (n) => o("label", n),
+          onChange: (n) => i("label", n),
           placeholder: e("settings.labelPh")
         }
       ) }),
-      /* @__PURE__ */ t(i, { label: e("settings.icon"), hint: e("settings.iconHint"), children: /* @__PURE__ */ t(b, { value: a.icon, onChange: (n) => o("icon", n), dark: c }) }),
-      /* @__PURE__ */ t(i, { label: e("settings.accent"), children: /* @__PURE__ */ t(
-        Q,
+      /* @__PURE__ */ t(o, { label: e("settings.icon"), hint: e("settings.iconHint"), children: /* @__PURE__ */ t(v, { value: a.icon, onChange: (n) => i("icon", n), dark: d }) }),
+      /* @__PURE__ */ t(o, { label: e("settings.accent"), children: /* @__PURE__ */ t(
+        A,
         {
           value: a.accent,
-          onChange: (n) => o("accent", n),
-          colors: Y
+          onChange: (n) => i("accent", n),
+          colors: S
         }
       ) })
     ] }),
-    /* @__PURE__ */ l(u, { title: e("settings.sectionTap"), children: [
-      /* @__PURE__ */ t(i, { label: e("settings.tap"), hint: e("settings.tapHint"), children: /* @__PURE__ */ t(
-        v,
+    /* @__PURE__ */ s(p, { title: e("settings.sectionLayout"), children: [
+      /* @__PURE__ */ t(o, { label: e("settings.layout"), hint: e("settings.layoutHint"), children: /* @__PURE__ */ t(
+        m,
+        {
+          value: a.layout || "value",
+          onChange: (n) => i("layout", n),
+          options: [
+            { value: "value", label: e("settings.layoutValue") },
+            { value: "inline", label: e("settings.layoutInline") },
+            { value: "state", label: e("settings.layoutState") },
+            { value: "stateTint", label: e("settings.layoutTint") }
+          ]
+        }
+      ) }),
+      a.layout === "stateTint" && /* @__PURE__ */ t(o, { label: e("settings.offAccent"), hint: e("settings.offAccentHint"), children: /* @__PURE__ */ t(A, { value: a.offAccent, onChange: (n) => i("offAccent", n), colors: S }) })
+    ] }),
+    /* @__PURE__ */ s(p, { title: e("settings.sectionCount"), collapsible: !0, defaultOpen: !1, children: [
+      /* @__PURE__ */ t(o, { label: e("settings.countEntities"), hint: e("settings.countHint") }),
+      /* @__PURE__ */ t(ae, { cfg: a, set: i, t: e })
+    ] }),
+    /* @__PURE__ */ s(p, { title: e("settings.sectionTap"), children: [
+      /* @__PURE__ */ t(o, { label: e("settings.tap"), hint: e("settings.tapHint"), children: /* @__PURE__ */ t(
+        m,
         {
           value: a.tapAction,
-          onChange: (n) => o("tapAction", n),
+          onChange: (n) => i("tapAction", n),
           options: [
             { value: "more-info", label: e("settings.tapMore") },
             { value: "toggle", label: e("settings.tapToggle") },
             { value: "popup", label: e("settings.tapPopup") },
+            { value: "list", label: e("settings.tapList") },
             { value: "none", label: e("settings.tapNone") }
           ]
         }
       ) }),
-      a.tapAction === "popup" && /* @__PURE__ */ t(J, { cfg: a, set: o, t: e })
+      a.tapAction === "popup" && /* @__PURE__ */ t(ie, { cfg: a, set: i, t: e })
     ] }),
-    /* @__PURE__ */ l(u, { title: e("settings.sectionStatus"), children: [
-      /* @__PURE__ */ t(i, { label: e("settings.showStatus"), children: /* @__PURE__ */ t(m, { value: a.showStatus, onChange: (n) => o("showStatus", n) }) }),
-      a.showStatus && /* @__PURE__ */ l(h, { children: [
-        /* @__PURE__ */ t(i, { label: e("settings.onText"), children: /* @__PURE__ */ t(
-          s,
+    /* @__PURE__ */ s(p, { title: e("settings.sectionStatus"), children: [
+      /* @__PURE__ */ t(o, { label: e("settings.showStatus"), children: /* @__PURE__ */ t(y, { value: a.showStatus, onChange: (n) => i("showStatus", n) }) }),
+      a.showStatus && /* @__PURE__ */ s(f, { children: [
+        /* @__PURE__ */ t(o, { label: e("settings.onText"), children: /* @__PURE__ */ t(
+          r,
           {
             value: a.onText,
-            onChange: (n) => o("onText", n),
+            onChange: (n) => i("onText", n),
             placeholder: e("settings.textPh")
           }
         ) }),
-        /* @__PURE__ */ t(i, { label: e("settings.offText"), children: /* @__PURE__ */ t(
-          s,
+        /* @__PURE__ */ t(o, { label: e("settings.offText"), children: /* @__PURE__ */ t(
+          r,
           {
             value: a.offText,
-            onChange: (n) => o("offText", n),
+            onChange: (n) => i("offText", n),
             placeholder: e("settings.textPh")
           }
         ) }),
-        /* @__PURE__ */ t(i, { label: e("settings.activeStates"), hint: e("settings.activeStatesHint"), children: /* @__PURE__ */ t(
-          s,
+        /* @__PURE__ */ t(o, { label: e("settings.activeStates"), hint: e("settings.activeStatesHint"), children: /* @__PURE__ */ t(
+          r,
           {
-            value: T,
-            onChange: C,
-            placeholder: $.slice(0, 4).join(", "),
+            value: u,
+            onChange: c,
+            placeholder: G.slice(0, 4).join(", "),
             mono: !0
           }
         ) })
       ] })
     ] }),
-    /* @__PURE__ */ l(u, { title: e("settings.sectionValue"), children: [
-      /* @__PURE__ */ t(i, { label: e("settings.showValue"), children: /* @__PURE__ */ t(m, { value: a.showValue, onChange: (n) => o("showValue", n) }) }),
-      a.showValue && /* @__PURE__ */ l(h, { children: [
-        /* @__PURE__ */ t(i, { label: e("settings.valueSource"), children: /* @__PURE__ */ t(
-          v,
+    /* @__PURE__ */ s(p, { title: e("settings.sectionValue"), children: [
+      /* @__PURE__ */ t(o, { label: e("settings.showValue"), children: /* @__PURE__ */ t(y, { value: a.showValue, onChange: (n) => i("showValue", n) }) }),
+      a.showValue && /* @__PURE__ */ s(f, { children: [
+        /* @__PURE__ */ t(o, { label: e("settings.valueSource"), children: /* @__PURE__ */ t(
+          m,
           {
             value: a.valueSource,
-            onChange: (n) => o("valueSource", n),
+            onChange: (n) => i("valueSource", n),
             options: [
               { value: "state", label: e("settings.srcState") },
               { value: "attribute", label: e("settings.srcAttr") }
             ]
           }
         ) }),
-        a.valueSource === "attribute" && /* @__PURE__ */ t(i, { label: e("settings.valueAttr"), children: /* @__PURE__ */ t(
-          s,
+        a.valueSource === "attribute" && /* @__PURE__ */ t(o, { label: e("settings.valueAttr"), children: /* @__PURE__ */ t(
+          r,
           {
             value: a.valueAttr,
-            onChange: (n) => o("valueAttr", n),
+            onChange: (n) => i("valueAttr", n),
             placeholder: e("settings.valueAttrPh"),
             mono: !0
           }
         ) }),
-        /* @__PURE__ */ t(i, { label: e("settings.decimals"), children: /* @__PURE__ */ t(
-          W,
+        /* @__PURE__ */ t(o, { label: e("settings.decimals"), children: /* @__PURE__ */ t(
+          ne,
           {
             value: a.decimals,
-            onChange: (n) => o("decimals", n),
+            onChange: (n) => i("decimals", n),
             min: 0,
             max: 3,
             step: 1,
@@ -653,59 +817,59 @@ function ie({ cardId: p }) {
             rightLabel: "3"
           }
         ) }),
-        /* @__PURE__ */ t(i, { label: e("settings.unit"), children: /* @__PURE__ */ t(
-          s,
+        /* @__PURE__ */ t(o, { label: e("settings.unit"), children: /* @__PURE__ */ t(
+          r,
           {
             value: a.unitOverride,
-            onChange: (n) => o("unitOverride", n),
+            onChange: (n) => i("unitOverride", n),
             placeholder: e("settings.unitPh")
           }
         ) })
       ] })
     ] }),
-    /* @__PURE__ */ l(u, { title: e("settings.sectionSub"), collapsible: !0, defaultOpen: !1, children: [
-      /* @__PURE__ */ t(i, { label: e("settings.sub1") }),
+    /* @__PURE__ */ s(p, { title: e("settings.sectionSub"), collapsible: !0, defaultOpen: !1, children: [
+      /* @__PURE__ */ t(o, { label: e("settings.sub1") }),
       /* @__PURE__ */ t(
-        g,
+        h,
         {
           label: e("settings.subEntity"),
           field: "sub1Entity",
           config: a,
-          setConfig: r
+          setConfig: l
         }
       ),
-      /* @__PURE__ */ t(i, { label: e("settings.subLabel"), children: /* @__PURE__ */ t(
-        s,
+      /* @__PURE__ */ t(o, { label: e("settings.subLabel"), children: /* @__PURE__ */ t(
+        r,
         {
           value: a.sub1Label,
-          onChange: (n) => o("sub1Label", n),
+          onChange: (n) => i("sub1Label", n),
           placeholder: e("settings.subLabelPh")
         }
       ) }),
-      /* @__PURE__ */ t(i, { label: e("settings.subUnit"), children: /* @__PURE__ */ t(s, { value: a.sub1Unit, onChange: (n) => o("sub1Unit", n) }) }),
-      /* @__PURE__ */ t(i, { label: e("settings.sub2") }),
+      /* @__PURE__ */ t(o, { label: e("settings.subUnit"), children: /* @__PURE__ */ t(r, { value: a.sub1Unit, onChange: (n) => i("sub1Unit", n) }) }),
+      /* @__PURE__ */ t(o, { label: e("settings.sub2") }),
       /* @__PURE__ */ t(
-        g,
+        h,
         {
           label: e("settings.subEntity"),
           field: "sub2Entity",
           config: a,
-          setConfig: r
+          setConfig: l
         }
       ),
-      /* @__PURE__ */ t(i, { label: e("settings.subLabel"), children: /* @__PURE__ */ t(
-        s,
+      /* @__PURE__ */ t(o, { label: e("settings.subLabel"), children: /* @__PURE__ */ t(
+        r,
         {
           value: a.sub2Label,
-          onChange: (n) => o("sub2Label", n),
+          onChange: (n) => i("sub2Label", n),
           placeholder: e("settings.subLabelPh")
         }
       ) }),
-      /* @__PURE__ */ t(i, { label: e("settings.subUnit"), children: /* @__PURE__ */ t(s, { value: a.sub2Unit, onChange: (n) => o("sub2Unit", n) }) })
+      /* @__PURE__ */ t(o, { label: e("settings.subUnit"), children: /* @__PURE__ */ t(r, { value: a.sub2Unit, onChange: (n) => i("sub2Unit", n) }) })
     ] }),
-    /* @__PURE__ */ t(u, { title: e("settings.sectionExtra"), collapsible: !0, defaultOpen: !1, children: /* @__PURE__ */ t(i, { label: e("settings.badgeIcon"), hint: e("settings.badgeIconHint"), children: /* @__PURE__ */ t(b, { value: a.badgeIcon, onChange: (n) => o("badgeIcon", n), dark: c }) }) })
+    /* @__PURE__ */ t(p, { title: e("settings.sectionExtra"), collapsible: !0, defaultOpen: !1, children: /* @__PURE__ */ t(o, { label: e("settings.badgeIcon"), hint: e("settings.badgeIconHint"), children: /* @__PURE__ */ t(v, { value: a.badgeIcon, onChange: (n) => i("badgeIcon", n), dark: d }) }) })
   ] });
 }
 export {
-  ie as default
+  de as default
 };

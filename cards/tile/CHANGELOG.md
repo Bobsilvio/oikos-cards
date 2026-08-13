@@ -4,6 +4,25 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [1.3.0] - 2026-08-13
+### Added
+- **Quattro disposizioni.** Non è vezzo grafico: una fila di serrature vuole
+  nome e stato, una sonda vuole il numero grande, una riga di scorciatoie vuole
+  la forma bassa. Con una sola forma o si spreca spazio o si perde leggibilità.
+  - *Valore grande* — quella di prima, resta il predefinito.
+  - *In linea* — icona, nome e valore su una riga sola.
+  - *Icona e stato* — icona a sinistra, nome accanto, stato sotto.
+  - *Tinta di stato* — come sopra, ma tutta la tile prende il colore dello
+    stato: una fila di porte si legge senza mettere a fuoco una parola. Il
+    colore per lo stato inattivo si sceglie a parte.
+- **Conteggio su più entità.** La tile può osservare un gruppo e dire quante ne
+  sono attive — «4 · Luci» — invece del valore di una sola. L'entità principale
+  resta quella che decide colore e azione, così la stessa tile può accendere il
+  gruppo e insieme dire quante ne sono accese.
+- **Al tocco: «Apri elenco»**, che mostra le entità osservate con il loro stato.
+  L'elenco si apre dentro la tile: eredita tema e bordi e non finisce sotto
+  altre card mentre la dashboard scorre.
+
 ## [1.2.0] - 2026-08-12
 ### Added
 - **Al tocco: «Apri popup».** La tile può aprire un pannello popup configurato

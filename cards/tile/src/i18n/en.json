@@ -87,6 +87,21 @@
     "popupUntitled": "Untitled",
     "popupHidden": "hidden",
     "popupNone": "No panels available",
-    "popupNoneHint": "Add a «Popup Panel» card to a page first."
-  }
+    "popupNoneHint": "Add a «Popup Panel» card to a page first.",
+    "sectionLayout": "Appearance",
+    "layout": "Layout",
+    "layoutHint": "A row of locks wants name and state, a probe wants the big number.",
+    "layoutValue": "Large value",
+    "layoutInline": "Inline",
+    "layoutState": "Icon and state",
+    "layoutTint": "State tint",
+    "offAccent": "Inactive colour",
+    "offAccentHint": "With «State tint» the whole tile takes this colour when the entity is not active.",
+    "sectionCount": "Count",
+    "countEntities": "Entities to count",
+    "countHint": "The tile shows how many are active — «4 · Lights» — instead of a single entity's value.",
+    "countAdd": "Add entity",
+    "tapList": "Open list"
+  },
+  "countOn": "{{count}} on"
 }

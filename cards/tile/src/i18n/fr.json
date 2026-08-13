@@ -87,6 +87,21 @@
     "popupUntitled": "Sans titre",
     "popupHidden": "masqué",
     "popupNone": "Aucun panneau disponible",
-    "popupNoneHint": "Ajoute d’abord une carte « Popup Panel » à une page."
-  }
+    "popupNoneHint": "Ajoute d’abord une carte « Popup Panel » à une page.",
+    "sectionLayout": "Apparence",
+    "layout": "Disposition",
+    "layoutHint": "Une rangée de serrures veut nom et état, une sonde veut le grand nombre.",
+    "layoutValue": "Grande valeur",
+    "layoutInline": "En ligne",
+    "layoutState": "Icône et état",
+    "layoutTint": "Teinte d’état",
+    "offAccent": "Couleur à l’état inactif",
+    "offAccentHint": "Avec « Teinte d’état », toute la tuile prend cette couleur quand l’entité n’est pas active.",
+    "sectionCount": "Comptage",
+    "countEntities": "Entités à compter",
+    "countHint": "La tuile indique combien sont actives — « 4 · Lumières » — au lieu de la valeur d’une seule entité.",
+    "countAdd": "Ajouter une entité",
+    "tapList": "Ouvrir la liste"
+  },
+  "countOn": "{{count}} actives"
 }

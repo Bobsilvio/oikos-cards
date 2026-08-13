@@ -41,6 +41,56 @@ registerCardTranslations('card-tile', { it, en, de, es, fr })
  * perché è proprio quello il caso d'uso — un popup che esiste solo per essere
  * richiamato da qui.
  */
+/**
+ * Elenco di entità da contare.
+ *
+ * Righe aggiungibili una alla volta invece di un campo di testo con virgole:
+ * gli entity_id si sbagliano a scriverli, e un id sbagliato non dà errore —
+ * semplicemente non conta, e non si capisce perché il numero non torna.
+ */
+function EntityListField({ cfg, set, t }) {
+  const list = Array.isArray(cfg.countEntities) ? cfg.countEntities : []
+  const setAt = (i, v) => { const n = [...list]; n[i] = v; set('countEntities', n.filter(Boolean)) }
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+      {list.map((e, i) => (
+        <div key={i} style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <EntityField
+              label=""
+              field={`__count_${i}`}
+              config={{ [`__count_${i}`]: e }}
+              setConfig={fn => {
+                const next = typeof fn === 'function' ? fn({ [`__count_${i}`]: e }) : fn
+                setAt(i, next[`__count_${i}`])
+              }}
+            />
+          </div>
+          <button
+            onClick={() => set('countEntities', list.filter((_, k) => k !== i))}
+            style={{
+              width: 30, height: 30, borderRadius: 8, flexShrink: 0, cursor: 'pointer',
+              background: 'transparent', border: '1px solid var(--border-medium)',
+              color: 'var(--red)', fontSize: 15, lineHeight: 1,
+            }}
+          >×</button>
+        </div>
+      ))}
+      <button
+        onClick={() => set('countEntities', [...list, ''])}
+        style={{
+          padding: '7px 12px', borderRadius: 9, cursor: 'pointer',
+          background: 'transparent', border: '1px dashed var(--border-medium)',
+          color: 'var(--text-muted)', fontSize: 12, fontWeight: 600,
+        }}
+      >
+        + {t('settings.countAdd')}
+      </button>
+    </div>
+  )
+}
+
 function PopupPicker({ cfg, set, t }) {
   // Pannelli su dashboard più vecchie: l'export potrebbe non esserci ancora.
   const panels = typeof listPopupPanels === 'function' ? listPopupPanels() : []
@@ -123,6 +173,32 @@ export default function TileSettings({ cardId }) {
           QUELL'icona: un utente ha chiesto se dovesse aggiungere una seconda
           icona per poter accendere e spegnere. Il tocco vale su tutta la
           tile. */}
+      <Section title={t('settings.sectionLayout')}>
+        <Field label={t('settings.layout')} hint={t('settings.layoutHint')}>
+          <Pills
+            value={cfg.layout || 'value'}
+            onChange={v => set('layout', v)}
+            options={[
+              { value: 'value',     label: t('settings.layoutValue') },
+              { value: 'inline',    label: t('settings.layoutInline') },
+              { value: 'state',     label: t('settings.layoutState') },
+              { value: 'stateTint', label: t('settings.layoutTint') },
+            ]}
+          />
+        </Field>
+        {/* Il secondo colore serve solo dove c'è una tinta da spegnere. */}
+        {cfg.layout === 'stateTint' && (
+          <Field label={t('settings.offAccent')} hint={t('settings.offAccentHint')}>
+            <ColorCircles value={cfg.offAccent} onChange={v => set('offAccent', v)} colors={ACCENT_COLORS} />
+          </Field>
+        )}
+      </Section>
+
+      <Section title={t('settings.sectionCount')} collapsible defaultOpen={false}>
+        <Field label={t('settings.countEntities')} hint={t('settings.countHint')} />
+        <EntityListField cfg={cfg} set={set} t={t}/>
+      </Section>
+
       <Section title={t('settings.sectionTap')}>
         <Field label={t('settings.tap')} hint={t('settings.tapHint')}>
           <Pills
@@ -132,6 +208,7 @@ export default function TileSettings({ cardId }) {
               { value: 'more-info', label: t('settings.tapMore') },
               { value: 'toggle',    label: t('settings.tapToggle') },
               { value: 'popup',     label: t('settings.tapPopup') },
+              { value: 'list',      label: t('settings.tapList') },
               { value: 'none',      label: t('settings.tapNone') },
             ]}
           />

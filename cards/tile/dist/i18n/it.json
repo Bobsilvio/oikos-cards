@@ -87,6 +87,21 @@
     "popupUntitled": "Senza titolo",
     "popupHidden": "nascosto",
     "popupNone": "Nessun pannello disponibile",
-    "popupNoneHint": "Aggiungi prima una card «Popup Panel» a una pagina."
-  }
+    "popupNoneHint": "Aggiungi prima una card «Popup Panel» a una pagina.",
+    "sectionLayout": "Aspetto",
+    "layout": "Disposizione",
+    "layoutHint": "Una fila di serrature vuole nome e stato, una sonda vuole il numero grande.",
+    "layoutValue": "Valore grande",
+    "layoutInline": "In linea",
+    "layoutState": "Icona e stato",
+    "layoutTint": "Tinta di stato",
+    "offAccent": "Colore a stato spento",
+    "offAccentHint": "Con «Tinta di stato» tutta la tile prende questo colore quando l’entità non è attiva.",
+    "sectionCount": "Conteggio",
+    "countEntities": "Entità da contare",
+    "countHint": "La tile mostra quante ne sono attive — «4 · Luci» — invece del valore della singola entità.",
+    "countAdd": "Aggiungi entità",
+    "tapList": "Apri elenco"
+  },
+  "countOn": "{{count}} attive"
 }
