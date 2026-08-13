@@ -244,6 +244,10 @@ export default function LightControl({ cardId = 'light-control' }) {
   const [localRgb, setLocalRgb] = useState(null)
   const [localKelvin, setLocalKelvin] = useState(null)
   const dragModeRef = useRef(null)
+  // Quale puntatore ha iniziato il trascinamento in corso. Serve a non
+  // scambiare per «rilascio del cursore» il rilascio di un tocco diverso —
+  // vedi onPointerUp.
+  const dragPointerRef = useRef(null)
   const svgRef = useRef(null)
   const barRefs = useRef({ brightness: null, color: null })
 
@@ -252,6 +256,23 @@ export default function LightControl({ cardId = 'light-control' }) {
   useEffect(() => {
     if (dragModeRef.current !== 'brightness') setLocalBrightness(null)
   }, [haBrightness])
+
+  /*
+   * Luce spenta: si scarta qualunque trascinamento in corso o appena concluso.
+   * Senza questo il colore locale sopravviveva allo spegnimento e la card
+   * restava colorata come se fosse ancora accesa.
+   *
+   * Lo stato si rilegge qui e non da `isOn`: quello è calcolato dopo l'uscita
+   * anticipata per entità mancante, e un hook non può stare là sotto — si
+   * eseguirebbe in alcuni render sì e in altri no (React #310).
+   */
+  const haStateDep = config.entityId ? getState(config.entityId) : undefined
+  useEffect(() => {
+    if (haStateDep === 'on') return
+    dragModeRef.current = null
+    dragPointerRef.current = null
+    setLocalBrightness(null); setLocalRgb(null); setLocalKelvin(null)
+  }, [haStateDep])
 
   const haKelvinDep = config.entityId ? getAttr(config.entityId, 'color_temp_kelvin') : undefined
   useEffect(() => {
@@ -348,12 +369,41 @@ export default function LightControl({ cardId = 'light-control' }) {
     e.preventDefault()
     try { e.currentTarget.setPointerCapture(e.pointerId) } catch {}
     dragModeRef.current = mode
+    dragPointerRef.current = e.pointerId
     handleMove(e)
   }
 
-  const onPointerUp = () => {
+  /*
+   * Fine trascinamento: si manda a HA il valore scelto.
+   *
+   * Due controlli che prima non c'erano, ed è da lì che nasceva la lampada che
+   * si riaccendeva da sola dopo essere stata spenta:
+   *
+   *  • `!isOn` — `light.turn_on` con una luminosità ACCENDE. Se nel frattempo
+   *    la luce è stata spenta (dal bottone, da un'automazione, da un altro
+   *    telefono), spedire quel valore la riaccende. A luce spenta non c'è
+   *    niente da mandare: il valore locale si butta.
+   *
+   *  • il puntatore — `dragModeRef` si azzera solo qui. Se un trascinamento
+   *    non riceve mai il suo rilascio (la cattura del puntatore può fallire, e
+   *    il `try/catch` sopra lo ingoia), la modalità resta impostata: il tocco
+   *    SUCCESSIVO su una qualunque delle barre trovava il riferimento sporco e
+   *    spediva la luminosità di prima. Confrontando il pointerId si scarta il
+   *    rilascio che non appartiene a quel trascinamento.
+   */
+  const onPointerUp = (e) => {
     const mode = dragModeRef.current
+    const pid  = dragPointerRef.current
+    if (e && pid != null && e.pointerId !== pid) return
+
     dragModeRef.current = null
+    dragPointerRef.current = null
+
+    if (!isOn) {
+      setLocalBrightness(null); setLocalRgb(null); setLocalKelvin(null)
+      return
+    }
+
     if (mode === 'brightness' && localBrightness != null) {
       const bri = Math.max(1, Math.round((localBrightness / 100) * 255))
       callService('light', 'turn_on', config.entityId, { brightness: bri })
@@ -396,6 +446,7 @@ export default function LightControl({ cardId = 'light-control' }) {
     e.preventDefault()
     try { e.currentTarget.setPointerCapture(e.pointerId) } catch {}
     dragModeRef.current = mode
+    dragPointerRef.current = e.pointerId
     barMove(e)
   }
 
