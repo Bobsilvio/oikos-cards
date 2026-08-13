@@ -4,6 +4,13 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [1.9.0] - 2026-08-13
+
+### Added
+- Colori per stato: confronti numerici e intervalli oltre al testo esatto —
+  `>18`, `>=18`, `<5`, `<=5`, `=20`, `!=0`, `10-20`. Prima su un sensore
+  numerico serviva una regola per ogni valore possibile.
+
 ## [1.8.0] - 2026-08-13
 
 ### Added

@@ -141,8 +141,7 @@ export default function TileCard({ cardId = 'tile' }) {
   // Regola esplicita per questo stato, se c'è: batte tutto il resto.
   const ruleColor = (() => {
     if (unknown || !Array.isArray(cfg.stateColors)) return null
-    const r = cfg.stateColors.find(x =>
-      x?.color && String(x.state || '').trim().toLowerCase() === String(raw).trim().toLowerCase())
+    const r = cfg.stateColors.find(x => x?.color && matchesRule(x.state, raw))
     return r ? r.color : null
   })()
 
@@ -492,6 +491,52 @@ export default function TileCard({ cardId = 'tile' }) {
 
 
 /** Numero dentro un intervallo, con valore di ripiego se non è un numero. */
+/**
+ * Una regola di colore corrisponde allo stato?
+ *
+ * Il confronto era solo testuale ed esatto: andava bene per `open`/`closed`,
+ * ma su un sensore numerico serviva una regola per ogni valore possibile —
+ * impraticabile per una temperatura o un contatore. Chi ci provava scriveva
+ * `>0` e non succedeva niente, senza alcun segnale che quella regola non
+ * sarebbe mai scattata.
+ *
+ * Forme riconosciute, nell'ordine:
+ *   `>18`  `>=18`  `<5`  `<=5`  `=20`  `!=0`   confronto numerico
+ *   `10-20`  `10..20`                          intervallo, estremi compresi
+ *   qualunque altra cosa                       testo esatto, come prima
+ *
+ * La virgola vale come punto decimale: chi scrive `>21,5` intende quello.
+ */
+function matchesRule(pattern, raw) {
+  const p = String(pattern ?? '').trim()
+  if (!p) return false
+
+  const num = parseFloat(String(raw).replace(',', '.'))
+
+  const cmp = /^(>=|<=|!=|>|<|=)\s*(-?\d+(?:[.,]\d+)?)$/.exec(p)
+  if (cmp) {
+    if (!Number.isFinite(num)) return false
+    const v = parseFloat(cmp[2].replace(',', '.'))
+    switch (cmp[1]) {
+      case '>':  return num >  v
+      case '>=': return num >= v
+      case '<':  return num <  v
+      case '<=': return num <= v
+      case '!=': return num !== v
+      default:   return num === v
+    }
+  }
+
+  const range = /^(-?\d+(?:[.,]\d+)?)\s*(?:\.\.|-)\s*(-?\d+(?:[.,]\d+)?)$/.exec(p)
+  if (range && Number.isFinite(num)) {
+    const a = parseFloat(range[1].replace(',', '.'))
+    const b = parseFloat(range[2].replace(',', '.'))
+    return num >= Math.min(a, b) && num <= Math.max(a, b)
+  }
+
+  return p.toLowerCase() === String(raw).trim().toLowerCase()
+}
+
 function clampNum(v, min, max, dflt) {
   const n = parseFloat(v)
   if (!Number.isFinite(n)) return dflt

@@ -100,8 +100,8 @@ const { jsxs: l, jsx: t, Fragment: S } = window.__OIKOS_SDK__.jsxRuntime, V = {
   countAdd: "Aggiungi entità",
   tapList: "Apri elenco",
   stateColors: "Colori per stato",
-  stateColorsHint: "Es. aperto verde, chiuso rosso. Vince la prima regola che corrisponde; senza regole valgono i colori qui sopra.",
-  statePlaceholder: "stato (es. open)",
+  stateColorsHint: "Es. aperto verde, chiuso rosso. Con i numeri valgono >18, >=18, <5, !=0, 10-20. Vince la prima regola che corrisponde; senza regole valgono i colori qui sopra.",
+  statePlaceholder: "stato o confronto (es. open, >18)",
   stateAdd: "Aggiungi regola",
   stateAddCurrent: "Stato attuale: {{state}}",
   iconSize: "Dimensione icona",
@@ -118,7 +118,7 @@ const { jsxs: l, jsx: t, Fragment: S } = window.__OIKOS_SDK__.jsxRuntime, V = {
   bgOpacity: "Intensità",
   bgOpacityHint: "100% = colore pieno.",
   layoutSlim: "Sottile"
-}, U = "{{count}} attive", w = {
+}, U = "{{count}} attive", P = {
   empty: V,
   state: N,
   settings: D,
@@ -225,8 +225,8 @@ const { jsxs: l, jsx: t, Fragment: S } = window.__OIKOS_SDK__.jsxRuntime, V = {
   countAdd: "Add entity",
   tapList: "Open list",
   stateColors: "Colours by state",
-  stateColorsHint: "E.g. open green, closed red. The first matching rule wins; with no rules the colours above apply.",
-  statePlaceholder: "state (e.g. open)",
+  stateColorsHint: "E.g. open green, closed red. With numbers you can use >18, >=18, <5, !=0, 10-20. The first matching rule wins; with no rules the colours above apply.",
+  statePlaceholder: "state or comparison (e.g. open, >18)",
   stateAdd: "Add rule",
   stateAddCurrent: "Current state: {{state}}",
   iconSize: "Icon size",
@@ -350,8 +350,8 @@ const { jsxs: l, jsx: t, Fragment: S } = window.__OIKOS_SDK__.jsxRuntime, V = {
   countAdd: "Entität hinzufügen",
   tapList: "Liste öffnen",
   stateColors: "Farben nach Zustand",
-  stateColorsHint: "Z. B. offen grün, geschlossen rot. Die erste passende Regel gewinnt; ohne Regeln gelten die Farben oben.",
-  statePlaceholder: "Zustand (z. B. open)",
+  stateColorsHint: "Z.B. offen grün, geschlossen rot. Bei Zahlen gelten >18, >=18, <5, !=0, 10-20. Die erste passende Regel gewinnt; ohne Regeln gelten die Farben oben.",
+  statePlaceholder: "Zustand oder Vergleich (z.B. open, >18)",
   stateAdd: "Regel hinzufügen",
   stateAddCurrent: "Aktueller Zustand: {{state}}",
   iconSize: "Symbolgröße",
@@ -475,8 +475,8 @@ const { jsxs: l, jsx: t, Fragment: S } = window.__OIKOS_SDK__.jsxRuntime, V = {
   countAdd: "Añadir entidad",
   tapList: "Abrir lista",
   stateColors: "Colores por estado",
-  stateColorsHint: "P. ej. abierto verde, cerrado rojo. Gana la primera regla que coincide; sin reglas valen los colores de arriba.",
-  statePlaceholder: "estado (p. ej. open)",
+  stateColorsHint: "Ej. abierto verde, cerrado rojo. Con números valen >18, >=18, <5, !=0, 10-20. Gana la primera regla que coincide; sin reglas valen los colores de arriba.",
+  statePlaceholder: "estado o comparación (ej. open, >18)",
   stateAdd: "Añadir regla",
   stateAddCurrent: "Estado actual: {{state}}",
   iconSize: "Tamaño del icono",
@@ -600,8 +600,8 @@ const { jsxs: l, jsx: t, Fragment: S } = window.__OIKOS_SDK__.jsxRuntime, V = {
   countAdd: "Ajouter une entité",
   tapList: "Ouvrir la liste",
   stateColors: "Couleurs par état",
-  stateColorsHint: "Ex. ouvert vert, fermé rouge. La première règle qui correspond gagne ; sans règles, les couleurs ci-dessus s’appliquent.",
-  statePlaceholder: "état (ex. open)",
+  stateColorsHint: "Ex. ouvert vert, fermé rouge. Avec des nombres : >18, >=18, <5, !=0, 10-20. La première règle qui correspond gagne ; sans règles, les couleurs ci-dessus s’appliquent.",
+  statePlaceholder: "état ou comparaison (ex. open, >18)",
   stateAdd: "Ajouter une règle",
   stateAddCurrent: "État actuel : {{state}}",
   iconSize: "Taille de l’icône",
@@ -649,7 +649,7 @@ const { jsxs: l, jsx: t, Fragment: S } = window.__OIKOS_SDK__.jsxRuntime, V = {
   "active",
   "running"
 ], { useState: ce } = window.__OIKOS_SDK__.React, { useDashboard: de, useCardConfig: pe, useStyles: ge, registerCardTranslations: ne, useT: he, MdiIcon: be } = window.__OIKOS_SDK__;
-ne("card-tile", { it: w, en: L, de: I, es: _, fr: k });
+ne("card-tile", { it: P, en: L, de: I, es: _, fr: k });
 const ae = {
   entityId: "",
   label: "",
@@ -719,7 +719,7 @@ const ae = {
   popupCardId: ""
   // istanza popup-panel da aprire con tapAction 'popup'
 }, { useDashboard: z, useCardConfig: oe, registerCardTranslations: ie, useT: le, EntityField: y, MdiIconPicker: H, Section: b, Field: i, TextField: g, Toggle: E, Slider: m, Pills: v, ColorCircles: A, ACCENT_COLORS: C, listPopupPanels: T } = window.__OIKOS_SDK__;
-ie("card-tile", { it: w, en: L, de: I, es: _, fr: k });
+ie("card-tile", { it: P, en: L, de: I, es: _, fr: k });
 function se({ cfg: d, set: c, t: a }) {
   const { getState: r } = z(), e = Array.isArray(d.stateColors) ? d.stateColors : [], o = d.entityId ? r(d.entityId) : "", u = (n, s, h) => {
     const f = e.map((x, O) => O === n ? { ...x, [s]: h } : x);
@@ -790,7 +790,7 @@ function se({ cfg: d, set: c, t: a }) {
         "button",
         {
           onClick: () => c("stateColors", [...e, { state: o, color: "#22c55e" }]),
-          style: P,
+          style: w,
           children: [
             "+ ",
             a("settings.stateAddCurrent", { state: o })
@@ -801,7 +801,7 @@ function se({ cfg: d, set: c, t: a }) {
         "button",
         {
           onClick: () => c("stateColors", [...e, { state: "", color: "#ef4444" }]),
-          style: P,
+          style: w,
           children: [
             "+ ",
             a("settings.stateAdd")
@@ -811,7 +811,7 @@ function se({ cfg: d, set: c, t: a }) {
     ] })
   ] });
 }
-const P = {
+const w = {
   padding: "6px 11px",
   borderRadius: 9,
   cursor: "pointer",
