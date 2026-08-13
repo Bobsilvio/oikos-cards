@@ -49,7 +49,20 @@
     "labelPlaceholder": "ex. Salon",
     "timerPackage": "Minuteur d’arrêt (Home Assistant)",
     "timerPackageDesc": "Installe le package pour que le minuteur d’arrêt fonctionne même panneau fermé.",
-    "showPreset": "Afficher les préréglages (éco, nuit…)"
+    "showPreset": "Afficher les préréglages (éco, nuit…)",
+    "sectionMobile": "Sur téléphone",
+    "mobileHint": "Ne s’appliquent que si la carte est étroite. Sur écran large tout reste.",
+    "compact": "Forme compacte",
+    "compactHint": "Automatique sous 340px de largeur de carte. Les modes deviennent un seul bouton qui ouvre la liste.",
+    "compactAuto": "Auto",
+    "compactAlways": "Toujours",
+    "compactNever": "Jamais",
+    "hide": {
+      "fan": "Masquer la ventilation",
+      "preset": "Masquer les préréglages",
+      "humidity": "Masquer l’humidité",
+      "outdoor": "Masquer la température extérieure"
+    }
   },
   "preset": {
     "none": "Normal",

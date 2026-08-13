@@ -12,7 +12,7 @@
  */
 import {
   useCardConfig, EntityField, useT,
-  Section, Field, SettingsRow, TextField, Toggle,
+  Section, Field, SettingsRow, TextField, Toggle, Pills,
   ColorCircles, ACCENT_COLORS, Slider,
   usePackageInstaller, PackageSection,
 } from '@oikos/sdk'
@@ -119,6 +119,40 @@ export default function ClimatizzatoreSettings({ cardId }) {
         </SettingsRow>
       </Section>
 
+      {/* Telefono. Le voci qui sotto valgono SOLO quando la card è stretta:
+          su un riquadro largo resta tutto. Nascondere per sempre un dato che
+          sul computer ci sta benissimo sarebbe una perdita, non un guadagno. */}
+      <Section title={t('settings.sectionMobile')} hint={t('settings.mobileHint')}>
+        <Field label={t('settings.compact')} hint={t('settings.compactHint')}>
+          <Pills
+            value={config.compact || 'auto'}
+            onChange={v => set('compact', v)}
+            options={[
+              { value: 'auto',   label: t('settings.compactAuto') },
+              { value: 'always', label: t('settings.compactAlways') },
+              { value: 'never',  label: t('settings.compactNever') },
+            ]}
+          />
+        </Field>
+        {HIDEABLE.map(k => (
+          <SettingsRow key={k} label={t(`settings.hide.${k}`)}>
+            <Toggle
+              value={(config.hideOnSmall || []).includes(k)}
+              onChange={v => {
+                const cur = new Set(config.hideOnSmall || [])
+                if (v) cur.add(k); else cur.delete(k)
+                set('hideOnSmall', [...cur])
+              }}
+            />
+          </SettingsRow>
+        ))}
+      </Section>
+
     </div>
   )
 }
+
+// Cosa si può togliere quando lo spazio è poco. L'ordine è quello con cui se
+// ne può fare a meno: la ventola e i preset si cambiano di rado, l'umidità e
+// la temperatura esterna sono informazioni, non comandi.
+const HIDEABLE = ['fan', 'preset', 'humidity', 'outdoor']

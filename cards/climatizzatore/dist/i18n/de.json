@@ -49,7 +49,20 @@
     "labelPlaceholder": "z.B. Wohnzimmer",
     "timerPackage": "Ausschalt-Timer (Home Assistant)",
     "timerPackageDesc": "Installiere das Paket, damit der Ausschalt-Timer auch bei geschlossenem Panel funktioniert.",
-    "showPreset": "Presets anzeigen (Eco, Nacht…)"
+    "showPreset": "Presets anzeigen (Eco, Nacht…)",
+    "sectionMobile": "Auf dem Handy",
+    "mobileHint": "Gilt nur, wenn die Karte schmal ist. Auf breitem Bildschirm bleibt alles.",
+    "compact": "Kompakte Form",
+    "compactHint": "Automatisch unter 340px Kartenbreite. Die Modi werden zu einer Schaltfläche, die die Liste öffnet.",
+    "compactAuto": "Auto",
+    "compactAlways": "Immer",
+    "compactNever": "Nie",
+    "hide": {
+      "fan": "Lüfter ausblenden",
+      "preset": "Presets ausblenden",
+      "humidity": "Luftfeuchte ausblenden",
+      "outdoor": "Außentemperatur ausblenden"
+    }
   },
   "preset": {
     "none": "Normal",

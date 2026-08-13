@@ -2,6 +2,21 @@
 
 Tutte le modifiche rilevanti di questa card.
 
+## [1.1.0] - 2026-08-12
+### Added
+- **Forma compatta per il telefono.** In una colonna stretta le cinque modalità
+  in fila si sovrappongono e i chip vanno a capo mangiando altezza. Sotto i
+  340px di larghezza della card — non della finestra, perché la stessa card può
+  stare in una colonna stretta anche su un monitor grande — la card cambia
+  forma: le modalità diventano **un solo tasto** che mostra quella corrente e
+  apre l'elenco al tocco. Un bersaglio grande invece di cinque piccoli, più
+  facile da centrare col pollice.
+- Nelle impostazioni, sezione **Su telefono**: forma compatta Auto / Sempre /
+  Mai, e la scelta di cosa nascondere quando lo spazio è poco — ventola,
+  preset, umidità, temperatura esterna. Valgono **solo** a card stretta: su
+  schermo largo resta tutto, perché nascondere per sempre un dato che sul
+  computer ci sta benissimo sarebbe una perdita.
+
 ## [1.0.9]
 
 ### Added

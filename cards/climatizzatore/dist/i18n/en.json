@@ -49,7 +49,20 @@
     "labelPlaceholder": "e.g. Living room",
     "timerPackage": "Off timer (Home Assistant)",
     "timerPackageDesc": "Install the package so the off-timer works even when the panel is closed.",
-    "showPreset": "Show presets (eco, sleep…)"
+    "showPreset": "Show presets (eco, sleep…)",
+    "sectionMobile": "On phones",
+    "mobileHint": "These apply only when the card is narrow. On a wide screen everything stays.",
+    "compact": "Compact layout",
+    "compactHint": "Automatic below 340px of card width. The modes become a single button that opens the list.",
+    "compactAuto": "Auto",
+    "compactAlways": "Always",
+    "compactNever": "Never",
+    "hide": {
+      "fan": "Hide fan",
+      "preset": "Hide presets",
+      "humidity": "Hide humidity",
+      "outdoor": "Hide outdoor temperature"
+    }
   },
   "preset": {
     "none": "Normal",

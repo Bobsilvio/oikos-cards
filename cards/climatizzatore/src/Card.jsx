@@ -10,7 +10,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import {
   Power, PowerOff, Snowflake, Flame, Wind, Droplets, RefreshCcw,
   Plus, Minus, Sun, Sparkles, AirVent, Clock, X,
-  Moon, Leaf, Zap, Gauge, Home,
+  Moon, Leaf, Zap, Gauge, Home, ChevronDown, Check,
 } from 'lucide-react'
 import { useDashboard, useCardConfig, registerCardTranslations, useT } from '@oikos/sdk'
 import it from './i18n/it.json'
@@ -85,6 +85,33 @@ export default function ClimatizzatoreCard({ cardId = 'climatizzatore' }) {
   const [timerInput, setTimerInput]         = useState('')
   const [timerInputMode, setTimerInputMode] = useState('min')
   const [, forceUpdate] = useState(0)
+
+  /*
+   * Forma compatta: decisa sulla larghezza DELLA CARD, non della finestra.
+   *
+   * La card nasce per un riquadro largo. In una colonna di telefono le cinque
+   * modalità in fila si sovrappongono e i chip vanno a capo mangiando altezza.
+   * Sotto COMPACT_W si passa a una forma pensata per quello spazio: le
+   * modalità diventano un tasto solo che apre l'elenco.
+   *
+   * Una media query non servirebbe: guarda la finestra, e la stessa card può
+   * stare in una colonna stretta su un monitor grande.
+   */
+  const rootRef = useRef(null)
+  const [width, setWidth] = useState(0)
+  const [modeSheet, setModeSheet] = useState(false)
+
+  useEffect(() => {
+    const el = rootRef.current
+    if (!el) return
+    const ro = new ResizeObserver(([e]) => setWidth(e.contentRect.width))
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [])
+
+  const compact = config.compact === 'always'
+    || (config.compact !== 'never' && width > 0 && width < COMPACT_W)
+  const hideSmall = new Set(compact ? (config.hideOnSmall || []) : [])
 
   const id = config.entityId
   const stateMeta = id ? haStates?.[id] : null
@@ -250,9 +277,10 @@ export default function ClimatizzatoreCard({ cardId = 'climatizzatore' }) {
   return (
     <motion.div
       layout
+      ref={rootRef}
       style={{
         position: 'relative',
-        padding: 16, borderRadius: 18,
+        padding: compact ? 12 : 16, borderRadius: 18,
         background: cardBg,
         border: `1px solid ${isOff ? border : `${accent}40`}`,
         overflow: 'hidden',
@@ -432,16 +460,17 @@ export default function ClimatizzatoreCard({ cardId = 'climatizzatore' }) {
       {/* ── Temperatura corrente ── */}
       <div style={{
         position: 'relative',
-        display: 'flex', alignItems: 'flex-end', gap: 18, marginBottom: 14,
+        display: 'flex', alignItems: 'flex-end', gap: compact ? 10 : 18,
+        marginBottom: compact ? 10 : 14,
       }}>
         <div>
           <div style={{ fontSize: 9, fontWeight: 800, color: cMuted, letterSpacing: '.08em', textTransform: 'uppercase' }}>
             {t('tempCurrent')}
           </div>
           <div style={{
-            fontSize: 44, fontWeight: 900, color: cText,
-            letterSpacing: '-2px', lineHeight: 1, fontVariantNumeric: 'tabular-nums',
-            marginTop: 2,
+            fontSize: compact ? 30 : 44, fontWeight: 900, color: cText,
+            letterSpacing: compact ? '-1px' : '-2px', lineHeight: 1,
+            fontVariantNumeric: 'tabular-nums', marginTop: 2,
           }}>
             {fmtTemp(currentTemp)}
             <span style={{ fontSize: 18, fontWeight: 700, color: cMuted, marginLeft: 4 }}>°C</span>
@@ -505,13 +534,13 @@ export default function ClimatizzatoreCard({ cardId = 'climatizzatore' }) {
         <div style={{
           display: 'flex', gap: 8, marginBottom: 12, flexWrap: 'wrap',
         }}>
-          {config.showHumidity && humidity != null && (
+          {config.showHumidity && !hideSmall.has('humidity') && humidity != null && (
             <InfoChip
               dark={dark} icon={<Droplets size={11}/>}
               value={`${Math.round(humidity)}%`} label={t('chipHumidity')}
             />
           )}
-          {outdoorTemp != null && (
+          {!hideSmall.has('outdoor') && outdoorTemp != null && (
             <InfoChip
               dark={dark} icon={<Sun size={11}/>}
               value={`${fmtTemp(outdoorTemp, 0)}°`} label={t('chipOutdoor')}
@@ -553,7 +582,28 @@ export default function ClimatizzatoreCard({ cardId = 'climatizzatore' }) {
         </div>
       )}
 
-      {/* ── Mode picker ── */}
+      {/* ── Mode picker ──
+          In compatto cinque voci in fila non ci stanno: diventano un tasto
+          solo che dice la modalità corrente e apre l'elenco al tocco. Un
+          bersaglio grande invece di cinque piccoli, che è anche più facile da
+          centrare col pollice. */}
+      {compact ? (
+        <button
+          onClick={() => setModeSheet(true)}
+          style={{
+            display: 'flex', alignItems: 'center', gap: 10, width: '100%',
+            padding: '10px 12px', borderRadius: 12, cursor: 'pointer',
+            background: preset.bg, border: `1px solid ${accent}45`,
+            color: accent, textAlign: 'left',
+          }}
+        >
+          <preset.icon size={16} strokeWidth={2.2}/>
+          <span style={{ flex: 1, fontSize: 12, fontWeight: 800, letterSpacing: '.03em', textTransform: 'uppercase' }}>
+            {t(`mode.${preset.modeKey}`)}
+          </span>
+          <ChevronDown size={14} strokeWidth={2.5} style={{ opacity: .7 }}/>
+        </button>
+      ) : (
       <div style={{
         display: 'flex', gap: 4,
         padding: 3, borderRadius: 11,
@@ -589,9 +639,66 @@ export default function ClimatizzatoreCard({ cardId = 'climatizzatore' }) {
           )
         })}
       </div>
+      )}
+
+      {/* Elenco modalità, solo in compatto. Sta dentro la card (che è
+          position:relative) invece di un portale: così eredita tema e bordi e
+          non finisce sotto altre card quando la dashboard scorre. */}
+      <AnimatePresence>
+        {compact && modeSheet && (
+          <motion.div
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            onClick={() => setModeSheet(false)}
+            style={{
+              position: 'absolute', inset: 0, zIndex: 20,
+              background: dark ? 'rgba(0,0,0,.55)' : 'rgba(255,255,255,.75)',
+              backdropFilter: 'blur(3px)', borderRadius: 18,
+              display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 12,
+            }}
+          >
+            <motion.div
+              initial={{ scale: .94, y: 6 }} animate={{ scale: 1, y: 0 }} exit={{ scale: .96 }}
+              onClick={e => e.stopPropagation()}
+              style={{
+                width: '100%', maxHeight: '100%', overflowY: 'auto',
+                display: 'flex', flexDirection: 'column', gap: 4,
+                padding: 6, borderRadius: 14,
+                background: dark ? '#0f172a' : '#ffffff',
+                border: `1px solid ${border}`,
+                boxShadow: '0 18px 40px rgba(0,0,0,.35)',
+              }}
+            >
+              {hvacModes.filter(m => m !== 'off').map(m => {
+                const p = modeOf(m)
+                const active = hvacMode === m
+                const Icon = p.icon
+                return (
+                  <button
+                    key={m}
+                    onClick={() => { setHvacMode(m); setModeSheet(false) }}
+                    style={{
+                      display: 'flex', alignItems: 'center', gap: 10,
+                      padding: '10px 12px', borderRadius: 10, cursor: 'pointer',
+                      background: active ? p.bg : 'transparent',
+                      border: `1px solid ${active ? `${p.color}55` : 'transparent'}`,
+                      color: active ? p.color : cText, textAlign: 'left',
+                    }}
+                  >
+                    <Icon size={15} strokeWidth={active ? 2.4 : 2}/>
+                    <span style={{ flex: 1, fontSize: 12.5, fontWeight: 700 }}>
+                      {t(`mode.${p.modeKey}`)}
+                    </span>
+                    {active && <Check size={14} strokeWidth={3}/>}
+                  </button>
+                )
+              })}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* ── Fan modes (se disponibili e abilitati) ── */}
-      {config.showFan && fanModes && fanModes.length > 0 && !isOff && (
+      {config.showFan && !hideSmall.has('fan') && fanModes && fanModes.length > 0 && !isOff && (
         <div style={{
           display: 'flex', gap: 4, flexWrap: 'wrap', marginTop: 8,
         }}>
@@ -616,7 +723,7 @@ export default function ClimatizzatoreCard({ cardId = 'climatizzatore' }) {
       )}
 
       {/* ── Preset modes (eco, boost, sleep/notte… se disponibili e abilitati) ── */}
-      {config.showPreset && presetModes && presetModes.length > 0 && !isOff && (
+      {config.showPreset && !hideSmall.has('preset') && presetModes && presetModes.length > 0 && !isOff && (
         <div style={{ display: 'flex', gap: 4, flexWrap: 'wrap', marginTop: 8 }}>
           {presetModes.map(pm => {
             const PIcon = presetIcon(pm)

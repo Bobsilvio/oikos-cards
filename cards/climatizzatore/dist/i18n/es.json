@@ -49,7 +49,20 @@
     "labelPlaceholder": "ej. Salón",
     "timerPackage": "Temporizador de apagado (Home Assistant)",
     "timerPackageDesc": "Instala el paquete para que el temporizador de apagado funcione incluso con el panel cerrado.",
-    "showPreset": "Mostrar presets (eco, noche…)"
+    "showPreset": "Mostrar presets (eco, noche…)",
+    "sectionMobile": "En el móvil",
+    "mobileHint": "Solo se aplican cuando la tarjeta es estrecha. En pantalla ancha se queda todo.",
+    "compact": "Forma compacta",
+    "compactHint": "Automática por debajo de 340px de ancho de la tarjeta. Los modos pasan a un solo botón que abre la lista.",
+    "compactAuto": "Auto",
+    "compactAlways": "Siempre",
+    "compactNever": "Nunca",
+    "hide": {
+      "fan": "Ocultar ventilador",
+      "preset": "Ocultar preajustes",
+      "humidity": "Ocultar humedad",
+      "outdoor": "Ocultar temperatura exterior"
+    }
   },
   "preset": {
     "none": "Normal",

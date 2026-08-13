@@ -1,4 +1,4 @@
-const { jsxs: l, jsx: e } = window.__OIKOS_SDK__.jsxRuntime, p = `# oikos:package_id: oikos_climatizzatore_timer
+const { jsxs: r, jsx: e } = window.__OIKOS_SDK__.jsxRuntime, _ = `# oikos:package_id: oikos_climatizzatore_timer
 # oikos:package_version: 1.0.0
 
 timer:
@@ -28,7 +28,7 @@ automation:
       - service: climate.turn_off
         target:
           entity_id: "{{ target }}"
-`, { useCardConfig: y, EntityField: r, useT: f, Section: c, Field: o, SettingsRow: m, TextField: z, Toggle: d, ColorCircles: C, ACCENT_COLORS: b, Slider: w, usePackageInstaller: k, PackageSection: S } = window.__OIKOS_SDK__, v = {
+`, { useCardConfig: y, EntityField: c, useT: f, Section: m, Field: a, SettingsRow: d, TextField: C, Toggle: g, Pills: b, ColorCircles: z, ACCENT_COLORS: v, Slider: w, usePackageInstaller: S, PackageSection: E } = window.__OIKOS_SDK__, H = {
   entityId: "",
   indoorTempEntity: "",
   outdoorTempEntity: "",
@@ -40,91 +40,116 @@ automation:
   showPreset: !0,
   showHumidity: !0
 };
-function E({ cardId: g }) {
-  const [n, a] = y(g, v), { t } = f("card-climatizzatore"), s = (i, _) => a((u) => ({ ...u, [i]: _ })), h = k({ name: "oikos_climatizzatore_timer", yaml: p });
-  return /* @__PURE__ */ l("div", { style: { display: "flex", flexDirection: "column", gap: 14 }, children: [
+function x({ cardId: u }) {
+  const [n, s] = y(u, H), { t } = f("card-climatizzatore"), o = (i, h) => s((l) => ({ ...l, [i]: h })), p = S({ name: "oikos_climatizzatore_timer", yaml: _ });
+  return /* @__PURE__ */ r("div", { style: { display: "flex", flexDirection: "column", gap: 14 }, children: [
     /* @__PURE__ */ e(
-      S,
+      E,
       {
-        pkg: h,
+        pkg: p,
         label: t("settings.timerPackage"),
         description: t("settings.timerPackageDesc")
       }
     ),
-    /* @__PURE__ */ l(c, { title: t("settings.sectionEntity"), children: [
-      /* @__PURE__ */ e(o, { label: t("settings.climateEntity"), hint: t("settings.climateHint"), children: /* @__PURE__ */ e(
-        r,
+    /* @__PURE__ */ r(m, { title: t("settings.sectionEntity"), children: [
+      /* @__PURE__ */ e(a, { label: t("settings.climateEntity"), hint: t("settings.climateHint"), children: /* @__PURE__ */ e(
+        c,
         {
           field: "entityId",
           config: n,
-          setConfig: a,
+          setConfig: s,
           filterDomain: "climate"
         }
       ) }),
-      /* @__PURE__ */ e(o, { label: t("settings.indoorSensor"), hint: t("settings.indoorHint"), children: /* @__PURE__ */ e(
-        r,
+      /* @__PURE__ */ e(a, { label: t("settings.indoorSensor"), hint: t("settings.indoorHint"), children: /* @__PURE__ */ e(
+        c,
         {
           field: "indoorTempEntity",
           config: n,
-          setConfig: a,
+          setConfig: s,
           filterDomain: "sensor"
         }
       ) }),
-      /* @__PURE__ */ e(o, { label: t("settings.outdoorSensor"), hint: t("settings.outdoorHint"), children: /* @__PURE__ */ e(
-        r,
+      /* @__PURE__ */ e(a, { label: t("settings.outdoorSensor"), hint: t("settings.outdoorHint"), children: /* @__PURE__ */ e(
+        c,
         {
           field: "outdoorTempEntity",
           config: n,
-          setConfig: a,
+          setConfig: s,
           filterDomain: "sensor"
         }
       ) }),
-      /* @__PURE__ */ e(o, { label: t("settings.humiditySensor"), hint: t("settings.humidityHint"), children: /* @__PURE__ */ e(
-        r,
+      /* @__PURE__ */ e(a, { label: t("settings.humiditySensor"), hint: t("settings.humidityHint"), children: /* @__PURE__ */ e(
+        c,
         {
           field: "humidityEntity",
           config: n,
-          setConfig: a,
+          setConfig: s,
           filterDomain: "sensor"
         }
       ) })
     ] }),
-    /* @__PURE__ */ l(c, { title: t("settings.sectionAppearance"), children: [
-      /* @__PURE__ */ e(o, { label: t("settings.label"), hint: t("settings.labelHint"), children: /* @__PURE__ */ e(
-        z,
+    /* @__PURE__ */ r(m, { title: t("settings.sectionAppearance"), children: [
+      /* @__PURE__ */ e(a, { label: t("settings.label"), hint: t("settings.labelHint"), children: /* @__PURE__ */ e(
+        C,
         {
           value: n.label,
-          onChange: (i) => s("label", i),
+          onChange: (i) => o("label", i),
           placeholder: t("settings.labelPlaceholder")
         }
       ) }),
-      /* @__PURE__ */ e(o, { label: t("settings.accentColor"), hint: t("settings.accentHint"), children: /* @__PURE__ */ e(
-        C,
+      /* @__PURE__ */ e(a, { label: t("settings.accentColor"), hint: t("settings.accentHint"), children: /* @__PURE__ */ e(
+        z,
         {
           value: n.accentColor,
-          onChange: (i) => s("accentColor", i),
-          colors: ["", ...b]
+          onChange: (i) => o("accentColor", i),
+          colors: ["", ...v]
         }
       ) })
     ] }),
-    /* @__PURE__ */ l(c, { title: t("settings.sectionCommands"), children: [
-      /* @__PURE__ */ e(o, { label: t("settings.tempStep"), hint: t("settings.tempStepHint"), children: /* @__PURE__ */ e(
+    /* @__PURE__ */ r(m, { title: t("settings.sectionCommands"), children: [
+      /* @__PURE__ */ e(a, { label: t("settings.tempStep"), hint: t("settings.tempStepHint"), children: /* @__PURE__ */ e(
         w,
         {
           value: n.step,
-          onChange: (i) => s("step", i),
+          onChange: (i) => o("step", i),
           min: 0.1,
           max: 2,
           step: 0.1,
           format: (i) => `${i.toFixed(1)}°`
         }
       ) }),
-      /* @__PURE__ */ e(m, { label: t("settings.showFan"), children: /* @__PURE__ */ e(d, { value: n.showFan, onChange: (i) => s("showFan", i) }) }),
-      /* @__PURE__ */ e(m, { label: t("settings.showPreset"), children: /* @__PURE__ */ e(d, { value: n.showPreset !== !1, onChange: (i) => s("showPreset", i) }) }),
-      /* @__PURE__ */ e(m, { label: t("settings.showHumidity"), children: /* @__PURE__ */ e(d, { value: n.showHumidity, onChange: (i) => s("showHumidity", i) }) })
+      /* @__PURE__ */ e(d, { label: t("settings.showFan"), children: /* @__PURE__ */ e(g, { value: n.showFan, onChange: (i) => o("showFan", i) }) }),
+      /* @__PURE__ */ e(d, { label: t("settings.showPreset"), children: /* @__PURE__ */ e(g, { value: n.showPreset !== !1, onChange: (i) => o("showPreset", i) }) }),
+      /* @__PURE__ */ e(d, { label: t("settings.showHumidity"), children: /* @__PURE__ */ e(g, { value: n.showHumidity, onChange: (i) => o("showHumidity", i) }) })
+    ] }),
+    /* @__PURE__ */ r(m, { title: t("settings.sectionMobile"), hint: t("settings.mobileHint"), children: [
+      /* @__PURE__ */ e(a, { label: t("settings.compact"), hint: t("settings.compactHint"), children: /* @__PURE__ */ e(
+        b,
+        {
+          value: n.compact || "auto",
+          onChange: (i) => o("compact", i),
+          options: [
+            { value: "auto", label: t("settings.compactAuto") },
+            { value: "always", label: t("settings.compactAlways") },
+            { value: "never", label: t("settings.compactNever") }
+          ]
+        }
+      ) }),
+      k.map((i) => /* @__PURE__ */ e(d, { label: t(`settings.hide.${i}`), children: /* @__PURE__ */ e(
+        g,
+        {
+          value: (n.hideOnSmall || []).includes(i),
+          onChange: (h) => {
+            const l = new Set(n.hideOnSmall || []);
+            h ? l.add(i) : l.delete(i), o("hideOnSmall", [...l]);
+          }
+        }
+      ) }, i))
     ] })
   ] });
 }
+const k = ["fan", "preset", "humidity", "outdoor"];
 export {
-  E as default
+  x as default
 };

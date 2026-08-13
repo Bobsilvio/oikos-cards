@@ -49,7 +49,20 @@
     "labelPlaceholder": "Es. Soggiorno",
     "timerPackage": "Timer spegnimento (Home Assistant)",
     "timerPackageDesc": "Installa il package per far funzionare il timer di spegnimento anche col pannello chiuso.",
-    "showPreset": "Mostra preset (eco, notte…)"
+    "showPreset": "Mostra preset (eco, notte…)",
+    "sectionMobile": "Su telefono",
+    "mobileHint": "Valgono solo quando la card è stretta. Su schermo largo resta tutto.",
+    "compact": "Forma compatta",
+    "compactHint": "Automatica sotto i 340px di larghezza della card. Le modalità diventano un solo tasto che apre l'elenco.",
+    "compactAuto": "Auto",
+    "compactAlways": "Sempre",
+    "compactNever": "Mai",
+    "hide": {
+      "fan": "Nascondi ventola",
+      "preset": "Nascondi preset",
+      "humidity": "Nascondi umidità",
+      "outdoor": "Nascondi temperatura esterna"
+    }
   },
   "preset": {
     "none": "Normale",
