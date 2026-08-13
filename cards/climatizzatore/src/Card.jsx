@@ -109,6 +109,15 @@ export default function ClimatizzatoreCard({ cardId = 'climatizzatore' }) {
     return () => ro.disconnect()
   }, [])
 
+  // Esc chiude l'elenco modalità. Con la tastiera è l'unico gesto che ci si
+  // aspetta, e su tablet con tastiera esterna è il più rapido.
+  useEffect(() => {
+    if (!modeSheet) return
+    const onKey = (e) => { if (e.key === 'Escape') setModeSheet(false) }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [modeSheet])
+
   const compact = config.compact === 'always'
     || (config.compact !== 'never' && width > 0 && width < COMPACT_W)
   const hideSmall = new Set(compact ? (config.hideOnSmall || []) : [])
@@ -668,6 +677,35 @@ export default function ClimatizzatoreCard({ cardId = 'climatizzatore' }) {
                 boxShadow: '0 18px 40px rgba(0,0,0,.35)',
               }}
             >
+              {/* Riga di testa con la X.
+                  Senza, l'unico modo di uscire era toccare fuori dal pannello —
+                  ma il pannello riempie quasi tutta la card e di "fuori" ne
+                  resta una cornice di pochi pixel. Chi non voleva cambiare
+                  modalità restava bloccato. */}
+              <div style={{
+                display: 'flex', alignItems: 'center', gap: 8,
+                padding: '4px 4px 6px',
+              }}>
+                <span style={{
+                  flex: 1, fontSize: 10, fontWeight: 800, letterSpacing: '.08em',
+                  textTransform: 'uppercase', color: cMuted,
+                }}>
+                  {t('modeTitle')}
+                </span>
+                <button
+                  onClick={() => setModeSheet(false)}
+                  aria-label={t('close')}
+                  style={{
+                    width: 26, height: 26, borderRadius: 8, flexShrink: 0, cursor: 'pointer',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    background: dark ? 'rgba(255,255,255,.06)' : '#f1f5f9',
+                    border: `1px solid ${border}`, color: cText,
+                  }}
+                >
+                  <X size={13} strokeWidth={2.5}/>
+                </button>
+              </div>
+
               {hvacModes.filter(m => m !== 'off').map(m => {
                 const p = modeOf(m)
                 const active = hvacMode === m

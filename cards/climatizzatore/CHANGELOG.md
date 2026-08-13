@@ -2,6 +2,13 @@
 
 Tutte le modifiche rilevanti di questa card.
 
+## [1.1.1] - 2026-08-13
+### Fixed
+- **Dall'elenco delle modalità non si usciva** senza sceglierne una. L'unico
+  modo era toccare fuori dal pannello, ma il pannello riempie quasi tutta la
+  card e di «fuori» resta una cornice di pochi pixel. Ora c'è la X in alto, e
+  Esc chiude con la tastiera.
+
 ## [1.1.0] - 2026-08-12
 ### Added
 - **Forma compatta per il telefono.** In una colonna stretta le cinque modalità

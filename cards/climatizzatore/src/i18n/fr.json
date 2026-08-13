@@ -74,5 +74,7 @@
     "home": "Maison",
     "activity": "Activité"
   },
-  "chipPreset": "Préréglage"
+  "chipPreset": "Préréglage",
+  "modeTitle": "Mode",
+  "close": "Fermer"
 }
