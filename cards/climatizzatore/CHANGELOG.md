@@ -2,6 +2,13 @@
 
 Tutte le modifiche rilevanti di questa card.
 
+## [1.1.4] - 2026-08-13
+
+### Changed
+- Su telefono la temperatura attuale sta nell'intestazione, tra lo stato e i
+  comandi: la riga che occupava sotto era tutto lo spazio disponibile.
+- La riga sotto l'intestazione non viene disegnata se non ha nulla da mostrare.
+
 ## [1.1.3] - 2026-08-13
 ### Changed
 - **Compatto anche in funzione.** Acceso, ventola e preset erano due file di

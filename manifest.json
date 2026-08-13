@@ -46,7 +46,7 @@
       "id": "climatizzatore",
       "type": "card",
       "name": "Climatizzatore",
-      "version": "1.1.3",
+      "version": "1.1.4",
       "author": "Oikos",
       "description": "Controllo completo climatizzatore HA: power, modalità (cool/heat/auto/dry/fan), target ±, fan speed, temperatura corrente e umidità. Icona animata e tema colore dinamico per modalità attiva.",
       "description_en": "Full HA air conditioner control: power, modes (cool/heat/auto/dry/fan), target ±, fan speed, current temperature and humidity. Animated icon and dynamic color theme for active mode.",
@@ -73,6 +73,14 @@
       "package": null,
       "tier": "free",
       "changelog": [
+        {
+          "version": "1.1.4",
+          "date": "2026-08-13",
+          "changes": [
+            "Su telefono la temperatura attuale sta nell'intestazione, tra lo stato e i",
+            "La riga sotto l'intestazione non viene disegnata se non ha nulla da mostrare."
+          ]
+        },
         {
           "version": "1.1.3",
           "date": "2026-08-13",

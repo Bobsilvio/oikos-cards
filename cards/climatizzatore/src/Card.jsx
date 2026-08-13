@@ -315,7 +315,10 @@ export default function ClimatizzatoreCard({ cardId = 'climatizzatore' }) {
       )}
 
       {/* ── Header ── */}
-      <div style={{ position: 'relative', display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14 }}>
+      <div style={{
+        position: 'relative', display: 'flex', alignItems: 'center',
+        gap: compact ? 8 : 10, marginBottom: compact ? 10 : 14,
+      }}>
         <motion.div
           animate={!isOff && hvacMode === 'cool' ? { rotate: [0, 360] }
                 : !isOff && hvacMode === 'fan_only' ? { rotate: [0, 360] }
@@ -350,6 +353,21 @@ export default function ClimatizzatoreCard({ cardId = 'climatizzatore' }) {
             {t(`mode.${preset.modeKey}`)}
           </div>
         </div>
+
+        {/* Compatto: la temperatura attuale sale qui, tra lo stato e i comandi.
+            Sotto si teneva una riga intera per un numero solo, e su telefono
+            quella riga è tutto lo spazio che c'è. */}
+        {compact && (
+          <div style={{
+            display: 'flex', alignItems: 'baseline', gap: 2, flexShrink: 0,
+            fontVariantNumeric: 'tabular-nums', marginRight: 2,
+          }}>
+            <span style={{ fontSize: 22, fontWeight: 900, color: cText, letterSpacing: '-.5px' }}>
+              {fmtTemp(currentTemp)}
+            </span>
+            <span style={{ fontSize: 11, fontWeight: 700, color: cMuted }}>°C</span>
+          </div>
+        )}
 
         {/* Timer spegnimento */}
         {!isOff && (
@@ -467,27 +485,36 @@ export default function ClimatizzatoreCard({ cardId = 'climatizzatore' }) {
         )}
       </AnimatePresence>
 
-      {/* ── Temperatura corrente ── */}
+      {/* ── Temperatura corrente ──
+          In compatto la temperatura attuale è salita nell'intestazione: qui
+          restano i mini-dati e il termostato, e senza né l'uno né l'altro la
+          riga non va disegnata affatto — sarebbe uno spazio vuoto. */}
+      {(!compact
+        || (targetTemp != null && !isOff)
+        || (config.showHumidity && !hideSmall.has('humidity') && humidity != null)
+        || (!hideSmall.has('outdoor') && outdoorTemp != null)
+        || (config.showFan && !hideSmall.has('fan') && fanMode)) && (
       <div style={{
         position: 'relative',
         display: 'flex', alignItems: 'flex-end', gap: compact ? 10 : 18,
         marginBottom: compact ? 10 : 14,
       }}>
-        <div>
-          {!compact && (
+        {/* In compatto sta nell'intestazione (vedi sopra) */}
+        {!compact && (
+          <div>
             <div style={{ fontSize: 9, fontWeight: 800, color: cMuted, letterSpacing: '.08em', textTransform: 'uppercase' }}>
               {t('tempCurrent')}
             </div>
-          )}
-          <div style={{
-            fontSize: compact ? 30 : 44, fontWeight: 900, color: cText,
-            letterSpacing: compact ? '-1px' : '-2px', lineHeight: 1,
-            fontVariantNumeric: 'tabular-nums', marginTop: 2,
-          }}>
-            {fmtTemp(currentTemp)}
-            <span style={{ fontSize: 18, fontWeight: 700, color: cMuted, marginLeft: 4 }}>°C</span>
+            <div style={{
+              fontSize: 44, fontWeight: 900, color: cText,
+              letterSpacing: '-2px', lineHeight: 1,
+              fontVariantNumeric: 'tabular-nums', marginTop: 2,
+            }}>
+              {fmtTemp(currentTemp)}
+              <span style={{ fontSize: 18, fontWeight: 700, color: cMuted, marginLeft: 4 }}>°C</span>
+            </div>
           </div>
-        </div>
+        )}
 
         {/* Compatto: umidità, esterna e ventola in coda alla stessa riga.
             Solo icona e numero — l'etichetta ripete quello che l'icona già
@@ -562,6 +589,7 @@ export default function ClimatizzatoreCard({ cardId = 'climatizzatore' }) {
           </div>
         )}
       </div>
+      )}
 
       {/* ── Info row: umidità + outdoor + fan + preset ──
           In compatto questi dati salgono nella riga della temperatura: qui
