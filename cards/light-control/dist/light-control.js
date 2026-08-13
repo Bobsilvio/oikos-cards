@@ -1,4 +1,4 @@
-const { jsxs: u, jsx: o, Fragment: X } = window.__OIKOS_SDK__.jsxRuntime, Ot = {
+const { jsxs: u, jsx: r, Fragment: Z } = window.__OIKOS_SDK__.jsxRuntime, Kt = {
   toggle: "Accendi/Spegni",
   turnOn: "Accendi",
   turnOff: "Spegni",
@@ -32,9 +32,9 @@ const { jsxs: u, jsx: o, Fragment: X } = window.__OIKOS_SDK__.jsxRuntime, Ot = {
     colorTempLabel: "Temperatura (K)",
     colorTempHint: "Gradiente caldo→freddo per luci color_temp"
   }
-}, Bt = {
-  lightControl: Ot
-}, At = {
+}, Wt = {
+  lightControl: Kt
+}, zt = {
   toggle: "Toggle",
   turnOn: "Turn on",
   turnOff: "Turn off",
@@ -68,11 +68,11 @@ const { jsxs: u, jsx: o, Fragment: X } = window.__OIKOS_SDK__.jsxRuntime, Ot = {
     colorTempLabel: "Temperature (K)",
     colorTempHint: "Warm→cool gradient for color_temp lights"
   }
-}, Kt = {
-  lightControl: At
-}, { useState: Q, useEffect: ut, useRef: Z } = window.__OIKOS_SDK__.React, { motion: Wt } = window.__OIKOS_SDK__.framerMotion, { useCardConfig: zt, useDashboard: Nt, useStyles: Ut, MdiIcon: G, registerCardTranslations: jt, useT: Ft } = window.__OIKOS_SDK__;
-jt("card-light-control", { it: Bt, en: Kt });
-const Gt = {
+}, Nt = {
+  lightControl: zt
+}, { useState: J, useEffect: tt, useRef: z } = window.__OIKOS_SDK__.React, { motion: Ft } = window.__OIKOS_SDK__.framerMotion, { useCardConfig: Ut, useDashboard: jt, useStyles: Gt, MdiIcon: Y, registerCardTranslations: Vt, useT: Yt } = window.__OIKOS_SDK__;
+Vt("card-light-control", { it: Wt, en: Nt });
+const Xt = {
   entityId: "",
   label: "",
   icon: "mdi:lightbulb",
@@ -80,77 +80,77 @@ const Gt = {
   enableBrightness: !0,
   enableColor: !0,
   enableColorTemp: !0
-}, ft = "linear-gradient(90deg, #ff8d3a 0%, #ffc488 22%, #fff4d8 50%, #cfe3ff 78%, #87b6ff 100%)";
-function kt(s) {
+}, gt = "linear-gradient(90deg, #ff8d3a 0%, #ffc488 22%, #fff4d8 50%, #cfe3ff 78%, #87b6ff 100%)";
+function St(s) {
   const n = s / 100;
   let t, d, f;
   return n <= 66 ? (t = 255, d = 99.4708 * Math.log(n) - 161.1196, f = n <= 19 ? 0 : 138.5177 * Math.log(n - 10) - 305.0448) : (t = 329.6987 * Math.pow(n - 60, -0.1332), d = 288.1222 * Math.pow(n - 60, -0.0755), f = 255), [t, d, f].map((c) => Math.max(0, Math.min(255, Math.round(c))));
 }
-const Vt = ["brightness", "color_temp", "hs", "rgb", "rgbw", "rgbww", "xy", "white"], Yt = ["hs", "rgb", "rgbw", "rgbww", "xy"], w = 240, y = w / 2, M = 14, Ct = 12, ht = 102, Xt = 78, q = 96, V = ([s, n, t]) => `rgb(${s}, ${n}, ${t})`;
-function It(s, n) {
+const qt = ["brightness", "color_temp", "hs", "rgb", "rgbw", "rgbww", "xy", "white"], Qt = ["hs", "rgb", "rgbw", "rgbww", "xy"], w = 240, y = w / 2, T = 14, _t = 12, pt = 102, Zt = 78, et = 96, X = ([s, n, t]) => `rgb(${s}, ${n}, ${t})`;
+function Mt(s, n) {
   const t = (s - 90) * Math.PI / 180;
   return [y + n * Math.cos(t), y + n * Math.sin(t)];
 }
-function Qt(s, n) {
+function Jt(s, n) {
   let t = Math.atan2(n - y, s - y) * 180 / Math.PI + 90;
   return t < 0 && (t += 360), t % 360;
 }
-function gt([s, n, t]) {
+function bt([s, n, t]) {
   s /= 255, n /= 255, t /= 255;
   const d = Math.max(s, n, t), f = Math.min(s, n, t), c = d - f;
   if (c === 0) return 0;
-  let b;
-  return d === s ? b = (n - t) / c % 6 : d === n ? b = (t - s) / c + 2 : b = (s - n) / c + 4, b *= 60, b < 0 && (b += 360), b;
+  let p;
+  return d === s ? p = (n - t) / c % 6 : d === n ? p = (t - s) / c + 2 : p = (s - n) / c + 4, p *= 60, p < 0 && (p += 360), p;
 }
-function St(s) {
+function Pt(s) {
   s = (s % 360 + 360) % 360;
   const n = 1, t = 1 - Math.abs(s / 60 % 2 - 1);
   let d, f, c;
   return s < 60 ? [d, f, c] = [n, t, 0] : s < 120 ? [d, f, c] = [t, n, 0] : s < 180 ? [d, f, c] = [0, n, t] : s < 240 ? [d, f, c] = [0, t, n] : s < 300 ? [d, f, c] = [t, 0, n] : [d, f, c] = [n, 0, t], [Math.round(d * 255), Math.round(f * 255), Math.round(c * 255)];
 }
-function J({
+function nt({
   innerRef: s,
   disabled: n,
   background: t,
   thumbPct: d,
   thumbFill: f,
   thumbStroke: c,
-  onPointerDown: b,
+  onPointerDown: p,
   onPointerMove: i,
-  onPointerUp: C,
-  isOn: L,
-  accent: P,
-  desaturate: I
+  onPointerUp: I,
+  isOn: O,
+  accent: R,
+  desaturate: S
 }) {
-  const T = Math.max(0, Math.min(1, d));
-  return /* @__PURE__ */ o(
+  const $ = Math.max(0, Math.min(1, d));
+  return /* @__PURE__ */ r(
     "div",
     {
       ref: s,
-      onPointerDown: b,
+      onPointerDown: p,
       onPointerMove: i,
-      onPointerUp: C,
-      onPointerCancel: C,
+      onPointerUp: I,
+      onPointerCancel: I,
       style: {
         position: "relative",
         height: 44,
         borderRadius: 44 / 2,
         background: t,
-        opacity: L ? 1 : 0.45,
-        filter: I && !L ? "saturate(.35)" : "none",
+        opacity: O ? 1 : 0.45,
+        filter: S && !O ? "saturate(.35)" : "none",
         cursor: n ? "not-allowed" : "grab",
         touchAction: "none",
         userSelect: "none",
-        boxShadow: L && P ? `0 4px 14px ${P}22, inset 0 1px 0 rgba(255,255,255,.18)` : "inset 0 1px 0 rgba(255,255,255,.08)",
+        boxShadow: O && R ? `0 4px 14px ${R}22, inset 0 1px 0 rgba(255,255,255,.18)` : "inset 0 1px 0 rgba(255,255,255,.08)",
         transition: "opacity .2s, filter .2s, box-shadow .25s"
       },
-      children: /* @__PURE__ */ o(
+      children: /* @__PURE__ */ r(
         "div",
         {
           style: {
             position: "absolute",
             top: 7,
-            left: `calc(7px + ${T} * (100% - 44px))`,
+            left: `calc(7px + ${$} * (100% - 44px))`,
             width: 30,
             height: 30,
             borderRadius: "50%",
@@ -165,91 +165,106 @@ function J({
     }
   );
 }
-function qt({ cardId: s = "light-control" }) {
-  const { t: n } = Ft("card-light-control"), t = Ut(), { dark: d, getState: f, getAttr: c, callService: b } = Nt(), [i] = zt(s, Gt), [C, L] = Q(!1), [P, I] = Q(null), [K, D] = Q(null), [W, T] = Q(null), g = Z(null), z = Z(null), tt = Z(null), S = Z({ brightness: null, color: null }), pt = i.entityId ? c(i.entityId, "brightness") : void 0;
-  ut(() => {
-    g.current !== "brightness" && I(null);
-  }, [pt]);
-  const bt = i.entityId ? f(i.entityId) : void 0;
-  ut(() => {
-    bt !== "on" && (g.current = null, z.current = null, I(null), D(null), T(null));
-  }, [bt]);
-  const _t = i.entityId ? c(i.entityId, "color_temp_kelvin") : void 0;
-  if (ut(() => {
-    g.current !== "colortemp" && T(null);
-  }, [_t]), !i.entityId)
+function ee({ cardId: s = "light-control" }) {
+  const { t: n } = Yt("card-light-control"), t = Gt(), { dark: d, getState: f, getAttr: c, callService: p } = jt(), [i] = Ut(s, Xt), [I, O] = J(!1), [R, S] = J(null), [N, A] = J(null), [F, $] = J(null), b = z(null), U = z(null), _ = z(0), q = z(null), mt = (l) => {
+    q.current = l, !_.current && (_.current = requestAnimationFrame(() => {
+      _.current = 0;
+      const o = q.current;
+      q.current = null, o == null || o();
+    }));
+  };
+  tt(() => () => {
+    _.current && cancelAnimationFrame(_.current);
+  }, []);
+  const ot = z(null), M = z({ brightness: null, color: null }), yt = i.entityId ? c(i.entityId, "brightness") : void 0;
+  tt(() => {
+    b.current !== "brightness" && S(null);
+  }, [yt]);
+  const xt = i.entityId ? f(i.entityId) : void 0;
+  tt(() => {
+    xt !== "on" && (b.current = null, U.current = null, S(null), A(null), $(null));
+  }, [xt]);
+  const Tt = i.entityId ? c(i.entityId, "color_temp_kelvin") : void 0;
+  if (tt(() => {
+    b.current !== "colortemp" && $(null);
+  }, [Tt]), !i.entityId)
     return /* @__PURE__ */ u("div", { style: { ...t.card, color: t.tokens.color.muted, fontSize: 12, fontStyle: "italic" }, children: [
       n("lightControl.emptyStatePrefix"),
       " ",
-      /* @__PURE__ */ o("code", { children: "light.*" }),
+      /* @__PURE__ */ r("code", { children: "light.*" }),
       " ",
       n("lightControl.emptyStateSuffix")
     ] });
-  const O = f(i.entityId), e = O === "on", Mt = c(i.entityId, "friendly_name"), et = i.label || Mt || i.entityId, Y = i.entityId.split(".")[0], nt = c(i.entityId, "supported_color_modes") || [], Pt = c(i.entityId, "rgb_color"), Tt = Y === "light" && nt.some((l) => Vt.includes(l)), Rt = Y === "light" && nt.some((l) => Yt.includes(l)), $t = Y === "light" && nt.includes("color_temp"), p = i.enableBrightness && Tt, R = i.enableColor && Rt, ot = i.enableColorTemp && $t, N = c(i.entityId, "min_color_temp_kelvin") || 2e3, rt = c(i.entityId, "max_color_temp_kelvin") || 6500;
-  let it = c(i.entityId, "color_temp_kelvin");
-  if (it == null) {
+  const B = f(i.entityId), e = B === "on", Rt = c(i.entityId, "friendly_name"), rt = i.label || Rt || i.entityId, Q = i.entityId.split(".")[0], it = c(i.entityId, "supported_color_modes") || [], $t = c(i.entityId, "rgb_color"), Et = Q === "light" && it.some((l) => qt.includes(l)), Ht = Q === "light" && it.some((l) => Qt.includes(l)), Dt = Q === "light" && it.includes("color_temp"), g = i.enableBrightness && Et, E = i.enableColor && Ht, lt = i.enableColorTemp && Dt, j = c(i.entityId, "min_color_temp_kelvin") || 2e3, st = c(i.entityId, "max_color_temp_kelvin") || 6500;
+  let at = c(i.entityId, "color_temp_kelvin");
+  if (at == null) {
     const l = c(i.entityId, "color_temp");
-    l && (it = Math.round(1e6 / l));
+    l && (at = Math.round(1e6 / l));
   }
-  const B = g.current === "colortemp" && W != null ? W : it ?? Math.round((N + rt) / 2), lt = Math.max(0, Math.min(1, (B - N) / (rt - N || 1))), U = ht, A = p && R ? Xt : ht, $ = g.current === "brightness" && P != null ? P : Math.round((pt ?? (e ? 255 : 0)) / 255 * 100), x = g.current === "color" && K ? K : Pt, a = e ? x ? V(x) : t.tokens.color.amber : t.tokens.color.muted, Et = d ? "rgba(255,255,255,.08)" : "rgba(0,0,0,.08)", st = 2 * Math.PI * U, Ht = $ / 100 * 360, mt = It(Ht, U), Lt = x ? gt(x) : 0, yt = It(Lt, A), at = () => {
-    if (C || O === "unavailable") return;
-    L(!0);
+  const K = b.current === "colortemp" && F != null ? F : at ?? Math.round((j + st) / 2), ct = Math.max(0, Math.min(1, (K - j) / (st - j || 1))), G = pt, W = g && E ? Zt : pt, H = b.current === "brightness" && R != null ? R : Math.round((yt ?? (e ? 255 : 0)) / 255 * 100), x = b.current === "color" && N ? N : $t, a = e ? x ? X(x) : t.tokens.color.amber : t.tokens.color.muted, Lt = d ? "rgba(255,255,255,.08)" : "rgba(0,0,0,.08)", dt = 2 * Math.PI * G, Ot = H / 100 * 360, vt = Mt(Ot, G), At = x ? bt(x) : 0, wt = Mt(At, W), ut = () => {
+    if (I || B === "unavailable") return;
+    O(!0);
     const l = e ? "turn_off" : "turn_on";
-    Promise.resolve(b(Y, l, i.entityId)).catch((r) => console.error("[LightControl]", r)).finally(() => setTimeout(() => L(!1), 250));
-  }, Dt = (l) => {
-    const r = tt.current.getBoundingClientRect(), h = (l.clientX - r.left) / r.width * w, v = (l.clientY - r.top) / r.height * w;
-    return Qt(h, v);
-  }, ct = (l) => {
-    if (!g.current || !tt.current) return;
-    const r = Dt(l);
-    if (g.current === "brightness") {
-      const h = Math.max(1, Math.min(100, Math.round(r / 360 * 100)));
-      I(h);
-    } else
-      D(St(r));
-  }, xt = (l) => (r) => {
+    Promise.resolve(p(Q, l, i.entityId)).catch((o) => console.error("[LightControl]", o)).finally(() => setTimeout(() => O(!1), 250));
+  }, Bt = (l) => {
+    const o = ot.current.getBoundingClientRect(), h = (l.clientX - o.left) / o.width * w, v = (l.clientY - o.top) / o.height * w;
+    return Jt(h, v);
+  }, ft = (l) => {
+    if (!b.current || !ot.current) return;
+    const o = Bt(l), h = b.current;
+    mt(() => {
+      if (h === "brightness") {
+        const v = Math.max(1, Math.min(100, Math.round(o / 360 * 100)));
+        S(v);
+      } else
+        A(Pt(o));
+    });
+  }, kt = (l) => (o) => {
     if (e) {
-      r.preventDefault();
+      o.preventDefault();
       try {
-        r.currentTarget.setPointerCapture(r.pointerId);
+        o.currentTarget.setPointerCapture(o.pointerId);
       } catch {
       }
-      g.current = l, z.current = r.pointerId, ct(r);
+      b.current = l, U.current = o.pointerId, ft(o);
     }
   }, m = (l) => {
-    var v, j, F;
-    const r = g.current, h = z.current;
+    var v, k, V;
+    const o = b.current, h = U.current;
     if (!(l && h != null && l.pointerId !== h)) {
-      if (g.current = null, z.current = null, !e) {
-        I(null), D(null), T(null);
+      if (b.current = null, U.current = null, _.current && (cancelAnimationFrame(_.current), _.current = 0), q.current = null, !e) {
+        S(null), A(null), $(null);
         return;
       }
-      if (r === "brightness" && P != null) {
-        const H = Math.max(1, Math.round(P / 100 * 255));
-        (v = b("light", "turn_on", i.entityId, { brightness: H })) == null || v.catch((dt) => console.error("[LightControl]", dt)), setTimeout(() => I(null), 600);
-      } else r === "color" && K ? ((j = b("light", "turn_on", i.entityId, { rgb_color: K })) == null || j.catch((H) => console.error("[LightControl]", H)), setTimeout(() => D(null), 600)) : r === "colortemp" && W != null && ((F = b("light", "turn_on", i.entityId, { color_temp_kelvin: W })) == null || F.catch((H) => console.error("[LightControl]", H)), setTimeout(() => T(null), 600));
+      if (o === "brightness" && R != null) {
+        const L = Math.max(1, Math.round(R / 100 * 255));
+        (v = p("light", "turn_on", i.entityId, { brightness: L })) == null || v.catch((ht) => console.error("[LightControl]", ht)), setTimeout(() => S(null), 600);
+      } else o === "color" && N ? ((k = p("light", "turn_on", i.entityId, { rgb_color: N })) == null || k.catch((L) => console.error("[LightControl]", L)), setTimeout(() => A(null), 600)) : o === "colortemp" && F != null && ((V = p("light", "turn_on", i.entityId, { color_temp_kelvin: F })) == null || V.catch((L) => console.error("[LightControl]", L)), setTimeout(() => $(null), 600));
     }
-  }, vt = `radial-gradient(circle, transparent ${A - M / 2}px, #000 ${A - M / 2 + 1}px, #000 ${A + M / 2}px, transparent ${A + M / 2 + 1}px)`, _ = (l) => {
-    if (!g.current) return;
-    const r = S.current[g.current];
-    if (!r) return;
-    const h = r.getBoundingClientRect(), v = Math.max(0, Math.min(1, (l.clientX - h.left) / h.width));
-    g.current === "brightness" ? I(Math.max(1, Math.round(v * 100))) : g.current === "colortemp" ? T(Math.round(N + v * (rt - N))) : D(St(v * 360));
-  }, E = (l) => (r) => {
+  }, Ct = `radial-gradient(circle, transparent ${W - T / 2}px, #000 ${W - T / 2 + 1}px, #000 ${W + T / 2}px, transparent ${W + T / 2 + 1}px)`, P = (l) => {
+    const o = b.current;
+    if (!o) return;
+    const h = M.current[o];
+    if (!h) return;
+    const v = h.getBoundingClientRect(), k = Math.max(0, Math.min(1, (l.clientX - v.left) / v.width));
+    mt(() => {
+      o === "brightness" ? S(Math.max(1, Math.round(k * 100))) : o === "colortemp" ? $(Math.round(j + k * (st - j))) : A(Pt(k * 360));
+    });
+  }, D = (l) => (o) => {
     if (e) {
-      r.preventDefault();
+      o.preventDefault();
       try {
-        r.currentTarget.setPointerCapture(r.pointerId);
+        o.currentTarget.setPointerCapture(o.pointerId);
       } catch {
       }
-      g.current = l, z.current = r.pointerId, _(r);
+      b.current = l, U.current = o.pointerId, P(o);
     }
   };
   if (i.layout === "filled") {
-    const l = x ? gt(x) / 360 : 0, r = $ / 100, h = p ? r : e ? 1 : 0, [v, j, F] = x || [245, 158, 11], H = 28, dt = 64, wt = 30;
+    const l = x ? bt(x) / 360 : 0, o = H / 100, h = g ? o : e ? 1 : 0, [v, k, V] = x || [245, 158, 11], L = 28, ht = 64, It = 30;
     return /* @__PURE__ */ u("div", { style: {
       position: "relative",
-      borderRadius: H,
+      borderRadius: L,
       background: d ? "#1c2230" : "#e5e7eb",
       overflow: "hidden",
       opacity: e ? 1 : 0.6,
@@ -260,34 +275,34 @@ function qt({ cardId: s = "light-control" }) {
       /* @__PURE__ */ u(
         "div",
         {
-          ref: (k) => {
-            S.current.brightness = k;
+          ref: (C) => {
+            M.current.brightness = C;
           },
-          onPointerDown: p ? E("brightness") : void 0,
-          onPointerMove: p ? _ : void 0,
-          onPointerUp: p ? m : void 0,
-          onPointerCancel: p ? m : void 0,
+          onPointerDown: g ? D("brightness") : void 0,
+          onPointerMove: g ? P : void 0,
+          onPointerUp: g ? m : void 0,
+          onPointerCancel: g ? m : void 0,
           style: {
             position: "relative",
-            height: dt,
+            height: ht,
             touchAction: "none",
-            cursor: p && e ? "pointer" : "default"
+            cursor: g && e ? "pointer" : "default"
           },
           children: [
-            h > 0 && /* @__PURE__ */ o("div", { style: {
+            h > 0 && /* @__PURE__ */ r("div", { style: {
               position: "absolute",
               top: 0,
               bottom: 0,
               left: 0,
               width: `${h * 100}%`,
-              background: `linear-gradient(90deg, rgba(${v},${j},${F},0.35) 0%, rgb(${v},${j},${F}) 100%)`,
+              background: `linear-gradient(90deg, rgba(${v},${k},${V},0.35) 0%, rgb(${v},${k},${V}) 100%)`,
               transition: "width .15s ease-out"
             } }),
-            p && e && /* @__PURE__ */ o("div", { style: {
+            g && e && /* @__PURE__ */ r("div", { style: {
               position: "absolute",
               top: 12,
               bottom: 12,
-              left: `calc(${r * 100}% - 2px)`,
+              left: `calc(${o * 100}% - 2px)`,
               width: 4,
               borderRadius: 2,
               background: "#fff",
@@ -305,13 +320,13 @@ function qt({ cardId: s = "light-control" }) {
               paddingRight: 16,
               pointerEvents: "none"
             }, children: [
-              /* @__PURE__ */ o(
+              /* @__PURE__ */ r(
                 "button",
                 {
-                  onClick: (k) => {
-                    k.stopPropagation(), at();
+                  onClick: (C) => {
+                    C.stopPropagation(), ut();
                   },
-                  onPointerDown: (k) => k.stopPropagation(),
+                  onPointerDown: (C) => C.stopPropagation(),
                   "aria-label": n(e ? "lightControl.turnOff" : "lightControl.turnOn"),
                   style: {
                     width: 36,
@@ -327,8 +342,8 @@ function qt({ cardId: s = "light-control" }) {
                     pointerEvents: "auto",
                     flexShrink: 0
                   },
-                  children: /* @__PURE__ */ o(
-                    G,
+                  children: /* @__PURE__ */ r(
+                    Y,
                     {
                       name: i.icon || "mdi:lightbulb",
                       size: 20,
@@ -338,7 +353,7 @@ function qt({ cardId: s = "light-control" }) {
                   )
                 }
               ),
-              /* @__PURE__ */ o("span", { style: {
+              /* @__PURE__ */ r("span", { style: {
                 color: "#fff",
                 fontSize: 16,
                 fontWeight: 600,
@@ -348,8 +363,8 @@ function qt({ cardId: s = "light-control" }) {
                 whiteSpace: "nowrap",
                 flex: 1,
                 minWidth: 0
-              }, children: et }),
-              e && p && /* @__PURE__ */ u("span", { style: {
+              }, children: rt }),
+              e && g && /* @__PURE__ */ u("span", { style: {
                 color: "#fff",
                 opacity: 0.85,
                 fontSize: 12,
@@ -357,28 +372,28 @@ function qt({ cardId: s = "light-control" }) {
                 fontVariantNumeric: "tabular-nums",
                 textShadow: "0 1px 2px rgba(0,0,0,.35)"
               }, children: [
-                $,
+                H,
                 "%"
               ] })
             ] })
           ]
         }
       ),
-      R && /* @__PURE__ */ u(X, { children: [
-        /* @__PURE__ */ o("div", { style: { height: 1, background: "rgba(255,255,255,.06)" } }),
+      E && /* @__PURE__ */ u(Z, { children: [
+        /* @__PURE__ */ r("div", { style: { height: 1, background: "rgba(255,255,255,.06)" } }),
         /* @__PURE__ */ u(
           "div",
           {
-            ref: (k) => {
-              S.current.color = k;
+            ref: (C) => {
+              M.current.color = C;
             },
-            onPointerDown: E("color"),
-            onPointerMove: _,
+            onPointerDown: D("color"),
+            onPointerMove: P,
             onPointerUp: m,
             onPointerCancel: m,
             style: {
               position: "relative",
-              height: wt,
+              height: It,
               touchAction: "none",
               cursor: e ? "pointer" : "not-allowed",
               background: "linear-gradient(90deg, #ff0000, #ffff00, #00ff00, #00ffff, #0000ff, #ff00ff, #ff0000)",
@@ -386,7 +401,7 @@ function qt({ cardId: s = "light-control" }) {
               transition: "filter .25s"
             },
             children: [
-              /* @__PURE__ */ o("div", { style: {
+              /* @__PURE__ */ r("div", { style: {
                 position: "absolute",
                 left: 10,
                 top: "50%",
@@ -399,8 +414,8 @@ function qt({ cardId: s = "light-control" }) {
                 alignItems: "center",
                 justifyContent: "center",
                 pointerEvents: "none"
-              }, children: /* @__PURE__ */ o(G, { name: "mdi:palette", size: 12, color: "#fff", dark: !0 }) }),
-              e && /* @__PURE__ */ o("div", { style: {
+              }, children: /* @__PURE__ */ r(Y, { name: "mdi:palette", size: 12, color: "#fff", dark: !0 }) }),
+              e && /* @__PURE__ */ r("div", { style: {
                 position: "absolute",
                 top: 4,
                 bottom: 4,
@@ -416,29 +431,29 @@ function qt({ cardId: s = "light-control" }) {
           }
         )
       ] }),
-      ot && /* @__PURE__ */ u(X, { children: [
-        /* @__PURE__ */ o("div", { style: { height: 1, background: "rgba(255,255,255,.06)" } }),
+      lt && /* @__PURE__ */ u(Z, { children: [
+        /* @__PURE__ */ r("div", { style: { height: 1, background: "rgba(255,255,255,.06)" } }),
         /* @__PURE__ */ u(
           "div",
           {
-            ref: (k) => {
-              S.current.colortemp = k;
+            ref: (C) => {
+              M.current.colortemp = C;
             },
-            onPointerDown: E("colortemp"),
-            onPointerMove: _,
+            onPointerDown: D("colortemp"),
+            onPointerMove: P,
             onPointerUp: m,
             onPointerCancel: m,
             style: {
               position: "relative",
-              height: wt,
+              height: It,
               touchAction: "none",
               cursor: e ? "pointer" : "not-allowed",
-              background: ft,
+              background: gt,
               filter: e ? "none" : "saturate(.3)",
               transition: "filter .25s"
             },
             children: [
-              /* @__PURE__ */ o("div", { style: {
+              /* @__PURE__ */ r("div", { style: {
                 position: "absolute",
                 left: 10,
                 top: "50%",
@@ -451,13 +466,13 @@ function qt({ cardId: s = "light-control" }) {
                 alignItems: "center",
                 justifyContent: "center",
                 pointerEvents: "none"
-              }, children: /* @__PURE__ */ o(G, { name: "mdi:thermometer", size: 12, color: "#fff", dark: !0 }) }),
-              e && /* @__PURE__ */ u(X, { children: [
-                /* @__PURE__ */ o("div", { style: {
+              }, children: /* @__PURE__ */ r(Y, { name: "mdi:thermometer", size: 12, color: "#fff", dark: !0 }) }),
+              e && /* @__PURE__ */ u(Z, { children: [
+                /* @__PURE__ */ r("div", { style: {
                   position: "absolute",
                   top: 4,
                   bottom: 4,
-                  left: `calc(${lt * 100}% - 2px)`,
+                  left: `calc(${ct * 100}% - 2px)`,
                   width: 4,
                   borderRadius: 2,
                   background: "#fff",
@@ -477,7 +492,7 @@ function qt({ cardId: s = "light-control" }) {
                   fontVariantNumeric: "tabular-nums",
                   pointerEvents: "none"
                 }, children: [
-                  B,
+                  K,
                   "K"
                 ] })
               ] })
@@ -488,7 +503,7 @@ function qt({ cardId: s = "light-control" }) {
     ] });
   }
   if (i.layout === "bars") {
-    const l = x ? gt(x) / 360 : 0, r = $ / 100;
+    const l = x ? bt(x) / 360 : 0, o = H / 100;
     return /* @__PURE__ */ u("div", { style: {
       ...t.card,
       borderColor: e ? `${a}55` : t.tokens.color.border,
@@ -499,11 +514,11 @@ function qt({ cardId: s = "light-control" }) {
       gap: t.tokens.space.md
     }, children: [
       /* @__PURE__ */ u("div", { style: { ...t.row, gap: t.tokens.space.sm }, children: [
-        /* @__PURE__ */ o(
+        /* @__PURE__ */ r(
           "button",
           {
-            onClick: at,
-            disabled: C || O === "unavailable",
+            onClick: ut,
+            disabled: I || B === "unavailable",
             "aria-label": n(e ? "lightControl.turnOff" : "lightControl.turnOn"),
             style: {
               width: 36,
@@ -511,7 +526,7 @@ function qt({ cardId: s = "light-control" }) {
               borderRadius: "50%",
               border: "none",
               background: e ? `radial-gradient(circle, ${a}40 0%, ${a}10 70%, transparent 100%)` : d ? "rgba(255,255,255,.05)" : "rgba(0,0,0,.04)",
-              cursor: C ? "wait" : "pointer",
+              cursor: I ? "wait" : "pointer",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -520,8 +535,8 @@ function qt({ cardId: s = "light-control" }) {
               boxShadow: e ? `inset 0 0 12px ${a}30` : "none",
               transition: "background .25s, box-shadow .25s"
             },
-            children: /* @__PURE__ */ o(
-              G,
+            children: /* @__PURE__ */ r(
+              Y,
               {
                 name: i.icon || "mdi:lightbulb",
                 size: 20,
@@ -532,75 +547,75 @@ function qt({ cardId: s = "light-control" }) {
           }
         ),
         /* @__PURE__ */ u("div", { style: { flex: 1, minWidth: 0 }, children: [
-          /* @__PURE__ */ o("div", { style: {
+          /* @__PURE__ */ r("div", { style: {
             ...t.tokens.font.title,
             color: t.tokens.color.primary,
             overflow: "hidden",
             textOverflow: "ellipsis",
             whiteSpace: "nowrap"
-          }, children: et }),
-          O === "unavailable" && /* @__PURE__ */ o("div", { style: { ...t.tokens.font.hint, color: t.tokens.color.muted, marginTop: 2 }, children: n("lightControl.unavailable") })
+          }, children: rt }),
+          B === "unavailable" && /* @__PURE__ */ r("div", { style: { ...t.tokens.font.hint, color: t.tokens.color.muted, marginTop: 2 }, children: n("lightControl.unavailable") })
         ] }),
-        e && p && /* @__PURE__ */ u("span", { style: {
+        e && g && /* @__PURE__ */ u("span", { style: {
           ...t.tokens.font.hint,
           color: t.tokens.color.primary,
           fontVariantNumeric: "tabular-nums"
         }, children: [
-          $,
+          H,
           "%"
         ] })
       ] }),
-      p && /* @__PURE__ */ o(
-        J,
+      g && /* @__PURE__ */ r(
+        nt,
         {
           innerRef: (h) => {
-            S.current.brightness = h;
+            M.current.brightness = h;
           },
           disabled: !e,
           background: `linear-gradient(90deg, ${d ? "rgba(255,255,255,.08)" : "rgba(0,0,0,.08)"} 0%, ${a} 100%)`,
-          thumbPct: r,
+          thumbPct: o,
           thumbFill: "#fff",
           thumbStroke: a,
-          onPointerDown: E("brightness"),
-          onPointerMove: _,
+          onPointerDown: D("brightness"),
+          onPointerMove: P,
           onPointerUp: m,
           isOn: e,
           accent: a
         }
       ),
-      R && /* @__PURE__ */ o(
-        J,
+      E && /* @__PURE__ */ r(
+        nt,
         {
           innerRef: (h) => {
-            S.current.color = h;
+            M.current.color = h;
           },
           disabled: !e,
           background: "linear-gradient(90deg, #ff0000, #ffff00, #00ff00, #00ffff, #0000ff, #ff00ff, #ff0000)",
           thumbPct: l,
-          thumbFill: x ? V(x) : "#fff",
+          thumbFill: x ? X(x) : "#fff",
           thumbStroke: "#fff",
-          onPointerDown: E("color"),
-          onPointerMove: _,
+          onPointerDown: D("color"),
+          onPointerMove: P,
           onPointerUp: m,
           isOn: e,
           accent: a,
           desaturate: !0
         }
       ),
-      ot && /* @__PURE__ */ u(X, { children: [
-        /* @__PURE__ */ o(
-          J,
+      lt && /* @__PURE__ */ u(Z, { children: [
+        /* @__PURE__ */ r(
+          nt,
           {
             innerRef: (h) => {
-              S.current.colortemp = h;
+              M.current.colortemp = h;
             },
             disabled: !e,
-            background: ft,
-            thumbPct: lt,
-            thumbFill: V(kt(B)),
+            background: gt,
+            thumbPct: ct,
+            thumbFill: X(St(K)),
             thumbStroke: "#fff",
-            onPointerDown: E("colortemp"),
-            onPointerMove: _,
+            onPointerDown: D("colortemp"),
+            onPointerMove: P,
             onPointerUp: m,
             isOn: e,
             accent: a,
@@ -614,7 +629,7 @@ function qt({ cardId: s = "light-control" }) {
           marginTop: -4,
           fontVariantNumeric: "tabular-nums"
         }, children: [
-          B,
+          K,
           " K"
         ] })
       ] })
@@ -637,13 +652,13 @@ function qt({ cardId: s = "light-control" }) {
       touchAction: "none",
       userSelect: "none"
     }, children: [
-      R && /* @__PURE__ */ o("div", { style: {
+      E && /* @__PURE__ */ r("div", { style: {
         position: "absolute",
         inset: 0,
         pointerEvents: "none",
         background: "conic-gradient(from 0deg, #ff0000, #ffff00, #00ff00, #00ffff, #0000ff, #ff00ff, #ff0000)",
-        WebkitMask: vt,
-        mask: vt,
+        WebkitMask: Ct,
+        mask: Ct,
         opacity: e ? 1 : 0.35,
         borderRadius: "50%",
         transition: "opacity .25s",
@@ -652,94 +667,94 @@ function qt({ cardId: s = "light-control" }) {
       /* @__PURE__ */ u(
         "svg",
         {
-          ref: tt,
+          ref: ot,
           width: w,
           height: w,
           viewBox: `0 0 ${w} ${w}`,
           style: { position: "absolute", inset: 0 },
           children: [
-            p && /* @__PURE__ */ o(
+            g && /* @__PURE__ */ r(
               "circle",
               {
                 cx: y,
                 cy: y,
-                r: U,
+                r: G,
                 fill: "none",
-                stroke: Et,
-                strokeWidth: M,
+                stroke: Lt,
+                strokeWidth: T,
                 pointerEvents: "none"
               }
             ),
-            p && /* @__PURE__ */ o("g", { transform: `rotate(-90 ${y} ${y})`, children: /* @__PURE__ */ o(
+            g && /* @__PURE__ */ r("g", { transform: `rotate(-90 ${y} ${y})`, children: /* @__PURE__ */ r(
               "circle",
               {
                 cx: y,
                 cy: y,
-                r: U,
+                r: G,
                 fill: "none",
                 stroke: a,
-                strokeWidth: M,
+                strokeWidth: T,
                 strokeLinecap: "round",
-                strokeDasharray: st,
-                strokeDashoffset: st - st * (e ? $ : 0) / 100,
+                strokeDasharray: dt,
+                strokeDashoffset: dt - dt * (e ? H : 0) / 100,
                 pointerEvents: "none",
                 style: {
-                  transition: g.current === "brightness" ? "stroke .15s" : "stroke-dashoffset .4s cubic-bezier(.4,0,.2,1), stroke .25s",
+                  transition: b.current === "brightness" ? "stroke .15s" : "stroke-dashoffset .4s cubic-bezier(.4,0,.2,1), stroke .25s",
                   filter: e ? `drop-shadow(0 0 8px ${a}80)` : "none"
                 }
               }
             ) }),
-            p && /* @__PURE__ */ o(
+            g && /* @__PURE__ */ r(
               "circle",
               {
                 cx: y,
                 cy: y,
-                r: U,
+                r: G,
                 fill: "none",
                 stroke: "transparent",
-                strokeWidth: M + Ct,
+                strokeWidth: T + _t,
                 pointerEvents: "stroke",
                 style: { cursor: e ? "grab" : "not-allowed" },
-                onPointerDown: xt("brightness"),
-                onPointerMove: ct,
+                onPointerDown: kt("brightness"),
+                onPointerMove: ft,
                 onPointerUp: m,
                 onPointerCancel: m
               }
             ),
-            R && /* @__PURE__ */ o(
+            E && /* @__PURE__ */ r(
               "circle",
               {
                 cx: y,
                 cy: y,
-                r: A,
+                r: W,
                 fill: "none",
                 stroke: "transparent",
-                strokeWidth: M + Ct,
+                strokeWidth: T + _t,
                 pointerEvents: "stroke",
                 style: { cursor: e ? "grab" : "not-allowed" },
-                onPointerDown: xt("color"),
-                onPointerMove: ct,
+                onPointerDown: kt("color"),
+                onPointerMove: ft,
                 onPointerUp: m,
                 onPointerCancel: m
               }
             ),
-            R && e && x && /* @__PURE__ */ o("g", { pointerEvents: "none", children: /* @__PURE__ */ o(
+            E && e && x && /* @__PURE__ */ r("g", { pointerEvents: "none", children: /* @__PURE__ */ r(
               "circle",
               {
-                cx: yt[0],
-                cy: yt[1],
+                cx: wt[0],
+                cy: wt[1],
                 r: 10,
-                fill: V(x),
+                fill: X(x),
                 stroke: "#fff",
                 strokeWidth: 2.5,
                 style: { filter: "drop-shadow(0 2px 5px rgba(0,0,0,.35))" }
               }
             ) }),
-            p && e && /* @__PURE__ */ o("g", { pointerEvents: "none", children: /* @__PURE__ */ o(
+            g && e && /* @__PURE__ */ r("g", { pointerEvents: "none", children: /* @__PURE__ */ r(
               "circle",
               {
-                cx: mt[0],
-                cy: mt[1],
+                cx: vt[0],
+                cy: vt[1],
                 r: 10,
                 fill: "#fff",
                 stroke: a,
@@ -750,34 +765,34 @@ function qt({ cardId: s = "light-control" }) {
           ]
         }
       ),
-      /* @__PURE__ */ o(
-        Wt.button,
+      /* @__PURE__ */ r(
+        Ft.button,
         {
-          onClick: at,
-          disabled: C || O === "unavailable",
+          onClick: ut,
+          disabled: I || B === "unavailable",
           "aria-label": n(e ? "lightControl.turnOff" : "lightControl.turnOn"),
           animate: e ? { scale: [1, 1.04, 1] } : { scale: 1 },
           transition: { duration: 2.6, repeat: e ? 1 / 0 : 0, ease: "easeInOut" },
           style: {
             position: "absolute",
-            top: (w - q) / 2,
-            left: (w - q) / 2,
-            width: q,
-            height: q,
+            top: (w - et) / 2,
+            left: (w - et) / 2,
+            width: et,
+            height: et,
             borderRadius: "50%",
             border: "none",
             background: e ? `radial-gradient(circle, ${a}45 0%, ${a}10 65%, transparent 100%)` : d ? "rgba(255,255,255,.04)" : "rgba(0,0,0,.04)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            cursor: C ? "wait" : "pointer",
+            cursor: I ? "wait" : "pointer",
             padding: 0,
             boxShadow: e ? `inset 0 0 30px ${a}35` : "none",
             transition: "background .3s, box-shadow .3s",
             zIndex: 2
           },
-          children: /* @__PURE__ */ o(
-            G,
+          children: /* @__PURE__ */ r(
+            Y,
             {
               name: i.icon || "mdi:lightbulb",
               size: 52,
@@ -789,13 +804,13 @@ function qt({ cardId: s = "light-control" }) {
       )
     ] }),
     /* @__PURE__ */ u("div", { style: { textAlign: "center", minWidth: 0, width: "100%" }, children: [
-      /* @__PURE__ */ o("div", { style: {
+      /* @__PURE__ */ r("div", { style: {
         ...t.tokens.font.title,
         color: t.tokens.color.primary,
         overflow: "hidden",
         textOverflow: "ellipsis",
         whiteSpace: "nowrap"
-      }, children: et }),
+      }, children: rt }),
       /* @__PURE__ */ u("div", { style: {
         ...t.tokens.font.label,
         color: e ? a : t.tokens.color.muted,
@@ -805,30 +820,30 @@ function qt({ cardId: s = "light-control" }) {
         justifyContent: "center",
         gap: 6
       }, children: [
-        /* @__PURE__ */ o("span", { style: {
+        /* @__PURE__ */ r("span", { style: {
           width: 6,
           height: 6,
           borderRadius: "50%",
           background: e ? a : t.tokens.color.muted,
           boxShadow: e ? `0 0 8px ${a}` : "none"
         } }),
-        O === "unavailable" ? n("lightControl.unavailable") : e ? p ? n("lightControl.onWithBrightness", { n: $ }) : n("lightControl.on") : n("lightControl.off")
+        B === "unavailable" ? n("lightControl.unavailable") : e ? g ? n("lightControl.onWithBrightness", { n: H }) : n("lightControl.on") : n("lightControl.off")
       ] })
     ] }),
-    ot && /* @__PURE__ */ u("div", { style: { width: "100%", display: "flex", flexDirection: "column", gap: 4 }, children: [
-      /* @__PURE__ */ o(
-        J,
+    lt && /* @__PURE__ */ u("div", { style: { width: "100%", display: "flex", flexDirection: "column", gap: 4 }, children: [
+      /* @__PURE__ */ r(
+        nt,
         {
           innerRef: (l) => {
-            S.current.colortemp = l;
+            M.current.colortemp = l;
           },
           disabled: !e,
-          background: ft,
-          thumbPct: lt,
-          thumbFill: V(kt(B)),
+          background: gt,
+          thumbPct: ct,
+          thumbFill: X(St(K)),
           thumbStroke: "#fff",
-          onPointerDown: E("colortemp"),
-          onPointerMove: _,
+          onPointerDown: D("colortemp"),
+          onPointerMove: P,
           onPointerUp: m,
           isOn: e,
           accent: a,
@@ -841,12 +856,12 @@ function qt({ cardId: s = "light-control" }) {
         textAlign: "center",
         fontVariantNumeric: "tabular-nums"
       }, children: [
-        B,
+        K,
         " K"
       ] })
     ] })
   ] });
 }
 export {
-  qt as default
+  ee as default
 };

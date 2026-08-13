@@ -248,6 +248,31 @@ export default function LightControl({ cardId = 'light-control' }) {
   // scambiare per «rilascio del cursore» il rilascio di un tocco diverso —
   // vedi onPointerUp.
   const dragPointerRef = useRef(null)
+  /*
+   * Il puntatore emette fino a 120 eventi al secondo, e ognuno faceva un
+   * `setState`: la card si ridisegnava per intero — anelli SVG, icona animata,
+   * gradienti — più volte per ogni millimetro di trascinamento, e il dito
+   * arrivava prima del disegno.
+   *
+   * Gli eventi si accorpano nel fotogramma: si tiene solo l'ultima posizione e
+   * si aggiorna una volta sola quando il browser sta per disegnare. Nulla si
+   * perde — le posizioni intermedie di uno stesso fotogramma non sarebbero mai
+   * finite sullo schermo comunque.
+   */
+  const rafRef = useRef(0)
+  const pendingRef = useRef(null)
+  const scheduleDrag = (fn) => {
+    pendingRef.current = fn
+    if (rafRef.current) return
+    rafRef.current = requestAnimationFrame(() => {
+      rafRef.current = 0
+      const run = pendingRef.current
+      pendingRef.current = null
+      run?.()
+    })
+  }
+  useEffect(() => () => { if (rafRef.current) cancelAnimationFrame(rafRef.current) }, [])
+
   const svgRef = useRef(null)
   const barRefs = useRef({ brightness: null, color: null })
 
@@ -356,12 +381,15 @@ export default function LightControl({ cardId = 'light-control' }) {
   const handleMove = (e) => {
     if (!dragModeRef.current || !svgRef.current) return
     const angle = eventToAngle(e)
-    if (dragModeRef.current === 'brightness') {
-      const pct = Math.max(1, Math.min(100, Math.round((angle / 360) * 100)))
-      setLocalBrightness(pct)
-    } else {
-      setLocalRgb(hueToRgb(angle))
-    }
+    const mode  = dragModeRef.current
+    scheduleDrag(() => {
+      if (mode === 'brightness') {
+        const pct = Math.max(1, Math.min(100, Math.round((angle / 360) * 100)))
+        setLocalBrightness(pct)
+      } else {
+        setLocalRgb(hueToRgb(angle))
+      }
+    })
   }
 
   const onPointerDown = (mode) => (e) => {
@@ -398,6 +426,10 @@ export default function LightControl({ cardId = 'light-control' }) {
 
     dragModeRef.current = null
     dragPointerRef.current = null
+    // Un aggiornamento ancora in coda scriverebbe DOPO il rilascio, sovrascrivendo
+    // l'azzeramento qui sotto.
+    if (rafRef.current) { cancelAnimationFrame(rafRef.current); rafRef.current = 0 }
+    pendingRef.current = null
 
     if (!isOn) {
       setLocalBrightness(null); setLocalRgb(null); setLocalKelvin(null)
@@ -427,18 +459,21 @@ export default function LightControl({ cardId = 'light-control' }) {
 
   // ── BARS LAYOUT ──────────────────────────────────────────────────────────
   const barMove = (e) => {
-    if (!dragModeRef.current) return
-    const ref = barRefs.current[dragModeRef.current]
+    const mode = dragModeRef.current
+    if (!mode) return
+    const ref = barRefs.current[mode]
     if (!ref) return
     const rect = ref.getBoundingClientRect()
     const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width))
-    if (dragModeRef.current === 'brightness') {
-      setLocalBrightness(Math.max(1, Math.round(pct * 100)))
-    } else if (dragModeRef.current === 'colortemp') {
-      setLocalKelvin(Math.round(minKelvin + pct * (maxKelvin - minKelvin)))
-    } else {
-      setLocalRgb(hueToRgb(pct * 360))
-    }
+    scheduleDrag(() => {
+      if (mode === 'brightness') {
+        setLocalBrightness(Math.max(1, Math.round(pct * 100)))
+      } else if (mode === 'colortemp') {
+        setLocalKelvin(Math.round(minKelvin + pct * (maxKelvin - minKelvin)))
+      } else {
+        setLocalRgb(hueToRgb(pct * 360))
+      }
+    })
   }
 
   const barDown = (mode) => (e) => {

@@ -3,6 +3,12 @@
 Tutte le modifiche rilevanti a questa card.
 Il formato segue [Keep a Changelog](https://keepachangelog.com/it/1.0.0/).
 
+## [1.0.18] - 2026-08-13
+
+### Changed
+- Trascinamento più fluido: gli eventi del puntatore (fino a 120 al secondo)
+  vengono accorpati nel fotogramma invece di ridisegnare la card a ognuno.
+
 ## [1.0.17] - 2026-08-13
 
 ### Fixed
