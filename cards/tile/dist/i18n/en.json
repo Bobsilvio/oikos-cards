@@ -111,7 +111,15 @@
     "sizeHint": "Useful when the tile is small or the name is long.",
     "titleScale": "Name size",
     "stateScale": "State size",
-    "stateScaleHint": "Applies to the numeric value too."
+    "stateScaleHint": "Applies to the numeric value too.",
+    "bgMode": "Coloured background",
+    "bgModeHint": "Works on every layout, not just the tinted one.",
+    "bgNone": "None",
+    "bgState": "State colour",
+    "bgFixed": "Fixed colour",
+    "bgColor": "Background colour",
+    "bgOpacity": "Intensity",
+    "bgOpacityHint": "100% = solid colour."
   },
   "countOn": "{{count}} on"
 }

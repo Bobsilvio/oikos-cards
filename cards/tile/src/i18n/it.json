@@ -111,7 +111,15 @@
     "sizeHint": "Utile quando la tile è piccola o il nome è lungo.",
     "titleScale": "Dimensione nome",
     "stateScale": "Dimensione stato",
-    "stateScaleHint": "Vale anche per il valore numerico."
+    "stateScaleHint": "Vale anche per il valore numerico.",
+    "bgMode": "Sfondo colorato",
+    "bgModeHint": "Vale su tutte le disposizioni, non solo sulla tinta.",
+    "bgNone": "Nessuno",
+    "bgState": "Colore di stato",
+    "bgFixed": "Colore fisso",
+    "bgColor": "Colore dello sfondo",
+    "bgOpacity": "Intensità",
+    "bgOpacityHint": "100% = colore pieno."
   },
   "countOn": "{{count}} attive"
 }

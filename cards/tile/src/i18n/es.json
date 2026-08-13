@@ -111,7 +111,15 @@
     "sizeHint": "Útil cuando la tarjeta es pequeña o el nombre es largo.",
     "titleScale": "Tamaño del nombre",
     "stateScale": "Tamaño del estado",
-    "stateScaleHint": "Vale también para el valor numérico."
+    "stateScaleHint": "Vale también para el valor numérico.",
+    "bgMode": "Fondo de color",
+    "bgModeHint": "Vale en todas las disposiciones, no solo en la teñida.",
+    "bgNone": "Ninguno",
+    "bgState": "Color de estado",
+    "bgFixed": "Color fijo",
+    "bgColor": "Color del fondo",
+    "bgOpacity": "Intensidad",
+    "bgOpacityHint": "100% = color pleno."
   },
   "countOn": "{{count}} activas"
 }

@@ -111,7 +111,15 @@
     "sizeHint": "Utile quand la tuile est petite ou que le nom est long.",
     "titleScale": "Taille du nom",
     "stateScale": "Taille de l'état",
-    "stateScaleHint": "Vaut aussi pour la valeur numérique."
+    "stateScaleHint": "Vaut aussi pour la valeur numérique.",
+    "bgMode": "Fond coloré",
+    "bgModeHint": "Vaut pour toutes les dispositions, pas seulement la teintée.",
+    "bgNone": "Aucun",
+    "bgState": "Couleur d’état",
+    "bgFixed": "Couleur fixe",
+    "bgColor": "Couleur du fond",
+    "bgOpacity": "Intensité",
+    "bgOpacityHint": "100% = couleur pleine."
   },
   "countOn": "{{count}} actives"
 }

@@ -261,6 +261,43 @@ export default function TileSettings({ cardId }) {
             ]}
           />
         </Field>
+        {/* Sfondo colorato — vedi bgMode in Card.jsx. Il valore mostrato tiene
+            conto delle tile 'stateTint' fatte prima che l'opzione esistesse:
+            lì lo sfondo c'è già, e la scelta deve partire da dov'è. */}
+        {(() => {
+          const bgMode = cfg.bgMode || (cfg.layout === 'stateTint' ? 'state' : 'none')
+          return (
+            <>
+              <Field label={t('settings.bgMode')} hint={t('settings.bgModeHint')}>
+                <Pills
+                  value={bgMode}
+                  onChange={v => set('bgMode', v)}
+                  options={[
+                    { value: 'none',  label: t('settings.bgNone') },
+                    { value: 'state', label: t('settings.bgState') },
+                    { value: 'fixed', label: t('settings.bgFixed') },
+                  ]}
+                />
+              </Field>
+              {bgMode === 'fixed' && (
+                <Field label={t('settings.bgColor')}>
+                  <ColorCircles value={cfg.bgColor} onChange={v => set('bgColor', v)} colors={ACCENT_COLORS} />
+                </Field>
+              )}
+              {bgMode !== 'none' && (
+                <Field label={t('settings.bgOpacity')} hint={t('settings.bgOpacityHint')}>
+                  <Slider
+                    value={cfg.bgOpacity ?? (bgMode === 'fixed' ? 100 : 13)}
+                    onChange={v => set('bgOpacity', v)}
+                    min={0} max={100} step={1}
+                    format={v => `${Math.round(v)}%`}
+                  />
+                </Field>
+              )}
+            </>
+          )
+        })()}
+
         <Field label={t('settings.iconSize')} hint={t('settings.sizeHint')}>
           <Slider
             value={cfg.iconSize ?? 20}

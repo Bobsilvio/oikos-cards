@@ -65,6 +65,12 @@ export const DEFAULT = {
   iconSize:      20,            // 12–34
   // textScale: sostituito da titleScale/stateScale, letto ancora dalle tile
   // configurate prima (vedi tsT/tsS).
+  // Vuoto e non 'none': i DEFAULTS vengono fusi nella configurazione salvata,
+  // e un 'none' esplicito spegnerebbe lo sfondo delle tile 'stateTint' fatte
+  // prima che questa opzione esistesse (vedi wrapper).
+  bgMode:        '',            // '' | 'none' | 'state' | 'fixed'
+  bgColor:       '',            // solo con bgMode 'fixed'
+  bgOpacity:     null,          // 0–100; null = default secondo bgMode
   titleScale:    1,             // 0.75–1.4
   stateScale:    1,             // 0.75–1.4
   offAccent:     '',            // colore a stato inattivo (solo layout 'stateTint')
@@ -250,14 +256,32 @@ export default function TileCard({ cardId = 'tile' }) {
   const tintCol   = ruleColor
     || (unknown ? tk.color.muted : (active || !onOff ? accent : offAccent))
 
+  /*
+   * Sfondo della tile.
+   *
+   * Prima lo sfondo esisteva solo dentro la disposizione 'stateTint', al 13%
+   * fisso del colore di stato: chi voleva il numero grande su fondo colorato
+   * doveva rinunciare al numero grande. Ora è una scelta a parte, valida su
+   * tutte le disposizioni:
+   *
+   *   'state' — segue il colore di stato (quello che faceva 'stateTint')
+   *   'fixed' — un colore scelto, indipendente da cosa fa l'entità
+   *
+   * Le tile salvate prima non hanno `bgMode`: 'stateTint' continua a valere
+   * come 'state' al 13%, quindi restano identiche a come sono adesso.
+   */
+  const bgMode  = cfg.bgMode || (tinted ? 'state' : 'none')
+  const bgCol   = bgMode === 'fixed' ? (cfg.bgColor || tintCol) : tintCol
+  const bgAlpha = clampNum(cfg.bgOpacity, 0, 100, bgMode === 'fixed' ? 100 : 13) / 100
+
   const wrapper = {
     ...s.card,
     cursor: clickable ? 'pointer' : 'default',
     transition: 'border-color .25s ease, background .25s ease',
-    ...(tinted
+    ...(bgMode !== 'none'
       ? {
-          background: withAlpha(tintCol, 0.13),
-          borderColor: withAlpha(tintCol, 0.4),
+          background: withAlpha(bgCol, bgAlpha),
+          borderColor: withAlpha(bgCol, 0.4),
         }
       : {
           borderColor: onOff && active && !unknown ? withAlpha(accent, 0.35) : tk.color.border,

@@ -4,6 +4,13 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [1.7.0] - 2026-08-13
+
+### Added
+- Sfondo colorato su qualunque disposizione: colore di stato o colore fisso,
+  con intensità regolabile da 0 a 100%. Prima esisteva solo dentro la
+  disposizione a tinta, al 13% fisso.
+
 ## [1.6.0] - 2026-08-13
 
 ### Changed

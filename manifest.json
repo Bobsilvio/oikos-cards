@@ -339,7 +339,7 @@
       "id": "tile",
       "type": "card",
       "name": "Tile",
-      "version": "1.6.0",
+      "version": "1.7.0",
       "author": "Oikos",
       "description": "Tile compatta e configurabile: una entità, uno stile, molti usi. Icona, stato, valore grande e due righe di dettaglio — per allarme, serratura, cancello, temperatura, batterie.",
       "description_en": "Compact configurable tile: one entity, one style, many uses. Icon, status, large value and two detail lines — for alarm, lock, gate, temperature, batteries.",
@@ -363,6 +363,13 @@
       "package": null,
       "tier": "free",
       "changelog": [
+        {
+          "version": "1.7.0",
+          "date": "2026-08-13",
+          "changes": [
+            "Sfondo colorato su qualunque disposizione: colore di stato o colore fisso,"
+          ]
+        },
         {
           "version": "1.6.0",
           "date": "2026-08-13",
@@ -436,17 +443,6 @@
           "changes": [
             "Accendi/spegni non faceva nulla. Con l'azione al tocco impostata su",
             "Le serrature ora usano lock/unlock: il dominio lock non ha un servizio"
-          ]
-        },
-        {
-          "version": "1.0.0",
-          "date": "2026-08-05",
-          "changes": [
-            "Prima versione. Tile compatta per una singola entità: icona in riquadro",
-            "Stato tradotto automaticamente (acceso, aperto, bloccato, in pulizia…) con",
-            "Colore di accento a scelta: il bordo e l'icona si accendono quando l'entità",
-            "Al tocco: dettagli entità, accendi/spegni, oppure niente.",
-            "Un'entità non disponibile mostra \"N/D\" invece di un valore inventato."
           ]
         }
       ]

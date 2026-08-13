@@ -111,7 +111,15 @@
     "sizeHint": "Nützlich, wenn die Kachel klein oder der Name lang ist.",
     "titleScale": "Namensgröße",
     "stateScale": "Zustandsgröße",
-    "stateScaleHint": "Gilt auch für den Zahlenwert."
+    "stateScaleHint": "Gilt auch für den Zahlenwert.",
+    "bgMode": "Farbiger Hintergrund",
+    "bgModeHint": "Gilt für jedes Layout, nicht nur für das getönte.",
+    "bgNone": "Keiner",
+    "bgState": "Zustandsfarbe",
+    "bgFixed": "Feste Farbe",
+    "bgColor": "Hintergrundfarbe",
+    "bgOpacity": "Intensität",
+    "bgOpacityHint": "100% = volle Farbe."
   },
   "countOn": "{{count}} aktiv"
 }
