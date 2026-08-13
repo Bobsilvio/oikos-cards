@@ -248,12 +248,6 @@ export default function TileSettings({ cardId }) {
           />
         </Field>
       </Section>
-
-      {/* Sezione a sé. Stava sotto «Extra», appena dopo l'icona accessoria in
-          basso a destra, e si leggeva come se il tocco appartenesse a
-          QUELL'icona: un utente ha chiesto se dovesse aggiungere una seconda
-          icona per poter accendere e spegnere. Il tocco vale su tutta la
-          tile. */}
       <Section title={t('settings.sectionLayout')}>
         <Field label={t('settings.layout')} hint={t('settings.layoutHint')}>
           <Pills
@@ -267,6 +261,23 @@ export default function TileSettings({ cardId }) {
             ]}
           />
         </Field>
+        <Field label={t('settings.iconSize')} hint={t('settings.sizeHint')}>
+          <Slider
+            value={cfg.iconSize ?? 20}
+            onChange={v => set('iconSize', v)}
+            min={12} max={34} step={1}
+            format={v => `${v} px`}
+          />
+        </Field>
+        <Field label={t('settings.textScale')}>
+          <Slider
+            value={cfg.textScale ?? 1}
+            onChange={v => set('textScale', v)}
+            min={0.75} max={1.4} step={0.05}
+            format={v => `${Math.round(v * 100)}%`}
+          />
+        </Field>
+
         {/* Colori per stato: vale per tutte le disposizioni, non solo la tinta —
             anche solo l'icona rossa su «chiuso» è un segnale. */}
         <Field label={t('settings.stateColors')} hint={t('settings.stateColorsHint')}/>
@@ -279,31 +290,6 @@ export default function TileSettings({ cardId }) {
           </Field>
         )}
       </Section>
-
-      <Section title={t('settings.sectionCount')} collapsible defaultOpen={false}>
-        <Field label={t('settings.countEntities')} hint={t('settings.countHint')} />
-        <EntityListField cfg={cfg} set={set} t={t}/>
-      </Section>
-
-      <Section title={t('settings.sectionTap')}>
-        <Field label={t('settings.tap')} hint={t('settings.tapHint')}>
-          <Pills
-            value={cfg.tapAction}
-            onChange={v => set('tapAction', v)}
-            options={[
-              { value: 'more-info', label: t('settings.tapMore') },
-              { value: 'toggle',    label: t('settings.tapToggle') },
-              { value: 'popup',     label: t('settings.tapPopup') },
-              { value: 'list',      label: t('settings.tapList') },
-              { value: 'none',      label: t('settings.tapNone') },
-            ]}
-          />
-        </Field>
-        {/* Il menù dei popup compare solo se serve: elencare pannelli quando
-            l'azione è un'altra è rumore. */}
-        {cfg.tapAction === 'popup' && <PopupPicker cfg={cfg} set={set} t={t}/>}
-      </Section>
-
       <Section title={t('settings.sectionStatus')}>
         <Field label={t('settings.showStatus')}>
           <Toggle value={cfg.showStatus} onChange={v => set('showStatus', v)} />
@@ -335,7 +321,6 @@ export default function TileSettings({ cardId }) {
           </>
         )}
       </Section>
-
       <Section title={t('settings.sectionValue')}>
         <Field label={t('settings.showValue')}>
           <Toggle value={cfg.showValue} onChange={v => set('showValue', v)} />
@@ -380,7 +365,28 @@ export default function TileSettings({ cardId }) {
           </>
         )}
       </Section>
-
+      <Section title={t('settings.sectionCount')} collapsible defaultOpen={false}>
+        <Field label={t('settings.countEntities')} hint={t('settings.countHint')} />
+        <EntityListField cfg={cfg} set={set} t={t}/>
+      </Section>
+      <Section title={t('settings.sectionTap')}>
+        <Field label={t('settings.tap')} hint={t('settings.tapHint')}>
+          <Pills
+            value={cfg.tapAction}
+            onChange={v => set('tapAction', v)}
+            options={[
+              { value: 'more-info', label: t('settings.tapMore') },
+              { value: 'toggle',    label: t('settings.tapToggle') },
+              { value: 'popup',     label: t('settings.tapPopup') },
+              { value: 'list',      label: t('settings.tapList') },
+              { value: 'none',      label: t('settings.tapNone') },
+            ]}
+          />
+        </Field>
+        {/* Il menù dei popup compare solo se serve: elencare pannelli quando
+            l'azione è un'altra è rumore. */}
+        {cfg.tapAction === 'popup' && <PopupPicker cfg={cfg} set={set} t={t}/>}
+      </Section>
       <Section title={t('settings.sectionSub')} collapsible defaultOpen={false}>
         <Field label={t('settings.sub1')} />
         <EntityField
@@ -416,7 +422,6 @@ export default function TileSettings({ cardId }) {
           <TextField value={cfg.sub2Unit} onChange={v => set('sub2Unit', v)} />
         </Field>
       </Section>
-
       <Section title={t('settings.sectionExtra')} collapsible defaultOpen={false}>
         <Field label={t('settings.badgeIcon')} hint={t('settings.badgeIconHint')}>
           <MdiIconPicker value={cfg.badgeIcon} onChange={v => set('badgeIcon', v)} dark={dark} />

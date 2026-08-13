@@ -106,7 +106,10 @@
     "stateColorsHint": "Ex. ouvert vert, fermé rouge. La première règle qui correspond gagne ; sans règles, les couleurs ci-dessus s’appliquent.",
     "statePlaceholder": "état (ex. open)",
     "stateAdd": "Ajouter une règle",
-    "stateAddCurrent": "État actuel : {{state}}"
+    "stateAddCurrent": "État actuel : {{state}}",
+    "iconSize": "Taille de l’icône",
+    "textScale": "Taille du texte",
+    "sizeHint": "Utile quand la tuile est petite ou que le nom est long."
   },
   "countOn": "{{count}} actives"
 }

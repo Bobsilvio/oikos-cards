@@ -106,7 +106,10 @@
     "stateColorsHint": "E.g. open green, closed red. The first matching rule wins; with no rules the colours above apply.",
     "statePlaceholder": "state (e.g. open)",
     "stateAdd": "Add rule",
-    "stateAddCurrent": "Current state: {{state}}"
+    "stateAddCurrent": "Current state: {{state}}",
+    "iconSize": "Icon size",
+    "textScale": "Text size",
+    "sizeHint": "Useful when the tile is small or the name is long."
   },
   "countOn": "{{count}} on"
 }

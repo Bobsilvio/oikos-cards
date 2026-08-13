@@ -331,7 +331,7 @@
       "id": "tile",
       "type": "card",
       "name": "Tile",
-      "version": "1.4.0",
+      "version": "1.5.0",
       "author": "Oikos",
       "description": "Tile compatta e configurabile: una entità, uno stile, molti usi. Icona, stato, valore grande e due righe di dettaglio — per allarme, serratura, cancello, temperatura, batterie.",
       "description_en": "Compact configurable tile: one entity, one style, many uses. Icon, status, large value and two detail lines — for alarm, lock, gate, temperature, batteries.",
@@ -355,6 +355,15 @@
       "package": null,
       "tier": "free",
       "changelog": [
+        {
+          "version": "1.5.0",
+          "date": "2026-08-13",
+          "changes": [
+            "Dimensione di icona e testo regolabili. Due cursori separati, perché si",
+            "Impostazioni riordinate. Le sezioni seguivano l'ordine in cui sono state",
+            "Nella disposizione «In linea» il valore si prendeva tutto lo spazio e il nome"
+          ]
+        },
         {
           "version": "1.4.0",
           "date": "2026-08-13",

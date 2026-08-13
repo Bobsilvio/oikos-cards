@@ -59,6 +59,11 @@ export const DEFAULT = {
   badgeIcon:     '',
   // Aspetto
   layout:        'value',       // 'value' | 'inline' | 'state' | 'stateTint'
+  // Dimensioni: icona in px, testo come fattore. Separate perché si regolano
+  // per motivi diversi — l'icona per il peso visivo, il testo per farci stare
+  // un nome lungo.
+  iconSize:      20,            // 12–34
+  textScale:     1,             // 0.75–1.4
   offAccent:     '',            // colore a stato inattivo (solo layout 'stateTint')
   /*
    * Colori per stato: [{ state: 'open', color: '#22c55e' }, …]
@@ -266,7 +271,11 @@ export default function TileCard({ cardId = 'tile' }) {
     'aria-label': clickable ? `${title}${status ? ` — ${status}` : ''}` : undefined,
   }
 
-  const iconEl = <MdiIcon name={icon} size={20} color={tinted ? tintCol : tint} />
+  const iconPx = clampNum(cfg.iconSize, 12, 34, 20)
+  const ts     = clampNum(cfg.textScale, 0.75, 1.4, 1)
+  const fs     = (base) => Math.round(base * ts * 10) / 10
+
+  const iconEl = <MdiIcon name={icon} size={iconPx} color={tinted ? tintCol : tint} />
 
   let body
   if (cfg.layout === 'inline') {
@@ -274,13 +283,20 @@ export default function TileCard({ cardId = 'tile' }) {
     // conta quante ne stanno in altezza, non quanto è grande il numero.
     body = (
       <div style={{ display: 'flex', alignItems: 'center', gap: tk.space.md, minWidth: 0 }}>
-        <div style={chipStyle(tk, tinted ? tintCol : tint, active && !unknown)}>{iconEl}</div>
-        <span style={{ ...s.title, flex: 1, minWidth: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+        <div style={chipStyle(tk, tinted ? tintCol : tint, active && !unknown, iconPx + 22)}>{iconEl}</div>
+        <span style={{
+          ...s.title, fontSize: fs(15), flex: 1, minWidth: 0,
+          whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
+        }}>
           {title}
         </span>
+        {/* Il valore non può essere intoccabile: essendo `nowrap` si prendeva
+            tutto lo spazio e il nome si riduceva a una lettera («F  Chiuso»).
+            Con un tetto e i puntini si stringono tutti e due. */}
         <span style={{
-          fontSize: 20, fontWeight: 800, color: tinted ? tintCol : tint,
+          fontSize: fs(20), fontWeight: 800, color: tinted ? tintCol : tint,
           fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap',
+          maxWidth: '55%', overflow: 'hidden', textOverflow: 'ellipsis', flexShrink: 1,
         }}>
           {value ?? status ?? '—'}
           {value !== null && unit && <small style={{ ...s.hint, marginLeft: 3 }}>{unit}</small>}
@@ -292,12 +308,12 @@ export default function TileCard({ cardId = 'tile' }) {
     // dato è una parola e non un numero.
     body = (
       <div style={{ display: 'flex', alignItems: 'center', gap: tk.space.md, minWidth: 0 }}>
-        <div style={chipStyle(tk, tinted ? tintCol : tint, active && !unknown)}>{iconEl}</div>
+        <div style={chipStyle(tk, tinted ? tintCol : tint, active && !unknown, iconPx + 22)}>{iconEl}</div>
         <div style={{ minWidth: 0, flex: 1 }}>
-          <div style={{ ...s.title, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+          <div style={{ ...s.title, fontSize: fs(15), whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
             {title}
           </div>
-          <div style={{ ...s.hint, color: tinted ? tintCol : tk.color.muted, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+          <div style={{ ...s.hint, fontSize: fs(11), color: tinted ? tintCol : tk.color.muted, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
             {counted.length > 0 ? t('countOn', { count: countOn }) : (status ?? '—')}
           </div>
         </div>
@@ -309,7 +325,7 @@ export default function TileCard({ cardId = 'tile' }) {
     body = (
       <div style={{ display: 'flex', flexDirection: 'column', gap: tk.space.md }}>
         <div style={{ ...s.rowBetween, alignItems: 'flex-start', gap: tk.space.sm }}>
-          <div style={chipStyle(tk, tint, active && !unknown)}>{iconEl}</div>
+          <div style={chipStyle(tk, tint, active && !unknown, iconPx + 22)}>{iconEl}</div>
           {status && (
             <span style={{ ...tk.font.label, color: tint, textAlign: 'right', minWidth: 0, overflowWrap: 'anywhere' }}>
               {status}
@@ -318,11 +334,11 @@ export default function TileCard({ cardId = 'tile' }) {
         </div>
 
         <div style={{ ...s.colTight, minWidth: 0 }}>
-          <div style={{ ...s.title, overflowWrap: 'anywhere' }}>{title}</div>
+          <div style={{ ...s.title, fontSize: fs(15), overflowWrap: 'anywhere' }}>{title}</div>
 
           {(cfg.showValue || counted.length > 0) && (
             <div style={{ display: 'flex', alignItems: 'baseline', gap: tk.space.xs, minWidth: 0 }}>
-              <span style={{ ...tk.font.value, color: tint, fontSize: valueFontSize(value) }}>
+              <span style={{ ...tk.font.value, color: tint, fontSize: fs(valueFontSize(value)) }}>
                 {value ?? '—'}
               </span>
               {value !== null && unit && counted.length === 0 && <span style={s.hint}>{unit}</span>}
@@ -400,6 +416,14 @@ export default function TileCard({ cardId = 'tile' }) {
   )
 }
 
+
+/** Numero dentro un intervallo, con valore di ripiego se non è un numero. */
+function clampNum(v, min, max, dflt) {
+  const n = parseFloat(v)
+  if (!Number.isFinite(n)) return dflt
+  return Math.min(max, Math.max(min, n))
+}
+
 // ── Helper di stile ────────────────────────────────────────────────────────
 
 /**
@@ -407,10 +431,10 @@ export default function TileCard({ cardId = 'tile' }) {
  * token CSS (var(--…)) color-mix funziona lo stesso, mentre concatenare
  * l'alpha in esadecimale romperebbe — vedi nota su color-mix nell'SDK.
  */
-function chipStyle(tk, color, glow) {
+function chipStyle(tk, color, glow, size = 42) {
   return {
-    width: 42,
-    height: 42,
+    width: size,
+    height: size,
     flexShrink: 0,
     borderRadius: tk.radius.md,
     background: withAlpha(color, 0.14),

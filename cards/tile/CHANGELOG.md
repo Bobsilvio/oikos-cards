@@ -4,6 +4,22 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [1.5.0] - 2026-08-13
+### Added
+- **Dimensione di icona e testo regolabili.** Due cursori separati, perché si
+  regolano per motivi diversi: l'icona per il peso visivo, il testo per farci
+  stare un nome lungo. Il riquadro dell'icona segue la sua misura.
+
+### Changed
+- **Impostazioni riordinate.** Le sezioni seguivano l'ordine in cui sono state
+  aggiunte — Aspetto, Conteggio, Al tocco, poi Stato e Valore — invece di quello
+  in cui si configura una tile. Ora: Entità → Aspetto → Stato → Valore →
+  Conteggio → Al tocco → Dettagli → Extra.
+
+### Fixed
+- Nella disposizione «In linea» il valore si prendeva tutto lo spazio e il nome
+  si riduceva a una lettera: «F  Chiuso». Ora si stringono entrambi.
+
 ## [1.4.0] - 2026-08-13
 ### Added
 - **Colori per stato.** Si assegna un colore a ogni stato — aperto verde,

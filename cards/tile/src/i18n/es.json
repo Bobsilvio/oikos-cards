@@ -106,7 +106,10 @@
     "stateColorsHint": "P. ej. abierto verde, cerrado rojo. Gana la primera regla que coincide; sin reglas valen los colores de arriba.",
     "statePlaceholder": "estado (p. ej. open)",
     "stateAdd": "Añadir regla",
-    "stateAddCurrent": "Estado actual: {{state}}"
+    "stateAddCurrent": "Estado actual: {{state}}",
+    "iconSize": "Tamaño del icono",
+    "textScale": "Tamaño del texto",
+    "sizeHint": "Útil cuando la tarjeta es pequeña o el nombre es largo."
   },
   "countOn": "{{count}} activas"
 }

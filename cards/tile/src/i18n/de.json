@@ -106,7 +106,10 @@
     "stateColorsHint": "Z. B. offen grün, geschlossen rot. Die erste passende Regel gewinnt; ohne Regeln gelten die Farben oben.",
     "statePlaceholder": "Zustand (z. B. open)",
     "stateAdd": "Regel hinzufügen",
-    "stateAddCurrent": "Aktueller Zustand: {{state}}"
+    "stateAddCurrent": "Aktueller Zustand: {{state}}",
+    "iconSize": "Symbolgröße",
+    "textScale": "Textgröße",
+    "sizeHint": "Nützlich, wenn die Kachel klein oder der Name lang ist."
   },
   "countOn": "{{count}} aktiv"
 }
