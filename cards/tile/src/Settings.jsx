@@ -48,6 +48,87 @@ registerCardTranslations('card-tile', { it, en, de, es, fr })
  * gli entity_id si sbagliano a scriverli, e un id sbagliato non dà errore —
  * semplicemente non conta, e non si capisce perché il numero non torna.
  */
+/**
+ * Regole «stato → colore».
+ *
+ * Lo stato si scrive come lo scrive Home Assistant (`open`, `closed`, `on`…),
+ * non come lo leggi a schermo: è quello il valore su cui si confronta. Per non
+ * costringerti a indovinarlo c'è il tasto che aggiunge lo stato in cui l'entità
+ * si trova adesso — apri la porta, premi, hai la regola per «aperto».
+ */
+function StateColorList({ cfg, set, t }) {
+  const { getState } = useDashboard()
+  const rules = Array.isArray(cfg.stateColors) ? cfg.stateColors : []
+  const current = cfg.entityId ? getState(cfg.entityId) : ''
+
+  const patch = (i, k, v) => {
+    const next = rules.map((r, j) => (j === i ? { ...r, [k]: v } : r))
+    set('stateColors', next)
+  }
+  const alreadyHas = rules.some(r =>
+    String(r.state || '').toLowerCase() === String(current || '').toLowerCase())
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+      {rules.map((r, i) => (
+        <div key={i} style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
+          <input
+            value={r.state || ''}
+            onChange={e => patch(i, 'state', e.target.value)}
+            placeholder={t('settings.statePlaceholder')}
+            style={{
+              flex: 1, minWidth: 0, padding: '7px 10px', borderRadius: 8, fontSize: 12,
+              background: 'var(--bg-primary)', border: '1px solid var(--border-medium)',
+              color: 'var(--text-primary)', outline: 'none',
+              fontFamily: 'JetBrains Mono, monospace',
+            }}
+          />
+          <input
+            type="color"
+            value={r.color || '#22c55e'}
+            onChange={e => patch(i, 'color', e.target.value)}
+            style={{
+              width: 38, height: 30, flexShrink: 0, padding: 0, cursor: 'pointer',
+              border: '1px solid var(--border-medium)', borderRadius: 8, background: 'none',
+            }}
+          />
+          <button
+            onClick={() => set('stateColors', rules.filter((_, j) => j !== i))}
+            style={{
+              width: 30, height: 30, borderRadius: 8, flexShrink: 0, cursor: 'pointer',
+              background: 'transparent', border: '1px solid var(--border-medium)',
+              color: 'var(--red)', fontSize: 15, lineHeight: 1,
+            }}
+          >×</button>
+        </div>
+      ))}
+
+      <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+        {current && !alreadyHas && (
+          <button
+            onClick={() => set('stateColors', [...rules, { state: current, color: '#22c55e' }])}
+            style={addBtnStyle}
+          >
+            + {t('settings.stateAddCurrent', { state: current })}
+          </button>
+        )}
+        <button
+          onClick={() => set('stateColors', [...rules, { state: '', color: '#ef4444' }])}
+          style={addBtnStyle}
+        >
+          + {t('settings.stateAdd')}
+        </button>
+      </div>
+    </div>
+  )
+}
+
+const addBtnStyle = {
+  padding: '6px 11px', borderRadius: 9, cursor: 'pointer',
+  background: 'transparent', border: '1px dashed var(--border-medium)',
+  color: 'var(--text-muted)', fontSize: 11.5, fontWeight: 600,
+}
+
 function EntityListField({ cfg, set, t }) {
   const list = Array.isArray(cfg.countEntities) ? cfg.countEntities : []
   const setAt = (i, v) => { const n = [...list]; n[i] = v; set('countEntities', n.filter(Boolean)) }
@@ -186,6 +267,11 @@ export default function TileSettings({ cardId }) {
             ]}
           />
         </Field>
+        {/* Colori per stato: vale per tutte le disposizioni, non solo la tinta —
+            anche solo l'icona rossa su «chiuso» è un segnale. */}
+        <Field label={t('settings.stateColors')} hint={t('settings.stateColorsHint')}/>
+        <StateColorList cfg={cfg} set={set} t={t}/>
+
         {/* Il secondo colore serve solo dove c'è una tinta da spegnere. */}
         {cfg.layout === 'stateTint' && (
           <Field label={t('settings.offAccent')} hint={t('settings.offAccentHint')}>

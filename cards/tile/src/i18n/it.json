@@ -101,7 +101,12 @@
     "countEntities": "Entità da contare",
     "countHint": "La tile mostra quante ne sono attive — «4 · Luci» — invece del valore della singola entità.",
     "countAdd": "Aggiungi entità",
-    "tapList": "Apri elenco"
+    "tapList": "Apri elenco",
+    "stateColors": "Colori per stato",
+    "stateColorsHint": "Es. aperto verde, chiuso rosso. Vince la prima regola che corrisponde; senza regole valgono i colori qui sopra.",
+    "statePlaceholder": "stato (es. open)",
+    "stateAdd": "Aggiungi regola",
+    "stateAddCurrent": "Stato attuale: {{state}}"
   },
   "countOn": "{{count}} attive"
 }

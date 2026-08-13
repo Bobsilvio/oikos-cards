@@ -101,7 +101,12 @@
     "countEntities": "Entités à compter",
     "countHint": "La tuile indique combien sont actives — « 4 · Lumières » — au lieu de la valeur d’une seule entité.",
     "countAdd": "Ajouter une entité",
-    "tapList": "Ouvrir la liste"
+    "tapList": "Ouvrir la liste",
+    "stateColors": "Couleurs par état",
+    "stateColorsHint": "Ex. ouvert vert, fermé rouge. La première règle qui correspond gagne ; sans règles, les couleurs ci-dessus s’appliquent.",
+    "statePlaceholder": "état (ex. open)",
+    "stateAdd": "Ajouter une règle",
+    "stateAddCurrent": "État actuel : {{state}}"
   },
   "countOn": "{{count}} actives"
 }

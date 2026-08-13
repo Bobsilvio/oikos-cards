@@ -60,6 +60,16 @@ export const DEFAULT = {
   // Aspetto
   layout:        'value',       // 'value' | 'inline' | 'state' | 'stateTint'
   offAccent:     '',            // colore a stato inattivo (solo layout 'stateTint')
+  /*
+   * Colori per stato: [{ state: 'open', color: '#22c55e' }, …]
+   *
+   * Più espressivo di «attivo/inattivo»: una tapparella ha aperto, chiuso, in
+   * apertura e in chiusura, e volerle tutte dello stesso colore perché tre di
+   * esse contano come «non attivo» non ha senso. Vince la prima regola che
+   * corrisponde allo stato grezzo; senza corrispondenze si torna ad accento e
+   * colore di spento.
+   */
+  stateColors:   [],
   // Conteggio: più entità osservate insieme ("4 · Luci"), con elenco al tocco
   countEntities: [],
   // Interazione
@@ -113,7 +123,17 @@ export default function TileCard({ cardId = 'tile' }) {
    * applica sempre.
    */
   const onOff = hasOnOff(cfg.entityId, cfg.activeStates)
-  const tint = unknown ? tk.color.muted : (!onOff || active ? accent : tk.color.muted)
+
+  // Regola esplicita per questo stato, se c'è: batte tutto il resto.
+  const ruleColor = (() => {
+    if (unknown || !Array.isArray(cfg.stateColors)) return null
+    const r = cfg.stateColors.find(x =>
+      x?.color && String(x.state || '').trim().toLowerCase() === String(raw).trim().toLowerCase())
+    return r ? r.color : null
+  })()
+
+  const tint = ruleColor
+    || (unknown ? tk.color.muted : (!onOff || active ? accent : tk.color.muted))
 
   /*
    * Conteggio su più entità.
@@ -219,7 +239,8 @@ export default function TileCard({ cardId = 'tile' }) {
    */
   const offAccent = cfg.offAccent || tk.color.muted
   const tinted    = cfg.layout === 'stateTint'
-  const tintCol   = unknown ? tk.color.muted : (active || !onOff ? accent : offAccent)
+  const tintCol   = ruleColor
+    || (unknown ? tk.color.muted : (active || !onOff ? accent : offAccent))
 
   const wrapper = {
     ...s.card,

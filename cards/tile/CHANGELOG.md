@@ -4,6 +4,19 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [1.4.0] - 2026-08-13
+### Added
+- **Colori per stato.** Si assegna un colore a ogni stato — aperto verde,
+  chiuso rosso, in apertura giallo — invece del solo «attivo/non attivo». Una
+  tapparella ha quattro stati, e volerne tre dello stesso colore perché contano
+  tutti come «non attivo» non dice niente a chi guarda.
+- Vale per **tutte** le disposizioni, non solo per la tinta piena: anche la sola
+  icona rossa su «chiuso» è un segnale.
+- Lo stato si scrive come lo scrive Home Assistant (`open`, `closed`, `on`), non
+  come lo leggi a schermo: è quello il valore su cui si confronta. Per non
+  doverlo indovinare c'è il tasto che aggiunge **lo stato in cui l'entità si
+  trova adesso** — apri la porta, premi, hai la regola per «aperto».
+
 ## [1.3.1] - 2026-08-13
 ### Fixed
 - **Su porte, finestre e serrature si leggeva «Acceso/Spento».** Un

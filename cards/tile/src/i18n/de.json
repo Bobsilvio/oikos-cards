@@ -101,7 +101,12 @@
     "countEntities": "Zu zählende Entitäten",
     "countHint": "Die Kachel zeigt, wie viele aktiv sind — «4 · Lichter» — statt des Werts einer einzelnen Entität.",
     "countAdd": "Entität hinzufügen",
-    "tapList": "Liste öffnen"
+    "tapList": "Liste öffnen",
+    "stateColors": "Farben nach Zustand",
+    "stateColorsHint": "Z. B. offen grün, geschlossen rot. Die erste passende Regel gewinnt; ohne Regeln gelten die Farben oben.",
+    "statePlaceholder": "Zustand (z. B. open)",
+    "stateAdd": "Regel hinzufügen",
+    "stateAddCurrent": "Aktueller Zustand: {{state}}"
   },
   "countOn": "{{count}} aktiv"
 }

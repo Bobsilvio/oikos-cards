@@ -101,7 +101,12 @@
     "countEntities": "Entidades a contar",
     "countHint": "La tarjeta muestra cuántas están activas — «4 · Luces» — en vez del valor de una sola entidad.",
     "countAdd": "Añadir entidad",
-    "tapList": "Abrir lista"
+    "tapList": "Abrir lista",
+    "stateColors": "Colores por estado",
+    "stateColorsHint": "P. ej. abierto verde, cerrado rojo. Gana la primera regla que coincide; sin reglas valen los colores de arriba.",
+    "statePlaceholder": "estado (p. ej. open)",
+    "stateAdd": "Añadir regla",
+    "stateAddCurrent": "Estado actual: {{state}}"
   },
   "countOn": "{{count}} activas"
 }
