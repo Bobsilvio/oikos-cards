@@ -188,7 +188,16 @@
       ],
       "package": null,
       "tier": "free",
-      "changelog": null
+      "changelog": [
+        {
+          "version": "1.0.17",
+          "date": "2026-08-13",
+          "changes": [
+            "La luce si riaccendeva da sola poco dopo essere stata spenta. Il valore di",
+            "La card restava colorata come se la luce fosse accesa dopo lo spegnimento."
+          ]
+        }
+      ]
     },
     {
       "id": "person",
