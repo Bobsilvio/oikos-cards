@@ -58,7 +58,7 @@ export const DEFAULT = {
   // Icona accessoria in basso a destra
   badgeIcon:     '',
   // Aspetto
-  layout:        'value',       // 'value' | 'inline' | 'state' | 'stateTint'
+  layout:        'value',       // 'value' | 'slim' | 'inline' | 'state' | 'stateTint'
   // Dimensioni: icona in px, testo come fattore. Separate perché si regolano
   // per motivi diversi — l'icona per il peso visivo, il testo per farci stare
   // un nome lungo.
@@ -241,7 +241,7 @@ export default function TileCard({ cardId = 'tile' }) {
   }
 
   /*
-   * Quattro disposizioni per la stessa tile.
+   * Cinque disposizioni per la stessa tile.
    *
    * Non è vezzo grafico: una fila di serrature vuole «nome + stato», una sonda
    * vuole il numero grande, e una riga di scorciatoie vuole la forma bassa. Con
@@ -274,8 +274,16 @@ export default function TileCard({ cardId = 'tile' }) {
   const bgCol   = bgMode === 'fixed' ? (cfg.bgColor || tintCol) : tintCol
   const bgAlpha = clampNum(cfg.bgOpacity, 0, 100, bgMode === 'fixed' ? 100 : 13) / 100
 
+  /*
+   * 'slim' vive del suo margine interno: con il riempimento normale della card
+   * una riga alta 22px starebbe dentro un riquadro di 70, e non sarebbe più
+   * sottile di 'inline'. È l'unica disposizione che tocca il contenitore.
+   */
+  const slim = cfg.layout === 'slim'
+
   const wrapper = {
     ...s.card,
+    ...(slim ? { padding: '7px 12px', borderRadius: tk.radius.md } : null),
     cursor: clickable ? 'pointer' : 'default',
     transition: 'border-color .25s ease, background .25s ease',
     ...(bgMode !== 'none'
@@ -316,7 +324,35 @@ export default function TileCard({ cardId = 'tile' }) {
   const iconEl = <MdiIcon name={icon} size={iconPx} color={tinted ? tintCol : tint} />
 
   let body
-  if (cfg.layout === 'inline') {
+  if (slim) {
+    /*
+     * Una riga e basta: icona nuda, nome, valore. Niente pastiglia attorno
+     * all'icona — è lei a imporre l'altezza (42px di default), e senza di essa
+     * la tile scende a poco più dell'altezza del testo.
+     *
+     * Per file lunghe di scorciatoie, dove conta quante ne stanno in una
+     * schermata e lo stato è una parola sola.
+     */
+    body = (
+      <div style={{ display: 'flex', alignItems: 'center', gap: tk.space.sm, minWidth: 0 }}>
+        {iconEl}
+        <span style={{
+          ...s.title, fontSize: fsT(13), flex: 1, minWidth: 0,
+          whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
+        }}>
+          {title}
+        </span>
+        <span style={{
+          fontSize: fsS(13), fontWeight: 700, color: tint,
+          fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap',
+          maxWidth: '50%', overflow: 'hidden', textOverflow: 'ellipsis', flexShrink: 1,
+        }}>
+          {value ?? status ?? '—'}
+          {value !== null && unit && <small style={{ ...s.hint, marginLeft: 3 }}>{unit}</small>}
+        </span>
+      </div>
+    )
+  } else if (cfg.layout === 'inline') {
     // Bassa: icona, nome e valore su una riga. Per file di scorciatoie dove
     // conta quante ne stanno in altezza, non quanto è grande il numero.
     body = (

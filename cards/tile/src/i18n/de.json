@@ -119,7 +119,8 @@
     "bgFixed": "Feste Farbe",
     "bgColor": "Hintergrundfarbe",
     "bgOpacity": "Intensität",
-    "bgOpacityHint": "100% = volle Farbe."
+    "bgOpacityHint": "100% = volle Farbe.",
+    "layoutSlim": "Schmal"
   },
   "countOn": "{{count}} aktiv"
 }

@@ -119,7 +119,8 @@
     "bgFixed": "Fixed colour",
     "bgColor": "Background colour",
     "bgOpacity": "Intensity",
-    "bgOpacityHint": "100% = solid colour."
+    "bgOpacityHint": "100% = solid colour.",
+    "layoutSlim": "Slim"
   },
   "countOn": "{{count}} on"
 }

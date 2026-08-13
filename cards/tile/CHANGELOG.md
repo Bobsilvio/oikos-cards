@@ -4,6 +4,13 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [1.8.0] - 2026-08-13
+
+### Added
+- Disposizione «Sottile»: una riga sola, icona senza pastiglia e margine
+  interno ridotto. Per file lunghe di scorciatoie, dove conta quante ne stanno
+  in una schermata.
+
 ## [1.7.0] - 2026-08-13
 
 ### Added

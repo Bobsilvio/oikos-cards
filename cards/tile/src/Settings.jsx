@@ -255,6 +255,7 @@ export default function TileSettings({ cardId }) {
             onChange={v => set('layout', v)}
             options={[
               { value: 'value',     label: t('settings.layoutValue') },
+              { value: 'slim',      label: t('settings.layoutSlim') },
               { value: 'inline',    label: t('settings.layoutInline') },
               { value: 'state',     label: t('settings.layoutState') },
               { value: 'stateTint', label: t('settings.layoutTint') },

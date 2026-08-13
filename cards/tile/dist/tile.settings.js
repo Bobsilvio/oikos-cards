@@ -116,16 +116,17 @@ const { jsxs: l, jsx: t, Fragment: S } = window.__OIKOS_SDK__.jsxRuntime, V = {
   bgFixed: "Colore fisso",
   bgColor: "Colore dello sfondo",
   bgOpacity: "Intensità",
-  bgOpacityHint: "100% = colore pieno."
+  bgOpacityHint: "100% = colore pieno.",
+  layoutSlim: "Sottile"
 }, U = "{{count}} attive", w = {
   empty: V,
   state: N,
   settings: D,
   countOn: U
-}, M = {
+}, F = {
   title: "Tile not configured",
   hint: "Pick an entity in the settings"
-}, F = {
+}, M = {
   unavailable: "N/A",
   on: "On",
   off: "Off",
@@ -240,10 +241,11 @@ const { jsxs: l, jsx: t, Fragment: S } = window.__OIKOS_SDK__.jsxRuntime, V = {
   bgFixed: "Fixed colour",
   bgColor: "Background colour",
   bgOpacity: "Intensity",
-  bgOpacityHint: "100% = solid colour."
+  bgOpacityHint: "100% = solid colour.",
+  layoutSlim: "Slim"
 }, $ = "{{count}} on", L = {
-  empty: M,
-  state: F,
+  empty: F,
+  state: M,
   settings: R,
   countOn: $
 }, q = {
@@ -364,7 +366,8 @@ const { jsxs: l, jsx: t, Fragment: S } = window.__OIKOS_SDK__.jsxRuntime, V = {
   bgFixed: "Feste Farbe",
   bgColor: "Hintergrundfarbe",
   bgOpacity: "Intensität",
-  bgOpacityHint: "100% = volle Farbe."
+  bgOpacityHint: "100% = volle Farbe.",
+  layoutSlim: "Schmal"
 }, B = "{{count}} aktiv", I = {
   empty: q,
   state: j,
@@ -488,7 +491,8 @@ const { jsxs: l, jsx: t, Fragment: S } = window.__OIKOS_SDK__.jsxRuntime, V = {
   bgFixed: "Color fijo",
   bgColor: "Color del fondo",
   bgOpacity: "Intensidad",
-  bgOpacityHint: "100% = color pleno."
+  bgOpacityHint: "100% = color pleno.",
+  layoutSlim: "Fina"
 }, J = "{{count}} activas", _ = {
   empty: K,
   state: W,
@@ -612,7 +616,8 @@ const { jsxs: l, jsx: t, Fragment: S } = window.__OIKOS_SDK__.jsxRuntime, V = {
   bgFixed: "Couleur fixe",
   bgColor: "Couleur du fond",
   bgOpacity: "Intensité",
-  bgOpacityHint: "100% = couleur pleine."
+  bgOpacityHint: "100% = couleur pleine.",
+  layoutSlim: "Fine"
 }, ee = "{{count}} actives", k = {
   empty: Q,
   state: Y,
@@ -673,7 +678,7 @@ const ae = {
   badgeIcon: "",
   // Aspetto
   layout: "value",
-  // 'value' | 'inline' | 'state' | 'stateTint'
+  // 'value' | 'slim' | 'inline' | 'state' | 'stateTint'
   // Dimensioni: icona in px, testo come fattore. Separate perché si regolano
   // per motivi diversi — l'icona per il peso visivo, il testo per farci stare
   // un nome lungo.
@@ -713,12 +718,12 @@ const ae = {
   // 'more-info' | 'toggle' | 'popup' | 'list' | 'none'
   popupCardId: ""
   // istanza popup-panel da aprire con tapAction 'popup'
-}, { useDashboard: z, useCardConfig: oe, registerCardTranslations: ie, useT: le, EntityField: f, MdiIconPicker: H, Section: b, Field: i, TextField: g, Toggle: E, Slider: m, Pills: v, ColorCircles: A, ACCENT_COLORS: C, listPopupPanels: T } = window.__OIKOS_SDK__;
+}, { useDashboard: z, useCardConfig: oe, registerCardTranslations: ie, useT: le, EntityField: y, MdiIconPicker: H, Section: b, Field: i, TextField: g, Toggle: E, Slider: m, Pills: v, ColorCircles: A, ACCENT_COLORS: C, listPopupPanels: T } = window.__OIKOS_SDK__;
 ie("card-tile", { it: w, en: L, de: I, es: _, fr: k });
 function se({ cfg: d, set: c, t: a }) {
   const { getState: r } = z(), e = Array.isArray(d.stateColors) ? d.stateColors : [], o = d.entityId ? r(d.entityId) : "", u = (n, s, h) => {
-    const y = e.map((x, O) => O === n ? { ...x, [s]: h } : x);
-    c("stateColors", y);
+    const f = e.map((x, O) => O === n ? { ...x, [s]: h } : x);
+    c("stateColors", f);
   }, p = e.some((n) => String(n.state || "").toLowerCase() === String(o || "").toLowerCase());
   return /* @__PURE__ */ l("div", { style: { display: "flex", flexDirection: "column", gap: 6 }, children: [
     e.map((n, s) => /* @__PURE__ */ l("div", { style: { display: "flex", gap: 6, alignItems: "center" }, children: [
@@ -763,7 +768,7 @@ function se({ cfg: d, set: c, t: a }) {
       /* @__PURE__ */ t(
         "button",
         {
-          onClick: () => c("stateColors", e.filter((h, y) => y !== s)),
+          onClick: () => c("stateColors", e.filter((h, f) => f !== s)),
           style: {
             width: 30,
             height: 30,
@@ -824,7 +829,7 @@ function re({ cfg: d, set: c, t: a }) {
   return /* @__PURE__ */ l("div", { style: { display: "flex", flexDirection: "column", gap: 6 }, children: [
     r.map((o, u) => /* @__PURE__ */ l("div", { style: { display: "flex", gap: 6, alignItems: "center" }, children: [
       /* @__PURE__ */ t("div", { style: { flex: 1, minWidth: 0 }, children: /* @__PURE__ */ t(
-        f,
+        y,
         {
           label: "",
           field: `__count_${u}`,
@@ -910,7 +915,7 @@ function me({ cardId: d }) {
   return /* @__PURE__ */ l("div", { style: { display: "flex", flexDirection: "column", gap: 14 }, children: [
     /* @__PURE__ */ l(b, { title: e("settings.sectionEntity"), children: [
       /* @__PURE__ */ t(
-        f,
+        y,
         {
           label: e("settings.entity"),
           field: "entityId",
@@ -944,6 +949,7 @@ function me({ cardId: d }) {
           onChange: (n) => o("layout", n),
           options: [
             { value: "value", label: e("settings.layoutValue") },
+            { value: "slim", label: e("settings.layoutSlim") },
             { value: "inline", label: e("settings.layoutInline") },
             { value: "state", label: e("settings.layoutState") },
             { value: "stateTint", label: e("settings.layoutTint") }
@@ -1115,7 +1121,7 @@ function me({ cardId: d }) {
     /* @__PURE__ */ l(b, { title: e("settings.sectionSub"), collapsible: !0, defaultOpen: !1, children: [
       /* @__PURE__ */ t(i, { label: e("settings.sub1") }),
       /* @__PURE__ */ t(
-        f,
+        y,
         {
           label: e("settings.subEntity"),
           field: "sub1Entity",
@@ -1134,7 +1140,7 @@ function me({ cardId: d }) {
       /* @__PURE__ */ t(i, { label: e("settings.subUnit"), children: /* @__PURE__ */ t(g, { value: a.sub1Unit, onChange: (n) => o("sub1Unit", n) }) }),
       /* @__PURE__ */ t(i, { label: e("settings.sub2") }),
       /* @__PURE__ */ t(
-        f,
+        y,
         {
           label: e("settings.subEntity"),
           field: "sub2Entity",
