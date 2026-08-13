@@ -108,8 +108,10 @@
     "stateAdd": "Add rule",
     "stateAddCurrent": "Current state: {{state}}",
     "iconSize": "Icon size",
-    "textScale": "Text size",
-    "sizeHint": "Useful when the tile is small or the name is long."
+    "sizeHint": "Useful when the tile is small or the name is long.",
+    "titleScale": "Name size",
+    "stateScale": "State size",
+    "stateScaleHint": "Applies to the numeric value too."
   },
   "countOn": "{{count}} on"
 }

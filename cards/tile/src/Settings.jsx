@@ -269,10 +269,20 @@ export default function TileSettings({ cardId }) {
             format={v => `${v} px`}
           />
         </Field>
-        <Field label={t('settings.textScale')}>
+        {/* Due scale distinte: vedi tsT/tsS in Card.jsx. Il ripiego su
+            `textScale` fa sì che una tile configurata prima parta da dov'era. */}
+        <Field label={t('settings.titleScale')}>
           <Slider
-            value={cfg.textScale ?? 1}
-            onChange={v => set('textScale', v)}
+            value={cfg.titleScale ?? cfg.textScale ?? 1}
+            onChange={v => set('titleScale', v)}
+            min={0.75} max={1.4} step={0.05}
+            format={v => `${Math.round(v * 100)}%`}
+          />
+        </Field>
+        <Field label={t('settings.stateScale')} hint={t('settings.stateScaleHint')}>
+          <Slider
+            value={cfg.stateScale ?? cfg.textScale ?? 1}
+            onChange={v => set('stateScale', v)}
             min={0.75} max={1.4} step={0.05}
             format={v => `${Math.round(v * 100)}%`}
           />

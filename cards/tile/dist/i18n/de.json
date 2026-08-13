@@ -108,8 +108,10 @@
     "stateAdd": "Regel hinzufügen",
     "stateAddCurrent": "Aktueller Zustand: {{state}}",
     "iconSize": "Symbolgröße",
-    "textScale": "Textgröße",
-    "sizeHint": "Nützlich, wenn die Kachel klein oder der Name lang ist."
+    "sizeHint": "Nützlich, wenn die Kachel klein oder der Name lang ist.",
+    "titleScale": "Namensgröße",
+    "stateScale": "Zustandsgröße",
+    "stateScaleHint": "Gilt auch für den Zahlenwert."
   },
   "countOn": "{{count}} aktiv"
 }

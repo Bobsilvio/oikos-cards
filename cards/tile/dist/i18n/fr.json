@@ -108,8 +108,10 @@
     "stateAdd": "Ajouter une règle",
     "stateAddCurrent": "État actuel : {{state}}",
     "iconSize": "Taille de l’icône",
-    "textScale": "Taille du texte",
-    "sizeHint": "Utile quand la tuile est petite ou que le nom est long."
+    "sizeHint": "Utile quand la tuile est petite ou que le nom est long.",
+    "titleScale": "Taille du nom",
+    "stateScale": "Taille de l'état",
+    "stateScaleHint": "Vaut aussi pour la valeur numérique."
   },
   "countOn": "{{count}} actives"
 }

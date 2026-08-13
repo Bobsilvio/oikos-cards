@@ -4,6 +4,13 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [1.6.0] - 2026-08-13
+
+### Changed
+- Dimensione del testo separata per nome e per stato: su una tile stretta il
+  nome si può rimpicciolire senza rendere illeggibile il valore.
+  Le tile già configurate partono dalla dimensione che avevano.
+
 ## [1.5.0] - 2026-08-13
 ### Added
 - **Dimensione di icona e testo regolabili.** Due cursori separati, perché si

@@ -63,7 +63,10 @@ export const DEFAULT = {
   // per motivi diversi — l'icona per il peso visivo, il testo per farci stare
   // un nome lungo.
   iconSize:      20,            // 12–34
-  textScale:     1,             // 0.75–1.4
+  // textScale: sostituito da titleScale/stateScale, letto ancora dalle tile
+  // configurate prima (vedi tsT/tsS).
+  titleScale:    1,             // 0.75–1.4
+  stateScale:    1,             // 0.75–1.4
   offAccent:     '',            // colore a stato inattivo (solo layout 'stateTint')
   /*
    * Colori per stato: [{ state: 'open', color: '#22c55e' }, …]
@@ -272,8 +275,19 @@ export default function TileCard({ cardId = 'tile' }) {
   }
 
   const iconPx = clampNum(cfg.iconSize, 12, 34, 20)
-  const ts     = clampNum(cfg.textScale, 0.75, 1.4, 1)
-  const fs     = (base) => Math.round(base * ts * 10) / 10
+  /*
+   * Nome e stato si regolano separatamente: su una tile stretta il nome va
+   * rimpicciolito per starci, ma il valore è il motivo per cui la tile esiste e
+   * deve restare leggibile — con una scala sola una delle due cose andava
+   * sempre sacrificata.
+   *
+   * `textScale` resta come ripiego: le tile configurate prima avevano solo
+   * quello, e devono continuare a vedersi come le ha lasciate l'utente.
+   */
+  const tsT = clampNum(cfg.titleScale ?? cfg.textScale, 0.75, 1.4, 1)
+  const tsS = clampNum(cfg.stateScale ?? cfg.textScale, 0.75, 1.4, 1)
+  const fsT = (base) => Math.round(base * tsT * 10) / 10
+  const fsS = (base) => Math.round(base * tsS * 10) / 10
 
   const iconEl = <MdiIcon name={icon} size={iconPx} color={tinted ? tintCol : tint} />
 
@@ -285,7 +299,7 @@ export default function TileCard({ cardId = 'tile' }) {
       <div style={{ display: 'flex', alignItems: 'center', gap: tk.space.md, minWidth: 0 }}>
         <div style={chipStyle(tk, tinted ? tintCol : tint, active && !unknown, iconPx + 22)}>{iconEl}</div>
         <span style={{
-          ...s.title, fontSize: fs(15), flex: 1, minWidth: 0,
+          ...s.title, fontSize: fsT(15), flex: 1, minWidth: 0,
           whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
         }}>
           {title}
@@ -294,7 +308,7 @@ export default function TileCard({ cardId = 'tile' }) {
             tutto lo spazio e il nome si riduceva a una lettera («F  Chiuso»).
             Con un tetto e i puntini si stringono tutti e due. */}
         <span style={{
-          fontSize: fs(20), fontWeight: 800, color: tinted ? tintCol : tint,
+          fontSize: fsS(20), fontWeight: 800, color: tinted ? tintCol : tint,
           fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap',
           maxWidth: '55%', overflow: 'hidden', textOverflow: 'ellipsis', flexShrink: 1,
         }}>
@@ -310,10 +324,10 @@ export default function TileCard({ cardId = 'tile' }) {
       <div style={{ display: 'flex', alignItems: 'center', gap: tk.space.md, minWidth: 0 }}>
         <div style={chipStyle(tk, tinted ? tintCol : tint, active && !unknown, iconPx + 22)}>{iconEl}</div>
         <div style={{ minWidth: 0, flex: 1 }}>
-          <div style={{ ...s.title, fontSize: fs(15), whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+          <div style={{ ...s.title, fontSize: fsT(15), whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
             {title}
           </div>
-          <div style={{ ...s.hint, fontSize: fs(11), color: tinted ? tintCol : tk.color.muted, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+          <div style={{ ...s.hint, fontSize: fsS(11), color: tinted ? tintCol : tk.color.muted, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
             {counted.length > 0 ? t('countOn', { count: countOn }) : (status ?? '—')}
           </div>
         </div>
@@ -327,18 +341,18 @@ export default function TileCard({ cardId = 'tile' }) {
         <div style={{ ...s.rowBetween, alignItems: 'flex-start', gap: tk.space.sm }}>
           <div style={chipStyle(tk, tint, active && !unknown, iconPx + 22)}>{iconEl}</div>
           {status && (
-            <span style={{ ...tk.font.label, color: tint, textAlign: 'right', minWidth: 0, overflowWrap: 'anywhere' }}>
+            <span style={{ ...tk.font.label, fontSize: fsS(11), color: tint, textAlign: 'right', minWidth: 0, overflowWrap: 'anywhere' }}>
               {status}
             </span>
           )}
         </div>
 
         <div style={{ ...s.colTight, minWidth: 0 }}>
-          <div style={{ ...s.title, fontSize: fs(15), overflowWrap: 'anywhere' }}>{title}</div>
+          <div style={{ ...s.title, fontSize: fsT(15), overflowWrap: 'anywhere' }}>{title}</div>
 
           {(cfg.showValue || counted.length > 0) && (
             <div style={{ display: 'flex', alignItems: 'baseline', gap: tk.space.xs, minWidth: 0 }}>
-              <span style={{ ...tk.font.value, color: tint, fontSize: fs(valueFontSize(value)) }}>
+              <span style={{ ...tk.font.value, color: tint, fontSize: fsS(valueFontSize(value)) }}>
                 {value ?? '—'}
               </span>
               {value !== null && unit && counted.length === 0 && <span style={s.hint}>{unit}</span>}

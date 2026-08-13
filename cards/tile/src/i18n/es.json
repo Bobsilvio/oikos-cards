@@ -108,8 +108,10 @@
     "stateAdd": "Añadir regla",
     "stateAddCurrent": "Estado actual: {{state}}",
     "iconSize": "Tamaño del icono",
-    "textScale": "Tamaño del texto",
-    "sizeHint": "Útil cuando la tarjeta es pequeña o el nombre es largo."
+    "sizeHint": "Útil cuando la tarjeta es pequeña o el nombre es largo.",
+    "titleScale": "Tamaño del nombre",
+    "stateScale": "Tamaño del estado",
+    "stateScaleHint": "Vale también para el valor numérico."
   },
   "countOn": "{{count}} activas"
 }

@@ -108,8 +108,10 @@
     "stateAdd": "Aggiungi regola",
     "stateAddCurrent": "Stato attuale: {{state}}",
     "iconSize": "Dimensione icona",
-    "textScale": "Dimensione testo",
-    "sizeHint": "Utile quando la tile è piccola o il nome è lungo."
+    "sizeHint": "Utile quando la tile è piccola o il nome è lungo.",
+    "titleScale": "Dimensione nome",
+    "stateScale": "Dimensione stato",
+    "stateScaleHint": "Vale anche per il valore numerico."
   },
   "countOn": "{{count}} attive"
 }

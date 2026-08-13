@@ -1,4 +1,4 @@
-const { jsxs: s, jsx: t, Fragment: S } = window.__OIKOS_SDK__.jsxRuntime, D = {
+const { jsxs: l, jsx: t, Fragment: A } = window.__OIKOS_SDK__.jsxRuntime, D = {
   title: "Tile non configurata",
   hint: "Scegli un'entità dalle impostazioni"
 }, O = {
@@ -105,8 +105,10 @@ const { jsxs: s, jsx: t, Fragment: S } = window.__OIKOS_SDK__.jsxRuntime, D = {
   stateAdd: "Aggiungi regola",
   stateAddCurrent: "Stato attuale: {{state}}",
   iconSize: "Dimensione icona",
-  textScale: "Dimensione testo",
-  sizeHint: "Utile quando la tile è piccola o il nome è lungo."
+  sizeHint: "Utile quando la tile è piccola o il nome è lungo.",
+  titleScale: "Dimensione nome",
+  stateScale: "Dimensione stato",
+  stateScaleHint: "Vale anche per il valore numerico."
 }, U = "{{count}} attive", w = {
   empty: D,
   state: O,
@@ -219,17 +221,19 @@ const { jsxs: s, jsx: t, Fragment: S } = window.__OIKOS_SDK__.jsxRuntime, D = {
   stateAdd: "Add rule",
   stateAddCurrent: "Current state: {{state}}",
   iconSize: "Icon size",
-  textScale: "Text size",
-  sizeHint: "Useful when the tile is small or the name is long."
-}, j = "{{count}} on", L = {
+  sizeHint: "Useful when the tile is small or the name is long.",
+  titleScale: "Name size",
+  stateScale: "State size",
+  stateScaleHint: "Applies to the numeric value too."
+}, Z = "{{count}} on", L = {
   empty: R,
   state: $,
   settings: q,
-  countOn: j
-}, B = {
+  countOn: Z
+}, j = {
   title: "Kachel nicht konfiguriert",
   hint: "Wähle eine Entität in den Einstellungen"
-}, F = {
+}, B = {
   unavailable: "K/A",
   on: "An",
   off: "Aus",
@@ -264,7 +268,7 @@ const { jsxs: s, jsx: t, Fragment: S } = window.__OIKOS_SDK__.jsxRuntime, D = {
   wet: "Nass",
   active: "Aktiv",
   running: "Läuft"
-}, Z = {
+}, F = {
   sectionEntity: "Entität",
   entity: "Hauptentität",
   label: "Titel",
@@ -333,14 +337,16 @@ const { jsxs: s, jsx: t, Fragment: S } = window.__OIKOS_SDK__.jsxRuntime, D = {
   stateAdd: "Regel hinzufügen",
   stateAddCurrent: "Aktueller Zustand: {{state}}",
   iconSize: "Symbolgröße",
-  textScale: "Textgröße",
-  sizeHint: "Nützlich, wenn die Kachel klein oder der Name lang ist."
-}, K = "{{count}} aktiv", _ = {
-  empty: B,
-  state: F,
-  settings: Z,
-  countOn: K
-}, M = {
+  sizeHint: "Nützlich, wenn die Kachel klein oder der Name lang ist.",
+  titleScale: "Namensgröße",
+  stateScale: "Zustandsgröße",
+  stateScaleHint: "Gilt auch für den Zahlenwert."
+}, M = "{{count}} aktiv", _ = {
+  empty: j,
+  state: B,
+  settings: F,
+  countOn: M
+}, K = {
   title: "Tarjeta sin configurar",
   hint: "Elige una entidad en los ajustes"
 }, W = {
@@ -447,10 +453,12 @@ const { jsxs: s, jsx: t, Fragment: S } = window.__OIKOS_SDK__.jsxRuntime, D = {
   stateAdd: "Añadir regla",
   stateAddCurrent: "Estado actual: {{state}}",
   iconSize: "Tamaño del icono",
-  textScale: "Tamaño del texto",
-  sizeHint: "Útil cuando la tarjeta es pequeña o el nombre es largo."
+  sizeHint: "Útil cuando la tarjeta es pequeña o el nombre es largo.",
+  titleScale: "Tamaño del nombre",
+  stateScale: "Tamaño del estado",
+  stateScaleHint: "Vale también para el valor numérico."
 }, J = "{{count}} activas", I = {
-  empty: M,
+  empty: K,
   state: W,
   settings: G,
   countOn: J
@@ -561,8 +569,10 @@ const { jsxs: s, jsx: t, Fragment: S } = window.__OIKOS_SDK__.jsxRuntime, D = {
   stateAdd: "Ajouter une règle",
   stateAddCurrent: "État actuel : {{state}}",
   iconSize: "Taille de l’icône",
-  textScale: "Taille du texte",
-  sizeHint: "Utile quand la tuile est petite ou que le nom est long."
+  sizeHint: "Utile quand la tuile est petite ou que le nom est long.",
+  titleScale: "Taille du nom",
+  stateScale: "Taille de l'état",
+  stateScaleHint: "Vaut aussi pour la valeur numérique."
 }, ee = "{{count}} actives", k = {
   empty: Q,
   state: Y,
@@ -629,7 +639,11 @@ const ae = {
   // un nome lungo.
   iconSize: 20,
   // 12–34
-  textScale: 1,
+  // textScale: sostituito da titleScale/stateScale, letto ancora dalle tile
+  // configurate prima (vedi tsT/tsS).
+  titleScale: 1,
+  // 0.75–1.4
+  stateScale: 1,
   // 0.75–1.4
   offAccent: "",
   // colore a stato inattivo (solo layout 'stateTint')
@@ -650,15 +664,15 @@ const ae = {
   // 'more-info' | 'toggle' | 'popup' | 'list' | 'none'
   popupCardId: ""
   // istanza popup-panel da aprire con tapAction 'popup'
-}, { useDashboard: z, useCardConfig: oe, registerCardTranslations: ie, useT: se, EntityField: m, MdiIconPicker: C, Section: b, Field: i, TextField: g, Toggle: x, Slider: f, Pills: y, ColorCircles: E, ACCENT_COLORS: T, listPopupPanels: H } = window.__OIKOS_SDK__;
-ie("card-tile", { it: w, en: L, de: _, es: I, fr: k });
-function le({ cfg: c, set: u, t: a }) {
-  const { getState: l } = z(), e = Array.isArray(c.stateColors) ? c.stateColors : [], o = c.entityId ? l(c.entityId) : "", r = (n, p, h) => {
-    const v = e.map((A, V) => V === n ? { ...A, [p]: h } : A);
-    u("stateColors", v);
-  }, d = e.some((n) => String(n.state || "").toLowerCase() === String(o || "").toLowerCase());
-  return /* @__PURE__ */ s("div", { style: { display: "flex", flexDirection: "column", gap: 6 }, children: [
-    e.map((n, p) => /* @__PURE__ */ s("div", { style: { display: "flex", gap: 6, alignItems: "center" }, children: [
+}, { useDashboard: z, useCardConfig: ie, registerCardTranslations: oe, useT: le, EntityField: v, MdiIconPicker: C, Section: b, Field: o, TextField: g, Toggle: E, Slider: m, Pills: y, ColorCircles: x, ACCENT_COLORS: H, listPopupPanels: T } = window.__OIKOS_SDK__;
+oe("card-tile", { it: w, en: L, de: _, es: I, fr: k });
+function se({ cfg: c, set: u, t: a }) {
+  const { getState: s } = z(), e = Array.isArray(c.stateColors) ? c.stateColors : [], i = c.entityId ? s(c.entityId) : "", r = (n, p, h) => {
+    const f = e.map((S, V) => V === n ? { ...S, [p]: h } : S);
+    u("stateColors", f);
+  }, d = e.some((n) => String(n.state || "").toLowerCase() === String(i || "").toLowerCase());
+  return /* @__PURE__ */ l("div", { style: { display: "flex", flexDirection: "column", gap: 6 }, children: [
+    e.map((n, p) => /* @__PURE__ */ l("div", { style: { display: "flex", gap: 6, alignItems: "center" }, children: [
       /* @__PURE__ */ t(
         "input",
         {
@@ -700,7 +714,7 @@ function le({ cfg: c, set: u, t: a }) {
       /* @__PURE__ */ t(
         "button",
         {
-          onClick: () => u("stateColors", e.filter((h, v) => v !== p)),
+          onClick: () => u("stateColors", e.filter((h, f) => f !== p)),
           style: {
             width: 30,
             height: 30,
@@ -717,19 +731,19 @@ function le({ cfg: c, set: u, t: a }) {
         }
       )
     ] }, p)),
-    /* @__PURE__ */ s("div", { style: { display: "flex", gap: 6, flexWrap: "wrap" }, children: [
-      o && !d && /* @__PURE__ */ s(
+    /* @__PURE__ */ l("div", { style: { display: "flex", gap: 6, flexWrap: "wrap" }, children: [
+      i && !d && /* @__PURE__ */ l(
         "button",
         {
-          onClick: () => u("stateColors", [...e, { state: o, color: "#22c55e" }]),
+          onClick: () => u("stateColors", [...e, { state: i, color: "#22c55e" }]),
           style: P,
           children: [
             "+ ",
-            a("settings.stateAddCurrent", { state: o })
+            a("settings.stateAddCurrent", { state: i })
           ]
         }
       ),
-      /* @__PURE__ */ s(
+      /* @__PURE__ */ l(
         "button",
         {
           onClick: () => u("stateColors", [...e, { state: "", color: "#ef4444" }]),
@@ -754,20 +768,20 @@ const P = {
   fontWeight: 600
 };
 function re({ cfg: c, set: u, t: a }) {
-  const l = Array.isArray(c.countEntities) ? c.countEntities : [], e = (o, r) => {
-    const d = [...l];
-    d[o] = r, u("countEntities", d.filter(Boolean));
+  const s = Array.isArray(c.countEntities) ? c.countEntities : [], e = (i, r) => {
+    const d = [...s];
+    d[i] = r, u("countEntities", d.filter(Boolean));
   };
-  return /* @__PURE__ */ s("div", { style: { display: "flex", flexDirection: "column", gap: 6 }, children: [
-    l.map((o, r) => /* @__PURE__ */ s("div", { style: { display: "flex", gap: 6, alignItems: "center" }, children: [
+  return /* @__PURE__ */ l("div", { style: { display: "flex", flexDirection: "column", gap: 6 }, children: [
+    s.map((i, r) => /* @__PURE__ */ l("div", { style: { display: "flex", gap: 6, alignItems: "center" }, children: [
       /* @__PURE__ */ t("div", { style: { flex: 1, minWidth: 0 }, children: /* @__PURE__ */ t(
-        m,
+        v,
         {
           label: "",
           field: `__count_${r}`,
-          config: { [`__count_${r}`]: o },
+          config: { [`__count_${r}`]: i },
           setConfig: (d) => {
-            const n = typeof d == "function" ? d({ [`__count_${r}`]: o }) : d;
+            const n = typeof d == "function" ? d({ [`__count_${r}`]: i }) : d;
             e(r, n[`__count_${r}`]);
           }
         }
@@ -775,7 +789,7 @@ function re({ cfg: c, set: u, t: a }) {
       /* @__PURE__ */ t(
         "button",
         {
-          onClick: () => u("countEntities", l.filter((d, n) => n !== r)),
+          onClick: () => u("countEntities", s.filter((d, n) => n !== r)),
           style: {
             width: 30,
             height: 30,
@@ -792,10 +806,10 @@ function re({ cfg: c, set: u, t: a }) {
         }
       )
     ] }, r)),
-    /* @__PURE__ */ s(
+    /* @__PURE__ */ l(
       "button",
       {
-        onClick: () => u("countEntities", [...l, ""]),
+        onClick: () => u("countEntities", [...s, ""]),
         style: {
           padding: "7px 12px",
           borderRadius: 9,
@@ -815,8 +829,8 @@ function re({ cfg: c, set: u, t: a }) {
   ] });
 }
 function ue({ cfg: c, set: u, t: a }) {
-  const l = typeof H == "function" ? H() : [];
-  return l.length === 0 ? /* @__PURE__ */ t(i, { label: a("settings.popupPanel"), hint: a("settings.popupNone"), children: /* @__PURE__ */ t("div", { style: { fontSize: 11, color: "var(--text-muted)" }, children: a("settings.popupNoneHint") }) }) : /* @__PURE__ */ t(i, { label: a("settings.popupPanel"), hint: a("settings.popupHint"), children: /* @__PURE__ */ s(
+  const s = typeof T == "function" ? T() : [];
+  return s.length === 0 ? /* @__PURE__ */ t(o, { label: a("settings.popupPanel"), hint: a("settings.popupNone"), children: /* @__PURE__ */ t("div", { style: { fontSize: 11, color: "var(--text-muted)" }, children: a("settings.popupNoneHint") }) }) : /* @__PURE__ */ t(o, { label: a("settings.popupPanel"), hint: a("settings.popupHint"), children: /* @__PURE__ */ l(
     "select",
     {
       value: c.popupCardId || "",
@@ -833,7 +847,7 @@ function ue({ cfg: c, set: u, t: a }) {
       },
       children: [
         /* @__PURE__ */ t("option", { value: "", children: a("settings.popupChoose") }),
-        l.map((e) => /* @__PURE__ */ s("option", { value: e.id, children: [
+        s.map((e) => /* @__PURE__ */ l("option", { value: e.id, children: [
           e.title || a("settings.popupUntitled"),
           e.hidden ? " · " + a("settings.popupHidden") : "",
           " — " + e.page
@@ -843,42 +857,42 @@ function ue({ cfg: c, set: u, t: a }) {
   ) });
 }
 function me({ cardId: c }) {
-  const { dark: u } = z(), [a, l] = oe(c, ae), { t: e } = se("card-tile"), o = (n, p) => l((h) => ({ ...h, [n]: p })), r = (a.activeStates ?? []).join(", "), d = (n) => o("activeStates", n.split(",").map((p) => p.trim().toLowerCase()).filter(Boolean));
-  return /* @__PURE__ */ s("div", { style: { display: "flex", flexDirection: "column", gap: 14 }, children: [
-    /* @__PURE__ */ s(b, { title: e("settings.sectionEntity"), children: [
+  const { dark: u } = z(), [a, s] = ie(c, ae), { t: e } = le("card-tile"), i = (n, p) => s((h) => ({ ...h, [n]: p })), r = (a.activeStates ?? []).join(", "), d = (n) => i("activeStates", n.split(",").map((p) => p.trim().toLowerCase()).filter(Boolean));
+  return /* @__PURE__ */ l("div", { style: { display: "flex", flexDirection: "column", gap: 14 }, children: [
+    /* @__PURE__ */ l(b, { title: e("settings.sectionEntity"), children: [
       /* @__PURE__ */ t(
-        m,
+        v,
         {
           label: e("settings.entity"),
           field: "entityId",
           config: a,
-          setConfig: l
+          setConfig: s
         }
       ),
-      /* @__PURE__ */ t(i, { label: e("settings.label"), children: /* @__PURE__ */ t(
+      /* @__PURE__ */ t(o, { label: e("settings.label"), children: /* @__PURE__ */ t(
         g,
         {
           value: a.label,
-          onChange: (n) => o("label", n),
+          onChange: (n) => i("label", n),
           placeholder: e("settings.labelPh")
         }
       ) }),
-      /* @__PURE__ */ t(i, { label: e("settings.icon"), hint: e("settings.iconHint"), children: /* @__PURE__ */ t(C, { value: a.icon, onChange: (n) => o("icon", n), dark: u }) }),
-      /* @__PURE__ */ t(i, { label: e("settings.accent"), children: /* @__PURE__ */ t(
-        E,
+      /* @__PURE__ */ t(o, { label: e("settings.icon"), hint: e("settings.iconHint"), children: /* @__PURE__ */ t(C, { value: a.icon, onChange: (n) => i("icon", n), dark: u }) }),
+      /* @__PURE__ */ t(o, { label: e("settings.accent"), children: /* @__PURE__ */ t(
+        x,
         {
           value: a.accent,
-          onChange: (n) => o("accent", n),
-          colors: T
+          onChange: (n) => i("accent", n),
+          colors: H
         }
       ) })
     ] }),
-    /* @__PURE__ */ s(b, { title: e("settings.sectionLayout"), children: [
-      /* @__PURE__ */ t(i, { label: e("settings.layout"), hint: e("settings.layoutHint"), children: /* @__PURE__ */ t(
+    /* @__PURE__ */ l(b, { title: e("settings.sectionLayout"), children: [
+      /* @__PURE__ */ t(o, { label: e("settings.layout"), hint: e("settings.layoutHint"), children: /* @__PURE__ */ t(
         y,
         {
           value: a.layout || "value",
-          onChange: (n) => o("layout", n),
+          onChange: (n) => i("layout", n),
           options: [
             { value: "value", label: e("settings.layoutValue") },
             { value: "inline", label: e("settings.layoutInline") },
@@ -887,52 +901,63 @@ function me({ cardId: c }) {
           ]
         }
       ) }),
-      /* @__PURE__ */ t(i, { label: e("settings.iconSize"), hint: e("settings.sizeHint"), children: /* @__PURE__ */ t(
-        f,
+      /* @__PURE__ */ t(o, { label: e("settings.iconSize"), hint: e("settings.sizeHint"), children: /* @__PURE__ */ t(
+        m,
         {
           value: a.iconSize ?? 20,
-          onChange: (n) => o("iconSize", n),
+          onChange: (n) => i("iconSize", n),
           min: 12,
           max: 34,
           step: 1,
           format: (n) => `${n} px`
         }
       ) }),
-      /* @__PURE__ */ t(i, { label: e("settings.textScale"), children: /* @__PURE__ */ t(
-        f,
+      /* @__PURE__ */ t(o, { label: e("settings.titleScale"), children: /* @__PURE__ */ t(
+        m,
         {
-          value: a.textScale ?? 1,
-          onChange: (n) => o("textScale", n),
+          value: a.titleScale ?? a.textScale ?? 1,
+          onChange: (n) => i("titleScale", n),
           min: 0.75,
           max: 1.4,
           step: 0.05,
           format: (n) => `${Math.round(n * 100)}%`
         }
       ) }),
-      /* @__PURE__ */ t(i, { label: e("settings.stateColors"), hint: e("settings.stateColorsHint") }),
-      /* @__PURE__ */ t(le, { cfg: a, set: o, t: e }),
-      a.layout === "stateTint" && /* @__PURE__ */ t(i, { label: e("settings.offAccent"), hint: e("settings.offAccentHint"), children: /* @__PURE__ */ t(E, { value: a.offAccent, onChange: (n) => o("offAccent", n), colors: T }) })
+      /* @__PURE__ */ t(o, { label: e("settings.stateScale"), hint: e("settings.stateScaleHint"), children: /* @__PURE__ */ t(
+        m,
+        {
+          value: a.stateScale ?? a.textScale ?? 1,
+          onChange: (n) => i("stateScale", n),
+          min: 0.75,
+          max: 1.4,
+          step: 0.05,
+          format: (n) => `${Math.round(n * 100)}%`
+        }
+      ) }),
+      /* @__PURE__ */ t(o, { label: e("settings.stateColors"), hint: e("settings.stateColorsHint") }),
+      /* @__PURE__ */ t(se, { cfg: a, set: i, t: e }),
+      a.layout === "stateTint" && /* @__PURE__ */ t(o, { label: e("settings.offAccent"), hint: e("settings.offAccentHint"), children: /* @__PURE__ */ t(x, { value: a.offAccent, onChange: (n) => i("offAccent", n), colors: H }) })
     ] }),
-    /* @__PURE__ */ s(b, { title: e("settings.sectionStatus"), children: [
-      /* @__PURE__ */ t(i, { label: e("settings.showStatus"), children: /* @__PURE__ */ t(x, { value: a.showStatus, onChange: (n) => o("showStatus", n) }) }),
-      a.showStatus && /* @__PURE__ */ s(S, { children: [
-        /* @__PURE__ */ t(i, { label: e("settings.onText"), children: /* @__PURE__ */ t(
+    /* @__PURE__ */ l(b, { title: e("settings.sectionStatus"), children: [
+      /* @__PURE__ */ t(o, { label: e("settings.showStatus"), children: /* @__PURE__ */ t(E, { value: a.showStatus, onChange: (n) => i("showStatus", n) }) }),
+      a.showStatus && /* @__PURE__ */ l(A, { children: [
+        /* @__PURE__ */ t(o, { label: e("settings.onText"), children: /* @__PURE__ */ t(
           g,
           {
             value: a.onText,
-            onChange: (n) => o("onText", n),
+            onChange: (n) => i("onText", n),
             placeholder: e("settings.textPh")
           }
         ) }),
-        /* @__PURE__ */ t(i, { label: e("settings.offText"), children: /* @__PURE__ */ t(
+        /* @__PURE__ */ t(o, { label: e("settings.offText"), children: /* @__PURE__ */ t(
           g,
           {
             value: a.offText,
-            onChange: (n) => o("offText", n),
+            onChange: (n) => i("offText", n),
             placeholder: e("settings.textPh")
           }
         ) }),
-        /* @__PURE__ */ t(i, { label: e("settings.activeStates"), hint: e("settings.activeStatesHint"), children: /* @__PURE__ */ t(
+        /* @__PURE__ */ t(o, { label: e("settings.activeStates"), hint: e("settings.activeStatesHint"), children: /* @__PURE__ */ t(
           g,
           {
             value: r,
@@ -943,34 +968,34 @@ function me({ cardId: c }) {
         ) })
       ] })
     ] }),
-    /* @__PURE__ */ s(b, { title: e("settings.sectionValue"), children: [
-      /* @__PURE__ */ t(i, { label: e("settings.showValue"), children: /* @__PURE__ */ t(x, { value: a.showValue, onChange: (n) => o("showValue", n) }) }),
-      a.showValue && /* @__PURE__ */ s(S, { children: [
-        /* @__PURE__ */ t(i, { label: e("settings.valueSource"), children: /* @__PURE__ */ t(
+    /* @__PURE__ */ l(b, { title: e("settings.sectionValue"), children: [
+      /* @__PURE__ */ t(o, { label: e("settings.showValue"), children: /* @__PURE__ */ t(E, { value: a.showValue, onChange: (n) => i("showValue", n) }) }),
+      a.showValue && /* @__PURE__ */ l(A, { children: [
+        /* @__PURE__ */ t(o, { label: e("settings.valueSource"), children: /* @__PURE__ */ t(
           y,
           {
             value: a.valueSource,
-            onChange: (n) => o("valueSource", n),
+            onChange: (n) => i("valueSource", n),
             options: [
               { value: "state", label: e("settings.srcState") },
               { value: "attribute", label: e("settings.srcAttr") }
             ]
           }
         ) }),
-        a.valueSource === "attribute" && /* @__PURE__ */ t(i, { label: e("settings.valueAttr"), children: /* @__PURE__ */ t(
+        a.valueSource === "attribute" && /* @__PURE__ */ t(o, { label: e("settings.valueAttr"), children: /* @__PURE__ */ t(
           g,
           {
             value: a.valueAttr,
-            onChange: (n) => o("valueAttr", n),
+            onChange: (n) => i("valueAttr", n),
             placeholder: e("settings.valueAttrPh"),
             mono: !0
           }
         ) }),
-        /* @__PURE__ */ t(i, { label: e("settings.decimals"), children: /* @__PURE__ */ t(
-          f,
+        /* @__PURE__ */ t(o, { label: e("settings.decimals"), children: /* @__PURE__ */ t(
+          m,
           {
             value: a.decimals,
-            onChange: (n) => o("decimals", n),
+            onChange: (n) => i("decimals", n),
             min: 0,
             max: 3,
             step: 1,
@@ -978,26 +1003,26 @@ function me({ cardId: c }) {
             rightLabel: "3"
           }
         ) }),
-        /* @__PURE__ */ t(i, { label: e("settings.unit"), children: /* @__PURE__ */ t(
+        /* @__PURE__ */ t(o, { label: e("settings.unit"), children: /* @__PURE__ */ t(
           g,
           {
             value: a.unitOverride,
-            onChange: (n) => o("unitOverride", n),
+            onChange: (n) => i("unitOverride", n),
             placeholder: e("settings.unitPh")
           }
         ) })
       ] })
     ] }),
-    /* @__PURE__ */ s(b, { title: e("settings.sectionCount"), collapsible: !0, defaultOpen: !1, children: [
-      /* @__PURE__ */ t(i, { label: e("settings.countEntities"), hint: e("settings.countHint") }),
-      /* @__PURE__ */ t(re, { cfg: a, set: o, t: e })
+    /* @__PURE__ */ l(b, { title: e("settings.sectionCount"), collapsible: !0, defaultOpen: !1, children: [
+      /* @__PURE__ */ t(o, { label: e("settings.countEntities"), hint: e("settings.countHint") }),
+      /* @__PURE__ */ t(re, { cfg: a, set: i, t: e })
     ] }),
-    /* @__PURE__ */ s(b, { title: e("settings.sectionTap"), children: [
-      /* @__PURE__ */ t(i, { label: e("settings.tap"), hint: e("settings.tapHint"), children: /* @__PURE__ */ t(
+    /* @__PURE__ */ l(b, { title: e("settings.sectionTap"), children: [
+      /* @__PURE__ */ t(o, { label: e("settings.tap"), hint: e("settings.tapHint"), children: /* @__PURE__ */ t(
         y,
         {
           value: a.tapAction,
-          onChange: (n) => o("tapAction", n),
+          onChange: (n) => i("tapAction", n),
           options: [
             { value: "more-info", label: e("settings.tapMore") },
             { value: "toggle", label: e("settings.tapToggle") },
@@ -1007,49 +1032,49 @@ function me({ cardId: c }) {
           ]
         }
       ) }),
-      a.tapAction === "popup" && /* @__PURE__ */ t(ue, { cfg: a, set: o, t: e })
+      a.tapAction === "popup" && /* @__PURE__ */ t(ue, { cfg: a, set: i, t: e })
     ] }),
-    /* @__PURE__ */ s(b, { title: e("settings.sectionSub"), collapsible: !0, defaultOpen: !1, children: [
-      /* @__PURE__ */ t(i, { label: e("settings.sub1") }),
+    /* @__PURE__ */ l(b, { title: e("settings.sectionSub"), collapsible: !0, defaultOpen: !1, children: [
+      /* @__PURE__ */ t(o, { label: e("settings.sub1") }),
       /* @__PURE__ */ t(
-        m,
+        v,
         {
           label: e("settings.subEntity"),
           field: "sub1Entity",
           config: a,
-          setConfig: l
+          setConfig: s
         }
       ),
-      /* @__PURE__ */ t(i, { label: e("settings.subLabel"), children: /* @__PURE__ */ t(
+      /* @__PURE__ */ t(o, { label: e("settings.subLabel"), children: /* @__PURE__ */ t(
         g,
         {
           value: a.sub1Label,
-          onChange: (n) => o("sub1Label", n),
+          onChange: (n) => i("sub1Label", n),
           placeholder: e("settings.subLabelPh")
         }
       ) }),
-      /* @__PURE__ */ t(i, { label: e("settings.subUnit"), children: /* @__PURE__ */ t(g, { value: a.sub1Unit, onChange: (n) => o("sub1Unit", n) }) }),
-      /* @__PURE__ */ t(i, { label: e("settings.sub2") }),
+      /* @__PURE__ */ t(o, { label: e("settings.subUnit"), children: /* @__PURE__ */ t(g, { value: a.sub1Unit, onChange: (n) => i("sub1Unit", n) }) }),
+      /* @__PURE__ */ t(o, { label: e("settings.sub2") }),
       /* @__PURE__ */ t(
-        m,
+        v,
         {
           label: e("settings.subEntity"),
           field: "sub2Entity",
           config: a,
-          setConfig: l
+          setConfig: s
         }
       ),
-      /* @__PURE__ */ t(i, { label: e("settings.subLabel"), children: /* @__PURE__ */ t(
+      /* @__PURE__ */ t(o, { label: e("settings.subLabel"), children: /* @__PURE__ */ t(
         g,
         {
           value: a.sub2Label,
-          onChange: (n) => o("sub2Label", n),
+          onChange: (n) => i("sub2Label", n),
           placeholder: e("settings.subLabelPh")
         }
       ) }),
-      /* @__PURE__ */ t(i, { label: e("settings.subUnit"), children: /* @__PURE__ */ t(g, { value: a.sub2Unit, onChange: (n) => o("sub2Unit", n) }) })
+      /* @__PURE__ */ t(o, { label: e("settings.subUnit"), children: /* @__PURE__ */ t(g, { value: a.sub2Unit, onChange: (n) => i("sub2Unit", n) }) })
     ] }),
-    /* @__PURE__ */ t(b, { title: e("settings.sectionExtra"), collapsible: !0, defaultOpen: !1, children: /* @__PURE__ */ t(i, { label: e("settings.badgeIcon"), hint: e("settings.badgeIconHint"), children: /* @__PURE__ */ t(C, { value: a.badgeIcon, onChange: (n) => o("badgeIcon", n), dark: u }) }) })
+    /* @__PURE__ */ t(b, { title: e("settings.sectionExtra"), collapsible: !0, defaultOpen: !1, children: /* @__PURE__ */ t(o, { label: e("settings.badgeIcon"), hint: e("settings.badgeIconHint"), children: /* @__PURE__ */ t(C, { value: a.badgeIcon, onChange: (n) => i("badgeIcon", n), dark: u }) }) })
   ] });
 }
 export {
