@@ -355,7 +355,7 @@
       "id": "tile",
       "type": "card",
       "name": "Tile",
-      "version": "1.9.0",
+      "version": "1.10.0",
       "author": "Oikos",
       "description": "Tile compatta e configurabile: una entità, uno stile, molti usi. Icona, stato, valore grande e due righe di dettaglio — per allarme, serratura, cancello, temperatura, batterie.",
       "description_en": "Compact configurable tile: one entity, one style, many uses. Icon, status, large value and two detail lines — for alarm, lock, gate, temperature, batteries.",
@@ -379,6 +379,14 @@
       "package": null,
       "tier": "free",
       "changelog": [
+        {
+          "version": "1.10.0",
+          "date": "2026-08-13",
+          "changes": [
+            "La riga di stato mostrava il numero senza unità: si leggeva «45.5» senza",
+            "Il campo «Unità» compariva solo col valore grande acceso, quindi chi usa la"
+          ]
+        },
         {
           "version": "1.9.0",
           "date": "2026-08-13",
@@ -450,14 +458,6 @@
           "date": "2026-08-12",
           "changes": [
             "Al tocco: «Apri popup». La tile può aprire un pannello popup configurato"
-          ]
-        },
-        {
-          "version": "1.1.0",
-          "date": "2026-08-12",
-          "changes": [
-            "Il colore scelto non si vedeva sui sensori. L'accento compariva solo a",
-            "Il bordo acceso resta invece un segnale di stato, quindi su un sensore non si"
           ]
         }
       ]

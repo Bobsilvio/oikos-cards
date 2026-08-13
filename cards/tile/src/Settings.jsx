@@ -403,15 +403,20 @@ export default function TileSettings({ cardId }) {
                 leftLabel="0" rightLabel="3"
               />
             </Field>
-            <Field label={t('settings.unit')}>
-              <TextField
-                value={cfg.unitOverride}
-                onChange={v => set('unitOverride', v)}
-                placeholder={t('settings.unitPh')}
-              />
-            </Field>
           </>
         )}
+
+        {/* Fuori dal blocco «valore grande»: l'unità vale anche per la riga di
+            stato, e chi usa la disposizione con lo stato sotto il nome non ha
+            il valore grande acceso — il campo gli restava nascosto e non aveva
+            modo di dire che quel 45.5 è una percentuale. */}
+        <Field label={t('settings.unit')} hint={t('settings.unitHint')}>
+          <TextField
+            value={cfg.unitOverride}
+            onChange={v => set('unitOverride', v)}
+            placeholder={t('settings.unitPh')}
+          />
+        </Field>
       </Section>
       <Section title={t('settings.sectionCount')} collapsible defaultOpen={false}>
         <Field label={t('settings.countEntities')} hint={t('settings.countHint')} />

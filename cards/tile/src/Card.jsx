@@ -186,6 +186,26 @@ export default function TileCard({ cardId = 'tile' }) {
     status = null
   }
 
+  /*
+   * Testo dello stato con la sua unità.
+   *
+   * Lo stato di un sensore numerico in Home Assistant è solo il numero:
+   * l'unità sta in un attributo a parte. Nelle disposizioni che mostrano lo
+   * stato invece del valore grande si leggeva «45.5» e basta — nessun modo di
+   * sapere se sono gradi, per cento o litri.
+   *
+   * Si aggiunge solo quando il testo È quel numero: uno stato a parole
+   * («aperto») non prende un'unità.
+   *
+   * Lo spazio segue l'uso di Home Assistant: attaccato per % e gradi, staccato
+   * per tutto il resto (45.5% ma 21.4 kWh).
+   */
+  const statusText = (() => {
+    if (status == null || !unit) return status
+    if (String(valueRaw).trim() !== status.trim()) return status
+    return /^[%°]/.test(unit) ? `${status}${unit}` : `${status} ${unit}`
+  })()
+
   const subs = [
     subLine(cfg.sub1Entity, cfg.sub1Label, cfg.sub1Unit),
     subLine(cfg.sub2Entity, cfg.sub2Label, cfg.sub2Unit),
@@ -346,7 +366,7 @@ export default function TileCard({ cardId = 'tile' }) {
           fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap',
           maxWidth: '50%', overflow: 'hidden', textOverflow: 'ellipsis', flexShrink: 1,
         }}>
-          {value ?? status ?? '—'}
+          {value ?? statusText ?? '—'}
           {value !== null && unit && <small style={{ ...s.hint, marginLeft: 3 }}>{unit}</small>}
         </span>
       </div>
@@ -371,7 +391,7 @@ export default function TileCard({ cardId = 'tile' }) {
           fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap',
           maxWidth: '55%', overflow: 'hidden', textOverflow: 'ellipsis', flexShrink: 1,
         }}>
-          {value ?? status ?? '—'}
+          {value ?? statusText ?? '—'}
           {value !== null && unit && <small style={{ ...s.hint, marginLeft: 3 }}>{unit}</small>}
         </span>
       </div>
@@ -387,7 +407,7 @@ export default function TileCard({ cardId = 'tile' }) {
             {title}
           </div>
           <div style={{ ...s.hint, fontSize: fsS(11), color: tinted ? tintCol : tk.color.muted, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-            {counted.length > 0 ? t('countOn', { count: countOn }) : (status ?? '—')}
+            {counted.length > 0 ? t('countOn', { count: countOn }) : (statusText ?? '—')}
           </div>
         </div>
         {cfg.badgeIcon && <MdiIcon name={cfg.badgeIcon} size={18} color={tinted ? tintCol : tint} />}
@@ -399,9 +419,9 @@ export default function TileCard({ cardId = 'tile' }) {
       <div style={{ display: 'flex', flexDirection: 'column', gap: tk.space.md }}>
         <div style={{ ...s.rowBetween, alignItems: 'flex-start', gap: tk.space.sm }}>
           <div style={chipStyle(tk, tint, active && !unknown, iconPx + 22)}>{iconEl}</div>
-          {status && (
+          {statusText && (
             <span style={{ ...tk.font.label, fontSize: fsS(11), color: tint, textAlign: 'right', minWidth: 0, overflowWrap: 'anywhere' }}>
-              {status}
+              {statusText}
             </span>
           )}
         </div>

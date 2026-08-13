@@ -120,7 +120,8 @@
     "bgColor": "Couleur du fond",
     "bgOpacity": "Intensité",
     "bgOpacityHint": "100% = couleur pleine.",
-    "layoutSlim": "Fine"
+    "layoutSlim": "Fine",
+    "unitHint": "Vide = celle de l'entité. Vaut aussi pour la ligne d'état."
   },
   "countOn": "{{count}} actives"
 }

@@ -120,7 +120,8 @@
     "bgColor": "Colore dello sfondo",
     "bgOpacity": "Intensità",
     "bgOpacityHint": "100% = colore pieno.",
-    "layoutSlim": "Sottile"
+    "layoutSlim": "Sottile",
+    "unitHint": "Vuoto = quella dell'entità. Vale anche per la riga di stato."
   },
   "countOn": "{{count}} attive"
 }

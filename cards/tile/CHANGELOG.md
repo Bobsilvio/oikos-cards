@@ -4,6 +4,16 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [1.10.0] - 2026-08-13
+
+### Fixed
+- La riga di stato mostrava il numero senza unità: si leggeva «45.5» senza
+  sapere se fossero gradi o percentuale. Ora l'unità dell'entità viene aggiunta
+  (attaccata per % e gradi, staccata per il resto).
+- Il campo «Unità» compariva solo col valore grande acceso, quindi chi usa la
+  disposizione con lo stato sotto il nome non poteva impostarlo. Ora è sempre
+  visibile.
+
 ## [1.9.0] - 2026-08-13
 
 ### Added

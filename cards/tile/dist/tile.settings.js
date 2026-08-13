@@ -1,4 +1,4 @@
-const { jsxs: l, jsx: t, Fragment: S } = window.__OIKOS_SDK__.jsxRuntime, V = {
+const { jsxs: l, jsx: t, Fragment: S } = window.__OIKOS_SDK__.jsxRuntime, O = {
   title: "Tile non configurata",
   hint: "Scegli un'entità dalle impostazioni"
 }, N = {
@@ -117,9 +117,10 @@ const { jsxs: l, jsx: t, Fragment: S } = window.__OIKOS_SDK__.jsxRuntime, V = {
   bgColor: "Colore dello sfondo",
   bgOpacity: "Intensità",
   bgOpacityHint: "100% = colore pieno.",
-  layoutSlim: "Sottile"
+  layoutSlim: "Sottile",
+  unitHint: "Vuoto = quella dell'entità. Vale anche per la riga di stato."
 }, U = "{{count}} attive", P = {
-  empty: V,
+  empty: O,
   state: N,
   settings: D,
   countOn: U
@@ -242,7 +243,8 @@ const { jsxs: l, jsx: t, Fragment: S } = window.__OIKOS_SDK__.jsxRuntime, V = {
   bgColor: "Background colour",
   bgOpacity: "Intensity",
   bgOpacityHint: "100% = solid colour.",
-  layoutSlim: "Slim"
+  layoutSlim: "Slim",
+  unitHint: "Empty = the entity's own. Applies to the state line too."
 }, $ = "{{count}} on", L = {
   empty: F,
   state: M,
@@ -251,7 +253,7 @@ const { jsxs: l, jsx: t, Fragment: S } = window.__OIKOS_SDK__.jsxRuntime, V = {
 }, q = {
   title: "Kachel nicht konfiguriert",
   hint: "Wähle eine Entität in den Einstellungen"
-}, j = {
+}, Z = {
   unavailable: "K/A",
   on: "An",
   off: "Aus",
@@ -286,7 +288,7 @@ const { jsxs: l, jsx: t, Fragment: S } = window.__OIKOS_SDK__.jsxRuntime, V = {
   wet: "Nass",
   active: "Aktiv",
   running: "Läuft"
-}, Z = {
+}, j = {
   sectionEntity: "Entität",
   entity: "Hauptentität",
   label: "Titel",
@@ -367,11 +369,12 @@ const { jsxs: l, jsx: t, Fragment: S } = window.__OIKOS_SDK__.jsxRuntime, V = {
   bgColor: "Hintergrundfarbe",
   bgOpacity: "Intensität",
   bgOpacityHint: "100% = volle Farbe.",
-  layoutSlim: "Schmal"
+  layoutSlim: "Schmal",
+  unitHint: "Leer = die der Entität. Gilt auch für die Zustandszeile."
 }, B = "{{count}} aktiv", I = {
   empty: q,
-  state: j,
-  settings: Z,
+  state: Z,
+  settings: j,
   countOn: B
 }, K = {
   title: "Tarjeta sin configurar",
@@ -492,7 +495,8 @@ const { jsxs: l, jsx: t, Fragment: S } = window.__OIKOS_SDK__.jsxRuntime, V = {
   bgColor: "Color del fondo",
   bgOpacity: "Intensidad",
   bgOpacityHint: "100% = color pleno.",
-  layoutSlim: "Fina"
+  layoutSlim: "Fina",
+  unitHint: "Vacío = la de la entidad. Vale también para la línea de estado."
 }, J = "{{count}} activas", _ = {
   empty: K,
   state: W,
@@ -617,7 +621,8 @@ const { jsxs: l, jsx: t, Fragment: S } = window.__OIKOS_SDK__.jsxRuntime, V = {
   bgColor: "Couleur du fond",
   bgOpacity: "Intensité",
   bgOpacityHint: "100% = couleur pleine.",
-  layoutSlim: "Fine"
+  layoutSlim: "Fine",
+  unitHint: "Vide = celle de l'entité. Vaut aussi pour la ligne d'état."
 }, ee = "{{count}} actives", k = {
   empty: Q,
   state: Y,
@@ -718,11 +723,11 @@ const ae = {
   // 'more-info' | 'toggle' | 'popup' | 'list' | 'none'
   popupCardId: ""
   // istanza popup-panel da aprire con tapAction 'popup'
-}, { useDashboard: z, useCardConfig: oe, registerCardTranslations: ie, useT: le, EntityField: y, MdiIconPicker: H, Section: b, Field: i, TextField: g, Toggle: E, Slider: m, Pills: v, ColorCircles: A, ACCENT_COLORS: C, listPopupPanels: T } = window.__OIKOS_SDK__;
+}, { useDashboard: z, useCardConfig: oe, registerCardTranslations: ie, useT: le, EntityField: y, MdiIconPicker: x, Section: b, Field: i, TextField: g, Toggle: E, Slider: m, Pills: v, ColorCircles: A, ACCENT_COLORS: C, listPopupPanels: T } = window.__OIKOS_SDK__;
 ie("card-tile", { it: P, en: L, de: I, es: _, fr: k });
 function se({ cfg: d, set: c, t: a }) {
   const { getState: r } = z(), e = Array.isArray(d.stateColors) ? d.stateColors : [], o = d.entityId ? r(d.entityId) : "", u = (n, s, h) => {
-    const f = e.map((x, O) => O === n ? { ...x, [s]: h } : x);
+    const f = e.map((H, V) => V === n ? { ...H, [s]: h } : H);
     c("stateColors", f);
   }, p = e.some((n) => String(n.state || "").toLowerCase() === String(o || "").toLowerCase());
   return /* @__PURE__ */ l("div", { style: { display: "flex", flexDirection: "column", gap: 6 }, children: [
@@ -931,7 +936,7 @@ function me({ cardId: d }) {
           placeholder: e("settings.labelPh")
         }
       ) }),
-      /* @__PURE__ */ t(i, { label: e("settings.icon"), hint: e("settings.iconHint"), children: /* @__PURE__ */ t(H, { value: a.icon, onChange: (n) => o("icon", n), dark: c }) }),
+      /* @__PURE__ */ t(i, { label: e("settings.icon"), hint: e("settings.iconHint"), children: /* @__PURE__ */ t(x, { value: a.icon, onChange: (n) => o("icon", n), dark: c }) }),
       /* @__PURE__ */ t(i, { label: e("settings.accent"), children: /* @__PURE__ */ t(
         A,
         {
@@ -1086,16 +1091,16 @@ function me({ cardId: d }) {
             leftLabel: "0",
             rightLabel: "3"
           }
-        ) }),
-        /* @__PURE__ */ t(i, { label: e("settings.unit"), children: /* @__PURE__ */ t(
-          g,
-          {
-            value: a.unitOverride,
-            onChange: (n) => o("unitOverride", n),
-            placeholder: e("settings.unitPh")
-          }
         ) })
-      ] })
+      ] }),
+      /* @__PURE__ */ t(i, { label: e("settings.unit"), hint: e("settings.unitHint"), children: /* @__PURE__ */ t(
+        g,
+        {
+          value: a.unitOverride,
+          onChange: (n) => o("unitOverride", n),
+          placeholder: e("settings.unitPh")
+        }
+      ) })
     ] }),
     /* @__PURE__ */ l(b, { title: e("settings.sectionCount"), collapsible: !0, defaultOpen: !1, children: [
       /* @__PURE__ */ t(i, { label: e("settings.countEntities"), hint: e("settings.countHint") }),
@@ -1158,7 +1163,7 @@ function me({ cardId: d }) {
       ) }),
       /* @__PURE__ */ t(i, { label: e("settings.subUnit"), children: /* @__PURE__ */ t(g, { value: a.sub2Unit, onChange: (n) => o("sub2Unit", n) }) })
     ] }),
-    /* @__PURE__ */ t(b, { title: e("settings.sectionExtra"), collapsible: !0, defaultOpen: !1, children: /* @__PURE__ */ t(i, { label: e("settings.badgeIcon"), hint: e("settings.badgeIconHint"), children: /* @__PURE__ */ t(H, { value: a.badgeIcon, onChange: (n) => o("badgeIcon", n), dark: c }) }) })
+    /* @__PURE__ */ t(b, { title: e("settings.sectionExtra"), collapsible: !0, defaultOpen: !1, children: /* @__PURE__ */ t(i, { label: e("settings.badgeIcon"), hint: e("settings.badgeIconHint"), children: /* @__PURE__ */ t(x, { value: a.badgeIcon, onChange: (n) => o("badgeIcon", n), dark: c }) }) })
   ] });
 }
 export {

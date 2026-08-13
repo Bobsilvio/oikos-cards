@@ -120,7 +120,8 @@
     "bgColor": "Hintergrundfarbe",
     "bgOpacity": "Intensität",
     "bgOpacityHint": "100% = volle Farbe.",
-    "layoutSlim": "Schmal"
+    "layoutSlim": "Schmal",
+    "unitHint": "Leer = die der Entität. Gilt auch für die Zustandszeile."
   },
   "countOn": "{{count}} aktiv"
 }

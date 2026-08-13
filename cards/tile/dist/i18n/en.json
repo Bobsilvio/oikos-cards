@@ -120,7 +120,8 @@
     "bgColor": "Background colour",
     "bgOpacity": "Intensity",
     "bgOpacityHint": "100% = solid colour.",
-    "layoutSlim": "Slim"
+    "layoutSlim": "Slim",
+    "unitHint": "Empty = the entity's own. Applies to the state line too."
   },
   "countOn": "{{count}} on"
 }

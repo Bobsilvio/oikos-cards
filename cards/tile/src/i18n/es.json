@@ -120,7 +120,8 @@
     "bgColor": "Color del fondo",
     "bgOpacity": "Intensidad",
     "bgOpacityHint": "100% = color pleno.",
-    "layoutSlim": "Fina"
+    "layoutSlim": "Fina",
+    "unitHint": "Vacío = la de la entidad. Vale también para la línea de estado."
   },
   "countOn": "{{count}} activas"
 }
