@@ -2,6 +2,15 @@
 
 Tutte le modifiche rilevanti di questa card.
 
+## [1.1.2] - 2026-08-13
+### Changed
+- **Forma compatta più stretta.** Temperatura attuale, target e i dati di
+  contorno — umidità, esterna, ventola — stanno ora su **una riga sola**.
+  Prima occupavano tre righe per cinque numeri. Nella riga compatta i chip
+  perdono l'etichetta: ripeteva quello che l'icona già dice, ed era lei a far
+  andare tutto a capo. Sparisce anche la scritta «ATTUALE»: una temperatura in
+  cifre grandi non ha bisogno che le si dica cos'è.
+
 ## [1.1.1] - 2026-08-13
 ### Fixed
 - **Dall'elenco delle modalità non si usciva** senza sceglierne una. L'unico

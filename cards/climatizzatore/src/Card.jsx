@@ -473,9 +473,11 @@ export default function ClimatizzatoreCard({ cardId = 'climatizzatore' }) {
         marginBottom: compact ? 10 : 14,
       }}>
         <div>
-          <div style={{ fontSize: 9, fontWeight: 800, color: cMuted, letterSpacing: '.08em', textTransform: 'uppercase' }}>
-            {t('tempCurrent')}
-          </div>
+          {!compact && (
+            <div style={{ fontSize: 9, fontWeight: 800, color: cMuted, letterSpacing: '.08em', textTransform: 'uppercase' }}>
+              {t('tempCurrent')}
+            </div>
+          )}
           <div style={{
             fontSize: compact ? 30 : 44, fontWeight: 900, color: cText,
             letterSpacing: compact ? '-1px' : '-2px', lineHeight: 1,
@@ -485,6 +487,26 @@ export default function ClimatizzatoreCard({ cardId = 'climatizzatore' }) {
             <span style={{ fontSize: 18, fontWeight: 700, color: cMuted, marginLeft: 4 }}>°C</span>
           </div>
         </div>
+
+        {/* Compatto: umidità, esterna e ventola in coda alla stessa riga.
+            Solo icona e numero — l'etichetta ripete quello che l'icona già
+            dice, e a questa larghezza è lei a far andare tutto a capo. */}
+        {compact && (
+          <div style={{
+            display: 'flex', alignItems: 'center', gap: 10,
+            marginLeft: 'auto', paddingBottom: 3, minWidth: 0,
+          }}>
+            {config.showHumidity && !hideSmall.has('humidity') && humidity != null && (
+              <MiniStat icon={<Droplets size={12}/>} value={`${Math.round(humidity)}%`} c={cText} m={cMuted}/>
+            )}
+            {!hideSmall.has('outdoor') && outdoorTemp != null && (
+              <MiniStat icon={<Sun size={12}/>} value={`${Math.round(outdoorTemp)}°`} c={cText} m={cMuted}/>
+            )}
+            {config.showFan && !hideSmall.has('fan') && fanMode && (
+              <MiniStat icon={<Wind size={12}/>} value={String(fanMode)} c={cText} m={cMuted}/>
+            )}
+          </div>
+        )}
 
         {/* Target temp con +/- */}
         {targetTemp != null && !isOff && (
@@ -538,8 +560,10 @@ export default function ClimatizzatoreCard({ cardId = 'climatizzatore' }) {
         )}
       </div>
 
-      {/* ── Info row: umidità + outdoor + fan + preset ── */}
-      {(humidity != null || outdoorTemp != null || (fanMode && config.showFan) || (config.showPreset && presetMode && presetMode !== 'none') || timerEndsAt) && (
+      {/* ── Info row: umidità + outdoor + fan + preset ──
+          In compatto questi dati salgono nella riga della temperatura: qui
+          occuperebbero due righe intere per tre numeri. */}
+      {!compact && (humidity != null || outdoorTemp != null || (fanMode && config.showFan) || (config.showPreset && presetMode && presetMode !== 'none') || timerEndsAt) && (
         <div style={{
           display: 'flex', gap: 8, marginBottom: 12, flexWrap: 'wrap',
         }}>
@@ -811,6 +835,22 @@ export default function ClimatizzatoreCard({ cardId = 'climatizzatore' }) {
         )}
       </AnimatePresence>
     </motion.div>
+  )
+}
+
+
+/** Icona + numero, senza etichetta: nella riga compatta lo spazio è quello. */
+function MiniStat({ icon, value, c, m }) {
+  return (
+    <span style={{ display: 'flex', alignItems: 'center', gap: 4, minWidth: 0 }}>
+      <span style={{ color: m, display: 'flex' }}>{icon}</span>
+      <span style={{
+        fontSize: 12, fontWeight: 800, color: c,
+        fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap',
+      }}>
+        {value}
+      </span>
+    </span>
   )
 }
 

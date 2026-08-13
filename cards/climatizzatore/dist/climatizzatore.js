@@ -1,11 +1,11 @@
-const { jsx: t, jsxs: a, Fragment: je } = window.__OIKOS_SDK__.jsxRuntime, Be = {
+const { jsx: e, jsxs: a, Fragment: Be } = window.__OIKOS_SDK__.jsxRuntime, Ve = {
   off: "Spento",
   cool: "Raffredda",
   heat: "Riscalda",
   auto: "Auto",
   dry: "Deumidifica",
   fan_only: "Ventola"
-}, Ve = "Attuale", qe = "Target", Ge = "Umidità", Ue = "Esterna", Ze = "Ventola", Ye = "Accendi", Je = "Spegni", Xe = "Entità non disponibile", Qe = "Configura un'entità climate.* nelle impostazioni della card.", et = {
+}, qe = "Attuale", Ge = "Target", Ue = "Umidità", Ze = "Esterna", Ye = "Ventola", Je = "Accendi", Xe = "Spegni", Qe = "Entità non disponibile", et = "Configura un'entità climate.* nelle impostazioni della card.", tt = {
   title: "Timer spegnimento",
   tabMin: "Minuti",
   tabTime: "Orario",
@@ -14,7 +14,7 @@ const { jsx: t, jsxs: a, Fragment: je } = window.__OIKOS_SDK__.jsxRuntime, Be = 
   cancel: "Annulla",
   activeLabel: "Spegni alle",
   activeIn: "tra {{m}}"
-}, tt = {
+}, ot = {
   sectionEntity: "Entità",
   sectionAppearance: "Aspetto",
   sectionCommands: "Comandi",
@@ -51,7 +51,7 @@ const { jsx: t, jsxs: a, Fragment: je } = window.__OIKOS_SDK__.jsxRuntime, Be = 
     humidity: "Nascondi umidità",
     outdoor: "Nascondi temperatura esterna"
   }
-}, ot = {
+}, nt = {
   none: "Normale",
   boost: "Boost",
   eco: "Eco",
@@ -60,31 +60,31 @@ const { jsx: t, jsxs: a, Fragment: je } = window.__OIKOS_SDK__.jsxRuntime, Be = 
   away: "Assente",
   home: "Casa",
   activity: "Attività"
-}, nt = "Preset", it = "Modalità", at = "Chiudi", rt = {
-  mode: Be,
-  tempCurrent: Ve,
-  tempTarget: qe,
-  chipHumidity: Ge,
-  chipOutdoor: Ue,
-  chipFan: Ze,
-  btnOn: Ye,
-  btnOff: Je,
-  unavailable: Xe,
-  noEntity: Qe,
-  timer: et,
-  settings: tt,
-  preset: ot,
-  chipPreset: nt,
-  modeTitle: it,
-  close: at
-}, st = {
+}, it = "Preset", at = "Modalità", rt = "Chiudi", st = {
+  mode: Ve,
+  tempCurrent: qe,
+  tempTarget: Ge,
+  chipHumidity: Ue,
+  chipOutdoor: Ze,
+  chipFan: Ye,
+  btnOn: Je,
+  btnOff: Xe,
+  unavailable: Qe,
+  noEntity: et,
+  timer: tt,
+  settings: ot,
+  preset: nt,
+  chipPreset: it,
+  modeTitle: at,
+  close: rt
+}, lt = {
   off: "Off",
   cool: "Cool",
   heat: "Heat",
   auto: "Auto",
   dry: "Dry",
   fan_only: "Fan"
-}, ct = "Current", lt = "Target", dt = "Humidity", ut = "Outdoor", mt = "Fan", pt = "Turn on", ht = "Turn off", ft = "Entity unavailable", gt = "Configure a climate.* entity in the card settings.", bt = {
+}, ct = "Current", dt = "Target", ut = "Humidity", mt = "Outdoor", pt = "Fan", ht = "Turn on", ft = "Turn off", gt = "Entity unavailable", bt = "Configure a climate.* entity in the card settings.", yt = {
   title: "Off timer",
   tabMin: "Minutes",
   tabTime: "Time",
@@ -93,7 +93,7 @@ const { jsx: t, jsxs: a, Fragment: je } = window.__OIKOS_SDK__.jsxRuntime, Be = 
   cancel: "Cancel",
   activeLabel: "Off at",
   activeIn: "in {{m}}"
-}, yt = {
+}, xt = {
   sectionEntity: "Entity",
   sectionAppearance: "Appearance",
   sectionCommands: "Commands",
@@ -130,7 +130,7 @@ const { jsx: t, jsxs: a, Fragment: je } = window.__OIKOS_SDK__.jsxRuntime, Be = 
     humidity: "Hide humidity",
     outdoor: "Hide outdoor temperature"
   }
-}, xt = {
+}, vt = {
   none: "Normal",
   boost: "Boost",
   eco: "Eco",
@@ -139,31 +139,31 @@ const { jsx: t, jsxs: a, Fragment: je } = window.__OIKOS_SDK__.jsxRuntime, Be = 
   away: "Away",
   home: "Home",
   activity: "Activity"
-}, vt = "Preset", St = "Mode", wt = "Close", $t = {
-  mode: st,
+}, St = "Preset", wt = "Mode", $t = "Close", Ct = {
+  mode: lt,
   tempCurrent: ct,
-  tempTarget: lt,
-  chipHumidity: dt,
-  chipOutdoor: ut,
-  chipFan: mt,
-  btnOn: pt,
-  btnOff: ht,
-  unavailable: ft,
-  noEntity: gt,
-  timer: bt,
-  settings: yt,
-  preset: xt,
-  chipPreset: vt,
-  modeTitle: St,
-  close: wt
-}, Ct = {
+  tempTarget: dt,
+  chipHumidity: ut,
+  chipOutdoor: mt,
+  chipFan: pt,
+  btnOn: ht,
+  btnOff: ft,
+  unavailable: gt,
+  noEntity: bt,
+  timer: yt,
+  settings: xt,
+  preset: vt,
+  chipPreset: St,
+  modeTitle: wt,
+  close: $t
+}, zt = {
   off: "Aus",
   cool: "Kühlen",
   heat: "Heizen",
   auto: "Auto",
   dry: "Entfeuchten",
   fan_only: "Lüfter"
-}, kt = "Aktuell", zt = "Ziel", At = "Luftfeuchtigkeit", Tt = "Außen", Ht = "Lüfter", Ot = "Einschalten", _t = "Ausschalten", Et = "Entität nicht verfügbar", Mt = "Konfiguriere eine climate.*-Entität in den Karteneinstellungen.", It = {
+}, kt = "Aktuell", At = "Ziel", Tt = "Luftfeuchtigkeit", Ht = "Außen", Ot = "Lüfter", _t = "Einschalten", Et = "Ausschalten", Mt = "Entität nicht verfügbar", It = "Konfiguriere eine climate.*-Entität in den Karteneinstellungen.", Pt = {
   title: "Abschalttimer",
   tabMin: "Minuten",
   tabTime: "Uhrzeit",
@@ -172,7 +172,7 @@ const { jsx: t, jsxs: a, Fragment: je } = window.__OIKOS_SDK__.jsxRuntime, Be = 
   cancel: "Abbrechen",
   activeLabel: "Aus um",
   activeIn: "in {{m}}"
-}, Pt = {
+}, Wt = {
   sectionEntity: "Entität",
   sectionAppearance: "Aussehen",
   sectionCommands: "Befehle",
@@ -218,31 +218,31 @@ const { jsx: t, jsxs: a, Fragment: je } = window.__OIKOS_SDK__.jsxRuntime, Be = 
   away: "Abwesend",
   home: "Zuhause",
   activity: "Aktivität"
-}, Wt = "Preset", Rt = "Modus", Nt = "Schließen", Dt = {
-  mode: Ct,
+}, Rt = "Preset", Nt = "Modus", Lt = "Schließen", Dt = {
+  mode: zt,
   tempCurrent: kt,
-  tempTarget: zt,
-  chipHumidity: At,
-  chipOutdoor: Tt,
-  chipFan: Ht,
-  btnOn: Ot,
-  btnOff: _t,
-  unavailable: Et,
-  noEntity: Mt,
-  timer: It,
-  settings: Pt,
+  tempTarget: At,
+  chipHumidity: Tt,
+  chipOutdoor: Ht,
+  chipFan: Ot,
+  btnOn: _t,
+  btnOff: Et,
+  unavailable: Mt,
+  noEntity: It,
+  timer: Pt,
+  settings: Wt,
   preset: Ft,
-  chipPreset: Wt,
-  modeTitle: Rt,
-  close: Nt
-}, Lt = {
+  chipPreset: Rt,
+  modeTitle: Nt,
+  close: Lt
+}, Kt = {
   off: "Apagado",
   cool: "Enfriar",
   heat: "Calentar",
   auto: "Auto",
   dry: "Deshumidificar",
   fan_only: "Ventilador"
-}, Kt = "Actual", jt = "Objetivo", Bt = "Humedad", Vt = "Exterior", qt = "Ventilador", Gt = "Encender", Ut = "Apagar", Zt = "Entidad no disponible", Yt = "Configura una entidad climate.* en los ajustes de la tarjeta.", Jt = {
+}, jt = "Actual", Bt = "Objetivo", Vt = "Humedad", qt = "Exterior", Gt = "Ventilador", Ut = "Encender", Zt = "Apagar", Yt = "Entidad no disponible", Jt = "Configura una entidad climate.* en los ajustes de la tarjeta.", Xt = {
   title: "Temporizador de apagado",
   tabMin: "Minutos",
   tabTime: "Hora",
@@ -251,7 +251,7 @@ const { jsx: t, jsxs: a, Fragment: je } = window.__OIKOS_SDK__.jsxRuntime, Be = 
   cancel: "Cancelar",
   activeLabel: "Apagar a las",
   activeIn: "en {{m}}"
-}, Xt = {
+}, Qt = {
   sectionEntity: "Entidad",
   sectionAppearance: "Apariencia",
   sectionCommands: "Comandos",
@@ -288,7 +288,7 @@ const { jsx: t, jsxs: a, Fragment: je } = window.__OIKOS_SDK__.jsxRuntime, Be = 
     humidity: "Ocultar humedad",
     outdoor: "Ocultar temperatura exterior"
   }
-}, Qt = {
+}, eo = {
   none: "Normal",
   boost: "Boost",
   eco: "Eco",
@@ -297,31 +297,31 @@ const { jsx: t, jsxs: a, Fragment: je } = window.__OIKOS_SDK__.jsxRuntime, Be = 
   away: "Ausente",
   home: "Casa",
   activity: "Actividad"
-}, eo = "Preset", to = "Modo", oo = "Cerrar", no = {
-  mode: Lt,
-  tempCurrent: Kt,
-  tempTarget: jt,
-  chipHumidity: Bt,
-  chipOutdoor: Vt,
-  chipFan: qt,
-  btnOn: Gt,
-  btnOff: Ut,
-  unavailable: Zt,
-  noEntity: Yt,
-  timer: Jt,
-  settings: Xt,
-  preset: Qt,
-  chipPreset: eo,
-  modeTitle: to,
-  close: oo
-}, io = {
+}, to = "Preset", oo = "Modo", no = "Cerrar", io = {
+  mode: Kt,
+  tempCurrent: jt,
+  tempTarget: Bt,
+  chipHumidity: Vt,
+  chipOutdoor: qt,
+  chipFan: Gt,
+  btnOn: Ut,
+  btnOff: Zt,
+  unavailable: Yt,
+  noEntity: Jt,
+  timer: Xt,
+  settings: Qt,
+  preset: eo,
+  chipPreset: to,
+  modeTitle: oo,
+  close: no
+}, ao = {
   off: "Éteint",
   cool: "Refroidir",
   heat: "Chauffer",
   auto: "Auto",
   dry: "Déshumidifier",
   fan_only: "Ventilateur"
-}, ao = "Actuelle", ro = "Cible", so = "Humidité", co = "Extérieure", lo = "Ventilateur", uo = "Allumer", mo = "Éteindre", po = "Entité non disponible", ho = "Configurez une entité climate.* dans les paramètres de la carte.", fo = {
+}, ro = "Actuelle", so = "Cible", lo = "Humidité", co = "Extérieure", uo = "Ventilateur", mo = "Allumer", po = "Éteindre", ho = "Entité non disponible", fo = "Configurez une entité climate.* dans les paramètres de la carte.", go = {
   title: "Minuterie d'arrêt",
   tabMin: "Minutes",
   tabTime: "Heure",
@@ -330,7 +330,7 @@ const { jsx: t, jsxs: a, Fragment: je } = window.__OIKOS_SDK__.jsxRuntime, Be = 
   cancel: "Annuler",
   activeLabel: "Éteindre à",
   activeIn: "dans {{m}}"
-}, go = {
+}, bo = {
   sectionEntity: "Entité",
   sectionAppearance: "Apparence",
   sectionCommands: "Commandes",
@@ -367,7 +367,7 @@ const { jsx: t, jsxs: a, Fragment: je } = window.__OIKOS_SDK__.jsxRuntime, Be = 
     humidity: "Masquer l’humidité",
     outdoor: "Masquer la température extérieure"
   }
-}, bo = {
+}, yo = {
   none: "Normal",
   boost: "Boost",
   eco: "Éco",
@@ -376,26 +376,26 @@ const { jsx: t, jsxs: a, Fragment: je } = window.__OIKOS_SDK__.jsxRuntime, Be = 
   away: "Absent",
   home: "Maison",
   activity: "Activité"
-}, yo = "Préréglage", xo = "Mode", vo = "Fermer", So = {
-  mode: io,
-  tempCurrent: ao,
-  tempTarget: ro,
-  chipHumidity: so,
+}, xo = "Préréglage", vo = "Mode", So = "Fermer", wo = {
+  mode: ao,
+  tempCurrent: ro,
+  tempTarget: so,
+  chipHumidity: lo,
   chipOutdoor: co,
-  chipFan: lo,
-  btnOn: uo,
-  btnOff: mo,
-  unavailable: po,
-  noEntity: ho,
-  timer: fo,
-  settings: go,
-  preset: bo,
-  chipPreset: yo,
-  modeTitle: xo,
-  close: vo
-}, { useState: A, useEffect: L, useRef: wo, useMemo: xe } = window.__OIKOS_SDK__.React, { motion: T, AnimatePresence: oe } = window.__OIKOS_SDK__.framerMotion, { Power: $o, PowerOff: Co, Snowflake: ko, Flame: zo, Wind: ze, Droplets: Ae, RefreshCcw: Ao, Plus: To, Minus: Te, Sun: He, Sparkles: ve, AirVent: Ho, Clock: ne, X: Se, Moon: Oo, Leaf: _o, Zap: Eo, Gauge: Oe, Home: we, ChevronDown: Mo, Check: Io } = window.__OIKOS_SDK__.icons, { useDashboard: Po, useCardConfig: Fo, registerCardTranslations: Wo, useT: Ro } = window.__OIKOS_SDK__;
-Wo("card-climatizzatore", { it: rt, en: $t, de: Dt, es: no, fr: So });
-const No = {
+  chipFan: uo,
+  btnOn: mo,
+  btnOff: po,
+  unavailable: ho,
+  noEntity: fo,
+  timer: go,
+  settings: bo,
+  preset: yo,
+  chipPreset: xo,
+  modeTitle: vo,
+  close: So
+}, { useState: O, useEffect: j, useRef: $o, useMemo: $e } = window.__OIKOS_SDK__.React, { motion: _, AnimatePresence: oe } = window.__OIKOS_SDK__.framerMotion, { Power: Co, PowerOff: zo, Snowflake: ko, Flame: Ao, Wind: se, Droplets: le, RefreshCcw: To, Plus: Ho, Minus: Oe, Sun: ce, Sparkles: Ce, AirVent: Oo, Clock: ne, X: ze, Moon: _o, Leaf: Eo, Zap: Mo, Gauge: _e, Home: ke, ChevronDown: Io, Check: Po } = window.__OIKOS_SDK__.icons, { useDashboard: Wo, useCardConfig: Fo, registerCardTranslations: Ro, useT: No } = window.__OIKOS_SDK__;
+Ro("card-climatizzatore", { it: st, en: Ct, de: Dt, es: io, fr: wo });
+const Lo = {
   entityId: "",
   // climate.X
   indoorTempEntity: "",
@@ -420,130 +420,130 @@ const No = {
   // 'auto' | 'always' | 'never'
   hideOnSmall: []
   // 'humidity' | 'outdoor' | 'fan' | 'preset'
-}, Do = 340, $e = {
-  off: { modeKey: "off", color: "#94a3b8", icon: Ho, bg: "rgba(148,163,184,.1)" },
+}, Do = 340, Ae = {
+  off: { modeKey: "off", color: "#94a3b8", icon: Oo, bg: "rgba(148,163,184,.1)" },
   cool: { modeKey: "cool", color: "#06b6d4", icon: ko, bg: "rgba(6,182,212,.12)" },
-  heat: { modeKey: "heat", color: "#ef4444", icon: zo, bg: "rgba(239,68,68,.12)" },
-  heat_cool: { modeKey: "auto", color: "#8b5cf6", icon: ve, bg: "rgba(139,92,246,.12)" },
-  auto: { modeKey: "auto", color: "#8b5cf6", icon: ve, bg: "rgba(139,92,246,.12)" },
-  dry: { modeKey: "dry", color: "#f59e0b", icon: Ae, bg: "rgba(245,158,11,.12)" },
-  fan_only: { modeKey: "fan_only", color: "#22c55e", icon: ze, bg: "rgba(34,197,94,.12)" }
+  heat: { modeKey: "heat", color: "#ef4444", icon: Ao, bg: "rgba(239,68,68,.12)" },
+  heat_cool: { modeKey: "auto", color: "#8b5cf6", icon: Ce, bg: "rgba(139,92,246,.12)" },
+  auto: { modeKey: "auto", color: "#8b5cf6", icon: Ce, bg: "rgba(139,92,246,.12)" },
+  dry: { modeKey: "dry", color: "#f59e0b", icon: le, bg: "rgba(245,158,11,.12)" },
+  fan_only: { modeKey: "fan_only", color: "#22c55e", icon: se, bg: "rgba(34,197,94,.12)" }
 };
-function ie(u) {
-  return $e[u] || $e.off;
+function ie(d) {
+  return Ae[d] || Ae.off;
 }
-const Lo = {
-  none: Te,
-  boost: Eo,
-  eco: _o,
-  sleep: Oo,
-  comfort: He,
-  away: we,
-  home: we,
-  activity: Oe
+const Ko = {
+  none: Oe,
+  boost: Mo,
+  eco: Eo,
+  sleep: _o,
+  comfort: ce,
+  away: ke,
+  home: ke,
+  activity: _e
 };
-function Ce(u) {
-  return Lo[String(u).toLowerCase()] || Oe;
+function Te(d) {
+  return Ko[String(d).toLowerCase()] || _e;
 }
-function ae(u, r = 1) {
-  return u == null || !Number.isFinite(u) ? "—" : Math.abs(u) >= 100 ? u.toFixed(0) : u.toFixed(r);
+function ae(d, r = 1) {
+  return d == null || !Number.isFinite(d) ? "—" : Math.abs(d) >= 100 ? d.toFixed(0) : d.toFixed(r);
 }
-function ke(u) {
-  return new Date(u).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+function He(d) {
+  return new Date(d).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
 }
-function Ko({ cardId: u = "climatizzatore" }) {
-  const { dark: r, getState: H, getFloat: E, getAttr: _e, callService: y, haStates: j } = Po(), [s] = Fo(u, No), { t: i } = Ro("card-climatizzatore"), [O, re] = A(null), [F, W] = A(!1), [R, B] = A(""), [v, Ee] = A("min"), [, Me] = A(0), se = wo(null), [ce, Ie] = A(0), [V, M] = A(!1);
-  L(() => {
-    const e = se.current;
-    if (!e) return;
-    const n = new ResizeObserver(([c]) => Ie(c.contentRect.width));
-    return n.observe(e), () => n.disconnect();
-  }, []), L(() => {
-    if (!V) return;
-    const e = (n) => {
-      n.key === "Escape" && M(!1);
+function jo({ cardId: d = "climatizzatore" }) {
+  const { dark: r, getState: $, getFloat: k, getAttr: Ee, callService: x, haStates: V } = Wo(), [s] = Fo(d, Lo), { t: i } = No("card-climatizzatore"), [E, de] = O(null), [N, L] = O(!1), [D, q] = O(""), [C, Me] = O("min"), [, Ie] = O(0), ue = $o(null), [me, Pe] = O(0), [G, I] = O(!1);
+  j(() => {
+    const t = ue.current;
+    if (!t) return;
+    const n = new ResizeObserver(([l]) => Pe(l.contentRect.width));
+    return n.observe(t), () => n.disconnect();
+  }, []), j(() => {
+    if (!G) return;
+    const t = (n) => {
+      n.key === "Escape" && I(!1);
     };
-    return window.addEventListener("keydown", e), () => window.removeEventListener("keydown", e);
-  }, [V]);
-  const S = s.compact === "always" || s.compact !== "never" && ce > 0 && ce < Do, N = new Set(S ? s.hideOnSmall || [] : []), h = s.entityId, _ = h ? j == null ? void 0 : j[h] : null, $ = "timer.oikos_climatizzatore", le = "input_text.oikos_climatizzatore_target", de = H($) === "active" && H(le) === h, ue = _e($, "finishes_at"), f = de && ue ? Date.parse(ue) : null;
-  H($) != null && H($);
-  const d = (_ == null ? void 0 : _.state) ?? "unavailable", g = (_ == null ? void 0 : _.attributes) ?? {}, l = d === "off" || d === "unavailable" || d === "unknown", q = s.indoorTempEntity ? E(s.indoorTempEntity) : null, Pe = q != null && Number.isFinite(q) ? q : g.current_temperature, x = g.temperature ?? g.target_temp, G = s.humidityEntity ? E(s.humidityEntity) : null, U = G != null && Number.isFinite(G) ? G : g.current_humidity, Z = g.min_temp ?? 16, Y = g.max_temp ?? 32, me = g.hvac_modes ?? ["off", "cool", "heat", "auto", "dry", "fan_only"], J = g.fan_modes ?? null, C = g.fan_mode, X = g.preset_modes ?? null, w = g.preset_mode, Q = s.outdoorTempEntity ? E(s.outdoorTempEntity) : null, k = xe(() => ie(d), [d]), o = s.accentColor || k.color, Fe = s.label || g.friendly_name || "Climatizzatore", ee = (e) => {
-    const n = String(e).toLowerCase(), c = i(`preset.${n}`);
-    return c === `preset.${n}` ? e : c;
-  }, We = xe(() => d !== "off" ? d : "cool", [d]), I = async (e, n) => {
+    return window.addEventListener("keydown", t), () => window.removeEventListener("keydown", t);
+  }, [G]);
+  const b = s.compact === "always" || s.compact !== "never" && me > 0 && me < Do, A = new Set(b ? s.hideOnSmall || [] : []), h = s.entityId, M = h ? V == null ? void 0 : V[h] : null, T = "timer.oikos_climatizzatore", pe = "input_text.oikos_climatizzatore_target", he = $(T) === "active" && $(pe) === h, fe = Ee(T, "finishes_at"), f = he && fe ? Date.parse(fe) : null;
+  $(T) != null && $(T);
+  const m = (M == null ? void 0 : M.state) ?? "unavailable", g = (M == null ? void 0 : M.attributes) ?? {}, c = m === "off" || m === "unavailable" || m === "unknown", U = s.indoorTempEntity ? k(s.indoorTempEntity) : null, We = U != null && Number.isFinite(U) ? U : g.current_temperature, S = g.temperature ?? g.target_temp, Z = s.humidityEntity ? k(s.humidityEntity) : null, P = Z != null && Number.isFinite(Z) ? Z : g.current_humidity, Y = g.min_temp ?? 16, J = g.max_temp ?? 32, ge = g.hvac_modes ?? ["off", "cool", "heat", "auto", "dry", "fan_only"], X = g.fan_modes ?? null, w = g.fan_mode, Q = g.preset_modes ?? null, z = g.preset_mode, W = s.outdoorTempEntity ? k(s.outdoorTempEntity) : null, H = $e(() => ie(m), [m]), o = s.accentColor || H.color, Fe = s.label || g.friendly_name || "Climatizzatore", ee = (t) => {
+    const n = String(t).toLowerCase(), l = i(`preset.${n}`);
+    return l === `preset.${n}` ? t : l;
+  }, Re = $e(() => m !== "off" ? m : "cool", [m]), F = async (t, n) => {
     if (h) {
-      re(e);
+      de(t);
       try {
-        await Promise.resolve(n()).catch((c) => console.error("[Climatizzatore]", e, c));
+        await Promise.resolve(n()).catch((l) => console.error("[Climatizzatore]", t, l));
       } finally {
-        setTimeout(() => re(null), 400);
+        setTimeout(() => de(null), 400);
       }
     }
-  }, Re = () => I(
+  }, Ne = () => F(
     "power",
-    () => l ? y("climate", "set_hvac_mode", h, { hvac_mode: We }) : y("climate", "set_hvac_mode", h, { hvac_mode: "off" })
-  ), pe = (e) => I(
+    () => c ? x("climate", "set_hvac_mode", h, { hvac_mode: Re }) : x("climate", "set_hvac_mode", h, { hvac_mode: "off" })
+  ), be = (t) => F(
     "mode",
-    () => y("climate", "set_hvac_mode", h, { hvac_mode: e })
-  ), he = (e) => {
-    if (x == null) return;
-    const n = Math.min(Y, Math.max(
-      Z,
-      Math.round((x + e) / s.step) * s.step
+    () => x("climate", "set_hvac_mode", h, { hvac_mode: t })
+  ), ye = (t) => {
+    if (S == null) return;
+    const n = Math.min(J, Math.max(
+      Y,
+      Math.round((S + t) / s.step) * s.step
     ));
-    n !== x && I("temp", () => y("climate", "set_temperature", h, { temperature: n }));
-  }, Ne = (e) => I(
+    n !== S && F("temp", () => x("climate", "set_temperature", h, { temperature: n }));
+  }, Le = (t) => F(
     "fan",
-    () => y("climate", "set_fan_mode", h, { fan_mode: e })
-  ), De = (e) => I(
+    () => x("climate", "set_fan_mode", h, { fan_mode: t })
+  ), De = (t) => F(
     "preset",
-    () => y("climate", "set_preset_mode", h, { preset_mode: e })
-  ), fe = () => {
-    y("timer", "cancel", $).catch(() => {
-    }), W(!1);
-  }, Le = () => {
-    if (!R) return;
-    let e;
-    if (v === "min") {
-      const b = parseInt(R, 10);
-      if (!b || b < 1 || b > 1440) return;
-      e = b * 6e4;
+    () => x("climate", "set_preset_mode", h, { preset_mode: t })
+  ), xe = () => {
+    x("timer", "cancel", T).catch(() => {
+    }), L(!1);
+  }, Ke = () => {
+    if (!D) return;
+    let t;
+    if (C === "min") {
+      const y = parseInt(D, 10);
+      if (!y || y < 1 || y > 1440) return;
+      t = y * 6e4;
     } else {
-      const b = R.split(":").map(Number), be = b[0], ye = b[1];
-      if (isNaN(be) || isNaN(ye)) return;
-      const te = /* @__PURE__ */ new Date(), D = new Date(te.getFullYear(), te.getMonth(), te.getDate(), be, ye, 0);
-      D.getTime() <= Date.now() && D.setDate(D.getDate() + 1), e = D.getTime() - Date.now();
+      const y = D.split(":").map(Number), Se = y[0], we = y[1];
+      if (isNaN(Se) || isNaN(we)) return;
+      const te = /* @__PURE__ */ new Date(), K = new Date(te.getFullYear(), te.getMonth(), te.getDate(), Se, we, 0);
+      K.getTime() <= Date.now() && K.setDate(K.getDate() + 1), t = K.getTime() - Date.now();
     }
-    const n = Math.max(60, Math.round(e / 1e3)), c = `${String(Math.floor(n / 3600)).padStart(2, "0")}:${String(Math.floor(n % 3600 / 60)).padStart(2, "0")}:${String(n % 60).padStart(2, "0")}`;
-    y("input_text", "set_value", le, { value: h }), y("timer", "start", $, { duration: c }), W(!1), B("");
-  }, z = r ? "rgba(255,255,255,.92)" : "#0f172a", m = r ? "rgba(255,255,255,.5)" : "#64748b", ge = r ? "rgba(255,255,255,.04)" : "#ffffff", p = r ? "rgba(255,255,255,.08)" : "#e2e8f0";
-  L(() => {
+    const n = Math.max(60, Math.round(t / 1e3)), l = `${String(Math.floor(n / 3600)).padStart(2, "0")}:${String(Math.floor(n % 3600 / 60)).padStart(2, "0")}:${String(n % 60).padStart(2, "0")}`;
+    x("input_text", "set_value", pe, { value: h }), x("timer", "start", T, { duration: l }), L(!1), q("");
+  }, v = r ? "rgba(255,255,255,.92)" : "#0f172a", u = r ? "rgba(255,255,255,.5)" : "#64748b", ve = r ? "rgba(255,255,255,.04)" : "#ffffff", p = r ? "rgba(255,255,255,.08)" : "#e2e8f0";
+  j(() => {
     if (!f) return;
-    const e = setInterval(() => Me((n) => n + 1), 6e4);
-    return () => clearInterval(e);
-  }, [f]), L(() => {
-    l && (W(!1), de && y("timer", "cancel", $).catch(() => {
+    const t = setInterval(() => Ie((n) => n + 1), 6e4);
+    return () => clearInterval(t);
+  }, [f]), j(() => {
+    c && (L(!1), he && x("timer", "cancel", T).catch(() => {
     }));
-  }, [l]);
-  const P = f ? Math.max(0, Math.ceil((f - Date.now()) / 6e4)) : 0, Ke = P >= 60 ? `${Math.floor(P / 60)}h ${P % 60}min` : P > 0 ? `${P}min` : "…";
+  }, [c]);
+  const R = f ? Math.max(0, Math.ceil((f - Date.now()) / 6e4)) : 0, je = R >= 60 ? `${Math.floor(R / 60)}h ${R % 60}min` : R > 0 ? `${R}min` : "…";
   return h ? /* @__PURE__ */ a(
-    T.div,
+    _.div,
     {
       layout: !0,
-      ref: se,
+      ref: ue,
       style: {
         position: "relative",
-        padding: S ? 12 : 16,
+        padding: b ? 12 : 16,
         borderRadius: 18,
-        background: ge,
-        border: `1px solid ${l ? p : `${o}40`}`,
+        background: ve,
+        border: `1px solid ${c ? p : `${o}40`}`,
         overflow: "hidden",
-        boxShadow: l ? r ? "0 4px 20px rgba(0,0,0,.3)" : "0 2px 12px rgba(0,0,0,.05)" : `0 0 0 1px ${o}30, 0 8px 32px ${o}25`,
+        boxShadow: c ? r ? "0 4px 20px rgba(0,0,0,.3)" : "0 2px 12px rgba(0,0,0,.05)" : `0 0 0 1px ${o}30, 0 8px 32px ${o}25`,
         transition: "border-color .3s, box-shadow .3s"
       },
       children: [
-        !l && /* @__PURE__ */ t(
-          T.div,
+        !c && /* @__PURE__ */ e(
+          _.div,
           {
             "aria-hidden": !0,
             animate: { opacity: [0.45, 0.7, 0.45] },
@@ -557,11 +557,11 @@ function Ko({ cardId: u = "climatizzatore" }) {
           }
         ),
         /* @__PURE__ */ a("div", { style: { position: "relative", display: "flex", alignItems: "center", gap: 10, marginBottom: 14 }, children: [
-          /* @__PURE__ */ t(
-            T.div,
+          /* @__PURE__ */ e(
+            _.div,
             {
-              animate: !l && d === "cool" ? { rotate: [0, 360] } : !l && d === "fan_only" ? { rotate: [0, 360] } : !l && d === "heat" ? { scale: [1, 1.08, 1] } : { scale: 1 },
-              transition: !l && (d === "cool" || d === "fan_only") ? { duration: 4, repeat: 1 / 0, ease: "linear" } : { duration: 1.2, repeat: 1 / 0, ease: "easeInOut" },
+              animate: !c && m === "cool" ? { rotate: [0, 360] } : !c && m === "fan_only" ? { rotate: [0, 360] } : !c && m === "heat" ? { scale: [1, 1.08, 1] } : { scale: 1 },
+              transition: !c && (m === "cool" || m === "fan_only") ? { duration: 4, repeat: 1 / 0, ease: "linear" } : { duration: 1.2, repeat: 1 / 0, ease: "easeInOut" },
               style: {
                 width: 36,
                 height: 36,
@@ -569,97 +569,97 @@ function Ko({ cardId: u = "climatizzatore" }) {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                background: k.bg,
+                background: H.bg,
                 border: `1px solid ${o}40`,
                 color: o
               },
-              children: /* @__PURE__ */ t(k.icon, { size: 18, strokeWidth: 2 })
+              children: /* @__PURE__ */ e(H.icon, { size: 18, strokeWidth: 2 })
             }
           ),
           /* @__PURE__ */ a("div", { style: { flex: 1, minWidth: 0 }, children: [
-            /* @__PURE__ */ t("div", { style: {
+            /* @__PURE__ */ e("div", { style: {
               fontSize: 13,
               fontWeight: 700,
-              color: z,
+              color: v,
               overflow: "hidden",
               textOverflow: "ellipsis",
               whiteSpace: "nowrap"
             }, children: Fe }),
-            /* @__PURE__ */ t("div", { style: {
+            /* @__PURE__ */ e("div", { style: {
               fontSize: 10,
               color: o,
               fontWeight: 700,
               letterSpacing: ".04em",
               textTransform: "uppercase"
-            }, children: i(`mode.${k.modeKey}`) })
+            }, children: i(`mode.${H.modeKey}`) })
           ] }),
-          !l && /* @__PURE__ */ t(
+          !c && /* @__PURE__ */ e(
             "button",
             {
-              onClick: () => W((e) => !e),
+              onClick: () => L((t) => !t),
               title: i("timer.title"),
               style: {
                 width: 30,
                 height: 30,
                 borderRadius: 8,
                 cursor: "pointer",
-                background: f || F ? `${o}18` : "transparent",
-                border: `1px solid ${f || F ? `${o}50` : p}`,
-                color: f || F ? o : m,
+                background: f || N ? `${o}18` : "transparent",
+                border: `1px solid ${f || N ? `${o}50` : p}`,
+                color: f || N ? o : u,
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
                 transition: "all .15s"
               },
-              children: /* @__PURE__ */ t(ne, { size: 13, strokeWidth: 2 })
+              children: /* @__PURE__ */ e(ne, { size: 13, strokeWidth: 2 })
             }
           ),
-          /* @__PURE__ */ t(
+          /* @__PURE__ */ e(
             "button",
             {
-              onClick: Re,
-              disabled: O === "power",
-              title: i(l ? "btnOn" : "btnOff"),
+              onClick: Ne,
+              disabled: E === "power",
+              title: i(c ? "btnOn" : "btnOff"),
               style: {
                 width: 38,
                 height: 38,
                 borderRadius: 10,
                 cursor: "pointer",
-                background: l ? r ? "rgba(255,255,255,.05)" : "#f1f5f9" : `${o}18`,
-                border: `1px solid ${l ? p : `${o}50`}`,
-                color: l ? m : o,
+                background: c ? r ? "rgba(255,255,255,.05)" : "#f1f5f9" : `${o}18`,
+                border: `1px solid ${c ? p : `${o}50`}`,
+                color: c ? u : o,
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
                 transition: "all .15s"
               },
-              children: l ? /* @__PURE__ */ t($o, { size: 16, strokeWidth: 2.4 }) : /* @__PURE__ */ t(Co, { size: 16, strokeWidth: 2.4 })
+              children: c ? /* @__PURE__ */ e(Co, { size: 16, strokeWidth: 2.4 }) : /* @__PURE__ */ e(zo, { size: 16, strokeWidth: 2.4 })
             }
           )
         ] }),
-        /* @__PURE__ */ t(oe, { children: F && !l && /* @__PURE__ */ t(
-          T.div,
+        /* @__PURE__ */ e(oe, { children: N && !c && /* @__PURE__ */ e(
+          _.div,
           {
             initial: { opacity: 0, height: 0 },
             animate: { opacity: 1, height: "auto" },
             exit: { opacity: 0, height: 0 },
             style: { overflow: "hidden", marginBottom: 12 },
-            children: /* @__PURE__ */ t("div", { style: {
+            children: /* @__PURE__ */ e("div", { style: {
               padding: "10px 12px",
               borderRadius: 12,
               background: r ? "rgba(255,255,255,.04)" : "#f8fafc",
               border: `1px solid ${p}`
             }, children: f ? /* @__PURE__ */ a("div", { style: { display: "flex", alignItems: "center", gap: 10 }, children: [
-              /* @__PURE__ */ t(ne, { size: 16, style: { color: o, flexShrink: 0 } }),
+              /* @__PURE__ */ e(ne, { size: 16, style: { color: o, flexShrink: 0 } }),
               /* @__PURE__ */ a("div", { style: { flex: 1 }, children: [
-                /* @__PURE__ */ a("div", { style: { fontSize: 13, fontWeight: 700, color: z }, children: [
+                /* @__PURE__ */ a("div", { style: { fontSize: 13, fontWeight: 700, color: v }, children: [
                   i("timer.activeLabel"),
                   " ",
-                  ke(f)
+                  He(f)
                 ] }),
-                /* @__PURE__ */ t("div", { style: { fontSize: 10, color: m }, children: i("timer.activeIn", { m: Ke }) })
+                /* @__PURE__ */ e("div", { style: { fontSize: 10, color: u }, children: i("timer.activeIn", { m: je }) })
               ] }),
-              /* @__PURE__ */ t("button", { onClick: fe, style: {
+              /* @__PURE__ */ e("button", { onClick: xe, style: {
                 padding: "5px 12px",
                 borderRadius: 8,
                 fontSize: 11,
@@ -667,14 +667,14 @@ function Ko({ cardId: u = "climatizzatore" }) {
                 cursor: "pointer",
                 background: r ? "rgba(255,255,255,.08)" : "#f1f5f9",
                 border: `1px solid ${p}`,
-                color: m
+                color: u
               }, children: i("timer.cancel") })
-            ] }) : /* @__PURE__ */ a(je, { children: [
-              /* @__PURE__ */ t("div", { style: { display: "flex", gap: 4, marginBottom: 8 }, children: ["min", "time"].map((e) => /* @__PURE__ */ t(
+            ] }) : /* @__PURE__ */ a(Be, { children: [
+              /* @__PURE__ */ e("div", { style: { display: "flex", gap: 4, marginBottom: 8 }, children: ["min", "time"].map((t) => /* @__PURE__ */ e(
                 "button",
                 {
                   onClick: () => {
-                    Ee(e), B("");
+                    Me(t), q("");
                   },
                   style: {
                     flex: 1,
@@ -685,24 +685,24 @@ function Ko({ cardId: u = "climatizzatore" }) {
                     fontWeight: 700,
                     letterSpacing: ".04em",
                     textTransform: "uppercase",
-                    background: v === e ? `${o}18` : "transparent",
-                    border: `1px solid ${v === e ? `${o}50` : p}`,
-                    color: v === e ? o : m
+                    background: C === t ? `${o}18` : "transparent",
+                    border: `1px solid ${C === t ? `${o}50` : p}`,
+                    color: C === t ? o : u
                   },
-                  children: i(e === "min" ? "timer.tabMin" : "timer.tabTime")
+                  children: i(t === "min" ? "timer.tabMin" : "timer.tabTime")
                 },
-                e
+                t
               )) }),
               /* @__PURE__ */ a("div", { style: { display: "flex", gap: 6 }, children: [
-                /* @__PURE__ */ t(
+                /* @__PURE__ */ e(
                   "input",
                   {
-                    type: v === "min" ? "number" : "time",
-                    value: R,
-                    onChange: (e) => B(e.target.value),
-                    placeholder: v === "min" ? i("timer.placeholderMin") : "",
-                    min: v === "min" ? 1 : void 0,
-                    max: v === "min" ? 1440 : void 0,
+                    type: C === "min" ? "number" : "time",
+                    value: D,
+                    onChange: (t) => q(t.target.value),
+                    placeholder: C === "min" ? i("timer.placeholderMin") : "",
+                    min: C === "min" ? 1 : void 0,
+                    max: C === "min" ? 1440 : void 0,
                     style: {
                       flex: 1,
                       padding: "7px 10px",
@@ -711,13 +711,13 @@ function Ko({ cardId: u = "climatizzatore" }) {
                       fontWeight: 600,
                       background: r ? "rgba(255,255,255,.08)" : "#ffffff",
                       border: `1px solid ${p}`,
-                      color: z,
+                      color: v,
                       outline: "none",
                       colorScheme: r ? "dark" : "light"
                     }
                   }
                 ),
-                /* @__PURE__ */ t("button", { onClick: Le, style: {
+                /* @__PURE__ */ e("button", { onClick: Ke, style: {
                   padding: "0 14px",
                   borderRadius: 8,
                   cursor: "pointer",
@@ -735,31 +735,43 @@ function Ko({ cardId: u = "climatizzatore" }) {
           position: "relative",
           display: "flex",
           alignItems: "flex-end",
-          gap: S ? 10 : 18,
-          marginBottom: S ? 10 : 14
+          gap: b ? 10 : 18,
+          marginBottom: b ? 10 : 14
         }, children: [
           /* @__PURE__ */ a("div", { children: [
-            /* @__PURE__ */ t("div", { style: { fontSize: 9, fontWeight: 800, color: m, letterSpacing: ".08em", textTransform: "uppercase" }, children: i("tempCurrent") }),
+            !b && /* @__PURE__ */ e("div", { style: { fontSize: 9, fontWeight: 800, color: u, letterSpacing: ".08em", textTransform: "uppercase" }, children: i("tempCurrent") }),
             /* @__PURE__ */ a("div", { style: {
-              fontSize: S ? 30 : 44,
+              fontSize: b ? 30 : 44,
               fontWeight: 900,
-              color: z,
-              letterSpacing: S ? "-1px" : "-2px",
+              color: v,
+              letterSpacing: b ? "-1px" : "-2px",
               lineHeight: 1,
               fontVariantNumeric: "tabular-nums",
               marginTop: 2
             }, children: [
-              ae(Pe),
-              /* @__PURE__ */ t("span", { style: { fontSize: 18, fontWeight: 700, color: m, marginLeft: 4 }, children: "°C" })
+              ae(We),
+              /* @__PURE__ */ e("span", { style: { fontSize: 18, fontWeight: 700, color: u, marginLeft: 4 }, children: "°C" })
             ] })
           ] }),
-          x != null && !l && /* @__PURE__ */ a("div", { style: { flex: 1, paddingBottom: 4 }, children: [
-            /* @__PURE__ */ t("div", { style: {
+          b && /* @__PURE__ */ a("div", { style: {
+            display: "flex",
+            alignItems: "center",
+            gap: 10,
+            marginLeft: "auto",
+            paddingBottom: 3,
+            minWidth: 0
+          }, children: [
+            s.showHumidity && !A.has("humidity") && P != null && /* @__PURE__ */ e(re, { icon: /* @__PURE__ */ e(le, { size: 12 }), value: `${Math.round(P)}%`, c: v, m: u }),
+            !A.has("outdoor") && W != null && /* @__PURE__ */ e(re, { icon: /* @__PURE__ */ e(ce, { size: 12 }), value: `${Math.round(W)}°`, c: v, m: u }),
+            s.showFan && !A.has("fan") && w && /* @__PURE__ */ e(re, { icon: /* @__PURE__ */ e(se, { size: 12 }), value: String(w), c: v, m: u })
+          ] }),
+          S != null && !c && /* @__PURE__ */ a("div", { style: { flex: 1, paddingBottom: 4 }, children: [
+            /* @__PURE__ */ e("div", { style: {
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
               marginBottom: 4
-            }, children: /* @__PURE__ */ t("span", { style: { fontSize: 9, fontWeight: 800, color: m, letterSpacing: ".08em", textTransform: "uppercase" }, children: i("tempTarget") }) }),
+            }, children: /* @__PURE__ */ e("span", { style: { fontSize: 9, fontWeight: 800, color: u, letterSpacing: ".08em", textTransform: "uppercase" }, children: i("tempTarget") }) }),
             /* @__PURE__ */ a("div", { style: {
               display: "flex",
               alignItems: "center",
@@ -769,11 +781,11 @@ function Ko({ cardId: u = "climatizzatore" }) {
               background: `${o}12`,
               border: `1px solid ${o}35`
             }, children: [
-              /* @__PURE__ */ t(
+              /* @__PURE__ */ e(
                 "button",
                 {
-                  onClick: () => he(-s.step),
-                  disabled: O === "temp" || x <= Z,
+                  onClick: () => ye(-s.step),
+                  disabled: E === "temp" || S <= Y,
                   style: {
                     width: 26,
                     height: 26,
@@ -785,9 +797,9 @@ function Ko({ cardId: u = "climatizzatore" }) {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    opacity: x <= Z ? 0.35 : 1
+                    opacity: S <= Y ? 0.35 : 1
                   },
-                  children: /* @__PURE__ */ t(Te, { size: 14, strokeWidth: 3 })
+                  children: /* @__PURE__ */ e(Oe, { size: 14, strokeWidth: 3 })
                 }
               ),
               /* @__PURE__ */ a("div", { style: {
@@ -799,14 +811,14 @@ function Ko({ cardId: u = "climatizzatore" }) {
                 fontVariantNumeric: "tabular-nums",
                 letterSpacing: "-.5px"
               }, children: [
-                ae(x),
+                ae(S),
                 "°"
               ] }),
-              /* @__PURE__ */ t(
+              /* @__PURE__ */ e(
                 "button",
                 {
-                  onClick: () => he(+s.step),
-                  disabled: O === "temp" || x >= Y,
+                  onClick: () => ye(+s.step),
+                  disabled: E === "temp" || S >= J,
                   style: {
                     width: 26,
                     height: 26,
@@ -818,55 +830,55 @@ function Ko({ cardId: u = "climatizzatore" }) {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    opacity: x >= Y ? 0.35 : 1
+                    opacity: S >= J ? 0.35 : 1
                   },
-                  children: /* @__PURE__ */ t(To, { size: 14, strokeWidth: 3 })
+                  children: /* @__PURE__ */ e(Ho, { size: 14, strokeWidth: 3 })
                 }
               )
             ] })
           ] })
         ] }),
-        (U != null || Q != null || C && s.showFan || s.showPreset && w && w !== "none" || f) && /* @__PURE__ */ a("div", { style: {
+        !b && (P != null || W != null || w && s.showFan || s.showPreset && z && z !== "none" || f) && /* @__PURE__ */ a("div", { style: {
           display: "flex",
           gap: 8,
           marginBottom: 12,
           flexWrap: "wrap"
         }, children: [
-          s.showHumidity && !N.has("humidity") && U != null && /* @__PURE__ */ t(
-            K,
+          s.showHumidity && !A.has("humidity") && P != null && /* @__PURE__ */ e(
+            B,
             {
               dark: r,
-              icon: /* @__PURE__ */ t(Ae, { size: 11 }),
-              value: `${Math.round(U)}%`,
+              icon: /* @__PURE__ */ e(le, { size: 11 }),
+              value: `${Math.round(P)}%`,
               label: i("chipHumidity")
             }
           ),
-          !N.has("outdoor") && Q != null && /* @__PURE__ */ t(
-            K,
+          !A.has("outdoor") && W != null && /* @__PURE__ */ e(
+            B,
             {
               dark: r,
-              icon: /* @__PURE__ */ t(He, { size: 11 }),
-              value: `${ae(Q, 0)}°`,
+              icon: /* @__PURE__ */ e(ce, { size: 11 }),
+              value: `${ae(W, 0)}°`,
               label: i("chipOutdoor")
             }
           ),
-          s.showFan && C && /* @__PURE__ */ t(
-            K,
+          s.showFan && w && /* @__PURE__ */ e(
+            B,
             {
               dark: r,
-              icon: /* @__PURE__ */ t(ze, { size: 11 }),
-              value: C,
+              icon: /* @__PURE__ */ e(se, { size: 11 }),
+              value: w,
               label: i("chipFan")
             }
           ),
-          s.showPreset && w && w !== "none" && (() => {
-            const e = Ce(w);
-            return /* @__PURE__ */ t(
-              K,
+          s.showPreset && z && z !== "none" && (() => {
+            const t = Te(z);
+            return /* @__PURE__ */ e(
+              B,
               {
                 dark: r,
-                icon: /* @__PURE__ */ t(e, { size: 11 }),
-                value: ee(w),
+                icon: /* @__PURE__ */ e(t, { size: 11 }),
+                value: ee(z),
                 label: i("chipPreset")
               }
             );
@@ -880,23 +892,23 @@ function Ko({ cardId: u = "climatizzatore" }) {
             background: `${o}12`,
             border: `1px solid ${o}40`
           }, children: [
-            /* @__PURE__ */ t("span", { style: { color: o, display: "flex" }, children: /* @__PURE__ */ t(ne, { size: 11 }) }),
-            /* @__PURE__ */ t("span", { style: { fontSize: 12, fontWeight: 800, color: z, fontVariantNumeric: "tabular-nums" }, children: ke(f) }),
-            /* @__PURE__ */ t("button", { onClick: fe, style: {
+            /* @__PURE__ */ e("span", { style: { color: o, display: "flex" }, children: /* @__PURE__ */ e(ne, { size: 11 }) }),
+            /* @__PURE__ */ e("span", { style: { fontSize: 12, fontWeight: 800, color: v, fontVariantNumeric: "tabular-nums" }, children: He(f) }),
+            /* @__PURE__ */ e("button", { onClick: xe, style: {
               background: "none",
               border: "none",
               cursor: "pointer",
-              color: m,
+              color: u,
               display: "flex",
               padding: 0,
               marginLeft: 2
-            }, children: /* @__PURE__ */ t(Se, { size: 11 }) })
+            }, children: /* @__PURE__ */ e(ze, { size: 11 }) })
           ] })
         ] }),
-        S ? /* @__PURE__ */ a(
+        b ? /* @__PURE__ */ a(
           "button",
           {
-            onClick: () => M(!0),
+            onClick: () => I(!0),
             style: {
               display: "flex",
               alignItems: "center",
@@ -905,40 +917,40 @@ function Ko({ cardId: u = "climatizzatore" }) {
               padding: "10px 12px",
               borderRadius: 12,
               cursor: "pointer",
-              background: k.bg,
+              background: H.bg,
               border: `1px solid ${o}45`,
               color: o,
               textAlign: "left"
             },
             children: [
-              /* @__PURE__ */ t(k.icon, { size: 16, strokeWidth: 2.2 }),
-              /* @__PURE__ */ t("span", { style: { flex: 1, fontSize: 12, fontWeight: 800, letterSpacing: ".03em", textTransform: "uppercase" }, children: i(`mode.${k.modeKey}`) }),
-              /* @__PURE__ */ t(Mo, { size: 14, strokeWidth: 2.5, style: { opacity: 0.7 } })
+              /* @__PURE__ */ e(H.icon, { size: 16, strokeWidth: 2.2 }),
+              /* @__PURE__ */ e("span", { style: { flex: 1, fontSize: 12, fontWeight: 800, letterSpacing: ".03em", textTransform: "uppercase" }, children: i(`mode.${H.modeKey}`) }),
+              /* @__PURE__ */ e(Io, { size: 14, strokeWidth: 2.5, style: { opacity: 0.7 } })
             ]
           }
-        ) : /* @__PURE__ */ t("div", { style: {
+        ) : /* @__PURE__ */ e("div", { style: {
           display: "flex",
           gap: 4,
           padding: 3,
           borderRadius: 11,
           background: r ? "rgba(255,255,255,.04)" : "#f1f5f9",
           border: `1px solid ${p}`
-        }, children: me.filter((e) => e !== "off").map((e) => {
-          const n = ie(e), c = d === e, b = n.icon;
+        }, children: ge.filter((t) => t !== "off").map((t) => {
+          const n = ie(t), l = m === t, y = n.icon;
           return /* @__PURE__ */ a(
             "button",
             {
-              onClick: () => pe(e),
-              disabled: O === "mode",
+              onClick: () => be(t),
+              disabled: E === "mode",
               title: i(`mode.${n.modeKey}`),
               style: {
                 flex: 1,
                 padding: "8px 0",
                 borderRadius: 8,
                 cursor: "pointer",
-                background: c ? n.bg : "transparent",
-                border: c ? `1px solid ${n.color}55` : "1px solid transparent",
-                color: c ? n.color : m,
+                background: l ? n.bg : "transparent",
+                border: l ? `1px solid ${n.color}55` : "1px solid transparent",
+                color: l ? n.color : u,
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
@@ -946,8 +958,8 @@ function Ko({ cardId: u = "climatizzatore" }) {
                 transition: "all .15s"
               },
               children: [
-                /* @__PURE__ */ t(b, { size: 13, strokeWidth: c ? 2.4 : 2 }),
-                /* @__PURE__ */ t("span", { style: {
+                /* @__PURE__ */ e(y, { size: 13, strokeWidth: l ? 2.4 : 2 }),
+                /* @__PURE__ */ e("span", { style: {
                   fontSize: 9,
                   fontWeight: 800,
                   letterSpacing: ".04em",
@@ -955,16 +967,16 @@ function Ko({ cardId: u = "climatizzatore" }) {
                 }, children: i(`mode.${n.modeKey}`) })
               ]
             },
-            e
+            t
           );
         }) }),
-        /* @__PURE__ */ t(oe, { children: S && V && /* @__PURE__ */ t(
-          T.div,
+        /* @__PURE__ */ e(oe, { children: b && G && /* @__PURE__ */ e(
+          _.div,
           {
             initial: { opacity: 0 },
             animate: { opacity: 1 },
             exit: { opacity: 0 },
-            onClick: () => M(!1),
+            onClick: () => I(!1),
             style: {
               position: "absolute",
               inset: 0,
@@ -978,12 +990,12 @@ function Ko({ cardId: u = "climatizzatore" }) {
               padding: 12
             },
             children: /* @__PURE__ */ a(
-              T.div,
+              _.div,
               {
                 initial: { scale: 0.94, y: 6 },
                 animate: { scale: 1, y: 0 },
                 exit: { scale: 0.96 },
-                onClick: (e) => e.stopPropagation(),
+                onClick: (t) => t.stopPropagation(),
                 style: {
                   width: "100%",
                   maxHeight: "100%",
@@ -1004,18 +1016,18 @@ function Ko({ cardId: u = "climatizzatore" }) {
                     gap: 8,
                     padding: "4px 4px 6px"
                   }, children: [
-                    /* @__PURE__ */ t("span", { style: {
+                    /* @__PURE__ */ e("span", { style: {
                       flex: 1,
                       fontSize: 10,
                       fontWeight: 800,
                       letterSpacing: ".08em",
                       textTransform: "uppercase",
-                      color: m
+                      color: u
                     }, children: i("modeTitle") }),
-                    /* @__PURE__ */ t(
+                    /* @__PURE__ */ e(
                       "button",
                       {
-                        onClick: () => M(!1),
+                        onClick: () => I(!1),
                         "aria-label": i("close"),
                         style: {
                           width: 26,
@@ -1028,19 +1040,19 @@ function Ko({ cardId: u = "climatizzatore" }) {
                           justifyContent: "center",
                           background: r ? "rgba(255,255,255,.06)" : "#f1f5f9",
                           border: `1px solid ${p}`,
-                          color: z
+                          color: v
                         },
-                        children: /* @__PURE__ */ t(Se, { size: 13, strokeWidth: 2.5 })
+                        children: /* @__PURE__ */ e(ze, { size: 13, strokeWidth: 2.5 })
                       }
                     )
                   ] }),
-                  me.filter((e) => e !== "off").map((e) => {
-                    const n = ie(e), c = d === e, b = n.icon;
+                  ge.filter((t) => t !== "off").map((t) => {
+                    const n = ie(t), l = m === t, y = n.icon;
                     return /* @__PURE__ */ a(
                       "button",
                       {
                         onClick: () => {
-                          pe(e), M(!1);
+                          be(t), I(!1);
                         },
                         style: {
                           display: "flex",
@@ -1049,18 +1061,18 @@ function Ko({ cardId: u = "climatizzatore" }) {
                           padding: "10px 12px",
                           borderRadius: 10,
                           cursor: "pointer",
-                          background: c ? n.bg : "transparent",
-                          border: `1px solid ${c ? `${n.color}55` : "transparent"}`,
-                          color: c ? n.color : z,
+                          background: l ? n.bg : "transparent",
+                          border: `1px solid ${l ? `${n.color}55` : "transparent"}`,
+                          color: l ? n.color : v,
                           textAlign: "left"
                         },
                         children: [
-                          /* @__PURE__ */ t(b, { size: 15, strokeWidth: c ? 2.4 : 2 }),
-                          /* @__PURE__ */ t("span", { style: { flex: 1, fontSize: 12.5, fontWeight: 700 }, children: i(`mode.${n.modeKey}`) }),
-                          c && /* @__PURE__ */ t(Io, { size: 14, strokeWidth: 3 })
+                          /* @__PURE__ */ e(y, { size: 15, strokeWidth: l ? 2.4 : 2 }),
+                          /* @__PURE__ */ e("span", { style: { flex: 1, fontSize: 12.5, fontWeight: 700 }, children: i(`mode.${n.modeKey}`) }),
+                          l && /* @__PURE__ */ e(Po, { size: 14, strokeWidth: 3 })
                         ]
                       },
-                      e
+                      t
                     );
                   })
                 ]
@@ -1068,16 +1080,16 @@ function Ko({ cardId: u = "climatizzatore" }) {
             )
           }
         ) }),
-        s.showFan && !N.has("fan") && J && J.length > 0 && !l && /* @__PURE__ */ t("div", { style: {
+        s.showFan && !A.has("fan") && X && X.length > 0 && !c && /* @__PURE__ */ e("div", { style: {
           display: "flex",
           gap: 4,
           flexWrap: "wrap",
           marginTop: 8
-        }, children: J.map((e) => /* @__PURE__ */ t(
+        }, children: X.map((t) => /* @__PURE__ */ e(
           "button",
           {
-            onClick: () => Ne(e),
-            disabled: O === "fan" || e === C,
+            onClick: () => Le(t),
+            disabled: E === "fan" || t === w,
             style: {
               padding: "4px 10px",
               borderRadius: 99,
@@ -1085,23 +1097,23 @@ function Ko({ cardId: u = "climatizzatore" }) {
               fontSize: 10,
               fontWeight: 700,
               letterSpacing: ".02em",
-              background: e === C ? `${o}22` : "transparent",
-              border: `1px solid ${e === C ? `${o}50` : p}`,
-              color: e === C ? o : m,
+              background: t === w ? `${o}22` : "transparent",
+              border: `1px solid ${t === w ? `${o}50` : p}`,
+              color: t === w ? o : u,
               transition: "all .15s"
             },
-            children: e
+            children: t
           },
-          e
+          t
         )) }),
-        s.showPreset && !N.has("preset") && X && X.length > 0 && !l && /* @__PURE__ */ t("div", { style: { display: "flex", gap: 4, flexWrap: "wrap", marginTop: 8 }, children: X.map((e) => {
-          const n = Ce(e), c = e === w;
+        s.showPreset && !A.has("preset") && Q && Q.length > 0 && !c && /* @__PURE__ */ e("div", { style: { display: "flex", gap: 4, flexWrap: "wrap", marginTop: 8 }, children: Q.map((t) => {
+          const n = Te(t), l = t === z;
           return /* @__PURE__ */ a(
             "button",
             {
-              onClick: () => De(e),
-              disabled: O === "preset" || e === w,
-              title: ee(e),
+              onClick: () => De(t),
+              disabled: E === "preset" || t === z,
+              title: ee(t),
               style: {
                 display: "flex",
                 alignItems: "center",
@@ -1112,21 +1124,21 @@ function Ko({ cardId: u = "climatizzatore" }) {
                 fontSize: 10,
                 fontWeight: 700,
                 letterSpacing: ".02em",
-                background: c ? `${o}22` : "transparent",
-                border: `1px solid ${c ? `${o}50` : p}`,
-                color: c ? o : m,
+                background: l ? `${o}22` : "transparent",
+                border: `1px solid ${l ? `${o}50` : p}`,
+                color: l ? o : u,
                 transition: "all .15s"
               },
               children: [
-                /* @__PURE__ */ t(n, { size: 11, strokeWidth: 2 }),
-                ee(e)
+                /* @__PURE__ */ e(n, { size: 11, strokeWidth: 2 }),
+                ee(t)
               ]
             },
-            e
+            t
           );
         }) }),
-        /* @__PURE__ */ t(oe, { children: (d === "unavailable" || d === "unknown") && /* @__PURE__ */ a(
-          T.div,
+        /* @__PURE__ */ e(oe, { children: (m === "unavailable" || m === "unknown") && /* @__PURE__ */ a(
+          _.div,
           {
             initial: { opacity: 0 },
             animate: { opacity: 1 },
@@ -1142,53 +1154,65 @@ function Ko({ cardId: u = "climatizzatore" }) {
               borderRadius: 18,
               fontSize: 12,
               fontWeight: 600,
-              color: m,
+              color: u,
               gap: 6
             },
             children: [
-              /* @__PURE__ */ t(Ao, { size: 13, style: { animation: "spin 2s linear infinite" } }),
+              /* @__PURE__ */ e(To, { size: 13, style: { animation: "spin 2s linear infinite" } }),
               i("unavailable")
             ]
           }
         ) })
       ]
     }
-  ) : /* @__PURE__ */ t("div", { style: {
+  ) : /* @__PURE__ */ e("div", { style: {
     padding: 16,
     borderRadius: 16,
-    background: ge,
+    background: ve,
     border: `1px solid ${p}`,
-    color: m,
+    color: u,
     fontSize: 12,
     fontStyle: "italic"
   }, children: i("noEntity") });
 }
-function K({ dark: u, icon: r, value: H, label: E }) {
+function re({ icon: d, value: r, c: $, m: k }) {
+  return /* @__PURE__ */ a("span", { style: { display: "flex", alignItems: "center", gap: 4, minWidth: 0 }, children: [
+    /* @__PURE__ */ e("span", { style: { color: k, display: "flex" }, children: d }),
+    /* @__PURE__ */ e("span", { style: {
+      fontSize: 12,
+      fontWeight: 800,
+      color: $,
+      fontVariantNumeric: "tabular-nums",
+      whiteSpace: "nowrap"
+    }, children: r })
+  ] });
+}
+function B({ dark: d, icon: r, value: $, label: k }) {
   return /* @__PURE__ */ a("div", { style: {
     display: "flex",
     alignItems: "center",
     gap: 6,
     padding: "5px 9px",
     borderRadius: 8,
-    background: u ? "rgba(255,255,255,.04)" : "#f8fafc",
-    border: `1px solid ${u ? "rgba(255,255,255,.06)" : "#e2e8f0"}`
+    background: d ? "rgba(255,255,255,.04)" : "#f8fafc",
+    border: `1px solid ${d ? "rgba(255,255,255,.06)" : "#e2e8f0"}`
   }, children: [
-    /* @__PURE__ */ t("span", { style: { color: "var(--text-muted)" }, children: r }),
-    /* @__PURE__ */ t("span", { style: {
+    /* @__PURE__ */ e("span", { style: { color: "var(--text-muted)" }, children: r }),
+    /* @__PURE__ */ e("span", { style: {
       fontSize: 12,
       fontWeight: 800,
       color: "var(--text-primary)",
       fontVariantNumeric: "tabular-nums"
-    }, children: H }),
-    /* @__PURE__ */ t("span", { style: {
+    }, children: $ }),
+    /* @__PURE__ */ e("span", { style: {
       fontSize: 9,
       fontWeight: 700,
       color: "var(--text-muted)",
       textTransform: "uppercase",
       letterSpacing: ".06em"
-    }, children: E })
+    }, children: k })
   ] });
 }
 export {
-  Ko as default
+  jo as default
 };
