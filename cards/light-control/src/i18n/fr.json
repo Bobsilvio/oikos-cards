@@ -18,7 +18,7 @@
       "labelPlaceholder": "ex. Lampe du salon",
       "sectionAppearance": "Apparence",
       "layoutLabel": "Disposition",
-      "layoutHint": "Cercles autour de l'icône, ou barres horizontales",
+      "layoutHint": "Anneaux autour de l'icône, barres horizontales, pilule compacte ou Simple : luminosité et chaud/froid",
       "layoutCircle": "Cercles",
       "layoutBars": "Barres",
       "layoutFilled": "Pilule",
@@ -31,7 +31,16 @@
       "colorLabel": "Couleur",
       "colorHint": "Sélecteur de couleurs prédéfinies",
       "colorTempLabel": "Température (K)",
-      "colorTempHint": "Dégradé chaud→froid pour les lumières color_temp"
+      "colorTempHint": "Dégradé chaud→froid pour les lumières color_temp",
+      "layoutSimple": "Simple",
+      "presetsLabel": "Préréglages de température",
+      "presetsHint": "Puces Bougie · Chaude · Neutre · Froide sous les commandes (la disposition Simple les a toujours)"
+    },
+    "preset": {
+      "candle": "Bougie",
+      "warm": "Chaude",
+      "neutral": "Neutre",
+      "cool": "Froide"
     }
   }
 }

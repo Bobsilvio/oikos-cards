@@ -18,7 +18,7 @@
       "labelPlaceholder": "es. Lampada salotto",
       "sectionAppearance": "Aspetto",
       "layoutLabel": "Layout",
-      "layoutHint": "Cerchi attorno icona, oppure barre orizzontali",
+      "layoutHint": "Cerchi attorno all'icona, barre orizzontali, pill compatta, oppure Semplice: luminosità e caldo/freddo",
       "layoutCircle": "Cerchi",
       "layoutBars": "Barre",
       "layoutFilled": "Pill",
@@ -31,7 +31,16 @@
       "colorLabel": "Colore",
       "colorHint": "Selettore colori preset",
       "colorTempLabel": "Temperatura (K)",
-      "colorTempHint": "Gradiente caldo→freddo per luci color_temp"
+      "colorTempHint": "Gradiente caldo→freddo per luci color_temp",
+      "layoutSimple": "Semplice",
+      "presetsLabel": "Preset temperatura",
+      "presetsHint": "Chip Candela · Calda · Neutra · Fredda sotto i controlli (il layout Semplice li ha sempre)"
+    },
+    "preset": {
+      "candle": "Candela",
+      "warm": "Calda",
+      "neutral": "Neutra",
+      "cool": "Fredda"
     }
   }
 }

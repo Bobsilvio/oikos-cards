@@ -5,8 +5,11 @@ import {
 } from '@oikos/sdk'
 import it from './i18n/it.json'
 import en from './i18n/en.json'
+import de from './i18n/de.json'
+import es from './i18n/es.json'
+import fr from './i18n/fr.json'
 
-registerCardTranslations('card-light-control', { it, en })
+registerCardTranslations('card-light-control', { it, en, de, es, fr })
 
 const DEFAULT = {
   entityId: '',
@@ -16,6 +19,7 @@ const DEFAULT = {
   enableBrightness: true,
   enableColor: true,
   enableColorTemp: true,
+  enablePresets: false,
 }
 
 export default function LightControlSettings({ cardId }) {
@@ -52,6 +56,7 @@ export default function LightControlSettings({ cardId }) {
               { value: 'circle', label: t('lightControl.settings.layoutCircle') },
               { value: 'bars',   label: t('lightControl.settings.layoutBars') },
               { value: 'filled', label: t('lightControl.settings.layoutFilled') },
+              { value: 'simple', label: t('lightControl.settings.layoutSimple') },
             ]}
             value={config.layout || 'circle'}
             onChange={v => set('layout', v)}
@@ -85,6 +90,15 @@ export default function LightControlSettings({ cardId }) {
             onChange={v => set('enableColorTemp', v)}
           />
         </Field>
+        {/* Nel layout Semplice i chip ci sono sempre: il toggle non avrebbe effetto. */}
+        {config.layout !== 'simple' && (
+          <Field label={t('lightControl.settings.presetsLabel')} hint={t('lightControl.settings.presetsHint')}>
+            <Toggle
+              value={!!config.enablePresets}
+              onChange={v => set('enablePresets', v)}
+            />
+          </Field>
+        )}
       </Section>
 
     </div>

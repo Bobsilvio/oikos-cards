@@ -18,7 +18,7 @@
       "labelPlaceholder": "ej. Lámpara del salón",
       "sectionAppearance": "Apariencia",
       "layoutLabel": "Diseño",
-      "layoutHint": "Círculos alrededor del icono, o barras horizontales",
+      "layoutHint": "Anillos alrededor del icono, barras horizontales, píldora compacta o Sencillo: brillo y cálido/frío",
       "layoutCircle": "Círculos",
       "layoutBars": "Barras",
       "layoutFilled": "Píldora",
@@ -31,7 +31,16 @@
       "colorLabel": "Color",
       "colorHint": "Selector de colores preestablecidos",
       "colorTempLabel": "Temperatura (K)",
-      "colorTempHint": "Degradado cálido→frío para luces color_temp"
+      "colorTempHint": "Degradado cálido→frío para luces color_temp",
+      "layoutSimple": "Sencillo",
+      "presetsLabel": "Preajustes de temperatura",
+      "presetsHint": "Chips Vela · Cálida · Neutra · Fría bajo los controles (el diseño Sencillo los tiene siempre)"
+    },
+    "preset": {
+      "candle": "Vela",
+      "warm": "Cálida",
+      "neutral": "Neutra",
+      "cool": "Fría"
     }
   }
 }

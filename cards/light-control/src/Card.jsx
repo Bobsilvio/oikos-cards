@@ -3,8 +3,11 @@ import { motion } from 'framer-motion'
 import { useCardConfig, useDashboard, useStyles, MdiIcon, registerCardTranslations, useT } from '@oikos/sdk'
 import it from './i18n/it.json'
 import en from './i18n/en.json'
+import de from './i18n/de.json'
+import es from './i18n/es.json'
+import fr from './i18n/fr.json'
 
-registerCardTranslations('card-light-control', { it, en })
+registerCardTranslations('card-light-control', { it, en, de, es, fr })
 
 const DEFAULT = {
   entityId: '',
@@ -14,10 +17,40 @@ const DEFAULT = {
   enableBrightness: true,
   enableColor: true,
   enableColorTemp: true,
+  enablePresets: false,
 }
 
 const KELVIN_GRADIENT =
   'linear-gradient(90deg, #ff8d3a 0%, #ffc488 22%, #fff4d8 50%, #cfe3ff 78%, #87b6ff 100%)'
+
+/*
+ * Trasparenza su un colore che può essere `rgb(…)` o un token `var(--…)`.
+ * Concatenare un hex (`${accent}55`) non produce un colore: il browser
+ * scarta la dichiarazione in silenzio. color-mix funziona con entrambi.
+ */
+const alpha = (c, pct) => `color-mix(in srgb, ${c} ${pct}%, transparent)`
+
+/*
+ * Le temperature «classiche»: candela, calda, neutra, fredda. Chi non vuole
+ * cercare il punto giusto su un gradiente tocca un chip. Si tagliano sul
+ * range della lampada e si tolgono i doppioni che ne nascono (una lampada
+ * 2700–6500 K non ha una «candela» distinta dalla «calda»).
+ */
+const KELVIN_PRESETS = [
+  { key: 'candle',  k: 2200 },
+  { key: 'warm',    k: 2700 },
+  { key: 'neutral', k: 4000 },
+  { key: 'cool',    k: 6500 },
+]
+function presetsFor(minK, maxK) {
+  const out = []
+  for (const p of KELVIN_PRESETS) {
+    const k = Math.max(minK, Math.min(maxK, p.k))
+    if (out.some(o => Math.abs(o.k - k) < 150)) continue
+    out.push({ key: p.key, k })
+  }
+  return out
+}
 
 function kelvinToRgb(k) {
   const t = k / 100
@@ -211,7 +244,7 @@ function PillBar({
         touchAction: 'none',
         userSelect: 'none',
         boxShadow: isOn && accent
-          ? `0 4px 14px ${accent}22, inset 0 1px 0 rgba(255,255,255,.18)`
+          ? `0 4px 14px ${alpha(accent, 13)}, inset 0 1px 0 rgba(255,255,255,.18)`
           : 'inset 0 1px 0 rgba(255,255,255,.08)',
         transition: 'opacity .2s, filter .2s, box-shadow .25s',
       }}
@@ -230,6 +263,62 @@ function PillBar({
           transition: 'left .15s ease-out, background .15s',
         }}
       />
+    </div>
+  )
+}
+
+function TempPresets({ presets, currentK, isOn, onPick, s, t }) {
+  // Il chip «acceso» è il preset più vicino alla temperatura attuale, purché
+  // entro 350 K: a 3300 K nessuno è acceso, ed è giusto così.
+  let active = null
+  if (isOn && currentK != null) {
+    let best = Infinity
+    for (const p of presets) {
+      const d = Math.abs(p.k - currentK)
+      if (d < best) { best = d; active = p.key }
+    }
+    if (best > 350) active = null
+  }
+  return (
+    <div style={{ display: 'flex', gap: s.tokens.space.sm, width: '100%' }}>
+      {presets.map(p => {
+        const rgb = rgbToCss(kelvinToRgb(p.k))
+        const on = active === p.key
+        return (
+          <button
+            key={p.key}
+            type="button"
+            onClick={() => onPick(p.k)}
+            aria-pressed={on}
+            aria-label={`${t(`lightControl.preset.${p.key}`)} · ${p.k} K`}
+            style={{
+              flex: 1, minWidth: 0,
+              display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6,
+              padding: '10px 4px 8px',
+              borderRadius: s.tokens.radius.md,
+              border: `1px solid ${on ? alpha(rgb, 70) : s.tokens.color.border}`,
+              background: on ? alpha(rgb, 24) : alpha(s.tokens.color.primary, 4),
+              boxShadow: on ? `0 6px 18px ${alpha(rgb, 22)}` : 'none',
+              cursor: 'pointer',
+              transition: 'background .2s, border-color .2s, box-shadow .2s',
+            }}
+          >
+            <span style={{
+              width: 22, height: 22, borderRadius: '50%',
+              background: rgb,
+              boxShadow: on ? `0 0 12px ${alpha(rgb, 80)}` : 'none',
+              opacity: isOn ? 1 : .5,
+              transform: on ? 'scale(1.08)' : 'scale(1)',
+              transition: 'opacity .2s, box-shadow .2s, transform .2s',
+            }}/>
+            <span style={{
+              ...s.tokens.font.hint, fontWeight: 700,
+              color: on ? s.tokens.color.primary : s.tokens.color.muted,
+              whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '100%',
+            }}>{t(`lightControl.preset.${p.key}`)}</span>
+          </button>
+        )
+      })}
     </div>
   )
 }
@@ -340,6 +429,17 @@ export default function LightControl({ cardId = 'light-control' }) {
     ? localKelvin
     : (haKelvin ?? Math.round((minKelvin + maxKelvin) / 2))
   const kelvinPct = Math.max(0, Math.min(1, (currentKelvin - minKelvin) / (maxKelvin - minKelvin || 1)))
+
+  // Chip caldo/freddo: sempre nel layout Semplice, a scelta negli altri.
+  const showPresets = showColorTemp && (config.layout === 'simple' || config.enablePresets)
+  const presets = showPresets ? presetsFor(minKelvin, maxKelvin) : []
+  // Un tocco sul chip è una scelta esplicita: a luce spenta la accende a
+  // quella temperatura (diverso dal trascinamento, che a luce spenta si butta).
+  const pickKelvin = (k) => {
+    if (state === 'unavailable') return
+    callService('light', 'turn_on', config.entityId, { color_temp_kelvin: k })
+      ?.catch(err => console.error('[LightControl]', err))
+  }
 
   // When only one ring shown, promote it to outer radius
   const brightR = (showBrightness && showColor) ? OUTER_R : OUTER_R
@@ -452,10 +552,14 @@ export default function LightControl({ cardId = 'light-control' }) {
     }
   }
 
+  // In percentuale e non in px: la ruota ora si adatta alla larghezza (in un
+  // popup stretto i 240 px fissi venivano tagliati). `closest-side` su un
+  // riquadro quadrato fa valere 100% = metà lato, cioè CENTER.
+  const pctR = (r) => `${(r / CENTER * 100).toFixed(2)}%`
   const colorRingMask =
-    `radial-gradient(circle, transparent ${colorR - STROKE / 2}px, ` +
-    `#000 ${colorR - STROKE / 2 + 1}px, #000 ${colorR + STROKE / 2}px, ` +
-    `transparent ${colorR + STROKE / 2 + 1}px)`
+    `radial-gradient(circle closest-side, transparent ${pctR(colorR - STROKE / 2)}, ` +
+    `#000 ${pctR(colorR - STROKE / 2 + 1)}, #000 ${pctR(colorR + STROKE / 2)}, ` +
+    `transparent ${pctR(colorR + STROKE / 2 + 1)})`
 
   // ── BARS LAYOUT ──────────────────────────────────────────────────────────
   const barMove = (e) => {
@@ -692,6 +796,128 @@ export default function LightControl({ cardId = 'light-control' }) {
             </div>
           </>
         )}
+
+        {showPresets && (
+          <>
+            <div style={{ height: 1, background: 'rgba(255,255,255,.06)' }}/>
+            <div style={{ padding: '8px 10px 10px' }}>
+              <TempPresets presets={presets} currentK={currentKelvin} isOn={isOn} onPick={pickKelvin} s={s} t={t}/>
+            </div>
+          </>
+        )}
+      </div>
+    )
+  }
+
+  if (config.layout === 'simple') {
+    const huePct = displayRgb ? rgbToHueAngle(displayRgb) / 360 : 0
+    const brightPct = brightness / 100
+    const stateText = state === 'unavailable'
+      ? t('lightControl.unavailable')
+      : isOn ? t('lightControl.on') : t('lightControl.off')
+
+    return (
+      <div style={{
+        ...s.card,
+        borderColor: isOn ? alpha(accent, 33) : s.tokens.color.border,
+        boxShadow: isOn ? `0 0 40px ${alpha(accent, 12)}` : 'none',
+        transition: 'border-color .3s, box-shadow .3s',
+        display: 'flex', flexDirection: 'column',
+        gap: s.tokens.space.md,
+      }}>
+        {/* Intestazione: icona (accende/spegne), nome, stato, percentuale */}
+        <div style={{ ...s.row, gap: s.tokens.space.sm }}>
+          <button
+            onClick={toggle}
+            disabled={busy || state === 'unavailable'}
+            aria-label={isOn ? t('lightControl.turnOff') : t('lightControl.turnOn')}
+            style={{
+              width: 44, height: 44, borderRadius: '50%',
+              border: 'none',
+              background: isOn
+                ? `radial-gradient(circle, ${alpha(accent, 28)} 0%, ${alpha(accent, 8)} 70%, transparent 100%)`
+                : alpha(s.tokens.color.primary, 5),
+              cursor: busy ? 'wait' : 'pointer',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              padding: 0, flexShrink: 0,
+              boxShadow: isOn ? `inset 0 0 14px ${alpha(accent, 22)}` : 'none',
+              transition: 'background .25s, box-shadow .25s',
+            }}
+          >
+            <MdiIcon name={config.icon || 'mdi:lightbulb'} size={24} color={accent} dark={dark}/>
+          </button>
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <div style={{
+              ...s.tokens.font.title,
+              color: s.tokens.color.primary,
+              overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
+            }}>
+              {label}
+            </div>
+            <div style={{
+              ...s.tokens.font.hint, marginTop: 2,
+              color: isOn ? accent : s.tokens.color.muted,
+              display: 'flex', alignItems: 'center', gap: 6,
+            }}>
+              <span style={{
+                width: 6, height: 6, borderRadius: '50%', flexShrink: 0,
+                background: isOn ? accent : s.tokens.color.muted,
+                boxShadow: isOn ? `0 0 8px ${accent}` : 'none',
+              }}/>
+              {stateText}
+            </div>
+          </div>
+          {isOn && showBrightness && (
+            <span style={{
+              ...s.tokens.font.title,
+              color: s.tokens.color.primary,
+              fontVariantNumeric: 'tabular-nums',
+              flexShrink: 0,
+            }}>
+              {brightness}%
+            </span>
+          )}
+        </div>
+
+        {/* Luminosità */}
+        {showBrightness && (
+          <PillBar
+            innerRef={el => { barRefs.current.brightness = el }}
+            disabled={!isOn}
+            background={`linear-gradient(90deg, ${alpha(s.tokens.color.primary, 8)} 0%, ${accent} 100%)`}
+            thumbPct={brightPct}
+            thumbFill="#fff"
+            thumbStroke={accent}
+            onPointerDown={barDown('brightness')}
+            onPointerMove={barMove}
+            onPointerUp={onPointerUp}
+            isOn={isOn}
+            accent={accent}
+          />
+        )}
+
+        {/* Caldo / freddo: i chip al posto del gradiente */}
+        {showPresets && (
+          <TempPresets presets={presets} currentK={currentKelvin} isOn={isOn} onPick={pickKelvin} s={s} t={t}/>
+        )}
+
+        {/* Colore, se la lampada lo fa e non è stato spento nelle impostazioni */}
+        {showColor && (
+          <PillBar
+            innerRef={el => { barRefs.current.color = el }}
+            disabled={!isOn}
+            background={'linear-gradient(90deg, #ff0000, #ffff00, #00ff00, #00ffff, #0000ff, #ff00ff, #ff0000)'}
+            thumbPct={huePct}
+            thumbFill={displayRgb ? rgbToCss(displayRgb) : '#fff'}
+            thumbStroke="#fff"
+            onPointerDown={barDown('color')}
+            onPointerMove={barMove}
+            onPointerUp={onPointerUp}
+            isOn={isOn}
+            accent={accent}
+            desaturate
+          />
+        )}
       </div>
     )
   }
@@ -703,8 +929,8 @@ export default function LightControl({ cardId = 'light-control' }) {
     return (
       <div style={{
         ...s.card,
-        borderColor: isOn ? `${accent}55` : s.tokens.color.border,
-        boxShadow: isOn ? `0 0 40px ${accent}1f, 0 0 0 1px ${accent}30` : 'none',
+        borderColor: isOn ? `${alpha(accent, 33)}` : s.tokens.color.border,
+        boxShadow: isOn ? `0 0 40px ${alpha(accent, 12)}, 0 0 0 1px ${alpha(accent, 19)}` : 'none',
         transition: 'border-color .3s, box-shadow .3s',
         display: 'flex', flexDirection: 'column',
         gap: s.tokens.space.md,
@@ -719,12 +945,12 @@ export default function LightControl({ cardId = 'light-control' }) {
               width: 36, height: 36, borderRadius: '50%',
               border: 'none',
               background: isOn
-                ? `radial-gradient(circle, ${accent}40 0%, ${accent}10 70%, transparent 100%)`
+                ? `radial-gradient(circle, ${alpha(accent, 25)} 0%, ${alpha(accent, 6)} 70%, transparent 100%)`
                 : (dark ? 'rgba(255,255,255,.05)' : 'rgba(0,0,0,.04)'),
               cursor: busy ? 'wait' : 'pointer',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               padding: 0, flexShrink: 0,
-              boxShadow: isOn ? `inset 0 0 12px ${accent}30` : 'none',
+              boxShadow: isOn ? `inset 0 0 12px ${alpha(accent, 19)}` : 'none',
               transition: 'background .25s, box-shadow .25s',
             }}
           >
@@ -825,6 +1051,10 @@ export default function LightControl({ cardId = 'light-control' }) {
             )}
           </>
         )}
+
+        {showPresets && (
+          <TempPresets presets={presets} currentK={currentKelvin} isOn={isOn} onPick={pickKelvin} s={s} t={t}/>
+        )}
       </div>
     )
   }
@@ -832,15 +1062,18 @@ export default function LightControl({ cardId = 'light-control' }) {
   return (
     <div style={{
       ...s.card,
-      borderColor: isOn ? `${accent}55` : s.tokens.color.border,
-      boxShadow: isOn ? `0 0 50px ${accent}1f, 0 0 0 1px ${accent}30` : 'none',
+      borderColor: isOn ? `${alpha(accent, 33)}` : s.tokens.color.border,
+      boxShadow: isOn ? `0 0 50px ${alpha(accent, 12)}, 0 0 0 1px ${alpha(accent, 19)}` : 'none',
       transition: 'border-color .3s, box-shadow .3s',
       display: 'flex', flexDirection: 'column', alignItems: 'center',
       gap: s.tokens.space.md,
     }}>
+      {/* Larghezza fluida con tetto a SIZE: in un popup stretto o a mezza
+          colonna i 240 px fissi sbordavano e la ruota veniva tagliata. Le
+          coordinate interne restano nel viewBox e scalano da sole. */}
       <div style={{
         position: 'relative',
-        width: SIZE, height: SIZE,
+        width: '100%', maxWidth: SIZE, aspectRatio: '1 / 1',
         touchAction: 'none',
         userSelect: 'none',
       }}>
@@ -860,7 +1093,7 @@ export default function LightControl({ cardId = 'light-control' }) {
 
         <svg
           ref={svgRef}
-          width={SIZE} height={SIZE}
+          width="100%" height="100%"
           viewBox={`0 0 ${SIZE} ${SIZE}`}
           style={{ position: 'absolute', inset: 0 }}
         >
@@ -889,7 +1122,7 @@ export default function LightControl({ cardId = 'light-control' }) {
                   transition: dragModeRef.current === 'brightness'
                     ? 'stroke .15s'
                     : 'stroke-dashoffset .4s cubic-bezier(.4,0,.2,1), stroke .25s',
-                  filter: isOn ? `drop-shadow(0 0 8px ${accent}80)` : 'none',
+                  filter: isOn ? `drop-shadow(0 0 8px ${alpha(accent, 50)})` : 'none',
                 }}
               />
             </g>
@@ -942,7 +1175,7 @@ export default function LightControl({ cardId = 'light-control' }) {
                 cx={brightThumb[0]} cy={brightThumb[1]} r={10}
                 fill="#fff"
                 stroke={accent} strokeWidth={2.5}
-                style={{ filter: `drop-shadow(0 2px 6px ${accent}90)` }}
+                style={{ filter: `drop-shadow(0 2px 6px ${alpha(accent, 56)})` }}
               />
             </g>
           )}
@@ -957,18 +1190,18 @@ export default function LightControl({ cardId = 'light-control' }) {
           transition={{ duration: 2.6, repeat: isOn ? Infinity : 0, ease: 'easeInOut' }}
           style={{
             position: 'absolute',
-            top: (SIZE - ICON_BOX) / 2,
-            left: (SIZE - ICON_BOX) / 2,
-            width: ICON_BOX, height: ICON_BOX,
+            top: `${(SIZE - ICON_BOX) / 2 / SIZE * 100}%`,
+            left: `${(SIZE - ICON_BOX) / 2 / SIZE * 100}%`,
+            width: `${ICON_BOX / SIZE * 100}%`, height: `${ICON_BOX / SIZE * 100}%`,
             borderRadius: '50%',
             border: 'none',
             background: isOn
-              ? `radial-gradient(circle, ${accent}45 0%, ${accent}10 65%, transparent 100%)`
+              ? `radial-gradient(circle, ${alpha(accent, 27)} 0%, ${alpha(accent, 6)} 65%, transparent 100%)`
               : (dark ? 'rgba(255,255,255,.04)' : 'rgba(0,0,0,.04)'),
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             cursor: busy ? 'wait' : 'pointer',
             padding: 0,
-            boxShadow: isOn ? `inset 0 0 30px ${accent}35` : 'none',
+            boxShadow: isOn ? `inset 0 0 30px ${alpha(accent, 21)}` : 'none',
             transition: 'background .3s, box-shadow .3s',
             zIndex: 2,
           }}
@@ -1038,6 +1271,10 @@ export default function LightControl({ cardId = 'light-control' }) {
             </div>
           )}
         </div>
+      )}
+
+      {showPresets && (
+        <TempPresets presets={presets} currentK={currentKelvin} isOn={isOn} onPick={pickKelvin} s={s} t={t}/>
       )}
     </div>
   )

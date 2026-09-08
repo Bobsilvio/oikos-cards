@@ -18,7 +18,7 @@
       "labelPlaceholder": "z. B. Wohnzimmerlampe",
       "sectionAppearance": "Aussehen",
       "layoutLabel": "Layout",
-      "layoutHint": "Kreise um das Symbol oder horizontale Balken",
+      "layoutHint": "Ringe um das Symbol, horizontale Balken, kompakte Pille oder Einfach: Helligkeit und warm/kalt",
       "layoutCircle": "Kreise",
       "layoutBars": "Balken",
       "layoutFilled": "Pille",
@@ -31,7 +31,16 @@
       "colorLabel": "Farbe",
       "colorHint": "Vordefinierte Farbauswahl",
       "colorTempLabel": "Temperatur (K)",
-      "colorTempHint": "Warm→Kalt-Verlauf für color_temp-Lichter"
+      "colorTempHint": "Warm→Kalt-Verlauf für color_temp-Lichter",
+      "layoutSimple": "Einfach",
+      "presetsLabel": "Temperatur-Voreinstellungen",
+      "presetsHint": "Chips Kerze · Warm · Neutral · Kalt unter den Reglern (das Layout Einfach hat sie immer)"
+    },
+    "preset": {
+      "candle": "Kerze",
+      "warm": "Warm",
+      "neutral": "Neutral",
+      "cool": "Kalt"
     }
   }
 }

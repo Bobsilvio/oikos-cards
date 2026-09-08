@@ -163,13 +163,13 @@
       "id": "light-control",
       "type": "card",
       "name": "Light Control",
-      "version": "1.0.18",
+      "version": "1.1.0",
       "author": "Oikos",
-      "description": "Controllo luce HA: on/off, luminosità e colore con sezioni disattivabili.",
-      "description_en": "HA light control: on/off, brightness and color with toggleable sections.",
-      "description_de": "HA-Lichtsteuerung: Ein/Aus, Helligkeit und Farbe mit umschaltbaren Bereichen.",
-      "description_es": "Control de luz HA: encendido/apagado, brillo y color con secciones desactivables.",
-      "description_fr": "Contrôle lumière HA : allumage/extinction, luminosité et couleur avec sections désactivables.",
+      "description": "Controllo luce HA: on/off, luminosità, colore e temperatura con chip caldo/freddo; layout Cerchi, Barre, Pill o Semplice.",
+      "description_en": "HA light control: on/off, brightness, color and temperature with warm/cool chips; Rings, Bars, Pill or Simple layout.",
+      "description_de": "HA-Lichtsteuerung: Ein/Aus, Helligkeit, Farbe und Temperatur mit Warm/Kalt-Chips; Layout Ringe, Balken, Pille oder Einfach.",
+      "description_es": "Control de luz HA: encendido/apagado, brillo, color y temperatura con chips cálido/frío; diseño Anillos, Barras, Píldora o Sencillo.",
+      "description_fr": "Contrôle lumière HA : allumage/extinction, luminosité, couleur et température avec puces chaud/froid ; disposition Anneaux, Barres, Pilule ou Simple.",
       "sdkVersion": "^1.1.0",
       "hasSettings": true,
       "path": "cards/light-control",
@@ -189,6 +189,17 @@
       "package": null,
       "tier": "free",
       "changelog": [
+        {
+          "version": "1.1.0",
+          "date": "2026-09-08",
+          "changes": [
+            "Layout «Semplice»: accendi/spegni, luminosità e i chip di temperatura",
+            "Opzione «Preset temperatura» che aggiunge gli stessi chip sotto i controlli",
+            "Traduzioni de/es/fr registrate (i file c'erano, ma non venivano caricati).",
+            "La ruota del layout Cerchi era larga 240 px fissi: in un popup stretto o a",
+            "Bordo, alone e ombra della card accesa non venivano mai applicati: il colore"
+          ]
+        },
         {
           "version": "1.0.18",
           "date": "2026-08-13",
