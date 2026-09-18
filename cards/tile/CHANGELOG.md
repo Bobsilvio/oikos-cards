@@ -4,6 +4,15 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [1.11.0] - 2026-09-18
+### Added
+- **Tocco «Impulso»**, per cancelli, portoni e campanelli che si rispengono da
+  soli. Accende sempre, invece di invertire: con «Accendi/spegni» uno switch
+  rimasto acceso per sbaglio veniva spento dal tocco e il cancello non si
+  muoveva. Per tre secondi la tile mostra «Comando inviato» col suo colore:
+  lo stato acceso dura troppo poco per essere disegnato, e prima sembrava che
+  il tocco non avesse fatto niente. Sui `button` usa `press`.
+
 ## [1.10.0] - 2026-08-13
 
 ### Fixed

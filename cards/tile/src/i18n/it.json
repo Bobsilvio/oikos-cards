@@ -37,7 +37,8 @@
     "clear": "Libero",
     "wet": "Bagnato",
     "active": "Attivo",
-    "running": "In funzione"
+    "running": "In funzione",
+    "pulseSent": "Comando inviato"
   },
   "settings": {
     "sectionEntity": "Entità",
@@ -79,7 +80,7 @@
     "tapToggle": "Accendi/spegni",
     "tapNone": "Niente",
     "sectionTap": "Al tocco",
-    "tapHint": "Vale su tutta la tile, non serve alcuna icona aggiuntiva. «Accendi/spegni» funziona su luci, prese, ventilatori, tapparelle e serrature.",
+    "tapHint": "Vale su tutta la tile, non serve alcuna icona aggiuntiva. «Accendi/spegni» funziona su luci, prese, ventilatori, tapparelle e serrature. «Impulso» accende sempre e mostra per qualche secondo che il comando è partito: per cancelli e campanelli che si rispengono da soli.",
     "tapPopup": "Apri popup",
     "popupPanel": "Pannello da aprire",
     "popupHint": "Anche uno impostato come «non mostrare nella pagina».",
@@ -121,7 +122,8 @@
     "bgOpacity": "Intensità",
     "bgOpacityHint": "100% = colore pieno.",
     "layoutSlim": "Sottile",
-    "unitHint": "Vuoto = quella dell'entità. Vale anche per la riga di stato."
+    "unitHint": "Vuoto = quella dell'entità. Vale anche per la riga di stato.",
+    "tapPulse": "Impulso"
   },
   "countOn": "{{count}} attive"
 }

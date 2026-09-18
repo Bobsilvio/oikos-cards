@@ -23,7 +23,7 @@
  *     colore esplicito.
  *   - nessuna stringa visibile hardcoded: tutto da useT
  */
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useDashboard, useCardConfig, useStyles, registerCardTranslations, useT, MdiIcon } from '@oikos/sdk'
 import it from './i18n/it.json'
 import en from './i18n/en.json'
@@ -87,7 +87,7 @@ export const DEFAULT = {
   // Conteggio: più entità osservate insieme ("4 · Luci"), con elenco al tocco
   countEntities: [],
   // Interazione
-  tapAction:     'more-info',   // 'more-info' | 'toggle' | 'popup' | 'list' | 'none'
+  tapAction:     'more-info',   // 'more-info' | 'toggle' | 'pulse' | 'popup' | 'list' | 'none'
   popupCardId:   '',            // istanza popup-panel da aprire con tapAction 'popup'
 }
 
@@ -99,6 +99,19 @@ export default function TileCard({ cardId = 'tile' }) {
   const [cfg] = useCardConfig(cardId, DEFAULT)
   // Prima di qualunque return: gli hook non possono stare dopo (SDK §3d).
   const [listOpen, setListOpen] = useState(false)
+  /*
+   * Riscontro dell'impulso. Un cancello o un campanello a impulso si accende e
+   * si rispegne in una frazione di secondo (di solito lo fa un'automazione):
+   * lo stato "acceso" non fa in tempo a essere disegnato, e la tile resterebbe
+   * su "spento" come se il tocco non avesse fatto niente. Per qualche secondo
+   * si mostra quindi che il comando è partito, indipendentemente dallo stato.
+   */
+  const [sentAt, setSentAt] = useState(0)
+  useEffect(() => {
+    if (!sentAt) return
+    const id = setTimeout(() => setSentAt(0), 3000)
+    return () => clearTimeout(id)
+  }, [sentAt])
 
   const tk = s.tokens
 
@@ -145,8 +158,8 @@ export default function TileCard({ cardId = 'tile' }) {
     return r ? r.color : null
   })()
 
-  const tint = ruleColor
-    || (unknown ? tk.color.muted : (!onOff || active ? accent : tk.color.muted))
+  const tint = sentAt ? accent : (ruleColor
+    || (unknown ? tk.color.muted : (!onOff || active ? accent : tk.color.muted)))
 
   /*
    * Conteggio su più entità.
@@ -168,6 +181,8 @@ export default function TileCard({ cardId = 'tile' }) {
         deviceClass: getAttr(cfg.entityId, 'device_class'),
       })
     : null
+
+  if (sentAt) status = t('state.pulseSent')
 
   // Valore grande: null quando non è un numero — mai "NaN" a schermo.
   const valueRaw = cfg.valueSource === 'attribute' && cfg.valueAttr
@@ -230,7 +245,21 @@ export default function TileCard({ cardId = 'tile' }) {
     && !(cfg.tapAction === 'popup' && !cfg.popupCardId)
     && !(cfg.tapAction === 'list' && counted.length === 0)
   const onClick = () => {
-    if (cfg.tapAction === 'toggle') {
+    if (cfg.tapAction === 'pulse') {
+      /*
+       * Impulso: ACCENDE sempre, non inverte. Con toggle, uno switch rimasto
+       * acceso per sbaglio (automazione saltata, riavvio nel mezzo) verrebbe
+       * spento dal tocco, e il cancello non si muoverebbe affatto.
+       */
+      const domain = cfg.entityId.split('.')[0]
+      if (domain === 'button' || domain === 'input_button') {
+        callService(domain, 'press', cfg.entityId)
+      } else {
+        // script, scene, switch, light, input_boolean: turn_on vale per tutti.
+        callService('homeassistant', 'turn_on', cfg.entityId)
+      }
+      setSentAt(Date.now())
+    } else if (cfg.tapAction === 'toggle') {
       const domain = cfg.entityId.split('.')[0]
       // L'entità è il TERZO argomento, non un oggetto dati.
       //

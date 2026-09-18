@@ -366,7 +366,7 @@
       "id": "tile",
       "type": "card",
       "name": "Tile",
-      "version": "1.10.0",
+      "version": "1.11.0",
       "author": "Oikos",
       "description": "Tile compatta e configurabile: una entità, uno stile, molti usi. Icona, stato, valore grande e due righe di dettaglio — per allarme, serratura, cancello, temperatura, batterie.",
       "description_en": "Compact configurable tile: one entity, one style, many uses. Icon, status, large value and two detail lines — for alarm, lock, gate, temperature, batteries.",
@@ -390,6 +390,13 @@
       "package": null,
       "tier": "free",
       "changelog": [
+        {
+          "version": "1.11.0",
+          "date": "2026-09-18",
+          "changes": [
+            "Tocco «Impulso», per cancelli, portoni e campanelli che si rispengono da"
+          ]
+        },
         {
           "version": "1.10.0",
           "date": "2026-08-13",
@@ -462,13 +469,6 @@
             "Tinta di stato — come sopra, ma tutta la tile prende il colore dello",
             "Conteggio su più entità. La tile può osservare un gruppo e dire quante ne",
             "Al tocco: «Apri elenco», che mostra le entità osservate con il loro stato."
-          ]
-        },
-        {
-          "version": "1.2.0",
-          "date": "2026-08-12",
-          "changes": [
-            "Al tocco: «Apri popup». La tile può aprire un pannello popup configurato"
           ]
         }
       ]

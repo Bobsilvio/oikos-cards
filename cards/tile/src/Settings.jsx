@@ -430,6 +430,7 @@ export default function TileSettings({ cardId }) {
             options={[
               { value: 'more-info', label: t('settings.tapMore') },
               { value: 'toggle',    label: t('settings.tapToggle') },
+              { value: 'pulse',     label: t('settings.tapPulse') },
               { value: 'popup',     label: t('settings.tapPopup') },
               { value: 'list',      label: t('settings.tapList') },
               { value: 'none',      label: t('settings.tapNone') },
