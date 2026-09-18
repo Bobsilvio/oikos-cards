@@ -123,7 +123,10 @@
     "bgOpacityHint": "100% = volle Farbe.",
     "layoutSlim": "Schmal",
     "unitHint": "Leer = die der Entität. Gilt auch für die Zustandszeile.",
-    "tapPulse": "Impuls"
+    "tapPulse": "Impuls",
+    "minHeight": "Mindesthöhe",
+    "minHeightHint": "Für Bildschirme, die man nebenbei bedient, wie im Auto: Die Kachel wird höher, der Inhalt bleibt mittig.",
+    "minHeightAuto": "Automatisch"
   },
   "countOn": "{{count}} aktiv"
 }

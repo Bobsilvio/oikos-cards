@@ -123,7 +123,10 @@
     "bgOpacityHint": "100% = color pleno.",
     "layoutSlim": "Fina",
     "unitHint": "Vacío = la de la entidad. Vale también para la línea de estado.",
-    "tapPulse": "Pulso"
+    "tapPulse": "Pulso",
+    "minHeight": "Altura mínima",
+    "minHeightHint": "Para pantallas que se usan sobre la marcha, como la del coche: el mosaico crece y el contenido queda centrado.",
+    "minHeightAuto": "Automática"
   },
   "countOn": "{{count}} activas"
 }

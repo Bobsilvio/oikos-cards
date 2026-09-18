@@ -120,7 +120,10 @@ const { jsxs: u, jsx: i } = window.__OIKOS_SDK__.jsxRuntime, fe = {
   bgOpacityHint: "100% = colore pieno.",
   layoutSlim: "Sottile",
   unitHint: "Vuoto = quella dell'entità. Vale anche per la riga di stato.",
-  tapPulse: "Impulso"
+  tapPulse: "Impulso",
+  minHeight: "Altezza minima",
+  minHeightHint: "Per schermi da usare al volo, come quello dell'auto: la tile si alza e il contenuto resta al centro.",
+  minHeightAuto: "Automatica"
 }, ve = "{{count}} attive", Se = {
   empty: fe,
   state: be,
@@ -165,7 +168,7 @@ const { jsxs: u, jsx: i } = window.__OIKOS_SDK__.jsxRuntime, fe = {
   active: "Active",
   running: "Running",
   pulseSent: "Command sent"
-}, xe = {
+}, He = {
   sectionEntity: "Entity",
   entity: "Main entity",
   label: "Title",
@@ -248,16 +251,19 @@ const { jsxs: u, jsx: i } = window.__OIKOS_SDK__.jsxRuntime, fe = {
   bgOpacityHint: "100% = solid colour.",
   layoutSlim: "Slim",
   unitHint: "Empty = the entity's own. Applies to the state line too.",
-  tapPulse: "Pulse"
-}, Ce = "{{count}} on", Ee = {
+  tapPulse: "Pulse",
+  minHeight: "Minimum height",
+  minHeightHint: "For screens used on the go, like a car's: the tile gets taller and the content stays centred.",
+  minHeightAuto: "Automatic"
+}, xe = "{{count}} on", Ce = {
   empty: Ae,
   state: we,
-  settings: xe,
-  countOn: Ce
+  settings: He,
+  countOn: xe
 }, Ie = {
   title: "Kachel nicht konfiguriert",
   hint: "Wähle eine Entität in den Einstellungen"
-}, He = {
+}, Ee = {
   unavailable: "K/A",
   on: "An",
   off: "Aus",
@@ -293,7 +299,7 @@ const { jsxs: u, jsx: i } = window.__OIKOS_SDK__.jsxRuntime, fe = {
   active: "Aktiv",
   running: "Läuft",
   pulseSent: "Befehl gesendet"
-}, Te = {
+}, ke = {
   sectionEntity: "Entität",
   entity: "Hauptentität",
   label: "Titel",
@@ -376,16 +382,19 @@ const { jsxs: u, jsx: i } = window.__OIKOS_SDK__.jsxRuntime, fe = {
   bgOpacityHint: "100% = volle Farbe.",
   layoutSlim: "Schmal",
   unitHint: "Leer = die der Entität. Gilt auch für die Zustandszeile.",
-  tapPulse: "Impuls"
-}, ke = "{{count}} aktiv", _e = {
+  tapPulse: "Impuls",
+  minHeight: "Mindesthöhe",
+  minHeightHint: "Für Bildschirme, die man nebenbei bedient, wie im Auto: Die Kachel wird höher, der Inhalt bleibt mittig.",
+  minHeightAuto: "Automatisch"
+}, Te = "{{count}} aktiv", _e = {
   empty: Ie,
-  state: He,
-  settings: Te,
-  countOn: ke
+  state: Ee,
+  settings: ke,
+  countOn: Te
 }, Pe = {
   title: "Tarjeta sin configurar",
   hint: "Elige una entidad en los ajustes"
-}, Le = {
+}, ze = {
   unavailable: "N/D",
   on: "Encendido",
   off: "Apagado",
@@ -421,7 +430,7 @@ const { jsxs: u, jsx: i } = window.__OIKOS_SDK__.jsxRuntime, fe = {
   active: "Activo",
   running: "En marcha",
   pulseSent: "Orden enviada"
-}, ze = {
+}, Le = {
   sectionEntity: "Entidad",
   entity: "Entidad principal",
   label: "Título",
@@ -504,11 +513,14 @@ const { jsxs: u, jsx: i } = window.__OIKOS_SDK__.jsxRuntime, fe = {
   bgOpacityHint: "100% = color pleno.",
   layoutSlim: "Fina",
   unitHint: "Vacío = la de la entidad. Vale también para la línea de estado.",
-  tapPulse: "Pulso"
+  tapPulse: "Pulso",
+  minHeight: "Altura mínima",
+  minHeightHint: "Para pantallas que se usan sobre la marcha, como la del coche: el mosaico crece y el contenido queda centrado.",
+  minHeightAuto: "Automática"
 }, Oe = "{{count}} activas", Ve = {
   empty: Pe,
-  state: Le,
-  settings: ze,
+  state: ze,
+  settings: Le,
   countOn: Oe
 }, Ne = {
   title: "Tuile non configurée",
@@ -632,7 +644,10 @@ const { jsxs: u, jsx: i } = window.__OIKOS_SDK__.jsxRuntime, fe = {
   bgOpacityHint: "100% = couleur pleine.",
   layoutSlim: "Fine",
   unitHint: "Vide = celle de l'entité. Vaut aussi pour la ligne d'état.",
-  tapPulse: "Impulsion"
+  tapPulse: "Impulsion",
+  minHeight: "Hauteur minimale",
+  minHeightHint: "Pour les écrans utilisés en passant, comme celui de la voiture : la tuile s'agrandit et le contenu reste centré.",
+  minHeightAuto: "Automatique"
 }, qe = "{{count}} actives", Me = {
   empty: Ne,
   state: De,
@@ -704,11 +719,11 @@ function K(a, { t, onText: l, offText: s, activeStates: r, deviceClass: m }) {
   if (!c && s) return s;
   const p = String(a).toLowerCase(), e = Re[String(m ?? "").toLowerCase()];
   if (e && (p === "on" || p === "off")) {
-    const S = `state.${e[p === "on" ? 0 : 1]}`, k = t(S);
-    if (k !== S) return k;
+    const S = `state.${e[p === "on" ? 0 : 1]}`, T = t(S);
+    if (T !== S) return T;
   }
-  const V = `state.${p}`, T = t(V);
-  return T !== V ? T : String(a).replace(/_/g, " ");
+  const N = `state.${p}`, k = t(N);
+  return k !== N ? k : String(a).replace(/_/g, " ");
 }
 const We = /* @__PURE__ */ new Set([
   "light",
@@ -756,7 +771,7 @@ function ie(a) {
   }[t] || "square-rounded-outline";
 }
 const { useState: le, useEffect: Be } = window.__OIKOS_SDK__.React, { useDashboard: Ze, useCardConfig: Ke, useStyles: Ge, registerCardTranslations: Ye, useT: Qe, MdiIcon: I } = window.__OIKOS_SDK__;
-Ye("card-tile", { it: Se, en: Ee, de: _e, es: Ve, fr: Me });
+Ye("card-tile", { it: Se, en: Ce, de: _e, es: Ve, fr: Me });
 const Je = {
   entityId: "",
   label: "",
@@ -790,7 +805,7 @@ const Je = {
   // per motivi diversi — l'icona per il peso visivo, il testo per farci stare
   // un nome lungo.
   iconSize: 20,
-  // 12–34
+  // 12–64
   // textScale: sostituito da titleScale/stateScale, letto ancora dalle tile
   // configurate prima (vedi tsT/tsS).
   // Vuoto e non 'none': i DEFAULTS vengono fusi nella configurazione salvata,
@@ -803,9 +818,11 @@ const Je = {
   bgOpacity: null,
   // 0–100; null = default secondo bgMode
   titleScale: 1,
-  // 0.75–1.4
+  // 0.75–2.5
   stateScale: 1,
-  // 0.75–1.4
+  // 0.75–2.5
+  minHeight: 0,
+  // px, 0 = segue il contenuto
   offAccent: "",
   // colore a stato inattivo (solo layout 'stateTint')
   /*
@@ -827,10 +844,10 @@ const Je = {
   // istanza popup-panel da aprire con tapAction 'popup'
 };
 function tt({ cardId: a = "tile" }) {
-  const t = Ge(), { t: l } = Qe("card-tile"), { getState: s, getAttr: r, callService: m, openMoreInfo: c, openPopup: p } = Ze(), [e] = Ke(a, Je), [V, T] = le(!1), [S, k] = le(0);
+  const t = Ge(), { t: l } = Qe("card-tile"), { getState: s, getAttr: r, callService: m, openMoreInfo: c, openPopup: p } = Ze(), [e] = Ke(a, Je), [N, k] = le(!1), [S, T] = le(0);
   Be(() => {
     if (!S) return;
-    const n = setTimeout(() => k(0), 3e3);
+    const n = setTimeout(() => T(0), 3e3);
     return () => clearTimeout(n);
   }, [S]);
   const o = t.tokens;
@@ -842,11 +859,11 @@ function tt({ cardId: a = "tile" }) {
         /* @__PURE__ */ i("div", { style: t.hint, children: l("empty.hint") })
       ] })
     ] });
-  const _ = s(e.entityId), A = G(_), w = U(_, e.activeStates), C = e.accent || o.color.green, R = je(e.entityId, e.activeStates), Y = (() => {
+  const _ = s(e.entityId), A = G(_), w = U(_, e.activeStates), x = e.accent || o.color.green, R = je(e.entityId, e.activeStates), Y = (() => {
     if (A || !Array.isArray(e.stateColors)) return null;
     const n = e.stateColors.find((f) => (f == null ? void 0 : f.color) && Xe(f.state, _));
     return n ? n.color : null;
-  })(), g = S ? C : Y || (A ? o.color.muted : !R || w ? C : o.color.muted), x = Array.isArray(e.countEntities) ? e.countEntities.filter(Boolean) : [], Q = x.filter((n) => U(s(n), e.activeStates)).length, P = e.label || r(e.entityId, "friendly_name") || e.entityId, re = e.icon || r(e.entityId, "icon") || ie(e.entityId);
+  })(), g = S ? x : Y || (A ? o.color.muted : !R || w ? x : o.color.muted), H = Array.isArray(e.countEntities) ? e.countEntities.filter(Boolean) : [], Q = H.filter((n) => U(s(n), e.activeStates)).length, P = e.label || r(e.entityId, "friendly_name") || e.entityId, re = e.icon || r(e.entityId, "icon") || ie(e.entityId);
   let d = e.showStatus ? K(_, {
     t: l,
     onText: e.onText,
@@ -855,48 +872,56 @@ function tt({ cardId: a = "tile" }) {
     deviceClass: r(e.entityId, "device_class")
   }) : null;
   S && (d = l("state.pulseSent"));
-  const W = e.valueSource === "attribute" && e.valueAttr ? r(e.entityId, e.valueAttr) : _, b = x.length > 0 ? String(Q) : e.showValue ? oe(W, e.decimals) : null, h = e.unitOverride || r(e.entityId, "unit_of_measurement") || "";
+  const W = e.valueSource === "attribute" && e.valueAttr ? r(e.entityId, e.valueAttr) : _, b = H.length > 0 ? String(Q) : e.showValue ? oe(W, e.decimals) : null, h = e.unitOverride || r(e.entityId, "unit_of_measurement") || "";
   b !== null && d !== null && d.replace(/\s+/g, "") === String(W).replace(/\s+/g, "") && (d = null);
-  const L = d == null || !h || String(W).trim() !== d.trim() ? d : /^[%°]/.test(h) ? `${d}${h}` : `${d} ${h}`, j = [
+  const z = d == null || !h || String(W).trim() !== d.trim() ? d : /^[%°]/.test(h) ? `${d}${h}` : `${d} ${h}`, j = [
     J(e.sub1Entity, e.sub1Label, e.sub1Unit),
     J(e.sub2Entity, e.sub2Label, e.sub2Unit)
   ].filter(Boolean);
-  function J(n, f, q) {
+  function J(n, f, M) {
     if (!n) return null;
-    const Z = s(n), ne = oe(Z, 0), he = q || r(n, "unit_of_measurement") || "", ae = ne !== null ? `${ne}${he}` : G(Z) ? l("state.unavailable") : K(Z, { t: l, activeStates: e.activeStates, deviceClass: r(n, "device_class") });
+    const Z = s(n), ne = oe(Z, 0), he = M || r(n, "unit_of_measurement") || "", ae = ne !== null ? `${ne}${he}` : G(Z) ? l("state.unavailable") : K(Z, { t: l, activeStates: e.activeStates, deviceClass: r(n, "device_class") });
     return f ? `${f}: ${ae}` : ae;
   }
-  const E = e.tapAction !== "none" && !(e.tapAction === "popup" && !e.popupCardId) && !(e.tapAction === "list" && x.length === 0), X = () => {
+  const C = e.tapAction !== "none" && !(e.tapAction === "popup" && !e.popupCardId) && !(e.tapAction === "list" && H.length === 0), X = () => {
     if (e.tapAction === "pulse") {
       const n = e.entityId.split(".")[0];
-      n === "button" || n === "input_button" ? m(n, "press", e.entityId) : m("homeassistant", "turn_on", e.entityId), k(Date.now());
-    } else e.tapAction === "toggle" ? e.entityId.split(".")[0] === "lock" ? m("lock", w ? "lock" : "unlock", e.entityId) : m("homeassistant", "toggle", e.entityId) : e.tapAction === "popup" ? e.popupCardId && (p == null || p(e.popupCardId)) : e.tapAction === "list" ? T(!0) : e.tapAction === "more-info" && (c == null || c(e.entityId));
-  }, ce = e.offAccent || o.color.muted, y = e.layout === "stateTint", v = Y || (A ? o.color.muted : w || !R ? C : ce), B = e.bgMode || (y ? "state" : "none"), ee = B === "fixed" && e.bgColor || v, ue = M(e.bgOpacity, 0, 100, B === "fixed" ? 100 : 13) / 100, te = e.layout === "slim", de = {
+      n === "button" || n === "input_button" ? m(n, "press", e.entityId) : m("homeassistant", "turn_on", e.entityId), T(Date.now());
+    } else e.tapAction === "toggle" ? e.entityId.split(".")[0] === "lock" ? m("lock", w ? "lock" : "unlock", e.entityId) : m("homeassistant", "toggle", e.entityId) : e.tapAction === "popup" ? e.popupCardId && (p == null || p(e.popupCardId)) : e.tapAction === "list" ? k(!0) : e.tapAction === "more-info" && (c == null || c(e.entityId));
+  }, ce = e.offAccent || o.color.muted, y = e.layout === "stateTint", v = Y || (A ? o.color.muted : w || !R ? x : ce), B = e.bgMode || (y ? "state" : "none"), ee = B === "fixed" && e.bgColor || v, ue = V(e.bgOpacity, 0, 100, B === "fixed" ? 100 : 13) / 100, te = e.layout === "slim", de = {
     ...t.card,
     ...te ? { padding: "7px 12px", borderRadius: o.radius.md } : null,
-    cursor: E ? "pointer" : "default",
+    /*
+     * Altezza minima, contenuto centrato in verticale. I limiti di prima
+     * (testo 1,4×, icona 34 px, altezza dal contenuto) erano pensati per uno
+     * schermo di casa: sul pannello di un'auto, da seduti e in movimento, un
+     * bersaglio così è piccolo. Solo se chiesta: a 0 il contenitore resta
+     * com'era, senza flex, e nessuna tile esistente cambia aspetto.
+     */
+    ...Number(e.minHeight) > 0 ? { minHeight: V(e.minHeight, 0, 400, 0), display: "flex", flexDirection: "column", justifyContent: "center" } : null,
+    cursor: C ? "pointer" : "default",
     transition: "border-color .25s ease, background .25s ease",
     ...B !== "none" ? {
-      background: H(ee, ue),
-      borderColor: H(ee, 0.4)
+      background: E(ee, ue),
+      borderColor: E(ee, 0.4)
     } : {
-      borderColor: R && w && !A ? H(C, 0.35) : o.color.border
+      borderColor: R && w && !A ? E(x, 0.35) : o.color.border
     }
   }, pe = {
-    onClick: E ? X : void 0,
-    role: E ? "button" : void 0,
-    tabIndex: E ? 0 : void 0,
-    onKeyDown: E ? (n) => {
+    onClick: C ? X : void 0,
+    role: C ? "button" : void 0,
+    tabIndex: C ? 0 : void 0,
+    onKeyDown: C ? (n) => {
       (n.key === "Enter" || n.key === " ") && (n.preventDefault(), X());
     } : void 0,
-    "aria-label": E ? `${P}${d ? ` — ${d}` : ""}` : void 0
-  }, N = M(e.iconSize, 12, 34, 20), ge = M(e.titleScale ?? e.textScale, 0.75, 1.4, 1), me = M(e.stateScale ?? e.textScale, 0.75, 1.4, 1), D = (n) => Math.round(n * ge * 10) / 10, z = (n) => Math.round(n * me * 10) / 10, F = /* @__PURE__ */ i(I, { name: re, size: N, color: y ? v : g });
+    "aria-label": C ? `${P}${d ? ` — ${d}` : ""}` : void 0
+  }, D = V(e.iconSize, 12, 64, 20), ge = V(e.titleScale ?? e.textScale, 0.75, 2.5, 1), me = V(e.stateScale ?? e.textScale, 0.75, 2.5, 1), F = (n) => Math.round(n * ge * 10) / 10, L = (n) => Math.round(n * me * 10) / 10, q = /* @__PURE__ */ i(I, { name: re, size: D, color: y ? v : g });
   let O;
   return te ? O = /* @__PURE__ */ u("div", { style: { display: "flex", alignItems: "center", gap: o.space.sm, minWidth: 0 }, children: [
-    F,
+    q,
     /* @__PURE__ */ i("span", { style: {
       ...t.title,
-      fontSize: D(13),
+      fontSize: F(13),
       flex: 1,
       minWidth: 0,
       whiteSpace: "nowrap",
@@ -904,7 +929,7 @@ function tt({ cardId: a = "tile" }) {
       textOverflow: "ellipsis"
     }, children: P }),
     /* @__PURE__ */ u("span", { style: {
-      fontSize: z(13),
+      fontSize: L(13),
       fontWeight: 700,
       color: g,
       fontVariantNumeric: "tabular-nums",
@@ -914,14 +939,14 @@ function tt({ cardId: a = "tile" }) {
       textOverflow: "ellipsis",
       flexShrink: 1
     }, children: [
-      b ?? L ?? "—",
+      b ?? z ?? "—",
       b !== null && h && /* @__PURE__ */ i("small", { style: { ...t.hint, marginLeft: 3 }, children: h })
     ] })
   ] }) : e.layout === "inline" ? O = /* @__PURE__ */ u("div", { style: { display: "flex", alignItems: "center", gap: o.space.md, minWidth: 0 }, children: [
-    /* @__PURE__ */ i("div", { style: $(o, y ? v : g, w && !A, N + 22), children: F }),
+    /* @__PURE__ */ i("div", { style: $(o, y ? v : g, w && !A, D + 22), children: q }),
     /* @__PURE__ */ i("span", { style: {
       ...t.title,
-      fontSize: D(15),
+      fontSize: F(15),
       flex: 1,
       minWidth: 0,
       whiteSpace: "nowrap",
@@ -929,7 +954,7 @@ function tt({ cardId: a = "tile" }) {
       textOverflow: "ellipsis"
     }, children: P }),
     /* @__PURE__ */ u("span", { style: {
-      fontSize: z(20),
+      fontSize: L(20),
       fontWeight: 800,
       color: y ? v : g,
       fontVariantNumeric: "tabular-nums",
@@ -939,26 +964,26 @@ function tt({ cardId: a = "tile" }) {
       textOverflow: "ellipsis",
       flexShrink: 1
     }, children: [
-      b ?? L ?? "—",
+      b ?? z ?? "—",
       b !== null && h && /* @__PURE__ */ i("small", { style: { ...t.hint, marginLeft: 3 }, children: h })
     ] })
   ] }) : e.layout === "state" || y ? O = /* @__PURE__ */ u("div", { style: { display: "flex", alignItems: "center", gap: o.space.md, minWidth: 0 }, children: [
-    /* @__PURE__ */ i("div", { style: $(o, y ? v : g, w && !A, N + 22), children: F }),
+    /* @__PURE__ */ i("div", { style: $(o, y ? v : g, w && !A, D + 22), children: q }),
     /* @__PURE__ */ u("div", { style: { minWidth: 0, flex: 1 }, children: [
-      /* @__PURE__ */ i("div", { style: { ...t.title, fontSize: D(15), whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: P }),
-      /* @__PURE__ */ i("div", { style: { ...t.hint, fontSize: z(11), color: y ? v : o.color.muted, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: x.length > 0 ? l("countOn", { count: Q }) : L ?? "—" })
+      /* @__PURE__ */ i("div", { style: { ...t.title, fontSize: F(15), whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: P }),
+      /* @__PURE__ */ i("div", { style: { ...t.hint, fontSize: L(11), color: y ? v : o.color.muted, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: H.length > 0 ? l("countOn", { count: Q }) : z ?? "—" })
     ] }),
     e.badgeIcon && /* @__PURE__ */ i(I, { name: e.badgeIcon, size: 18, color: y ? v : g })
   ] }) : O = /* @__PURE__ */ u("div", { style: { display: "flex", flexDirection: "column", gap: o.space.md }, children: [
     /* @__PURE__ */ u("div", { style: { ...t.rowBetween, alignItems: "flex-start", gap: o.space.sm }, children: [
-      /* @__PURE__ */ i("div", { style: $(o, g, w && !A, N + 22), children: F }),
-      L && /* @__PURE__ */ i("span", { style: { ...o.font.label, fontSize: z(11), color: g, textAlign: "right", minWidth: 0, overflowWrap: "anywhere" }, children: L })
+      /* @__PURE__ */ i("div", { style: $(o, g, w && !A, D + 22), children: q }),
+      z && /* @__PURE__ */ i("span", { style: { ...o.font.label, fontSize: L(11), color: g, textAlign: "right", minWidth: 0, overflowWrap: "anywhere" }, children: z })
     ] }),
     /* @__PURE__ */ u("div", { style: { ...t.colTight, minWidth: 0 }, children: [
-      /* @__PURE__ */ i("div", { style: { ...t.title, fontSize: D(15), overflowWrap: "anywhere" }, children: P }),
-      (e.showValue || x.length > 0) && /* @__PURE__ */ u("div", { style: { display: "flex", alignItems: "baseline", gap: o.space.xs, minWidth: 0 }, children: [
-        /* @__PURE__ */ i("span", { style: { ...o.font.value, color: g, fontSize: z(et(b)) }, children: b ?? "—" }),
-        b !== null && h && x.length === 0 && /* @__PURE__ */ i("span", { style: t.hint, children: h })
+      /* @__PURE__ */ i("div", { style: { ...t.title, fontSize: F(15), overflowWrap: "anywhere" }, children: P }),
+      (e.showValue || H.length > 0) && /* @__PURE__ */ u("div", { style: { display: "flex", alignItems: "baseline", gap: o.space.xs, minWidth: 0 }, children: [
+        /* @__PURE__ */ i("span", { style: { ...o.font.value, color: g, fontSize: L(et(b)) }, children: b ?? "—" }),
+        b !== null && h && H.length === 0 && /* @__PURE__ */ i("span", { style: t.hint, children: h })
       ] }),
       j.length > 0 && /* @__PURE__ */ u("div", { style: { ...t.rowBetween, gap: o.space.sm, alignItems: "flex-end" }, children: [
         /* @__PURE__ */ i("span", { style: { ...t.hint, minWidth: 0, overflowWrap: "anywhere" }, children: j.join("  |  ") }),
@@ -968,11 +993,11 @@ function tt({ cardId: a = "tile" }) {
     ] })
   ] }), /* @__PURE__ */ u("div", { style: { ...de, position: "relative" }, ...pe, children: [
     O,
-    V && /* @__PURE__ */ i(
+    N && /* @__PURE__ */ i(
       "div",
       {
         onClick: (n) => {
-          n.stopPropagation(), T(!1);
+          n.stopPropagation(), k(!1);
         },
         style: {
           position: "absolute",
@@ -1001,8 +1026,8 @@ function tt({ cardId: a = "tile" }) {
               background: "var(--bg-card)",
               border: `1px solid ${o.color.border}`
             },
-            children: x.map((n) => {
-              const f = s(n), q = U(f, e.activeStates);
+            children: H.map((n) => {
+              const f = s(n), M = U(f, e.activeStates);
               return /* @__PURE__ */ u("div", { style: {
                 display: "flex",
                 alignItems: "center",
@@ -1011,9 +1036,9 @@ function tt({ cardId: a = "tile" }) {
                 borderRadius: o.radius.sm,
                 minWidth: 0
               }, children: [
-                /* @__PURE__ */ i(I, { name: ie(n), size: 15, color: q ? C : o.color.muted }),
+                /* @__PURE__ */ i(I, { name: ie(n), size: 15, color: M ? x : o.color.muted }),
                 /* @__PURE__ */ i("span", { style: { ...t.body, flex: 1, minWidth: 0, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: r(n, "friendly_name") || n }),
-                /* @__PURE__ */ i("span", { style: { ...t.hint, color: q ? C : o.color.muted, whiteSpace: "nowrap" }, children: K(f, { t: l, activeStates: e.activeStates, deviceClass: r(n, "device_class") }) })
+                /* @__PURE__ */ i("span", { style: { ...t.hint, color: M ? x : o.color.muted, whiteSpace: "nowrap" }, children: K(f, { t: l, activeStates: e.activeStates, deviceClass: r(n, "device_class") }) })
               ] }, n);
             })
           }
@@ -1051,7 +1076,7 @@ function Xe(a, t) {
   }
   return l.toLowerCase() === String(t).trim().toLowerCase();
 }
-function M(a, t, l, s) {
+function V(a, t, l, s) {
   const r = parseFloat(a);
   return Number.isFinite(r) ? Math.min(l, Math.max(t, r)) : s;
 }
@@ -1061,16 +1086,16 @@ function $(a, t, l, s = 42) {
     height: s,
     flexShrink: 0,
     borderRadius: a.radius.md,
-    background: H(t, 0.14),
-    border: `1px solid ${H(t, 0.22)}`,
+    background: E(t, 0.14),
+    border: `1px solid ${E(t, 0.22)}`,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    boxShadow: l ? `0 0 16px ${H(t, 0.25)}` : "none",
+    boxShadow: l ? `0 0 16px ${E(t, 0.25)}` : "none",
     transition: "box-shadow .25s ease, background .25s ease"
   };
 }
-function H(a, t) {
+function E(a, t) {
   return `color-mix(in srgb, ${a} ${Math.round(t * 100)}%, transparent)`;
 }
 function et(a) {

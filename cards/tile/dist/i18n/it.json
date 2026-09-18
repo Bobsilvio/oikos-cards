@@ -123,7 +123,10 @@
     "bgOpacityHint": "100% = colore pieno.",
     "layoutSlim": "Sottile",
     "unitHint": "Vuoto = quella dell'entità. Vale anche per la riga di stato.",
-    "tapPulse": "Impulso"
+    "tapPulse": "Impulso",
+    "minHeight": "Altezza minima",
+    "minHeightHint": "Per schermi da usare al volo, come quello dell'auto: la tile si alza e il contenuto resta al centro.",
+    "minHeightAuto": "Automatica"
   },
   "countOn": "{{count}} attive"
 }
