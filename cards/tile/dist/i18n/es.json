@@ -37,7 +37,8 @@
     "clear": "Libre",
     "wet": "Mojado",
     "active": "Activo",
-    "running": "En marcha"
+    "running": "En marcha",
+    "pulseSent": "Orden enviada"
   },
   "settings": {
     "sectionEntity": "Entidad",
@@ -79,7 +80,7 @@
     "tapToggle": "Encender/apagar",
     "tapNone": "Nada",
     "sectionTap": "Al tocar",
-    "tapHint": "Se aplica a toda la tarjeta, no hace falta ningún icono adicional. «Encender/apagar» funciona en luces, enchufes, ventiladores, persianas y cerraduras.",
+    "tapHint": "Se aplica a toda la tarjeta, no hace falta ningún icono adicional. «Encender/apagar» funciona en luces, enchufes, ventiladores, persianas y cerraduras. «Pulso» siempre enciende y muestra durante unos segundos que la orden ha salido: para cancelas y timbres que se apagan solos.",
     "tapPopup": "Abrir ventana",
     "popupPanel": "Panel a abrir",
     "popupHint": "También uno con «no mostrar en la página».",
@@ -121,7 +122,8 @@
     "bgOpacity": "Intensidad",
     "bgOpacityHint": "100% = color pleno.",
     "layoutSlim": "Fina",
-    "unitHint": "Vacío = la de la entidad. Vale también para la línea de estado."
+    "unitHint": "Vacío = la de la entidad. Vale también para la línea de estado.",
+    "tapPulse": "Pulso"
   },
   "countOn": "{{count}} activas"
 }

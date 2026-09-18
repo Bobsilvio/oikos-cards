@@ -35,7 +35,8 @@ const { jsxs: l, jsx: t, Fragment: S } = window.__OIKOS_SDK__.jsxRuntime, O = {
   clear: "Libero",
   wet: "Bagnato",
   active: "Attivo",
-  running: "In funzione"
+  running: "In funzione",
+  pulseSent: "Comando inviato"
 }, D = {
   sectionEntity: "Entità",
   entity: "Entità principale",
@@ -76,7 +77,7 @@ const { jsxs: l, jsx: t, Fragment: S } = window.__OIKOS_SDK__.jsxRuntime, O = {
   tapToggle: "Accendi/spegni",
   tapNone: "Niente",
   sectionTap: "Al tocco",
-  tapHint: "Vale su tutta la tile, non serve alcuna icona aggiuntiva. «Accendi/spegni» funziona su luci, prese, ventilatori, tapparelle e serrature.",
+  tapHint: "Vale su tutta la tile, non serve alcuna icona aggiuntiva. «Accendi/spegni» funziona su luci, prese, ventilatori, tapparelle e serrature. «Impulso» accende sempre e mostra per qualche secondo che il comando è partito: per cancelli e campanelli che si rispengono da soli.",
   tapPopup: "Apri popup",
   popupPanel: "Pannello da aprire",
   popupHint: "Anche uno impostato come «non mostrare nella pagina».",
@@ -118,8 +119,9 @@ const { jsxs: l, jsx: t, Fragment: S } = window.__OIKOS_SDK__.jsxRuntime, O = {
   bgOpacity: "Intensità",
   bgOpacityHint: "100% = colore pieno.",
   layoutSlim: "Sottile",
-  unitHint: "Vuoto = quella dell'entità. Vale anche per la riga di stato."
-}, U = "{{count}} attive", P = {
+  unitHint: "Vuoto = quella dell'entità. Vale anche per la riga di stato.",
+  tapPulse: "Impulso"
+}, U = "{{count}} attive", w = {
   empty: O,
   state: N,
   settings: D,
@@ -161,8 +163,9 @@ const { jsxs: l, jsx: t, Fragment: S } = window.__OIKOS_SDK__.jsxRuntime, O = {
   clear: "Clear",
   wet: "Wet",
   active: "Active",
-  running: "Running"
-}, R = {
+  running: "Running",
+  pulseSent: "Command sent"
+}, q = {
   sectionEntity: "Entity",
   entity: "Main entity",
   label: "Title",
@@ -202,7 +205,7 @@ const { jsxs: l, jsx: t, Fragment: S } = window.__OIKOS_SDK__.jsxRuntime, O = {
   tapToggle: "Toggle",
   tapNone: "Nothing",
   sectionTap: "On tap",
-  tapHint: "Applies to the whole tile; no extra icon is needed. «Toggle» works on lights, switches, fans, covers and locks.",
+  tapHint: "Applies to the whole tile; no extra icon is needed. «Toggle» works on lights, switches, fans, covers and locks. «Pulse» always turns on and shows for a few seconds that the command went out: for gates and doorbells that switch themselves off.",
   tapPopup: "Open popup",
   popupPanel: "Panel to open",
   popupHint: "Including one set to «do not show on the page».",
@@ -244,16 +247,17 @@ const { jsxs: l, jsx: t, Fragment: S } = window.__OIKOS_SDK__.jsxRuntime, O = {
   bgOpacity: "Intensity",
   bgOpacityHint: "100% = solid colour.",
   layoutSlim: "Slim",
-  unitHint: "Empty = the entity's own. Applies to the state line too."
-}, $ = "{{count}} on", L = {
+  unitHint: "Empty = the entity's own. Applies to the state line too.",
+  tapPulse: "Pulse"
+}, R = "{{count}} on", I = {
   empty: F,
   state: M,
-  settings: R,
-  countOn: $
-}, q = {
+  settings: q,
+  countOn: R
+}, $ = {
   title: "Kachel nicht konfiguriert",
   hint: "Wähle eine Entität in den Einstellungen"
-}, Z = {
+}, j = {
   unavailable: "K/A",
   on: "An",
   off: "Aus",
@@ -287,8 +291,9 @@ const { jsxs: l, jsx: t, Fragment: S } = window.__OIKOS_SDK__.jsxRuntime, O = {
   clear: "Frei",
   wet: "Nass",
   active: "Aktiv",
-  running: "Läuft"
-}, j = {
+  running: "Läuft",
+  pulseSent: "Befehl gesendet"
+}, B = {
   sectionEntity: "Entität",
   entity: "Hauptentität",
   label: "Titel",
@@ -328,7 +333,7 @@ const { jsxs: l, jsx: t, Fragment: S } = window.__OIKOS_SDK__.jsxRuntime, O = {
   tapToggle: "Umschalten",
   tapNone: "Nichts",
   sectionTap: "Bei Berührung",
-  tapHint: "Gilt für die ganze Kachel, ein zusätzliches Symbol ist nicht nötig. «Ein/Aus» funktioniert bei Lampen, Steckdosen, Ventilatoren, Rollläden und Schlössern.",
+  tapHint: "Gilt für die ganze Kachel, ein zusätzliches Symbol ist nicht nötig. «Ein/Aus» funktioniert bei Lampen, Steckdosen, Ventilatoren, Rollläden und Schlössern. «Impuls» schaltet immer ein und zeigt einige Sekunden lang, dass der Befehl gesendet wurde: für Tore und Klingeln, die sich selbst ausschalten.",
   tapPopup: "Popup öffnen",
   popupPanel: "Zu öffnendes Panel",
   popupHint: "Auch eines mit «auf der Seite nicht anzeigen».",
@@ -370,12 +375,13 @@ const { jsxs: l, jsx: t, Fragment: S } = window.__OIKOS_SDK__.jsxRuntime, O = {
   bgOpacity: "Intensität",
   bgOpacityHint: "100% = volle Farbe.",
   layoutSlim: "Schmal",
-  unitHint: "Leer = die der Entität. Gilt auch für die Zustandszeile."
-}, B = "{{count}} aktiv", I = {
-  empty: q,
-  state: Z,
-  settings: j,
-  countOn: B
+  unitHint: "Leer = die der Entität. Gilt auch für die Zustandszeile.",
+  tapPulse: "Impuls"
+}, Z = "{{count}} aktiv", L = {
+  empty: $,
+  state: j,
+  settings: B,
+  countOn: Z
 }, K = {
   title: "Tarjeta sin configurar",
   hint: "Elige una entidad en los ajustes"
@@ -413,7 +419,8 @@ const { jsxs: l, jsx: t, Fragment: S } = window.__OIKOS_SDK__.jsxRuntime, O = {
   clear: "Libre",
   wet: "Mojado",
   active: "Activo",
-  running: "En marcha"
+  running: "En marcha",
+  pulseSent: "Orden enviada"
 }, G = {
   sectionEntity: "Entidad",
   entity: "Entidad principal",
@@ -454,7 +461,7 @@ const { jsxs: l, jsx: t, Fragment: S } = window.__OIKOS_SDK__.jsxRuntime, O = {
   tapToggle: "Encender/apagar",
   tapNone: "Nada",
   sectionTap: "Al tocar",
-  tapHint: "Se aplica a toda la tarjeta, no hace falta ningún icono adicional. «Encender/apagar» funciona en luces, enchufes, ventiladores, persianas y cerraduras.",
+  tapHint: "Se aplica a toda la tarjeta, no hace falta ningún icono adicional. «Encender/apagar» funciona en luces, enchufes, ventiladores, persianas y cerraduras. «Pulso» siempre enciende y muestra durante unos segundos que la orden ha salido: para cancelas y timbres que se apagan solos.",
   tapPopup: "Abrir ventana",
   popupPanel: "Panel a abrir",
   popupHint: "También uno con «no mostrar en la página».",
@@ -496,7 +503,8 @@ const { jsxs: l, jsx: t, Fragment: S } = window.__OIKOS_SDK__.jsxRuntime, O = {
   bgOpacity: "Intensidad",
   bgOpacityHint: "100% = color pleno.",
   layoutSlim: "Fina",
-  unitHint: "Vacío = la de la entidad. Vale también para la línea de estado."
+  unitHint: "Vacío = la de la entidad. Vale también para la línea de estado.",
+  tapPulse: "Pulso"
 }, J = "{{count}} activas", _ = {
   empty: K,
   state: W,
@@ -539,7 +547,8 @@ const { jsxs: l, jsx: t, Fragment: S } = window.__OIKOS_SDK__.jsxRuntime, O = {
   clear: "Libre",
   wet: "Mouillé",
   active: "Actif",
-  running: "En marche"
+  running: "En marche",
+  pulseSent: "Commande envoyée"
 }, X = {
   sectionEntity: "Entité",
   entity: "Entité principale",
@@ -580,7 +589,7 @@ const { jsxs: l, jsx: t, Fragment: S } = window.__OIKOS_SDK__.jsxRuntime, O = {
   tapToggle: "Basculer",
   tapNone: "Rien",
   sectionTap: "Au toucher",
-  tapHint: "S'applique à toute la tuile, aucune icône supplémentaire n'est nécessaire. « Allumer/éteindre » fonctionne sur lumières, prises, ventilateurs, volets et serrures.",
+  tapHint: "S'applique à toute la tuile, aucune icône supplémentaire n'est nécessaire. « Allumer/éteindre » fonctionne sur lumières, prises, ventilateurs, volets et serrures. «Impulsion» allume toujours et indique pendant quelques secondes que la commande est partie : pour portails et sonnettes qui s'éteignent tout seuls.",
   tapPopup: "Ouvrir la fenêtre",
   popupPanel: "Panneau à ouvrir",
   popupHint: "Y compris un panneau « ne pas afficher sur la page ».",
@@ -622,7 +631,8 @@ const { jsxs: l, jsx: t, Fragment: S } = window.__OIKOS_SDK__.jsxRuntime, O = {
   bgOpacity: "Intensité",
   bgOpacityHint: "100% = couleur pleine.",
   layoutSlim: "Fine",
-  unitHint: "Vide = celle de l'entité. Vaut aussi pour la ligne d'état."
+  unitHint: "Vide = celle de l'entité. Vaut aussi pour la ligne d'état.",
+  tapPulse: "Impulsion"
 }, ee = "{{count}} actives", k = {
   empty: Q,
   state: Y,
@@ -653,8 +663,8 @@ const { jsxs: l, jsx: t, Fragment: S } = window.__OIKOS_SDK__.jsxRuntime, O = {
   "motion",
   "active",
   "running"
-], { useState: ce } = window.__OIKOS_SDK__.React, { useDashboard: de, useCardConfig: pe, useStyles: ge, registerCardTranslations: ne, useT: he, MdiIcon: be } = window.__OIKOS_SDK__;
-ne("card-tile", { it: P, en: L, de: I, es: _, fr: k });
+], { useState: ce, useEffect: de } = window.__OIKOS_SDK__.React, { useDashboard: pe, useCardConfig: ge, useStyles: he, registerCardTranslations: ne, useT: be, MdiIcon: me } = window.__OIKOS_SDK__;
+ne("card-tile", { it: w, en: I, de: L, es: _, fr: k });
 const ae = {
   entityId: "",
   label: "",
@@ -720,15 +730,15 @@ const ae = {
   countEntities: [],
   // Interazione
   tapAction: "more-info",
-  // 'more-info' | 'toggle' | 'popup' | 'list' | 'none'
+  // 'more-info' | 'toggle' | 'pulse' | 'popup' | 'list' | 'none'
   popupCardId: ""
   // istanza popup-panel da aprire con tapAction 'popup'
-}, { useDashboard: z, useCardConfig: oe, registerCardTranslations: ie, useT: le, EntityField: y, MdiIconPicker: x, Section: b, Field: i, TextField: g, Toggle: E, Slider: m, Pills: v, ColorCircles: A, ACCENT_COLORS: C, listPopupPanels: T } = window.__OIKOS_SDK__;
-ie("card-tile", { it: P, en: L, de: I, es: _, fr: k });
+}, { useDashboard: z, useCardConfig: oe, registerCardTranslations: ie, useT: le, EntityField: v, MdiIconPicker: x, Section: b, Field: i, TextField: g, Toggle: E, Slider: m, Pills: f, ColorCircles: A, ACCENT_COLORS: C, listPopupPanels: T } = window.__OIKOS_SDK__;
+ie("card-tile", { it: w, en: I, de: L, es: _, fr: k });
 function se({ cfg: d, set: c, t: a }) {
   const { getState: r } = z(), e = Array.isArray(d.stateColors) ? d.stateColors : [], o = d.entityId ? r(d.entityId) : "", u = (n, s, h) => {
-    const f = e.map((H, V) => V === n ? { ...H, [s]: h } : H);
-    c("stateColors", f);
+    const y = e.map((H, V) => V === n ? { ...H, [s]: h } : H);
+    c("stateColors", y);
   }, p = e.some((n) => String(n.state || "").toLowerCase() === String(o || "").toLowerCase());
   return /* @__PURE__ */ l("div", { style: { display: "flex", flexDirection: "column", gap: 6 }, children: [
     e.map((n, s) => /* @__PURE__ */ l("div", { style: { display: "flex", gap: 6, alignItems: "center" }, children: [
@@ -773,7 +783,7 @@ function se({ cfg: d, set: c, t: a }) {
       /* @__PURE__ */ t(
         "button",
         {
-          onClick: () => c("stateColors", e.filter((h, f) => f !== s)),
+          onClick: () => c("stateColors", e.filter((h, y) => y !== s)),
           style: {
             width: 30,
             height: 30,
@@ -795,7 +805,7 @@ function se({ cfg: d, set: c, t: a }) {
         "button",
         {
           onClick: () => c("stateColors", [...e, { state: o, color: "#22c55e" }]),
-          style: w,
+          style: P,
           children: [
             "+ ",
             a("settings.stateAddCurrent", { state: o })
@@ -806,7 +816,7 @@ function se({ cfg: d, set: c, t: a }) {
         "button",
         {
           onClick: () => c("stateColors", [...e, { state: "", color: "#ef4444" }]),
-          style: w,
+          style: P,
           children: [
             "+ ",
             a("settings.stateAdd")
@@ -816,7 +826,7 @@ function se({ cfg: d, set: c, t: a }) {
     ] })
   ] });
 }
-const w = {
+const P = {
   padding: "6px 11px",
   borderRadius: 9,
   cursor: "pointer",
@@ -834,7 +844,7 @@ function re({ cfg: d, set: c, t: a }) {
   return /* @__PURE__ */ l("div", { style: { display: "flex", flexDirection: "column", gap: 6 }, children: [
     r.map((o, u) => /* @__PURE__ */ l("div", { style: { display: "flex", gap: 6, alignItems: "center" }, children: [
       /* @__PURE__ */ t("div", { style: { flex: 1, minWidth: 0 }, children: /* @__PURE__ */ t(
-        y,
+        v,
         {
           label: "",
           field: `__count_${u}`,
@@ -915,12 +925,12 @@ function ue({ cfg: d, set: c, t: a }) {
     }
   ) });
 }
-function me({ cardId: d }) {
+function fe({ cardId: d }) {
   const { dark: c } = z(), [a, r] = oe(d, ae), { t: e } = le("card-tile"), o = (n, s) => r((h) => ({ ...h, [n]: s })), u = (a.activeStates ?? []).join(", "), p = (n) => o("activeStates", n.split(",").map((s) => s.trim().toLowerCase()).filter(Boolean));
   return /* @__PURE__ */ l("div", { style: { display: "flex", flexDirection: "column", gap: 14 }, children: [
     /* @__PURE__ */ l(b, { title: e("settings.sectionEntity"), children: [
       /* @__PURE__ */ t(
-        y,
+        v,
         {
           label: e("settings.entity"),
           field: "entityId",
@@ -948,7 +958,7 @@ function me({ cardId: d }) {
     ] }),
     /* @__PURE__ */ l(b, { title: e("settings.sectionLayout"), children: [
       /* @__PURE__ */ t(i, { label: e("settings.layout"), hint: e("settings.layoutHint"), children: /* @__PURE__ */ t(
-        v,
+        f,
         {
           value: a.layout || "value",
           onChange: (n) => o("layout", n),
@@ -965,7 +975,7 @@ function me({ cardId: d }) {
         const n = a.bgMode || (a.layout === "stateTint" ? "state" : "none");
         return /* @__PURE__ */ l(S, { children: [
           /* @__PURE__ */ t(i, { label: e("settings.bgMode"), hint: e("settings.bgModeHint"), children: /* @__PURE__ */ t(
-            v,
+            f,
             {
               value: n,
               onChange: (s) => o("bgMode", s),
@@ -1061,7 +1071,7 @@ function me({ cardId: d }) {
       /* @__PURE__ */ t(i, { label: e("settings.showValue"), children: /* @__PURE__ */ t(E, { value: a.showValue, onChange: (n) => o("showValue", n) }) }),
       a.showValue && /* @__PURE__ */ l(S, { children: [
         /* @__PURE__ */ t(i, { label: e("settings.valueSource"), children: /* @__PURE__ */ t(
-          v,
+          f,
           {
             value: a.valueSource,
             onChange: (n) => o("valueSource", n),
@@ -1108,13 +1118,14 @@ function me({ cardId: d }) {
     ] }),
     /* @__PURE__ */ l(b, { title: e("settings.sectionTap"), children: [
       /* @__PURE__ */ t(i, { label: e("settings.tap"), hint: e("settings.tapHint"), children: /* @__PURE__ */ t(
-        v,
+        f,
         {
           value: a.tapAction,
           onChange: (n) => o("tapAction", n),
           options: [
             { value: "more-info", label: e("settings.tapMore") },
             { value: "toggle", label: e("settings.tapToggle") },
+            { value: "pulse", label: e("settings.tapPulse") },
             { value: "popup", label: e("settings.tapPopup") },
             { value: "list", label: e("settings.tapList") },
             { value: "none", label: e("settings.tapNone") }
@@ -1126,7 +1137,7 @@ function me({ cardId: d }) {
     /* @__PURE__ */ l(b, { title: e("settings.sectionSub"), collapsible: !0, defaultOpen: !1, children: [
       /* @__PURE__ */ t(i, { label: e("settings.sub1") }),
       /* @__PURE__ */ t(
-        y,
+        v,
         {
           label: e("settings.subEntity"),
           field: "sub1Entity",
@@ -1145,7 +1156,7 @@ function me({ cardId: d }) {
       /* @__PURE__ */ t(i, { label: e("settings.subUnit"), children: /* @__PURE__ */ t(g, { value: a.sub1Unit, onChange: (n) => o("sub1Unit", n) }) }),
       /* @__PURE__ */ t(i, { label: e("settings.sub2") }),
       /* @__PURE__ */ t(
-        y,
+        v,
         {
           label: e("settings.subEntity"),
           field: "sub2Entity",
@@ -1167,5 +1178,5 @@ function me({ cardId: d }) {
   ] });
 }
 export {
-  me as default
+  fe as default
 };

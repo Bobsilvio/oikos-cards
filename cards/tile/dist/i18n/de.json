@@ -37,7 +37,8 @@
     "clear": "Frei",
     "wet": "Nass",
     "active": "Aktiv",
-    "running": "Läuft"
+    "running": "Läuft",
+    "pulseSent": "Befehl gesendet"
   },
   "settings": {
     "sectionEntity": "Entität",
@@ -79,7 +80,7 @@
     "tapToggle": "Umschalten",
     "tapNone": "Nichts",
     "sectionTap": "Bei Berührung",
-    "tapHint": "Gilt für die ganze Kachel, ein zusätzliches Symbol ist nicht nötig. «Ein/Aus» funktioniert bei Lampen, Steckdosen, Ventilatoren, Rollläden und Schlössern.",
+    "tapHint": "Gilt für die ganze Kachel, ein zusätzliches Symbol ist nicht nötig. «Ein/Aus» funktioniert bei Lampen, Steckdosen, Ventilatoren, Rollläden und Schlössern. «Impuls» schaltet immer ein und zeigt einige Sekunden lang, dass der Befehl gesendet wurde: für Tore und Klingeln, die sich selbst ausschalten.",
     "tapPopup": "Popup öffnen",
     "popupPanel": "Zu öffnendes Panel",
     "popupHint": "Auch eines mit «auf der Seite nicht anzeigen».",
@@ -121,7 +122,8 @@
     "bgOpacity": "Intensität",
     "bgOpacityHint": "100% = volle Farbe.",
     "layoutSlim": "Schmal",
-    "unitHint": "Leer = die der Entität. Gilt auch für die Zustandszeile."
+    "unitHint": "Leer = die der Entität. Gilt auch für die Zustandszeile.",
+    "tapPulse": "Impuls"
   },
   "countOn": "{{count}} aktiv"
 }

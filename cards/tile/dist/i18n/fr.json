@@ -37,7 +37,8 @@
     "clear": "Libre",
     "wet": "Mouillé",
     "active": "Actif",
-    "running": "En marche"
+    "running": "En marche",
+    "pulseSent": "Commande envoyée"
   },
   "settings": {
     "sectionEntity": "Entité",
@@ -79,7 +80,7 @@
     "tapToggle": "Basculer",
     "tapNone": "Rien",
     "sectionTap": "Au toucher",
-    "tapHint": "S'applique à toute la tuile, aucune icône supplémentaire n'est nécessaire. « Allumer/éteindre » fonctionne sur lumières, prises, ventilateurs, volets et serrures.",
+    "tapHint": "S'applique à toute la tuile, aucune icône supplémentaire n'est nécessaire. « Allumer/éteindre » fonctionne sur lumières, prises, ventilateurs, volets et serrures. «Impulsion» allume toujours et indique pendant quelques secondes que la commande est partie : pour portails et sonnettes qui s'éteignent tout seuls.",
     "tapPopup": "Ouvrir la fenêtre",
     "popupPanel": "Panneau à ouvrir",
     "popupHint": "Y compris un panneau « ne pas afficher sur la page ».",
@@ -121,7 +122,8 @@
     "bgOpacity": "Intensité",
     "bgOpacityHint": "100% = couleur pleine.",
     "layoutSlim": "Fine",
-    "unitHint": "Vide = celle de l'entité. Vaut aussi pour la ligne d'état."
+    "unitHint": "Vide = celle de l'entité. Vaut aussi pour la ligne d'état.",
+    "tapPulse": "Impulsion"
   },
   "countOn": "{{count}} actives"
 }
