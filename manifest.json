@@ -37,7 +37,7 @@
           "version": "1.0.5",
           "date": "2026-08-12",
           "changes": [
-            "La colonna di un sensore poteva far cadere la card: la funzione di"
+            "La colonna di un sensore poteva far cadere la card: la funzione di traduzione era usata senza averla in scope."
           ]
         }
       ]
@@ -77,7 +77,7 @@
           "version": "1.1.4",
           "date": "2026-08-13",
           "changes": [
-            "Su telefono la temperatura attuale sta nell'intestazione, tra lo stato e i",
+            "Su telefono la temperatura attuale sta nell'intestazione, tra lo stato e i comandi: la riga che occupava sotto era tutto lo spazio disponibile.",
             "La riga sotto l'intestazione non viene disegnata se non ha nulla da mostrare."
           ]
         },
@@ -85,8 +85,8 @@
           "version": "1.1.3",
           "date": "2026-08-13",
           "changes": [
-            "Compatto anche in funzione. Acceso, ventola e preset erano due file di",
-            "I tre elenchi sono la stessa finestra: hanno la stessa forma — un valore fra",
+            "Compatto anche in funzione. Acceso, ventola e preset erano due file di pillole: due righe intere per due scelte che si toccano di rado, e la card cresceva del doppio rispetto a quando è spenta. Ora modalità, ventola e preset sono tre tasti su una riga sola, ognuno mostra il valore corrente e apre il proprio elenco. La card resta della stessa altezza accesa o spenta.",
+            "I tre elenchi sono la stessa finestra: hanno la stessa forma — un valore fra pochi possibili — e tenerne tre quasi identiche allineate sarebbe solo un modo per farle divergere.",
             "Sparisce anche l'etichetta «TARGET» in compatto: i tasti − e + dicono già cos'è."
           ]
         },
@@ -94,22 +94,22 @@
           "version": "1.1.2",
           "date": "2026-08-13",
           "changes": [
-            "Forma compatta più stretta. Temperatura attuale, target e i dati di"
+            "Forma compatta più stretta. Temperatura attuale, target e i dati di contorno — umidità, esterna, ventola — stanno ora su una riga sola. Prima occupavano tre righe per cinque numeri. Nella riga compatta i chip perdono l'etichetta: ripeteva quello che l'icona già dice, ed era lei a far andare tutto a capo. Sparisce anche la scritta «ATTUALE»: una temperatura in cifre grandi non ha bisogno che le si dica cos'è."
           ]
         },
         {
           "version": "1.1.1",
           "date": "2026-08-13",
           "changes": [
-            "Dall'elenco delle modalità non si usciva senza sceglierne una. L'unico"
+            "Dall'elenco delle modalità non si usciva senza sceglierne una. L'unico modo era toccare fuori dal pannello, ma il pannello riempie quasi tutta la card e di «fuori» resta una cornice di pochi pixel. Ora c'è la X in alto, e Esc chiude con la tastiera."
           ]
         },
         {
           "version": "1.1.0",
           "date": "2026-08-12",
           "changes": [
-            "Forma compatta per il telefono. In una colonna stretta le cinque modalità",
-            "Nelle impostazioni, sezione Su telefono: forma compatta Auto / Sempre /"
+            "Forma compatta per il telefono. In una colonna stretta le cinque modalità in fila si sovrappongono e i chip vanno a capo mangiando altezza. Sotto i 340px di larghezza della card — non della finestra, perché la stessa card può stare in una colonna stretta anche su un monitor grande — la card cambia forma: le modalità diventano un solo tasto che mostra quella corrente e apre l'elenco al tocco. Un bersaglio grande invece di cinque piccoli, più facile da centrare col pollice.",
+            "Nelle impostazioni, sezione Su telefono: forma compatta Auto / Sempre / Mai, e la scelta di cosa nascondere quando lo spazio è poco — ventola, preset, umidità, temperatura esterna. Valgono solo a card stretta: su schermo largo resta tutto, perché nascondere per sempre un dato che sul computer ci sta benissimo sarebbe una perdita."
           ]
         },
         {
@@ -193,25 +193,25 @@
           "version": "1.1.0",
           "date": "2026-09-08",
           "changes": [
-            "Layout «Semplice»: accendi/spegni, luminosità e i chip di temperatura",
-            "Opzione «Preset temperatura» che aggiunge gli stessi chip sotto i controlli",
+            "Layout «Semplice»: accendi/spegni, luminosità e i chip di temperatura Candela · Calda · Neutra · Fredda al posto del gradiente. Per chi vuole scegliere «caldo» o «freddo» senza cercare il punto su una barra.",
+            "Opzione «Preset temperatura» che aggiunge gli stessi chip sotto i controlli dei layout Cerchi, Barre e Pill. I preset si adattano al range della lampada e un tocco a luce spenta la accende a quella temperatura.",
             "Traduzioni de/es/fr registrate (i file c'erano, ma non venivano caricati).",
-            "La ruota del layout Cerchi era larga 240 px fissi: in un popup stretto o a",
-            "Bordo, alone e ombra della card accesa non venivano mai applicati: il colore"
+            "La ruota del layout Cerchi era larga 240 px fissi: in un popup stretto o a mezza colonna sbordava e veniva tagliata. Ora si adatta alla larghezza, con 240 px come tetto.",
+            "Bordo, alone e ombra della card accesa non venivano mai applicati: il colore d'accento riceveva un alpha esadecimale concatenato (rgb(…)55), che per il browser non è un colore. Ora si usa color-mix."
           ]
         },
         {
           "version": "1.0.18",
           "date": "2026-08-13",
           "changes": [
-            "Trascinamento più fluido: gli eventi del puntatore (fino a 120 al secondo)"
+            "Trascinamento più fluido: gli eventi del puntatore (fino a 120 al secondo) vengono accorpati nel fotogramma invece di ridisegnare la card a ognuno."
           ]
         },
         {
           "version": "1.0.17",
           "date": "2026-08-13",
           "changes": [
-            "La luce si riaccendeva da sola poco dopo essere stata spenta. Il valore di",
+            "La luce si riaccendeva da sola poco dopo essere stata spenta. Il valore di luminosità o colore scelto trascinando veniva spedito con light.turn_on, che accende: se nel frattempo la luce era stata spenta, la riaccendeva. Ora a luce spenta non si manda nulla, e un trascinamento rimasto in sospeso non può più far partire il comando al tocco successivo.",
             "La card restava colorata come se la luce fosse accesa dopo lo spegnimento."
           ]
         }
@@ -283,21 +283,21 @@
           "version": "1.1.5",
           "date": "2026-08-12",
           "changes": [
-            "Il grafico dello storico poteva far cadere la card quando i dati"
+            "Il grafico dello storico poteva far cadere la card quando i dati arrivavano dopo il primo disegno: c'era un'uscita anticipata prima di un hook, quindi il numero di hook cambiava fra due disegni (React #310)."
           ]
         },
         {
           "version": "1.1.4",
           "date": "2026-08-12",
           "changes": [
-            "La card poteva non aprirsi, con l'errore «cannot access … before"
+            "La card poteva non aprirsi, con l'errore «cannot access … before initialization». La registrazione delle traduzioni stava in mezzo agli import: quella riga viene eseguita, e il bundler emette i JSON delle lingue come costanti nella posizione del loro import, quindi la chiamata finiva prima e leggeva una costante non ancora inizializzata. Spostata dopo tutti gli import."
           ]
         },
         {
           "version": "1.1.3",
           "date": "2026-08-12",
           "changes": [
-            "Cursori e selettori colore non scrivono più a ogni movimento. Ogni"
+            "Cursori e selettori colore non scrivono più a ogni movimento. Ogni spostamento del mouse faceva partire una chiamata: sul volume e sulla posizione si trattava di decine di richieste al secondo verso Home Assistant, che le eseguiva tutte una per una; sui colori era una scrittura della configurazione, con invio al server e ridisegno, per ogni pixel di movimento. Ora il cursore risponde subito ma si scrive una volta sola, alla fermata."
           ]
         }
       ]
@@ -394,76 +394,76 @@
           "version": "1.12.0",
           "date": "2026-09-18",
           "changes": [
-            "Altezza minima, da 0 (segue il contenuto, come prima) a 400 px, con il",
-            "Limiti più ampi: nome e stato fino a 2,5× (prima 1,4×), icona fino a"
+            "Altezza minima, da 0 (segue il contenuto, come prima) a 400 px, con il contenuto centrato in verticale. Per schermi usati al volo, come quello dell'auto.",
+            "Limiti più ampi: nome e stato fino a 2,5× (prima 1,4×), icona fino a 64 px (prima 34). Le tile già configurate non cambiano aspetto."
           ]
         },
         {
           "version": "1.11.0",
           "date": "2026-09-18",
           "changes": [
-            "Tocco «Impulso», per cancelli, portoni e campanelli che si rispengono da"
+            "Tocco «Impulso», per cancelli, portoni e campanelli che si rispengono da soli. Accende sempre, invece di invertire: con «Accendi/spegni» uno switch rimasto acceso per sbaglio veniva spento dal tocco e il cancello non si muoveva. Per tre secondi la tile mostra «Comando inviato» col suo colore: lo stato acceso dura troppo poco per essere disegnato, e prima sembrava che il tocco non avesse fatto niente. Sui button usa press."
           ]
         },
         {
           "version": "1.10.0",
           "date": "2026-08-13",
           "changes": [
-            "La riga di stato mostrava il numero senza unità: si leggeva «45.5» senza",
-            "Il campo «Unità» compariva solo col valore grande acceso, quindi chi usa la"
+            "La riga di stato mostrava il numero senza unità: si leggeva «45.5» senza sapere se fossero gradi o percentuale. Ora l'unità dell'entità viene aggiunta (attaccata per % e gradi, staccata per il resto).",
+            "Il campo «Unità» compariva solo col valore grande acceso, quindi chi usa la disposizione con lo stato sotto il nome non poteva impostarlo. Ora è sempre visibile."
           ]
         },
         {
           "version": "1.9.0",
           "date": "2026-08-13",
           "changes": [
-            "Colori per stato: confronti numerici e intervalli oltre al testo esatto —"
+            "Colori per stato: confronti numerici e intervalli oltre al testo esatto — >18, >=18, <5, <=5, =20, !=0, 10-20. Prima su un sensore numerico serviva una regola per ogni valore possibile."
           ]
         },
         {
           "version": "1.8.0",
           "date": "2026-08-13",
           "changes": [
-            "Disposizione «Sottile»: una riga sola, icona senza pastiglia e margine"
+            "Disposizione «Sottile»: una riga sola, icona senza pastiglia e margine interno ridotto. Per file lunghe di scorciatoie, dove conta quante ne stanno in una schermata."
           ]
         },
         {
           "version": "1.7.0",
           "date": "2026-08-13",
           "changes": [
-            "Sfondo colorato su qualunque disposizione: colore di stato o colore fisso,"
+            "Sfondo colorato su qualunque disposizione: colore di stato o colore fisso, con intensità regolabile da 0 a 100%. Prima esisteva solo dentro la disposizione a tinta, al 13% fisso."
           ]
         },
         {
           "version": "1.6.0",
           "date": "2026-08-13",
           "changes": [
-            "Dimensione del testo separata per nome e per stato: su una tile stretta il"
+            "Dimensione del testo separata per nome e per stato: su una tile stretta il nome si può rimpicciolire senza rendere illeggibile il valore. Le tile già configurate partono dalla dimensione che avevano."
           ]
         },
         {
           "version": "1.5.0",
           "date": "2026-08-13",
           "changes": [
-            "Dimensione di icona e testo regolabili. Due cursori separati, perché si",
-            "Impostazioni riordinate. Le sezioni seguivano l'ordine in cui sono state",
-            "Nella disposizione «In linea» il valore si prendeva tutto lo spazio e il nome"
+            "Dimensione di icona e testo regolabili. Due cursori separati, perché si regolano per motivi diversi: l'icona per il peso visivo, il testo per farci stare un nome lungo. Il riquadro dell'icona segue la sua misura.",
+            "Impostazioni riordinate. Le sezioni seguivano l'ordine in cui sono state aggiunte — Aspetto, Conteggio, Al tocco, poi Stato e Valore — invece di quello in cui si configura una tile. Ora: Entità → Aspetto → Stato → Valore → Conteggio → Al tocco → Dettagli → Extra.",
+            "Nella disposizione «In linea» il valore si prendeva tutto lo spazio e il nome si riduceva a una lettera: «F Chiuso». Ora si stringono entrambi."
           ]
         },
         {
           "version": "1.4.0",
           "date": "2026-08-13",
           "changes": [
-            "Colori per stato. Si assegna un colore a ogni stato — aperto verde,",
-            "Vale per tutte le disposizioni, non solo per la tinta piena: anche la sola",
-            "Lo stato si scrive come lo scrive Home Assistant (open, closed, on), non"
+            "Colori per stato. Si assegna un colore a ogni stato — aperto verde, chiuso rosso, in apertura giallo — invece del solo «attivo/non attivo». Una tapparella ha quattro stati, e volerne tre dello stesso colore perché contano tutti come «non attivo» non dice niente a chi guarda.",
+            "Vale per tutte le disposizioni, non solo per la tinta piena: anche la sola icona rossa su «chiuso» è un segnale.",
+            "Lo stato si scrive come lo scrive Home Assistant (open, closed, on), non come lo leggi a schermo: è quello il valore su cui si confronta. Per non doverlo indovinare c'è il tasto che aggiunge lo stato in cui l'entità si trova adesso — apri la porta, premi, hai la regola per «aperto»."
           ]
         },
         {
           "version": "1.3.1",
           "date": "2026-08-13",
           "changes": [
-            "Su porte, finestre e serrature si leggeva «Acceso/Spento». Un"
+            "Su porte, finestre e serrature si leggeva «Acceso/Spento». Un binary_sensor ha sempre stato on o off, ma quelle parole non si mostrano mai così: Home Assistant le traduce secondo il device_class — una porta è «Aperto/Chiuso», un movimento «Rilevato/Libero», una perdita «Bagnato/Asciutto». La tile ignorava il device_class, quindi la stessa entità si leggeva in due modi diversi a seconda di dove la guardavi. Su una serratura le due parole dicono cose opposte."
           ]
         }
       ]

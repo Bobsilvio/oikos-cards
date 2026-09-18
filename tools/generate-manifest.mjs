@@ -33,24 +33,44 @@ function parseChangelog(dir, max = 10) {
   if (!existsSync(p)) return null
   let text
   try { text = readFileSync(p, 'utf8') } catch { return null }
+  // Toglie grassetto, corsivo e backtick per un testo pulito in UI. Si applica
+  // al punto INTERO, a fine lettura: un grassetto aperto su una riga e chiuso
+  // sulla successiva resterebbe altrimenti con gli asterischi a schermo.
+  const clean = (s) => s.replace(/\*\*(.+?)\*\*/g, '$1').replace(/\*(.+?)\*/g, '$1').replace(/`(.+?)`/g, '$1').replace(/\s+/g, ' ').trim()
   const entries = []
   let cur = null
+  let inBullet = false
   for (const raw of text.split('\n')) {
     const line = raw.trim()
+    // Intestazione versione: "## [1.2.0] - 2026-06-08" oppure "## 1.2.0 - ..."
     const h = line.match(/^##\s+\[?v?([0-9][0-9A-Za-z.\-]*)\]?\s*(?:[-–—]\s*(.+))?$/)
     if (h) {
       if (cur) entries.push(cur)
       cur = { version: h[1], date: (h[2] || '').trim() || null, changes: [] }
+      inBullet = false
       continue
     }
     if (!cur) continue
     const b = line.match(/^[-*]\s+(.+)$/)
     if (b) {
-      const txt = b[1].replace(/\*\*(.+?)\*\*/g, '$1').replace(/\*(.+?)\*/g, '$1').replace(/`(.+?)`/g, '$1').trim()
-      if (txt) cur.changes.push(txt)
+      cur.changes.push(b[1])
+      inBullet = true
+      continue
     }
+    /*
+     * Riga di continuazione. Un punto lungo va a capo, rientrato, sotto il
+     * trattino: prima veniva scartata e in «Novità» ogni voce si fermava a metà
+     * frase, esattamente dove andava a capo il file. Una riga vuota o un titolo
+     * (### Added) chiudono il punto.
+     */
+    if (inBullet && line && !line.startsWith('#') && /^\s/.test(raw)) {
+      cur.changes[cur.changes.length - 1] += ' ' + line
+      continue
+    }
+    inBullet = false
   }
   if (cur) entries.push(cur)
+  for (const e of entries) e.changes = e.changes.map(clean).filter(Boolean)
   const filtered = entries.filter(e => e.changes.length > 0).slice(0, max)
   return filtered.length ? filtered : null
 }
