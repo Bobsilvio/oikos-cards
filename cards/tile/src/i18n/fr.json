@@ -123,7 +123,10 @@
     "bgOpacityHint": "100% = couleur pleine.",
     "layoutSlim": "Fine",
     "unitHint": "Vide = celle de l'entité. Vaut aussi pour la ligne d'état.",
-    "tapPulse": "Impulsion"
+    "tapPulse": "Impulsion",
+    "minHeight": "Hauteur minimale",
+    "minHeightHint": "Pour les écrans utilisés en passant, comme celui de la voiture : la tuile s'agrandit et le contenu reste centré.",
+    "minHeightAuto": "Automatique"
   },
   "countOn": "{{count}} actives"
 }

@@ -4,6 +4,16 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [1.12.0] - 2026-09-18
+### Added
+- **Altezza minima**, da 0 (segue il contenuto, come prima) a 400 px, con il
+  contenuto centrato in verticale. Per schermi usati al volo, come quello
+  dell'auto.
+
+### Changed
+- Limiti più ampi: nome e stato fino a **2,5×** (prima 1,4×), icona fino a
+  **64 px** (prima 34). Le tile già configurate non cambiano aspetto.
+
 ## [1.11.0] - 2026-09-18
 ### Added
 - **Tocco «Impulso»**, per cancelli, portoni e campanelli che si rispengono da

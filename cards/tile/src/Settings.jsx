@@ -303,7 +303,7 @@ export default function TileSettings({ cardId }) {
           <Slider
             value={cfg.iconSize ?? 20}
             onChange={v => set('iconSize', v)}
-            min={12} max={34} step={1}
+            min={12} max={64} step={1}
             format={v => `${v} px`}
           />
         </Field>
@@ -313,7 +313,7 @@ export default function TileSettings({ cardId }) {
           <Slider
             value={cfg.titleScale ?? cfg.textScale ?? 1}
             onChange={v => set('titleScale', v)}
-            min={0.75} max={1.4} step={0.05}
+            min={0.75} max={2.5} step={0.05}
             format={v => `${Math.round(v * 100)}%`}
           />
         </Field>
@@ -321,8 +321,16 @@ export default function TileSettings({ cardId }) {
           <Slider
             value={cfg.stateScale ?? cfg.textScale ?? 1}
             onChange={v => set('stateScale', v)}
-            min={0.75} max={1.4} step={0.05}
+            min={0.75} max={2.5} step={0.05}
             format={v => `${Math.round(v * 100)}%`}
+          />
+        </Field>
+        <Field label={t('settings.minHeight')} hint={t('settings.minHeightHint')}>
+          <Slider
+            value={Number(cfg.minHeight) || 0}
+            onChange={v => set('minHeight', v)}
+            min={0} max={400} step={10}
+            format={v => (v ? `${v} px` : t('settings.minHeightAuto'))}
           />
         </Field>
 

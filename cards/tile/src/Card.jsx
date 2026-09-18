@@ -62,7 +62,7 @@ export const DEFAULT = {
   // Dimensioni: icona in px, testo come fattore. Separate perché si regolano
   // per motivi diversi — l'icona per il peso visivo, il testo per farci stare
   // un nome lungo.
-  iconSize:      20,            // 12–34
+  iconSize:      20,            // 12–64
   // textScale: sostituito da titleScale/stateScale, letto ancora dalle tile
   // configurate prima (vedi tsT/tsS).
   // Vuoto e non 'none': i DEFAULTS vengono fusi nella configurazione salvata,
@@ -71,8 +71,9 @@ export const DEFAULT = {
   bgMode:        '',            // '' | 'none' | 'state' | 'fixed'
   bgColor:       '',            // solo con bgMode 'fixed'
   bgOpacity:     null,          // 0–100; null = default secondo bgMode
-  titleScale:    1,             // 0.75–1.4
-  stateScale:    1,             // 0.75–1.4
+  titleScale:    1,             // 0.75–2.5
+  stateScale:    1,             // 0.75–2.5
+  minHeight:     0,             // px, 0 = segue il contenuto
   offAccent:     '',            // colore a stato inattivo (solo layout 'stateTint')
   /*
    * Colori per stato: [{ state: 'open', color: '#22c55e' }, …]
@@ -332,6 +333,16 @@ export default function TileCard({ cardId = 'tile' }) {
   const wrapper = {
     ...s.card,
     ...(slim ? { padding: '7px 12px', borderRadius: tk.radius.md } : null),
+    /*
+     * Altezza minima, contenuto centrato in verticale. I limiti di prima
+     * (testo 1,4×, icona 34 px, altezza dal contenuto) erano pensati per uno
+     * schermo di casa: sul pannello di un'auto, da seduti e in movimento, un
+     * bersaglio così è piccolo. Solo se chiesta: a 0 il contenitore resta
+     * com'era, senza flex, e nessuna tile esistente cambia aspetto.
+     */
+    ...(Number(cfg.minHeight) > 0
+      ? { minHeight: clampNum(cfg.minHeight, 0, 400, 0), display: 'flex', flexDirection: 'column', justifyContent: 'center' }
+      : null),
     cursor: clickable ? 'pointer' : 'default',
     transition: 'border-color .25s ease, background .25s ease',
     ...(bgMode !== 'none'
@@ -354,7 +365,7 @@ export default function TileCard({ cardId = 'tile' }) {
     'aria-label': clickable ? `${title}${status ? ` — ${status}` : ''}` : undefined,
   }
 
-  const iconPx = clampNum(cfg.iconSize, 12, 34, 20)
+  const iconPx = clampNum(cfg.iconSize, 12, 64, 20)
   /*
    * Nome e stato si regolano separatamente: su una tile stretta il nome va
    * rimpicciolito per starci, ma il valore è il motivo per cui la tile esiste e
@@ -364,8 +375,8 @@ export default function TileCard({ cardId = 'tile' }) {
    * `textScale` resta come ripiego: le tile configurate prima avevano solo
    * quello, e devono continuare a vedersi come le ha lasciate l'utente.
    */
-  const tsT = clampNum(cfg.titleScale ?? cfg.textScale, 0.75, 1.4, 1)
-  const tsS = clampNum(cfg.stateScale ?? cfg.textScale, 0.75, 1.4, 1)
+  const tsT = clampNum(cfg.titleScale ?? cfg.textScale, 0.75, 2.5, 1)
+  const tsS = clampNum(cfg.stateScale ?? cfg.textScale, 0.75, 2.5, 1)
   const fsT = (base) => Math.round(base * tsT * 10) / 10
   const fsS = (base) => Math.round(base * tsS * 10) / 10
 

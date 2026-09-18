@@ -123,7 +123,10 @@
     "bgOpacityHint": "100% = solid colour.",
     "layoutSlim": "Slim",
     "unitHint": "Empty = the entity's own. Applies to the state line too.",
-    "tapPulse": "Pulse"
+    "tapPulse": "Pulse",
+    "minHeight": "Minimum height",
+    "minHeightHint": "For screens used on the go, like a car's: the tile gets taller and the content stays centred.",
+    "minHeightAuto": "Automatic"
   },
   "countOn": "{{count}} on"
 }
