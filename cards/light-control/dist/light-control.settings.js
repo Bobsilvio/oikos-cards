@@ -1,4 +1,4 @@
-const { jsxs: a, jsx: t } = window.__OIKOS_SDK__.jsxRuntime, p = {
+const { jsxs: a, jsx: l } = window.__OIKOS_SDK__.jsxRuntime, p = {
   toggle: "Accendi/Spegni",
   turnOn: "Accendi",
   turnOff: "Spegni",
@@ -33,7 +33,13 @@ const { jsxs: a, jsx: t } = window.__OIKOS_SDK__.jsxRuntime, p = {
     colorTempHint: "Gradiente caldo→freddo per luci color_temp",
     layoutSimple: "Semplice",
     presetsLabel: "Preset temperatura",
-    presetsHint: "Chip Candela · Calda · Neutra · Fredda sotto i controlli (il layout Semplice li ha sempre)"
+    presetsHint: "Chip Candela · Calda · Neutra · Fredda sotto i controlli (il layout Semplice li ha sempre)",
+    titleScale: "Dimensione nome",
+    stateScale: "Dimensione stato",
+    iconScale: "Dimensione icona",
+    minHeight: "Altezza minima",
+    minHeightHint: "Per schermi da usare al volo, come quello dell'auto: la card si alza e il contenuto resta al centro.",
+    minHeightAuto: "Automatica"
   },
   preset: {
     candle: "Candela",
@@ -43,7 +49,7 @@ const { jsxs: a, jsx: t } = window.__OIKOS_SDK__.jsxRuntime, p = {
   }
 }, b = {
   lightControl: p
-}, m = {
+}, C = {
   toggle: "Toggle",
   turnOn: "Turn on",
   turnOff: "Turn off",
@@ -78,7 +84,13 @@ const { jsxs: a, jsx: t } = window.__OIKOS_SDK__.jsxRuntime, p = {
     colorTempHint: "Warm→cool gradient for color_temp lights",
     layoutSimple: "Simple",
     presetsLabel: "Temperature presets",
-    presetsHint: "Candle · Warm · Neutral · Cool chips under the controls (the Simple layout always has them)"
+    presetsHint: "Candle · Warm · Neutral · Cool chips under the controls (the Simple layout always has them)",
+    titleScale: "Name size",
+    stateScale: "State size",
+    iconScale: "Icon size",
+    minHeight: "Minimum height",
+    minHeightHint: "For screens used on the go, like a car's: the card gets taller and the content stays centred.",
+    minHeightAuto: "Automatic"
   },
   preset: {
     candle: "Candle",
@@ -86,9 +98,9 @@ const { jsxs: a, jsx: t } = window.__OIKOS_SDK__.jsxRuntime, p = {
     neutral: "Neutral",
     cool: "Cool"
   }
-}, C = {
-  lightControl: m
 }, f = {
+  lightControl: C
+}, y = {
   toggle: "Ein-/Ausschalten",
   turnOn: "Einschalten",
   turnOff: "Ausschalten",
@@ -123,7 +135,13 @@ const { jsxs: a, jsx: t } = window.__OIKOS_SDK__.jsxRuntime, p = {
     colorTempHint: "Warm→Kalt-Verlauf für color_temp-Lichter",
     layoutSimple: "Einfach",
     presetsLabel: "Temperatur-Voreinstellungen",
-    presetsHint: "Chips Kerze · Warm · Neutral · Kalt unter den Reglern (das Layout Einfach hat sie immer)"
+    presetsHint: "Chips Kerze · Warm · Neutral · Kalt unter den Reglern (das Layout Einfach hat sie immer)",
+    titleScale: "Namensgröße",
+    stateScale: "Statusgröße",
+    iconScale: "Symbolgröße",
+    minHeight: "Mindesthöhe",
+    minHeightHint: "Für Bildschirme, die man nebenbei bedient, wie im Auto: Die Karte wird höher, der Inhalt bleibt mittig.",
+    minHeightAuto: "Automatisch"
   },
   preset: {
     candle: "Kerze",
@@ -131,9 +149,9 @@ const { jsxs: a, jsx: t } = window.__OIKOS_SDK__.jsxRuntime, p = {
     neutral: "Neutral",
     cool: "Kalt"
   }
-}, y = {
-  lightControl: f
-}, L = {
+}, H = {
+  lightControl: y
+}, S = {
   toggle: "Encender/Apagar",
   turnOn: "Encender",
   turnOff: "Apagar",
@@ -168,7 +186,13 @@ const { jsxs: a, jsx: t } = window.__OIKOS_SDK__.jsxRuntime, p = {
     colorTempHint: "Degradado cálido→frío para luces color_temp",
     layoutSimple: "Sencillo",
     presetsLabel: "Preajustes de temperatura",
-    presetsHint: "Chips Vela · Cálida · Neutra · Fría bajo los controles (el diseño Sencillo los tiene siempre)"
+    presetsHint: "Chips Vela · Cálida · Neutra · Fría bajo los controles (el diseño Sencillo los tiene siempre)",
+    titleScale: "Tamaño del nombre",
+    stateScale: "Tamaño del estado",
+    iconScale: "Tamaño del icono",
+    minHeight: "Altura mínima",
+    minHeightHint: "Para pantallas que se usan sobre la marcha, como la del coche: la tarjeta crece y el contenido queda centrado.",
+    minHeightAuto: "Automática"
   },
   preset: {
     candle: "Vela",
@@ -176,9 +200,9 @@ const { jsxs: a, jsx: t } = window.__OIKOS_SDK__.jsxRuntime, p = {
     neutral: "Neutra",
     cool: "Fría"
   }
-}, H = {
-  lightControl: L
-}, S = {
+}, L = {
+  lightControl: S
+}, A = {
   toggle: "Allumer/Éteindre",
   turnOn: "Allumer",
   turnOff: "Éteindre",
@@ -213,7 +237,13 @@ const { jsxs: a, jsx: t } = window.__OIKOS_SDK__.jsxRuntime, p = {
     colorTempHint: "Dégradé chaud→froid pour les lumières color_temp",
     layoutSimple: "Simple",
     presetsLabel: "Préréglages de température",
-    presetsHint: "Puces Bougie · Chaude · Neutre · Froide sous les commandes (la disposition Simple les a toujours)"
+    presetsHint: "Puces Bougie · Chaude · Neutre · Froide sous les commandes (la disposition Simple les a toujours)",
+    titleScale: "Taille du nom",
+    stateScale: "Taille de l'état",
+    iconScale: "Taille de l'icône",
+    minHeight: "Hauteur minimale",
+    minHeightHint: "Pour les écrans utilisés en passant, comme celui de la voiture : la carte s'agrandit et le contenu reste centré.",
+    minHeightAuto: "Automatique"
   },
   preset: {
     candle: "Bougie",
@@ -221,11 +251,11 @@ const { jsxs: a, jsx: t } = window.__OIKOS_SDK__.jsxRuntime, p = {
     neutral: "Neutre",
     cool: "Froide"
   }
-}, A = {
-  lightControl: S
-}, { useCardConfig: T, useDashboard: v, EntityField: E, MdiIconPicker: B, Section: s, Field: o, TextField: P, Toggle: r, Pills: _, registerCardTranslations: w, useT: D } = window.__OIKOS_SDK__;
-w("card-light-control", { it: b, en: C, de: y, es: H, fr: A });
-const x = {
+}, T = {
+  lightControl: A
+}, { useCardConfig: v, useDashboard: P, EntityField: B, MdiIconPicker: E, Section: c, Field: n, TextField: x, Toggle: r, Pills: D, Slider: s, registerCardTranslations: _, useT: z } = window.__OIKOS_SDK__;
+_("card-light-control", { it: b, en: f, de: H, es: L, fr: T });
+const w = {
   entityId: "",
   label: "",
   icon: "mdi:lightbulb",
@@ -235,83 +265,127 @@ const x = {
   enableColorTemp: !0,
   enablePresets: !1
 };
-function z({ cardId: u }) {
-  const { t: e } = D("card-light-control"), { dark: g } = v(), [n, c] = T(u, x), i = (l, h) => c((d) => ({ ...d, [l]: h }));
+function F({ cardId: h }) {
+  const { t } = z("card-light-control"), { dark: g } = P(), [i, u] = v(h, w), o = (e, m) => u((d) => ({ ...d, [e]: m }));
   return /* @__PURE__ */ a("div", { style: { display: "flex", flexDirection: "column", gap: 14 }, children: [
-    /* @__PURE__ */ a(s, { title: e("lightControl.settings.sectionEntity"), children: [
-      /* @__PURE__ */ t(o, { label: e("lightControl.settings.lightLabel"), hint: e("lightControl.settings.lightHint"), children: /* @__PURE__ */ t(
-        E,
+    /* @__PURE__ */ a(c, { title: t("lightControl.settings.sectionEntity"), children: [
+      /* @__PURE__ */ l(n, { label: t("lightControl.settings.lightLabel"), hint: t("lightControl.settings.lightHint"), children: /* @__PURE__ */ l(
+        B,
         {
           field: "entityId",
-          config: n,
-          setConfig: c,
+          config: i,
+          setConfig: u,
           filterDomain: "light"
         }
       ) }),
-      /* @__PURE__ */ t(o, { label: e("lightControl.settings.labelLabel"), hint: e("lightControl.settings.labelHint"), children: /* @__PURE__ */ t(
-        P,
+      /* @__PURE__ */ l(n, { label: t("lightControl.settings.labelLabel"), hint: t("lightControl.settings.labelHint"), children: /* @__PURE__ */ l(
+        x,
         {
-          value: n.label,
-          onChange: (l) => i("label", l),
-          placeholder: e("lightControl.settings.labelPlaceholder")
+          value: i.label,
+          onChange: (e) => o("label", e),
+          placeholder: t("lightControl.settings.labelPlaceholder")
         }
       ) })
     ] }),
-    /* @__PURE__ */ a(s, { title: e("lightControl.settings.sectionAppearance"), children: [
-      /* @__PURE__ */ t(o, { label: e("lightControl.settings.layoutLabel"), hint: e("lightControl.settings.layoutHint"), children: /* @__PURE__ */ t(
-        _,
+    /* @__PURE__ */ a(c, { title: t("lightControl.settings.sectionAppearance"), children: [
+      /* @__PURE__ */ l(n, { label: t("lightControl.settings.layoutLabel"), hint: t("lightControl.settings.layoutHint"), children: /* @__PURE__ */ l(
+        D,
         {
           options: [
-            { value: "circle", label: e("lightControl.settings.layoutCircle") },
-            { value: "bars", label: e("lightControl.settings.layoutBars") },
-            { value: "filled", label: e("lightControl.settings.layoutFilled") },
-            { value: "simple", label: e("lightControl.settings.layoutSimple") }
+            { value: "circle", label: t("lightControl.settings.layoutCircle") },
+            { value: "bars", label: t("lightControl.settings.layoutBars") },
+            { value: "filled", label: t("lightControl.settings.layoutFilled") },
+            { value: "simple", label: t("lightControl.settings.layoutSimple") }
           ],
-          value: n.layout || "circle",
-          onChange: (l) => i("layout", l)
+          value: i.layout || "circle",
+          onChange: (e) => o("layout", e)
         }
       ) }),
-      /* @__PURE__ */ t(o, { label: e("lightControl.settings.iconLabel"), hint: e("lightControl.settings.iconHint"), children: /* @__PURE__ */ t(
-        B,
+      /* @__PURE__ */ l(n, { label: t("lightControl.settings.iconLabel"), hint: t("lightControl.settings.iconHint"), children: /* @__PURE__ */ l(
+        E,
         {
-          value: n.icon || "mdi:lightbulb",
-          onChange: (l) => i("icon", l),
+          value: i.icon || "mdi:lightbulb",
+          onChange: (e) => o("icon", e),
           dark: g
+        }
+      ) }),
+      /* @__PURE__ */ l(n, { label: t("lightControl.settings.titleScale"), children: /* @__PURE__ */ l(
+        s,
+        {
+          value: Number(i.titleScale) || 1,
+          onChange: (e) => o("titleScale", e),
+          min: 0.75,
+          max: 2.5,
+          step: 0.05,
+          format: (e) => `${Math.round(e * 100)}%`
+        }
+      ) }),
+      /* @__PURE__ */ l(n, { label: t("lightControl.settings.stateScale"), children: /* @__PURE__ */ l(
+        s,
+        {
+          value: Number(i.stateScale) || 1,
+          onChange: (e) => o("stateScale", e),
+          min: 0.75,
+          max: 2.5,
+          step: 0.05,
+          format: (e) => `${Math.round(e * 100)}%`
+        }
+      ) }),
+      /* @__PURE__ */ l(n, { label: t("lightControl.settings.iconScale"), children: /* @__PURE__ */ l(
+        s,
+        {
+          value: Number(i.iconScale) || 1,
+          onChange: (e) => o("iconScale", e),
+          min: 0.75,
+          max: 2.5,
+          step: 0.05,
+          format: (e) => `${Math.round(e * 100)}%`
+        }
+      ) }),
+      /* @__PURE__ */ l(n, { label: t("lightControl.settings.minHeight"), hint: t("lightControl.settings.minHeightHint"), children: /* @__PURE__ */ l(
+        s,
+        {
+          value: Number(i.minHeight) || 0,
+          onChange: (e) => o("minHeight", e),
+          min: 0,
+          max: 400,
+          step: 10,
+          format: (e) => e ? `${e} px` : t("lightControl.settings.minHeightAuto")
         }
       ) })
     ] }),
-    /* @__PURE__ */ a(s, { title: e("lightControl.settings.sectionControls"), hint: e("lightControl.settings.sectionControlsHint"), children: [
-      /* @__PURE__ */ t(o, { label: e("lightControl.settings.brightnessLabel"), hint: e("lightControl.settings.brightnessHint"), children: /* @__PURE__ */ t(
+    /* @__PURE__ */ a(c, { title: t("lightControl.settings.sectionControls"), hint: t("lightControl.settings.sectionControlsHint"), children: [
+      /* @__PURE__ */ l(n, { label: t("lightControl.settings.brightnessLabel"), hint: t("lightControl.settings.brightnessHint"), children: /* @__PURE__ */ l(
         r,
         {
-          value: n.enableBrightness,
-          onChange: (l) => i("enableBrightness", l)
+          value: i.enableBrightness,
+          onChange: (e) => o("enableBrightness", e)
         }
       ) }),
-      /* @__PURE__ */ t(o, { label: e("lightControl.settings.colorLabel"), hint: e("lightControl.settings.colorHint"), children: /* @__PURE__ */ t(
+      /* @__PURE__ */ l(n, { label: t("lightControl.settings.colorLabel"), hint: t("lightControl.settings.colorHint"), children: /* @__PURE__ */ l(
         r,
         {
-          value: n.enableColor,
-          onChange: (l) => i("enableColor", l)
+          value: i.enableColor,
+          onChange: (e) => o("enableColor", e)
         }
       ) }),
-      /* @__PURE__ */ t(o, { label: e("lightControl.settings.colorTempLabel"), hint: e("lightControl.settings.colorTempHint"), children: /* @__PURE__ */ t(
+      /* @__PURE__ */ l(n, { label: t("lightControl.settings.colorTempLabel"), hint: t("lightControl.settings.colorTempHint"), children: /* @__PURE__ */ l(
         r,
         {
-          value: n.enableColorTemp,
-          onChange: (l) => i("enableColorTemp", l)
+          value: i.enableColorTemp,
+          onChange: (e) => o("enableColorTemp", e)
         }
       ) }),
-      n.layout !== "simple" && /* @__PURE__ */ t(o, { label: e("lightControl.settings.presetsLabel"), hint: e("lightControl.settings.presetsHint"), children: /* @__PURE__ */ t(
+      i.layout !== "simple" && /* @__PURE__ */ l(n, { label: t("lightControl.settings.presetsLabel"), hint: t("lightControl.settings.presetsHint"), children: /* @__PURE__ */ l(
         r,
         {
-          value: !!n.enablePresets,
-          onChange: (l) => i("enablePresets", l)
+          value: !!i.enablePresets,
+          onChange: (e) => o("enablePresets", e)
         }
       ) })
     ] })
   ] });
 }
 export {
-  z as default
+  F as default
 };

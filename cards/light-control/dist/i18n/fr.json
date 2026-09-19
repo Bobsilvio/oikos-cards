@@ -34,7 +34,13 @@
       "colorTempHint": "Dégradé chaud→froid pour les lumières color_temp",
       "layoutSimple": "Simple",
       "presetsLabel": "Préréglages de température",
-      "presetsHint": "Puces Bougie · Chaude · Neutre · Froide sous les commandes (la disposition Simple les a toujours)"
+      "presetsHint": "Puces Bougie · Chaude · Neutre · Froide sous les commandes (la disposition Simple les a toujours)",
+      "titleScale": "Taille du nom",
+      "stateScale": "Taille de l'état",
+      "iconScale": "Taille de l'icône",
+      "minHeight": "Hauteur minimale",
+      "minHeightHint": "Pour les écrans utilisés en passant, comme celui de la voiture : la carte s'agrandit et le contenu reste centré.",
+      "minHeightAuto": "Automatique"
     },
     "preset": {
       "candle": "Bougie",

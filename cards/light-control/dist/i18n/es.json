@@ -34,7 +34,13 @@
       "colorTempHint": "Degradado cálido→frío para luces color_temp",
       "layoutSimple": "Sencillo",
       "presetsLabel": "Preajustes de temperatura",
-      "presetsHint": "Chips Vela · Cálida · Neutra · Fría bajo los controles (el diseño Sencillo los tiene siempre)"
+      "presetsHint": "Chips Vela · Cálida · Neutra · Fría bajo los controles (el diseño Sencillo los tiene siempre)",
+      "titleScale": "Tamaño del nombre",
+      "stateScale": "Tamaño del estado",
+      "iconScale": "Tamaño del icono",
+      "minHeight": "Altura mínima",
+      "minHeightHint": "Para pantallas que se usan sobre la marcha, como la del coche: la tarjeta crece y el contenido queda centrado.",
+      "minHeightAuto": "Automática"
     },
     "preset": {
       "candle": "Vela",

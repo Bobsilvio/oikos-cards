@@ -34,7 +34,13 @@
       "colorTempHint": "Warm→cool gradient for color_temp lights",
       "layoutSimple": "Simple",
       "presetsLabel": "Temperature presets",
-      "presetsHint": "Candle · Warm · Neutral · Cool chips under the controls (the Simple layout always has them)"
+      "presetsHint": "Candle · Warm · Neutral · Cool chips under the controls (the Simple layout always has them)",
+      "titleScale": "Name size",
+      "stateScale": "State size",
+      "iconScale": "Icon size",
+      "minHeight": "Minimum height",
+      "minHeightHint": "For screens used on the go, like a car's: the card gets taller and the content stays centred.",
+      "minHeightAuto": "Automatic"
     },
     "preset": {
       "candle": "Candle",
