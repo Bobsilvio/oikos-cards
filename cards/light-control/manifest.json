@@ -1,7 +1,7 @@
 {
   "id": "light-control",
   "name": "Light Control",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "author": "Oikos",
   "description": "Controllo luce HA: on/off, luminosità, colore e temperatura con chip caldo/freddo; layout Cerchi, Barre, Pill o Semplice.",
   "description_en": "HA light control: on/off, brightness, color and temperature with warm/cool chips; Rings, Bars, Pill or Simple layout.",

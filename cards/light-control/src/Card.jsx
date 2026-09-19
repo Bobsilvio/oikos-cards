@@ -18,6 +18,16 @@ const DEFAULT = {
   enableColor: true,
   enableColorTemp: true,
   enablePresets: false,
+  // Misure (come la Tile): pensate per schermi usati al volo, es. l'auto.
+  titleScale: 1,   // 0.75–2.5
+  stateScale: 1,   // 0.75–2.5
+  iconScale:  1,   // 0.75–2.5
+  minHeight:  0,   // px, 0 = segue il contenuto
+}
+
+const clampNum = (v, min, max, dflt) => {
+  const n = parseFloat(v)
+  return Number.isFinite(n) ? Math.min(max, Math.max(min, n)) : dflt
 }
 
 const KELVIN_GRADIENT =
@@ -329,6 +339,20 @@ export default function LightControl({ cardId = 'light-control' }) {
   const { dark, getState, getAttr, callService } = useDashboard()
   const [config] = useCardConfig(cardId, DEFAULT)
   const [busy, setBusy] = useState(false)
+  /*
+   * Misure regolabili. Le intestazioni di ogni disposizione avevano nome,
+   * stato e icona a misura fissa: a mezza colonna, su uno schermo d'auto,
+   * la riga "Luce Box · Spento" era un bersaglio piccolo accanto a una Tile
+   * ingrandita. A 1 e 0 tutto resta com'era.
+   */
+  const tsT = clampNum(config.titleScale, 0.75, 2.5, 1)
+  const tsS = clampNum(config.stateScale, 0.75, 2.5, 1)
+  const isc = clampNum(config.iconScale, 0.75, 2.5, 1)
+  const mh  = clampNum(config.minHeight, 0, 400, 0)
+  const px  = (n, k) => Math.round(n * k)
+  const fz  = (tok, k) => ({ ...tok, fontSize: Math.round(tok.fontSize * k * 10) / 10 })
+  // Altezza minima con contenuto centrato; a 0 nessuna proprietà in più.
+  const tall = mh > 0 ? { minHeight: mh, justifyContent: 'center' } : null
   const [localBrightness, setLocalBrightness] = useState(null)
   const [localRgb, setLocalRgb] = useState(null)
   const [localKelvin, setLocalKelvin] = useState(null)
@@ -598,7 +622,7 @@ export default function LightControl({ cardId = 'light-control' }) {
     const [ar, ag, ab] = displayRgb || [245, 158, 11]
     const hasSubBars = showColor || showColorTemp
     const PILL_RADIUS = 28
-    const TOP_H = 64
+    const TOP_H = Math.max(px(64, Math.max(isc, tsT)), mh)
     const SUB_H = 30
     const cardBg = dark ? '#1c2230' : '#e5e7eb'
 
@@ -661,7 +685,7 @@ export default function LightControl({ cardId = 'light-control' }) {
               onPointerDown={(e) => e.stopPropagation()}
               aria-label={isOn ? t('lightControl.turnOff') : t('lightControl.turnOn')}
               style={{
-                width: 36, height: 36, borderRadius: '50%',
+                width: px(36, isc), height: px(36, isc), borderRadius: '50%',
                 border: 'none',
                 background: 'rgba(255,255,255,.15)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -672,14 +696,14 @@ export default function LightControl({ cardId = 'light-control' }) {
             >
               <MdiIcon
                 name={config.icon || 'mdi:lightbulb'}
-                size={20}
+                size={px(20, isc)}
                 color="#fff"
                 dark={true}
               />
             </button>
             <span style={{
               color: '#fff',
-              fontSize: 16, fontWeight: 600,
+              fontSize: px(16, tsT), fontWeight: 600,
               textShadow: '0 1px 2px rgba(0,0,0,.35)',
               overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
               flex: 1, minWidth: 0,
@@ -687,7 +711,7 @@ export default function LightControl({ cardId = 'light-control' }) {
             {isOn && showBrightness && (
               <span style={{
                 color: '#fff', opacity: .85,
-                fontSize: 12, fontWeight: 600,
+                fontSize: px(12, tsS), fontWeight: 600,
                 fontVariantNumeric: 'tabular-nums',
                 textShadow: '0 1px 2px rgba(0,0,0,.35)',
               }}>{brightness}%</span>
@@ -824,6 +848,7 @@ export default function LightControl({ cardId = 'light-control' }) {
         transition: 'border-color .3s, box-shadow .3s',
         display: 'flex', flexDirection: 'column',
         gap: s.tokens.space.md,
+        ...tall,
       }}>
         {/* Intestazione: icona (accende/spegne), nome, stato, percentuale */}
         <div style={{ ...s.row, gap: s.tokens.space.sm }}>
@@ -832,7 +857,7 @@ export default function LightControl({ cardId = 'light-control' }) {
             disabled={busy || state === 'unavailable'}
             aria-label={isOn ? t('lightControl.turnOff') : t('lightControl.turnOn')}
             style={{
-              width: 44, height: 44, borderRadius: '50%',
+              width: px(44, isc), height: px(44, isc), borderRadius: '50%',
               border: 'none',
               background: isOn
                 ? `radial-gradient(circle, ${alpha(accent, 28)} 0%, ${alpha(accent, 8)} 70%, transparent 100%)`
@@ -844,18 +869,18 @@ export default function LightControl({ cardId = 'light-control' }) {
               transition: 'background .25s, box-shadow .25s',
             }}
           >
-            <MdiIcon name={config.icon || 'mdi:lightbulb'} size={24} color={accent} dark={dark}/>
+            <MdiIcon name={config.icon || 'mdi:lightbulb'} size={px(24, isc)} color={accent} dark={dark}/>
           </button>
           <div style={{ flex: 1, minWidth: 0 }}>
             <div style={{
-              ...s.tokens.font.title,
+              ...fz(s.tokens.font.title, tsT),
               color: s.tokens.color.primary,
               overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
             }}>
               {label}
             </div>
             <div style={{
-              ...s.tokens.font.hint, marginTop: 2,
+              ...fz(s.tokens.font.hint, tsS), marginTop: 2,
               color: isOn ? accent : s.tokens.color.muted,
               display: 'flex', alignItems: 'center', gap: 6,
             }}>
@@ -869,7 +894,7 @@ export default function LightControl({ cardId = 'light-control' }) {
           </div>
           {isOn && showBrightness && (
             <span style={{
-              ...s.tokens.font.title,
+              ...fz(s.tokens.font.title, tsS),
               color: s.tokens.color.primary,
               fontVariantNumeric: 'tabular-nums',
               flexShrink: 0,
@@ -934,6 +959,7 @@ export default function LightControl({ cardId = 'light-control' }) {
         transition: 'border-color .3s, box-shadow .3s',
         display: 'flex', flexDirection: 'column',
         gap: s.tokens.space.md,
+        ...tall,
       }}>
         {/* Header — icon button + label */}
         <div style={{ ...s.row, gap: s.tokens.space.sm }}>
@@ -942,7 +968,7 @@ export default function LightControl({ cardId = 'light-control' }) {
             disabled={busy || state === 'unavailable'}
             aria-label={isOn ? t('lightControl.turnOff') : t('lightControl.turnOn')}
             style={{
-              width: 36, height: 36, borderRadius: '50%',
+              width: px(36, isc), height: px(36, isc), borderRadius: '50%',
               border: 'none',
               background: isOn
                 ? `radial-gradient(circle, ${alpha(accent, 25)} 0%, ${alpha(accent, 6)} 70%, transparent 100%)`
@@ -956,28 +982,28 @@ export default function LightControl({ cardId = 'light-control' }) {
           >
             <MdiIcon
               name={config.icon || 'mdi:lightbulb'}
-              size={20}
+              size={px(20, isc)}
               color={accent}
               dark={dark}
             />
           </button>
           <div style={{ flex: 1, minWidth: 0 }}>
             <div style={{
-              ...s.tokens.font.title,
+              ...fz(s.tokens.font.title, tsT),
               color: s.tokens.color.primary,
               overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
             }}>
               {label}
             </div>
             {state === 'unavailable' && (
-              <div style={{ ...s.tokens.font.hint, color: s.tokens.color.muted, marginTop: 2 }}>
+              <div style={{ ...fz(s.tokens.font.hint, tsS), color: s.tokens.color.muted, marginTop: 2 }}>
                 {t('lightControl.unavailable')}
               </div>
             )}
           </div>
           {isOn && showBrightness && (
             <span style={{
-              ...s.tokens.font.hint,
+              ...fz(s.tokens.font.hint, tsS),
               color: s.tokens.color.primary,
               fontVariantNumeric: 'tabular-nums',
             }}>
@@ -1067,6 +1093,7 @@ export default function LightControl({ cardId = 'light-control' }) {
       transition: 'border-color .3s, box-shadow .3s',
       display: 'flex', flexDirection: 'column', alignItems: 'center',
       gap: s.tokens.space.md,
+      ...tall,
     }}>
       {/* Larghezza fluida con tetto a SIZE: in un popup stretto o a mezza
           colonna i 240 px fissi sbordavano e la ruota veniva tagliata. Le
@@ -1218,14 +1245,14 @@ export default function LightControl({ cardId = 'light-control' }) {
       {/* Label + state */}
       <div style={{ textAlign: 'center', minWidth: 0, width: '100%' }}>
         <div style={{
-          ...s.tokens.font.title,
+          ...fz(s.tokens.font.title, tsT),
           color: s.tokens.color.primary,
           overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
         }}>
           {label}
         </div>
         <div style={{
-          ...s.tokens.font.label,
+          ...fz(s.tokens.font.label, tsS),
           color: isOn ? accent : s.tokens.color.muted,
           marginTop: 4,
           display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,

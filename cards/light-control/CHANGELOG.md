@@ -3,6 +3,15 @@
 Tutte le modifiche rilevanti a questa card.
 Il formato segue [Keep a Changelog](https://keepachangelog.com/it/1.0.0/).
 
+## [1.2.0] - 2026-09-19
+
+### Added
+- **Misure regolabili**, come nella Tile: dimensione del nome, dello stato e
+  dell'icona fino al 250%, e un'altezza minima fino a 400 px con il contenuto
+  centrato. Valgono per tutte e quattro le disposizioni. A mezza colonna, su
+  uno schermo d'auto, la riga «Luce Box · Spento» era un bersaglio piccolo
+  accanto a una Tile ingrandita. Ai valori di default nulla cambia.
+
 ## [1.1.0] - 2026-09-08
 
 ### Added

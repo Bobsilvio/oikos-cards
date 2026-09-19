@@ -1,6 +1,6 @@
 import {
   useCardConfig, useDashboard, EntityField, MdiIconPicker,
-  Section, Field, TextField, Toggle, Pills,
+  Section, Field, TextField, Toggle, Pills, Slider,
   registerCardTranslations, useT,
 } from '@oikos/sdk'
 import it from './i18n/it.json'
@@ -68,6 +68,24 @@ export default function LightControlSettings({ cardId }) {
             onChange={v => set('icon', v)}
             dark={dark}
           />
+        </Field>
+
+        {/* Misure: come nella Tile. A 100% e Automatica la card resta com'era. */}
+        <Field label={t('lightControl.settings.titleScale')}>
+          <Slider value={Number(config.titleScale) || 1} onChange={v => set('titleScale', v)}
+            min={0.75} max={2.5} step={0.05} format={v => `${Math.round(v * 100)}%`}/>
+        </Field>
+        <Field label={t('lightControl.settings.stateScale')}>
+          <Slider value={Number(config.stateScale) || 1} onChange={v => set('stateScale', v)}
+            min={0.75} max={2.5} step={0.05} format={v => `${Math.round(v * 100)}%`}/>
+        </Field>
+        <Field label={t('lightControl.settings.iconScale')}>
+          <Slider value={Number(config.iconScale) || 1} onChange={v => set('iconScale', v)}
+            min={0.75} max={2.5} step={0.05} format={v => `${Math.round(v * 100)}%`}/>
+        </Field>
+        <Field label={t('lightControl.settings.minHeight')} hint={t('lightControl.settings.minHeightHint')}>
+          <Slider value={Number(config.minHeight) || 0} onChange={v => set('minHeight', v)}
+            min={0} max={400} step={10} format={v => (v ? `${v} px` : t('lightControl.settings.minHeightAuto'))}/>
         </Field>
       </Section>
 

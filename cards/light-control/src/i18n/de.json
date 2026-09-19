@@ -34,7 +34,13 @@
       "colorTempHint": "Warm→Kalt-Verlauf für color_temp-Lichter",
       "layoutSimple": "Einfach",
       "presetsLabel": "Temperatur-Voreinstellungen",
-      "presetsHint": "Chips Kerze · Warm · Neutral · Kalt unter den Reglern (das Layout Einfach hat sie immer)"
+      "presetsHint": "Chips Kerze · Warm · Neutral · Kalt unter den Reglern (das Layout Einfach hat sie immer)",
+      "titleScale": "Namensgröße",
+      "stateScale": "Statusgröße",
+      "iconScale": "Symbolgröße",
+      "minHeight": "Mindesthöhe",
+      "minHeightHint": "Für Bildschirme, die man nebenbei bedient, wie im Auto: Die Karte wird höher, der Inhalt bleibt mittig.",
+      "minHeightAuto": "Automatisch"
     },
     "preset": {
       "candle": "Kerze",

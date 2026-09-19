@@ -34,7 +34,13 @@
       "colorTempHint": "Gradiente caldo→freddo per luci color_temp",
       "layoutSimple": "Semplice",
       "presetsLabel": "Preset temperatura",
-      "presetsHint": "Chip Candela · Calda · Neutra · Fredda sotto i controlli (il layout Semplice li ha sempre)"
+      "presetsHint": "Chip Candela · Calda · Neutra · Fredda sotto i controlli (il layout Semplice li ha sempre)",
+      "titleScale": "Dimensione nome",
+      "stateScale": "Dimensione stato",
+      "iconScale": "Dimensione icona",
+      "minHeight": "Altezza minima",
+      "minHeightHint": "Per schermi da usare al volo, come quello dell'auto: la card si alza e il contenuto resta al centro.",
+      "minHeightAuto": "Automatica"
     },
     "preset": {
       "candle": "Candela",
