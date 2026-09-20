@@ -678,7 +678,7 @@ const { jsxs: l, jsx: t, Fragment: S } = window.__OIKOS_SDK__.jsxRuntime, O = {
   "motion",
   "active",
   "running"
-], { useState: ce, useEffect: de } = window.__OIKOS_SDK__.React, { useDashboard: pe, useCardConfig: ge, useStyles: he, registerCardTranslations: ne, useT: be, MdiIcon: me } = window.__OIKOS_SDK__;
+], { useState: ce, useEffect: de, useRef: pe } = window.__OIKOS_SDK__.React, { useDashboard: ge, useCardConfig: he, useStyles: be, registerCardTranslations: ne, useT: me, MdiIcon: fe } = window.__OIKOS_SDK__;
 ne("card-tile", { it: w, en: I, de: L, es: _, fr: k });
 const ae = {
   entityId: "",
@@ -942,7 +942,7 @@ function ue({ cfg: d, set: c, t: a }) {
     }
   ) });
 }
-function fe({ cardId: d }) {
+function ve({ cardId: d }) {
   const { dark: c } = z(), [a, r] = ie(d, ae), { t: e } = le("card-tile"), i = (n, s) => r((h) => ({ ...h, [n]: s })), u = (a.activeStates ?? []).join(", "), p = (n) => i("activeStates", n.split(",").map((s) => s.trim().toLowerCase()).filter(Boolean));
   return /* @__PURE__ */ l("div", { style: { display: "flex", flexDirection: "column", gap: 14 }, children: [
     /* @__PURE__ */ l(b, { title: e("settings.sectionEntity"), children: [
@@ -1206,5 +1206,5 @@ function fe({ cardId: d }) {
   ] });
 }
 export {
-  fe as default
+  ve as default
 };
