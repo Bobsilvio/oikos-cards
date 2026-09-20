@@ -4,6 +4,14 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [1.13.0] - 2026-09-20
+### Fixed
+- **Numero troncato («54…») con due tile affiancate su un telefono.** In mezza
+  colonna il nome si riduceva a nulla e al valore restava il tetto di metà
+  riga. Ora la card misura la propria larghezza: sotto i 210 px il nome sparisce
+  e il numero si prende la riga, perché un numero leggibile senza etichetta vale
+  più di un'etichetta vuota e un numero a metà. Sopra quella soglia nulla cambia.
+
 ## [1.12.0] - 2026-09-18
 ### Added
 - **Altezza minima**, da 0 (segue il contenuto, come prima) a 400 px, con il

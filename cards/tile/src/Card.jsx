@@ -23,7 +23,7 @@
  *     colore esplicito.
  *   - nessuna stringa visibile hardcoded: tutto da useT
  */
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useDashboard, useCardConfig, useStyles, registerCardTranslations, useT, MdiIcon } from '@oikos/sdk'
 import it from './i18n/it.json'
 import en from './i18n/en.json'
@@ -108,6 +108,22 @@ export default function TileCard({ cardId = 'tile' }) {
    * si mostra quindi che il comando è partito, indipendentemente dallo stato.
    */
   const [sentAt, setSentAt] = useState(0)
+  /*
+   * Larghezza della card, misurata su sé stessa. Due tile affiancate su un
+   * telefono stanno in circa 170 px: lì il nome si riduceva a nulla e il
+   * valore, con il tetto al 50%, usciva troncato («54…»). Sotto la soglia il
+   * nome si toglie del tutto e il valore si prende lo spazio: meglio un
+   * numero leggibile senza etichetta che un'etichetta vuota e un numero a metà.
+   */
+  const rootRef = useRef(null)
+  const [larghezza, setLarghezza] = useState(0)
+  useEffect(() => {
+    const el = rootRef.current
+    if (!el || typeof ResizeObserver === 'undefined') return
+    const ro = new ResizeObserver(([e]) => setLarghezza(Math.round(e.contentRect.width)))
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [])
   useEffect(() => {
     if (!sentAt) return
     const id = setTimeout(() => setSentAt(0), 3000)
@@ -366,6 +382,8 @@ export default function TileCard({ cardId = 'tile' }) {
   }
 
   const iconPx = clampNum(cfg.iconSize, 12, 64, 20)
+  // Sotto questa larghezza nome e valore non ci stanno insieme.
+  const stretta = larghezza > 0 && larghezza < 210
   /*
    * Nome e stato si regolano separatamente: su una tile stretta il nome va
    * rimpicciolito per starci, ma il valore è il motivo per cui la tile esiste e
@@ -395,16 +413,19 @@ export default function TileCard({ cardId = 'tile' }) {
     body = (
       <div style={{ display: 'flex', alignItems: 'center', gap: tk.space.sm, minWidth: 0 }}>
         {iconEl}
-        <span style={{
-          ...s.title, fontSize: fsT(13), flex: 1, minWidth: 0,
-          whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
-        }}>
-          {title}
-        </span>
+        {!stretta && (
+          <span style={{
+            ...s.title, fontSize: fsT(13), flex: 1, minWidth: 0,
+            whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
+          }}>
+            {title}
+          </span>
+        )}
         <span style={{
           fontSize: fsS(13), fontWeight: 700, color: tint,
           fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap',
-          maxWidth: '50%', overflow: 'hidden', textOverflow: 'ellipsis', flexShrink: 1,
+          maxWidth: stretta ? '100%' : '60%', marginLeft: stretta ? 'auto' : 0,
+          overflow: 'hidden', textOverflow: 'ellipsis', flexShrink: 1,
         }}>
           {value ?? statusText ?? '—'}
           {value !== null && unit && <small style={{ ...s.hint, marginLeft: 3 }}>{unit}</small>}
@@ -417,19 +438,24 @@ export default function TileCard({ cardId = 'tile' }) {
     body = (
       <div style={{ display: 'flex', alignItems: 'center', gap: tk.space.md, minWidth: 0 }}>
         <div style={chipStyle(tk, tinted ? tintCol : tint, active && !unknown, iconPx + 22)}>{iconEl}</div>
-        <span style={{
-          ...s.title, fontSize: fsT(15), flex: 1, minWidth: 0,
-          whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
-        }}>
-          {title}
-        </span>
+        {!stretta && (
+          <span style={{
+            ...s.title, fontSize: fsT(15), flex: 1, minWidth: 0,
+            whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
+          }}>
+            {title}
+          </span>
+        )}
         {/* Il valore non può essere intoccabile: essendo `nowrap` si prendeva
             tutto lo spazio e il nome si riduceva a una lettera («F  Chiuso»).
-            Con un tetto e i puntini si stringono tutti e due. */}
+            Con un tetto e i puntini si stringono tutti e due. In mezza colonna
+            su un telefono nemmeno quello basta: lì il nome sparisce del tutto
+            (vedi `stretta`) e il numero si prende la riga. */}
         <span style={{
           fontSize: fsS(20), fontWeight: 800, color: tinted ? tintCol : tint,
           fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap',
-          maxWidth: '55%', overflow: 'hidden', textOverflow: 'ellipsis', flexShrink: 1,
+          maxWidth: stretta ? '100%' : '55%', marginLeft: stretta ? 'auto' : 0,
+          overflow: 'hidden', textOverflow: 'ellipsis', flexShrink: 1,
         }}>
           {value ?? statusText ?? '—'}
           {value !== null && unit && <small style={{ ...s.hint, marginLeft: 3 }}>{unit}</small>}
@@ -498,7 +524,7 @@ export default function TileCard({ cardId = 'tile' }) {
   }
 
   return (
-    <div style={{ ...wrapper, position: 'relative' }} {...interactive}>
+    <div ref={rootRef} style={{ ...wrapper, position: 'relative' }} {...interactive}>
       {body}
 
       {/* Elenco delle entità osservate. Sta dentro la tile — che è
