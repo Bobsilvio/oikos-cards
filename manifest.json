@@ -8,7 +8,7 @@
       "id": "air-quality",
       "type": "card",
       "name": "Qualità dell'aria",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "author": "Oikos",
       "description": "Card qualità aria: AQI con zone colorate, classificazione, grafico 24h smooth.",
       "description_en": "Air quality card: AQI with colored zones, classification, smooth 24h chart.",
@@ -34,6 +34,13 @@
       "tier": "free",
       "changelog": [
         {
+          "version": "1.1.1",
+          "date": "2026-11-17",
+          "changes": [
+            "Più colore nello screensaver: tessera e alone nel colore della zona AQI."
+          ]
+        },
+        {
           "version": "1.1.0",
           "date": "2026-11-17",
           "changes": [
@@ -53,7 +60,7 @@
       "id": "climatizzatore",
       "type": "card",
       "name": "Climatizzatore",
-      "version": "1.2.0",
+      "version": "1.2.1",
       "author": "Oikos",
       "description": "Controllo completo climatizzatore HA: power, modalità (cool/heat/auto/dry/fan), target ±, fan speed, temperatura corrente e umidità. Icona animata e tema colore dinamico per modalità attiva.",
       "description_en": "Full HA air conditioner control: power, modes (cool/heat/auto/dry/fan), target ±, fan speed, current temperature and humidity. Animated icon and dynamic color theme for active mode.",
@@ -80,6 +87,13 @@
       "package": null,
       "tier": "free",
       "changelog": [
+        {
+          "version": "1.2.1",
+          "date": "2026-11-17",
+          "changes": [
+            "Più colore nello screensaver: icona in una tessera colorata e un alone morbido dello stesso colore dietro la card; il colore segue lo stato (caldo quando scalda, freddo quando raffresca, grigio da spento)."
+          ]
+        },
         {
           "version": "1.2.0",
           "date": "2026-11-17",
@@ -242,7 +256,7 @@
       "id": "person",
       "type": "card",
       "name": "Persona",
-      "version": "1.4.0",
+      "version": "1.4.1",
       "author": "Oikos",
       "description": "Card persona HA: avatar, zona, batteria, passi/km guidati. Layout split con mappa Google Maps live sul lato destro (sfumatura graduale tra info e mappa), campo dedicato per il device_tracker GPS, badge LIVE animato.",
       "description_en": "HA person card: avatar, zone, battery, steps/driven km. Split layout with live Google Maps on the right (gradient between info and map), dedicated GPS device_tracker field, animated LIVE badge.",
@@ -269,6 +283,13 @@
       "tier": "free",
       "changelog": [
         {
+          "version": "1.4.1",
+          "date": "2026-11-17",
+          "changes": [
+            "Più colore nello screensaver: l'avatar resta, col bordo nel colore della zona, e dietro c'è un alone morbido dello stesso colore."
+          ]
+        },
+        {
           "version": "1.4.0",
           "date": "2026-11-17",
           "changes": [
@@ -282,7 +303,7 @@
       "id": "room-sensor",
       "type": "card",
       "name": "Room Sensor",
-      "version": "1.2.0",
+      "version": "1.2.1",
       "author": "Oikos",
       "description": "Card sensore stanza: gauge multipli, flow chart storico, badge numerici, mini-gauge batteria/segnale.",
       "description_en": "Room sensor card: multiple gauges, history flow chart, numeric badges, mini battery/signal gauges.",
@@ -309,6 +330,13 @@
       "package": null,
       "tier": "free",
       "changelog": [
+        {
+          "version": "1.2.1",
+          "date": "2026-11-17",
+          "changes": [
+            "Più colore nello screensaver: tessera con l'icona della stanza e un alone tenue (rosa se fa caldo, azzurro se fa fresco, verde se si sta bene)."
+          ]
+        },
         {
           "version": "1.2.0",
           "date": "2026-11-17",
@@ -343,7 +371,7 @@
       "id": "thermostat",
       "type": "card",
       "name": "Termostato",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "author": "Oikos",
       "description": "Gauge 270° con gradiente blu→arancione per termostato HA. Slider target, toggle on/off, multi-mode.",
       "description_en": "270° gauge with blue→orange gradient for HA thermostat. Target slider, on/off toggle, multi-mode.",
@@ -368,6 +396,13 @@
       "package": null,
       "tier": "free",
       "changelog": [
+        {
+          "version": "1.1.1",
+          "date": "2026-11-17",
+          "changes": [
+            "Più colore nello screensaver: icona in una tessera colorata e un alone morbido dello stesso colore dietro la card; il colore segue lo stato (caldo quando scalda, freddo quando raffresca, grigio da spento)."
+          ]
+        },
         {
           "version": "1.1.0",
           "date": "2026-11-17",
@@ -412,7 +447,7 @@
       "id": "tile",
       "type": "card",
       "name": "Tile",
-      "version": "1.14.0",
+      "version": "1.14.1",
       "author": "Oikos",
       "description": "Tile compatta e configurabile: una entità, uno stile, molti usi. Icona, stato, valore grande e due righe di dettaglio — per allarme, serratura, cancello, temperatura, batterie.",
       "description_en": "Compact configurable tile: one entity, one style, many uses. Icon, status, large value and two detail lines — for alarm, lock, gate, temperature, batteries.",
@@ -436,6 +471,13 @@
       "package": null,
       "tier": "free",
       "changelog": [
+        {
+          "version": "1.14.1",
+          "date": "2026-11-17",
+          "changes": [
+            "Più colore nello screensaver: icona in una tessera colorata e un alone morbido dello stesso colore dietro la card; il colore segue lo stato e il colore configurato della tile."
+          ]
+        },
         {
           "version": "1.14.0",
           "date": "2026-11-17",
@@ -500,15 +542,6 @@
           "changes": [
             "Dimensione del testo separata per nome e per stato: su una tile stretta il nome si può rimpicciolire senza rendere illeggibile il valore. Le tile già configurate partono dalla dimensione che avevano."
           ]
-        },
-        {
-          "version": "1.5.0",
-          "date": "2026-08-13",
-          "changes": [
-            "Dimensione di icona e testo regolabili. Due cursori separati, perché si regolano per motivi diversi: l'icona per il peso visivo, il testo per farci stare un nome lungo. Il riquadro dell'icona segue la sua misura.",
-            "Impostazioni riordinate. Le sezioni seguivano l'ordine in cui sono state aggiunte — Aspetto, Conteggio, Al tocco, poi Stato e Valore — invece di quello in cui si configura una tile. Ora: Entità → Aspetto → Stato → Valore → Conteggio → Al tocco → Dettagli → Extra.",
-            "Nella disposizione «In linea» il valore si prendeva tutto lo spazio e il nome si riduceva a una lettera: «F Chiuso». Ora si stringono entrambi."
-          ]
         }
       ]
     },
@@ -516,7 +549,7 @@
       "id": "vacuum",
       "type": "card",
       "name": "Dreame Vacuum",
-      "version": "2.15.0",
+      "version": "2.15.1",
       "author": "Oikos",
       "description": "Card Dreame Vacuum con UI ispirata all'app ufficiale: mappa, sheet di pulizia (CleanGenius/Personalizza), base stazione, impostazioni MopExtend™.",
       "description_en": "Dreame Vacuum card with app-inspired UI: map, cleaning sheet (CleanGenius/Customize), base station, MopExtend™ settings.",
@@ -543,6 +576,13 @@
       "tier": "free",
       "changelog": [
         {
+          "version": "2.15.1",
+          "date": "2026-11-17",
+          "changes": [
+            "Più colore nello screensaver: tessera colorata col robot e un alone tenue (turchese in pulizia, verde in carica, rosso in errore, spento a riposo)."
+          ]
+        },
+        {
           "version": "2.15.0",
           "date": "2026-11-17",
           "changes": [
@@ -555,7 +595,7 @@
       "id": "yesterday",
       "type": "card",
       "name": "Fotovoltaico — Ieri",
-      "version": "1.2.0",
+      "version": "1.2.1",
       "author": "Oikos",
       "description": "Riepilogo produzione/consumo/prelievo/cessione del giorno precedente con grafico orario.",
       "description_en": "Previous day production/consumption/grid-draw/export summary with hourly chart.",
@@ -581,6 +621,13 @@
       "package": null,
       "tier": "free",
       "changelog": [
+        {
+          "version": "1.2.1",
+          "date": "2026-11-17",
+          "changes": [
+            "Più colore nello screensaver: la produzione ha una tessera col sole giallo e un alone caldo dietro."
+          ]
+        },
         {
           "version": "1.2.0",
           "date": "2026-11-17",

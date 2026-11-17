@@ -12,7 +12,7 @@
  *
  */
 import { useState, useEffect, useId, useRef } from 'react'
-import { useDashboard, useCardConfig, registerCardTranslations, useT, useCardSurface } from '@oikos/sdk'
+import { useDashboard, useCardConfig, registerCardTranslations, useT, useCardSurface, SsTile, SsAura, SS_ACCENT } from '@oikos/sdk'
 import it from './i18n/it.json'
 import en from './i18n/en.json'
 import de from './i18n/de.json'
@@ -37,6 +37,12 @@ registerCardTranslations('card-room-sensor', { it, en, de, es, fr })
 // Scelto una volta all'avvio, quindi l'ordine degli hook non cambia mai.
 const NO_SURFACE = { isScreensaver: false, theme: 'dark' }
 const useSurface = typeof useCardSurface === 'function' ? useCardSurface : () => NO_SURFACE
+
+// Colore screensaver (SDK 1.6). Su Oikos più vecchi: icona semplice, niente alone.
+const ACC = SS_ACCENT || { water: '#38bdf8', money: '#f59e0b', sun: '#facc15', energy: '#22c55e', calm: '#34d399', alert: '#ef4444', warn: '#fb923c', heat: '#fb7185', cool: '#60a5fa', air: '#2dd4bf', media: '#a78bfa', home: '#818cf8', neutral: '#94a3b8' }
+const Tile = typeof SsTile === 'function' ? SsTile
+  : ({ icon, color, size = 44, children }) => children ?? <MdiIcon name={icon} size={Math.round(size * 0.6)} color={color} opacity={1}/>
+const Aura = typeof SsAura === 'function' ? SsAura : ({ children }) => <>{children}</>
 
 const DEFAULT = {
   label:         '',
@@ -465,23 +471,33 @@ export default function RoomSensorCard({ cardId }) {
       ...badges.map(b => fmt(b, 0)),
     ].filter(Boolean)
     const nameSize = roomName.length <= 16 ? 13 : 12
+    // Colore = temperatura: caldo sopra 24 °C, fresco sotto 18 °C, tranquillo in mezzo.
+    // Se il valore principale non è una temperatura: colore "casa".
+    const mainNum = mainV ? parseFloat(mainV.v) : null
+    const mainC   = mainNum == null || !isTemp(main) ? null : /F/i.test(mainV.unit) ? (mainNum - 32) * 5 / 9 : mainNum
+    const accent  = !mainV ? ACC.neutral
+      : mainC == null ? ACC.home
+      : mainC >= 24 ? ACC.heat : mainC <= 18 ? ACC.cool : ACC.calm
     return (
       <div style={{ padding: '18px 22px', color: 'var(--text-primary)', textShadow: shadow }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 9, fontSize: nameSize, fontWeight: 600, letterSpacing: '.28em', textTransform: 'uppercase', color: 'var(--text-muted)', overflowWrap: 'anywhere' }}>
-          <MdiIcon name={iconName} size={16} color="currentColor" opacity={1}/>
+       <Aura color={accent} strength={mainV ? 1 : 0.5}>
+        <div style={{ fontSize: nameSize, fontWeight: 600, letterSpacing: '.28em', textTransform: 'uppercase', color: 'var(--text-muted)', overflowWrap: 'anywhere' }}>
           {roomName}
         </div>
         {!gauges.length ? (
           <div style={{ marginTop: 14, fontSize: 16, color: 'var(--text-muted)' }}>{t('ss.notConfigured')}</div>
         ) : (
           <>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginTop: 10 }}>
+            <Tile icon={iconName} color={accent} size={50} muted={!mainV}/>
             <div style={{
-              marginTop: 8, fontSize: 64, lineHeight: 1, color: mainV ? 'var(--text-primary)' : 'var(--text-muted)',
+              fontSize: 64, lineHeight: 1, color: mainV ? 'var(--text-primary)' : 'var(--text-muted)',
               fontFamily: 'var(--ss-display, inherit)', fontWeight: 'var(--ss-display-w, 300)',
               letterSpacing: 'var(--ss-display-track, -0.03em)', fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap',
             }}>
               {mainV ? mainV.v : '—'}
               {mainV?.unit && <span style={{ fontSize: 28, marginLeft: 4, color: 'var(--text-secondary)' }}>{mainV.unit}</span>}
+            </div>
             </div>
             {others.length > 0 && (
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px 18px', marginTop: 12, fontSize: 17, color: 'var(--text-secondary)', fontVariantNumeric: 'tabular-nums' }}>
@@ -495,6 +511,7 @@ export default function RoomSensorCard({ cardId }) {
             )}
           </>
         )}
+       </Aura>
       </div>
     )
   }

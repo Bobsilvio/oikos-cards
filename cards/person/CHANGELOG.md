@@ -4,6 +4,10 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [1.4.1] - 2026-11-17
+### Changed
+- Più colore nello screensaver: l'avatar resta, col bordo nel colore della zona, e dietro c'è un alone morbido dello stesso colore.
+
 ## [1.4.0] - 2026-11-17
 ### Added
 - **Versione screensaver.** Messa nello screensaver la card perde riquadro,

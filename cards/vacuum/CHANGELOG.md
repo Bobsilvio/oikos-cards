@@ -4,6 +4,10 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [2.15.1] - 2026-11-17
+### Changed
+- Più colore nello screensaver: tessera colorata col robot e un alone tenue (turchese in pulizia, verde in carica, rosso in errore, spento a riposo).
+
 ## [2.15.0] - 2026-11-17
 ### Added
 - **Versione screensaver.** Messa nello screensaver, la card mostra il nome

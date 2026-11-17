@@ -4,6 +4,10 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [1.14.1] - 2026-11-17
+### Changed
+- Più colore nello screensaver: icona in una tessera colorata e un alone morbido dello stesso colore dietro la card; il colore segue lo stato e il colore configurato della tile.
+
 ## [1.14.0] - 2026-11-17
 ### Added
 - **Versione screensaver.** Messa nello screensaver, la tile perde riquadro,

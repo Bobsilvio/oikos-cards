@@ -5,7 +5,7 @@
 import { useState, useEffect, useRef, useMemo } from 'react'
 import { createPortal } from 'react-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { useDashboard, getHAConfig, registerCardTranslations, useT, getOverlayRoot, useCardSurface } from '@oikos/sdk'
+import { useDashboard, getHAConfig, registerCardTranslations, useT, getOverlayRoot, useCardSurface, MdiIcon, SsTile, SsAura, SS_ACCENT } from '@oikos/sdk'
 import { getVacuumConfig } from './vacuumStore'
 import it from './i18n/it.json'
 import en from './i18n/en.json'
@@ -19,6 +19,12 @@ registerCardTranslations('card-vacuum', { it, en, de, es, fr })
 // Scelto una volta all'avvio, quindi l'ordine degli hook non cambia mai.
 const NO_SURFACE = { isScreensaver: false, theme: 'dark' }
 const useSurface = typeof useCardSurface === 'function' ? useCardSurface : () => NO_SURFACE
+
+// Colore screensaver (SDK 1.6). Su Oikos più vecchi: icona semplice, niente alone.
+const ACC = SS_ACCENT || { water: '#38bdf8', money: '#f59e0b', sun: '#facc15', energy: '#22c55e', calm: '#34d399', alert: '#ef4444', warn: '#fb923c', heat: '#fb7185', cool: '#60a5fa', air: '#2dd4bf', media: '#a78bfa', home: '#818cf8', neutral: '#94a3b8' }
+const Tile = typeof SsTile === 'function' ? SsTile
+  : ({ icon, color, size = 44, children }) => children ?? (typeof MdiIcon === 'function' ? <MdiIcon name={icon} size={Math.round(size * 0.6)} color={color} opacity={1}/> : null)
+const Aura = typeof SsAura === 'function' ? SsAura : ({ children }) => <>{children}</>
 // Riferimenti stabili: oggetti inline in animate/transition riavviano i keyframe a ogni render.
 const SS_PULSE_ANIM  = { opacity: [1, .3, 1] }
 const SS_PULSE_TRANS = { duration: 1.6, repeat: Infinity }
@@ -1777,8 +1783,12 @@ export default function VacuumCard() {
       progress !== null && !isNaN(progress) ? `${Math.round(progress)}%` : null,
     ].filter(Boolean) : []
     const batColor = !Number.isFinite(battery) ? 'var(--text-muted)' : battery <= 20 ? 'var(--red)' : isCharging ? 'var(--green)' : 'var(--text-secondary)'
+    // Colore = significato: errore rosso, al lavoro aria, in carica energia, a riposo neutro.
+    const accent = hasError ? ACC.alert : active ? ACC.air : mainState === 'docked' ? ACC.energy : ACC.neutral
+    const resting = !hasError && !active && mainState !== 'docked'
     return (
       <div style={{ padding: '18px 22px', color: 'var(--text-primary)', textShadow: shadow }}>
+       <Aura color={accent} strength={resting || !stateLabel ? 0.5 : 1}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 9, fontSize: name.length > 18 ? 12 : 13, fontWeight: 600, letterSpacing: '.28em', textTransform: 'uppercase', color: 'var(--text-muted)', overflowWrap: 'anywhere' }}>
           {(isCleaning || isReturning) && (
             <motion.span animate={SS_PULSE_ANIM} transition={SS_PULSE_TRANS} style={{ width: 8, height: 8, borderRadius: '50%', background: ssColor, display: 'inline-block', flexShrink: 0, boxShadow: `0 0 12px ${ssColor}` }}/>
@@ -1789,12 +1799,15 @@ export default function VacuumCard() {
           <div style={{ marginTop: 14, fontSize: 16, color: 'var(--text-muted)' }}>{t('ss.notConfigured')}</div>
         ) : (
           <>
-            <div style={{
-              marginTop: 8, fontSize: bigSize, lineHeight: 1.05, color: ssColor, overflowWrap: 'anywhere',
-              fontFamily: 'var(--ss-display, inherit)', fontWeight: 'var(--ss-display-w, 300)',
-              letterSpacing: 'var(--ss-display-track, -0.03em)',
-            }}>
-              {stateLabel}
+            <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginTop: 10 }}>
+              <Tile icon={hasError ? 'robot-vacuum-alert' : 'robot-vacuum'} color={accent} size={50} muted={resting}/>
+              <div style={{
+                minWidth: 0, fontSize: bigSize, lineHeight: 1.05, color: ssColor, overflowWrap: 'anywhere',
+                fontFamily: 'var(--ss-display, inherit)', fontWeight: 'var(--ss-display-w, 300)',
+                letterSpacing: 'var(--ss-display-track, -0.03em)',
+              }}>
+                {stateLabel}
+              </div>
             </div>
             <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '6px 16px', marginTop: 12, fontSize: 17, color: 'var(--text-secondary)', fontVariantNumeric: 'tabular-nums' }}>
               {Number.isFinite(battery) && (
@@ -1809,6 +1822,7 @@ export default function VacuumCard() {
             </div>
           </>
         )}
+       </Aura>
       </div>
     )
   }

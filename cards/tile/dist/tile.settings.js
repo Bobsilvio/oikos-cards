@@ -678,7 +678,7 @@ const { jsxs: l, jsx: t, Fragment: S } = window.__OIKOS_SDK__.jsxRuntime, O = {
   "motion",
   "active",
   "running"
-], { useState: ce, useEffect: de, useRef: pe } = window.__OIKOS_SDK__.React, { useDashboard: ge, useCardConfig: he, useStyles: be, registerCardTranslations: ne, useT: me, MdiIcon: fe, useCardSurface: ve } = window.__OIKOS_SDK__;
+], { useState: ce, useEffect: de, useRef: pe } = window.__OIKOS_SDK__.React, { useDashboard: ge, useCardConfig: he, useStyles: be, registerCardTranslations: ne, useT: me, MdiIcon: fe, useCardSurface: ve, SsTile: ye, SsAura: Se, SS_ACCENT: Ae } = window.__OIKOS_SDK__;
 ne("card-tile", { it: w, en: I, de: L, es: _, fr: k });
 const ae = {
   entityId: "",
@@ -750,7 +750,7 @@ const ae = {
   // 'more-info' | 'toggle' | 'pulse' | 'popup' | 'list' | 'none'
   popupCardId: ""
   // istanza popup-panel da aprire con tapAction 'popup'
-}, { useDashboard: z, useCardConfig: ie, registerCardTranslations: oe, useT: le, EntityField: v, MdiIconPicker: x, Section: b, Field: o, TextField: g, Toggle: E, Slider: m, Pills: f, ColorCircles: A, ACCENT_COLORS: C, listPopupPanels: P } = window.__OIKOS_SDK__;
+}, { useDashboard: z, useCardConfig: ie, registerCardTranslations: oe, useT: le, EntityField: v, MdiIconPicker: x, Section: b, Field: o, TextField: g, Toggle: E, Slider: m, Pills: f, ColorCircles: A, ACCENT_COLORS: C, listPopupPanels: T } = window.__OIKOS_SDK__;
 oe("card-tile", { it: w, en: I, de: L, es: _, fr: k });
 function se({ cfg: d, set: c, t: a }) {
   const { getState: r } = z(), e = Array.isArray(d.stateColors) ? d.stateColors : [], i = d.entityId ? r(d.entityId) : "", u = (n, s, h) => {
@@ -822,7 +822,7 @@ function se({ cfg: d, set: c, t: a }) {
         "button",
         {
           onClick: () => c("stateColors", [...e, { state: i, color: "#22c55e" }]),
-          style: T,
+          style: P,
           children: [
             "+ ",
             a("settings.stateAddCurrent", { state: i })
@@ -833,7 +833,7 @@ function se({ cfg: d, set: c, t: a }) {
         "button",
         {
           onClick: () => c("stateColors", [...e, { state: "", color: "#ef4444" }]),
-          style: T,
+          style: P,
           children: [
             "+ ",
             a("settings.stateAdd")
@@ -843,7 +843,7 @@ function se({ cfg: d, set: c, t: a }) {
     ] })
   ] });
 }
-const T = {
+const P = {
   padding: "6px 11px",
   borderRadius: 9,
   cursor: "pointer",
@@ -915,7 +915,7 @@ function re({ cfg: d, set: c, t: a }) {
   ] });
 }
 function ue({ cfg: d, set: c, t: a }) {
-  const r = typeof P == "function" ? P() : [];
+  const r = typeof T == "function" ? T() : [];
   return r.length === 0 ? /* @__PURE__ */ t(o, { label: a("settings.popupPanel"), hint: a("settings.popupNone"), children: /* @__PURE__ */ t("div", { style: { fontSize: 11, color: "var(--text-muted)" }, children: a("settings.popupNoneHint") }) }) : /* @__PURE__ */ t(o, { label: a("settings.popupPanel"), hint: a("settings.popupHint"), children: /* @__PURE__ */ l(
     "select",
     {
@@ -942,7 +942,7 @@ function ue({ cfg: d, set: c, t: a }) {
     }
   ) });
 }
-function ye({ cardId: d }) {
+function Ce({ cardId: d }) {
   const { dark: c } = z(), [a, r] = ie(d, ae), { t: e } = le("card-tile"), i = (n, s) => r((h) => ({ ...h, [n]: s })), u = (a.activeStates ?? []).join(", "), p = (n) => i("activeStates", n.split(",").map((s) => s.trim().toLowerCase()).filter(Boolean));
   return /* @__PURE__ */ l("div", { style: { display: "flex", flexDirection: "column", gap: 14 }, children: [
     /* @__PURE__ */ l(b, { title: e("settings.sectionEntity"), children: [
@@ -1206,5 +1206,5 @@ function ye({ cardId: d }) {
   ] });
 }
 export {
-  ye as default
+  Ce as default
 };

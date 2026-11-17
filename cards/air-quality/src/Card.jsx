@@ -1,5 +1,5 @@
 import { useState, useEffect, useId } from 'react'
-import { useDashboard, useCardConfig, registerCardTranslations, useT, useCardSurface } from '@oikos/sdk'
+import { useDashboard, useCardConfig, registerCardTranslations, useT, useCardSurface, MdiIcon, SsTile, SsAura, SS_ACCENT } from '@oikos/sdk'
 import { smoothPath } from './smoothPath'
 import it from './i18n/it.json'
 import en from './i18n/en.json'
@@ -13,6 +13,12 @@ registerCardTranslations('card-air-quality', { it, en, de, es, fr })
 // Scelto una volta all'avvio, quindi l'ordine degli hook non cambia mai.
 const NO_SURFACE = { isScreensaver: false, theme: 'dark' }
 const useSurface = typeof useCardSurface === 'function' ? useCardSurface : () => NO_SURFACE
+
+// Colore screensaver (SDK 1.6). Su Oikos più vecchi: icona semplice, niente alone.
+const ACC = SS_ACCENT || { water: '#38bdf8', money: '#f59e0b', sun: '#facc15', energy: '#22c55e', calm: '#34d399', alert: '#ef4444', warn: '#fb923c', heat: '#fb7185', cool: '#60a5fa', air: '#2dd4bf', media: '#a78bfa', home: '#818cf8', neutral: '#94a3b8' }
+const Tile = typeof SsTile === 'function' ? SsTile
+  : ({ icon, color, size = 44, children }) => children ?? (typeof MdiIcon === 'function' ? <MdiIcon name={icon} size={Math.round(size * 0.6)} color={color} opacity={1}/> : null)
+const Aura = typeof SsAura === 'function' ? SsAura : ({ children }) => <>{children}</>
 
 const ZONE_COLORS = ['#16a34a', '#84cc16', '#eab308', '#f97316', '#dc2626']
 
@@ -457,8 +463,11 @@ export default function AirQualityCard({ cardId }) {
       ? classificationVal
       : (zone ? t(`ss.zone${zone}`) : null)
     const place = cfg.title || t('title')
+    // Il colore è quello della zona AQI; senza valore, neutro.
+    const accent = hasVal ? ringColor : ACC.neutral
     return (
       <div style={{ padding: '18px 22px', color: 'var(--text-primary)', textShadow: shadow }}>
+       <Aura color={accent} strength={hasVal ? 1 : 0.5}>
         <div style={{ fontSize: 13, fontWeight: 600, letterSpacing: '.28em', textTransform: 'uppercase', color: 'var(--text-muted)', overflowWrap: 'anywhere' }}>
           {cfg.label || t('label')}
         </div>
@@ -466,7 +475,9 @@ export default function AirQualityCard({ cardId }) {
           <div style={{ marginTop: 14, fontSize: 16, color: 'var(--text-muted)' }}>{t('ss.notConfigured')}</div>
         ) : (
           <>
-            <div style={{ display: 'flex', alignItems: 'baseline', gap: 16, marginTop: 8 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginTop: 10 }}>
+             <Tile icon="air-filter" color={accent} size={50} muted={!hasVal}/>
+             <div style={{ display: 'flex', alignItems: 'baseline', gap: 16, minWidth: 0 }}>
               <div style={{
                 fontSize: 64, lineHeight: 1, color: hasVal ? ringColor : 'var(--text-muted)',
                 fontFamily: 'var(--ss-display, inherit)', fontWeight: 'var(--ss-display-w, 300)',
@@ -484,6 +495,7 @@ export default function AirQualityCard({ cardId }) {
                   {place}
                 </div>
               </div>
+             </div>
             </div>
             {aqiHasData && (
               <div style={{ marginTop: 14, opacity: 0.7 }}>
@@ -500,6 +512,7 @@ export default function AirQualityCard({ cardId }) {
             )}
           </>
         )}
+       </Aura>
       </div>
     )
   }

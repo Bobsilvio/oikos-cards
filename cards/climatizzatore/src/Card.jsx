@@ -12,7 +12,7 @@ import {
   Plus, Minus, Sun, Sparkles, AirVent, Clock, X,
   Moon, Leaf, Zap, Gauge, Home, ChevronDown, Check,
 } from 'lucide-react'
-import { useDashboard, useCardConfig, registerCardTranslations, useT, useCardSurface } from '@oikos/sdk'
+import { useDashboard, useCardConfig, registerCardTranslations, useT, useCardSurface, SsTile, SsAura, SS_ACCENT } from '@oikos/sdk'
 import it from './i18n/it.json'
 import en from './i18n/en.json'
 import de from './i18n/de.json'
@@ -27,6 +27,23 @@ const NO_SURFACE = { isScreensaver: false, theme: 'dark' }
 const useSurface = typeof useCardSurface === 'function' ? useCardSurface : () => NO_SURFACE
 const SS_PULSE = { opacity: [1, 0.3, 1] }
 const SS_PULSE_T = { duration: 1.6, repeat: Infinity }
+// Colore e tessera dello screensaver (SDK 1.6). Oikos più vecchi non hanno
+// SsTile/SsAura/SS_ACCENT: fallback qui, prima del componente. Senza tessera
+// l'icona Lucide resta colorata (vedi HAS_SS_TILE nel ramo screensaver).
+const ACC = SS_ACCENT || { water: '#38bdf8', money: '#f59e0b', sun: '#facc15', energy: '#22c55e', calm: '#34d399', alert: '#ef4444', warn: '#fb923c', heat: '#fb7185', cool: '#60a5fa', air: '#2dd4bf', media: '#a78bfa', home: '#818cf8', neutral: '#94a3b8' }
+const HAS_SS_TILE = typeof SsTile === 'function'
+const Tile = HAS_SS_TILE ? SsTile : ({ children }) => children ?? null
+const Aura = typeof SsAura === 'function' ? SsAura : ({ children }) => <>{children}</>
+// Caldo quando scalda, freddo quando raffresca; altrimenti segue la modalità.
+function ssAccentFor(mode, action) {
+  if (action === 'heating' || action === 'preheating') return ACC.heat
+  if (action === 'cooling') return ACC.cool
+  if (action === 'drying' || action === 'fan') return ACC.air
+  if (mode === 'heat') return ACC.heat
+  if (mode === 'cool') return ACC.cool
+  if (mode === 'dry' || mode === 'fan_only') return ACC.air
+  return ACC.home
+}
 
 const DEFAULT_CONFIG = {
   entityId:    '',                     // climate.X
@@ -289,8 +306,12 @@ export default function ClimatizzatoreCard({ cardId = 'climatizzatore' }) {
     const ModeIcon = preset.icon
     const hasHum = config.showHumidity && humidity != null && Number.isFinite(Number(humidity))
     const nameSize = displayLabel.length <= 18 ? 13 : 12
+    // Colore scelto dall'utente in configurazione > significato (caldo/freddo).
+    const ssAcc = isOff ? ACC.neutral : (config.accentColor || ssAccentFor(hvacMode, attrs.hvac_action))
+    const iconCol = isOff ? 'var(--text-muted)' : HAS_SS_TILE ? '#fff' : ssAcc
     return (
       <div style={{ padding: '18px 22px', color: 'var(--text-primary)', textShadow: shadow }}>
+      <Aura color={ssAcc} strength={isOff ? 0.5 : 1}>
         <div style={{
           display: 'flex', alignItems: 'center', gap: 9, fontSize: nameSize, fontWeight: 600,
           letterSpacing: '.28em', textTransform: 'uppercase', color: 'var(--text-muted)', overflowWrap: 'anywhere',
@@ -298,13 +319,15 @@ export default function ClimatizzatoreCard({ cardId = 'climatizzatore' }) {
           {!isOff && (
             <motion.span animate={SS_PULSE} transition={SS_PULSE_T} style={{
               width: 8, height: 8, borderRadius: '50%', flexShrink: 0, display: 'inline-block',
-              background: accent, boxShadow: `0 0 12px ${accent}`,
+              background: ssAcc, boxShadow: `0 0 12px ${ssAcc}`,
             }}/>
           )}
           {displayLabel}
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginTop: 10 }}>
-          <ModeIcon size={40} strokeWidth={1.6} color={isOff ? 'var(--text-muted)' : accent} style={{ flexShrink: 0 }}/>
+          <Tile color={ssAcc} size={50} muted={isOff}>
+            <ModeIcon size={HAS_SS_TILE ? 28 : 40} strokeWidth={HAS_SS_TILE ? 2 : 1.6} color={iconCol} style={{ flexShrink: 0 }}/>
+          </Tile>
           <div style={{
             fontSize: 64, lineHeight: 1, fontVariantNumeric: 'tabular-nums',
             fontFamily: 'var(--ss-display, inherit)', fontWeight: 'var(--ss-display-w, 300)',
@@ -314,7 +337,7 @@ export default function ClimatizzatoreCard({ cardId = 'climatizzatore' }) {
             {fmtTemp(currentTemp)}°
           </div>
         </div>
-        <div style={{ marginTop: 12, fontSize: 17, fontWeight: 600, color: isOff ? 'var(--text-muted)' : accent }}>
+        <div style={{ marginTop: 12, fontSize: 17, fontWeight: 600, color: isOff ? 'var(--text-muted)' : ssAcc }}>
           {unav ? t('unavailable') : t(`mode.${preset.modeKey}`)}
           {!isOff && targetTemp != null && (
             <span style={{ color: 'var(--text-secondary)', fontWeight: 400, fontVariantNumeric: 'tabular-nums' }}>
@@ -327,6 +350,7 @@ export default function ClimatizzatoreCard({ cardId = 'climatizzatore' }) {
             {t('chipHumidity')} {Math.round(Number(humidity))}%
           </div>
         )}
+      </Aura>
       </div>
     )
   }

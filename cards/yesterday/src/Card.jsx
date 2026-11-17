@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react'
-import { TrendingUp, Zap, Home, PlugZap, Upload } from 'lucide-react'
+import { TrendingUp, Zap, Home, PlugZap, Upload, Sun } from 'lucide-react'
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend } from 'recharts'
-import { useDashboard, getEntities, registerCardTranslations, useT, getPlants, useCardSurface } from '@oikos/sdk'
+import { useDashboard, getEntities, registerCardTranslations, useT, getPlants, useCardSurface, SsTile, SsAura, SS_ACCENT } from '@oikos/sdk'
 import { fmt, yesterdayIt } from './format'
 import it from './i18n/it.json'
 import en from './i18n/en.json'
@@ -12,6 +12,11 @@ registerCardTranslations('card-yesterday', { it, en })
 // Scelto una volta all'avvio, quindi l'ordine degli hook non cambia mai.
 const NO_SURFACE = { isScreensaver: false, theme: 'dark' }
 const useSurface = typeof useCardSurface === 'function' ? useCardSurface : () => NO_SURFACE
+
+// Colore screensaver (SDK 1.6). Su Oikos più vecchi: icona semplice, niente alone.
+const ACC = SS_ACCENT || { water: '#38bdf8', money: '#f59e0b', sun: '#facc15', energy: '#22c55e', calm: '#34d399', alert: '#ef4444', warn: '#fb923c', heat: '#fb7185', cool: '#60a5fa', air: '#2dd4bf', media: '#a78bfa', home: '#818cf8', neutral: '#94a3b8' }
+const Tile = typeof SsTile === 'function' ? SsTile : ({ children }) => children ?? null
+const Aura = typeof SsAura === 'function' ? SsAura : ({ children }) => <>{children}</>
 
 function getChartAnim() {
   try {
@@ -146,17 +151,21 @@ export default function YesterdayCard() {
     ]
     return (
       <div style={{ padding: '18px 22px', color: 'var(--text-primary)', textShadow: shadow }}>
+       <Aura color={ready ? ACC.sun : ACC.neutral} strength={ready ? 1 : 0.5}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 9, fontSize: 13, fontWeight: 600, letterSpacing: '.28em', textTransform: 'uppercase', color: 'var(--amber)' }}>
           <Zap size={15} strokeWidth={2.2}/>
           {t('ss.label')}
         </div>
         {ready ? (
           <>
-            <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, marginTop: 10, lineHeight: 1 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginTop: 10, lineHeight: 1 }}>
+              <Tile color={ACC.sun} size={50}><Sun size={28} strokeWidth={2.2} color="#fff"/></Tile>
+              <div style={{ display: 'flex', alignItems: 'baseline', gap: 10 }}>
               <span style={{ fontSize: 60, fontFamily: 'var(--ss-display, inherit)', fontWeight: 'var(--ss-display-w, 300)', letterSpacing: 'var(--ss-display-track, -0.03em)', fontVariantNumeric: 'tabular-nums' }}>
                 {fmt(totals.prod, 1)}
               </span>
               <span style={{ fontSize: 20, color: 'var(--text-secondary)' }}>kWh</span>
+              </div>
             </div>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px 18px', marginTop: 14, fontSize: 16, color: 'var(--text-secondary)' }}>
               {flows.map(({ key, icon: Icon, color, label, value }) => (
@@ -172,6 +181,7 @@ export default function YesterdayCard() {
         ) : (
           <div style={{ marginTop: 12, fontSize: 17, color: 'var(--text-muted)' }}>{t('chart.loading')}</div>
         )}
+       </Aura>
       </div>
     )
   }

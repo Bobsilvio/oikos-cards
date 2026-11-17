@@ -4,6 +4,10 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [1.2.1] - 2026-11-17
+### Changed
+- Più colore nello screensaver: tessera con l'icona della stanza e un alone tenue (rosa se fa caldo, azzurro se fa fresco, verde se si sta bene).
+
 ## [1.2.0] - 2026-11-17
 ### Added
 - **Versione screensaver.** Messa nello screensaver, la card mostra il nome

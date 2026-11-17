@@ -2,7 +2,7 @@
  * PersonCard — avatar, zona, metriche. Retro: mappa OSM live (flip 3D).
  */
 import { useId } from 'react'
-import { useDashboard, useCardConfig, registerCardTranslations, useT, useCardSurface } from '@oikos/sdk'
+import { useDashboard, useCardConfig, registerCardTranslations, useT, useCardSurface, SsAura, SS_ACCENT } from '@oikos/sdk'
 import it from './i18n/it.json'
 import en from './i18n/en.json'
 
@@ -12,6 +12,9 @@ registerCardTranslations('card-person', { it, en })
 // Scelto una volta all'avvio, quindi l'ordine degli hook non cambia mai.
 const NO_SURFACE = { isScreensaver: false, theme: 'dark' }
 const useSurface = typeof useCardSurface === 'function' ? useCardSurface : () => NO_SURFACE
+// Oikos < SDK 1.6 non ha SsAura/SS_ACCENT: fallback dichiarati prima del componente.
+const ACC = SS_ACCENT || { water: '#38bdf8', money: '#f59e0b', sun: '#facc15', energy: '#22c55e', calm: '#34d399', alert: '#ef4444', warn: '#fb923c', heat: '#fb7185', cool: '#60a5fa', air: '#2dd4bf', media: '#a78bfa', home: '#818cf8', neutral: '#94a3b8' }
+const Aura = typeof SsAura === 'function' ? SsAura : ({ children }) => <>{children}</>
 
 const DEFAULT = {
   personEntity:  '',
@@ -177,7 +180,7 @@ export default function PersonCard({ cardId }) {
     const who = cfg.label || a.friendly_name || cfg.personEntity
     const unknown = state === 'unknown' || state === 'unavailable'
     const zone = zoneLabel(state, t)
-    const col = unknown ? 'var(--text-muted)' : state === 'home' ? 'var(--green)' : state === 'not_home' ? 'var(--amber)' : 'var(--blue)'
+    const col = unknown ? ACC.neutral : state === 'home' ? ACC.calm : state === 'not_home' ? ACC.warn : ACC.home
     const zoneSize = zone.length <= 9 ? 52 : zone.length <= 16 ? 40 : 32
     const sec = st?.last_changed ? (Date.now() - new Date(st.last_changed).getTime()) / 1000 : null
     const since = sec == null || !Number.isFinite(sec) || sec < 0 ? null
@@ -187,6 +190,7 @@ export default function PersonCard({ cardId }) {
       : t('timeDayAgo', { n: Math.floor(sec / 86400) })
     return (
       <div style={wrap}>
+      <Aura color={col} strength={unknown ? 0.5 : 1}>
         <div style={{ fontSize: 13, fontWeight: 600, letterSpacing: '.28em', textTransform: 'uppercase',
           color: 'var(--text-muted)', overflowWrap: 'anywhere' }}>{who}</div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginTop: 14 }}>
@@ -211,6 +215,7 @@ export default function PersonCard({ cardId }) {
         {since && (
           <div style={{ marginTop: 10, fontSize: 16, color: 'var(--text-muted)' }}>{since}</div>
         )}
+      </Aura>
       </div>
     )
   }

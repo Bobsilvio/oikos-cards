@@ -2,6 +2,11 @@
 
 Tutte le modifiche rilevanti di questa card.
 
+## [1.2.1] - 2026-11-17
+
+### Changed
+- Più colore nello screensaver: la produzione ha una tessera col sole giallo e un alone caldo dietro.
+
 ## [1.2.0] - 2026-11-17
 
 ### Added

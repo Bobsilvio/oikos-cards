@@ -4,6 +4,10 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [1.1.1] - 2026-11-17
+### Changed
+- Più colore nello screensaver: tessera e alone nel colore della zona AQI.
+
 ## [1.1.0] - 2026-11-17
 ### Added
 - **Versione screensaver.** Messa nello screensaver, la card mostra solo

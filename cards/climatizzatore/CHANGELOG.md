@@ -2,6 +2,10 @@
 
 Tutte le modifiche rilevanti di questa card.
 
+## [1.2.1] - 2026-11-17
+### Changed
+- Più colore nello screensaver: icona in una tessera colorata e un alone morbido dello stesso colore dietro la card; il colore segue lo stato (caldo quando scalda, freddo quando raffresca, grigio da spento).
+
 ## [1.2.0] - 2026-11-17
 ### Added
 - **Versione screensaver.** Messa nello screensaver, la card non mostra più

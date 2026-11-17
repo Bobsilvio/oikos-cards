@@ -24,7 +24,7 @@
  *   - nessuna stringa visibile hardcoded: tutto da useT
  */
 import { useState, useEffect, useRef } from 'react'
-import { useDashboard, useCardConfig, useStyles, registerCardTranslations, useT, MdiIcon, useCardSurface } from '@oikos/sdk'
+import { useDashboard, useCardConfig, useStyles, registerCardTranslations, useT, MdiIcon, useCardSurface, SsTile, SsAura, SS_ACCENT } from '@oikos/sdk'
 import it from './i18n/it.json'
 import en from './i18n/en.json'
 import de from './i18n/de.json'
@@ -42,6 +42,12 @@ const NO_SURFACE = { isScreensaver: false, theme: 'dark' }
 const useSurface = typeof useCardSurface === 'function' ? useCardSurface : () => NO_SURFACE
 const SS_SHADOW = '0 1px 3px rgba(0,0,0,.45), 0 0 18px rgba(0,0,0,.3)'
 const SS_PULSE = { animation: 'oikos-tile-pulse 1.6s ease-in-out infinite' }
+// Colore e tessera dello screensaver (SDK 1.6). Oikos più vecchi non hanno
+// SsTile/SsAura/SS_ACCENT: fallback qui, prima del componente.
+const ACC = SS_ACCENT || { water: '#38bdf8', money: '#f59e0b', sun: '#facc15', energy: '#22c55e', calm: '#34d399', alert: '#ef4444', warn: '#fb923c', heat: '#fb7185', cool: '#60a5fa', air: '#2dd4bf', media: '#a78bfa', home: '#818cf8', neutral: '#94a3b8' }
+const Tile = typeof SsTile === 'function' ? SsTile
+  : ({ icon, color, size = 44, children }) => children ?? <MdiIcon name={icon} size={Math.round(size * 0.6)} color={color} opacity={1}/>
+const Aura = typeof SsAura === 'function' ? SsAura : ({ children }) => <>{children}</>
 
 export const DEFAULT = {
   entityId:      '',
@@ -299,6 +305,7 @@ export default function TileCard({ cardId = 'tile' }) {
     const statusLine = !unknown && value !== null && status ? statusText : null
     return (
       <div style={{ padding: '18px 22px', color: 'var(--text-primary)', textShadow: shadow }}>
+      <Aura color={dim ? ACC.neutral : tint} strength={dim ? 0.5 : 1}>
         <style>{'@keyframes oikos-tile-pulse{0%,100%{opacity:1}50%{opacity:.3}}'}</style>
         <div style={{
           display: 'flex', alignItems: 'center', gap: 9, fontSize: title.length <= 18 ? 13 : 12,
@@ -311,9 +318,7 @@ export default function TileCard({ cardId = 'tile' }) {
           {title}
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginTop: 10, minWidth: 0 }}>
-          <span style={{ flexShrink: 0, display: 'inline-flex' }}>
-            <MdiIcon name={icon} size={44} color={tint} />
-          </span>
+          <Tile icon={icon} color={tint} size={50} muted={dim}/>
           <div style={{
             minWidth: 0, overflowWrap: 'anywhere', lineHeight: 1.05, fontSize: bigSize,
             fontVariantNumeric: 'tabular-nums',
@@ -337,6 +342,7 @@ export default function TileCard({ cardId = 'tile' }) {
             {line}
           </div>
         ))}
+      </Aura>
       </div>
     )
   }

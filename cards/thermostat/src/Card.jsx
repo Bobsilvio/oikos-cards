@@ -4,7 +4,7 @@
  * Click fiamma = toggle on/off.
  */
 import { useState, useRef, useCallback } from 'react'
-import { useDashboard, useCardConfig, registerCardTranslations, useT, useCardSurface } from '@oikos/sdk'
+import { useDashboard, useCardConfig, registerCardTranslations, useT, useCardSurface, MdiIcon, SsTile, SsAura, SS_ACCENT } from '@oikos/sdk'
 import it from './i18n/it.json'
 import en from './i18n/en.json'
 import de from './i18n/de.json'
@@ -20,7 +20,24 @@ const useSurface = typeof useCardSurface === 'function' ? useCardSurface : () =>
 
 // Colori modalità (stessi della card da plancia) e stati di hvac_action che
 // significano "sta lavorando adesso".
-const SS_ACCENT = { heat: '#f97316', cool: '#3b82f6', auto: '#8b5cf6', heat_cool: '#f97316', fan_only: '#06b6d4', dry: '#84cc16' }
+const SS_MODES = new Set(['heat', 'cool', 'auto', 'heat_cool', 'fan_only', 'dry'])
+// Colore e tessera dello screensaver (SDK 1.6). Oikos più vecchi non hanno
+// SsTile/SsAura/SS_ACCENT: fallback qui, prima del componente.
+const ACC = SS_ACCENT || { water: '#38bdf8', money: '#f59e0b', sun: '#facc15', energy: '#22c55e', calm: '#34d399', alert: '#ef4444', warn: '#fb923c', heat: '#fb7185', cool: '#60a5fa', air: '#2dd4bf', media: '#a78bfa', home: '#818cf8', neutral: '#94a3b8' }
+const Tile = typeof SsTile === 'function' ? SsTile
+  : ({ icon, color, size = 44, children }) => children ?? <MdiIcon name={icon} size={Math.round(size * 0.6)} color={color} opacity={1}/>
+const Aura = typeof SsAura === 'function' ? SsAura : ({ children }) => <>{children}</>
+const SS_ICON = { heat: 'fire', cool: 'snowflake', auto: 'thermostat-auto', heat_cool: 'thermostat-auto', fan_only: 'fan', dry: 'water-percent' }
+// Caldo quando scalda, freddo quando raffresca; altrimenti segue la modalità.
+function ssAccentFor(mode, action) {
+  if (action === 'heating' || action === 'preheating') return ACC.heat
+  if (action === 'cooling') return ACC.cool
+  if (action === 'drying' || action === 'fan') return ACC.air
+  if (mode === 'heat') return ACC.heat
+  if (mode === 'cool') return ACC.cool
+  if (mode === 'fan_only' || mode === 'dry') return ACC.air
+  return ACC.home
+}
 const SS_WORKING = new Set(['heating', 'cooling', 'drying', 'fan', 'preheating', 'defrosting'])
 const SS_PULSE = { animation: 'oikos-thermo-pulse 1.6s ease-in-out infinite' }
 
@@ -189,14 +206,15 @@ export default function ThermostatCard({ cardId }) {
     const ssTarget = getAttr(id, 'temperature')
     const ssAction = getAttr(id, 'hvac_action')
     const ssName   = config.label || getAttr(id, 'friendly_name') || id
-    const ssAccent = SS_ACCENT[ssMode] ?? 'var(--amber)'
+    const ssAccent = ssOff ? ACC.neutral : ssAccentFor(ssMode, ssAction)
     const working  = !ssOff && SS_WORKING.has(ssAction)
     const curTxt   = typeof ssCur === 'number' ? `${ssCur.toFixed(1)}°` : '—'
-    const modeTxt  = ssUnav ? t('ss.unavailable') : ssOff ? t('ss.off') : (SS_ACCENT[ssMode] ? t(`mode.${ssMode}`) : ssMode)
+    const modeTxt  = ssUnav ? t('ss.unavailable') : ssOff ? t('ss.off') : (SS_MODES.has(ssMode) ? t(`mode.${ssMode}`) : ssMode)
     const actTxt   = !ssOff && (SS_WORKING.has(ssAction) || ssAction === 'idle') ? t(`ss.action.${ssAction}`) : null
     const nameSize = ssName.length <= 18 ? 13 : 12
     return (
       <div style={{ padding: '18px 22px', color: 'var(--text-primary)', textShadow: shadow }}>
+      <Aura color={ssAccent} strength={ssOff ? 0.5 : 1}>
         <style>{'@keyframes oikos-thermo-pulse{0%,100%{opacity:1}50%{opacity:.3}}'}</style>
         <div style={{ ...label, fontSize: nameSize, display: 'flex', alignItems: 'center', gap: 9, color: 'var(--text-muted)', overflowWrap: 'anywhere' }}>
           {working && (
@@ -204,13 +222,16 @@ export default function ThermostatCard({ cardId }) {
           )}
           {ssName}
         </div>
-        <div style={{
-          marginTop: 10, fontSize: 64, lineHeight: 1, fontVariantNumeric: 'tabular-nums',
-          fontFamily: 'var(--ss-display, inherit)', fontWeight: 'var(--ss-display-w, 300)',
-          letterSpacing: 'var(--ss-display-track, -0.03em)',
-          color: ssOff ? 'var(--text-secondary)' : 'var(--text-primary)',
-        }}>
-          {curTxt}
+        <div style={{ marginTop: 10, display: 'flex', alignItems: 'center', gap: 16 }}>
+          <Tile icon={ssOff ? 'thermostat' : (SS_ICON[ssMode] ?? 'thermostat')} color={ssAccent} size={50} muted={ssOff}/>
+          <div style={{
+            fontSize: 64, lineHeight: 1, fontVariantNumeric: 'tabular-nums',
+            fontFamily: 'var(--ss-display, inherit)', fontWeight: 'var(--ss-display-w, 300)',
+            letterSpacing: 'var(--ss-display-track, -0.03em)',
+            color: ssOff ? 'var(--text-secondary)' : 'var(--text-primary)',
+          }}>
+            {curTxt}
+          </div>
         </div>
         <div style={{ marginTop: 12, fontSize: 17, fontWeight: 600, color: ssOff ? 'var(--text-muted)' : ssAccent }}>
           {modeTxt}{actTxt && <span style={{ color: 'var(--text-secondary)', fontWeight: 400 }}>{` · ${actTxt}`}</span>}
@@ -220,6 +241,7 @@ export default function ThermostatCard({ cardId }) {
             {t('ss.target')} {ssTarget.toFixed(1)}°
           </div>
         )}
+      </Aura>
       </div>
     )
   }
