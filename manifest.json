@@ -57,6 +57,49 @@
       ]
     },
     {
+      "id": "christmas",
+      "type": "card",
+      "name": "Natale",
+      "version": "1.0.0",
+      "author": "Oikos",
+      "description": "L'albero di Natale in plancia: toccalo per accenderlo o spegnerlo, con le lucine che brillano e la neve che scende. Sotto, le altre prese delle feste (presepe, lucine, balcone) e il conto alla rovescia per Natale. Ha anche la versione per lo screensaver.",
+      "description_en": "The Christmas tree on your dashboard: tap it to switch it on or off, with twinkling lights and falling snow. Below, the other festive plugs (nativity, fairy lights, balcony) and the countdown to Christmas. Includes a screensaver version.",
+      "description_de": "Der Weihnachtsbaum im Dashboard: antippen zum Ein- und Ausschalten, mit funkelnden Lichtern und fallendem Schnee. Darunter die anderen Festtags-Steckdosen und der Countdown bis Weihnachten. Mit Bildschirmschoner-Version.",
+      "description_es": "El árbol de Navidad en el panel: tócalo para encenderlo o apagarlo, con luces que parpadean y nieve que cae. Debajo, los otros enchufes de las fiestas y la cuenta atrás para Navidad. Incluye versión para el salvapantallas.",
+      "description_fr": "Le sapin de Noël sur le tableau de bord : touchez-le pour l'allumer ou l'éteindre, avec ses lumières qui scintillent et la neige qui tombe. En dessous, les autres prises des fêtes et le compte à rebours jusqu'à Noël. Avec version économiseur d'écran.",
+      "sdkVersion": "^1.0.0",
+      "hasSettings": true,
+      "path": "cards/christmas",
+      "entry": "cards/christmas/dist/christmas.js",
+      "settings": "cards/christmas/dist/christmas.settings.js",
+      "manifest": "cards/christmas/manifest.json",
+      "preview": "cards/christmas/preview.png",
+      "previews": [
+        "cards/christmas/preview.png"
+      ],
+      "thumbnail": "cards/christmas/preview-thumb.png",
+      "tags": [
+        "natale",
+        "feste",
+        "luci",
+        "prese"
+      ],
+      "package": null,
+      "tier": "free",
+      "changelog": [
+        {
+          "version": "1.0.0",
+          "date": "2026-11-17",
+          "changes": [
+            "Prima versione. L'albero di Natale si accende e si spegne con un tocco: acceso, le lucine brillano, la stella si illumina e scende la neve.",
+            "Altre prese delle feste (presepe, lucine, balcone…) sotto l'albero, ognuna col suo nome e la sua icona, e un tasto per accendere o spegnere tutto insieme.",
+            "Conto alla rovescia per Natale; il 24 «È la vigilia», il 25 «Buon Natale», fino all'Epifania «Buone feste».",
+            "Versione screensaver: i giorni che mancano, in grande, e se l'albero è acceso."
+          ]
+        }
+      ]
+    },
+    {
       "id": "climatizzatore",
       "type": "card",
       "name": "Climatizzatore",

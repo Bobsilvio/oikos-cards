@@ -1,0 +1,43 @@
+{
+  "title": "Noël",
+  "tree": "Sapin",
+  "treeOn": "Sapin allumé",
+  "treeOff": "Sapin éteint",
+  "treeDead": "Sapin injoignable",
+  "toggleTree": "Allumer ou éteindre le sapin",
+  "allOn": "Tout allumer",
+  "allOff": "Tout éteindre",
+  "on": "Allumée",
+  "off": "Éteinte",
+  "dead": "Ne répond pas",
+  "empty": "Choisissez la prise du sapin dans les réglages de la carte.",
+  "count": {
+    "days_one": "jour avant Noël",
+    "days_other": "jours avant Noël",
+    "eve": "C'est le réveillon",
+    "today": "Joyeux Noël !",
+    "holidays": "Joyeuses fêtes !"
+  },
+  "ss": {
+    "days_one": "jour",
+    "days_other": "jours",
+    "toXmas": "avant Noël"
+  },
+  "settings": {
+    "treeSection": "Sapin",
+    "treeEntity": "Prise ou lumière du sapin",
+    "treeHint": "S'allume et s'éteint en touchant le sapin.",
+    "plugsSection": "Autres prises",
+    "plugsHint": "Crèche, guirlandes, balcon : affichées sous le sapin.",
+    "addPlug": "Ajouter une prise",
+    "name": "Nom",
+    "namePlaceholder": "Ex. Crèche",
+    "icon": "Icône",
+    "remove": "Retirer",
+    "optionsSection": "Apparence",
+    "countdown": "Compte à rebours",
+    "countdownHint": "Combien de jours avant Noël.",
+    "snow": "Neige",
+    "snowHint": "Tombe quand le sapin est allumé."
+  }
+}

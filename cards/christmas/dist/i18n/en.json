@@ -1,0 +1,43 @@
+{
+  "title": "Christmas",
+  "tree": "Tree",
+  "treeOn": "Tree is on",
+  "treeOff": "Tree is off",
+  "treeDead": "Tree unreachable",
+  "toggleTree": "Switch the tree on or off",
+  "allOn": "All on",
+  "allOff": "All off",
+  "on": "On",
+  "off": "Off",
+  "dead": "Not responding",
+  "empty": "Pick the tree's plug in the card settings.",
+  "count": {
+    "days_one": "day to Christmas",
+    "days_other": "days to Christmas",
+    "eve": "It's Christmas Eve",
+    "today": "Merry Christmas!",
+    "holidays": "Happy holidays!"
+  },
+  "ss": {
+    "days_one": "day",
+    "days_other": "days",
+    "toXmas": "to Christmas"
+  },
+  "settings": {
+    "treeSection": "Tree",
+    "treeEntity": "Tree plug or light",
+    "treeHint": "Switched on and off by tapping the tree.",
+    "plugsSection": "Other plugs",
+    "plugsHint": "Nativity, fairy lights, balcony: shown below the tree.",
+    "addPlug": "Add a plug",
+    "name": "Name",
+    "namePlaceholder": "E.g. Nativity",
+    "icon": "Icon",
+    "remove": "Remove",
+    "optionsSection": "Look",
+    "countdown": "Countdown",
+    "countdownHint": "How many days to Christmas.",
+    "snow": "Snow",
+    "snowHint": "Falls while the tree is on."
+  }
+}

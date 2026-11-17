@@ -1,0 +1,43 @@
+{
+  "title": "Natale",
+  "tree": "Albero",
+  "treeOn": "Albero acceso",
+  "treeOff": "Albero spento",
+  "treeDead": "Albero non raggiungibile",
+  "toggleTree": "Accendi o spegni l'albero",
+  "allOn": "Accendi tutto",
+  "allOff": "Spegni tutto",
+  "on": "Accesa",
+  "off": "Spenta",
+  "dead": "Non risponde",
+  "empty": "Scegli la presa dell'albero nelle impostazioni della card.",
+  "count": {
+    "days_one": "giorno a Natale",
+    "days_other": "giorni a Natale",
+    "eve": "È la vigilia",
+    "today": "Buon Natale!",
+    "holidays": "Buone feste!"
+  },
+  "ss": {
+    "days_one": "giorno",
+    "days_other": "giorni",
+    "toXmas": "a Natale"
+  },
+  "settings": {
+    "treeSection": "Albero",
+    "treeEntity": "Presa o luce dell'albero",
+    "treeHint": "Si accende e si spegne toccando l'albero.",
+    "plugsSection": "Altre prese",
+    "plugsHint": "Presepe, lucine, balcone: compaiono sotto l'albero.",
+    "addPlug": "Aggiungi una presa",
+    "name": "Nome",
+    "namePlaceholder": "Es. Presepe",
+    "icon": "Icona",
+    "remove": "Togli",
+    "optionsSection": "Aspetto",
+    "countdown": "Conto alla rovescia",
+    "countdownHint": "Quanti giorni mancano a Natale.",
+    "snow": "Neve",
+    "snowHint": "Scende quando l'albero è acceso."
+  }
+}

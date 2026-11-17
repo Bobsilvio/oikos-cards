@@ -1,0 +1,43 @@
+{
+  "title": "Weihnachten",
+  "tree": "Baum",
+  "treeOn": "Baum ist an",
+  "treeOff": "Baum ist aus",
+  "treeDead": "Baum nicht erreichbar",
+  "toggleTree": "Baum ein- oder ausschalten",
+  "allOn": "Alles an",
+  "allOff": "Alles aus",
+  "on": "An",
+  "off": "Aus",
+  "dead": "Antwortet nicht",
+  "empty": "Wähle die Steckdose des Baums in den Karteneinstellungen.",
+  "count": {
+    "days_one": "Tag bis Weihnachten",
+    "days_other": "Tage bis Weihnachten",
+    "eve": "Heute ist Heiligabend",
+    "today": "Frohe Weihnachten!",
+    "holidays": "Frohe Festtage!"
+  },
+  "ss": {
+    "days_one": "Tag",
+    "days_other": "Tage",
+    "toXmas": "bis Weihnachten"
+  },
+  "settings": {
+    "treeSection": "Baum",
+    "treeEntity": "Steckdose oder Licht des Baums",
+    "treeHint": "Wird durch Antippen des Baums geschaltet.",
+    "plugsSection": "Weitere Steckdosen",
+    "plugsHint": "Krippe, Lichterkette, Balkon: erscheinen unter dem Baum.",
+    "addPlug": "Steckdose hinzufügen",
+    "name": "Name",
+    "namePlaceholder": "z. B. Krippe",
+    "icon": "Symbol",
+    "remove": "Entfernen",
+    "optionsSection": "Aussehen",
+    "countdown": "Countdown",
+    "countdownHint": "Wie viele Tage bis Weihnachten.",
+    "snow": "Schnee",
+    "snowHint": "Fällt, solange der Baum an ist."
+  }
+}

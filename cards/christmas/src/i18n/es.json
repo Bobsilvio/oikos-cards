@@ -1,0 +1,43 @@
+{
+  "title": "Navidad",
+  "tree": "Árbol",
+  "treeOn": "Árbol encendido",
+  "treeOff": "Árbol apagado",
+  "treeDead": "Árbol no disponible",
+  "toggleTree": "Encender o apagar el árbol",
+  "allOn": "Encender todo",
+  "allOff": "Apagar todo",
+  "on": "Encendido",
+  "off": "Apagado",
+  "dead": "No responde",
+  "empty": "Elige el enchufe del árbol en los ajustes de la tarjeta.",
+  "count": {
+    "days_one": "día para Navidad",
+    "days_other": "días para Navidad",
+    "eve": "Es Nochebuena",
+    "today": "¡Feliz Navidad!",
+    "holidays": "¡Felices fiestas!"
+  },
+  "ss": {
+    "days_one": "día",
+    "days_other": "días",
+    "toXmas": "para Navidad"
+  },
+  "settings": {
+    "treeSection": "Árbol",
+    "treeEntity": "Enchufe o luz del árbol",
+    "treeHint": "Se enciende y se apaga tocando el árbol.",
+    "plugsSection": "Otros enchufes",
+    "plugsHint": "Belén, luces, balcón: aparecen debajo del árbol.",
+    "addPlug": "Añadir un enchufe",
+    "name": "Nombre",
+    "namePlaceholder": "Ej. Belén",
+    "icon": "Icono",
+    "remove": "Quitar",
+    "optionsSection": "Aspecto",
+    "countdown": "Cuenta atrás",
+    "countdownHint": "Cuántos días faltan para Navidad.",
+    "snow": "Nieve",
+    "snowHint": "Cae mientras el árbol está encendido."
+  }
+}
