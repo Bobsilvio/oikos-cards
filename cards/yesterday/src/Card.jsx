@@ -1,12 +1,17 @@
 import { useState, useEffect, useCallback } from 'react'
 import { TrendingUp, Zap, Home, PlugZap, Upload } from 'lucide-react'
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend } from 'recharts'
-import { useDashboard, getEntities, registerCardTranslations, useT, getPlants } from '@oikos/sdk'
+import { useDashboard, getEntities, registerCardTranslations, useT, getPlants, useCardSurface } from '@oikos/sdk'
 import { fmt, yesterdayIt } from './format'
 import it from './i18n/it.json'
 import en from './i18n/en.json'
 
 registerCardTranslations('card-yesterday', { it, en })
+
+// Oikos < SDK 1.5 non ha useCardSurface: lì la card è sempre "da plancia".
+// Scelto una volta all'avvio, quindi l'ordine degli hook non cambia mai.
+const NO_SURFACE = { isScreensaver: false, theme: 'dark' }
+const useSurface = typeof useCardSurface === 'function' ? useCardSurface : () => NO_SURFACE
 
 function getChartAnim() {
   try {
@@ -34,6 +39,7 @@ function StatBox({ dark, icon: Icon, iconColor, label, value }) {
 export default function YesterdayCard() {
   const { dark, fetchHistory, connected } = useDashboard()
   const { t } = useT('card-yesterday')
+  const surface = useSurface()
   const { chartAnimActive, chartAnimDuration } = getChartAnim()
   const [chartData, setChartData] = useState([])
   const [totals,    setTotals]    = useState({ prod: 0, cons: 0, prel: 0, ced: 0 })
@@ -126,6 +132,48 @@ export default function YesterdayCard() {
     border: `1px solid ${dark ? 'rgba(255,255,255,.12)' : '#e2e8f0'}`,
     borderRadius: 10, fontSize: 12,
     color: dark ? '#f8fafc' : '#0f172a',
+  }
+
+  // Versione screensaver: niente contenitore né grafico, solo la produzione di
+  // ieri in grande e i tre flussi secondari sotto. Dopo tutti gli hook.
+  if (surface.isScreensaver) {
+    const shadow = surface.theme === 'light' ? 'none' : '0 1px 3px rgba(0,0,0,.45), 0 0 18px rgba(0,0,0,.3)'
+    const ready = loaded && !loading
+    const flows = [
+      { key: 'cons', icon: Home,    color: 'var(--blue)',   label: t('stats.consumption'), value: totals.cons },
+      { key: 'prel', icon: PlugZap, color: 'var(--purple)', label: t('stats.fromGrid'),    value: totals.prel },
+      { key: 'ced',  icon: Upload,  color: 'var(--green)',  label: t('stats.toGrid'),      value: totals.ced  },
+    ]
+    return (
+      <div style={{ padding: '18px 22px', color: 'var(--text-primary)', textShadow: shadow }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 9, fontSize: 13, fontWeight: 600, letterSpacing: '.28em', textTransform: 'uppercase', color: 'var(--amber)' }}>
+          <Zap size={15} strokeWidth={2.2}/>
+          {t('ss.label')}
+        </div>
+        {ready ? (
+          <>
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, marginTop: 10, lineHeight: 1 }}>
+              <span style={{ fontSize: 60, fontFamily: 'var(--ss-display, inherit)', fontWeight: 'var(--ss-display-w, 300)', letterSpacing: 'var(--ss-display-track, -0.03em)', fontVariantNumeric: 'tabular-nums' }}>
+                {fmt(totals.prod, 1)}
+              </span>
+              <span style={{ fontSize: 20, color: 'var(--text-secondary)' }}>kWh</span>
+            </div>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px 18px', marginTop: 14, fontSize: 16, color: 'var(--text-secondary)' }}>
+              {flows.map(({ key, icon: Icon, color, label, value }) => (
+                <span key={key} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, whiteSpace: 'nowrap' }}>
+                  <Icon size={15} strokeWidth={2.2} color={color}/>
+                  <span style={{ fontSize: 13, color: 'var(--text-muted)' }}>{label}</span>
+                  <span style={{ fontVariantNumeric: 'tabular-nums' }}>{fmt(value, 1)}</span>
+                </span>
+              ))}
+            </div>
+            <div style={{ marginTop: 6, fontSize: 13, color: 'var(--text-muted)', textTransform: 'capitalize' }}>{yesterdayIt()}</div>
+          </>
+        ) : (
+          <div style={{ marginTop: 12, fontSize: 17, color: 'var(--text-muted)' }}>{t('chart.loading')}</div>
+        )}
+      </div>
+    )
   }
 
   return (

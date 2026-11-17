@@ -1,15 +1,30 @@
 {
   "mode": {
-    "heat":     "Chaud",
-    "cool":     "Froid",
-    "auto":     "Auto",
-    "heat_cool":"C+F",
+    "heat": "Chaud",
+    "cool": "Froid",
+    "auto": "Auto",
+    "heat_cool": "C+F",
     "fan_only": "Ventilateur",
-    "dry":      "Déshumidifier"
+    "dry": "Déshumidifier"
   },
   "noEntity": "Configurez une entité climate dans ⚙",
   "settings": {
     "entityLabel": "Entité climate",
     "nameLabel": "Nom affiché (optionnel)"
+  },
+  "ss": {
+    "noEntity": "Thermostat non configuré",
+    "off": "Éteint",
+    "unavailable": "Indisponible",
+    "target": "Consigne",
+    "action": {
+      "heating": "Chauffe",
+      "cooling": "Refroidit",
+      "drying": "Déshumidifie",
+      "fan": "Ventilation",
+      "idle": "En attente",
+      "preheating": "Préchauffage",
+      "defrosting": "Dégivrage"
+    }
   }
 }

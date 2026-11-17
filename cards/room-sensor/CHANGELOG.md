@@ -4,6 +4,13 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [1.2.0] - 2026-11-17
+### Added
+- **Versione screensaver.** Messa nello screensaver, la card mostra il nome
+  della stanza, la temperatura in grande e gli altri valori (umidità, badge)
+  piccoli sotto, senza riquadro, gauge né grafici. Serve Oikos 2.6.98 o
+  successivo; le versioni precedenti continuano a mostrare la card normale.
+
 ## [1.1.5] - 2026-08-12
 ### Fixed
 - **Il grafico dello storico poteva far cadere la card** quando i dati

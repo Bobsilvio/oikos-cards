@@ -1,7 +1,7 @@
 {
   "id": "climatizzatore",
   "name": "Climatizzatore",
-  "version": "1.1.4",
+  "version": "1.2.0",
   "author": "Oikos",
   "description": "Controllo completo climatizzatore HA: power, modalità (cool/heat/auto/dry/fan), target ±, fan speed, temperatura corrente e umidità. Icona animata e tema colore dinamico per modalità attiva.",
   "description_en": "Full HA air conditioner control: power, modes (cool/heat/auto/dry/fan), target ±, fan speed, current temperature and humidity. Animated icon and dynamic color theme for active mode.",
@@ -21,5 +21,6 @@
   "tier": "free",
   "description_de": "Vollständige HA-Klimaanlagensteuerung: Ein/Aus, Modi (cool/heat/auto/dry/fan), Zieltemperatur ±, Lüftergeschwindigkeit, Temperatur und Luftfeuchtigkeit. Animiertes Symbol und dynamisches Farbthema je Modus.",
   "description_es": "Control completo del climatizador HA: encendido, modos (cool/heat/auto/dry/fan), temperatura objetivo ±, velocidad del ventilador, temperatura actual y humedad. Icono animado y tema de color dinámico según el modo activo.",
-  "description_fr": "Contrôle complet du climatiseur HA : marche/arrêt, modes (cool/heat/auto/dry/fan), consigne ±, vitesse du ventilateur, température et humidité actuelles. Icône animée et thème de couleur dynamique selon le mode actif."
+  "description_fr": "Contrôle complet du climatiseur HA : marche/arrêt, modes (cool/heat/auto/dry/fan), consigne ±, vitesse du ventilateur, température et humidité actuelles. Icône animée et thème de couleur dynamique selon le mode actif.",
+  "screensaver": true
 }

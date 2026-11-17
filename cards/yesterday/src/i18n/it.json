@@ -17,5 +17,8 @@
     "consToday": "Consumo giornaliero (kWh)",
     "gridFromToday": "Prelievo da rete (kWh)",
     "gridToToday": "Ceduta alla rete (kWh)"
+  },
+  "ss": {
+    "label": "Prodotti ieri"
   }
 }

@@ -17,5 +17,8 @@
     "consToday": "Tagesverbrauch (kWh)",
     "gridFromToday": "Netzbezug (kWh)",
     "gridToToday": "Netzeinspeisung (kWh)"
+  },
+  "ss": {
+    "label": "Gestern erzeugt"
   }
 }

@@ -2,11 +2,16 @@
  * PersonCard — avatar, zona, metriche. Retro: mappa OSM live (flip 3D).
  */
 import { useId } from 'react'
-import { useDashboard, useCardConfig, registerCardTranslations, useT } from '@oikos/sdk'
+import { useDashboard, useCardConfig, registerCardTranslations, useT, useCardSurface } from '@oikos/sdk'
 import it from './i18n/it.json'
 import en from './i18n/en.json'
 
 registerCardTranslations('card-person', { it, en })
+
+// Oikos < SDK 1.5 non ha useCardSurface: lì la card è sempre "da plancia".
+// Scelto una volta all'avvio, quindi l'ordine degli hook non cambia mai.
+const NO_SURFACE = { isScreensaver: false, theme: 'dark' }
+const useSurface = typeof useCardSurface === 'function' ? useCardSurface : () => NO_SURFACE
 
 const DEFAULT = {
   personEntity:  '',
@@ -29,11 +34,13 @@ function zoneColor(state) {
   if (state === 'not_home') return '#f97316'
   return '#3b82f6'
 }
-function zoneLabel(state, attrs, t) {
+// Per una zona con nome lo stato di person.* È già il nome della zona
+// («Lavoro»): il friendly_name è quello della persona, non della zona.
+function zoneLabel(state, t) {
   if (!state || state === 'unknown' || state === 'unavailable') return t('zoneUnknown')
   if (state === 'home')     return t('zoneHome')
   if (state === 'not_home') return t('zoneAway')
-  return attrs?.friendly_name ?? state
+  return state
 }
 function fmtMetric(state, unit) {
   if (!state || state === 'unknown' || state === 'unavailable') return '—'
@@ -155,6 +162,58 @@ export default function PersonCard({ cardId }) {
   const [cfg]     = useCardConfig(cardId, DEFAULT)
   const { t } = useT('card-person')
   const uid = useId().replace(/:/g, '')
+  const surface = useSurface()
+
+  // ── Versione screensaver: si guarda da tre metri, non si tocca ──────────
+  if (surface.isScreensaver) {
+    const shadow = surface.theme === 'light' ? 'none' : '0 1px 3px rgba(0,0,0,.45), 0 0 18px rgba(0,0,0,.3)'
+    const wrap = { padding: '18px 22px', color: 'var(--text-primary)', textShadow: shadow }
+    if (!cfg.personEntity) {
+      return <div style={{ ...wrap, fontSize: 16, color: 'var(--text-muted)' }}>{t('noEntity')}</div>
+    }
+    const st = haStates?.[cfg.personEntity]
+    const state = st?.state ?? 'unknown'
+    const a = st?.attributes ?? {}
+    const who = cfg.label || a.friendly_name || cfg.personEntity
+    const unknown = state === 'unknown' || state === 'unavailable'
+    const zone = zoneLabel(state, t)
+    const col = unknown ? 'var(--text-muted)' : state === 'home' ? 'var(--green)' : state === 'not_home' ? 'var(--amber)' : 'var(--blue)'
+    const zoneSize = zone.length <= 9 ? 52 : zone.length <= 16 ? 40 : 32
+    const sec = st?.last_changed ? (Date.now() - new Date(st.last_changed).getTime()) / 1000 : null
+    const since = sec == null || !Number.isFinite(sec) || sec < 0 ? null
+      : sec < 90 ? t('timeNow')
+      : sec < 3600 ? t('timeMinAgo', { n: Math.floor(sec / 60) })
+      : sec < 86400 ? t('timeHAgo', { n: Math.floor(sec / 3600) })
+      : t('timeDayAgo', { n: Math.floor(sec / 86400) })
+    return (
+      <div style={wrap}>
+        <div style={{ fontSize: 13, fontWeight: 600, letterSpacing: '.28em', textTransform: 'uppercase',
+          color: 'var(--text-muted)', overflowWrap: 'anywhere' }}>{who}</div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginTop: 14 }}>
+          <div style={{ width: 56, height: 56, flexShrink: 0, borderRadius: '50%', padding: 3, boxSizing: 'border-box',
+            border: `2.5px solid ${col}`, boxShadow: `0 0 16px color-mix(in srgb, ${col} 45%, transparent)` }}>
+            {a.entity_picture ? (
+              <img src={a.entity_picture} alt={who} style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover', display: 'block' }}/>
+            ) : (
+              <div style={{ width: '100%', height: '100%', borderRadius: '50%', display: 'flex', alignItems: 'center',
+                justifyContent: 'center', fontSize: 18, fontWeight: 700, color: col,
+                background: `color-mix(in srgb, ${col} 18%, transparent)` }}>
+                {String(who).slice(0, 2).toUpperCase()}
+              </div>
+            )}
+          </div>
+          <div style={{
+            minWidth: 0, overflowWrap: 'anywhere',
+            fontFamily: 'var(--ss-display, inherit)', fontWeight: 'var(--ss-display-w, 300)',
+            letterSpacing: 'var(--ss-display-track, -0.03em)', fontSize: zoneSize, lineHeight: 1.05,
+          }}>{zone}</div>
+        </div>
+        {since && (
+          <div style={{ marginTop: 10, fontSize: 16, color: 'var(--text-muted)' }}>{since}</div>
+        )}
+      </div>
+    )
+  }
 
   if (!cfg.personEntity) return (
     <div style={{
@@ -312,7 +371,7 @@ export default function PersonCard({ cardId }) {
               background: `${color}20`, color, border: `1px solid ${color}40`,
               whiteSpace: 'nowrap',
             }}>
-              {zoneLabel(personState, attrs, t)}
+              {zoneLabel(personState, t)}
             </span>
           </div>
 

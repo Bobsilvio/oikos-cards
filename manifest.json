@@ -8,7 +8,7 @@
       "id": "air-quality",
       "type": "card",
       "name": "Qualità dell'aria",
-      "version": "1.0.5",
+      "version": "1.1.0",
       "author": "Oikos",
       "description": "Card qualità aria: AQI con zone colorate, classificazione, grafico 24h smooth.",
       "description_en": "Air quality card: AQI with colored zones, classification, smooth 24h chart.",
@@ -34,6 +34,13 @@
       "tier": "free",
       "changelog": [
         {
+          "version": "1.1.0",
+          "date": "2026-11-17",
+          "changes": [
+            "Versione screensaver. Messa nello screensaver, la card mostra solo l'AQI grande nel colore della sua zona, la classificazione e una piccola linea delle ultime 24 ore, senza riquadro né sensori. Serve Oikos 2.6.98 o successivo; le versioni precedenti continuano a mostrare la card normale."
+          ]
+        },
+        {
           "version": "1.0.5",
           "date": "2026-08-12",
           "changes": [
@@ -46,7 +53,7 @@
       "id": "climatizzatore",
       "type": "card",
       "name": "Climatizzatore",
-      "version": "1.1.4",
+      "version": "1.2.0",
       "author": "Oikos",
       "description": "Controllo completo climatizzatore HA: power, modalità (cool/heat/auto/dry/fan), target ±, fan speed, temperatura corrente e umidità. Icona animata e tema colore dinamico per modalità attiva.",
       "description_en": "Full HA air conditioner control: power, modes (cool/heat/auto/dry/fan), target ±, fan speed, current temperature and humidity. Animated icon and dynamic color theme for active mode.",
@@ -73,6 +80,13 @@
       "package": null,
       "tier": "free",
       "changelog": [
+        {
+          "version": "1.2.0",
+          "date": "2026-11-17",
+          "changes": [
+            "Versione screensaver. Messa nello screensaver, la card non mostra più intestazione, tasti, modalità e timer: solo l'icona della modalità, la temperatura della stanza grande e, acceso, la modalità nel suo colore con la temperatura target (più l'umidità, se mostrata). Spento resta la temperatura della stanza con un «Spento» discreto. Serve Oikos 2.6.98 o successivo; le versioni precedenti continuano a mostrare la card normale."
+          ]
+        },
         {
           "version": "1.1.4",
           "date": "2026-08-13",
@@ -228,7 +242,7 @@
       "id": "person",
       "type": "card",
       "name": "Persona",
-      "version": "1.3.9",
+      "version": "1.4.0",
       "author": "Oikos",
       "description": "Card persona HA: avatar, zona, batteria, passi/km guidati. Layout split con mappa Google Maps live sul lato destro (sfumatura graduale tra info e mappa), campo dedicato per il device_tracker GPS, badge LIVE animato.",
       "description_en": "HA person card: avatar, zone, battery, steps/driven km. Split layout with live Google Maps on the right (gradient between info and map), dedicated GPS device_tracker field, animated LIVE badge.",
@@ -253,13 +267,22 @@
       ],
       "package": null,
       "tier": "free",
-      "changelog": null
+      "changelog": [
+        {
+          "version": "1.4.0",
+          "date": "2026-11-17",
+          "changes": [
+            "Versione screensaver. Messa nello screensaver la card perde riquadro, mappa e metriche e mostra solo quello che si legge da tre metri: il nome della persona, un piccolo avatar tondo col bordo del colore della zona e la zona in grande («A casa», «Fuori» o il nome della zona), con da quanto ci si trova sotto. Serve Oikos 2.6.98 o successivo; le versioni precedenti continuano a mostrare la card normale.",
+            "Il badge della zona mostra la zona. Quando la persona era in una zona con nome (es. «Lavoro»), il badge mostrava il nome della persona invece di quello della zona."
+          ]
+        }
+      ]
     },
     {
       "id": "room-sensor",
       "type": "card",
       "name": "Room Sensor",
-      "version": "1.1.5",
+      "version": "1.2.0",
       "author": "Oikos",
       "description": "Card sensore stanza: gauge multipli, flow chart storico, badge numerici, mini-gauge batteria/segnale.",
       "description_en": "Room sensor card: multiple gauges, history flow chart, numeric badges, mini battery/signal gauges.",
@@ -287,6 +310,13 @@
       "tier": "free",
       "changelog": [
         {
+          "version": "1.2.0",
+          "date": "2026-11-17",
+          "changes": [
+            "Versione screensaver. Messa nello screensaver, la card mostra il nome della stanza, la temperatura in grande e gli altri valori (umidità, badge) piccoli sotto, senza riquadro, gauge né grafici. Serve Oikos 2.6.98 o successivo; le versioni precedenti continuano a mostrare la card normale."
+          ]
+        },
+        {
           "version": "1.1.5",
           "date": "2026-08-12",
           "changes": [
@@ -313,7 +343,7 @@
       "id": "thermostat",
       "type": "card",
       "name": "Termostato",
-      "version": "1.0.4",
+      "version": "1.1.0",
       "author": "Oikos",
       "description": "Gauge 270° con gradiente blu→arancione per termostato HA. Slider target, toggle on/off, multi-mode.",
       "description_en": "270° gauge with blue→orange gradient for HA thermostat. Target slider, on/off toggle, multi-mode.",
@@ -337,7 +367,16 @@
       ],
       "package": null,
       "tier": "free",
-      "changelog": null
+      "changelog": [
+        {
+          "version": "1.1.0",
+          "date": "2026-11-17",
+          "changes": [
+            "Versione screensaver. Messa nello screensaver, la card non mostra più gauge, slider e pulsanti delle modalità: solo la temperatura attuale grande, la modalità nel suo colore con cosa sta facendo (riscalda, in attesa…) e la temperatura obiettivo, leggibili da lontano. Spento, resta la temperatura della stanza con «Spento». Serve Oikos 2.6.98 o successivo; le versioni precedenti continuano a mostrare la card normale.",
+            "Le traduzioni in tedesco, spagnolo e francese, già presenti, ora vengono effettivamente registrate."
+          ]
+        }
+      ]
     },
     {
       "id": "tigo-panels",
@@ -373,7 +412,7 @@
       "id": "tile",
       "type": "card",
       "name": "Tile",
-      "version": "1.13.0",
+      "version": "1.14.0",
       "author": "Oikos",
       "description": "Tile compatta e configurabile: una entità, uno stile, molti usi. Icona, stato, valore grande e due righe di dettaglio — per allarme, serratura, cancello, temperatura, batterie.",
       "description_en": "Compact configurable tile: one entity, one style, many uses. Icon, status, large value and two detail lines — for alarm, lock, gate, temperature, batteries.",
@@ -397,6 +436,13 @@
       "package": null,
       "tier": "free",
       "changelog": [
+        {
+          "version": "1.14.0",
+          "date": "2026-11-17",
+          "changes": [
+            "Versione screensaver. Messa nello screensaver, la tile perde riquadro, sfondo e azione al tocco e si legge da lontano: il nome in piccolo, l'icona nel colore di stato accanto al valore grande (o allo stato, se il valore non è attivo), sotto lo stato e le righe di dettaglio. Segue la configurazione della tile: entità, nome, icona, colori, conteggio e righe secondarie. Serve Oikos 2.6.98 o successivo; le versioni precedenti continuano a mostrare la card normale."
+          ]
+        },
         {
           "version": "1.13.0",
           "date": "2026-09-20",
@@ -463,15 +509,6 @@
             "Impostazioni riordinate. Le sezioni seguivano l'ordine in cui sono state aggiunte — Aspetto, Conteggio, Al tocco, poi Stato e Valore — invece di quello in cui si configura una tile. Ora: Entità → Aspetto → Stato → Valore → Conteggio → Al tocco → Dettagli → Extra.",
             "Nella disposizione «In linea» il valore si prendeva tutto lo spazio e il nome si riduceva a una lettera: «F Chiuso». Ora si stringono entrambi."
           ]
-        },
-        {
-          "version": "1.4.0",
-          "date": "2026-08-13",
-          "changes": [
-            "Colori per stato. Si assegna un colore a ogni stato — aperto verde, chiuso rosso, in apertura giallo — invece del solo «attivo/non attivo». Una tapparella ha quattro stati, e volerne tre dello stesso colore perché contano tutti come «non attivo» non dice niente a chi guarda.",
-            "Vale per tutte le disposizioni, non solo per la tinta piena: anche la sola icona rossa su «chiuso» è un segnale.",
-            "Lo stato si scrive come lo scrive Home Assistant (open, closed, on), non come lo leggi a schermo: è quello il valore su cui si confronta. Per non doverlo indovinare c'è il tasto che aggiunge lo stato in cui l'entità si trova adesso — apri la porta, premi, hai la regola per «aperto»."
-          ]
         }
       ]
     },
@@ -479,7 +516,7 @@
       "id": "vacuum",
       "type": "card",
       "name": "Dreame Vacuum",
-      "version": "2.14.2",
+      "version": "2.15.0",
       "author": "Oikos",
       "description": "Card Dreame Vacuum con UI ispirata all'app ufficiale: mappa, sheet di pulizia (CleanGenius/Personalizza), base stazione, impostazioni MopExtend™.",
       "description_en": "Dreame Vacuum card with app-inspired UI: map, cleaning sheet (CleanGenius/Customize), base station, MopExtend™ settings.",
@@ -504,13 +541,21 @@
       ],
       "package": null,
       "tier": "free",
-      "changelog": null
+      "changelog": [
+        {
+          "version": "2.15.0",
+          "date": "2026-11-17",
+          "changes": [
+            "Versione screensaver. Messa nello screensaver, la card mostra il nome del robot, lo stato in grande (in pulizia, in base, rientro, errore) e la batteria; durante la pulizia anche stanza corrente, area pulita, tempo e avanzamento. Niente mappa, riquadro né pannelli. Serve Oikos 2.6.98 o successivo; le versioni precedenti continuano a mostrare la card normale."
+          ]
+        }
+      ]
     },
     {
       "id": "yesterday",
       "type": "card",
       "name": "Fotovoltaico — Ieri",
-      "version": "1.1.0",
+      "version": "1.2.0",
       "author": "Oikos",
       "description": "Riepilogo produzione/consumo/prelievo/cessione del giorno precedente con grafico orario.",
       "description_en": "Previous day production/consumption/grid-draw/export summary with hourly chart.",
@@ -536,6 +581,13 @@
       "package": null,
       "tier": "free",
       "changelog": [
+        {
+          "version": "1.2.0",
+          "date": "2026-11-17",
+          "changes": [
+            "Versione screensaver. Nello screensaver la card non mostra più il layout da plancia (intestazione, riquadri, grafico): mostra quanto hai prodotto ieri, in grande, e sotto consumo, prelievo da rete e cessione — leggibile da tutta la stanza. Richiede Oikos 2.6.98 o successivo; le versioni precedenti continuano a mostrare la card normale."
+          ]
+        },
         {
           "version": "1.1.0",
           "date": null,

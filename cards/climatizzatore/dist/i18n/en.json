@@ -76,5 +76,6 @@
   },
   "chipPreset": "Preset",
   "modeTitle": "Mode",
-  "close": "Close"
+  "close": "Close",
+  "ssNoEntity": "Air conditioner not configured"
 }

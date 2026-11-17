@@ -387,8 +387,8 @@
       "mopWashLevelEntity": "Livello lavaggio mocio",
       "autoRewashingEntity": "Frequenza ri-lavaggio mocio",
       "startAutoEmptyEntity": "Avvia svuotatura (button)",
-      "startSelfWashEntity":  "Avvia lavaggio mocio (button)",
-      "startDryingEntity":    "Avvia asciugatura (button)",
+      "startSelfWashEntity": "Avvia lavaggio mocio (button)",
+      "startDryingEntity": "Avvia asciugatura (button)",
       "autoDetergentEntity": "Detergente automatico (ricarica acqua)",
       "autoWashEntity": "Montaggio mocio automatico",
       "cleanCarpetsFirstEntity": "Pulisci prima tappeti (switch)",
@@ -397,7 +397,6 @@
       "floorDirectionEntity": "Direzione pavimento (switch)",
       "stainAvoidanceEntity": "Riconoscimento macchie (switch)",
       "dndEntity": "Non disturbare",
-      "cleanCarpetsFirstEntity": "Pulisci prima tappeti (switch)",
       "carpetBoostEntity": "Potenziamento tappeti (switch)",
       "selfCleanSwitchEntity": "Auto-pulizia",
       "autoDryingEntity": "Auto-asciuga",
@@ -431,5 +430,8 @@
     "lightlyDry": "Legg.\nasciutto",
     "moist": "Umido",
     "wet": "Bagnato"
+  },
+  "ss": {
+    "notConfigured": "Robot non configurato"
   }
 }

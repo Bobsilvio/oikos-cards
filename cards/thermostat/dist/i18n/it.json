@@ -1,16 +1,30 @@
 {
   "mode": {
-    "heat":     "Caldo",
-    "cool":     "Freddo",
-    "auto":     "Auto",
-    "heat_cool":"H+C",
+    "heat": "Caldo",
+    "cool": "Freddo",
+    "auto": "Auto",
+    "heat_cool": "H+C",
     "fan_only": "Ventola",
-    "dry":      "Asciuga"
+    "dry": "Asciuga"
   },
   "noEntity": "Configura un'entità climate in ⚙",
-
   "settings": {
     "entityLabel": "Entità clima",
     "nameLabel": "Nome visualizzato (opzionale)"
+  },
+  "ss": {
+    "noEntity": "Termostato non configurato",
+    "off": "Spento",
+    "unavailable": "Non disponibile",
+    "target": "Obiettivo",
+    "action": {
+      "heating": "Riscalda",
+      "cooling": "Raffresca",
+      "drying": "Deumidifica",
+      "fan": "Ventola",
+      "idle": "In attesa",
+      "preheating": "Preriscalda",
+      "defrosting": "Sbrinamento"
+    }
   }
 }

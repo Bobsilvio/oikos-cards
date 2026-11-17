@@ -11,7 +11,6 @@
   "configHint": "Configure entities in ⚙",
   "statMinShort": "min",
   "statMaxShort": "max",
-
   "modal": {
     "range1h": "1 hour",
     "range24h": "24 hours",
@@ -24,7 +23,6 @@
     "statMax": "Max",
     "close": "Close"
   },
-
   "settings": {
     "sectionRoom": "Room",
     "sectionGauge": "Gauge",
@@ -60,5 +58,8 @@
     "gaugeLabelPlaceholder": "e.g. Temperature",
     "gaugeUnitPlaceholder": "e.g. °C",
     "badgeUnitPlaceholder": "e.g. %"
+  },
+  "ss": {
+    "notConfigured": "No sensors configured"
   }
 }

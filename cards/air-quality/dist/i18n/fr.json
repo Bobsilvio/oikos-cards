@@ -32,5 +32,13 @@
     "fieldDescription": "Description",
     "sensorLabelPlaceholder": "ex. CO2",
     "sensorUnitPlaceholder": "ex. ppm"
+  },
+  "ss": {
+    "notConfigured": "Aucun capteur IQA configuré",
+    "zone1": "Excellente",
+    "zone2": "Bonne",
+    "zone3": "Modérée",
+    "zone4": "Mauvaise",
+    "zone5": "Très mauvaise"
   }
 }

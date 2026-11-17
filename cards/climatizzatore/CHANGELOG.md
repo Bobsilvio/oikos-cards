@@ -2,6 +2,15 @@
 
 Tutte le modifiche rilevanti di questa card.
 
+## [1.2.0] - 2026-11-17
+### Added
+- **Versione screensaver.** Messa nello screensaver, la card non mostra più
+  intestazione, tasti, modalità e timer: solo l'icona della modalità, la
+  temperatura della stanza grande e, acceso, la modalità nel suo colore con la
+  temperatura target (più l'umidità, se mostrata). Spento resta la temperatura
+  della stanza con un «Spento» discreto. Serve Oikos 2.6.98 o successivo; le
+  versioni precedenti continuano a mostrare la card normale.
+
 ## [1.1.4] - 2026-08-13
 
 ### Changed

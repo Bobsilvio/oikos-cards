@@ -12,7 +12,7 @@
  *
  */
 import { useState, useEffect, useId, useRef } from 'react'
-import { useDashboard, useCardConfig, registerCardTranslations, useT } from '@oikos/sdk'
+import { useDashboard, useCardConfig, registerCardTranslations, useT, useCardSurface } from '@oikos/sdk'
 import it from './i18n/it.json'
 import en from './i18n/en.json'
 import de from './i18n/de.json'
@@ -32,6 +32,11 @@ import SensorDetailModal from './SensorDetailModal'
 // inizializzata — "cannot access X before initialization", con la card
 // che non si apriva.
 registerCardTranslations('card-room-sensor', { it, en, de, es, fr })
+
+// Oikos < SDK 1.5 non ha useCardSurface: lì la card è sempre "da plancia".
+// Scelto una volta all'avvio, quindi l'ordine degli hook non cambia mai.
+const NO_SURFACE = { isScreensaver: false, theme: 'dark' }
+const useSurface = typeof useCardSurface === 'function' ? useCardSurface : () => NO_SURFACE
 
 const DEFAULT = {
   label:         '',
@@ -376,6 +381,7 @@ export default function RoomSensorCard({ cardId }) {
   const { dark, getFloat, haStates, fetchHistory, connected } = useDashboard()
   const [cfg]   = useCardConfig(cardId, DEFAULT)
   const { t } = useT('card-room-sensor')
+  const surface = useSurface()
   const uid     = useId().replace(/:/g, '')
   const [detail, setDetail] = useState(null)
 
@@ -441,6 +447,57 @@ export default function RoomSensorCard({ cardId }) {
     return () => cleanups.forEach(c => c?.())
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gauges.length, gauges.map(g => g.entity).join(',')])
+
+  // ── Versione screensaver: nome stanza, temperatura grande, resto piccolo ──
+  if (surface.isScreensaver) {
+    const shadow = surface.theme === 'light' ? 'none' : '0 1px 3px rgba(0,0,0,.45), 0 0 18px rgba(0,0,0,.3)'
+    const fmt = (s, dflt) => {
+      const v = s.entity ? getFloat(s.entity) : null
+      if (v == null) return null
+      const unit = s.unit ?? haStates?.[s.entity]?.attributes?.unit_of_measurement ?? ''
+      return { v: v.toFixed(s.decimals ?? dflt), unit, icon: (s.icon || 'circle').replace(/^mdi:/, ''), color: s.color }
+    }
+    const isTemp = (g) => haStates?.[g.entity]?.attributes?.device_class === 'temperature' || /°/.test(g.unit ?? '')
+    const main   = gauges.find(isTemp) ?? gauges[0]
+    const mainV  = main ? fmt(main, 1) : null
+    const others = [
+      ...gauges.filter(g => g !== main).map(g => fmt(g, 1)),
+      ...badges.map(b => fmt(b, 0)),
+    ].filter(Boolean)
+    const nameSize = roomName.length <= 16 ? 13 : 12
+    return (
+      <div style={{ padding: '18px 22px', color: 'var(--text-primary)', textShadow: shadow }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 9, fontSize: nameSize, fontWeight: 600, letterSpacing: '.28em', textTransform: 'uppercase', color: 'var(--text-muted)', overflowWrap: 'anywhere' }}>
+          <MdiIcon name={iconName} size={16} color="currentColor" opacity={1}/>
+          {roomName}
+        </div>
+        {!gauges.length ? (
+          <div style={{ marginTop: 14, fontSize: 16, color: 'var(--text-muted)' }}>{t('ss.notConfigured')}</div>
+        ) : (
+          <>
+            <div style={{
+              marginTop: 8, fontSize: 64, lineHeight: 1, color: mainV ? 'var(--text-primary)' : 'var(--text-muted)',
+              fontFamily: 'var(--ss-display, inherit)', fontWeight: 'var(--ss-display-w, 300)',
+              letterSpacing: 'var(--ss-display-track, -0.03em)', fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap',
+            }}>
+              {mainV ? mainV.v : '—'}
+              {mainV?.unit && <span style={{ fontSize: 28, marginLeft: 4, color: 'var(--text-secondary)' }}>{mainV.unit}</span>}
+            </div>
+            {others.length > 0 && (
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px 18px', marginTop: 12, fontSize: 17, color: 'var(--text-secondary)', fontVariantNumeric: 'tabular-nums' }}>
+                {others.map((o, i) => (
+                  <span key={i} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, whiteSpace: 'nowrap' }}>
+                    <MdiIcon name={o.icon} size={18} color={o.color || 'currentColor'} opacity={o.color ? 1 : 0.8}/>
+                    {o.v}{o.unit && <span style={{ fontSize: 13, color: 'var(--text-muted)' }}>{o.unit}</span>}
+                  </span>
+                ))}
+              </div>
+            )}
+          </>
+        )}
+      </div>
+    )
+  }
 
   if (!gauges.length) return <EmptyState dark={dark}/>
 

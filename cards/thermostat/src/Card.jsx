@@ -4,11 +4,25 @@
  * Click fiamma = toggle on/off.
  */
 import { useState, useRef, useCallback } from 'react'
-import { useDashboard, useCardConfig, registerCardTranslations, useT } from '@oikos/sdk'
+import { useDashboard, useCardConfig, registerCardTranslations, useT, useCardSurface } from '@oikos/sdk'
 import it from './i18n/it.json'
 import en from './i18n/en.json'
+import de from './i18n/de.json'
+import es from './i18n/es.json'
+import fr from './i18n/fr.json'
 
-registerCardTranslations('card-thermostat', { it, en })
+registerCardTranslations('card-thermostat', { it, en, de, es, fr })
+
+// Oikos < SDK 1.5 non ha useCardSurface: lì la card è sempre "da plancia".
+// Scelto una volta all'avvio, quindi l'ordine degli hook non cambia mai.
+const NO_SURFACE = { isScreensaver: false, theme: 'dark' }
+const useSurface = typeof useCardSurface === 'function' ? useCardSurface : () => NO_SURFACE
+
+// Colori modalità (stessi della card da plancia) e stati di hvac_action che
+// significano "sta lavorando adesso".
+const SS_ACCENT = { heat: '#f97316', cool: '#3b82f6', auto: '#8b5cf6', heat_cool: '#f97316', fan_only: '#06b6d4', dry: '#84cc16' }
+const SS_WORKING = new Set(['heating', 'cooling', 'drying', 'fan', 'preheating', 'defrosting'])
+const SS_PULSE = { animation: 'oikos-thermo-pulse 1.6s ease-in-out infinite' }
 
 const DEFAULT_CONFIG = { entityId: '', label: '' }
 
@@ -145,6 +159,7 @@ export default function ThermostatCard({ cardId }) {
   const { dark, getState, getAttr, callService } = useDashboard()
   const [config]  = useCardConfig(cardId ?? 'thermostat', DEFAULT_CONFIG)
   const { t } = useT('card-thermostat')
+  const surface = useSurface()
   const [sliderT, setSliderT] = useState(null)
 
   const id = config.entityId
@@ -154,6 +169,60 @@ export default function ThermostatCard({ cardId }) {
     if (t == null || !id) return
     callService('climate', 'set_temperature', id, { temperature: parseFloat((Math.round(t / step) * step).toFixed(1)) })
   }, [id, callService, step])
+
+  // ── Versione screensaver: da lontano, senza gauge né slider ──────────────
+  // Dopo TUTTI gli hook: qui sotto non ne viene chiamato nessuno.
+  if (surface.isScreensaver) {
+    const shadow = surface.theme === 'light' ? 'none' : '0 1px 3px rgba(0,0,0,.45), 0 0 18px rgba(0,0,0,.3)'
+    const label = { fontSize: 13, fontWeight: 600, letterSpacing: '.28em', textTransform: 'uppercase' }
+    if (!id) {
+      return (
+        <div style={{ padding: '18px 22px', color: 'var(--text-muted)', fontSize: 16, textShadow: shadow }}>
+          {t('ss.noEntity')}
+        </div>
+      )
+    }
+    const ssMode   = getState(id) ?? 'off'
+    const ssUnav   = ssMode === 'unavailable' || ssMode === 'unknown'
+    const ssOff    = ssMode === 'off' || ssUnav
+    const ssCur    = getAttr(id, 'current_temperature')
+    const ssTarget = getAttr(id, 'temperature')
+    const ssAction = getAttr(id, 'hvac_action')
+    const ssName   = config.label || getAttr(id, 'friendly_name') || id
+    const ssAccent = SS_ACCENT[ssMode] ?? 'var(--amber)'
+    const working  = !ssOff && SS_WORKING.has(ssAction)
+    const curTxt   = typeof ssCur === 'number' ? `${ssCur.toFixed(1)}°` : '—'
+    const modeTxt  = ssUnav ? t('ss.unavailable') : ssOff ? t('ss.off') : (SS_ACCENT[ssMode] ? t(`mode.${ssMode}`) : ssMode)
+    const actTxt   = !ssOff && (SS_WORKING.has(ssAction) || ssAction === 'idle') ? t(`ss.action.${ssAction}`) : null
+    const nameSize = ssName.length <= 18 ? 13 : 12
+    return (
+      <div style={{ padding: '18px 22px', color: 'var(--text-primary)', textShadow: shadow }}>
+        <style>{'@keyframes oikos-thermo-pulse{0%,100%{opacity:1}50%{opacity:.3}}'}</style>
+        <div style={{ ...label, fontSize: nameSize, display: 'flex', alignItems: 'center', gap: 9, color: 'var(--text-muted)', overflowWrap: 'anywhere' }}>
+          {working && (
+            <span style={{ ...SS_PULSE, width: 8, height: 8, borderRadius: '50%', flexShrink: 0, background: ssAccent, boxShadow: `0 0 12px ${ssAccent}` }}/>
+          )}
+          {ssName}
+        </div>
+        <div style={{
+          marginTop: 10, fontSize: 64, lineHeight: 1, fontVariantNumeric: 'tabular-nums',
+          fontFamily: 'var(--ss-display, inherit)', fontWeight: 'var(--ss-display-w, 300)',
+          letterSpacing: 'var(--ss-display-track, -0.03em)',
+          color: ssOff ? 'var(--text-secondary)' : 'var(--text-primary)',
+        }}>
+          {curTxt}
+        </div>
+        <div style={{ marginTop: 12, fontSize: 17, fontWeight: 600, color: ssOff ? 'var(--text-muted)' : ssAccent }}>
+          {modeTxt}{actTxt && <span style={{ color: 'var(--text-secondary)', fontWeight: 400 }}>{` · ${actTxt}`}</span>}
+        </div>
+        {!ssOff && typeof ssTarget === 'number' && (
+          <div style={{ marginTop: 4, fontSize: 16, color: 'var(--text-secondary)', fontVariantNumeric: 'tabular-nums' }}>
+            {t('ss.target')} {ssTarget.toFixed(1)}°
+          </div>
+        )}
+      </div>
+    )
+  }
 
   if (!id) return (
     <div style={{

@@ -17,5 +17,8 @@
     "consToday": "Consumo diario (kWh)",
     "gridFromToday": "Consumo de red (kWh)",
     "gridToToday": "Vertida a la red (kWh)"
+  },
+  "ss": {
+    "label": "Producido ayer"
   }
 }

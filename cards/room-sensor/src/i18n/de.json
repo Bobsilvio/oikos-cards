@@ -58,5 +58,8 @@
     "gaugeLabelPlaceholder": "z.B. Temperatur",
     "gaugeUnitPlaceholder": "z.B. °C",
     "badgeUnitPlaceholder": "z.B. %"
+  },
+  "ss": {
+    "notConfigured": "Keine Sensoren konfiguriert"
   }
 }

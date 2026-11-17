@@ -58,5 +58,8 @@
     "gaugeLabelPlaceholder": "ex. Température",
     "gaugeUnitPlaceholder": "ex. °C",
     "badgeUnitPlaceholder": "ex. %"
+  },
+  "ss": {
+    "notConfigured": "Aucun capteur configuré"
   }
 }

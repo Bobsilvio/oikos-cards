@@ -12,7 +12,7 @@ import {
   Plus, Minus, Sun, Sparkles, AirVent, Clock, X,
   Moon, Leaf, Zap, Gauge, Home, ChevronDown, Check,
 } from 'lucide-react'
-import { useDashboard, useCardConfig, registerCardTranslations, useT } from '@oikos/sdk'
+import { useDashboard, useCardConfig, registerCardTranslations, useT, useCardSurface } from '@oikos/sdk'
 import it from './i18n/it.json'
 import en from './i18n/en.json'
 import de from './i18n/de.json'
@@ -20,6 +20,13 @@ import es from './i18n/es.json'
 import fr from './i18n/fr.json'
 
 registerCardTranslations('card-climatizzatore', { it, en, de, es, fr })
+
+// Oikos < SDK 1.5 non ha useCardSurface: lì la card è sempre "da plancia".
+// Scelto una volta all'avvio, quindi l'ordine degli hook non cambia mai.
+const NO_SURFACE = { isScreensaver: false, theme: 'dark' }
+const useSurface = typeof useCardSurface === 'function' ? useCardSurface : () => NO_SURFACE
+const SS_PULSE = { opacity: [1, 0.3, 1] }
+const SS_PULSE_T = { duration: 1.6, repeat: Infinity }
 
 const DEFAULT_CONFIG = {
   entityId:    '',                     // climate.X
@@ -80,6 +87,7 @@ export default function ClimatizzatoreCard({ cardId = 'climatizzatore' }) {
   const { dark, getState, getFloat, getAttr, callService, haStates } = useDashboard()
   const [config] = useCardConfig(cardId, DEFAULT_CONFIG)
   const { t } = useT('card-climatizzatore')
+  const surface = useSurface()
   const [busy, setBusy] = useState(null) // 'temp' | 'mode' | 'power' | 'fan'
   const [timerPanelOpen, setTimerPanelOpen] = useState(false)
   const [timerInput, setTimerInput]         = useState('')
@@ -265,6 +273,63 @@ export default function ClimatizzatoreCard({ cardId = 'climatizzatore' }) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOff])
+
+  // ── Versione screensaver: da lontano, nessun comando ──────────────────────
+  // Dopo TUTTI gli hook: qui sotto non ne viene chiamato nessuno.
+  if (surface.isScreensaver) {
+    const shadow = surface.theme === 'light' ? 'none' : '0 1px 3px rgba(0,0,0,.45), 0 0 18px rgba(0,0,0,.3)'
+    if (!id) {
+      return (
+        <div style={{ padding: '18px 22px', color: 'var(--text-muted)', fontSize: 16, textShadow: shadow }}>
+          {t('ssNoEntity')}
+        </div>
+      )
+    }
+    const unav = hvacMode === 'unavailable' || hvacMode === 'unknown'
+    const ModeIcon = preset.icon
+    const hasHum = config.showHumidity && humidity != null && Number.isFinite(Number(humidity))
+    const nameSize = displayLabel.length <= 18 ? 13 : 12
+    return (
+      <div style={{ padding: '18px 22px', color: 'var(--text-primary)', textShadow: shadow }}>
+        <div style={{
+          display: 'flex', alignItems: 'center', gap: 9, fontSize: nameSize, fontWeight: 600,
+          letterSpacing: '.28em', textTransform: 'uppercase', color: 'var(--text-muted)', overflowWrap: 'anywhere',
+        }}>
+          {!isOff && (
+            <motion.span animate={SS_PULSE} transition={SS_PULSE_T} style={{
+              width: 8, height: 8, borderRadius: '50%', flexShrink: 0, display: 'inline-block',
+              background: accent, boxShadow: `0 0 12px ${accent}`,
+            }}/>
+          )}
+          {displayLabel}
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginTop: 10 }}>
+          <ModeIcon size={40} strokeWidth={1.6} color={isOff ? 'var(--text-muted)' : accent} style={{ flexShrink: 0 }}/>
+          <div style={{
+            fontSize: 64, lineHeight: 1, fontVariantNumeric: 'tabular-nums',
+            fontFamily: 'var(--ss-display, inherit)', fontWeight: 'var(--ss-display-w, 300)',
+            letterSpacing: 'var(--ss-display-track, -0.03em)',
+            color: isOff ? 'var(--text-secondary)' : 'var(--text-primary)',
+          }}>
+            {fmtTemp(currentTemp)}°
+          </div>
+        </div>
+        <div style={{ marginTop: 12, fontSize: 17, fontWeight: 600, color: isOff ? 'var(--text-muted)' : accent }}>
+          {unav ? t('unavailable') : t(`mode.${preset.modeKey}`)}
+          {!isOff && targetTemp != null && (
+            <span style={{ color: 'var(--text-secondary)', fontWeight: 400, fontVariantNumeric: 'tabular-nums' }}>
+              {` · ${t('tempTarget')} ${fmtTemp(targetTemp)}°`}
+            </span>
+          )}
+        </div>
+        {hasHum && (
+          <div style={{ marginTop: 4, fontSize: 15, color: 'var(--text-muted)', fontVariantNumeric: 'tabular-nums' }}>
+            {t('chipHumidity')} {Math.round(Number(humidity))}%
+          </div>
+        )}
+      </div>
+    )
+  }
 
   const timerMinsLeft = timerEndsAt
     ? Math.max(0, Math.ceil((timerEndsAt - Date.now()) / 60_000))

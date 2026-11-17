@@ -1,4 +1,4 @@
-const { jsxs: a, jsx: e, Fragment: ge } = window.__OIKOS_SDK__.jsxRuntime, ra = "oikos-card-cfg-vacuum", St = {
+const { jsxs: a, jsx: e, Fragment: ue } = window.__OIKOS_SDK__.jsxRuntime, ua = "oikos-card-cfg-vacuum", Ct = {
   name: "Dreame Vacuum",
   vacuumEntity: "vacuum.ambrogio_2",
   cameraEntity: "camera.ambrogio_map",
@@ -84,15 +84,15 @@ const { jsxs: a, jsx: e, Fragment: ge } = window.__OIKOS_SDK__.jsxRuntime, ra = 
     { id: 8, name: "Salone" }
   ]
 };
-function sa() {
+function pa() {
   try {
-    const l = localStorage.getItem(ra);
-    if (l) return { ...St, ...JSON.parse(l) };
+    const l = localStorage.getItem(ua);
+    if (l) return { ...Ct, ...JSON.parse(l) };
   } catch {
   }
-  return { ...St };
+  return { ...Ct };
 }
-const la = {
+const ma = {
   docked: "In base",
   cleaning: "In pulizia",
   paused: "In pausa",
@@ -102,24 +102,24 @@ const la = {
   charging_completed: "Carico",
   sleeping: "Standby",
   unavailable: "N/D"
-}, da = {
+}, ga = {
   quiet: "Silenzioso",
   standard: "Standard",
   strong: "Forte",
   turbo: "Turbo",
   max: "Max",
   boost: "Boost"
-}, ca = {
+}, ha = {
   sweeping: "Aspira",
   mopping: "Mocio",
   sweeping_and_mopping: "Aspira+Lava",
   mopping_after_sweeping: "Mocio dopo",
   customized_cleaning: "Personalizza"
-}, ua = {
+}, ya = {
   cold: "Freddo",
   warm: "Tiepido",
   hot: "Caldo"
-}, pa = {
+}, va = {
   low: "Bassa",
   medium: "Media",
   high: "Alta",
@@ -129,11 +129,11 @@ const la = {
   by_area_desc: "Lava il mocio ogni tot metro quadro pulito",
   by_time_desc: "Lava il mocio ogni tot minuti di pulizia",
   by_room_desc: "Lava il mocio al termine di ogni stanza"
-}, ma = {
+}, fa = {
   intensive: "Intensivo",
   by_area: "Per area",
   by_time: "Per tempo"
-}, ga = {
+}, ba = {
   installed: "OK",
   available: "OK",
   not_available: "N/D",
@@ -152,14 +152,14 @@ const la = {
   reset_required: "Reset necessario",
   dirty: "Sporco",
   clean: "Pulito"
-}, ha = {
+}, xa = {
   on: "Sì",
   off: "No"
-}, ya = {
+}, wa = {
   title: "Mappa",
   refreshRate: "aggiorn. 5s",
   alt: "Mappa aspirapolvere"
-}, va = {
+}, Ea = {
   customize: "Personalizza",
   geniusDesc: "Il robot ottimizza automaticamente la pulizia in base al tipo di pavimento",
   deepClean: "Pulizia profonda",
@@ -167,9 +167,9 @@ const la = {
   scopeAll: "Tutto",
   scopeZone: "Zona",
   zoneComingSoon: "Pulizia per zona — prossimamente"
-}, fa = {
+}, Sa = {
   progress: "Progresso"
-}, ba = {
+}, za = {
   cleaning: "Pulizia",
   cleanMode: "Modalità pulizia",
   suction: "Potenza aspirazione",
@@ -180,24 +180,24 @@ const la = {
   quickSettings: "Impostazioni",
   totalStats: "Statistiche totali",
   allOk: "OK"
-}, xa = {
+}, Da = {
   start: "Avvia",
   resume: "Riprendi",
   pause: "Pausa",
   stop: "Stop",
   base: "Base"
-}, wa = {
+}, Ca = {
   allHome: "Tutta la casa",
   startAll: "Avvia pulizia completa",
   startN_one: "Avvia {{count}} stanza",
   startN_other: "Avvia {{count}} stanze",
   noRoomsHint: "Aggiungi le stanze nelle impostazioni della card"
-}, Ea = {
+}, ka = {
   water: "Acqua",
   drying: "Asciugatura",
   mopFreq: "Freq. mop",
   route: "Percorso"
-}, Sa = {
+}, Aa = {
   autoEmpty: "Vuotatura",
   selfWash: "Lavaggio",
   drainage: "Scarico",
@@ -207,14 +207,14 @@ const la = {
   dirtyWater: "Acqua sp.",
   hotWater: "Acqua cal.",
   lowWater: "Livello"
-}, za = {
+}, Ma = {
   mainBrush: "Sp. principale",
   sideBrush: "Sp. laterale",
   filter: "Filtro",
   sensors: "Sensori",
   mopPadLife: "Mop pad",
   silverIon: "Argento ionico"
-}, Da = {
+}, _a = {
   dnd: "Non disturb.",
   carpetBoost: "Potenziamento tappeti",
   carpetBoostDesc: "Il robot aumenta la potenza di aspirazione per pulire i tappeti, tranne quando si imposta il livello di aspirazione su Silenzioso.",
@@ -227,12 +227,12 @@ const la = {
   obstacle: "Evita ostacoli",
   resume: "Riprendi auto",
   cleanGenius: "CleanGenius"
-}, Ca = {
+}, Ta = {
   cleanings: "Pulizie",
   totalArea: "Area tot.",
   totalTime: "Ore tot.",
   firstClean: "Prima pulizia:"
-}, ka = {
+}, Ra = {
   baseTitle: "Stazione base",
   infoStazione: "Informazioni sulla stazione base",
   attivitaBase: "Attività base",
@@ -387,7 +387,7 @@ const la = {
   zonaConfirmMsg: "La pulizia a zone può essere utilizzata solo in modalità Personalizzata. Passare alla pulizia personalizzata?",
   zonaConfirmCancel: "Annulla",
   zonaConfirmSwitch: "Interruttore"
-}, Aa = {
+}, La = {
   collisionAvoidance: "Modalità Prevenzione collisioni",
   collisionAvoidanceDesc: "Dopo che è stata attivata questa funzione, il robot riduce le collisioni con pareti, mobili e ostacoli e l'efficienza e la copertura della pulizia saranno leggermente ridotte.",
   autoReclLabel: "Pulizia automatica ripetuta",
@@ -406,7 +406,7 @@ const la = {
   floorDirectionWarning: "Quando un'area richiede più passaggi di pulizia, viene eseguito uno schema di pulizia a forma di S incrociata.",
   stainAvoidance: "Riconoscimento delle macchie (funzione di laboratorio)",
   stainAvoidanceDesc: "Il robot riconosce e cerca di trattare le macchie sul pavimento durante la pulizia."
-}, Ma = {
+}, Wa = {
   groups: {
     main: "Principale",
     session: "Sessione corrente",
@@ -497,36 +497,39 @@ const la = {
   roomIdPlaceholder: "ID",
   roomNamePlaceholder: "Nome stanza",
   roomsHint: "L'ID HA si trova nelle entità select.*_room_N_name dove N è il numero. Integrazione Tasshack: usa vacuum.send_command → clean_segment."
-}, _a = {
+}, Ia = {
   lightlyDry: `Legg.
 asciutto`,
   moist: "Umido",
   wet: "Bagnato"
-}, Ta = {
-  state: la,
-  suction: da,
-  cleanMode: ca,
-  waterTemp: ua,
-  freq: pa,
-  route: ma,
-  stationStatus: ga,
-  sw: ha,
-  map: ya,
-  cleaning: va,
-  session: fa,
-  sections: ba,
-  controls: xa,
-  rooms: wa,
-  modeBadges: Ea,
-  stationChips: Sa,
-  consumables: za,
-  switches: Da,
-  totals: Ca,
-  dreame: ka,
-  floor: Aa,
-  settings: Ma,
-  humSlider: _a
-}, Ra = {
+}, Ba = {
+  notConfigured: "Robot non configurato"
+}, qa = {
+  state: ma,
+  suction: ga,
+  cleanMode: ha,
+  waterTemp: ya,
+  freq: va,
+  route: fa,
+  stationStatus: ba,
+  sw: xa,
+  map: wa,
+  cleaning: Ea,
+  session: Sa,
+  sections: za,
+  controls: Da,
+  rooms: Ca,
+  modeBadges: ka,
+  stationChips: Aa,
+  consumables: Ma,
+  switches: _a,
+  totals: Ta,
+  dreame: Ra,
+  floor: La,
+  settings: Wa,
+  humSlider: Ia,
+  ss: Ba
+}, Pa = {
   docked: "Docked",
   cleaning: "Cleaning",
   paused: "Paused",
@@ -536,24 +539,24 @@ asciutto`,
   charging_completed: "Charged",
   sleeping: "Standby",
   unavailable: "N/A"
-}, La = {
+}, Ha = {
   quiet: "Quiet",
   standard: "Standard",
   strong: "Strong",
   turbo: "Turbo",
   max: "Max",
   boost: "Boost"
-}, Wa = {
+}, Fa = {
   sweeping: "Sweep",
   mopping: "Mop",
   sweeping_and_mopping: "Sweep+Mop",
   mopping_after_sweeping: "Mop after",
   customized_cleaning: "Custom"
-}, Ia = {
+}, Na = {
   cold: "Cold",
   warm: "Warm",
   hot: "Hot"
-}, Ba = {
+}, Oa = {
   low: "Low",
   medium: "Medium",
   high: "High",
@@ -563,11 +566,11 @@ asciutto`,
   by_area_desc: "Washes mop pad after cleaning a set area",
   by_time_desc: "Washes mop pad after a set cleaning time",
   by_room_desc: "Washes mop pad after each room"
-}, qa = {
+}, $a = {
   intensive: "Intensive",
   by_area: "By area",
   by_time: "By time"
-}, Pa = {
+}, Ga = {
   installed: "OK",
   available: "OK",
   not_available: "N/A",
@@ -586,14 +589,14 @@ asciutto`,
   reset_required: "Reset needed",
   dirty: "Dirty",
   clean: "Clean"
-}, Ha = {
+}, ja = {
   on: "Yes",
   off: "No"
-}, Fa = {
+}, Va = {
   title: "Map",
   refreshRate: "refresh 5s",
   alt: "Vacuum map"
-}, Na = {
+}, Za = {
   customize: "Customize",
   geniusDesc: "The robot automatically optimizes cleaning based on floor type",
   deepClean: "Deep clean",
@@ -601,9 +604,9 @@ asciutto`,
   scopeAll: "All",
   scopeZone: "Zone",
   zoneComingSoon: "Zone cleaning — coming soon"
-}, Oa = {
+}, Qa = {
   progress: "Progress"
-}, $a = {
+}, Ka = {
   cleaning: "Cleaning",
   cleanMode: "Clean mode",
   suction: "Suction power",
@@ -614,24 +617,24 @@ asciutto`,
   quickSettings: "Settings",
   totalStats: "Total statistics",
   allOk: "OK"
-}, Ga = {
+}, Ua = {
   start: "Start",
   resume: "Resume",
   pause: "Pause",
   stop: "Stop",
   base: "Base"
-}, ja = {
+}, Ya = {
   allHome: "Whole house",
   startAll: "Start full clean",
   startN_one: "Start {{count}} room",
   startN_other: "Start {{count}} rooms",
   noRoomsHint: "Add rooms in the card settings"
-}, Va = {
+}, Xa = {
   water: "Water",
   drying: "Drying",
   mopFreq: "Mop freq.",
   route: "Route"
-}, Za = {
+}, Ja = {
   autoEmpty: "Emptying",
   selfWash: "Washing",
   drainage: "Drainage",
@@ -641,14 +644,14 @@ asciutto`,
   dirtyWater: "Dirty water",
   hotWater: "Hot water",
   lowWater: "Level"
-}, Qa = {
+}, ei = {
   mainBrush: "Main brush",
   sideBrush: "Side brush",
   filter: "Filter",
   sensors: "Sensors",
   mopPadLife: "Mop pad",
   silverIon: "Silver ion"
-}, Ka = {
+}, ti = {
   dnd: "Do not disturb",
   carpetBoost: "Carpet boost",
   carpetBoostDesc: "The robot increases suction power to clean carpets, except when suction level is set to Quiet.",
@@ -661,12 +664,12 @@ asciutto`,
   obstacle: "Avoid obstacles",
   resume: "Auto-resume",
   cleanGenius: "CleanGenius"
-}, Ua = {
+}, ai = {
   cleanings: "Cleanings",
   totalArea: "Total area",
   totalTime: "Total time",
   firstClean: "First clean:"
-}, Ya = {
+}, ii = {
   baseTitle: "Base station",
   infoStazione: "Base station information",
   attivitaBase: "Base activities",
@@ -821,7 +824,7 @@ asciutto`,
   zonaConfirmMsg: "Zone cleaning can only be used in Customize mode. Switch to customize cleaning?",
   zonaConfirmCancel: "Cancel",
   zonaConfirmSwitch: "Switch"
-}, Xa = {
+}, ni = {
   collisionAvoidance: "Collision avoidance mode",
   collisionAvoidanceDesc: "After enabling this function, the robot reduces collisions with walls, furniture and obstacles, and cleaning efficiency and coverage will be slightly reduced.",
   autoReclLabel: "Auto repeated cleaning",
@@ -840,7 +843,7 @@ asciutto`,
   floorDirectionWarning: "When an area requires more cleaning passes, a criss-cross S-shaped cleaning pattern is used.",
   stainAvoidance: "Stain recognition (lab feature)",
   stainAvoidanceDesc: "The robot recognises and attempts to treat stains on the floor during cleaning."
-}, Ja = {
+}, oi = {
   groups: {
     main: "Main",
     session: "Current session",
@@ -931,36 +934,39 @@ asciutto`,
   roomIdPlaceholder: "ID",
   roomNamePlaceholder: "Room name",
   roomsHint: "The HA ID is found in select.*_room_N_name entities where N is the number. Tasshack integration: use vacuum.send_command → clean_segment."
-}, ei = {
+}, ri = {
   lightlyDry: `Slightly
 dry`,
   moist: "Moist",
   wet: "Wet"
-}, ti = {
-  state: Ra,
-  suction: La,
-  cleanMode: Wa,
-  waterTemp: Ia,
-  freq: Ba,
-  route: qa,
-  stationStatus: Pa,
-  sw: Ha,
-  map: Fa,
-  cleaning: Na,
-  session: Oa,
-  sections: $a,
-  controls: Ga,
-  rooms: ja,
-  modeBadges: Va,
-  stationChips: Za,
-  consumables: Qa,
-  switches: Ka,
-  totals: Ua,
-  dreame: Ya,
-  floor: Xa,
-  settings: Ja,
-  humSlider: ei
-}, ai = {
+}, si = {
+  notConfigured: "Robot not configured"
+}, li = {
+  state: Pa,
+  suction: Ha,
+  cleanMode: Fa,
+  waterTemp: Na,
+  freq: Oa,
+  route: $a,
+  stationStatus: Ga,
+  sw: ja,
+  map: Va,
+  cleaning: Za,
+  session: Qa,
+  sections: Ka,
+  controls: Ua,
+  rooms: Ya,
+  modeBadges: Xa,
+  stationChips: Ja,
+  consumables: ei,
+  switches: ti,
+  totals: ai,
+  dreame: ii,
+  floor: ni,
+  settings: oi,
+  humSlider: ri,
+  ss: si
+}, ci = {
   docked: "In Basis",
   cleaning: "Reinigt",
   paused: "Pausiert",
@@ -970,24 +976,24 @@ dry`,
   charging_completed: "Geladen",
   sleeping: "Standby",
   unavailable: "N/V"
-}, ii = {
+}, di = {
   quiet: "Leise",
   standard: "Standard",
   strong: "Stark",
   turbo: "Turbo",
   max: "Max",
   boost: "Boost"
-}, ni = {
+}, ui = {
   sweeping: "Saugen",
   mopping: "Wischen",
   sweeping_and_mopping: "Saugen+Wischen",
   mopping_after_sweeping: "Wischen danach",
   customized_cleaning: "Anpassen"
-}, oi = {
+}, pi = {
   cold: "Kalt",
   warm: "Warm",
   hot: "Heiß"
-}, ri = {
+}, mi = {
   low: "Niedrig",
   medium: "Mittel",
   high: "Hoch",
@@ -997,11 +1003,11 @@ dry`,
   by_area_desc: "Wäscht den Mopp nach jeweils einer bestimmten Anzahl gereinigter Quadratmeter",
   by_time_desc: "Wäscht den Mopp nach jeweils einer bestimmten Anzahl Reinigungsminuten",
   by_room_desc: "Wäscht den Mopp nach Abschluss jedes Zimmers"
-}, si = {
+}, gi = {
   intensive: "Intensiv",
   by_area: "Nach Bereich",
   by_time: "Nach Zeit"
-}, li = {
+}, hi = {
   installed: "OK",
   available: "OK",
   not_available: "N/V",
@@ -1020,14 +1026,14 @@ dry`,
   reset_required: "Reset erforderlich",
   dirty: "Schmutzig",
   clean: "Sauber"
-}, di = {
+}, yi = {
   on: "Ja",
   off: "Nein"
-}, ci = {
+}, vi = {
   title: "Karte",
   refreshRate: "Aktual. 5s",
   alt: "Staubsauger-Karte"
-}, ui = {
+}, fi = {
   customize: "Anpassen",
   geniusDesc: "Der Roboter optimiert die Reinigung automatisch je nach Bodentyp",
   deepClean: "Tiefenreinigung",
@@ -1035,9 +1041,9 @@ dry`,
   scopeAll: "Alle",
   scopeZone: "Zone",
   zoneComingSoon: "Zonenreinigung — demnächst"
-}, pi = {
+}, bi = {
   progress: "Fortschritt"
-}, mi = {
+}, xi = {
   cleaning: "Reinigung",
   cleanMode: "Reinigungsmodus",
   suction: "Saugleistung",
@@ -1048,24 +1054,24 @@ dry`,
   quickSettings: "Einstellungen",
   totalStats: "Gesamtstatistiken",
   allOk: "OK"
-}, gi = {
+}, wi = {
   start: "Starten",
   resume: "Fortsetzen",
   pause: "Pause",
   stop: "Stop",
   base: "Basis"
-}, hi = {
+}, Ei = {
   allHome: "Gesamtes Haus",
   startAll: "Vollständige Reinigung starten",
   startN_one: "{{count}} Zimmer starten",
   startN_other: "{{count}} Zimmer starten",
   noRoomsHint: "Füge die Zimmer in den Karteneinstellungen hinzu"
-}, yi = {
+}, Si = {
   water: "Wasser",
   drying: "Trocknung",
   mopFreq: "Mop-Freq.",
   route: "Route"
-}, vi = {
+}, zi = {
   autoEmpty: "Entleerung",
   selfWash: "Reinigung",
   drainage: "Abfluss",
@@ -1075,14 +1081,14 @@ dry`,
   dirtyWater: "Schmutzwasser",
   hotWater: "Warmwasser",
   lowWater: "Füllstand"
-}, fi = {
+}, Di = {
   mainBrush: "Hauptbürste",
   sideBrush: "Seitenbürste",
   filter: "Filter",
   sensors: "Sensoren",
   mopPadLife: "Mop-Pad",
   silverIon: "Silberionen"
-}, bi = {
+}, Ci = {
   dnd: "Nicht stören",
   carpetBoost: "Teppich-Boost",
   carpetBoostDesc: "Der Roboter erhöht die Saugleistung für Teppiche, außer wenn die Saugstufe auf Leise eingestellt ist.",
@@ -1095,12 +1101,12 @@ dry`,
   obstacle: "Hindernisse vermeiden",
   resume: "Auto-Fortsetzen",
   cleanGenius: "CleanGenius"
-}, xi = {
+}, ki = {
   cleanings: "Reinigungen",
   totalArea: "Gesamtfl.",
   totalTime: "Gesamtstd.",
   firstClean: "Erste Reinigung:"
-}, wi = {
+}, Ai = {
   baseTitle: "Basisstation",
   infoStazione: "Informationen zur Basisstation",
   attivitaBase: "Basis-Aktivitäten",
@@ -1255,7 +1261,7 @@ dry`,
   zonaConfirmMsg: "Zonenreinigung kann nur im Anpassen-Modus verwendet werden. Zur angepassten Reinigung wechseln?",
   zonaConfirmCancel: "Abbrechen",
   zonaConfirmSwitch: "Wechseln"
-}, Ei = {
+}, Mi = {
   collisionAvoidance: "Kollisionsvermeidungsmodus",
   collisionAvoidanceDesc: "Nach Aktivierung reduziert der Roboter Kollisionen mit Wänden, Möbeln und Hindernissen; Effizienz und Abdeckung können leicht sinken.",
   autoReclLabel: "Automatische Wiederholungsreinigung",
@@ -1274,7 +1280,7 @@ dry`,
   floorDirectionWarning: "Bei Bereichen mit mehreren Reinigungsdurchgängen wird ein S-förmiges Kreuzmuster verwendet.",
   stainAvoidance: "Fleckenerkennung (Laborfunktion)",
   stainAvoidanceDesc: "Der Roboter erkennt und behandelt Flecken auf dem Boden während der Reinigung."
-}, Si = {
+}, _i = {
   groups: {
     main: "Haupt",
     session: "Aktuelle Sitzung",
@@ -1365,36 +1371,39 @@ dry`,
   roomIdPlaceholder: "ID",
   roomNamePlaceholder: "Zimmername",
   roomsHint: "Die HA-ID befindet sich in den Entitäten select.*_room_N_name, wobei N die Nummer ist. Tasshack-Integration: vacuum.send_command → clean_segment verwenden."
-}, zi = {
+}, Ti = {
   lightlyDry: `Leicht
 trocken`,
   moist: "Feucht",
   wet: "Nass"
-}, Di = {
-  state: ai,
-  suction: ii,
-  cleanMode: ni,
-  waterTemp: oi,
-  freq: ri,
-  route: si,
-  stationStatus: li,
-  sw: di,
-  map: ci,
-  cleaning: ui,
-  session: pi,
-  sections: mi,
-  controls: gi,
-  rooms: hi,
-  modeBadges: yi,
-  stationChips: vi,
-  consumables: fi,
-  switches: bi,
-  totals: xi,
-  dreame: wi,
-  floor: Ei,
-  settings: Si,
-  humSlider: zi
-}, Ci = {
+}, Ri = {
+  notConfigured: "Roboter nicht konfiguriert"
+}, Li = {
+  state: ci,
+  suction: di,
+  cleanMode: ui,
+  waterTemp: pi,
+  freq: mi,
+  route: gi,
+  stationStatus: hi,
+  sw: yi,
+  map: vi,
+  cleaning: fi,
+  session: bi,
+  sections: xi,
+  controls: wi,
+  rooms: Ei,
+  modeBadges: Si,
+  stationChips: zi,
+  consumables: Di,
+  switches: Ci,
+  totals: ki,
+  dreame: Ai,
+  floor: Mi,
+  settings: _i,
+  humSlider: Ti,
+  ss: Ri
+}, Wi = {
   docked: "En base",
   cleaning: "Limpiando",
   paused: "En pausa",
@@ -1404,24 +1413,24 @@ trocken`,
   charging_completed: "Cargado",
   sleeping: "Standby",
   unavailable: "N/D"
-}, ki = {
+}, Ii = {
   quiet: "Silencioso",
   standard: "Estándar",
   strong: "Fuerte",
   turbo: "Turbo",
   max: "Max",
   boost: "Boost"
-}, Ai = {
+}, Bi = {
   sweeping: "Aspirar",
   mopping: "Fregar",
   sweeping_and_mopping: "Aspirar+Fregar",
   mopping_after_sweeping: "Fregar después",
   customized_cleaning: "Personalizar"
-}, Mi = {
+}, qi = {
   cold: "Frío",
   warm: "Tibio",
   hot: "Caliente"
-}, _i = {
+}, Pi = {
   low: "Baja",
   medium: "Media",
   high: "Alta",
@@ -1431,11 +1440,11 @@ trocken`,
   by_area_desc: "Lava la mopa cada cierto número de metros cuadrados limpiados",
   by_time_desc: "Lava la mopa cada cierto número de minutos de limpieza",
   by_room_desc: "Lava la mopa al terminar cada habitación"
-}, Ti = {
+}, Hi = {
   intensive: "Intensivo",
   by_area: "Por área",
   by_time: "Por tiempo"
-}, Ri = {
+}, Fi = {
   installed: "OK",
   available: "OK",
   not_available: "N/D",
@@ -1454,14 +1463,14 @@ trocken`,
   reset_required: "Reset necesario",
   dirty: "Sucio",
   clean: "Limpio"
-}, Li = {
+}, Ni = {
   on: "Sí",
   off: "No"
-}, Wi = {
+}, Oi = {
   title: "Mapa",
   refreshRate: "actualiz. 5s",
   alt: "Mapa aspirador"
-}, Ii = {
+}, $i = {
   customize: "Personalizar",
   geniusDesc: "El robot optimiza automáticamente la limpieza según el tipo de suelo",
   deepClean: "Limpieza profunda",
@@ -1469,9 +1478,9 @@ trocken`,
   scopeAll: "Todo",
   scopeZone: "Zona",
   zoneComingSoon: "Limpieza por zona — próximamente"
-}, Bi = {
+}, Gi = {
   progress: "Progreso"
-}, qi = {
+}, ji = {
   cleaning: "Limpieza",
   cleanMode: "Modo de limpieza",
   suction: "Potencia de aspiración",
@@ -1482,24 +1491,24 @@ trocken`,
   quickSettings: "Ajustes",
   totalStats: "Estadísticas totales",
   allOk: "OK"
-}, Pi = {
+}, Vi = {
   start: "Iniciar",
   resume: "Reanudar",
   pause: "Pausa",
   stop: "Stop",
   base: "Base"
-}, Hi = {
+}, Zi = {
   allHome: "Toda la casa",
   startAll: "Iniciar limpieza completa",
   startN_one: "Iniciar {{count}} habitación",
   startN_other: "Iniciar {{count}} habitaciones",
   noRoomsHint: "Añade las habitaciones en los ajustes de la card"
-}, Fi = {
+}, Qi = {
   water: "Agua",
   drying: "Secado",
   mopFreq: "Frec. mopa",
   route: "Recorrido"
-}, Ni = {
+}, Ki = {
   autoEmpty: "Vaciado",
   selfWash: "Lavado",
   drainage: "Desagüe",
@@ -1509,14 +1518,14 @@ trocken`,
   dirtyWater: "Agua sucia",
   hotWater: "Agua cal.",
   lowWater: "Nivel"
-}, Oi = {
+}, Ui = {
   mainBrush: "Cepillo princ.",
   sideBrush: "Cepillo lateral",
   filter: "Filtro",
   sensors: "Sensores",
   mopPadLife: "Mop pad",
   silverIon: "Plata iónica"
-}, $i = {
+}, Yi = {
   dnd: "No molestar",
   carpetBoost: "Potenciamiento alfombra",
   carpetBoostDesc: "El robot aumenta la potencia de aspiración para limpiar alfombras, excepto cuando el nivel está en Silencioso.",
@@ -1529,12 +1538,12 @@ trocken`,
   obstacle: "Evitar obstáculos",
   resume: "Reanudar auto",
   cleanGenius: "CleanGenius"
-}, Gi = {
+}, Xi = {
   cleanings: "Limpiezas",
   totalArea: "Área tot.",
   totalTime: "Horas tot.",
   firstClean: "Primera limpieza:"
-}, ji = {
+}, Ji = {
   baseTitle: "Estación base",
   infoStazione: "Información de la estación base",
   attivitaBase: "Actividades de la base",
@@ -1689,7 +1698,7 @@ trocken`,
   zonaConfirmMsg: "La limpieza por zonas solo puede usarse en modo Personalizar. ¿Cambiar a limpieza personalizada?",
   zonaConfirmCancel: "Cancelar",
   zonaConfirmSwitch: "Cambiar"
-}, Vi = {
+}, en = {
   collisionAvoidance: "Modo de prevención de colisiones",
   collisionAvoidanceDesc: "Tras activar esta función, el robot reduce las colisiones con paredes, muebles y obstáculos; la eficiencia y cobertura de limpieza pueden reducirse ligeramente.",
   autoReclLabel: "Limpieza automática repetida",
@@ -1708,7 +1717,7 @@ trocken`,
   floorDirectionWarning: "Cuando un área requiere más pasadas de limpieza, se usa un patrón en forma de S cruzada.",
   stainAvoidance: "Reconocimiento de manchas (función de laboratorio)",
   stainAvoidanceDesc: "El robot reconoce e intenta tratar las manchas en el suelo durante la limpieza."
-}, Zi = {
+}, tn = {
   groups: {
     main: "Principal",
     session: "Sesión actual",
@@ -1799,36 +1808,39 @@ trocken`,
   roomIdPlaceholder: "ID",
   roomNamePlaceholder: "Nombre habitación",
   roomsHint: "El ID HA se encuentra en las entidades select.*_room_N_name donde N es el número. Integración Tasshack: usar vacuum.send_command → clean_segment."
-}, Qi = {
+}, an = {
   lightlyDry: `Ligeramente
 seco`,
   moist: "Húmedo",
   wet: "Mojado"
-}, Ki = {
-  state: Ci,
-  suction: ki,
-  cleanMode: Ai,
-  waterTemp: Mi,
-  freq: _i,
-  route: Ti,
-  stationStatus: Ri,
-  sw: Li,
-  map: Wi,
-  cleaning: Ii,
-  session: Bi,
-  sections: qi,
-  controls: Pi,
-  rooms: Hi,
-  modeBadges: Fi,
-  stationChips: Ni,
-  consumables: Oi,
-  switches: $i,
-  totals: Gi,
-  dreame: ji,
-  floor: Vi,
-  settings: Zi,
-  humSlider: Qi
-}, Ui = {
+}, nn = {
+  notConfigured: "Robot no configurado"
+}, on = {
+  state: Wi,
+  suction: Ii,
+  cleanMode: Bi,
+  waterTemp: qi,
+  freq: Pi,
+  route: Hi,
+  stationStatus: Fi,
+  sw: Ni,
+  map: Oi,
+  cleaning: $i,
+  session: Gi,
+  sections: ji,
+  controls: Vi,
+  rooms: Zi,
+  modeBadges: Qi,
+  stationChips: Ki,
+  consumables: Ui,
+  switches: Yi,
+  totals: Xi,
+  dreame: Ji,
+  floor: en,
+  settings: tn,
+  humSlider: an,
+  ss: nn
+}, rn = {
   docked: "En base",
   cleaning: "En nettoyage",
   paused: "En pause",
@@ -1838,24 +1850,24 @@ seco`,
   charging_completed: "Chargé",
   sleeping: "Veille",
   unavailable: "N/D"
-}, Yi = {
+}, sn = {
   quiet: "Silencieux",
   standard: "Standard",
   strong: "Fort",
   turbo: "Turbo",
   max: "Max",
   boost: "Boost"
-}, Xi = {
+}, ln = {
   sweeping: "Aspirer",
   mopping: "Laver",
   sweeping_and_mopping: "Aspirer+Laver",
   mopping_after_sweeping: "Laver après",
   customized_cleaning: "Personnaliser"
-}, Ji = {
+}, cn = {
   cold: "Froid",
   warm: "Tiède",
   hot: "Chaud"
-}, en = {
+}, dn = {
   low: "Basse",
   medium: "Moyenne",
   high: "Haute",
@@ -1865,11 +1877,11 @@ seco`,
   by_area_desc: "Lave la serpillière tous les tant de mètres carrés nettoyés",
   by_time_desc: "Lave la serpillière toutes les tant de minutes de nettoyage",
   by_room_desc: "Lave la serpillière à la fin de chaque pièce"
-}, tn = {
+}, un = {
   intensive: "Intensif",
   by_area: "Par zone",
   by_time: "Par durée"
-}, an = {
+}, pn = {
   installed: "OK",
   available: "OK",
   not_available: "N/D",
@@ -1888,14 +1900,14 @@ seco`,
   reset_required: "Réinitialisation requise",
   dirty: "Sale",
   clean: "Propre"
-}, nn = {
+}, mn = {
   on: "Oui",
   off: "Non"
-}, on = {
+}, gn = {
   title: "Carte",
   refreshRate: "actualisation 5s",
   alt: "Carte aspirateur"
-}, rn = {
+}, hn = {
   customize: "Personnaliser",
   geniusDesc: "Le robot optimise automatiquement le nettoyage selon le type de sol",
   deepClean: "Nettoyage en profondeur",
@@ -1903,9 +1915,9 @@ seco`,
   scopeAll: "Tout",
   scopeZone: "Zone",
   zoneComingSoon: "Nettoyage par zone — prochainement"
-}, sn = {
+}, yn = {
   progress: "Progression"
-}, ln = {
+}, vn = {
   cleaning: "Nettoyage",
   cleanMode: "Mode de nettoyage",
   suction: "Puissance d'aspiration",
@@ -1916,24 +1928,24 @@ seco`,
   quickSettings: "Réglages",
   totalStats: "Statistiques totales",
   allOk: "OK"
-}, dn = {
+}, fn = {
   start: "Démarrer",
   resume: "Reprendre",
   pause: "Pause",
   stop: "Stop",
   base: "Base"
-}, cn = {
+}, bn = {
   allHome: "Toute la maison",
   startAll: "Lancer le nettoyage complet",
   startN_one: "Lancer {{count}} pièce",
   startN_other: "Lancer {{count}} pièces",
   noRoomsHint: "Ajoutez les pièces dans les réglages de la carte"
-}, un = {
+}, xn = {
   water: "Eau",
   drying: "Séchage",
   mopFreq: "Fréq. serpillière",
   route: "Parcours"
-}, pn = {
+}, wn = {
   autoEmpty: "Vidage",
   selfWash: "Lavage",
   drainage: "Évacuation",
@@ -1943,14 +1955,14 @@ seco`,
   dirtyWater: "Eau sale",
   hotWater: "Eau chaude",
   lowWater: "Niveau"
-}, mn = {
+}, En = {
   mainBrush: "Brosse princ.",
   sideBrush: "Brosse latérale",
   filter: "Filtre",
   sensors: "Capteurs",
   mopPadLife: "Mop pad",
   silverIon: "Ion argent"
-}, gn = {
+}, Sn = {
   dnd: "Ne pas déranger",
   carpetBoost: "Amélioration tapis",
   carpetBoostDesc: "Le robot augmente la puissance d'aspiration pour les tapis, sauf quand l'aspiration est réglée sur Silencieux.",
@@ -1963,12 +1975,12 @@ seco`,
   obstacle: "Évit. obstacles",
   resume: "Reprise auto",
   cleanGenius: "CleanGenius"
-}, hn = {
+}, zn = {
   cleanings: "Nettoyages",
   totalArea: "Surface tot.",
   totalTime: "Heures tot.",
   firstClean: "Premier nettoyage :"
-}, yn = {
+}, Dn = {
   baseTitle: "Station de base",
   infoStazione: "Informations sur la station de base",
   attivitaBase: "Activités de la base",
@@ -2123,7 +2135,7 @@ seco`,
   zonaConfirmMsg: "Le nettoyage par zone ne peut être utilisé qu'en mode Personnaliser. Passer au nettoyage personnalisé ?",
   zonaConfirmCancel: "Annuler",
   zonaConfirmSwitch: "Changer"
-}, vn = {
+}, Cn = {
   collisionAvoidance: "Mode de prévention des collisions",
   collisionAvoidanceDesc: "Après activation, le robot réduit les collisions avec les murs, meubles et obstacles ; l'efficacité et la couverture de nettoyage seront légèrement réduites.",
   autoReclLabel: "Nettoyage automatique répété",
@@ -2142,7 +2154,7 @@ seco`,
   floorDirectionWarning: "Quand une zone nécessite plus de passages, un schéma en S croisé est utilisé.",
   stainAvoidance: "Reconnaissance des taches (fonction laboratoire)",
   stainAvoidanceDesc: "Le robot reconnaît et tente de traiter les taches sur le sol pendant le nettoyage."
-}, fn = {
+}, kn = {
   groups: {
     main: "Principal",
     session: "Session en cours",
@@ -2233,70 +2245,73 @@ seco`,
   roomIdPlaceholder: "ID",
   roomNamePlaceholder: "Nom de la pièce",
   roomsHint: "L'ID HA se trouve dans les entités select.*_room_N_name où N est le numéro. Intégration Tasshack : utiliser vacuum.send_command → clean_segment."
-}, bn = {
+}, An = {
   lightlyDry: `Légèrement
 sec`,
   moist: "Humide",
   wet: "Mouillé"
-}, xn = {
-  state: Ui,
-  suction: Yi,
-  cleanMode: Xi,
-  waterTemp: Ji,
-  freq: en,
-  route: tn,
-  stationStatus: an,
-  sw: nn,
-  map: on,
-  cleaning: rn,
-  session: sn,
-  sections: ln,
-  controls: dn,
-  rooms: cn,
-  modeBadges: un,
-  stationChips: pn,
-  consumables: mn,
-  switches: gn,
-  totals: hn,
-  dreame: yn,
-  floor: vn,
-  settings: fn,
-  humSlider: bn
-}, { useState: b, useEffect: U, useRef: me, useMemo: zt } = window.__OIKOS_SDK__.React, { createPortal: wn } = window.__OIKOS_SDK__.ReactDOM, { motion: ne, AnimatePresence: _t } = window.__OIKOS_SDK__.framerMotion, { useDashboard: En, getHAConfig: mo, registerCardTranslations: Sn, useT: Tt, getOverlayRoot: zn } = window.__OIKOS_SDK__;
-Sn("card-vacuum", { it: Ta, en: ti, de: Di, es: Ki, fr: xn });
-const h = "var(--amber)", dt = "var(--amber-light)", Rt = "var(--amber-light)", Dn = "var(--green)", Cn = {
+}, Mn = {
+  notConfigured: "Robot non configuré"
+}, _n = {
+  state: rn,
+  suction: sn,
+  cleanMode: ln,
+  waterTemp: cn,
+  freq: dn,
+  route: un,
+  stationStatus: pn,
+  sw: mn,
+  map: gn,
+  cleaning: hn,
+  session: yn,
+  sections: vn,
+  controls: fn,
+  rooms: bn,
+  modeBadges: xn,
+  stationChips: wn,
+  consumables: En,
+  switches: Sn,
+  totals: zn,
+  dreame: Dn,
+  floor: Cn,
+  settings: kn,
+  humSlider: An,
+  ss: Mn
+}, { useState: w, useEffect: J, useRef: he, useMemo: kt } = window.__OIKOS_SDK__.React, { createPortal: Tn } = window.__OIKOS_SDK__.ReactDOM, { motion: ie, AnimatePresence: It } = window.__OIKOS_SDK__.framerMotion, { useDashboard: Rn, getHAConfig: Co, registerCardTranslations: Ln, useT: Bt, getOverlayRoot: Wn, useCardSurface: At } = window.__OIKOS_SDK__;
+Ln("card-vacuum", { it: qa, en: li, de: Li, es: on, fr: _n });
+const In = { isScreensaver: !1, theme: "dark" }, Bn = typeof At == "function" ? At : () => In, qn = { opacity: [1, 0.3, 1] }, Pn = { duration: 1.6, repeat: 1 / 0 }, f = "var(--amber)", mt = "var(--amber-light)", qt = "var(--amber-light)", Hn = "var(--green)", Fn = {
   docked: "var(--green)",
   charging_completed: "var(--green)",
   sleeping: "var(--text-muted)",
-  cleaning: h,
-  paused: h,
+  cleaning: f,
+  paused: f,
   returning: "var(--blue)",
   error: "var(--red)",
   idle: "var(--text-muted)"
-}, kn = (l) => Cn[l] || "#94a3b8";
-function An(l) {
-  const o = parseInt(l);
-  if (!o || isNaN(o)) return "—";
-  if (o < 60) return `${o} min`;
-  const i = Math.floor(o / 60), t = o % 60;
+}, Nn = (l) => Fn[l] || "#94a3b8";
+function Mt(l) {
+  const n = parseInt(l);
+  if (!n || isNaN(n)) return "—";
+  if (n < 60) return `${n} min`;
+  const i = Math.floor(n / 60), t = n % 60;
   return t ? `${i}h ${t}m` : `${i}h`;
 }
-const Mn = () => /* @__PURE__ */ a("svg", { width: "40", height: "40", viewBox: "0 0 40 40", fill: "none", stroke: "currentColor", strokeLinecap: "round", children: [
+const On = () => /* @__PURE__ */ a("svg", { width: "40", height: "40", viewBox: "0 0 40 40", fill: "none", stroke: "currentColor", strokeLinecap: "round", children: [
   /* @__PURE__ */ e("path", { d: "M20 20 C23 17.5 24 11.5 20.5 9.5", strokeWidth: "3.4" }),
   /* @__PURE__ */ e("path", { d: "M20 20 C23 17.5 24 11.5 20.5 9.5", transform: "rotate(120 20 20)", strokeWidth: "3.4" }),
   /* @__PURE__ */ e("path", { d: "M20 20 C23 17.5 24 11.5 20.5 9.5", transform: "rotate(240 20 20)", strokeWidth: "3.4" }),
   /* @__PURE__ */ e("circle", { cx: "20", cy: "20", r: "3.2", fill: "currentColor", stroke: "none" })
-] }), _n = () => /* @__PURE__ */ a("svg", { width: "32", height: "38", viewBox: "0 0 32 38", fill: "none", stroke: "currentColor", strokeWidth: "2.8", strokeLinecap: "round", strokeLinejoin: "round", children: [
+] }), $n = () => /* @__PURE__ */ a("svg", { width: "32", height: "38", viewBox: "0 0 32 38", fill: "none", stroke: "currentColor", strokeWidth: "2.8", strokeLinecap: "round", strokeLinejoin: "round", children: [
   /* @__PURE__ */ e("path", { d: "M16 3 C16 3 5 15 5 22 C5 28.6 10 34 16 34 C22 34 27 28.6 27 22 C27 15 16 3 16 3Z" }),
   /* @__PURE__ */ e("path", { d: "M23 9 L24.2 11.2 L26.5 12.4 L24.2 13.6 L23 15.8 L21.8 13.6 L19.5 12.4 L21.8 11.2 Z", fill: "currentColor", stroke: "none", opacity: ".7" }),
   /* @__PURE__ */ e("path", { d: "M10 19 Q11.5 14 16 12", strokeWidth: "1.8", opacity: ".45" })
-] }), Dt = () => /* @__PURE__ */ a("svg", { width: "36", height: "38", viewBox: "0 0 36 38", fill: "none", stroke: "currentColor", children: [
+] }), _t = () => /* @__PURE__ */ a("svg", { width: "36", height: "38", viewBox: "0 0 36 38", fill: "none", stroke: "currentColor", children: [
   /* @__PURE__ */ e("path", { d: "M18 3 C18 3 7 15 7 22 C7 28.3 12 33.5 18 33.5 C24 33.5 29 28.3 29 22 C29 15 18 3 18 3Z", strokeWidth: "2.5", strokeLinecap: "round", strokeLinejoin: "round" }),
   /* @__PURE__ */ e("path", { d: "M18 21 C19.8 19.8 20.3 16.5 18.5 15.5", strokeWidth: "2.3", strokeLinecap: "round" }),
   /* @__PURE__ */ e("path", { d: "M18 21 C19.8 19.8 20.3 16.5 18.5 15.5", transform: "rotate(120 18 21)", strokeWidth: "2.3", strokeLinecap: "round" }),
   /* @__PURE__ */ e("path", { d: "M18 21 C19.8 19.8 20.3 16.5 18.5 15.5", transform: "rotate(240 18 21)", strokeWidth: "2.3", strokeLinecap: "round" }),
   /* @__PURE__ */ e("circle", { cx: "18", cy: "21", r: "2", fill: "currentColor", stroke: "none" })
-] }), Ct = () => /* @__PURE__ */ a("svg", { width: "42", height: "36", viewBox: "0 0 42 36", fill: "none", stroke: "currentColor", strokeLinecap: "round", children: [
+] }), Tt = () => /* @__PURE__ */ a("svg", { width: "42", height: "36", viewBox: "0 0 42 36", fill: "none", stroke: "currentColor", strokeLinecap: "round", children: [
   /* @__PURE__ */ e("path", { d: "M11 18 C13.5 16 14.5 11 12 9.5", strokeWidth: "2.6" }),
   /* @__PURE__ */ e("path", { d: "M11 18 C13.5 16 14.5 11 12 9.5", transform: "rotate(120 11 18)", strokeWidth: "2.6" }),
   /* @__PURE__ */ e("path", { d: "M11 18 C13.5 16 14.5 11 12 9.5", transform: "rotate(240 11 18)", strokeWidth: "2.6" }),
@@ -2304,43 +2319,43 @@ const Mn = () => /* @__PURE__ */ a("svg", { width: "40", height: "40", viewBox: 
   /* @__PURE__ */ e("line", { x1: "21", y1: "9", x2: "21", y2: "27", strokeWidth: "1", opacity: ".25" }),
   /* @__PURE__ */ e("path", { d: "M34 8 C34 8 28 16 28 21 C28 24.3 30.7 27 34 27 C37.3 27 40 24.3 40 21 C40 16 34 8 34 8Z", strokeWidth: "2.3", strokeLinejoin: "round" }),
   /* @__PURE__ */ e("path", { d: "M30 18 Q31.5 14 34 13", strokeWidth: "1.5", opacity: ".4" })
-] }), Tn = () => /* @__PURE__ */ a("svg", { width: "40", height: "34", viewBox: "0 0 40 34", fill: "none", stroke: "currentColor", strokeWidth: "2.4", strokeLinecap: "round", strokeLinejoin: "round", children: [
+] }), Gn = () => /* @__PURE__ */ a("svg", { width: "40", height: "34", viewBox: "0 0 40 34", fill: "none", stroke: "currentColor", strokeWidth: "2.4", strokeLinecap: "round", strokeLinejoin: "round", children: [
   /* @__PURE__ */ e("rect", { x: "3", y: "4", width: "16", height: "26", rx: "3" }),
   /* @__PURE__ */ e("rect", { x: "15", y: "8", width: "16", height: "22", rx: "3" }),
   /* @__PURE__ */ e("circle", { cx: "9", cy: "11", r: "2", fill: "currentColor", stroke: "none", opacity: ".45" }),
   /* @__PURE__ */ e("circle", { cx: "23", cy: "17", r: "2", fill: "currentColor", stroke: "none", opacity: ".45" })
-] }), Rn = () => /* @__PURE__ */ e("svg", { width: "30", height: "30", viewBox: "0 0 32 32", fill: "none", stroke: "currentColor", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ e("path", { d: "M19 8 C12 9 7 12 7 16 C7 20 12 23 19 24 C15 22 13 19 13 16 C13 13 15 10 19 8Z", strokeWidth: "2.3" }) }), Ln = () => /* @__PURE__ */ a("svg", { width: "30", height: "30", viewBox: "0 0 32 32", fill: "none", stroke: "currentColor", strokeLinecap: "round", children: [
+] }), jn = () => /* @__PURE__ */ e("svg", { width: "30", height: "30", viewBox: "0 0 32 32", fill: "none", stroke: "currentColor", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ e("path", { d: "M19 8 C12 9 7 12 7 16 C7 20 12 23 19 24 C15 22 13 19 13 16 C13 13 15 10 19 8Z", strokeWidth: "2.3" }) }), Vn = () => /* @__PURE__ */ a("svg", { width: "30", height: "30", viewBox: "0 0 32 32", fill: "none", stroke: "currentColor", strokeLinecap: "round", children: [
   /* @__PURE__ */ e("path", { d: "M16 16 C18.5 14 19.5 9 17 7.5", strokeWidth: "3.2" }),
   /* @__PURE__ */ e("path", { d: "M16 16 C18.5 14 19.5 9 17 7.5", transform: "rotate(180 16 16)", strokeWidth: "3.2" }),
   /* @__PURE__ */ e("circle", { cx: "16", cy: "16", r: "2.5", fill: "currentColor", stroke: "none" })
-] }), Wn = () => /* @__PURE__ */ a("svg", { width: "30", height: "30", viewBox: "0 0 32 32", fill: "none", stroke: "currentColor", strokeLinecap: "round", children: [
+] }), Zn = () => /* @__PURE__ */ a("svg", { width: "30", height: "30", viewBox: "0 0 32 32", fill: "none", stroke: "currentColor", strokeLinecap: "round", children: [
   /* @__PURE__ */ e("path", { d: "M16 16 C18.5 14 19.5 9 17 7.5", strokeWidth: "3.2" }),
   /* @__PURE__ */ e("path", { d: "M16 16 C18.5 14 19.5 9 17 7.5", transform: "rotate(120 16 16)", strokeWidth: "3.2" }),
   /* @__PURE__ */ e("path", { d: "M16 16 C18.5 14 19.5 9 17 7.5", transform: "rotate(240 16 16)", strokeWidth: "3.2" }),
   /* @__PURE__ */ e("circle", { cx: "16", cy: "16", r: "2.5", fill: "currentColor", stroke: "none" })
-] }), In = () => /* @__PURE__ */ a("svg", { width: "30", height: "30", viewBox: "0 0 32 32", fill: "none", stroke: "currentColor", strokeLinecap: "round", children: [
+] }), Qn = () => /* @__PURE__ */ a("svg", { width: "30", height: "30", viewBox: "0 0 32 32", fill: "none", stroke: "currentColor", strokeLinecap: "round", children: [
   /* @__PURE__ */ e("path", { d: "M16 16 C18.5 14 19.5 9 17 7.5", strokeWidth: "3.2" }),
   /* @__PURE__ */ e("path", { d: "M16 16 C18.5 14 19.5 9 17 7.5", transform: "rotate(90 16 16)", strokeWidth: "3.2" }),
   /* @__PURE__ */ e("path", { d: "M16 16 C18.5 14 19.5 9 17 7.5", transform: "rotate(180 16 16)", strokeWidth: "3.2" }),
   /* @__PURE__ */ e("path", { d: "M16 16 C18.5 14 19.5 9 17 7.5", transform: "rotate(270 16 16)", strokeWidth: "3.2" }),
   /* @__PURE__ */ e("circle", { cx: "16", cy: "16", r: "2.5", fill: "currentColor", stroke: "none" })
-] }), Bn = () => /* @__PURE__ */ a("svg", { width: "30", height: "30", viewBox: "0 0 34 34", fill: "none", stroke: "currentColor", strokeWidth: "2.8", strokeLinecap: "round", strokeLinejoin: "round", children: [
+] }), Kn = () => /* @__PURE__ */ a("svg", { width: "30", height: "30", viewBox: "0 0 34 34", fill: "none", stroke: "currentColor", strokeWidth: "2.8", strokeLinecap: "round", strokeLinejoin: "round", children: [
   /* @__PURE__ */ e("path", { d: "M9 9 L25 9" }),
   /* @__PURE__ */ e("path", { d: "M25 9 Q28 9 28 13 Q28 17 25 17 L9 17" }),
   /* @__PURE__ */ e("path", { d: "M9 17 Q6 17 6 21 Q6 25 9 25 L25 25" })
-] }), qn = () => /* @__PURE__ */ a("svg", { width: "30", height: "30", viewBox: "0 0 34 34", fill: "none", stroke: "currentColor", strokeWidth: "2.5", strokeLinecap: "round", strokeLinejoin: "round", children: [
+] }), Un = () => /* @__PURE__ */ a("svg", { width: "30", height: "30", viewBox: "0 0 34 34", fill: "none", stroke: "currentColor", strokeWidth: "2.5", strokeLinecap: "round", strokeLinejoin: "round", children: [
   /* @__PURE__ */ e("rect", { x: "5", y: "5", width: "24", height: "24", rx: "3" }),
   /* @__PURE__ */ e("path", { d: "M10 11 L24 11" }),
   /* @__PURE__ */ e("path", { d: "M24 11 L24 17 L10 17" }),
   /* @__PURE__ */ e("path", { d: "M10 17 L10 23 L24 23" })
-] }), Pn = () => /* @__PURE__ */ a("svg", { width: "30", height: "30", viewBox: "0 0 34 34", fill: "none", stroke: "currentColor", strokeWidth: "2.2", strokeLinecap: "round", strokeLinejoin: "round", children: [
+] }), Yn = () => /* @__PURE__ */ a("svg", { width: "30", height: "30", viewBox: "0 0 34 34", fill: "none", stroke: "currentColor", strokeWidth: "2.2", strokeLinecap: "round", strokeLinejoin: "round", children: [
   /* @__PURE__ */ e("rect", { x: "5", y: "5", width: "24", height: "24", rx: "3" }),
   /* @__PURE__ */ e("path", { d: "M10 10 L24 10" }),
   /* @__PURE__ */ e("path", { d: "M24 10 L24 14 L10 14" }),
   /* @__PURE__ */ e("path", { d: "M10 14 L10 18 L24 18" }),
   /* @__PURE__ */ e("path", { d: "M24 18 L24 22 L10 22" }),
   /* @__PURE__ */ e("path", { d: "M8 26 Q11 24 14 26 Q17 28 20 26 Q23 24 26 26", strokeWidth: "1.8" })
-] }), Hn = () => /* @__PURE__ */ a("svg", { width: "30", height: "30", viewBox: "0 0 34 34", fill: "none", stroke: "currentColor", strokeWidth: "2.2", strokeLinecap: "round", strokeLinejoin: "round", children: [
+] }), Xn = () => /* @__PURE__ */ a("svg", { width: "30", height: "30", viewBox: "0 0 34 34", fill: "none", stroke: "currentColor", strokeWidth: "2.2", strokeLinecap: "round", strokeLinejoin: "round", children: [
   /* @__PURE__ */ e("rect", { x: "5", y: "5", width: "24", height: "24", rx: "3" }),
   /* @__PURE__ */ e("path", { d: "M10 10 L24 10" }),
   /* @__PURE__ */ e("path", { d: "M24 10 L24 14 L10 14" }),
@@ -2350,22 +2365,22 @@ const Mn = () => /* @__PURE__ */ a("svg", { width: "40", height: "40", viewBox: 
   /* @__PURE__ */ e("circle", { cx: "17", cy: "26", r: "1.5", fill: "currentColor", stroke: "none" }),
   /* @__PURE__ */ e("circle", { cx: "23", cy: "26", r: "1.5", fill: "currentColor", stroke: "none" })
 ] });
-function F({ on: l, onToggle: o }) {
+function O({ on: l, onToggle: n }) {
   return /* @__PURE__ */ e("button", { onClick: (i) => {
-    i.stopPropagation(), o();
+    i.stopPropagation(), n();
   }, style: {
     width: 51,
     height: 31,
     borderRadius: 16,
     border: "none",
     flexShrink: 0,
-    background: l ? Dn : "var(--border-medium)",
+    background: l ? Hn : "var(--border-medium)",
     position: "relative",
     cursor: "pointer",
     transition: "background .2s",
     marginTop: 2
   }, children: /* @__PURE__ */ e(
-    ne.div,
+    ie.div,
     {
       animate: { x: l ? 20 : 0 },
       transition: { type: "spring", stiffness: 500, damping: 30 },
@@ -2373,33 +2388,33 @@ function F({ on: l, onToggle: o }) {
     }
   ) });
 }
-function Lt({ label: l, active: o, onClick: i, children: t, small: r }) {
+function Pt({ label: l, active: n, onClick: i, children: t, small: r }) {
   return /* @__PURE__ */ a("div", { onClick: i, style: { display: "flex", flexDirection: "column", alignItems: "center", gap: 8, cursor: "pointer", flex: 1, minWidth: 0 }, children: [
-    /* @__PURE__ */ e("div", { style: { width: 70, height: 70, borderRadius: "50%", margin: "0 auto", background: o ? dt : "var(--bg-elevated)", display: "flex", alignItems: "center", justifyContent: "center", transition: "background .2s", color: o ? h : "var(--text-secondary)" }, children: t }),
-    /* @__PURE__ */ e("span", { style: { fontSize: r ? 10 : 11.5, textAlign: "center", lineHeight: 1.3, color: o ? h : "var(--text-muted)", fontWeight: o ? 700 : 500 }, children: l })
+    /* @__PURE__ */ e("div", { style: { width: 70, height: 70, borderRadius: "50%", margin: "0 auto", background: n ? mt : "var(--bg-elevated)", display: "flex", alignItems: "center", justifyContent: "center", transition: "background .2s", color: n ? f : "var(--text-secondary)" }, children: t }),
+    /* @__PURE__ */ e("span", { style: { fontSize: r ? 10 : 11.5, textAlign: "center", lineHeight: 1.3, color: n ? f : "var(--text-muted)", fontWeight: n ? 700 : 500 }, children: l })
   ] });
 }
-function Fn({ label: l, active: o, onClick: i, children: t }) {
+function Jn({ label: l, active: n, onClick: i, children: t }) {
   return /* @__PURE__ */ a("div", { onClick: i, style: { display: "flex", flexDirection: "column", alignItems: "center", gap: 6, cursor: "pointer", flex: 1, minWidth: 0 }, children: [
-    /* @__PURE__ */ e("div", { style: { width: 62, height: 62, borderRadius: "50%", background: o ? dt : "var(--bg-elevated)", display: "flex", alignItems: "center", justifyContent: "center", transition: "background .2s", color: o ? h : "var(--text-secondary)" }, children: t }),
-    /* @__PURE__ */ e("span", { style: { fontSize: 10, textAlign: "center", color: o ? h : "var(--text-muted)", fontWeight: o ? 700 : 500, lineHeight: 1.3, width: "100%", wordBreak: "break-word" }, children: l })
+    /* @__PURE__ */ e("div", { style: { width: 62, height: 62, borderRadius: "50%", background: n ? mt : "var(--bg-elevated)", display: "flex", alignItems: "center", justifyContent: "center", transition: "background .2s", color: n ? f : "var(--text-secondary)" }, children: t }),
+    /* @__PURE__ */ e("span", { style: { fontSize: 10, textAlign: "center", color: n ? f : "var(--text-muted)", fontWeight: n ? 700 : 500, lineHeight: 1.3, width: "100%", wordBreak: "break-word" }, children: l })
   ] });
 }
-function ct({ label: l, desc: o, selected: i, onClick: t }) {
-  return /* @__PURE__ */ a("div", { onClick: t, style: { position: "relative", padding: "16px 44px 16px 16px", borderRadius: 14, margin: "3px 12px", cursor: "pointer", background: i ? Rt : "transparent", transition: "background .15s" }, children: [
-    /* @__PURE__ */ e("div", { style: { fontSize: 17, fontWeight: 700, color: i ? h : "#111", marginBottom: o ? 5 : 0 }, children: l }),
-    o && /* @__PURE__ */ e("div", { style: { fontSize: 14, color: i ? h : "#888", lineHeight: 1.6 }, children: o }),
-    i && /* @__PURE__ */ e("span", { style: { position: "absolute", right: 14, top: 17, color: h, fontSize: 18, fontWeight: 700 }, children: "✓" })
+function gt({ label: l, desc: n, selected: i, onClick: t }) {
+  return /* @__PURE__ */ a("div", { onClick: t, style: { position: "relative", padding: "16px 44px 16px 16px", borderRadius: 14, margin: "3px 12px", cursor: "pointer", background: i ? qt : "transparent", transition: "background .15s" }, children: [
+    /* @__PURE__ */ e("div", { style: { fontSize: 17, fontWeight: 700, color: i ? f : "#111", marginBottom: n ? 5 : 0 }, children: l }),
+    n && /* @__PURE__ */ e("div", { style: { fontSize: 14, color: i ? f : "#888", lineHeight: 1.6 }, children: n }),
+    i && /* @__PURE__ */ e("span", { style: { position: "absolute", right: 14, top: 17, color: f, fontSize: 18, fontWeight: 700 }, children: "✓" })
   ] });
 }
-function Nn({ value: l, onChange: o }) {
-  const { t: i } = Tt("card-vacuum"), t = (l - 1) / 31 * 100, r = [{ pct: 12.9 }, { pct: 48.4 }, { pct: 83.9 }], s = [{ pct: 12.9, txt: i("humSlider.lightlyDry") }, { pct: 48.4, txt: i("humSlider.moist") }, { pct: 83.9, txt: i("humSlider.wet") }];
+function eo({ value: l, onChange: n }) {
+  const { t: i } = Bt("card-vacuum"), t = (l - 1) / 31 * 100, r = [{ pct: 12.9 }, { pct: 48.4 }, { pct: 83.9 }], s = [{ pct: 12.9, txt: i("humSlider.lightlyDry") }, { pct: 48.4, txt: i("humSlider.moist") }, { pct: 83.9, txt: i("humSlider.wet") }];
   return /* @__PURE__ */ a("div", { style: { marginBottom: 8 }, children: [
     /* @__PURE__ */ a("div", { style: { position: "relative", padding: "18px 0 8px" }, children: [
       /* @__PURE__ */ a("div", { style: { height: 4, borderRadius: 2, background: "var(--border-medium)", position: "relative", margin: "0 18px" }, children: [
-        /* @__PURE__ */ e("div", { style: { height: "100%", borderRadius: 2, background: h, position: "absolute", left: 0, top: 0, width: `${t}%`, pointerEvents: "none" } }),
-        r.map((n) => /* @__PURE__ */ e("div", { style: { position: "absolute", top: "50%", left: `${n.pct}%`, transform: "translate(-50%,-50%)", width: 3, height: 11, borderRadius: 1.5, background: "rgba(0,0,0,.18)", pointerEvents: "none", zIndex: 2 } }, n.pct)),
-        /* @__PURE__ */ e("div", { style: { position: "absolute", top: -10, left: `${t}%`, transform: "translate(-50%, -50%)", width: 22, height: 22, borderRadius: "50%", background: h, border: `2px solid ${h}`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 10, fontWeight: 700, color: "white", pointerEvents: "none" }, children: l })
+        /* @__PURE__ */ e("div", { style: { height: "100%", borderRadius: 2, background: f, position: "absolute", left: 0, top: 0, width: `${t}%`, pointerEvents: "none" } }),
+        r.map((c) => /* @__PURE__ */ e("div", { style: { position: "absolute", top: "50%", left: `${c.pct}%`, transform: "translate(-50%,-50%)", width: 3, height: 11, borderRadius: 1.5, background: "rgba(0,0,0,.18)", pointerEvents: "none", zIndex: 2 } }, c.pct)),
+        /* @__PURE__ */ e("div", { style: { position: "absolute", top: -10, left: `${t}%`, transform: "translate(-50%, -50%)", width: 22, height: 22, borderRadius: "50%", background: f, border: `2px solid ${f}`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 10, fontWeight: 700, color: "white", pointerEvents: "none" }, children: l })
       ] }),
       /* @__PURE__ */ e(
         "input",
@@ -2408,42 +2423,42 @@ function Nn({ value: l, onChange: o }) {
           min: 1,
           max: 32,
           value: l,
-          onChange: (n) => o(Number(n.target.value)),
+          onChange: (c) => n(Number(c.target.value)),
           style: { position: "absolute", width: "calc(100% - 36px)", left: 18, opacity: 0, height: 32, top: -14, cursor: "pointer", margin: 0 }
         }
       )
     ] }),
-    /* @__PURE__ */ e("div", { style: { position: "relative", height: 38, margin: "10px 18px 0", fontSize: 11, color: "var(--text-muted)" }, children: s.map((n) => /* @__PURE__ */ e("span", { style: { position: "absolute", left: `${n.pct}%`, transform: "translateX(-50%)", textAlign: "center", whiteSpace: "nowrap", fontWeight: 500, lineHeight: 1.35 }, children: n.txt.split(`
-`).map((x, m) => /* @__PURE__ */ a("span", { children: [
-      m > 0 && /* @__PURE__ */ e("br", {}),
-      x
-    ] }, m)) }, n.pct)) })
+    /* @__PURE__ */ e("div", { style: { position: "relative", height: 38, margin: "10px 18px 0", fontSize: 11, color: "var(--text-muted)" }, children: s.map((c) => /* @__PURE__ */ e("span", { style: { position: "absolute", left: `${c.pct}%`, transform: "translateX(-50%)", textAlign: "center", whiteSpace: "nowrap", fontWeight: 500, lineHeight: 1.35 }, children: c.txt.split(`
+`).map((o, g) => /* @__PURE__ */ a("span", { children: [
+      g > 0 && /* @__PURE__ */ e("br", {}),
+      o
+    ] }, g)) }, c.pct)) })
   ] });
 }
-function ut(l = 700) {
-  const [o, i] = b(() => typeof window < "u" && !!window.matchMedia && window.matchMedia(`(max-width:${l}px)`).matches);
-  return U(() => {
+function ht(l = 700) {
+  const [n, i] = w(() => typeof window < "u" && !!window.matchMedia && window.matchMedia(`(max-width:${l}px)`).matches);
+  return J(() => {
     if (typeof window > "u" || !window.matchMedia) return;
     const t = window.matchMedia(`(max-width:${l}px)`), r = (s) => i(s.matches);
     return t.addEventListener("change", r), () => t.removeEventListener("change", r);
-  }, [l]), o;
+  }, [l]), n;
 }
-function pt(l, o) {
-  if (!l) return o;
-  const i = zn();
-  return i ? wn(o, i) : o;
+function yt(l, n) {
+  if (!l) return n;
+  const i = Wn();
+  return i ? Tn(n, i) : n;
 }
-function we({ open: l, onClose: o, children: i, zIndex: t = 1100 }) {
-  const r = ut();
-  return pt(r, /* @__PURE__ */ e(_t, { children: l && /* @__PURE__ */ e(
-    ne.div,
+function ze({ open: l, onClose: n, children: i, zIndex: t = 1100 }) {
+  const r = ht();
+  return yt(r, /* @__PURE__ */ e(It, { children: l && /* @__PURE__ */ e(
+    ie.div,
     {
       initial: { opacity: 0 },
       animate: { opacity: 1 },
       exit: { opacity: 0, pointerEvents: "none" },
       style: { position: r ? "fixed" : "absolute", inset: 0, background: "var(--overlay-scrim)", zIndex: t, pointerEvents: "auto", display: "flex", alignItems: "flex-end" },
       children: /* @__PURE__ */ a(
-        ne.div,
+        ie.div,
         {
           initial: { y: "100%" },
           animate: { y: 0 },
@@ -2455,7 +2470,7 @@ function we({ open: l, onClose: o, children: i, zIndex: t = 1100 }) {
             /* @__PURE__ */ a("div", { style: { display: "flex", alignItems: "center", padding: "10px 14px 2px", flexShrink: 0 }, children: [
               /* @__PURE__ */ e("div", { style: { flex: 1 } }),
               /* @__PURE__ */ e("div", { style: { width: 38, height: 4, background: "var(--border-medium)", borderRadius: 2 } }),
-              /* @__PURE__ */ e("div", { style: { flex: 1, display: "flex", justifyContent: "flex-end" }, children: /* @__PURE__ */ e("div", { onClick: o, style: { width: 28, height: 28, display: "flex", alignItems: "center", justifyContent: "center", borderRadius: 8, background: "var(--bg-elevated)", color: "var(--text-secondary)", cursor: "pointer", fontSize: 13, fontWeight: 700 }, children: "✕" }) })
+              /* @__PURE__ */ e("div", { style: { flex: 1, display: "flex", justifyContent: "flex-end" }, children: /* @__PURE__ */ e("div", { onClick: n, style: { width: 28, height: 28, display: "flex", alignItems: "center", justifyContent: "center", borderRadius: 8, background: "var(--bg-elevated)", color: "var(--text-secondary)", cursor: "pointer", fontSize: 13, fontWeight: 700 }, children: "✕" }) })
             ] }),
             i
           ]
@@ -2466,17 +2481,17 @@ function we({ open: l, onClose: o, children: i, zIndex: t = 1100 }) {
     "sub-backdrop"
   ) }));
 }
-function Se({ open: l, onClose: o, zIndex: i = 10, children: t }) {
-  const r = ut();
-  return pt(r, /* @__PURE__ */ e(_t, { children: l && /* @__PURE__ */ e(
-    ne.div,
+function Ce({ open: l, onClose: n, zIndex: i = 10, children: t }) {
+  const r = ht();
+  return yt(r, /* @__PURE__ */ e(It, { children: l && /* @__PURE__ */ e(
+    ie.div,
     {
       initial: { opacity: 0 },
       animate: { opacity: 1 },
       exit: { opacity: 0, pointerEvents: "none" },
       style: { position: r ? "fixed" : "absolute", inset: 0, background: "var(--overlay-scrim)", zIndex: i, pointerEvents: "auto", display: "flex", alignItems: "flex-end" },
       children: /* @__PURE__ */ a(
-        ne.div,
+        ie.div,
         {
           initial: { y: "100%" },
           animate: { y: 0 },
@@ -2485,7 +2500,7 @@ function Se({ open: l, onClose: o, zIndex: i = 10, children: t }) {
           onClick: (s) => s.stopPropagation(),
           style: { width: "100%", background: "var(--bg-panel)", borderRadius: "26px 26px 0 0", height: "92%", overflow: "hidden", display: "flex", flexDirection: "column", position: "relative" },
           children: [
-            /* @__PURE__ */ e("div", { onClick: o, style: { position: "absolute", top: 12, right: 14, zIndex: 20, width: 30, height: 30, display: "flex", alignItems: "center", justifyContent: "center", borderRadius: 8, background: "var(--bg-elevated)", color: "var(--text-secondary)", cursor: "pointer", fontSize: 13, fontWeight: 700 }, children: "✕" }),
+            /* @__PURE__ */ e("div", { onClick: n, style: { position: "absolute", top: 12, right: 14, zIndex: 20, width: 30, height: 30, display: "flex", alignItems: "center", justifyContent: "center", borderRadius: 8, background: "var(--bg-elevated)", color: "var(--text-secondary)", cursor: "pointer", fontSize: 13, fontWeight: 700 }, children: "✕" }),
             t
           ]
         },
@@ -2495,25 +2510,25 @@ function Se({ open: l, onClose: o, zIndex: i = 10, children: t }) {
     "full-backdrop"
   ) }));
 }
-function Ee({ title: l, onBack: o }) {
+function De({ title: l, onBack: n }) {
   return /* @__PURE__ */ a("div", { style: { background: "var(--bg-panel)", display: "flex", alignItems: "center", gap: 8, padding: "14px 16px", borderBottom: "1px solid var(--border)", position: "sticky", top: 0, zIndex: 5, flexShrink: 0 }, children: [
-    /* @__PURE__ */ e("div", { onClick: o, style: { fontSize: 28, lineHeight: 1, color: "var(--text-muted)", cursor: "pointer", width: 28, flexShrink: 0 }, children: "‹" }),
+    /* @__PURE__ */ e("div", { onClick: n, style: { fontSize: 28, lineHeight: 1, color: "var(--text-muted)", cursor: "pointer", width: 28, flexShrink: 0 }, children: "‹" }),
     /* @__PURE__ */ e("div", { style: { fontSize: 17, fontWeight: 700, color: "var(--text-primary)", flex: 1, textAlign: "center" }, children: l }),
-    /* @__PURE__ */ e("div", { onClick: o, style: { width: 28, height: 28, display: "flex", alignItems: "center", justifyContent: "center", borderRadius: 8, background: "var(--bg-elevated)", color: "var(--text-secondary)", cursor: "pointer", fontSize: 13, fontWeight: 700, flexShrink: 0 }, children: "✕" })
+    /* @__PURE__ */ e("div", { onClick: n, style: { width: 28, height: 28, display: "flex", alignItems: "center", justifyContent: "center", borderRadius: 8, background: "var(--bg-elevated)", color: "var(--text-secondary)", cursor: "pointer", fontSize: 13, fontWeight: 700, flexShrink: 0 }, children: "✕" })
   ] });
 }
-function On({ value: l, min: o, max: i, onChange: t }) {
-  const r = Math.min(100, Math.max(0, (l - o) / (i - o) * 100));
+function to({ value: l, min: n, max: i, onChange: t }) {
+  const r = Math.min(100, Math.max(0, (l - n) / (i - n) * 100));
   return /* @__PURE__ */ a("div", { style: { position: "relative", padding: "22px 0 6px", margin: "0 14px" }, children: [
     /* @__PURE__ */ a("div", { style: { height: 4, borderRadius: 2, background: "var(--border-medium)", position: "relative" }, children: [
-      /* @__PURE__ */ e("div", { style: { height: "100%", borderRadius: 2, background: h, position: "absolute", left: 0, top: 0, width: `${r}%`, pointerEvents: "none" } }),
-      /* @__PURE__ */ e("div", { style: { position: "absolute", top: -10, left: `${r}%`, transform: "translate(-50%, -50%)", width: 22, height: 22, borderRadius: "50%", background: h, border: `2px solid ${h}`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 10, fontWeight: 700, color: "white", pointerEvents: "none" }, children: l })
+      /* @__PURE__ */ e("div", { style: { height: "100%", borderRadius: 2, background: f, position: "absolute", left: 0, top: 0, width: `${r}%`, pointerEvents: "none" } }),
+      /* @__PURE__ */ e("div", { style: { position: "absolute", top: -10, left: `${r}%`, transform: "translate(-50%, -50%)", width: 22, height: 22, borderRadius: "50%", background: f, border: `2px solid ${f}`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 10, fontWeight: 700, color: "white", pointerEvents: "none" }, children: l })
     ] }),
     /* @__PURE__ */ e(
       "input",
       {
         type: "range",
-        min: o,
+        min: n,
         max: i,
         value: l,
         onChange: (s) => t(Number(s.target.value)),
@@ -2522,57 +2537,57 @@ function On({ value: l, min: o, max: i, onChange: t }) {
     )
   ] });
 }
-function Wt({
+function Ht({
   open: l,
-  onClose: o,
+  onClose: n,
   selected: i,
   onSelect: t,
   t: r,
   rewash: s = !1,
-  areaVal: n = 10,
-  timeVal: x = 10,
-  onAreaChange: m,
-  onTimeChange: p
+  areaVal: c = 10,
+  timeVal: o = 10,
+  onAreaChange: g,
+  onTimeChange: m
 }) {
   if (s) {
     const S = [
-      { id: "by_area", label: r("freq.by_area"), unit: "m²", desc: r("freq.by_area_desc"), min: 10, max: 35, val: n, cb: m },
-      { id: "by_time", label: r("freq.by_time"), unit: "min", desc: r("freq.by_time_desc"), min: 10, max: 50, val: x, cb: p },
+      { id: "by_area", label: r("freq.by_area"), unit: "m²", desc: r("freq.by_area_desc"), min: 10, max: 35, val: c, cb: g },
+      { id: "by_time", label: r("freq.by_time"), unit: "min", desc: r("freq.by_time_desc"), min: 10, max: 50, val: o, cb: m },
       { id: "by_room", label: r("freq.by_room"), unit: null, desc: r("freq.by_room_desc"), min: 0, max: 0, val: null, cb: null }
     ];
-    return /* @__PURE__ */ a(we, { open: l, onClose: o, children: [
+    return /* @__PURE__ */ a(ze, { open: l, onClose: n, children: [
       /* @__PURE__ */ e("div", { style: { fontSize: 17, fontWeight: 700, color: "var(--text-primary)", textAlign: "center", padding: "0 20px 18px" }, children: r("dreame.freqLavaggio") }),
-      /* @__PURE__ */ e("div", { style: { padding: "0 12px 24px" }, children: S.map((y) => {
-        const C = i === y.id;
-        return /* @__PURE__ */ a("div", { onClick: () => t(y.id), style: { background: C ? Rt : "var(--bg-elevated)", borderRadius: 16, padding: "14px 16px", marginBottom: 10, cursor: "pointer", transition: "background .15s" }, children: [
+      /* @__PURE__ */ e("div", { style: { padding: "0 12px 24px" }, children: S.map((b) => {
+        const k = i === b.id;
+        return /* @__PURE__ */ a("div", { onClick: () => t(b.id), style: { background: k ? qt : "var(--bg-elevated)", borderRadius: 16, padding: "14px 16px", marginBottom: 10, cursor: "pointer", transition: "background .15s" }, children: [
           /* @__PURE__ */ a("div", { style: { display: "flex", alignItems: "center", gap: 12, marginBottom: 6 }, children: [
-            /* @__PURE__ */ e("div", { style: { width: 22, height: 22, borderRadius: "50%", border: `2.5px solid ${C ? h : "#ccc"}`, background: C ? h : "transparent", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, transition: "all .15s" }, children: C && /* @__PURE__ */ e("div", { style: { width: 8, height: 8, borderRadius: "50%", background: "white" } }) }),
-            /* @__PURE__ */ a("span", { style: { fontSize: 16, fontWeight: 700, color: C ? h : "var(--text-primary)" }, children: [
-              y.label,
-              y.unit && /* @__PURE__ */ e("span", { style: { fontSize: 12, fontWeight: 400, color: "var(--text-muted)", marginLeft: 4 }, children: y.unit })
+            /* @__PURE__ */ e("div", { style: { width: 22, height: 22, borderRadius: "50%", border: `2.5px solid ${k ? f : "#ccc"}`, background: k ? f : "transparent", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, transition: "all .15s" }, children: k && /* @__PURE__ */ e("div", { style: { width: 8, height: 8, borderRadius: "50%", background: "white" } }) }),
+            /* @__PURE__ */ a("span", { style: { fontSize: 16, fontWeight: 700, color: k ? f : "var(--text-primary)" }, children: [
+              b.label,
+              b.unit && /* @__PURE__ */ e("span", { style: { fontSize: 12, fontWeight: 400, color: "var(--text-muted)", marginLeft: 4 }, children: b.unit })
             ] })
           ] }),
-          /* @__PURE__ */ e("div", { style: { fontSize: 13, color: C ? h : "var(--text-muted)", lineHeight: 1.5, paddingLeft: 34, opacity: 0.85 }, children: y.desc }),
-          C && y.cb && /* @__PURE__ */ e("div", { style: { marginTop: 14, paddingLeft: 0 }, onClick: (k) => k.stopPropagation(), children: /* @__PURE__ */ e(On, { value: y.val ?? y.min, min: y.min, max: y.max, onChange: y.cb }) })
-        ] }, y.id);
+          /* @__PURE__ */ e("div", { style: { fontSize: 13, color: k ? f : "var(--text-muted)", lineHeight: 1.5, paddingLeft: 34, opacity: 0.85 }, children: b.desc }),
+          k && b.cb && /* @__PURE__ */ e("div", { style: { marginTop: 14, paddingLeft: 0 }, onClick: (A) => A.stopPropagation(), children: /* @__PURE__ */ e(to, { value: b.val ?? b.min, min: b.min, max: b.max, onChange: b.cb }) })
+        ] }, b.id);
       }) })
     ] });
   }
-  const z = [
+  const D = [
     { id: "standard", label: r("dreame.freqStandard"), desc: r("dreame.freqStandardDesc") },
     { id: "intelligent", label: r("dreame.freqIntelligent"), desc: r("dreame.freqIntelligentDesc") },
     { id: "high", label: r("dreame.freqHigh"), desc: r("dreame.freqHighDesc") }
   ];
-  return /* @__PURE__ */ a(we, { open: l, onClose: o, children: [
+  return /* @__PURE__ */ a(ze, { open: l, onClose: n, children: [
     /* @__PURE__ */ e("div", { style: { fontSize: 17, fontWeight: 700, color: "var(--text-primary)", textAlign: "center", padding: "0 20px 18px" }, children: r("dreame.freqTitle") }),
-    z.map((S) => /* @__PURE__ */ e(
-      ct,
+    D.map((S) => /* @__PURE__ */ e(
+      gt,
       {
         label: S.label,
         desc: S.desc,
         selected: i === S.id,
         onClick: () => {
-          t(S.id), setTimeout(o, 280);
+          t(S.id), setTimeout(n, 280);
         }
       },
       S.id
@@ -2580,124 +2595,124 @@ function Wt({
     /* @__PURE__ */ e("div", { style: { height: 20 } })
   ] });
 }
-function $n({ open: l, onClose: o, selected: i, onSelect: t, t: r }) {
+function ao({ open: l, onClose: n, selected: i, onSelect: t, t: r }) {
   const s = [
     { id: "off", label: r("dreame.svuotOff"), desc: r("dreame.svuotOffDesc") },
     { id: "standard", label: r("dreame.svuotStandard"), desc: r("dreame.svuotStandardDesc") },
     { id: "high", label: r("dreame.svuotHighFreq"), desc: r("dreame.svuotHighFreqDesc") },
     { id: "low", label: r("dreame.svuotLowFreq"), desc: r("dreame.svuotLowFreqDesc") }
   ];
-  return /* @__PURE__ */ a(we, { open: l, onClose: o, children: [
+  return /* @__PURE__ */ a(ze, { open: l, onClose: n, children: [
     /* @__PURE__ */ e("div", { style: { fontSize: 17, fontWeight: 700, color: "var(--text-primary)", textAlign: "center", padding: "0 20px 18px" }, children: r("dreame.svuotAutoTitle") }),
-    s.map((n) => /* @__PURE__ */ e(
-      ct,
+    s.map((c) => /* @__PURE__ */ e(
+      gt,
       {
-        label: n.label,
-        desc: n.desc,
-        selected: i === n.id,
+        label: c.label,
+        desc: c.desc,
+        selected: i === c.id,
         onClick: () => {
-          t(n.id), setTimeout(o, 280);
+          t(c.id), setTimeout(n, 280);
         }
       },
-      n.id
+      c.id
     )),
     /* @__PURE__ */ e("div", { style: { height: 20 } })
   ] });
 }
-function Gn({ open: l, onClose: o, selected: i, onSelect: t, t: r }) {
+function io({ open: l, onClose: n, selected: i, onSelect: t, t: r }) {
   const s = [
     { id: "off", label: r("dreame.lavRipOff") },
     { id: "deepOnly", label: r("dreame.lavRipDeepOnly") },
     { id: "allModes", label: r("dreame.lavRipAllModes") }
   ];
-  return /* @__PURE__ */ a(we, { open: l, onClose: o, children: [
+  return /* @__PURE__ */ a(ze, { open: l, onClose: n, children: [
     /* @__PURE__ */ e("div", { style: { fontSize: 17, fontWeight: 700, color: "var(--text-primary)", textAlign: "center", padding: "0 20px 18px" }, children: r("dreame.lavRipTitle") }),
-    s.map((n) => /* @__PURE__ */ e(
-      ct,
+    s.map((c) => /* @__PURE__ */ e(
+      gt,
       {
-        label: n.label,
-        selected: i === n.id,
+        label: c.label,
+        selected: i === c.id,
         onClick: () => {
-          t(n.id), setTimeout(o, 280);
+          t(c.id), setTimeout(n, 280);
         }
       },
-      n.id
+      c.id
     )),
     /* @__PURE__ */ e("div", { style: { height: 20 } })
   ] });
 }
-function jn({ open: l, onClose: o, selected: i, onSelect: t, t: r }) {
+function no({ open: l, onClose: n, selected: i, onSelect: t, t: r }) {
   const s = [{ id: "2h", label: "2h" }, { id: "3h", label: "3h" }, { id: "4h", label: "4h" }];
-  return /* @__PURE__ */ a(we, { open: l, onClose: o, children: [
+  return /* @__PURE__ */ a(ze, { open: l, onClose: n, children: [
     /* @__PURE__ */ e("div", { style: { fontSize: 17, fontWeight: 700, color: "var(--text-primary)", textAlign: "center", padding: "16px 20px 8px" }, children: r("dreame.tempAsciugTitle") }),
-    /* @__PURE__ */ e("div", { style: { display: "flex", justifyContent: "space-around", alignItems: "center", padding: "22px 20px 36px" }, children: s.map((n) => /* @__PURE__ */ a("div", { onClick: () => {
-      t(n.id), setTimeout(o, 280);
+    /* @__PURE__ */ e("div", { style: { display: "flex", justifyContent: "space-around", alignItems: "center", padding: "22px 20px 36px" }, children: s.map((c) => /* @__PURE__ */ a("div", { onClick: () => {
+      t(c.id), setTimeout(n, 280);
     }, style: { display: "flex", alignItems: "center", gap: 10, cursor: "pointer" }, children: [
-      /* @__PURE__ */ e("div", { style: { width: 28, height: 28, borderRadius: "50%", border: `2px solid ${i === n.id ? h : "#ccc"}`, background: i === n.id ? h : "transparent", display: "flex", alignItems: "center", justifyContent: "center", transition: "all .18s" }, children: i === n.id && /* @__PURE__ */ e("span", { style: { fontSize: 13, color: "white", fontWeight: 800 }, children: "✓" }) }),
-      /* @__PURE__ */ e("span", { style: { fontSize: 18, fontWeight: 600, color: "var(--text-primary)" }, children: n.label })
-    ] }, n.id)) })
+      /* @__PURE__ */ e("div", { style: { width: 28, height: 28, borderRadius: "50%", border: `2px solid ${i === c.id ? f : "#ccc"}`, background: i === c.id ? f : "transparent", display: "flex", alignItems: "center", justifyContent: "center", transition: "all .18s" }, children: i === c.id && /* @__PURE__ */ e("span", { style: { fontSize: 13, color: "white", fontWeight: 800 }, children: "✓" }) }),
+      /* @__PURE__ */ e("span", { style: { fontSize: 18, fontWeight: 600, color: "var(--text-primary)" }, children: c.label })
+    ] }, c.id)) })
   ] });
 }
-function Vn({ open: l, onClose: o, onFrequenza: i, freqSel: t, sideReach: r, setSideReach: s, mopExtend: n, setMopExtend: x, mopVoid: m, setMopVoid: p, mopLegs: z, setMopLegs: S, t: y }) {
-  const C = y(t === "high" ? "dreame.freqHigh" : t === "intelligent" ? "dreame.freqIntelligent" : "dreame.freqStandard");
-  return /* @__PURE__ */ e(Se, { open: l, onClose: o, zIndex: 1100, children: /* @__PURE__ */ e("div", { style: { flex: 1, overflowY: "auto", minHeight: 0 }, children: /* @__PURE__ */ a("div", { style: { background: "var(--bg-elevated)", minHeight: "100%" }, children: [
-    /* @__PURE__ */ e(Ee, { title: y("dreame.mopExtendTitle"), onBack: o }),
+function oo({ open: l, onClose: n, onFrequenza: i, freqSel: t, sideReach: r, setSideReach: s, mopExtend: c, setMopExtend: o, mopVoid: g, setMopVoid: m, mopLegs: D, setMopLegs: S, t: b }) {
+  const k = b(t === "high" ? "dreame.freqHigh" : t === "intelligent" ? "dreame.freqIntelligent" : "dreame.freqStandard");
+  return /* @__PURE__ */ e(Ce, { open: l, onClose: n, zIndex: 1100, children: /* @__PURE__ */ e("div", { style: { flex: 1, overflowY: "auto", minHeight: 0 }, children: /* @__PURE__ */ a("div", { style: { background: "var(--bg-elevated)", minHeight: "100%" }, children: [
+    /* @__PURE__ */ e(De, { title: b("dreame.mopExtendTitle"), onBack: n }),
     /* @__PURE__ */ a("div", { style: { background: "var(--bg-card)", borderRadius: 16, margin: "14px 14px 0", padding: 16, boxShadow: "0 1px 3px rgba(0,0,0,.04)" }, children: [
       /* @__PURE__ */ a("div", { style: { display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 10, marginBottom: 8 }, children: [
         /* @__PURE__ */ a("div", { style: { display: "flex", alignItems: "center", gap: 6, flex: 1 }, children: [
-          /* @__PURE__ */ e("span", { style: { fontSize: 16, fontWeight: 700, color: "var(--text-primary)" }, children: y("dreame.sideReach") }),
+          /* @__PURE__ */ e("span", { style: { fontSize: 16, fontWeight: 700, color: "var(--text-primary)" }, children: b("dreame.sideReach") }),
           /* @__PURE__ */ e("div", { style: { width: 18, height: 18, borderRadius: "50%", border: "1.5px solid #ccc", display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: 11, color: "var(--text-muted)", flexShrink: 0 }, children: "?" })
         ] }),
-        /* @__PURE__ */ e(F, { on: r, onToggle: () => s((k) => !k) })
+        /* @__PURE__ */ e(O, { on: r, onToggle: () => s((A) => !A) })
       ] }),
-      /* @__PURE__ */ e("div", { style: { fontSize: 13, color: "var(--text-muted)", lineHeight: 1.6 }, children: y("dreame.sideReachDesc") })
+      /* @__PURE__ */ e("div", { style: { fontSize: 13, color: "var(--text-muted)", lineHeight: 1.6 }, children: b("dreame.sideReachDesc") })
     ] }),
     /* @__PURE__ */ a("div", { style: { background: "var(--bg-card)", borderRadius: 16, margin: "14px 14px 0", padding: 16, boxShadow: "0 1px 3px rgba(0,0,0,.04)" }, children: [
       /* @__PURE__ */ a("div", { style: { display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 10, marginBottom: 8 }, children: [
         /* @__PURE__ */ a("div", { style: { display: "flex", alignItems: "center", gap: 6, flex: 1 }, children: [
-          /* @__PURE__ */ e("span", { style: { fontSize: 16, fontWeight: 700, color: "var(--text-primary)" }, children: y("dreame.mopExtendLabel") }),
+          /* @__PURE__ */ e("span", { style: { fontSize: 16, fontWeight: 700, color: "var(--text-primary)" }, children: b("dreame.mopExtendLabel") }),
           /* @__PURE__ */ e("div", { style: { width: 18, height: 18, borderRadius: "50%", border: "1.5px solid #ccc", display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: 11, color: "var(--text-muted)", flexShrink: 0 }, children: "?" })
         ] }),
-        /* @__PURE__ */ e(F, { on: n, onToggle: () => x((k) => !k) })
+        /* @__PURE__ */ e(O, { on: c, onToggle: () => o((A) => !A) })
       ] }),
-      /* @__PURE__ */ e("div", { style: { fontSize: 13, color: "var(--text-muted)", lineHeight: 1.6, marginBottom: 14 }, children: y("dreame.mopExtendDesc") }),
+      /* @__PURE__ */ e("div", { style: { fontSize: 13, color: "var(--text-muted)", lineHeight: 1.6, marginBottom: 14 }, children: b("dreame.mopExtendDesc") }),
       /* @__PURE__ */ e("div", { style: { background: "var(--bg-elevated)", borderRadius: 12, padding: "0 14px", border: "1px solid var(--border)" }, children: [
-        { label: y("dreame.mopVoid"), on: m, set: p },
-        { label: y("dreame.mopLegs"), on: z, set: S }
-      ].map((k, u) => /* @__PURE__ */ a("div", { style: { padding: "14px 0", borderTop: u > 0 ? "1px solid #efefef" : "none", display: "flex", alignItems: "center", justifyContent: "space-between" }, children: [
-        /* @__PURE__ */ e("span", { style: { fontSize: 15, fontWeight: 600, color: "var(--text-primary)" }, children: k.label }),
-        /* @__PURE__ */ e(F, { on: k.on, onToggle: () => k.set((v) => !v) })
-      ] }, k.label)) })
+        { label: b("dreame.mopVoid"), on: g, set: m },
+        { label: b("dreame.mopLegs"), on: D, set: S }
+      ].map((A, p) => /* @__PURE__ */ a("div", { style: { padding: "14px 0", borderTop: p > 0 ? "1px solid #efefef" : "none", display: "flex", alignItems: "center", justifyContent: "space-between" }, children: [
+        /* @__PURE__ */ e("span", { style: { fontSize: 15, fontWeight: 600, color: "var(--text-primary)" }, children: A.label }),
+        /* @__PURE__ */ e(O, { on: A.on, onToggle: () => A.set((y) => !y) })
+      ] }, A.label)) })
     ] }),
     /* @__PURE__ */ e("div", { style: { background: "var(--bg-card)", borderRadius: 16, margin: "14px 14px 28px", padding: 16, boxShadow: "0 1px 3px rgba(0,0,0,.04)" }, children: /* @__PURE__ */ a("div", { onClick: i, style: { display: "flex", alignItems: "center", justifyContent: "space-between", cursor: "pointer" }, children: [
-      /* @__PURE__ */ e("span", { style: { fontSize: 16, fontWeight: 700, color: "var(--text-primary)" }, children: y("dreame.frequenzaLabel") }),
-      /* @__PURE__ */ a("span", { style: { fontSize: 14, color: h, whiteSpace: "nowrap" }, children: [
-        C,
+      /* @__PURE__ */ e("span", { style: { fontSize: 16, fontWeight: 700, color: "var(--text-primary)" }, children: b("dreame.frequenzaLabel") }),
+      /* @__PURE__ */ a("span", { style: { fontSize: 14, color: f, whiteSpace: "nowrap" }, children: [
+        k,
         " ›"
       ] })
     ] }) })
   ] }) }) });
 }
-function kt({ onBack: l, cfg: o, t: i, haStates: t, getState: r }) {
-  const s = zt(
+function Rt({ onBack: l, cfg: n, t: i, haStates: t, getState: r }) {
+  const s = kt(
     () => {
-      var u;
-      return o.historyEntity && ((u = t == null ? void 0 : t[o.historyEntity]) == null ? void 0 : u.attributes) || {};
+      var p;
+      return n.historyEntity && ((p = t == null ? void 0 : t[n.historyEntity]) == null ? void 0 : p.attributes) || {};
     },
-    [o.historyEntity, t]
-  ), n = (u) => {
-    const v = u ? r(u) ?? null : null;
-    return v && v !== "unavailable" ? parseFloat(v) : null;
-  }, x = zt(
-    () => Object.entries(s).filter(([u]) => /^\d{2}-\d{2} \d{2}:\d{2}$/.test(u)).map(([u, v]) => ({ dateKey: u, ...typeof v == "object" && v !== null ? v : {} })).sort((u, v) => (v.timestamp || 0) - (u.timestamp || 0)),
+    [n.historyEntity, t]
+  ), c = (p) => {
+    const y = p ? r(p) ?? null : null;
+    return y && y !== "unavailable" ? parseFloat(y) : null;
+  }, o = kt(
+    () => Object.entries(s).filter(([p]) => /^\d{2}-\d{2} \d{2}:\d{2}$/.test(p)).map(([p, y]) => ({ dateKey: p, ...typeof y == "object" && y !== null ? y : {} })).sort((p, y) => (y.timestamp || 0) - (p.timestamp || 0)),
     [s]
-  ), m = (u) => {
-    const v = u == null ? void 0 : u.match(/^(\d{2})-(\d{2}) (\d{2}:\d{2})$/);
-    return v ? `${v[2]}/${v[1]} ${v[3]}` : u || "";
-  }, p = (u) => i(u === "Zone cleaning" ? "dreame.cronologiaZoneClean" : u === "Room cleaning" ? "dreame.cronologiaRoomClean" : "dreame.cronologiaCleaning"), z = (u) => !u || u === "Default mode" ? i("dreame.cronologiaDefaultMode") : u.toLowerCase().includes("cleangenius") ? i("dreame.cronologiaCleangenius") : u, S = n(o.totalAreaEntity), y = n(o.totalTimeEntity), C = n(o.countEntity), k = [
+  ), g = (p) => {
+    const y = p == null ? void 0 : p.match(/^(\d{2})-(\d{2}) (\d{2}:\d{2})$/);
+    return y ? `${y[2]}/${y[1]} ${y[3]}` : p || "";
+  }, m = (p) => i(p === "Zone cleaning" ? "dreame.cronologiaZoneClean" : p === "Room cleaning" ? "dreame.cronologiaRoomClean" : "dreame.cronologiaCleaning"), D = (p) => !p || p === "Default mode" ? i("dreame.cronologiaDefaultMode") : p.toLowerCase().includes("cleangenius") ? i("dreame.cronologiaCleangenius") : p, S = c(n.totalAreaEntity), b = c(n.totalTimeEntity), k = c(n.countEntity), A = [
     { val: S !== null ? Math.round(S).toLocaleString() : "—", unit: "m²", label: i("dreame.cronologiaTotalArea") },
-    { val: y !== null ? Math.round(y).toLocaleString() : "—", unit: "min", label: i("dreame.cronologiaDuration") },
-    { val: C !== null ? Math.round(C) : "—", unit: "", label: i("dreame.cronologiaCycles") }
+    { val: b !== null ? Math.round(b).toLocaleString() : "—", unit: "min", label: i("dreame.cronologiaDuration") },
+    { val: k !== null ? Math.round(k) : "—", unit: "", label: i("dreame.cronologiaCycles") }
   ];
   return /* @__PURE__ */ a("div", { style: { display: "flex", flexDirection: "column", height: "100%" }, children: [
     /* @__PURE__ */ a("div", { style: {
@@ -2714,31 +2729,31 @@ function kt({ onBack: l, cfg: o, t: i, haStates: t, getState: r }) {
       /* @__PURE__ */ e("div", { onClick: l, style: { width: 28, height: 28, display: "flex", alignItems: "center", justifyContent: "center", borderRadius: 8, background: "var(--bg-elevated)", color: "var(--text-secondary)", cursor: "pointer", fontSize: 13, fontWeight: 700 }, children: "✕" })
     ] }),
     /* @__PURE__ */ a("div", { style: { flex: 1, overflowY: "auto", background: "var(--bg-elevated)", paddingBottom: 24 }, children: [
-      /* @__PURE__ */ e("div", { style: { background: "var(--bg-card)", borderRadius: 16, margin: "14px 14px 0", padding: "18px 8px" }, children: /* @__PURE__ */ e("div", { style: { display: "flex" }, children: k.map((u, v) => /* @__PURE__ */ a("div", { style: {
+      /* @__PURE__ */ e("div", { style: { background: "var(--bg-card)", borderRadius: 16, margin: "14px 14px 0", padding: "18px 8px" }, children: /* @__PURE__ */ e("div", { style: { display: "flex" }, children: A.map((p, y) => /* @__PURE__ */ a("div", { style: {
         flex: 1,
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        borderLeft: v > 0 ? "1px solid var(--border)" : "none",
+        borderLeft: y > 0 ? "1px solid var(--border)" : "none",
         padding: "0 8px"
       }, children: [
         /* @__PURE__ */ a("div", { style: { display: "flex", alignItems: "baseline", gap: 2 }, children: [
-          /* @__PURE__ */ e("span", { style: { fontSize: 26, fontWeight: 800, color: "var(--text-primary)", lineHeight: 1.1 }, children: u.val }),
-          u.unit && /* @__PURE__ */ e("span", { style: { fontSize: 10, color: "var(--text-muted)", fontWeight: 500, marginLeft: 1 }, children: u.unit })
+          /* @__PURE__ */ e("span", { style: { fontSize: 26, fontWeight: 800, color: "var(--text-primary)", lineHeight: 1.1 }, children: p.val }),
+          p.unit && /* @__PURE__ */ e("span", { style: { fontSize: 10, color: "var(--text-muted)", fontWeight: 500, marginLeft: 1 }, children: p.unit })
         ] }),
-        /* @__PURE__ */ e("span", { style: { fontSize: 11, color: "var(--text-muted)", marginTop: 4 }, children: u.label })
-      ] }, v)) }) }),
-      /* @__PURE__ */ e("div", { style: { marginTop: 12 }, children: x.length === 0 ? /* @__PURE__ */ e("div", { style: { textAlign: "center", padding: "32px 16px", color: "var(--text-muted)", fontSize: 14 }, children: i("dreame.cronologiaNoData") }) : x.map((u, v) => /* @__PURE__ */ a("div", { children: [
+        /* @__PURE__ */ e("span", { style: { fontSize: 11, color: "var(--text-muted)", marginTop: 4 }, children: p.label })
+      ] }, y)) }) }),
+      /* @__PURE__ */ e("div", { style: { marginTop: 12 }, children: o.length === 0 ? /* @__PURE__ */ e("div", { style: { textAlign: "center", padding: "32px 16px", color: "var(--text-muted)", fontSize: 14 }, children: i("dreame.cronologiaNoData") }) : o.map((p, y) => /* @__PURE__ */ a("div", { children: [
         /* @__PURE__ */ a("div", { style: { display: "flex", alignItems: "center", gap: 8, padding: "10px 16px 4px" }, children: [
-          /* @__PURE__ */ e("span", { style: { fontSize: 12, color: "var(--text-muted)", fontWeight: 500 }, children: z(u.cleanup_method) }),
+          /* @__PURE__ */ e("span", { style: { fontSize: 12, color: "var(--text-muted)", fontWeight: 500 }, children: D(p.cleanup_method) }),
           /* @__PURE__ */ e("span", { style: {
             fontSize: 11,
             fontWeight: 700,
             padding: "3px 10px",
             borderRadius: 20,
-            background: u.completed ? "var(--green-light)" : "var(--red-light)",
-            color: u.completed ? "var(--green)" : "var(--red)"
-          }, children: u.completed ? i("dreame.cronologiaCompleted") : i("dreame.cronologiaInterrupted") })
+            background: p.completed ? "var(--green-light)" : "var(--red-light)",
+            color: p.completed ? "var(--green)" : "var(--red)"
+          }, children: p.completed ? i("dreame.cronologiaCompleted") : i("dreame.cronologiaInterrupted") })
         ] }),
         /* @__PURE__ */ a("div", { style: {
           background: "var(--bg-card)",
@@ -2754,27 +2769,27 @@ function kt({ onBack: l, cfg: o, t: i, haStates: t, getState: r }) {
             height: 9,
             borderRadius: "50%",
             flexShrink: 0,
-            background: u.completed ? "var(--green)" : "var(--red)"
+            background: p.completed ? "var(--green)" : "var(--red)"
           } }),
           /* @__PURE__ */ a("div", { style: { flex: 1, minWidth: 0 }, children: [
             /* @__PURE__ */ a("div", { style: { display: "flex", alignItems: "center", gap: 5 }, children: [
-              /* @__PURE__ */ e("span", { style: { fontSize: 14, fontWeight: 700, color: "var(--text-primary)" }, children: p(u.status) }),
-              u.status === "Cleaning" && /* @__PURE__ */ e("span", { style: { fontSize: 14 }, children: "🐻" })
+              /* @__PURE__ */ e("span", { style: { fontSize: 14, fontWeight: 700, color: "var(--text-primary)" }, children: m(p.status) }),
+              p.status === "Cleaning" && /* @__PURE__ */ e("span", { style: { fontSize: 14 }, children: "🐻" })
             ] }),
             /* @__PURE__ */ a("div", { style: { fontSize: 12, color: "var(--text-muted)", marginTop: 2 }, children: [
-              m(u.dateKey),
-              u.cleaned_area ? ` | ${u.cleaned_area}` : "",
-              u.cleaning_time ? ` | ${u.cleaning_time}` : ""
+              g(p.dateKey),
+              p.cleaned_area ? ` | ${p.cleaned_area}` : "",
+              p.cleaning_time ? ` | ${p.cleaning_time}` : ""
             ] })
           ] }),
           /* @__PURE__ */ e("span", { style: { color: "var(--text-muted)", fontSize: 16, flexShrink: 0 }, children: "›" })
         ] })
-      ] }, u.dateKey ?? v)) })
+      ] }, p.dateKey ?? y)) })
     ] })
   ] });
 }
-function Zn({ open: l, onClose: o, cfg: i, t, callService: r, getState: s }) {
-  const n = (p) => p ? s(p) === "on" : !1, x = (p) => p && r("switch", "toggle", p), m = [
+function ro({ open: l, onClose: n, cfg: i, t, callService: r, getState: s }) {
+  const c = (m) => m ? s(m) === "on" : !1, o = (m) => m && r("switch", "toggle", m), g = [
     i.cleanCarpetsFirstEntity && {
       e: i.cleanCarpetsFirstEntity,
       label: t("switches.cleanCarpetsFirst"),
@@ -2791,23 +2806,23 @@ function Zn({ open: l, onClose: o, cfg: i, t, callService: r, getState: s }) {
       desc: t("switches.intensiveCarpetDesc")
     }
   ].filter(Boolean);
-  return /* @__PURE__ */ e(Se, { open: l, onClose: o, zIndex: 1e3, children: /* @__PURE__ */ e("div", { style: { flex: 1, overflowY: "auto", minHeight: 0 }, children: /* @__PURE__ */ a("div", { style: { background: "var(--bg-elevated)", minHeight: "100%", paddingBottom: 32 }, children: [
-    /* @__PURE__ */ e(Ee, { title: t("dreame.menuTappeti"), onBack: o }),
+  return /* @__PURE__ */ e(Ce, { open: l, onClose: n, zIndex: 1e3, children: /* @__PURE__ */ e("div", { style: { flex: 1, overflowY: "auto", minHeight: 0 }, children: /* @__PURE__ */ a("div", { style: { background: "var(--bg-elevated)", minHeight: "100%", paddingBottom: 32 }, children: [
+    /* @__PURE__ */ e(De, { title: t("dreame.menuTappeti"), onBack: n }),
     /* @__PURE__ */ e("div", { style: { margin: "12px 14px 0", background: "var(--bg-card)", borderRadius: 12, padding: "12px 14px" }, children: /* @__PURE__ */ e("span", { style: { fontSize: 13, color: "var(--text-muted)", lineHeight: 1.5 }, children: t("dreame.carpetSettingsDesc") }) }),
-    m.length > 0 && /* @__PURE__ */ a(ge, { children: [
+    g.length > 0 && /* @__PURE__ */ a(ue, { children: [
       /* @__PURE__ */ e("p", { style: { fontSize: 11, fontWeight: 700, color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: ".6px", margin: "16px 14px 6px" }, children: t("dreame.carpetMetodiTitle") }),
-      /* @__PURE__ */ e("div", { style: { background: "var(--bg-card)", borderRadius: 16, margin: "0 14px", overflow: "hidden" }, children: m.map((p, z) => /* @__PURE__ */ e("div", { style: { padding: "14px 16px", borderTop: z > 0 ? "1px solid var(--border)" : "none" }, children: /* @__PURE__ */ a("div", { style: { display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 12 }, children: [
+      /* @__PURE__ */ e("div", { style: { background: "var(--bg-card)", borderRadius: 16, margin: "0 14px", overflow: "hidden" }, children: g.map((m, D) => /* @__PURE__ */ e("div", { style: { padding: "14px 16px", borderTop: D > 0 ? "1px solid var(--border)" : "none" }, children: /* @__PURE__ */ a("div", { style: { display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 12 }, children: [
         /* @__PURE__ */ a("div", { style: { flex: 1 }, children: [
-          /* @__PURE__ */ e("div", { style: { fontSize: 15, fontWeight: 600, color: "var(--text-primary)", marginBottom: 4 }, children: p.label }),
-          /* @__PURE__ */ e("div", { style: { fontSize: 13, color: "var(--text-muted)", lineHeight: 1.5 }, children: p.desc })
+          /* @__PURE__ */ e("div", { style: { fontSize: 15, fontWeight: 600, color: "var(--text-primary)", marginBottom: 4 }, children: m.label }),
+          /* @__PURE__ */ e("div", { style: { fontSize: 13, color: "var(--text-muted)", lineHeight: 1.5 }, children: m.desc })
         ] }),
-        /* @__PURE__ */ e("div", { style: { flexShrink: 0, marginTop: 2 }, children: /* @__PURE__ */ e(F, { on: n(p.e), onToggle: () => x(p.e) }) })
-      ] }) }, p.e)) })
+        /* @__PURE__ */ e("div", { style: { flexShrink: 0, marginTop: 2 }, children: /* @__PURE__ */ e(O, { on: c(m.e), onToggle: () => o(m.e) }) })
+      ] }) }, m.e)) })
     ] })
   ] }) }) });
 }
-const Qn = { off: "off", deepOnly: "in_deep_mode", allModes: "in_all_modes" }, Kn = { off: "off", in_deep_mode: "deepOnly", in_all_modes: "allModes" };
-function Ke({ on: l, onToggle: o, label: i, desc: t, warning: r, border: s }) {
+const so = { off: "off", deepOnly: "in_deep_mode", allModes: "in_all_modes" }, lo = { off: "off", in_deep_mode: "deepOnly", in_all_modes: "allModes" };
+function at({ on: l, onToggle: n, label: i, desc: t, warning: r, border: s }) {
   return /* @__PURE__ */ e("div", { style: { padding: "14px 16px", borderTop: s ? "1px solid var(--border)" : "none" }, children: /* @__PURE__ */ a("div", { style: { display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 12 }, children: [
     /* @__PURE__ */ a("div", { style: { flex: 1 }, children: [
       /* @__PURE__ */ e("div", { style: { fontSize: 15, fontWeight: 600, color: "var(--text-primary)", marginBottom: 4 }, children: i }),
@@ -2817,26 +2832,26 @@ function Ke({ on: l, onToggle: o, label: i, desc: t, warning: r, border: s }) {
         /* @__PURE__ */ e("span", { style: { fontSize: 12, color: "var(--amber)", lineHeight: 1.5 }, children: r })
       ] })
     ] }),
-    /* @__PURE__ */ e("div", { style: { flexShrink: 0, marginTop: 2 }, children: /* @__PURE__ */ e(F, { on: l, onToggle: o }) })
+    /* @__PURE__ */ e("div", { style: { flexShrink: 0, marginTop: 2 }, children: /* @__PURE__ */ e(O, { on: l, onToggle: n }) })
   ] }) });
 }
-function Un({ open: l, onClose: o, cfg: i, t, callService: r, getState: s }) {
-  const [n, x] = b(!1), m = (u) => u ? s(u) === "on" : !1, p = (u) => u && r("switch", "toggle", u), z = i.autoRecleaningEntity ? s(i.autoRecleaningEntity) : null, S = Kn[z] || "off", y = (u) => {
-    i.autoRecleaningEntity && r("select", "select_option", i.autoRecleaningEntity, { option: Qn[u] }), x(!1);
-  }, C = t(S === "off" ? "floor.reclOff" : S === "deepOnly" ? "floor.reclDeepOnly" : "floor.reclAllModes"), k = [
+function co({ open: l, onClose: n, cfg: i, t, callService: r, getState: s }) {
+  const [c, o] = w(!1), g = (p) => p ? s(p) === "on" : !1, m = (p) => p && r("switch", "toggle", p), D = i.autoRecleaningEntity ? s(i.autoRecleaningEntity) : null, S = lo[D] || "off", b = (p) => {
+    i.autoRecleaningEntity && r("select", "select_option", i.autoRecleaningEntity, { option: so[p] }), o(!1);
+  }, k = t(S === "off" ? "floor.reclOff" : S === "deepOnly" ? "floor.reclDeepOnly" : "floor.reclAllModes"), A = [
     { val: "off", label: t("floor.reclOff"), desc: t("floor.reclOffDesc") },
     { val: "deepOnly", label: t("floor.reclDeepOnly"), desc: t("floor.reclDeepOnlyDesc") },
     { val: "allModes", label: t("floor.reclAllModes"), desc: t("floor.reclAllModesDesc") }
   ];
-  return /* @__PURE__ */ a(Se, { open: l, onClose: o, zIndex: 1e3, children: [
+  return /* @__PURE__ */ a(Ce, { open: l, onClose: n, zIndex: 1e3, children: [
     /* @__PURE__ */ e("div", { style: { flex: 1, overflowY: "auto", minHeight: 0 }, children: /* @__PURE__ */ a("div", { style: { background: "var(--bg-elevated)", minHeight: "100%", paddingBottom: 32 }, children: [
-      /* @__PURE__ */ e(Ee, { title: t("dreame.menuPavimento"), onBack: o }),
-      i.collisionAvoidanceEntity && /* @__PURE__ */ e("div", { style: { background: "var(--bg-card)", borderRadius: 16, margin: "12px 14px 0", overflow: "hidden" }, children: /* @__PURE__ */ e(Ke, { on: m(i.collisionAvoidanceEntity), onToggle: () => p(i.collisionAvoidanceEntity), label: t("floor.collisionAvoidance"), desc: t("floor.collisionAvoidanceDesc") }) }),
+      /* @__PURE__ */ e(De, { title: t("dreame.menuPavimento"), onBack: n }),
+      i.collisionAvoidanceEntity && /* @__PURE__ */ e("div", { style: { background: "var(--bg-card)", borderRadius: 16, margin: "12px 14px 0", overflow: "hidden" }, children: /* @__PURE__ */ e(at, { on: g(i.collisionAvoidanceEntity), onToggle: () => m(i.collisionAvoidanceEntity), label: t("floor.collisionAvoidance"), desc: t("floor.collisionAvoidanceDesc") }) }),
       (i.autoRecleaningEntity || i.autoWashEntity || i.floorDirectionEntity) && /* @__PURE__ */ a("div", { style: { background: "var(--bg-card)", borderRadius: 16, margin: "12px 14px 0", overflow: "hidden" }, children: [
         i.autoRecleaningEntity && /* @__PURE__ */ e(
           "div",
           {
-            onClick: () => x(!0),
+            onClick: () => o(!0),
             style: { padding: "14px 16px", cursor: "pointer" },
             children: /* @__PURE__ */ a("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8 }, children: [
               /* @__PURE__ */ a("div", { style: { flex: 1 }, children: [
@@ -2844,26 +2859,26 @@ function Un({ open: l, onClose: o, cfg: i, t, callService: r, getState: s }) {
                 /* @__PURE__ */ e("div", { style: { fontSize: 13, color: "var(--text-muted)", lineHeight: 1.5 }, children: t("floor.autoReclDesc") })
               ] }),
               /* @__PURE__ */ a("div", { style: { display: "flex", alignItems: "center", gap: 4, flexShrink: 0 }, children: [
-                /* @__PURE__ */ e("span", { style: { fontSize: 14, color: "var(--text-muted)" }, children: C }),
+                /* @__PURE__ */ e("span", { style: { fontSize: 14, color: "var(--text-muted)" }, children: k }),
                 /* @__PURE__ */ e("span", { style: { color: "var(--text-muted)", fontSize: 17, lineHeight: 1 }, children: "›" })
               ] })
             ] })
           }
         ),
-        i.autoWashEntity && /* @__PURE__ */ e(Ke, { on: m(i.autoWashEntity), onToggle: () => p(i.autoWashEntity), label: t("floor.autoMountMop"), desc: t("floor.autoMountMopDesc"), border: !!i.autoRecleaningEntity }),
-        i.floorDirectionEntity && /* @__PURE__ */ e(Ke, { on: m(i.floorDirectionEntity), onToggle: () => p(i.floorDirectionEntity), label: t("floor.floorDirection"), desc: t("floor.floorDirectionDesc"), warning: t("floor.floorDirectionWarning"), border: !!(i.autoRecleaningEntity || i.autoWashEntity) })
+        i.autoWashEntity && /* @__PURE__ */ e(at, { on: g(i.autoWashEntity), onToggle: () => m(i.autoWashEntity), label: t("floor.autoMountMop"), desc: t("floor.autoMountMopDesc"), border: !!i.autoRecleaningEntity }),
+        i.floorDirectionEntity && /* @__PURE__ */ e(at, { on: g(i.floorDirectionEntity), onToggle: () => m(i.floorDirectionEntity), label: t("floor.floorDirection"), desc: t("floor.floorDirectionDesc"), warning: t("floor.floorDirectionWarning"), border: !!(i.autoRecleaningEntity || i.autoWashEntity) })
       ] }),
-      i.stainAvoidanceEntity && /* @__PURE__ */ e("div", { style: { background: "var(--bg-card)", borderRadius: 16, margin: "12px 14px 0", overflow: "hidden" }, children: /* @__PURE__ */ e(Ke, { on: m(i.stainAvoidanceEntity), onToggle: () => p(i.stainAvoidanceEntity), label: t("floor.stainAvoidance"), desc: t("floor.stainAvoidanceDesc") }) })
+      i.stainAvoidanceEntity && /* @__PURE__ */ e("div", { style: { background: "var(--bg-card)", borderRadius: 16, margin: "12px 14px 0", overflow: "hidden" }, children: /* @__PURE__ */ e(at, { on: g(i.stainAvoidanceEntity), onToggle: () => m(i.stainAvoidanceEntity), label: t("floor.stainAvoidance"), desc: t("floor.stainAvoidanceDesc") }) })
     ] }) }),
-    /* @__PURE__ */ e(we, { open: n, onClose: () => x(!1), zIndex: 1100, children: /* @__PURE__ */ a("div", { style: { padding: "4px 0 16px" }, children: [
+    /* @__PURE__ */ e(ze, { open: c, onClose: () => o(!1), zIndex: 1100, children: /* @__PURE__ */ a("div", { style: { padding: "4px 0 16px" }, children: [
       /* @__PURE__ */ e("p", { style: { fontSize: 11, fontWeight: 700, color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: ".6px", margin: "8px 16px 10px" }, children: t("floor.autoReclTitle") }),
-      k.map((u) => {
-        const v = S === u.val;
+      A.map((p) => {
+        const y = S === p.val;
         return /* @__PURE__ */ e(
           "div",
           {
-            onClick: () => y(u.val),
-            style: { padding: "12px 16px", cursor: "pointer", background: v ? "var(--amber-light, rgba(245,158,11,.06))" : "transparent" },
+            onClick: () => b(p.val),
+            style: { padding: "12px 16px", cursor: "pointer", background: y ? "var(--amber-light, rgba(245,158,11,.06))" : "transparent" },
             children: /* @__PURE__ */ a("div", { style: { display: "flex", alignItems: "flex-start", gap: 12 }, children: [
               /* @__PURE__ */ e("div", { style: {
                 width: 20,
@@ -2871,98 +2886,98 @@ function Un({ open: l, onClose: o, cfg: i, t, callService: r, getState: s }) {
                 borderRadius: "50%",
                 flexShrink: 0,
                 marginTop: 2,
-                border: `2px solid ${v ? "var(--amber)" : "var(--border-medium)"}`,
-                background: v ? "var(--amber)" : "transparent",
+                border: `2px solid ${y ? "var(--amber)" : "var(--border-medium)"}`,
+                background: y ? "var(--amber)" : "transparent",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center"
-              }, children: v && /* @__PURE__ */ e("div", { style: { width: 7, height: 7, borderRadius: "50%", background: "#fff" } }) }),
+              }, children: y && /* @__PURE__ */ e("div", { style: { width: 7, height: 7, borderRadius: "50%", background: "#fff" } }) }),
               /* @__PURE__ */ a("div", { style: { flex: 1 }, children: [
-                /* @__PURE__ */ e("div", { style: { fontSize: 15, fontWeight: v ? 700 : 600, color: v ? "var(--amber)" : "var(--text-primary)", marginBottom: 3 }, children: u.label }),
-                /* @__PURE__ */ e("div", { style: { fontSize: 13, color: "var(--text-muted)", lineHeight: 1.5 }, children: u.desc })
+                /* @__PURE__ */ e("div", { style: { fontSize: 15, fontWeight: y ? 700 : 600, color: y ? "var(--amber)" : "var(--text-primary)", marginBottom: 3 }, children: p.label }),
+                /* @__PURE__ */ e("div", { style: { fontSize: 13, color: "var(--text-muted)", lineHeight: 1.5 }, children: p.desc })
               ] })
             ] })
           },
-          u.val
+          p.val
         );
       })
     ] }) })
   ] });
 }
-function Yn({ open: l, onClose: o, onMopExtend: i, onBase: t, onBaseSettings: r, onCronologia: s, onCarpet: n, onFloor: x, cfg: m, t: p, callService: z, getState: S }) {
-  const y = (w) => w ? S(w) === "on" : !1, C = (w) => w && z("switch", "toggle", w), k = [
-    { label: p("dreame.menuCronologia"), disabled: !m.historyEntity, onClick: s },
-    { label: p("dreame.menuProgrammata"), disabled: !0 },
-    { label: p("dreame.menuTappeti"), disabled: !1, onClick: n },
-    { label: p("dreame.menuPavimento"), disabled: !1, onClick: x },
-    { label: p("dreame.mopExtendTitle"), disabled: !1, onClick: i },
-    { label: p("dreame.baseTitle"), disabled: !1, onClick: r || t }
-  ], u = [
-    { label: p("dreame.menuOstacoli"), disabled: !0 },
-    { label: p("dreame.menuLingua"), disabled: !0 },
-    { label: p("dreame.menuFotocamera"), disabled: !0 },
-    { label: p("dreame.menuPiuFunzioni"), disabled: !0 }
-  ], v = [
-    m.dndEntity && { label: p("switches.dnd"), e: m.dndEntity },
-    m.carpetBoostEntity && { label: p("switches.carpetBoost"), e: m.carpetBoostEntity },
-    m.selfCleanSwitchEntity && { label: p("switches.selfClean"), e: m.selfCleanSwitchEntity },
-    m.autoDryingEntity && { label: p("switches.autoDrying"), e: m.autoDryingEntity },
-    m.obstacleEntity && { label: p("switches.obstacle"), e: m.obstacleEntity },
-    m.resumeEntity && { label: p("switches.resume"), e: m.resumeEntity }
-  ].filter(Boolean), M = ({ label: w, disabled: _, onClick: N, border: q }) => /* @__PURE__ */ a(
+function uo({ open: l, onClose: n, onMopExtend: i, onBase: t, onBaseSettings: r, onCronologia: s, onCarpet: c, onFloor: o, cfg: g, t: m, callService: D, getState: S }) {
+  const b = (h) => h ? S(h) === "on" : !1, k = (h) => h && D("switch", "toggle", h), A = [
+    { label: m("dreame.menuCronologia"), disabled: !g.historyEntity, onClick: s },
+    { label: m("dreame.menuProgrammata"), disabled: !0 },
+    { label: m("dreame.menuTappeti"), disabled: !1, onClick: c },
+    { label: m("dreame.menuPavimento"), disabled: !1, onClick: o },
+    { label: m("dreame.mopExtendTitle"), disabled: !1, onClick: i },
+    { label: m("dreame.baseTitle"), disabled: !1, onClick: r || t }
+  ], p = [
+    { label: m("dreame.menuOstacoli"), disabled: !0 },
+    { label: m("dreame.menuLingua"), disabled: !0 },
+    { label: m("dreame.menuFotocamera"), disabled: !0 },
+    { label: m("dreame.menuPiuFunzioni"), disabled: !0 }
+  ], y = [
+    g.dndEntity && { label: m("switches.dnd"), e: g.dndEntity },
+    g.carpetBoostEntity && { label: m("switches.carpetBoost"), e: g.carpetBoostEntity },
+    g.selfCleanSwitchEntity && { label: m("switches.selfClean"), e: g.selfCleanSwitchEntity },
+    g.autoDryingEntity && { label: m("switches.autoDrying"), e: g.autoDryingEntity },
+    g.obstacleEntity && { label: m("switches.obstacle"), e: g.obstacleEntity },
+    g.resumeEntity && { label: m("switches.resume"), e: g.resumeEntity }
+  ].filter(Boolean), H = ({ label: h, disabled: T, onClick: R, border: F }) => /* @__PURE__ */ a(
     "div",
     {
-      onClick: _ ? void 0 : N,
+      onClick: T ? void 0 : R,
       style: {
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
         padding: "16px",
-        borderTop: q ? "1px solid var(--border)" : "none",
-        cursor: _ ? "default" : "pointer",
-        opacity: _ ? 0.35 : 1
+        borderTop: F ? "1px solid var(--border)" : "none",
+        cursor: T ? "default" : "pointer",
+        opacity: T ? 0.35 : 1
       },
       children: [
-        /* @__PURE__ */ e("span", { style: { fontSize: 16, color: "var(--text-primary)" }, children: w }),
+        /* @__PURE__ */ e("span", { style: { fontSize: 16, color: "var(--text-primary)" }, children: h }),
         /* @__PURE__ */ e("span", { style: { color: "var(--text-muted)", fontSize: 17 }, children: "›" })
       ]
     }
   );
-  return /* @__PURE__ */ e(Se, { open: l, onClose: o, zIndex: 1e3, children: /* @__PURE__ */ e("div", { style: { flex: 1, overflowY: "auto", minHeight: 0 }, children: /* @__PURE__ */ a("div", { style: { background: "var(--bg-elevated)", minHeight: "100%", paddingBottom: 32 }, children: [
-    /* @__PURE__ */ e(Ee, { title: p("dreame.impostazioniTitle"), onBack: o }),
+  return /* @__PURE__ */ e(Ce, { open: l, onClose: n, zIndex: 1e3, children: /* @__PURE__ */ e("div", { style: { flex: 1, overflowY: "auto", minHeight: 0 }, children: /* @__PURE__ */ a("div", { style: { background: "var(--bg-elevated)", minHeight: "100%", paddingBottom: 32 }, children: [
+    /* @__PURE__ */ e(De, { title: m("dreame.impostazioniTitle"), onBack: n }),
     /* @__PURE__ */ a("div", { style: { margin: "12px 14px 0", background: "var(--bg-card)", borderRadius: 12, padding: "10px 14px", display: "flex", alignItems: "center", gap: 10 }, children: [
       /* @__PURE__ */ a("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "var(--text-muted)", strokeWidth: "2.2", strokeLinecap: "round", children: [
         /* @__PURE__ */ e("circle", { cx: "11", cy: "11", r: "7" }),
         /* @__PURE__ */ e("line", { x1: "21", y1: "21", x2: "16.65", y2: "16.65" })
       ] }),
-      /* @__PURE__ */ e("span", { style: { fontSize: 15, color: "var(--text-muted)" }, children: p("dreame.cerca") })
+      /* @__PURE__ */ e("span", { style: { fontSize: 15, color: "var(--text-muted)" }, children: m("dreame.cerca") })
     ] }),
-    /* @__PURE__ */ e("div", { style: { background: "var(--bg-card)", borderRadius: 16, margin: "12px 14px 0", overflow: "hidden" }, children: k.map((w, _) => /* @__PURE__ */ e(M, { label: w.label, disabled: w.disabled, onClick: w.onClick, border: _ > 0 }, w.label)) }),
-    /* @__PURE__ */ e("div", { style: { background: "var(--bg-card)", borderRadius: 16, margin: "12px 14px 0", overflow: "hidden" }, children: u.map((w, _) => /* @__PURE__ */ e(M, { label: w.label, disabled: w.disabled, border: _ > 0 }, w.label)) }),
-    v.length > 0 && /* @__PURE__ */ e("div", { style: { background: "var(--bg-card)", borderRadius: 16, margin: "12px 14px 0", overflow: "hidden" }, children: v.map((w, _) => /* @__PURE__ */ a(
+    /* @__PURE__ */ e("div", { style: { background: "var(--bg-card)", borderRadius: 16, margin: "12px 14px 0", overflow: "hidden" }, children: A.map((h, T) => /* @__PURE__ */ e(H, { label: h.label, disabled: h.disabled, onClick: h.onClick, border: T > 0 }, h.label)) }),
+    /* @__PURE__ */ e("div", { style: { background: "var(--bg-card)", borderRadius: 16, margin: "12px 14px 0", overflow: "hidden" }, children: p.map((h, T) => /* @__PURE__ */ e(H, { label: h.label, disabled: h.disabled, border: T > 0 }, h.label)) }),
+    y.length > 0 && /* @__PURE__ */ e("div", { style: { background: "var(--bg-card)", borderRadius: 16, margin: "12px 14px 0", overflow: "hidden" }, children: y.map((h, T) => /* @__PURE__ */ a(
       "div",
       {
-        style: { display: "flex", alignItems: "center", justifyContent: "space-between", padding: "14px 16px", borderTop: _ > 0 ? "1px solid var(--border)" : "none" },
+        style: { display: "flex", alignItems: "center", justifyContent: "space-between", padding: "14px 16px", borderTop: T > 0 ? "1px solid var(--border)" : "none" },
         children: [
-          /* @__PURE__ */ e("span", { style: { fontSize: 16, color: "var(--text-primary)" }, children: w.label }),
-          /* @__PURE__ */ e(F, { on: y(w.e), onToggle: () => C(w.e) })
+          /* @__PURE__ */ e("span", { style: { fontSize: 16, color: "var(--text-primary)" }, children: h.label }),
+          /* @__PURE__ */ e(O, { on: b(h.e), onToggle: () => k(h.e) })
         ]
       },
-      w.e
+      h.e
     )) })
   ] }) }) });
 }
-const Xn = { off: "off", standard: "standard", high: "high_frequency", low: "low_frequency" }, Jn = { off: "off", standard: "standard", high_frequency: "high", low_frequency: "low", smart: "standard" }, eo = { off: "off", deepOnly: "in_deep_mode", allModes: "in_all_modes" }, to = { off: "off", in_deep_mode: "deepOnly", in_all_modes: "allModes" }, ao = { low: "light", medium: "standard", high: "deep" }, io = { light: "low", standard: "medium", deep: "high", ultra_washing: "high" }, no = { normal: "normal", mild: "mild", warm: "warm", hot: "hot" }, oo = { normal: "normal", mild: "mild", warm: "warm", hot: "hot" };
-function At(l, o, i, t, r, s) {
-  const n = r / s, x = i / t;
-  let m, p, z, S;
-  return n > x ? (m = i, p = i / n, z = 0, S = (t - p) / 2) : (p = t, m = t * n, S = 0, z = (i - m) / 2), [(l / 100 * i - z) / m * r, (o / 100 * t - S) / p * s];
+const po = { off: "off", standard: "standard", high: "high_frequency", low: "low_frequency" }, mo = { off: "off", standard: "standard", high_frequency: "high", low_frequency: "low", smart: "standard" }, go = { off: "off", deepOnly: "in_deep_mode", allModes: "in_all_modes" }, ho = { off: "off", in_deep_mode: "deepOnly", in_all_modes: "allModes" }, yo = { low: "light", medium: "standard", high: "deep" }, vo = { light: "low", standard: "medium", deep: "high", ultra_washing: "high" }, fo = { normal: "normal", mild: "mild", warm: "warm", hot: "hot" }, bo = { normal: "normal", mild: "mild", warm: "warm", hot: "hot" };
+function Lt(l, n, i, t, r, s) {
+  const c = r / s, o = i / t;
+  let g, m, D, S;
+  return c > o ? (g = i, m = i / c, D = 0, S = (t - m) / 2) : (m = t, g = t * c, S = 0, D = (i - g) / 2), [(l / 100 * i - D) / g * r, (n / 100 * t - S) / m * s];
 }
-function Mt(l, o, i) {
-  const [t, r, s] = i, n = (r.map.x - t.map.x) / (r.vacuum.x - t.vacuum.x || 1e3), x = (s.map.y - t.map.y) / (s.vacuum.y - t.vacuum.y || 1e3);
-  return [(l - t.map.x) / n + t.vacuum.x, (o - t.map.y) / x + t.vacuum.y];
+function Wt(l, n, i) {
+  const [t, r, s] = i, c = (r.map.x - t.map.x) / (r.vacuum.x - t.vacuum.x || 1e3), o = (s.map.y - t.map.y) / (s.vacuum.y - t.vacuum.y || 1e3);
+  return [(l - t.map.x) / c + t.vacuum.x, (n - t.map.y) / o + t.vacuum.y];
 }
-const ro = () => /* @__PURE__ */ a("svg", { width: "48", height: "48", viewBox: "0 0 48 48", fill: "none", xmlns: "http://www.w3.org/2000/svg", children: [
+const xo = () => /* @__PURE__ */ a("svg", { width: "48", height: "48", viewBox: "0 0 48 48", fill: "none", xmlns: "http://www.w3.org/2000/svg", children: [
   /* @__PURE__ */ e("rect", { x: "12", y: "26", width: "24", height: "16", rx: "4", fill: "#ede9fe", stroke: "#7c3aed", strokeWidth: "1.8" }),
   /* @__PURE__ */ e("line", { x1: "17", y1: "29", x2: "17", y2: "39", stroke: "#7c3aed", strokeWidth: "1.3", opacity: ".5" }),
   /* @__PURE__ */ e("line", { x1: "22", y1: "29", x2: "22", y2: "39", stroke: "#7c3aed", strokeWidth: "1.3", opacity: ".5" }),
@@ -2976,14 +2991,14 @@ const ro = () => /* @__PURE__ */ a("svg", { width: "48", height: "48", viewBox: 
   /* @__PURE__ */ e("path", { d: "M24 18 L24 15", stroke: "#7c3aed", strokeWidth: "1.4", strokeLinecap: "round" }),
   /* @__PURE__ */ e("path", { d: "M19 16 L20 14", stroke: "#7c3aed", strokeWidth: "1.2", strokeLinecap: "round", opacity: ".5" }),
   /* @__PURE__ */ e("path", { d: "M29 15 L28 13", stroke: "#7c3aed", strokeWidth: "1.2", strokeLinecap: "round", opacity: ".5" })
-] }), so = () => /* @__PURE__ */ a("svg", { width: "44", height: "48", viewBox: "0 0 44 48", fill: "none", xmlns: "http://www.w3.org/2000/svg", children: [
+] }), wo = () => /* @__PURE__ */ a("svg", { width: "44", height: "48", viewBox: "0 0 44 48", fill: "none", xmlns: "http://www.w3.org/2000/svg", children: [
   /* @__PURE__ */ e("defs", { children: /* @__PURE__ */ a("linearGradient", { id: "vacBaseDropG", x1: "0", y1: "0", x2: "0", y2: "1", children: [
     /* @__PURE__ */ e("stop", { offset: "0%", stopColor: "#60b4f8" }),
     /* @__PURE__ */ e("stop", { offset: "100%", stopColor: "#1a7ed8" })
   ] }) }),
   /* @__PURE__ */ e("path", { d: "M22 8 C16 18 10 26 10 32 C10 39.7 15.4 45 22 45 C28.6 45 34 39.7 34 32 C34 26 28 18 22 8Z", fill: "url(#vacBaseDropG)" }),
   /* @__PURE__ */ e("path", { d: "M15 28 Q16.5 22 21 20", stroke: "white", strokeWidth: "2", strokeLinecap: "round", fill: "none", opacity: ".45" })
-] }), lo = () => /* @__PURE__ */ a("svg", { width: "48", height: "48", viewBox: "0 0 48 48", fill: "none", xmlns: "http://www.w3.org/2000/svg", children: [
+] }), Eo = () => /* @__PURE__ */ a("svg", { width: "48", height: "48", viewBox: "0 0 48 48", fill: "none", xmlns: "http://www.w3.org/2000/svg", children: [
   /* @__PURE__ */ e("circle", { cx: "24", cy: "24", r: "10", fill: "#fb923c" }),
   /* @__PURE__ */ e("line", { x1: "24", y1: "7", x2: "24", y2: "11", stroke: "#fb923c", strokeWidth: "2.5", strokeLinecap: "round" }),
   /* @__PURE__ */ e("line", { x1: "24", y1: "37", x2: "24", y2: "41", stroke: "#fb923c", strokeWidth: "2.5", strokeLinecap: "round" }),
@@ -2995,105 +3010,105 @@ const ro = () => /* @__PURE__ */ a("svg", { width: "48", height: "48", viewBox: 
   /* @__PURE__ */ e("line", { x1: "14.3", y1: "33.7", x2: "11.5", y2: "36.5", stroke: "#fb923c", strokeWidth: "2.3", strokeLinecap: "round" }),
   /* @__PURE__ */ e("circle", { cx: "24", cy: "24", r: "6.5", fill: "#fde68a" })
 ] });
-function co({
+function So({
   open: l,
-  onClose: o,
+  onClose: n,
   cfg: i,
   t,
   callService: r,
   getState: s,
-  svuotOpen: n,
-  setSvuotOpen: x,
-  svuotSel: m,
-  setSvuotSel: p,
-  lavRipOpen: z,
+  svuotOpen: c,
+  setSvuotOpen: o,
+  svuotSel: g,
+  setSvuotSel: m,
+  lavRipOpen: D,
   setLavRipOpen: S,
-  lavRipSel: y,
-  setLavRipSel: C,
-  tempAsciugOpen: k,
-  setTempAsciugOpen: u,
-  tempAsciugSel: v,
-  setTempAsciugSel: M,
-  startPage: w = "main"
+  lavRipSel: b,
+  setLavRipSel: k,
+  tempAsciugOpen: A,
+  setTempAsciugOpen: p,
+  tempAsciugSel: y,
+  setTempAsciugSel: H,
+  startPage: h = "main"
 }) {
-  const [_, N] = b("main"), [q, oe] = b("medium"), [L, te] = b("normal"), [he, ae] = b(!1), [ye, re] = b(!1), [ve, G] = b(!1), [P, se] = b(!1), Y = (c, I) => c && r("select", "select_option", c, { option: I }), le = (c, I) => c && r("switch", I ? "turn_on" : "turn_off", c), de = (c) => c && r("button", "press", c);
-  U(() => {
+  const [T, R] = w("main"), [F, ne] = w("medium"), [$, G] = w("normal"), [oe, ke] = w(!1), [ee, ye] = w(!1), [pe, re] = w(!1), [I, ve] = w(!1), V = (u, B) => u && r("select", "select_option", u, { option: B }), fe = (u, B) => u && r("switch", B ? "turn_on" : "turn_off", u), se = (u) => u && r("button", "press", u);
+  J(() => {
     if (!l) {
-      N("main");
+      R("main");
       return;
     }
-    N(w);
-    const c = (Pe) => Pe ? s(Pe) : null, I = c(i.autoEmptyModeEntity);
-    I && p(Jn[I] || "standard");
-    const be = c(i.autoRewashingEntity);
-    be && C(to[be] || "off");
-    const Ce = c(i.dryingTimeEntity);
-    Ce && ["2h", "3h", "4h"].includes(Ce) && M(Ce);
-    const Le = c(i.washingModeEntity);
-    Le && oe(io[Le] || "medium");
-    const We = c(i.waterTempEntity);
-    We && te(oo[We] || "normal");
-    const Ie = c(i.autoDetergentEntity);
-    Ie !== null && ae(Ie === "on");
-    const ke = c(i.autoWashEntity);
-    ke !== null && re(ke === "on");
-    const Be = c(i.autoDryingEntity);
-    Be !== null && G(Be === "on");
-    const qe = c(i.smartMopWashingEntity);
-    qe !== null && se(qe === "on");
+    R(h);
+    const u = (Ve) => Ve ? s(Ve) : null, B = u(i.autoEmptyModeEntity);
+    B && m(mo[B] || "standard");
+    const be = u(i.autoRewashingEntity);
+    be && k(ho[be] || "off");
+    const Te = u(i.dryingTimeEntity);
+    Te && ["2h", "3h", "4h"].includes(Te) && H(Te);
+    const Ne = u(i.washingModeEntity);
+    Ne && ne(vo[Ne] || "medium");
+    const Oe = u(i.waterTempEntity);
+    Oe && G(bo[Oe] || "normal");
+    const $e = u(i.autoDetergentEntity);
+    $e !== null && ke($e === "on");
+    const Ge = u(i.autoWashEntity);
+    Ge !== null && ye(Ge === "on");
+    const Re = u(i.autoDryingEntity);
+    Re !== null && re(Re === "on");
+    const je = u(i.smartMopWashingEntity);
+    je !== null && ve(je === "on");
   }, [l]);
-  const fe = (c) => c ? s(c) ?? null : null, A = ["installed", "available", "ok", "no_warning", "enabled", "completed", "clean"], V = [
+  const Ae = (u) => u ? s(u) ?? null : null, C = ["installed", "available", "ok", "no_warning", "enabled", "completed", "clean"], te = [
     { label: t("dreame.cleanWaterTank"), entity: i.lowWaterEntity, okVals: ["no_warning"] },
-    { label: t("dreame.dirtyWaterTankName"), entity: i.dirtyWaterEntity, okVals: A },
-    { label: t("dreame.dustBagName"), entity: i.dustBagEntity, okVals: A },
-    { label: t("dreame.detergentStatusName"), entity: i.detergentEntity, okVals: A }
-  ].map((c) => {
-    const I = fe(c.entity), be = !I || I === "unavailable" ? null : c.okVals.includes(I);
-    return { ...c, val: I, isOk: be };
-  }), X = [
+    { label: t("dreame.dirtyWaterTankName"), entity: i.dirtyWaterEntity, okVals: C },
+    { label: t("dreame.dustBagName"), entity: i.dustBagEntity, okVals: C },
+    { label: t("dreame.detergentStatusName"), entity: i.detergentEntity, okVals: C }
+  ].map((u) => {
+    const B = Ae(u.entity), be = !B || B === "unavailable" ? null : u.okVals.includes(B);
+    return { ...u, val: B, isOk: be };
+  }), Z = [
     { id: "low", label: t("dreame.washQtyLow"), desc: t("dreame.washQtyLowDesc") },
     { id: "medium", label: t("dreame.washQtyMedium"), desc: t("dreame.washQtyMediumDesc") },
     { id: "high", label: t("dreame.washQtyHigh"), desc: t("dreame.washQtyHighDesc") }
-  ], j = [
+  ], Q = [
     { id: "normal", label: t("dreame.washTempNormal"), desc: t("dreame.washTempNormalDesc") },
     { id: "mild", label: t("dreame.washTempMild"), desc: t("dreame.washTempMildDesc") },
     { id: "warm", label: t("dreame.washTempWarm"), desc: t("dreame.washTempWarmDesc") },
     { id: "hot", label: t("dreame.washTempHot"), desc: t("dreame.washTempHotDesc") }
-  ], Re = t(m === "off" ? "dreame.svuotOff" : m === "high" ? "dreame.svuotHighFreq" : m === "low" ? "dreame.svuotLowFreq" : "dreame.svuotStandard"), ze = t(y === "deepOnly" ? "dreame.lavRipDeepOnly" : y === "allModes" ? "dreame.lavRipAllModes" : "dreame.lavRipOff"), Ye = t(q === "low" ? "dreame.washQtyLow" : q === "high" ? "dreame.washQtyHigh" : "dreame.washQtyMedium"), Xe = t(L === "mild" ? "dreame.washTempMild" : L === "warm" ? "dreame.washTempWarm" : L === "hot" ? "dreame.washTempHot" : "dreame.washTempNormal"), De = { type: "spring", damping: 30, stiffness: 280 }, ce = { background: "var(--bg-card)", borderRadius: 16, margin: "12px 14px 0", overflow: "hidden" }, Z = (c) => ({ padding: 16, borderTop: c ? "1px solid var(--border)" : "none" }), Q = { display: "flex", alignItems: "center", justifyContent: "space-between" };
-  return /* @__PURE__ */ a(ge, { children: [
-    /* @__PURE__ */ e(Se, { open: l, onClose: o, zIndex: 1e3, children: /* @__PURE__ */ a("div", { style: { flex: 1, position: "relative", minHeight: 0, overflow: "hidden" }, children: [
+  ], He = t(g === "off" ? "dreame.svuotOff" : g === "high" ? "dreame.svuotHighFreq" : g === "low" ? "dreame.svuotLowFreq" : "dreame.svuotStandard"), Fe = t(b === "deepOnly" ? "dreame.lavRipDeepOnly" : b === "allModes" ? "dreame.lavRipAllModes" : "dreame.lavRipOff"), Me = t(F === "low" ? "dreame.washQtyLow" : F === "high" ? "dreame.washQtyHigh" : "dreame.washQtyMedium"), nt = t($ === "mild" ? "dreame.washTempMild" : $ === "warm" ? "dreame.washTempWarm" : $ === "hot" ? "dreame.washTempHot" : "dreame.washTempNormal"), _e = { type: "spring", damping: 30, stiffness: 280 }, me = { background: "var(--bg-card)", borderRadius: 16, margin: "12px 14px 0", overflow: "hidden" }, K = (u) => ({ padding: 16, borderTop: u ? "1px solid var(--border)" : "none" }), U = { display: "flex", alignItems: "center", justifyContent: "space-between" };
+  return /* @__PURE__ */ a(ue, { children: [
+    /* @__PURE__ */ e(Ce, { open: l, onClose: n, zIndex: 1e3, children: /* @__PURE__ */ a("div", { style: { flex: 1, position: "relative", minHeight: 0, overflow: "hidden" }, children: [
       /* @__PURE__ */ e(
-        ne.div,
+        ie.div,
         {
-          animate: { x: _ === "main" ? 0 : "-100%" },
-          transition: De,
+          animate: { x: T === "main" ? 0 : "-100%" },
+          transition: _e,
           style: { position: "absolute", inset: 0, overflowY: "auto" },
           children: /* @__PURE__ */ a("div", { style: { padding: "22px 20px 32px" }, children: [
             /* @__PURE__ */ e("div", { style: { fontSize: 22, fontWeight: 800, color: "var(--text-primary)", marginBottom: 20 }, children: t("dreame.infoStazione") }),
-            /* @__PURE__ */ e("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px 12px", marginBottom: 26 }, children: V.map((c) => /* @__PURE__ */ a("div", { style: { display: "flex", alignItems: "flex-start", gap: 10 }, children: [
+            /* @__PURE__ */ e("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px 12px", marginBottom: 26 }, children: te.map((u) => /* @__PURE__ */ a("div", { style: { display: "flex", alignItems: "flex-start", gap: 10 }, children: [
               /* @__PURE__ */ e("div", { style: {
                 width: 10,
                 height: 10,
                 borderRadius: "50%",
                 flexShrink: 0,
                 marginTop: 5,
-                background: c.isOk === null ? "var(--text-muted)" : c.isOk ? "var(--green)" : "var(--red)"
+                background: u.isOk === null ? "var(--text-muted)" : u.isOk ? "var(--green)" : "var(--red)"
               } }),
               /* @__PURE__ */ a("div", { children: [
-                /* @__PURE__ */ e("div", { style: { fontSize: 14, fontWeight: 600, color: "var(--text-primary)", lineHeight: 1.4 }, children: c.label }),
-                c.isOk === !1 && c.val && c.val !== "unavailable" && /* @__PURE__ */ e("div", { style: { fontSize: 12, color: "var(--red)", lineHeight: 1.4, marginTop: 2 }, children: t(`stationStatus.${c.val}`, { defaultValue: c.val }) })
+                /* @__PURE__ */ e("div", { style: { fontSize: 14, fontWeight: 600, color: "var(--text-primary)", lineHeight: 1.4 }, children: u.label }),
+                u.isOk === !1 && u.val && u.val !== "unavailable" && /* @__PURE__ */ e("div", { style: { fontSize: 12, color: "var(--red)", lineHeight: 1.4, marginTop: 2 }, children: t(`stationStatus.${u.val}`, { defaultValue: u.val }) })
               ] })
-            ] }, c.label)) }),
+            ] }, u.label)) }),
             /* @__PURE__ */ e("div", { style: { height: 1, background: "var(--border)", margin: "0 -20px 26px" } }),
             /* @__PURE__ */ e("div", { style: { fontSize: 17, fontWeight: 700, color: "var(--text-primary)", marginBottom: 20 }, children: t("dreame.attivitaBase") }),
             /* @__PURE__ */ e("div", { style: { display: "flex", justifyContent: "space-around", marginBottom: 28 }, children: [
-              { label: t("dreame.svuotaBtn"), Svg: ro, onClick: () => de(i.startAutoEmptyEntity) },
-              { label: t("dreame.lavaMocioBtn"), Svg: so, onClick: () => de(i.startSelfWashEntity) },
-              { label: t("dreame.asciugaBtn"), Svg: lo, onClick: () => de(i.startDryingEntity) }
-            ].map((c) => /* @__PURE__ */ a(
+              { label: t("dreame.svuotaBtn"), Svg: xo, onClick: () => se(i.startAutoEmptyEntity) },
+              { label: t("dreame.lavaMocioBtn"), Svg: wo, onClick: () => se(i.startSelfWashEntity) },
+              { label: t("dreame.asciugaBtn"), Svg: Eo, onClick: () => se(i.startDryingEntity) }
+            ].map((u) => /* @__PURE__ */ a(
               "div",
               {
-                onClick: c.onClick,
+                onClick: u.onClick,
                 style: { display: "flex", flexDirection: "column", alignItems: "center", gap: 10, cursor: "pointer" },
                 children: [
                   /* @__PURE__ */ e("div", { style: {
@@ -3105,22 +3120,22 @@ function co({
                     alignItems: "center",
                     justifyContent: "center",
                     transition: "background .18s"
-                  }, children: /* @__PURE__ */ e(c.Svg, {}) }),
-                  /* @__PURE__ */ e("span", { style: { fontSize: 14, color: "var(--text-primary)", fontWeight: 500 }, children: c.label })
+                  }, children: /* @__PURE__ */ e(u.Svg, {}) }),
+                  /* @__PURE__ */ e("span", { style: { fontSize: 14, color: "var(--text-primary)", fontWeight: 500 }, children: u.label })
                 ]
               },
-              c.label
+              u.label
             )) }),
             /* @__PURE__ */ a(
               "div",
               {
-                onClick: () => N("settings"),
+                onClick: () => R("settings"),
                 style: {
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
                   gap: 8,
-                  color: h,
+                  color: f,
                   fontSize: 16,
                   fontWeight: 600,
                   cursor: "pointer",
@@ -3128,7 +3143,7 @@ function co({
                   textUnderlineOffset: 3
                 },
                 children: [
-                  /* @__PURE__ */ a("svg", { width: "20", height: "20", viewBox: "0 0 24 24", fill: "none", stroke: h, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [
+                  /* @__PURE__ */ a("svg", { width: "20", height: "20", viewBox: "0 0 24 24", fill: "none", stroke: f, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [
                     /* @__PURE__ */ e("circle", { cx: "12", cy: "12", r: "3" }),
                     /* @__PURE__ */ e("path", { d: "M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" })
                   ] }),
@@ -3140,79 +3155,79 @@ function co({
         }
       ),
       /* @__PURE__ */ e(
-        ne.div,
+        ie.div,
         {
-          animate: { x: _ === "settings" ? 0 : _ === "main" ? "100%" : "-100%" },
-          transition: De,
+          animate: { x: T === "settings" ? 0 : T === "main" ? "100%" : "-100%" },
+          transition: _e,
           style: { position: "absolute", inset: 0, overflowY: "auto" },
           children: /* @__PURE__ */ a("div", { style: { background: "var(--bg-elevated)", minHeight: "100%", paddingBottom: 32 }, children: [
-            /* @__PURE__ */ e(Ee, { title: t("dreame.baseSettingsTitle"), onBack: w === "settings" ? o : () => N("main") }),
-            /* @__PURE__ */ e("div", { style: ce, children: /* @__PURE__ */ a("div", { onClick: () => x(!0), style: { ...Z(!1), cursor: "pointer" }, children: [
-              /* @__PURE__ */ a("div", { style: Q, children: [
+            /* @__PURE__ */ e(De, { title: t("dreame.baseSettingsTitle"), onBack: h === "settings" ? n : () => R("main") }),
+            /* @__PURE__ */ e("div", { style: me, children: /* @__PURE__ */ a("div", { onClick: () => o(!0), style: { ...K(!1), cursor: "pointer" }, children: [
+              /* @__PURE__ */ a("div", { style: U, children: [
                 /* @__PURE__ */ e("span", { style: { fontSize: 16, fontWeight: 600, color: "var(--text-primary)" }, children: t("dreame.svuotAutoTitle") }),
-                /* @__PURE__ */ a("span", { style: { fontSize: 14, color: h, whiteSpace: "nowrap" }, children: [
-                  Re,
+                /* @__PURE__ */ a("span", { style: { fontSize: 14, color: f, whiteSpace: "nowrap" }, children: [
+                  He,
                   " ›"
                 ] })
               ] }),
               /* @__PURE__ */ e("div", { style: { fontSize: 13, color: "var(--text-muted)", lineHeight: 1.6, marginTop: 6 }, children: t("dreame.svuotAutoDesc") })
             ] }) }),
-            /* @__PURE__ */ a("div", { style: ce, children: [
-              /* @__PURE__ */ a("div", { style: { ...Z(!1), opacity: 0.35 }, children: [
-                /* @__PURE__ */ a("div", { style: Q, children: [
+            /* @__PURE__ */ a("div", { style: me, children: [
+              /* @__PURE__ */ a("div", { style: { ...K(!1), opacity: 0.35 }, children: [
+                /* @__PURE__ */ a("div", { style: U, children: [
                   /* @__PURE__ */ e("span", { style: { fontSize: 16, fontWeight: 600, color: "var(--text-primary)", flex: 1 }, children: t("dreame.autoDetergent") }),
-                  /* @__PURE__ */ e(F, { on: he, onToggle: () => {
+                  /* @__PURE__ */ e(O, { on: oe, onToggle: () => {
                   } })
                 ] }),
                 /* @__PURE__ */ e("div", { style: { fontSize: 13, color: "var(--text-muted)", lineHeight: 1.6, marginTop: 6 }, children: t("dreame.autoDetergentDesc") })
               ] }),
-              /* @__PURE__ */ a("div", { style: { ...Z(!0), opacity: 0.35 }, children: [
-                /* @__PURE__ */ a("div", { style: Q, children: [
+              /* @__PURE__ */ a("div", { style: { ...K(!0), opacity: 0.35 }, children: [
+                /* @__PURE__ */ a("div", { style: U, children: [
                   /* @__PURE__ */ e("span", { style: { fontSize: 16, fontWeight: 600, color: "var(--text-primary)", flex: 1 }, children: t("dreame.autoWashTitle") }),
-                  /* @__PURE__ */ e(F, { on: ye, onToggle: () => {
+                  /* @__PURE__ */ e(O, { on: ee, onToggle: () => {
                   } })
                 ] }),
                 /* @__PURE__ */ e("div", { style: { fontSize: 13, color: "var(--text-muted)", lineHeight: 1.6, marginTop: 6 }, children: t("dreame.autoWashDesc") })
               ] })
             ] }),
-            /* @__PURE__ */ a("div", { style: ce, children: [
-              /* @__PURE__ */ a("div", { onClick: () => N("washing"), style: { ...Z(!1), cursor: "pointer" }, children: [
-                /* @__PURE__ */ a("div", { style: Q, children: [
+            /* @__PURE__ */ a("div", { style: me, children: [
+              /* @__PURE__ */ a("div", { onClick: () => R("washing"), style: { ...K(!1), cursor: "pointer" }, children: [
+                /* @__PURE__ */ a("div", { style: U, children: [
                   /* @__PURE__ */ e("span", { style: { fontSize: 16, fontWeight: 600, color: "var(--text-primary)" }, children: t("dreame.washingSettingsTitle") }),
-                  /* @__PURE__ */ a("span", { style: { fontSize: 14, color: h, whiteSpace: "nowrap" }, children: [
-                    Ye,
+                  /* @__PURE__ */ a("span", { style: { fontSize: 14, color: f, whiteSpace: "nowrap" }, children: [
+                    Me,
                     " | ",
-                    Xe,
+                    nt,
                     " ›"
                   ] })
                 ] }),
                 /* @__PURE__ */ e("div", { style: { fontSize: 13, color: "var(--text-muted)", lineHeight: 1.6, marginTop: 6 }, children: t("dreame.washingSettingsDesc") })
               ] }),
-              /* @__PURE__ */ a("div", { onClick: () => S(!0), style: { ...Z(!0), cursor: "pointer" }, children: [
-                /* @__PURE__ */ a("div", { style: Q, children: [
+              /* @__PURE__ */ a("div", { onClick: () => S(!0), style: { ...K(!0), cursor: "pointer" }, children: [
+                /* @__PURE__ */ a("div", { style: U, children: [
                   /* @__PURE__ */ e("span", { style: { fontSize: 16, fontWeight: 600, color: "var(--text-primary)" }, children: t("dreame.lavRipLabel") }),
-                  /* @__PURE__ */ a("span", { style: { fontSize: 14, color: y === "off" ? "var(--text-muted)" : h, whiteSpace: "nowrap" }, children: [
-                    ze,
+                  /* @__PURE__ */ a("span", { style: { fontSize: 14, color: b === "off" ? "var(--text-muted)" : f, whiteSpace: "nowrap" }, children: [
+                    Fe,
                     " ›"
                   ] })
                 ] }),
                 /* @__PURE__ */ e("div", { style: { fontSize: 13, color: "var(--text-muted)", lineHeight: 1.6, marginTop: 6 }, children: t("dreame.lavRipDesc") })
               ] })
             ] }),
-            /* @__PURE__ */ a("div", { style: { ...ce, marginBottom: 0, opacity: 0.35, pointerEvents: "none" }, children: [
-              /* @__PURE__ */ a("div", { style: Z(!1), children: [
-                /* @__PURE__ */ a("div", { style: Q, children: [
+            /* @__PURE__ */ a("div", { style: { ...me, marginBottom: 0, opacity: 0.35, pointerEvents: "none" }, children: [
+              /* @__PURE__ */ a("div", { style: K(!1), children: [
+                /* @__PURE__ */ a("div", { style: U, children: [
                   /* @__PURE__ */ e("span", { style: { fontSize: 16, fontWeight: 600, color: "var(--text-primary)" }, children: t("dreame.asciugaTitle") }),
-                  /* @__PURE__ */ e(F, { on: ve, onToggle: () => {
+                  /* @__PURE__ */ e(O, { on: pe, onToggle: () => {
                   } })
                 ] }),
                 /* @__PURE__ */ e("div", { style: { fontSize: 13, color: "var(--text-muted)", lineHeight: 1.6, marginTop: 6 }, children: t("dreame.asciugaDesc") })
               ] }),
-              /* @__PURE__ */ a("div", { style: { ...Z(!0) }, children: [
-                /* @__PURE__ */ a("div", { style: Q, children: [
+              /* @__PURE__ */ a("div", { style: { ...K(!0) }, children: [
+                /* @__PURE__ */ a("div", { style: U, children: [
                   /* @__PURE__ */ e("span", { style: { fontSize: 16, fontWeight: 600, color: "var(--text-primary)" }, children: t("dreame.tempAsciugLabel") }),
-                  /* @__PURE__ */ a("span", { style: { fontSize: 14, color: h }, children: [
-                    v || "—",
+                  /* @__PURE__ */ a("span", { style: { fontSize: 14, color: f }, children: [
+                    y || "—",
                     " ›"
                   ] })
                 ] }),
@@ -3223,222 +3238,222 @@ function co({
         }
       ),
       /* @__PURE__ */ e(
-        ne.div,
+        ie.div,
         {
-          animate: { x: _ === "washing" ? 0 : "100%" },
-          transition: De,
+          animate: { x: T === "washing" ? 0 : "100%" },
+          transition: _e,
           style: { position: "absolute", inset: 0, overflowY: "auto" },
           children: /* @__PURE__ */ a("div", { style: { background: "var(--bg-elevated)", minHeight: "100%", paddingBottom: 32 }, children: [
-            /* @__PURE__ */ e(Ee, { title: t("dreame.washingSettingsTitle"), onBack: () => N("settings") }),
-            /* @__PURE__ */ e("div", { style: ce, children: /* @__PURE__ */ a("div", { style: Z(!1), children: [
-              /* @__PURE__ */ a("div", { style: Q, children: [
+            /* @__PURE__ */ e(De, { title: t("dreame.washingSettingsTitle"), onBack: () => R("settings") }),
+            /* @__PURE__ */ e("div", { style: me, children: /* @__PURE__ */ a("div", { style: K(!1), children: [
+              /* @__PURE__ */ a("div", { style: U, children: [
                 /* @__PURE__ */ e("span", { style: { fontSize: 16, fontWeight: 600, color: "var(--text-primary)" }, children: t("dreame.smartWash") }),
-                /* @__PURE__ */ e(F, { on: P, onToggle: () => {
-                  const c = !P;
-                  se(c), le(i.smartMopWashingEntity, c);
+                /* @__PURE__ */ e(O, { on: I, onToggle: () => {
+                  const u = !I;
+                  ve(u), fe(i.smartMopWashingEntity, u);
                 } })
               ] }),
               /* @__PURE__ */ e("div", { style: { fontSize: 13, color: "var(--text-muted)", lineHeight: 1.6, marginTop: 6 }, children: t("dreame.smartWashDesc") })
             ] }) }),
-            /* @__PURE__ */ a("div", { style: { opacity: P ? 0.35 : 1, pointerEvents: P ? "none" : "auto", transition: "opacity .2s" }, children: [
+            /* @__PURE__ */ a("div", { style: { opacity: I ? 0.35 : 1, pointerEvents: I ? "none" : "auto", transition: "opacity .2s" }, children: [
               /* @__PURE__ */ e("div", { style: { fontSize: 14, color: "var(--text-muted)", margin: "16px 14px 8px", lineHeight: 1.5 }, children: t("dreame.washQtyLabel") }),
-              /* @__PURE__ */ e("div", { style: { background: "var(--bg-card)", borderRadius: 16, margin: "0 14px", overflow: "hidden" }, children: X.map((c, I) => /* @__PURE__ */ a(
+              /* @__PURE__ */ e("div", { style: { background: "var(--bg-card)", borderRadius: 16, margin: "0 14px", overflow: "hidden" }, children: Z.map((u, B) => /* @__PURE__ */ a(
                 "div",
                 {
                   onClick: () => {
-                    oe(c.id), Y(i.washingModeEntity, ao[c.id]);
+                    ne(u.id), V(i.washingModeEntity, yo[u.id]);
                   },
-                  style: { display: "flex", alignItems: "flex-start", gap: 14, padding: 16, cursor: "pointer", borderTop: I > 0 ? "1px solid var(--border)" : "none" },
+                  style: { display: "flex", alignItems: "flex-start", gap: 14, padding: 16, cursor: "pointer", borderTop: B > 0 ? "1px solid var(--border)" : "none" },
                   children: [
                     /* @__PURE__ */ e("div", { style: {
                       width: 24,
                       height: 24,
                       borderRadius: "50%",
-                      border: `2px solid ${q === c.id ? h : "#ccc"}`,
+                      border: `2px solid ${F === u.id ? f : "#ccc"}`,
                       flexShrink: 0,
                       marginTop: 1,
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
-                      background: q === c.id ? h : "transparent",
+                      background: F === u.id ? f : "transparent",
                       transition: "all .18s"
-                    }, children: q === c.id && /* @__PURE__ */ e("span", { style: { fontSize: 13, color: "white", fontWeight: 800, lineHeight: 1 }, children: "✓" }) }),
+                    }, children: F === u.id && /* @__PURE__ */ e("span", { style: { fontSize: 13, color: "white", fontWeight: 800, lineHeight: 1 }, children: "✓" }) }),
                     /* @__PURE__ */ a("div", { children: [
-                      /* @__PURE__ */ e("div", { style: { fontSize: 16, fontWeight: 700, color: "var(--text-primary)", marginBottom: 4 }, children: c.label }),
-                      /* @__PURE__ */ e("div", { style: { fontSize: 13, color: "var(--text-muted)", lineHeight: 1.5 }, children: c.desc })
+                      /* @__PURE__ */ e("div", { style: { fontSize: 16, fontWeight: 700, color: "var(--text-primary)", marginBottom: 4 }, children: u.label }),
+                      /* @__PURE__ */ e("div", { style: { fontSize: 13, color: "var(--text-muted)", lineHeight: 1.5 }, children: u.desc })
                     ] })
                   ]
                 },
-                c.id
+                u.id
               )) })
             ] }),
-            /* @__PURE__ */ a("div", { style: { opacity: P ? 0.35 : 1, pointerEvents: P ? "none" : "auto", transition: "opacity .2s" }, children: [
+            /* @__PURE__ */ a("div", { style: { opacity: I ? 0.35 : 1, pointerEvents: I ? "none" : "auto", transition: "opacity .2s" }, children: [
               /* @__PURE__ */ e("div", { style: { fontSize: 14, color: "var(--text-muted)", margin: "16px 14px 8px" }, children: t("dreame.washTempLabel") }),
-              /* @__PURE__ */ e("div", { style: { background: "var(--bg-card)", borderRadius: 16, margin: "0 14px", overflow: "hidden" }, children: j.map((c, I) => /* @__PURE__ */ a(
+              /* @__PURE__ */ e("div", { style: { background: "var(--bg-card)", borderRadius: 16, margin: "0 14px", overflow: "hidden" }, children: Q.map((u, B) => /* @__PURE__ */ a(
                 "div",
                 {
                   onClick: () => {
-                    te(c.id), Y(i.waterTempEntity, no[c.id]);
+                    G(u.id), V(i.waterTempEntity, fo[u.id]);
                   },
-                  style: { display: "flex", alignItems: "flex-start", gap: 14, padding: 16, cursor: "pointer", borderTop: I > 0 ? "1px solid var(--border)" : "none" },
+                  style: { display: "flex", alignItems: "flex-start", gap: 14, padding: 16, cursor: "pointer", borderTop: B > 0 ? "1px solid var(--border)" : "none" },
                   children: [
                     /* @__PURE__ */ e("div", { style: {
                       width: 24,
                       height: 24,
                       borderRadius: "50%",
-                      border: `2px solid ${L === c.id ? h : "#ccc"}`,
+                      border: `2px solid ${$ === u.id ? f : "#ccc"}`,
                       flexShrink: 0,
                       marginTop: 1,
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
-                      background: L === c.id ? h : "transparent",
+                      background: $ === u.id ? f : "transparent",
                       transition: "all .18s"
-                    }, children: L === c.id && /* @__PURE__ */ e("span", { style: { fontSize: 13, color: "white", fontWeight: 800, lineHeight: 1 }, children: "✓" }) }),
+                    }, children: $ === u.id && /* @__PURE__ */ e("span", { style: { fontSize: 13, color: "white", fontWeight: 800, lineHeight: 1 }, children: "✓" }) }),
                     /* @__PURE__ */ a("div", { children: [
-                      /* @__PURE__ */ e("div", { style: { fontSize: 16, fontWeight: 700, color: "var(--text-primary)", marginBottom: 4 }, children: c.label }),
-                      /* @__PURE__ */ e("div", { style: { fontSize: 13, color: "var(--text-muted)", lineHeight: 1.5 }, children: c.desc })
+                      /* @__PURE__ */ e("div", { style: { fontSize: 16, fontWeight: 700, color: "var(--text-primary)", marginBottom: 4 }, children: u.label }),
+                      /* @__PURE__ */ e("div", { style: { fontSize: 13, color: "var(--text-muted)", lineHeight: 1.5 }, children: u.desc })
                     ] })
                   ]
                 },
-                c.id
+                u.id
               )) }),
-              L === "hot" && !P && /* @__PURE__ */ e("div", { style: { fontSize: 13, color: h, lineHeight: 1.6, margin: "12px 14px 0" }, children: t("dreame.washWarningHot") })
+              $ === "hot" && !I && /* @__PURE__ */ e("div", { style: { fontSize: 13, color: f, lineHeight: 1.6, margin: "12px 14px 0" }, children: t("dreame.washWarningHot") })
             ] })
           ] })
         }
       )
     ] }) }),
     /* @__PURE__ */ e(
-      $n,
+      ao,
       {
-        open: n,
-        onClose: () => x(!1),
-        selected: m,
-        onSelect: (c) => {
-          p(c), Y(i.autoEmptyModeEntity, Xn[c]);
+        open: c,
+        onClose: () => o(!1),
+        selected: g,
+        onSelect: (u) => {
+          m(u), V(i.autoEmptyModeEntity, po[u]);
         },
         t
       }
     ),
     /* @__PURE__ */ e(
-      Gn,
+      io,
       {
-        open: z,
+        open: D,
         onClose: () => S(!1),
-        selected: y,
-        onSelect: (c) => {
-          C(c), Y(i.autoRewashingEntity, eo[c]);
+        selected: b,
+        onSelect: (u) => {
+          k(u), V(i.autoRewashingEntity, go[u]);
         },
         t
       }
     ),
     /* @__PURE__ */ e(
-      jn,
+      no,
       {
-        open: k,
-        onClose: () => u(!1),
-        selected: v,
-        onSelect: (c) => {
-          M(c), Y(i.dryingTimeEntity, c);
+        open: A,
+        onClose: () => p(!1),
+        selected: y,
+        onSelect: (u) => {
+          H(u), V(i.dryingTimeEntity, u);
         },
         t
       }
     )
   ] });
 }
-function st({ suction: l, onSelect: o, t: i }) {
+function ut({ suction: l, onSelect: n, t: i }) {
   const t = [
-    { id: "quiet", label: i("dreame.suctionSilenz"), Ico: Rn },
-    { id: "standard", label: i("dreame.suctionStd"), Ico: Ln },
-    { id: "strong", label: i("dreame.suctionIntensiva"), Ico: Wn },
-    { id: "turbo", label: i("dreame.suctionMax"), Ico: In }
+    { id: "quiet", label: i("dreame.suctionSilenz"), Ico: jn },
+    { id: "standard", label: i("dreame.suctionStd"), Ico: Vn },
+    { id: "strong", label: i("dreame.suctionIntensiva"), Ico: Zn },
+    { id: "turbo", label: i("dreame.suctionMax"), Ico: Qn }
   ];
   return /* @__PURE__ */ a("div", { children: [
     /* @__PURE__ */ e("div", { style: { fontSize: 17, fontWeight: 700, color: "var(--text-primary)", marginBottom: 16, display: "flex", alignItems: "center", gap: 6 }, children: i("dreame.potenzaAspira") }),
-    /* @__PURE__ */ e("div", { style: { display: "flex", gap: 8, justifyContent: "center", marginBottom: 22 }, children: t.map(({ id: r, label: s, Ico: n }) => /* @__PURE__ */ e(Lt, { label: s, active: l === r, onClick: () => o(r), children: /* @__PURE__ */ e(n, {}) }, r)) })
+    /* @__PURE__ */ e("div", { style: { display: "flex", gap: 8, justifyContent: "center", marginBottom: 22 }, children: t.map(({ id: r, label: s, Ico: c }) => /* @__PURE__ */ e(Pt, { label: s, active: l === r, onClick: () => n(r), children: /* @__PURE__ */ e(c, {}) }, r)) })
   ] });
 }
-function Ue({ route: l, onSelect: o, mop: i, t }) {
+function it({ route: l, onSelect: n, mop: i, t }) {
   const r = [
-    { id: "quick", label: t("dreame.percVeloce"), Ico: Bn },
-    { id: "standard", label: t("dreame.percStandard"), Ico: qn }
+    { id: "quick", label: t("dreame.percVeloce"), Ico: Kn },
+    { id: "standard", label: t("dreame.percStandard"), Ico: Un }
   ], s = [
     ...r,
-    { id: "intensive", label: t("dreame.percIntensivo"), Ico: Pn, small: !0 },
-    { id: "deep", label: t("dreame.percProfonda"), Ico: Hn }
-  ], n = i ? s : r;
+    { id: "intensive", label: t("dreame.percIntensivo"), Ico: Yn, small: !0 },
+    { id: "deep", label: t("dreame.percProfonda"), Ico: Xn }
+  ], c = i ? s : r;
   return /* @__PURE__ */ a("div", { children: [
     /* @__PURE__ */ a("div", { style: { fontSize: 17, fontWeight: 700, color: "var(--text-primary)", marginBottom: 16, display: "flex", alignItems: "center", gap: 6 }, children: [
       t("dreame.percorso"),
       /* @__PURE__ */ e("div", { style: { width: 20, height: 20, borderRadius: "50%", border: "1.5px solid #ccc", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, color: "var(--text-muted)", cursor: "pointer" }, children: "?" })
     ] }),
-    /* @__PURE__ */ e("div", { style: { display: "flex", gap: 8, justifyContent: "center", marginBottom: 22, flexWrap: "wrap" }, children: n.map(({ id: x, label: m, Ico: p, small: z }) => /* @__PURE__ */ e(Lt, { label: m, active: l === x, onClick: () => o(x), small: z, children: /* @__PURE__ */ e(p, {}) }, x)) })
+    /* @__PURE__ */ e("div", { style: { display: "flex", gap: 8, justifyContent: "center", marginBottom: 22, flexWrap: "wrap" }, children: c.map(({ id: o, label: g, Ico: m, small: D }) => /* @__PURE__ */ e(Pt, { label: g, active: l === o, onClick: () => n(o), small: D, children: /* @__PURE__ */ e(m, {}) }, o)) })
   ] });
 }
-function lt({ humidity: l, onHumChange: o, onFrequenza: i, freqSel: t, t: r }) {
-  const s = { by_area: "freq.by_area", by_time: "freq.by_time", by_room: "freq.by_room" }, n = s[t] ? r(s[t]) : t;
+function pt({ humidity: l, onHumChange: n, onFrequenza: i, freqSel: t, t: r }) {
+  const s = { by_area: "freq.by_area", by_time: "freq.by_time", by_room: "freq.by_room" }, c = s[t] ? r(s[t]) : t;
   return /* @__PURE__ */ a("div", { children: [
     /* @__PURE__ */ e("div", { style: { fontSize: 17, fontWeight: 700, color: "var(--text-primary)", marginBottom: 16 }, children: r("dreame.umidita") }),
-    /* @__PURE__ */ e(Nn, { value: l, onChange: o }),
+    /* @__PURE__ */ e(eo, { value: l, onChange: n }),
     /* @__PURE__ */ a("div", { onClick: i, style: { display: "flex", alignItems: "center", justifyContent: "space-between", padding: "14px 0", borderTop: "1px solid var(--border)", borderBottom: "1px solid var(--border)", marginBottom: 16, cursor: "pointer" }, children: [
       /* @__PURE__ */ e("span", { style: { fontSize: 16, fontWeight: 600, color: "var(--text-primary)" }, children: r("dreame.freqLavaggio") }),
       /* @__PURE__ */ a("span", { style: { display: "flex", alignItems: "center", gap: 4, fontSize: 14, color: "var(--text-muted)" }, children: [
-        /* @__PURE__ */ e("span", { style: { color: "var(--text-secondary)" }, children: n }),
+        /* @__PURE__ */ e("span", { style: { color: "var(--text-secondary)" }, children: c }),
         " ›"
       ] })
     ] }),
     l >= 27 && /* @__PURE__ */ e("div", { style: { fontSize: 13, color: "var(--amber)", lineHeight: 1.6, marginBottom: 16, marginTop: -8 }, children: r("dreame.humWarning") })
   ] });
 }
-function uo({
+function zo({
   open: l,
-  onClose: o,
+  onClose: n,
   cfg: i,
   t,
   callService: r,
   getState: s,
-  suction: n,
-  onSuction: x,
-  route: m,
-  onRoute: p,
-  humidity: z,
+  suction: c,
+  onSuction: o,
+  route: g,
+  onRoute: m,
+  humidity: D,
   onHumidity: S,
-  rewashFreqSel: y,
-  onRewashFreq: C,
-  deepClean: k,
-  onDeepClean: u
+  rewashFreqSel: b,
+  onRewashFreq: k,
+  deepClean: A,
+  onDeepClean: p
 }) {
-  const [v, M] = b("custom"), [w, _] = b(0), [N, q] = b(!1), oe = i.maxSuctionEntity ? s(i.maxSuctionEntity) === "on" : !1, L = () => i.maxSuctionEntity && r("switch", "toggle", i.maxSuctionEntity), [te, he] = b(10), [ae, ye] = b(10), re = me(null), ve = me(null), G = i.selfCleanAreaEntity ? parseFloat(s(i.selfCleanAreaEntity)) : null, P = i.selfCleanTimeEntity ? parseFloat(s(i.selfCleanTimeEntity)) : null;
-  U(() => {
-    G && !isNaN(G) && he(G);
-  }, [G]), U(() => {
-    P && !isNaN(P) && ye(P);
-  }, [P]);
-  const se = (A) => {
-    he(A), clearTimeout(re.current), re.current = setTimeout(() => {
-      i.selfCleanAreaEntity && r("number", "set_value", i.selfCleanAreaEntity, { value: A });
+  const [y, H] = w("custom"), [h, T] = w(0), [R, F] = w(!1), ne = i.maxSuctionEntity ? s(i.maxSuctionEntity) === "on" : !1, $ = () => i.maxSuctionEntity && r("switch", "toggle", i.maxSuctionEntity), [G, oe] = w(10), [ke, ee] = w(10), ye = he(null), pe = he(null), re = i.selfCleanAreaEntity ? parseFloat(s(i.selfCleanAreaEntity)) : null, I = i.selfCleanTimeEntity ? parseFloat(s(i.selfCleanTimeEntity)) : null;
+  J(() => {
+    re && !isNaN(re) && oe(re);
+  }, [re]), J(() => {
+    I && !isNaN(I) && ee(I);
+  }, [I]);
+  const ve = (C) => {
+    oe(C), clearTimeout(ye.current), ye.current = setTimeout(() => {
+      i.selfCleanAreaEntity && r("number", "set_value", i.selfCleanAreaEntity, { value: C });
     }, 600);
-  }, Y = (A) => {
-    ye(A), clearTimeout(ve.current), ve.current = setTimeout(() => {
-      i.selfCleanTimeEntity && r("number", "set_value", i.selfCleanTimeEntity, { value: A });
+  }, V = (C) => {
+    ee(C), clearTimeout(pe.current), pe.current = setTimeout(() => {
+      i.selfCleanTimeEntity && r("number", "set_value", i.selfCleanTimeEntity, { value: C });
     }, 600);
-  }, le = i.cleanGeniusEntity ? s(i.cleanGeniusEntity) !== "off" : !1;
-  U(() => {
-    i.cleanGeniusEntity && M(le ? "genius" : "custom");
-  }, [le, i.cleanGeniusEntity]);
-  const de = (A) => {
-    M(A), i.cleanGeniusEntity && r("select", "select_option", i.cleanGeniusEntity, { option: A === "genius" ? "routine_cleaning" : "off" });
-  }, fe = [
-    { label: t("dreame.modeAspira"), Ico: Mn, small: !1 },
-    { label: t("dreame.modeMocio"), Ico: _n, small: !1 },
-    { label: t("dreame.modeAspiraLava"), Ico: Dt, small: !0 },
-    { label: t("dreame.modeMocioDopo"), Ico: Ct, small: !0 },
-    { label: t("dreame.modePersStanza"), Ico: Tn, small: !0 }
+  }, fe = i.cleanGeniusEntity ? s(i.cleanGeniusEntity) !== "off" : !1;
+  J(() => {
+    i.cleanGeniusEntity && H(fe ? "genius" : "custom");
+  }, [fe, i.cleanGeniusEntity]);
+  const se = (C) => {
+    H(C), i.cleanGeniusEntity && r("select", "select_option", i.cleanGeniusEntity, { option: C === "genius" ? "routine_cleaning" : "off" });
+  }, Ae = [
+    { label: t("dreame.modeAspira"), Ico: On, small: !1 },
+    { label: t("dreame.modeMocio"), Ico: $n, small: !1 },
+    { label: t("dreame.modeAspiraLava"), Ico: _t, small: !0 },
+    { label: t("dreame.modeMocioDopo"), Ico: Tt, small: !0 },
+    { label: t("dreame.modePersStanza"), Ico: Gn, small: !0 }
   ];
-  return /* @__PURE__ */ a(ge, { children: [
-    /* @__PURE__ */ a(Se, { open: l, onClose: o, zIndex: 1e3, children: [
-      /* @__PURE__ */ e("div", { style: { display: "flex", margin: "0 16px 14px", background: "var(--bg-elevated)", borderRadius: 14, padding: 4, gap: 3, flexShrink: 0 }, children: ["genius", "custom"].map((A) => /* @__PURE__ */ e("button", { onClick: () => de(A), style: {
+  return /* @__PURE__ */ a(ue, { children: [
+    /* @__PURE__ */ a(Ce, { open: l, onClose: n, zIndex: 1e3, children: [
+      /* @__PURE__ */ e("div", { style: { display: "flex", margin: "0 16px 14px", background: "var(--bg-elevated)", borderRadius: 14, padding: 4, gap: 3, flexShrink: 0 }, children: ["genius", "custom"].map((C) => /* @__PURE__ */ e("button", { onClick: () => se(C), style: {
         flex: 1,
         textAlign: "center",
         padding: "11px 4px",
@@ -3448,69 +3463,69 @@ function uo({
         border: "none",
         cursor: "pointer",
         transition: "all .2s",
-        background: v === A ? "var(--bg-card)" : "transparent",
-        color: v === A ? "var(--text-primary)" : "var(--text-muted)",
-        boxShadow: v === A ? "0 2px 8px rgba(0,0,0,.1)" : "none"
-      }, children: t(A === "genius" ? "dreame.cleanGenius" : "dreame.personalizza") }, A)) }),
+        background: y === C ? "var(--bg-card)" : "transparent",
+        color: y === C ? "var(--text-primary)" : "var(--text-muted)",
+        boxShadow: y === C ? "0 2px 8px rgba(0,0,0,.1)" : "none"
+      }, children: t(C === "genius" ? "dreame.cleanGenius" : "dreame.personalizza") }, C)) }),
       /* @__PURE__ */ a("div", { style: { flex: 1, minHeight: 0, overflow: "hidden", position: "relative" }, children: [
-        /* @__PURE__ */ a("div", { style: { position: "absolute", inset: 0, overflowY: "auto", display: v === "custom" ? "block" : "none" }, children: [
-          /* @__PURE__ */ e("div", { style: { display: "flex", gap: 6, padding: "0 12px 16px" }, children: fe.map(({ label: A, Ico: V }, X) => /* @__PURE__ */ e(Fn, { label: A, active: w === X, onClick: () => _(X), children: /* @__PURE__ */ e(V, {}) }, X)) }),
+        /* @__PURE__ */ a("div", { style: { position: "absolute", inset: 0, overflowY: "auto", display: y === "custom" ? "block" : "none" }, children: [
+          /* @__PURE__ */ e("div", { style: { display: "flex", gap: 6, padding: "0 12px 16px" }, children: Ae.map(({ label: C, Ico: te }, Z) => /* @__PURE__ */ e(Jn, { label: C, active: h === Z, onClick: () => T(Z), children: /* @__PURE__ */ e(te, {}) }, Z)) }),
           /* @__PURE__ */ a("div", { style: { padding: "0 16px 80px" }, children: [
-            w === 0 && /* @__PURE__ */ a("div", { children: [
-              /* @__PURE__ */ e(st, { suction: n, onSelect: x, t }),
+            h === 0 && /* @__PURE__ */ a("div", { children: [
+              /* @__PURE__ */ e(ut, { suction: c, onSelect: o, t }),
               /* @__PURE__ */ a("div", { style: { background: "var(--bg-elevated)", borderRadius: 16, padding: "14px 16px", marginBottom: 24 }, children: [
                 /* @__PURE__ */ a("div", { style: { display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 12, marginBottom: 8 }, children: [
                   /* @__PURE__ */ e("div", { style: { flex: 1 }, children: /* @__PURE__ */ e("div", { style: { fontSize: 15, fontWeight: 700, color: "var(--text-primary)" }, children: t("dreame.massimaTitle") }) }),
-                  /* @__PURE__ */ e(F, { on: oe, onToggle: L })
+                  /* @__PURE__ */ e(O, { on: ne, onToggle: $ })
                 ] }),
                 /* @__PURE__ */ e("div", { style: { fontSize: 13, color: "var(--text-muted)", lineHeight: 1.6 }, children: t("dreame.massimaDesc") })
               ] }),
-              /* @__PURE__ */ e(Ue, { route: m, onSelect: p, mop: !1, t })
+              /* @__PURE__ */ e(it, { route: g, onSelect: m, mop: !1, t })
             ] }),
-            w === 1 && /* @__PURE__ */ a("div", { children: [
-              /* @__PURE__ */ e(lt, { humidity: z, onHumChange: S, onFrequenza: () => q(!0), freqSel: y, t }),
-              /* @__PURE__ */ e(Ue, { route: m, onSelect: p, mop: !0, t })
+            h === 1 && /* @__PURE__ */ a("div", { children: [
+              /* @__PURE__ */ e(pt, { humidity: D, onHumChange: S, onFrequenza: () => F(!0), freqSel: b, t }),
+              /* @__PURE__ */ e(it, { route: g, onSelect: m, mop: !0, t })
             ] }),
-            w === 2 && /* @__PURE__ */ a("div", { children: [
-              /* @__PURE__ */ e(st, { suction: n, onSelect: x, t }),
-              /* @__PURE__ */ e(lt, { humidity: z, onHumChange: S, onFrequenza: () => q(!0), freqSel: y, t }),
-              /* @__PURE__ */ e(Ue, { route: m, onSelect: p, mop: !1, t })
+            h === 2 && /* @__PURE__ */ a("div", { children: [
+              /* @__PURE__ */ e(ut, { suction: c, onSelect: o, t }),
+              /* @__PURE__ */ e(pt, { humidity: D, onHumChange: S, onFrequenza: () => F(!0), freqSel: b, t }),
+              /* @__PURE__ */ e(it, { route: g, onSelect: m, mop: !1, t })
             ] }),
-            w === 3 && /* @__PURE__ */ a("div", { children: [
-              /* @__PURE__ */ e(st, { suction: n, onSelect: x, t }),
+            h === 3 && /* @__PURE__ */ a("div", { children: [
+              /* @__PURE__ */ e(ut, { suction: c, onSelect: o, t }),
               /* @__PURE__ */ a("div", { style: { background: "var(--bg-elevated)", borderRadius: 16, padding: "14px 16px", marginBottom: 24 }, children: [
                 /* @__PURE__ */ a("div", { style: { display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 12, marginBottom: 8 }, children: [
                   /* @__PURE__ */ e("div", { style: { flex: 1 }, children: /* @__PURE__ */ e("div", { style: { fontSize: 15, fontWeight: 700, color: "var(--text-primary)" }, children: t("dreame.massimaTitle") }) }),
-                  /* @__PURE__ */ e(F, { on: oe, onToggle: L })
+                  /* @__PURE__ */ e(O, { on: ne, onToggle: $ })
                 ] }),
                 /* @__PURE__ */ e("div", { style: { fontSize: 13, color: "var(--text-muted)", lineHeight: 1.6 }, children: t("dreame.massimaDesc") })
               ] }),
-              /* @__PURE__ */ e(lt, { humidity: z, onHumChange: S, onFrequenza: () => q(!0), freqSel: y, t }),
-              /* @__PURE__ */ e(Ue, { route: m, onSelect: p, mop: !0, t })
+              /* @__PURE__ */ e(pt, { humidity: D, onHumChange: S, onFrequenza: () => F(!0), freqSel: b, t }),
+              /* @__PURE__ */ e(it, { route: g, onSelect: m, mop: !0, t })
             ] }),
-            w === 4 && /* @__PURE__ */ e("div", { style: { textAlign: "center", padding: "32px 16px", color: "var(--text-muted)", fontSize: 15 }, children: t("dreame.modePersStanza") })
+            h === 4 && /* @__PURE__ */ e("div", { style: { textAlign: "center", padding: "32px 16px", color: "var(--text-muted)", fontSize: 15 }, children: t("dreame.modePersStanza") })
           ] })
         ] }),
-        /* @__PURE__ */ e("div", { style: { position: "absolute", inset: 0, overflowY: "auto", display: v === "genius" ? "block" : "none" }, children: /* @__PURE__ */ a("div", { style: { padding: "0 12px 80px" }, children: [
+        /* @__PURE__ */ e("div", { style: { position: "absolute", inset: 0, overflowY: "auto", display: y === "genius" ? "block" : "none" }, children: /* @__PURE__ */ a("div", { style: { padding: "0 12px 80px" }, children: [
           /* @__PURE__ */ a("div", { style: { background: "var(--bg-card)", borderRadius: 18, padding: 16, boxShadow: "0 2px 12px rgba(0,0,0,.06)" }, children: [
             /* @__PURE__ */ e("div", { style: { fontSize: 17, fontWeight: 700, color: "var(--text-primary)", marginBottom: 16 }, children: t("cleaning.geniusDesc") }),
             /* @__PURE__ */ e("div", { style: { display: "flex", gap: 12 }, children: [
-              { id: "vacuum_and_mop", Ico: Dt, label: t("cleanMode.sweeping_and_mopping") },
-              { id: "mop_after_vacuum", Ico: Ct, label: t("cleanMode.mopping_after_sweeping") }
-            ].map(({ id: A, Ico: V, label: X }) => {
-              const j = s(i.cleanGeniusModeEntity) === A;
+              { id: "vacuum_and_mop", Ico: _t, label: t("cleanMode.sweeping_and_mopping") },
+              { id: "mop_after_vacuum", Ico: Tt, label: t("cleanMode.mopping_after_sweeping") }
+            ].map(({ id: C, Ico: te, label: Z }) => {
+              const Q = s(i.cleanGeniusModeEntity) === C;
               return /* @__PURE__ */ a(
                 "div",
                 {
-                  onClick: () => i.cleanGeniusModeEntity && r("select", "select_option", i.cleanGeniusModeEntity, { option: A }),
-                  style: { flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 10, padding: "16px 8px 20px", borderRadius: 16, background: j ? "var(--bg-card)" : "var(--bg-elevated)", cursor: "pointer", position: "relative", border: `2px solid ${j ? h : "transparent"}`, transition: "all .2s" },
+                  onClick: () => i.cleanGeniusModeEntity && r("select", "select_option", i.cleanGeniusModeEntity, { option: C }),
+                  style: { flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 10, padding: "16px 8px 20px", borderRadius: 16, background: Q ? "var(--bg-card)" : "var(--bg-elevated)", cursor: "pointer", position: "relative", border: `2px solid ${Q ? f : "transparent"}`, transition: "all .2s" },
                   children: [
-                    /* @__PURE__ */ e("div", { style: { color: j ? h : "var(--text-secondary)" }, children: /* @__PURE__ */ e(V, {}) }),
-                    /* @__PURE__ */ e("span", { style: { fontSize: 11.5, textAlign: "center", color: j ? "var(--text-primary)" : "var(--text-muted)", lineHeight: 1.4, fontWeight: j ? 700 : 500 }, children: X }),
-                    j && /* @__PURE__ */ e("div", { style: { position: "absolute", bottom: -10, left: "50%", transform: "translateX(-50%)", width: 22, height: 22, borderRadius: "50%", background: h, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, color: "white", fontWeight: 700 }, children: "✓" })
+                    /* @__PURE__ */ e("div", { style: { color: Q ? f : "var(--text-secondary)" }, children: /* @__PURE__ */ e(te, {}) }),
+                    /* @__PURE__ */ e("span", { style: { fontSize: 11.5, textAlign: "center", color: Q ? "var(--text-primary)" : "var(--text-muted)", lineHeight: 1.4, fontWeight: Q ? 700 : 500 }, children: Z }),
+                    Q && /* @__PURE__ */ e("div", { style: { position: "absolute", bottom: -10, left: "50%", transform: "translateX(-50%)", width: 22, height: 22, borderRadius: "50%", background: f, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, color: "white", fontWeight: 700 }, children: "✓" })
                   ]
                 },
-                A
+                C
               );
             }) })
           ] }),
@@ -3518,13 +3533,13 @@ function uo({
             /* @__PURE__ */ a("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between" }, children: [
               /* @__PURE__ */ e("div", { style: { fontSize: 17, fontWeight: 700, color: "var(--text-primary)" }, children: t("dreame.geniusDeepTitle") }),
               /* @__PURE__ */ e(
-                F,
+                O,
                 {
                   on: s(i.cleanGeniusEntity) === "deep_cleaning",
                   onToggle: () => {
                     if (!i.cleanGeniusEntity) return;
-                    const V = s(i.cleanGeniusEntity) === "deep_cleaning" ? "routine_cleaning" : "deep_cleaning";
-                    r("select", "select_option", i.cleanGeniusEntity, { option: V });
+                    const te = s(i.cleanGeniusEntity) === "deep_cleaning" ? "routine_cleaning" : "deep_cleaning";
+                    r("select", "select_option", i.cleanGeniusEntity, { option: te });
                   }
                 }
               )
@@ -3535,40 +3550,40 @@ function uo({
       ] })
     ] }),
     /* @__PURE__ */ e(
-      Wt,
+      Ht,
       {
-        open: N,
-        onClose: () => q(!1),
-        selected: y,
-        onSelect: C,
+        open: R,
+        onClose: () => F(!1),
+        selected: b,
+        onSelect: k,
         t,
         rewash: !0,
-        areaVal: te,
-        timeVal: ae,
-        onAreaChange: se,
-        onTimeChange: Y
+        areaVal: G,
+        timeVal: ke,
+        onAreaChange: ve,
+        onTimeChange: V
       }
     )
   ] });
 }
-function po({ rect: l, num: o, onUpdate: i, onRemove: t }) {
-  const r = (n) => {
-    if (n.target !== n.currentTarget) return;
-    n.stopPropagation();
-    const x = n.currentTarget;
-    x.setPointerCapture(n.pointerId);
-    const { width: m, height: p } = x.parentElement.getBoundingClientRect(), z = n.clientX, S = n.clientY, y = l.x, C = l.y, k = l.w, u = l.h, v = (w) => {
-      i({ x: Math.max(0, Math.min(100 - k, y + (w.clientX - z) / m * 100)), y: Math.max(0, Math.min(100 - u, C + (w.clientY - S) / p * 100)), w: k, h: u });
-    }, M = () => x.removeEventListener("pointermove", v);
-    x.addEventListener("pointermove", v), x.addEventListener("pointerup", M, { once: !0 });
-  }, s = (n) => {
-    n.stopPropagation();
-    const x = n.currentTarget;
-    x.setPointerCapture(n.pointerId);
-    const { width: m, height: p } = x.parentElement.parentElement.getBoundingClientRect(), z = n.clientX, S = n.clientY, { x: y, y: C, w: k, h: u } = l, v = (w) => {
-      i({ x: y, y: C, w: Math.max(10, Math.min(100 - y, k + (w.clientX - z) / m * 100)), h: Math.max(8, Math.min(100 - C, u + (w.clientY - S) / p * 100)) });
-    }, M = () => x.removeEventListener("pointermove", v);
-    x.addEventListener("pointermove", v), x.addEventListener("pointerup", M, { once: !0 });
+function Do({ rect: l, num: n, onUpdate: i, onRemove: t }) {
+  const r = (c) => {
+    if (c.target !== c.currentTarget) return;
+    c.stopPropagation();
+    const o = c.currentTarget;
+    o.setPointerCapture(c.pointerId);
+    const { width: g, height: m } = o.parentElement.getBoundingClientRect(), D = c.clientX, S = c.clientY, b = l.x, k = l.y, A = l.w, p = l.h, y = (h) => {
+      i({ x: Math.max(0, Math.min(100 - A, b + (h.clientX - D) / g * 100)), y: Math.max(0, Math.min(100 - p, k + (h.clientY - S) / m * 100)), w: A, h: p });
+    }, H = () => o.removeEventListener("pointermove", y);
+    o.addEventListener("pointermove", y), o.addEventListener("pointerup", H, { once: !0 });
+  }, s = (c) => {
+    c.stopPropagation();
+    const o = c.currentTarget;
+    o.setPointerCapture(c.pointerId);
+    const { width: g, height: m } = o.parentElement.parentElement.getBoundingClientRect(), D = c.clientX, S = c.clientY, { x: b, y: k, w: A, h: p } = l, y = (h) => {
+      i({ x: b, y: k, w: Math.max(10, Math.min(100 - b, A + (h.clientX - D) / g * 100)), h: Math.max(8, Math.min(100 - k, p + (h.clientY - S) / m * 100)) });
+    }, H = () => o.removeEventListener("pointermove", y);
+    o.addEventListener("pointermove", y), o.addEventListener("pointerup", H, { once: !0 });
   };
   return /* @__PURE__ */ a("div", { onPointerDown: r, style: {
     position: "absolute",
@@ -3576,7 +3591,7 @@ function po({ rect: l, num: o, onUpdate: i, onRemove: t }) {
     top: `${l.y}%`,
     width: `${l.w}%`,
     height: `${l.h}%`,
-    border: `2px dashed ${h}`,
+    border: `2px dashed ${f}`,
     background: "rgba(245,158,11,0.15)",
     cursor: "move",
     userSelect: "none",
@@ -3591,12 +3606,12 @@ function po({ rect: l, num: o, onUpdate: i, onRemove: t }) {
       justifyContent: "center",
       fontSize: 20,
       fontWeight: 800,
-      color: h,
+      color: f,
       pointerEvents: "none",
       textShadow: "0 1px 3px rgba(0,0,0,.5)"
-    }, children: o }),
-    /* @__PURE__ */ e("div", { onPointerDown: (n) => {
-      n.stopPropagation(), t();
+    }, children: n }),
+    /* @__PURE__ */ e("div", { onPointerDown: (c) => {
+      c.stopPropagation(), t();
     }, style: {
       position: "absolute",
       top: -10,
@@ -3614,7 +3629,7 @@ function po({ rect: l, num: o, onUpdate: i, onRemove: t }) {
       color: "white",
       zIndex: 3,
       touchAction: "none",
-      border: `1.5px solid ${h}`
+      border: `1.5px solid ${f}`
     }, children: "✕" }),
     /* @__PURE__ */ e("div", { onPointerDown: s, style: {
       position: "absolute",
@@ -3622,7 +3637,7 @@ function po({ rect: l, num: o, onUpdate: i, onRemove: t }) {
       right: -8,
       width: 16,
       height: 16,
-      background: h,
+      background: f,
       borderRadius: 4,
       cursor: "se-resize",
       touchAction: "none",
@@ -3631,104 +3646,139 @@ function po({ rect: l, num: o, onUpdate: i, onRemove: t }) {
     } })
   ] });
 }
-function go() {
-  const { dark: l, callService: o, getState: i, getAttr: t, haStates: r } = En(), { t: s } = Tt("card-vacuum"), [n] = b(sa), x = me(window.location.origin), m = me(null), p = me(null), z = me(null), [S, y] = b(!1), [C, k] = b(1), [u, v] = b(!1), [M, w] = b("all"), [_, N] = b([]), [q, oe] = b(1), [L, te] = b([{ x: 15, y: 15, w: 60, h: 50 }]), [he, ae] = b(!1), [ye, re] = b(!1), [ve, G] = b(!1), [P, se] = b("main"), [Y, le] = b(!1), [de, fe] = b(!1), [A, V] = b(!1), [X, j] = b(!1), [Re, ze] = b(!1), Ye = ut(), [Xe, De] = b(!1), [ce, Z] = b("standard"), [Q, c] = b(!1), [I, be] = b("off"), [Ce, Le] = b(!1), [We, Ie] = b("3h"), [ke, Be] = b("high"), [qe, Pe] = b(!0), [It, Bt] = b(!0), [qt, Pt] = b(!1), [Ht, Ft] = b(!1), [Nt, mt] = b(!1), [Ot, gt] = b("by_area"), [$t, ht] = b(20), yt = me(null), [Gt, vt] = b("standard"), [jt, ft] = b("standard"), J = (d) => d ? i(d) ?? null : null, Ae = (d) => {
-    const E = J(d);
+function ko() {
+  const { dark: l, callService: n, getState: i, getAttr: t, haStates: r } = Rn(), { t: s } = Bt("card-vacuum"), c = Bn(), [o] = w(pa), g = he(window.location.origin), m = he(null), D = he(null), S = he(null), [b, k] = w(!1), [A, p] = w(1), [y, H] = w(!1), [h, T] = w("all"), [R, F] = w([]), [ne, $] = w(1), [G, oe] = w([{ x: 15, y: 15, w: 60, h: 50 }]), [ke, ee] = w(!1), [ye, pe] = w(!1), [re, I] = w(!1), [ve, V] = w("main"), [fe, se] = w(!1), [Ae, C] = w(!1), [te, Z] = w(!1), [Q, He] = w(!1), [Fe, Me] = w(!1), nt = ht(), [_e, me] = w(!1), [K, U] = w("standard"), [u, B] = w(!1), [be, Te] = w("off"), [Ne, Oe] = w(!1), [$e, Ge] = w("3h"), [Re, je] = w("high"), [Ve, Ft] = w(!0), [Nt, Ot] = w(!0), [$t, Gt] = w(!1), [jt, Vt] = w(!1), [Zt, vt] = w(!1), [Qt, ft] = w("by_area"), [Kt, bt] = w(20), xt = he(null), [Ut, wt] = w("standard"), [Yt, Et] = w("standard"), ae = (d) => d ? i(d) ?? null : null, Le = (d) => {
+    const E = ae(d);
     return E && E !== "unavailable" ? parseFloat(E) : null;
-  }, Vt = J(n.vacuumEntity), Zt = J(n.stateEntity), H = Vt || Zt, bt = Ae(n.batteryEntity);
-  J(n.currentRoomEntity);
-  const He = J(n.errorEntity), Qt = He && He !== "no_error" && He !== "unavailable", xt = Ae(n.cleanedAreaEntity), Fe = Ae(n.cleaningTimeEntity), Ne = J(n.suctionLevelEntity), Oe = J(n.cleaningRouteEntity), $e = J(n.selfCleanFreqEntity), Je = Ae(n.humidityEntity);
-  U(() => {
-    Ne && Ne !== "unavailable" && vt(Ne);
-  }, [Ne]), U(() => {
-    Oe && Oe !== "unavailable" && ft(Oe);
-  }, [Oe]), U(() => {
-    $e && $e !== "unavailable" && gt($e);
-  }, [$e]), U(() => {
-    Je !== null && ht(Je);
-  }, [Je]);
-  const Kt = Gt, Ut = jt, et = Ae(n.cleaningProgressEntity), Yt = kn(H), Xt = n.cleanGeniusEntity ? J(n.cleanGeniusEntity) !== "off" : !1, tt = n.rooms || [], wt = () => `${x.current}/api/camera_proxy/${n.cameraEntity}?token=${t(n.cameraEntity, "access_token") ?? ""}&t=${Date.now()}`;
-  U(() => {
-    if (!n.cameraEntity) return;
-    m.current && (m.current.src = wt());
+  }, Xt = ae(o.vacuumEntity), Jt = ae(o.stateEntity), P = Xt || Jt, xe = Le(o.batteryEntity), Ze = ae(o.currentRoomEntity), Qe = ae(o.errorEntity), ot = Qe && Qe !== "no_error" && Qe !== "unavailable", Ke = Le(o.cleanedAreaEntity), we = Le(o.cleaningTimeEntity), Ue = ae(o.suctionLevelEntity), Ye = ae(o.cleaningRouteEntity), Xe = ae(o.selfCleanFreqEntity), rt = Le(o.humidityEntity);
+  J(() => {
+    Ue && Ue !== "unavailable" && wt(Ue);
+  }, [Ue]), J(() => {
+    Ye && Ye !== "unavailable" && Et(Ye);
+  }, [Ye]), J(() => {
+    Xe && Xe !== "unavailable" && ft(Xe);
+  }, [Xe]), J(() => {
+    rt !== null && bt(rt);
+  }, [rt]);
+  const ea = Ut, ta = Yt, Ee = Le(o.cleaningProgressEntity), St = Nn(P), aa = o.cleanGeniusEntity ? ae(o.cleanGeniusEntity) !== "off" : !1, st = o.rooms || [], zt = () => `${g.current}/api/camera_proxy/${o.cameraEntity}?token=${t(o.cameraEntity, "access_token") ?? ""}&t=${Date.now()}`;
+  J(() => {
+    if (!o.cameraEntity) return;
+    m.current && (m.current.src = zt());
     const d = setInterval(() => {
-      m.current && (m.current.src = wt());
+      m.current && (m.current.src = zt());
     }, 5e3);
     return () => clearInterval(d);
-  }, [n.cameraEntity]);
-  const Ge = (d) => o("vacuum", d, n.vacuumEntity), Jt = () => {
+  }, [o.cameraEntity]);
+  const Je = (d) => n("vacuum", d, o.vacuumEntity), ia = () => {
     var d, E;
-    if (M === "all")
-      Ge("start");
-    else if (M === "room" && _.length > 0)
-      o("dreame_vacuum", "vacuum_clean_segment", n.vacuumEntity, { segments: _, repeats: 1 });
-    else if (M === "zona" && L.length > 0) {
-      const T = p.current, W = m.current, O = ((W == null ? void 0 : W.naturalWidth) > 0 ? W.naturalWidth : null) ?? ((d = z.current) == null ? void 0 : d[0]) ?? 0, $ = ((W == null ? void 0 : W.naturalHeight) > 0 ? W.naturalHeight : null) ?? ((E = z.current) == null ? void 0 : E[1]) ?? 0, ue = n.cameraEntity ? t(n.cameraEntity, "calibration_points") || [] : [], { width: ee, height: pe } = (T == null ? void 0 : T.getBoundingClientRect()) ?? { width: 375, height: 390 }, it = L.map((B) => {
-        if (O > 0 && $ > 0 && ue.length >= 3) {
-          const [Ve, nt] = At(B.x, B.y, ee, pe, O, $), [Ze, Qe] = At(B.x + B.w, B.y + B.h, ee, pe, O, $), [g, f] = Mt(Ve, nt, ue), [D, R] = Mt(Ze, Qe, ue);
-          return [Math.round(g), Math.round(f), Math.round(D), Math.round(R)];
+    if (h === "all")
+      Je("start");
+    else if (h === "room" && R.length > 0)
+      n("dreame_vacuum", "vacuum_clean_segment", o.vacuumEntity, { segments: R, repeats: 1 });
+    else if (h === "zona" && G.length > 0) {
+      const M = D.current, _ = m.current, q = ((_ == null ? void 0 : _.naturalWidth) > 0 ? _.naturalWidth : null) ?? ((d = S.current) == null ? void 0 : d[0]) ?? 0, N = ((_ == null ? void 0 : _.naturalHeight) > 0 ? _.naturalHeight : null) ?? ((E = S.current) == null ? void 0 : E[1]) ?? 0, Y = o.cameraEntity ? t(o.cameraEntity, "calibration_points") || [] : [], { width: j, height: ce } = (M == null ? void 0 : M.getBoundingClientRect()) ?? { width: 375, height: 390 }, Ie = G.map((W) => {
+        if (q > 0 && N > 0 && Y.length >= 3) {
+          const [Se, Be] = Lt(W.x, W.y, j, ce, q, N), [et, tt] = Lt(W.x + W.w, W.y + W.h, j, ce, q, N), [v, x] = Wt(Se, Be, Y), [z, L] = Wt(et, tt, Y);
+          return [Math.round(v), Math.round(x), Math.round(z), Math.round(L)];
         }
         return [
-          Math.round(B.x / 100 * 12e3 - 6e3),
-          Math.round(B.y / 100 * 12e3 - 6e3),
-          Math.round((B.x + B.w) / 100 * 12e3 - 6e3),
-          Math.round((B.y + B.h) / 100 * 12e3 - 6e3)
+          Math.round(W.x / 100 * 12e3 - 6e3),
+          Math.round(W.y / 100 * 12e3 - 6e3),
+          Math.round((W.x + W.w) / 100 * 12e3 - 6e3),
+          Math.round((W.y + W.h) / 100 * 12e3 - 6e3)
         ];
       });
-      o("dreame_vacuum", "vacuum_clean_zone", n.vacuumEntity, { zone: it, repeats: q });
+      n("dreame_vacuum", "vacuum_clean_zone", o.vacuumEntity, { zone: Ie, repeats: ne });
     }
-  }, at = (d) => {
+  }, lt = (d) => {
     const E = Number(d);
-    N((T) => T.includes(E) ? T.filter((W) => W !== E) : [...T, E]);
-  }, ea = (d) => {
-    vt(d), n.suctionLevelEntity && o("select", "select_option", n.suctionLevelEntity, { option: d });
-  }, ta = (d) => {
-    ft(d), n.cleaningRouteEntity && o("select", "select_option", n.cleaningRouteEntity, { option: d });
-  }, aa = (d) => {
-    gt(d), n.selfCleanFreqEntity && o("select", "select_option", n.selfCleanFreqEntity, { option: d });
-  }, ia = (d) => {
-    ht(d), clearTimeout(yt.current), yt.current = setTimeout(() => {
-      n.humidityEntity && o("number", "set_value", n.humidityEntity, { value: d });
+    F((M) => M.includes(E) ? M.filter((_) => _ !== E) : [...M, E]);
+  }, na = (d) => {
+    wt(d), o.suctionLevelEntity && n("select", "select_option", o.suctionLevelEntity, { option: d });
+  }, oa = (d) => {
+    Et(d), o.cleaningRouteEntity && n("select", "select_option", o.cleaningRouteEntity, { option: d });
+  }, ra = (d) => {
+    ft(d), o.selfCleanFreqEntity && n("select", "select_option", o.selfCleanFreqEntity, { option: d });
+  }, sa = (d) => {
+    bt(d), clearTimeout(xt.current), xt.current = setTimeout(() => {
+      o.humidityEntity && n("number", "set_value", o.humidityEntity, { value: d });
     }, 600);
-  }, Me = H === "cleaning", je = H === "paused", xe = H === "returning", na = s(Me ? "controls.pause" : je ? "controls.resume" : "dreame.pulisci"), oa = () => {
-    if (Me) {
-      Ge("pause");
+  }, la = P === "docked" || P === "charging_completed", ge = P === "cleaning", We = P === "paused", le = P === "returning", ca = s(ge ? "controls.pause" : We ? "controls.resume" : "dreame.pulisci"), da = () => {
+    if (ge) {
+      Je("pause");
       return;
     }
-    if (je) {
-      Ge("resume");
+    if (We) {
+      Je("resume");
       return;
     }
-    xe || Jt();
+    le || ia();
   };
+  if (c.isScreensaver) {
+    const d = c.theme === "light" ? "none" : "0 1px 3px rgba(0,0,0,.45), 0 0 18px rgba(0,0,0,.3)", E = ["docked", "cleaning", "paused", "returning", "idle", "error", "charging_completed", "sleeping", "unavailable"], M = ot ? "error" : P, _ = ot ? "var(--red)" : St, q = !o.vacuumEntity && !o.stateEntity ? null : E.includes(M) ? s(`state.${M}`) : M ? String(M).replace(/_/g, " ") : s("state.unavailable"), N = ge || We || le, Y = o.name || "", j = q && q.length > 12 ? 44 : 56, Ie = N ? [
+      Ze && Ze !== "unavailable" && Ze !== "unknown" ? Ze : null,
+      Number.isFinite(Ke) ? `${Math.round(Ke)} m²` : null,
+      we ? Mt(we) : null,
+      Ee !== null && !isNaN(Ee) ? `${Math.round(Ee)}%` : null
+    ].filter(Boolean) : [], W = Number.isFinite(xe) ? xe <= 20 ? "var(--red)" : la ? "var(--green)" : "var(--text-secondary)" : "var(--text-muted)";
+    return /* @__PURE__ */ a("div", { style: { padding: "18px 22px", color: "var(--text-primary)", textShadow: d }, children: [
+      /* @__PURE__ */ a("div", { style: { display: "flex", alignItems: "center", gap: 9, fontSize: Y.length > 18 ? 12 : 13, fontWeight: 600, letterSpacing: ".28em", textTransform: "uppercase", color: "var(--text-muted)", overflowWrap: "anywhere" }, children: [
+        (ge || le) && /* @__PURE__ */ e(ie.span, { animate: qn, transition: Pn, style: { width: 8, height: 8, borderRadius: "50%", background: _, display: "inline-block", flexShrink: 0, boxShadow: `0 0 12px ${_}` } }),
+        Y
+      ] }),
+      q ? /* @__PURE__ */ a(ue, { children: [
+        /* @__PURE__ */ e("div", { style: {
+          marginTop: 8,
+          fontSize: j,
+          lineHeight: 1.05,
+          color: _,
+          overflowWrap: "anywhere",
+          fontFamily: "var(--ss-display, inherit)",
+          fontWeight: "var(--ss-display-w, 300)",
+          letterSpacing: "var(--ss-display-track, -0.03em)"
+        }, children: q }),
+        /* @__PURE__ */ a("div", { style: { display: "flex", flexWrap: "wrap", alignItems: "center", gap: "6px 16px", marginTop: 12, fontSize: 17, color: "var(--text-secondary)", fontVariantNumeric: "tabular-nums" }, children: [
+          Number.isFinite(xe) && /* @__PURE__ */ a("span", { style: { display: "inline-flex", alignItems: "center", gap: 6, color: W }, children: [
+            /* @__PURE__ */ a("svg", { width: "20", height: "20", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", children: [
+              /* @__PURE__ */ e("rect", { x: "2", y: "7", width: "18", height: "11", rx: "2" }),
+              /* @__PURE__ */ e("path", { d: "M22 11v3", strokeLinecap: "round" })
+            ] }),
+            Math.round(xe),
+            "%"
+          ] }),
+          Ie.map((Se, Be) => /* @__PURE__ */ e("span", { style: { whiteSpace: "nowrap" }, children: Se }, Be))
+        ] })
+      ] }) : /* @__PURE__ */ e("div", { style: { marginTop: 14, fontSize: 16, color: "var(--text-muted)" }, children: s("ss.notConfigured") })
+    ] });
+  }
   return /* @__PURE__ */ a("div", { style: { background: "var(--bg-card)", borderRadius: 22, overflow: "hidden", border: "1px solid var(--border)", position: "relative", isolation: "isolate" }, children: [
-    Re && (Ye ? pt(!0, /* @__PURE__ */ e("div", { style: { position: "fixed", inset: 0, zIndex: 1300, background: "var(--bg-panel)", pointerEvents: "auto", display: "flex", flexDirection: "column" }, children: /* @__PURE__ */ e(
-      kt,
+    Fe && (nt ? yt(!0, /* @__PURE__ */ e("div", { style: { position: "fixed", inset: 0, zIndex: 1300, background: "var(--bg-panel)", pointerEvents: "auto", display: "flex", flexDirection: "column" }, children: /* @__PURE__ */ e(
+      Rt,
       {
-        onBack: () => ze(!1),
-        cfg: n,
+        onBack: () => Me(!1),
+        cfg: o,
         t: s,
         haStates: r,
         getState: i
       }
     ) })) : /* @__PURE__ */ e("div", { style: { height: 560, position: "relative", zIndex: 1200 }, children: /* @__PURE__ */ e(
-      kt,
+      Rt,
       {
-        onBack: () => ze(!1),
-        cfg: n,
+        onBack: () => Me(!1),
+        cfg: o,
         t: s,
         haStates: r,
         getState: i
       }
     ) })),
-    Re ? null : /* @__PURE__ */ a(ge, { children: [
+    Fe ? null : /* @__PURE__ */ a(ue, { children: [
       /* @__PURE__ */ a("div", { style: { padding: "12px 18px 6px", display: "flex", alignItems: "center", justifyContent: "space-between" }, children: [
         /* @__PURE__ */ e("div", { style: { width: 34 } }),
         /* @__PURE__ */ a("div", { style: { textAlign: "center", flex: 1 }, children: [
-          /* @__PURE__ */ e("div", { style: { fontSize: 16, fontWeight: 700, color: "var(--text-primary)" }, children: n.name }),
-          /* @__PURE__ */ e("div", { style: { fontSize: 12, color: Yt, marginTop: 1, fontWeight: 500 }, children: H === "docked" ? s("state.docked") : H === "cleaning" ? s("state.cleaning") : H === "paused" ? s("state.paused") : H === "returning" ? s("state.returning") : H === "charging_completed" ? s("state.charging_completed") : H === "sleeping" ? s("state.sleeping") : H === "error" ? s("state.error") : H === "idle" ? s("state.idle") : H || "—" })
+          /* @__PURE__ */ e("div", { style: { fontSize: 16, fontWeight: 700, color: "var(--text-primary)" }, children: o.name }),
+          /* @__PURE__ */ e("div", { style: { fontSize: 12, color: St, marginTop: 1, fontWeight: 500 }, children: P === "docked" ? s("state.docked") : P === "cleaning" ? s("state.cleaning") : P === "paused" ? s("state.paused") : P === "returning" ? s("state.returning") : P === "charging_completed" ? s("state.charging_completed") : P === "sleeping" ? s("state.sleeping") : P === "error" ? s("state.error") : P === "idle" ? s("state.idle") : P || "—" })
         ] }),
-        /* @__PURE__ */ e("div", { onClick: () => le(!0), style: { width: 34, height: 34, display: "flex", alignItems: "center", justifyContent: "center", borderRadius: 10, background: "var(--bg-elevated)", color: "var(--text-secondary)", fontSize: 20, cursor: "pointer" }, children: "⋯" })
+        /* @__PURE__ */ e("div", { onClick: () => se(!0), style: { width: 34, height: 34, display: "flex", alignItems: "center", justifyContent: "center", borderRadius: 10, background: "var(--bg-elevated)", color: "var(--text-secondary)", fontSize: 20, cursor: "pointer" }, children: "⋯" })
       ] }),
       /* @__PURE__ */ e("div", { style: { margin: "5px 16px 0", padding: "6px 0", background: "var(--bg-elevated)", borderRadius: 22, display: "flex" }, children: [
         { icon: /* @__PURE__ */ a("svg", { width: "14", height: "14", viewBox: "0 0 24 24", fill: "none", stroke: "#999", strokeWidth: "2", children: [
@@ -3736,33 +3786,33 @@ function go() {
           /* @__PURE__ */ e("rect", { x: "14", y: "3", width: "7", height: "7", rx: "1" }),
           /* @__PURE__ */ e("rect", { x: "3", y: "14", width: "7", height: "7", rx: "1" }),
           /* @__PURE__ */ e("rect", { x: "14", y: "14", width: "7", height: "7", rx: "1" })
-        ] }), val: xt !== null ? Math.round(xt) : "0", unit: "m²" },
+        ] }), val: Ke !== null ? Math.round(Ke) : "0", unit: "m²" },
         { icon: /* @__PURE__ */ a("svg", { width: "14", height: "14", viewBox: "0 0 24 24", fill: "none", stroke: "#999", strokeWidth: "2", children: [
           /* @__PURE__ */ e("circle", { cx: "12", cy: "12", r: "9" }),
           /* @__PURE__ */ e("polyline", { points: "12,7 12,12 15,15" })
-        ] }), val: Fe !== null ? An(Fe).replace(" min", "").replace("h", "") : "0", unit: Fe !== null && Fe < 60 ? "min" : "h" },
+        ] }), val: we !== null ? Mt(we).replace(" min", "").replace("h", "") : "0", unit: we !== null && we < 60 ? "min" : "h" },
         { icon: /* @__PURE__ */ a("svg", { width: "14", height: "14", viewBox: "0 0 24 24", fill: "none", stroke: "#999", strokeWidth: "2", children: [
           /* @__PURE__ */ e("rect", { x: "2", y: "7", width: "18", height: "11", rx: "2" }),
           /* @__PURE__ */ e("path", { d: "M22 11v3", strokeLinecap: "round" })
-        ] }), val: bt !== null ? bt : "—", unit: "%" }
+        ] }), val: xe !== null ? xe : "—", unit: "%" }
       ].map((d, E) => /* @__PURE__ */ a("div", { style: { display: "flex", alignItems: "center", gap: 4, padding: "0 10px", flex: 1, justifyContent: "center", borderLeft: E > 0 ? "1px solid var(--border-medium)" : "none" }, children: [
         d.icon,
         /* @__PURE__ */ e("span", { style: { fontSize: 13, fontWeight: 700, color: "var(--text-primary)" }, children: d.val }),
         /* @__PURE__ */ e("span", { style: { fontSize: 11, color: "var(--text-muted)" }, children: d.unit })
       ] }, E)) }),
-      (Me || je) && et !== null && /* @__PURE__ */ a("div", { style: { margin: "8px 16px 0", display: "flex", flexDirection: "column", gap: 4 }, children: [
+      (ge || We) && Ee !== null && /* @__PURE__ */ a("div", { style: { margin: "8px 16px 0", display: "flex", flexDirection: "column", gap: 4 }, children: [
         /* @__PURE__ */ a("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "center" }, children: [
           /* @__PURE__ */ e("span", { style: { fontSize: 11, fontWeight: 600, color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: ".4px" }, children: s("session.progress") }),
-          /* @__PURE__ */ a("span", { style: { fontSize: 12, fontWeight: 700, color: h }, children: [
-            Math.round(et),
+          /* @__PURE__ */ a("span", { style: { fontSize: 12, fontWeight: 700, color: f }, children: [
+            Math.round(Ee),
             "%"
           ] })
         ] }),
-        /* @__PURE__ */ e("div", { style: { height: 5, borderRadius: 99, background: "var(--bg-elevated)", overflow: "hidden" }, children: /* @__PURE__ */ e("div", { style: { height: "100%", borderRadius: 99, background: h, width: `${Math.min(100, Math.max(0, et))}%`, transition: "width .6s ease" } }) })
+        /* @__PURE__ */ e("div", { style: { height: 5, borderRadius: 99, background: "var(--bg-elevated)", overflow: "hidden" }, children: /* @__PURE__ */ e("div", { style: { height: "100%", borderRadius: 99, background: f, width: `${Math.min(100, Math.max(0, Ee))}%`, transition: "width .6s ease" } }) })
       ] }),
-      /* @__PURE__ */ a("div", { ref: p, style: { marginTop: 8, position: "relative", height: 390, background: "var(--bg-elevated)", overflow: "hidden" }, children: [
-        /* @__PURE__ */ a("div", { style: { width: "100%", height: "100%", transform: `scale(${C})`, transformOrigin: "center center", transition: "transform .2s" }, children: [
-          n.cameraEntity ? /* @__PURE__ */ e(
+      /* @__PURE__ */ a("div", { ref: D, style: { marginTop: 8, position: "relative", height: 390, background: "var(--bg-elevated)", overflow: "hidden" }, children: [
+        /* @__PURE__ */ a("div", { style: { width: "100%", height: "100%", transform: `scale(${A})`, transformOrigin: "center center", transition: "transform .2s" }, children: [
+          o.cameraEntity ? /* @__PURE__ */ e(
             "img",
             {
               ref: m,
@@ -3772,11 +3822,11 @@ function go() {
                 height: "100%",
                 objectFit: "contain",
                 display: "block",
-                filter: M === "room" ? "brightness(0.85) saturate(0.5)" : M === "zona" ? "brightness(0.7) saturate(0.3) hue-rotate(180deg) sepia(0.18)" : "none",
+                filter: h === "room" ? "brightness(0.85) saturate(0.5)" : h === "zona" ? "brightness(0.7) saturate(0.3) hue-rotate(180deg) sepia(0.18)" : "none",
                 transition: "filter .25s"
               },
               onLoad: (d) => {
-                z.current = [d.currentTarget.naturalWidth, d.currentTarget.naturalHeight], y(!0);
+                S.current = [d.currentTarget.naturalWidth, d.currentTarget.naturalHeight], k(!0);
               },
               onError: (d) => {
                 d.currentTarget.style.opacity = "0";
@@ -3784,50 +3834,50 @@ function go() {
             }
           ) : /* @__PURE__ */ a("div", { style: { width: "100%", height: "100%", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 12 }, children: [
             /* @__PURE__ */ e("div", { style: { fontSize: 48 }, children: "🤖" }),
-            /* @__PURE__ */ e("div", { style: { fontSize: 13, color: "var(--text-muted)" }, children: n.name })
+            /* @__PURE__ */ e("div", { style: { fontSize: 13, color: "var(--text-muted)" }, children: o.name })
           ] }),
-          M === "zona" && L.map((d, E) => /* @__PURE__ */ e(
-            po,
+          h === "zona" && G.map((d, E) => /* @__PURE__ */ e(
+            Do,
             {
               rect: d,
               num: E + 1,
-              onUpdate: (T) => te((W) => W.map((O, $) => $ === E ? T : O)),
-              onRemove: () => te((T) => T.filter((W, O) => O !== E))
+              onUpdate: (M) => oe((_) => _.map((q, N) => N === E ? M : q)),
+              onRemove: () => oe((M) => M.filter((_, q) => q !== E))
             },
             E
           )),
-          M === "room" && (() => {
-            var Ze, Qe;
-            const d = ((Ze = z.current) == null ? void 0 : Ze[0]) ?? 0, E = ((Qe = z.current) == null ? void 0 : Qe[1]) ?? 0, T = n.cameraEntity ? t(n.cameraEntity, "calibration_points") || [] : [], W = n.cameraEntity && t(n.cameraEntity, "rooms") || null, O = n.cameraEntity && t(n.cameraEntity, "segments") || null;
-            let $ = [];
-            if (W ? $ = (Array.isArray(W) ? W : Object.values(W)).filter((f) => f.x0 !== void 0 && f.x1 !== void 0 && f.visibility !== "Hidden").map((f) => ({ id: Number(f.room_id ?? f.id), x0: f.x0, y0: f.y0, x1: f.x1, y1: f.y1, cx: f.x ?? (f.x0 + f.x1) / 2, cy: f.y ?? (f.y0 + f.y1) / 2, outline: null })) : O && ($ = (Array.isArray(O) ? O : Object.values(O)).filter((f) => {
-              var D;
-              return ((D = f == null ? void 0 : f.outline) == null ? void 0 : D.length) > 0;
-            }).map((f) => ({ id: Number(f.id), x0: null, y0: null, x1: null, y1: null, cx: f.x ?? null, cy: f.y ?? null, outline: f.outline }))), $.length === 0 || d === 0 || E === 0)
-              return _.length === 0 ? null : /* @__PURE__ */ e("div", { style: { position: "absolute", top: 10, left: 0, right: 0, display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 6, padding: "0 12px", pointerEvents: "none" }, children: tt.filter((g) => _.indexOf(Number(g.id)) >= 0).map((g) => /* @__PURE__ */ e("span", { style: { background: h, color: "white", padding: "4px 12px", borderRadius: 14, fontSize: 12, fontWeight: 700, boxShadow: "0 2px 8px rgba(0,0,0,.3)" }, children: g.name }, g.id)) });
-            let ue = T;
-            if (T.length < 3) {
-              const g = $.filter((f) => f.x0 !== null);
-              if (g.length > 0) {
-                const f = g.flatMap((Te) => [Te.x0, Te.x1]), D = g.flatMap((Te) => [Te.y0, Te.y1]), R = Math.min(...f), K = Math.max(...f), ie = Math.min(...D), _e = Math.max(...D), Et = 0.05, ot = d * Et, rt = E * Et;
-                ue = [
-                  { vacuum: { x: R, y: ie }, map: { x: ot, y: E - rt } },
-                  { vacuum: { x: K, y: ie }, map: { x: d - ot, y: E - rt } },
-                  { vacuum: { x: R, y: _e }, map: { x: ot, y: rt } }
+          h === "room" && (() => {
+            var et, tt;
+            const d = ((et = S.current) == null ? void 0 : et[0]) ?? 0, E = ((tt = S.current) == null ? void 0 : tt[1]) ?? 0, M = o.cameraEntity ? t(o.cameraEntity, "calibration_points") || [] : [], _ = o.cameraEntity && t(o.cameraEntity, "rooms") || null, q = o.cameraEntity && t(o.cameraEntity, "segments") || null;
+            let N = [];
+            if (_ ? N = (Array.isArray(_) ? _ : Object.values(_)).filter((x) => x.x0 !== void 0 && x.x1 !== void 0 && x.visibility !== "Hidden").map((x) => ({ id: Number(x.room_id ?? x.id), x0: x.x0, y0: x.y0, x1: x.x1, y1: x.y1, cx: x.x ?? (x.x0 + x.x1) / 2, cy: x.y ?? (x.y0 + x.y1) / 2, outline: null })) : q && (N = (Array.isArray(q) ? q : Object.values(q)).filter((x) => {
+              var z;
+              return ((z = x == null ? void 0 : x.outline) == null ? void 0 : z.length) > 0;
+            }).map((x) => ({ id: Number(x.id), x0: null, y0: null, x1: null, y1: null, cx: x.x ?? null, cy: x.y ?? null, outline: x.outline }))), N.length === 0 || d === 0 || E === 0)
+              return R.length === 0 ? null : /* @__PURE__ */ e("div", { style: { position: "absolute", top: 10, left: 0, right: 0, display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 6, padding: "0 12px", pointerEvents: "none" }, children: st.filter((v) => R.indexOf(Number(v.id)) >= 0).map((v) => /* @__PURE__ */ e("span", { style: { background: f, color: "white", padding: "4px 12px", borderRadius: 14, fontSize: 12, fontWeight: 700, boxShadow: "0 2px 8px rgba(0,0,0,.3)" }, children: v.name }, v.id)) });
+            let Y = M;
+            if (M.length < 3) {
+              const v = N.filter((x) => x.x0 !== null);
+              if (v.length > 0) {
+                const x = v.flatMap((Pe) => [Pe.x0, Pe.x1]), z = v.flatMap((Pe) => [Pe.y0, Pe.y1]), L = Math.min(...x), X = Math.max(...x), de = Math.min(...z), qe = Math.max(...z), Dt = 0.05, ct = d * Dt, dt = E * Dt;
+                Y = [
+                  { vacuum: { x: L, y: de }, map: { x: ct, y: E - dt } },
+                  { vacuum: { x: X, y: de }, map: { x: d - ct, y: E - dt } },
+                  { vacuum: { x: L, y: qe }, map: { x: ct, y: dt } }
                 ];
               }
             }
-            const ee = (g, f) => {
-              if (ue.length >= 3) {
-                const [D, R, K] = ue, ie = (R.map.x - D.map.x) / (R.vacuum.x - D.vacuum.x || 1), _e = (K.map.y - D.map.y) / (K.vacuum.y - D.vacuum.y || 1);
-                return [(g - D.vacuum.x) * ie + D.map.x, (f - D.vacuum.y) * _e + D.map.y];
+            const j = (v, x) => {
+              if (Y.length >= 3) {
+                const [z, L, X] = Y, de = (L.map.x - z.map.x) / (L.vacuum.x - z.vacuum.x || 1), qe = (X.map.y - z.map.y) / (X.vacuum.y - z.vacuum.y || 1);
+                return [(v - z.vacuum.x) * de + z.map.x, (x - z.vacuum.y) * qe + z.map.y];
               }
-              return [(g + 1e4) / 2e4 * d, (f + 1e4) / 2e4 * E];
-            }, pe = (g) => g.outline ? g.outline.map(([f, D]) => ee(f, D)) : [ee(g.x0, g.y0), ee(g.x1, g.y0), ee(g.x1, g.y1), ee(g.x0, g.y1)], it = (g, f) => {
-              if (g.cx !== null && g.cy !== null) return ee(g.cx, g.cy);
-              const D = f.map(([K]) => K), R = f.map(([, K]) => K);
-              return [(Math.min(...D) + Math.max(...D)) / 2, (Math.min(...R) + Math.max(...R)) / 2];
-            }, B = $.filter((g) => _.indexOf(g.id) < 0), Ve = $.filter((g) => _.indexOf(g.id) >= 0), nt = `M0,0 L${d},0 L${d},${E} L0,${E} Z` + (B.length > 0 ? " " + B.map((g) => `M${pe(g).map(([D, R]) => `${D},${R}`).join(" L")} Z`).join(" ") : "");
+              return [(v + 1e4) / 2e4 * d, (x + 1e4) / 2e4 * E];
+            }, ce = (v) => v.outline ? v.outline.map(([x, z]) => j(x, z)) : [j(v.x0, v.y0), j(v.x1, v.y0), j(v.x1, v.y1), j(v.x0, v.y1)], Ie = (v, x) => {
+              if (v.cx !== null && v.cy !== null) return j(v.cx, v.cy);
+              const z = x.map(([X]) => X), L = x.map(([, X]) => X);
+              return [(Math.min(...z) + Math.max(...z)) / 2, (Math.min(...L) + Math.max(...L)) / 2];
+            }, W = N.filter((v) => R.indexOf(v.id) < 0), Se = N.filter((v) => R.indexOf(v.id) >= 0), Be = `M0,0 L${d},0 L${d},${E} L0,${E} Z` + (W.length > 0 ? " " + W.map((v) => `M${ce(v).map(([z, L]) => `${z},${L}`).join(" L")} Z`).join(" ") : "");
             return /* @__PURE__ */ a(
               "svg",
               {
@@ -3835,63 +3885,63 @@ function go() {
                 viewBox: `0 0 ${d} ${E}`,
                 preserveAspectRatio: "xMidYMid meet",
                 children: [
-                  /* @__PURE__ */ e("defs", { children: /* @__PURE__ */ e("clipPath", { id: "oikos-vac-clip", clipPathUnits: "userSpaceOnUse", children: /* @__PURE__ */ e("path", { d: nt, fillRule: "evenodd" }) }) }),
-                  Ve.map((g) => {
-                    const f = pe(g);
+                  /* @__PURE__ */ e("defs", { children: /* @__PURE__ */ e("clipPath", { id: "oikos-vac-clip", clipPathUnits: "userSpaceOnUse", children: /* @__PURE__ */ e("path", { d: Be, fillRule: "evenodd" }) }) }),
+                  Se.map((v) => {
+                    const x = ce(v);
                     return /* @__PURE__ */ e("g", { clipPath: "url(#oikos-vac-clip)", pointerEvents: "none", children: /* @__PURE__ */ e(
                       "polygon",
                       {
-                        points: f.map(([D, R]) => `${D},${R}`).join(" "),
+                        points: x.map(([z, L]) => `${z},${L}`).join(" "),
                         fill: "rgba(37,99,235,0.38)",
                         stroke: "rgba(37,99,235,0.95)",
                         strokeWidth: 2.5
                       }
-                    ) }, `vis-${g.id}`);
+                    ) }, `vis-${v.id}`);
                   }),
-                  Ve.map((g) => {
-                    const f = pe(g), [D, R] = it(g, f), K = _.indexOf(g.id) + 1;
+                  Se.map((v) => {
+                    const x = ce(v), [z, L] = Ie(v, x), X = R.indexOf(v.id) + 1;
                     return /* @__PURE__ */ a("g", { children: [
                       /* @__PURE__ */ e(
                         "polygon",
                         {
-                          points: f.map(([ie, _e]) => `${ie},${_e}`).join(" "),
+                          points: x.map(([de, qe]) => `${de},${qe}`).join(" "),
                           fill: "rgba(0,0,0,0.001)",
                           stroke: "none",
                           style: { touchAction: "none" },
-                          onPointerDown: (ie) => {
-                            ie.stopPropagation(), at(g.id);
+                          onPointerDown: (de) => {
+                            de.stopPropagation(), lt(v.id);
                           }
                         }
                       ),
-                      /* @__PURE__ */ e("circle", { cx: D, cy: R, r: 14, fill: "rgba(37,99,235,1)", pointerEvents: "none" }),
+                      /* @__PURE__ */ e("circle", { cx: z, cy: L, r: 14, fill: "rgba(37,99,235,1)", pointerEvents: "none" }),
                       /* @__PURE__ */ e(
                         "text",
                         {
-                          x: D,
-                          y: R,
+                          x: z,
+                          y: L,
                           textAnchor: "middle",
                           dominantBaseline: "central",
                           style: { fontSize: 14, fontWeight: 700, fill: "white", pointerEvents: "none", userSelect: "none" },
-                          children: K
+                          children: X
                         }
                       )
-                    ] }, `sel-${g.id}`);
+                    ] }, `sel-${v.id}`);
                   }),
-                  B.map((g) => {
-                    const f = pe(g);
+                  W.map((v) => {
+                    const x = ce(v);
                     return /* @__PURE__ */ e(
                       "polygon",
                       {
-                        points: f.map(([D, R]) => `${D},${R}`).join(" "),
+                        points: x.map(([z, L]) => `${z},${L}`).join(" "),
                         fill: "rgba(255,255,255,0.06)",
                         stroke: "rgba(255,255,255,0.35)",
                         strokeWidth: 1.5,
                         style: { touchAction: "none" },
-                        onPointerDown: (D) => {
-                          D.stopPropagation(), at(g.id);
+                        onPointerDown: (z) => {
+                          z.stopPropagation(), lt(v.id);
                         }
                       },
-                      `unsel-${g.id}`
+                      `unsel-${v.id}`
                     );
                   })
                 ]
@@ -3904,17 +3954,17 @@ function go() {
             "div",
             {
               onClick: () => {
-                v((d) => !d), u && k(1);
+                H((d) => !d), y && p(1);
               },
               style: { width: 32, height: 32, borderRadius: 8, background: "rgba(0,0,0,0.55)", backdropFilter: "blur(6px)", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", fontSize: 15 },
-              children: u ? "🔓" : "🔒"
+              children: y ? "🔓" : "🔒"
             }
           ),
-          u && /* @__PURE__ */ a(ge, { children: [
+          y && /* @__PURE__ */ a(ue, { children: [
             /* @__PURE__ */ e(
               "div",
               {
-                onClick: () => k((d) => Math.min(3, parseFloat((d + 0.3).toFixed(1)))),
+                onClick: () => p((d) => Math.min(3, parseFloat((d + 0.3).toFixed(1)))),
                 style: { width: 32, height: 32, borderRadius: 8, background: "rgba(0,0,0,0.55)", backdropFilter: "blur(6px)", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", fontSize: 20, color: "white", fontWeight: 700, lineHeight: 1 },
                 children: "+"
               }
@@ -3922,7 +3972,7 @@ function go() {
             /* @__PURE__ */ e(
               "div",
               {
-                onClick: () => k((d) => Math.max(1, parseFloat((d - 0.3).toFixed(1)))),
+                onClick: () => p((d) => Math.max(1, parseFloat((d - 0.3).toFixed(1)))),
                 style: { width: 32, height: 32, borderRadius: 8, background: "rgba(0,0,0,0.55)", backdropFilter: "blur(6px)", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", fontSize: 20, color: "white", fontWeight: 700, lineHeight: 1 },
                 children: "−"
               }
@@ -3930,19 +3980,19 @@ function go() {
           ] })
         ] })
       ] }),
-      M === "room" && /* @__PURE__ */ e("div", { style: { padding: "8px 16px 0" }, children: tt.filter((d) => d.name).length > 0 ? /* @__PURE__ */ e("div", { style: { overflowX: "auto", scrollbarWidth: "none", WebkitOverflowScrolling: "touch", display: "flex", gap: 6, paddingBottom: 2 }, children: tt.filter((d) => d.name).map((d) => {
-        const E = _.indexOf(Number(d.id)) >= 0;
+      h === "room" && /* @__PURE__ */ e("div", { style: { padding: "8px 16px 0" }, children: st.filter((d) => d.name).length > 0 ? /* @__PURE__ */ e("div", { style: { overflowX: "auto", scrollbarWidth: "none", WebkitOverflowScrolling: "touch", display: "flex", gap: 6, paddingBottom: 2 }, children: st.filter((d) => d.name).map((d) => {
+        const E = R.indexOf(Number(d.id)) >= 0;
         return /* @__PURE__ */ a(
           "div",
           {
-            onPointerDown: (T) => {
-              T.currentTarget.style.transform = "scale(0.94)";
+            onPointerDown: (M) => {
+              M.currentTarget.style.transform = "scale(0.94)";
             },
-            onPointerUp: (T) => {
-              T.currentTarget.style.transform = "", at(Number(d.id));
+            onPointerUp: (M) => {
+              M.currentTarget.style.transform = "", lt(Number(d.id));
             },
-            onPointerCancel: (T) => {
-              T.currentTarget.style.transform = "";
+            onPointerCancel: (M) => {
+              M.currentTarget.style.transform = "";
             },
             style: {
               flexShrink: 0,
@@ -3953,11 +4003,11 @@ function go() {
               gap: 5,
               padding: "7px 14px",
               borderRadius: 20,
-              background: E ? h : "var(--bg-elevated)",
+              background: E ? f : "var(--bg-elevated)",
               color: E ? "white" : "var(--text-secondary)",
               fontSize: 13,
               fontWeight: E ? 700 : 500,
-              border: `1.5px solid ${E ? h : "var(--border)"}`,
+              border: `1.5px solid ${E ? f : "var(--border)"}`,
               boxShadow: E ? "0 2px 10px rgba(245,158,11,.45)" : "none",
               transition: "background .12s, border-color .12s, box-shadow .12s, color .12s",
               userSelect: "none"
@@ -3978,27 +4028,27 @@ function go() {
         { id: "all", label: s("dreame.scopeAll") },
         { id: "zona", label: s("dreame.scopeZona") }
       ].map(({ id: d, label: E }) => /* @__PURE__ */ e("button", { onClick: () => {
-        if (d === "zona" && Xt) {
-          ae(!0);
+        if (d === "zona" && aa) {
+          ee(!0);
           return;
         }
-        w(d);
+        T(d);
       }, style: {
         flex: 1,
         textAlign: "center",
         padding: "9px 4px",
         borderRadius: 10,
         fontSize: 14,
-        fontWeight: M === d ? 700 : 500,
+        fontWeight: h === d ? 700 : 500,
         cursor: "pointer",
         border: "none",
         transition: "all .18s",
-        background: M === d ? "var(--bg-card)" : "transparent",
-        color: M === d ? "var(--text-primary)" : "var(--text-muted)",
-        boxShadow: M === d ? "0 1px 5px rgba(0,0,0,.1)" : "none"
+        background: h === d ? "var(--bg-card)" : "transparent",
+        color: h === d ? "var(--text-primary)" : "var(--text-muted)",
+        boxShadow: h === d ? "0 1px 5px rgba(0,0,0,.1)" : "none"
       }, children: E }, d)) }) }),
       /* @__PURE__ */ a("div", { style: { padding: "8px 16px 0", display: "flex", alignItems: "center", gap: 8 }, children: [
-        /* @__PURE__ */ a("button", { onClick: () => re(!0), style: { display: "flex", alignItems: "center", gap: 8, padding: "9px 14px", background: "var(--bg-elevated)", borderRadius: 14, cursor: "pointer", border: "none", flex: 1, minWidth: 0 }, children: [
+        /* @__PURE__ */ a("button", { onClick: () => pe(!0), style: { display: "flex", alignItems: "center", gap: 8, padding: "9px 14px", background: "var(--bg-elevated)", borderRadius: 14, cursor: "pointer", border: "none", flex: 1, minWidth: 0 }, children: [
           /* @__PURE__ */ a("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "var(--text-secondary)", children: [
             /* @__PURE__ */ e("rect", { x: "2", y: "2", width: "9", height: "9", rx: "2" }),
             /* @__PURE__ */ e("rect", { x: "13", y: "2", width: "9", height: "9", rx: "2" }),
@@ -4008,158 +4058,158 @@ function go() {
           /* @__PURE__ */ e("span", { style: { fontSize: 14, fontWeight: 600, color: "var(--text-primary)", flex: 1 }, children: s("dreame.personalizzaBtn") }),
           /* @__PURE__ */ e("span", { style: { fontSize: 13, color: "var(--text-muted)" }, children: "›" })
         ] }),
-        M === "zona" && /* @__PURE__ */ a(ge, { children: [
+        h === "zona" && /* @__PURE__ */ a(ue, { children: [
           /* @__PURE__ */ e("button", { onClick: () => {
-            if (L.length >= 3) return;
-            const d = L[L.length - 1] ?? { x: 15, y: 15 };
-            te((E) => [...E, { x: (d.x + 10) % 35, y: (d.y + 10) % 35, w: 55, h: 44 }]);
-          }, style: { padding: "9px 14px", background: "var(--blue)", border: "none", borderRadius: 14, color: "white", fontSize: 13, fontWeight: 700, cursor: "pointer", flexShrink: 0, whiteSpace: "nowrap", opacity: L.length >= 3 ? 0.4 : 1 }, children: s("dreame.zonaAdd") }),
-          /* @__PURE__ */ a("button", { onClick: () => oe((d) => d >= 3 ? 1 : d + 1), style: { width: 40, height: 40, borderRadius: "50%", background: dt, border: "none", cursor: "pointer", fontSize: 13, fontWeight: 800, color: h, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }, children: [
+            if (G.length >= 3) return;
+            const d = G[G.length - 1] ?? { x: 15, y: 15 };
+            oe((E) => [...E, { x: (d.x + 10) % 35, y: (d.y + 10) % 35, w: 55, h: 44 }]);
+          }, style: { padding: "9px 14px", background: "var(--blue)", border: "none", borderRadius: 14, color: "white", fontSize: 13, fontWeight: 700, cursor: "pointer", flexShrink: 0, whiteSpace: "nowrap", opacity: G.length >= 3 ? 0.4 : 1 }, children: s("dreame.zonaAdd") }),
+          /* @__PURE__ */ a("button", { onClick: () => $((d) => d >= 3 ? 1 : d + 1), style: { width: 40, height: 40, borderRadius: "50%", background: mt, border: "none", cursor: "pointer", fontSize: 13, fontWeight: 800, color: f, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }, children: [
             "x",
-            q
+            ne
           ] })
         ] })
       ] }),
-      Qt && /* @__PURE__ */ a("div", { style: { display: "flex", alignItems: "center", gap: 6, margin: "8px 16px 0", padding: "8px 12px", borderRadius: 10, background: "var(--red-light)", border: "1px solid var(--red-border)" }, children: [
+      ot && /* @__PURE__ */ a("div", { style: { display: "flex", alignItems: "center", gap: 6, margin: "8px 16px 0", padding: "8px 12px", borderRadius: 10, background: "var(--red-light)", border: "1px solid var(--red-border)" }, children: [
         /* @__PURE__ */ e("span", { style: { fontSize: 14 }, children: "⚠️" }),
-        /* @__PURE__ */ e("span", { style: { fontSize: 12, color: "var(--red)", fontWeight: 600 }, children: He })
+        /* @__PURE__ */ e("span", { style: { fontSize: 12, color: "var(--red)", fontWeight: 600 }, children: Qe })
       ] }),
       /* @__PURE__ */ a("div", { style: { display: "flex", alignItems: "center", padding: "14px 20px 20px", borderTop: "1px solid var(--border)", marginTop: 12 }, children: [
-        /* @__PURE__ */ a("button", { onClick: oa, disabled: xe, style: { display: "flex", alignItems: "center", gap: 8, flex: 1, background: "transparent", border: "none", cursor: xe ? "default" : "pointer", padding: 0, opacity: xe ? 0.45 : 1 }, children: [
-          /* @__PURE__ */ e("svg", { width: "28", height: "28", viewBox: "0 0 28 28", children: Me ? /* @__PURE__ */ a(ge, { children: [
-            /* @__PURE__ */ e("rect", { x: "6", y: "5", width: "5", height: "18", fill: h, rx: "1.5" }),
-            /* @__PURE__ */ e("rect", { x: "17", y: "5", width: "5", height: "18", fill: h, rx: "1.5" })
-          ] }) : /* @__PURE__ */ e("polygon", { points: "7,4 24,14 7,24", fill: h }) }),
-          /* @__PURE__ */ e("span", { style: { fontSize: 17, fontWeight: 700, color: h }, children: xe ? s("state.returning") : na })
+        /* @__PURE__ */ a("button", { onClick: da, disabled: le, style: { display: "flex", alignItems: "center", gap: 8, flex: 1, background: "transparent", border: "none", cursor: le ? "default" : "pointer", padding: 0, opacity: le ? 0.45 : 1 }, children: [
+          /* @__PURE__ */ e("svg", { width: "28", height: "28", viewBox: "0 0 28 28", children: ge ? /* @__PURE__ */ a(ue, { children: [
+            /* @__PURE__ */ e("rect", { x: "6", y: "5", width: "5", height: "18", fill: f, rx: "1.5" }),
+            /* @__PURE__ */ e("rect", { x: "17", y: "5", width: "5", height: "18", fill: f, rx: "1.5" })
+          ] }) : /* @__PURE__ */ e("polygon", { points: "7,4 24,14 7,24", fill: f }) }),
+          /* @__PURE__ */ e("span", { style: { fontSize: 17, fontWeight: 700, color: f }, children: le ? s("state.returning") : ca })
         ] }),
         /* @__PURE__ */ e("div", { style: { width: 1, height: 32, background: "var(--border-medium)", margin: "0 8px" } }),
-        Me || je || xe ? /* @__PURE__ */ a("button", { onClick: () => Ge("stop"), style: { display: "flex", alignItems: "center", gap: 8, flex: 1, justifyContent: "center", background: "transparent", border: "none", cursor: "pointer", padding: 0 }, children: [
+        ge || We || le ? /* @__PURE__ */ a("button", { onClick: () => Je("stop"), style: { display: "flex", alignItems: "center", gap: 8, flex: 1, justifyContent: "center", background: "transparent", border: "none", cursor: "pointer", padding: 0 }, children: [
           /* @__PURE__ */ e("svg", { width: "22", height: "22", viewBox: "0 0 22 22", children: /* @__PURE__ */ e("rect", { x: "3", y: "3", width: "16", height: "16", rx: "3", fill: "var(--red)" }) }),
           /* @__PURE__ */ e("span", { style: { fontSize: 17, fontWeight: 600, color: "var(--red)" }, children: s("dreame.stopBtn") })
         ] }) : /* @__PURE__ */ a("button", { onClick: () => {
-          se("main"), G(!0);
+          V("main"), I(!0);
         }, style: { display: "flex", alignItems: "center", gap: 8, flex: 1, justifyContent: "center", background: "transparent", border: "none", cursor: "pointer", padding: 0 }, children: [
           /* @__PURE__ */ e("span", { style: { fontSize: 22 }, children: "🏠" }),
           /* @__PURE__ */ e("span", { style: { fontSize: 17, fontWeight: 600, color: "var(--text-secondary)" }, children: s("dreame.baseBtn") })
         ] })
       ] }),
-      he && /* @__PURE__ */ e("div", { onClick: () => ae(!1), style: { position: "fixed", inset: 0, background: "var(--overlay-scrim)", backdropFilter: "blur(4px)", WebkitBackdropFilter: "blur(4px)", zIndex: 9999, display: "flex", alignItems: "center", justifyContent: "center", padding: 24 }, children: /* @__PURE__ */ a("div", { onClick: (d) => d.stopPropagation(), style: { background: "var(--bg-panel)", borderRadius: 20, padding: "28px 24px 20px", maxWidth: 340, width: "100%", textAlign: "center", boxShadow: "0 20px 60px rgba(0,0,0,.5)" }, children: [
+      ke && /* @__PURE__ */ e("div", { onClick: () => ee(!1), style: { position: "fixed", inset: 0, background: "var(--overlay-scrim)", backdropFilter: "blur(4px)", WebkitBackdropFilter: "blur(4px)", zIndex: 9999, display: "flex", alignItems: "center", justifyContent: "center", padding: 24 }, children: /* @__PURE__ */ a("div", { onClick: (d) => d.stopPropagation(), style: { background: "var(--bg-panel)", borderRadius: 20, padding: "28px 24px 20px", maxWidth: 340, width: "100%", textAlign: "center", boxShadow: "0 20px 60px rgba(0,0,0,.5)" }, children: [
         /* @__PURE__ */ e("p", { style: { fontSize: 16, fontWeight: 500, color: "var(--text-primary)", lineHeight: 1.5, margin: "0 0 24px" }, children: s("dreame.zonaConfirmMsg") }),
         /* @__PURE__ */ a("div", { style: { display: "flex", gap: 12 }, children: [
-          /* @__PURE__ */ e("button", { onClick: () => ae(!1), style: { flex: 1, padding: "13px 0", borderRadius: 14, border: "none", background: "var(--bg-elevated)", color: "var(--text-primary)", fontSize: 15, fontWeight: 600, cursor: "pointer" }, children: s("dreame.zonaConfirmCancel") }),
+          /* @__PURE__ */ e("button", { onClick: () => ee(!1), style: { flex: 1, padding: "13px 0", borderRadius: 14, border: "none", background: "var(--bg-elevated)", color: "var(--text-primary)", fontSize: 15, fontWeight: 600, cursor: "pointer" }, children: s("dreame.zonaConfirmCancel") }),
           /* @__PURE__ */ e("button", { onClick: () => {
-            n.cleanGeniusEntity && o("select", "select_option", n.cleanGeniusEntity, { option: "off" }), w("zona"), ae(!1);
+            o.cleanGeniusEntity && n("select", "select_option", o.cleanGeniusEntity, { option: "off" }), T("zona"), ee(!1);
           }, style: { flex: 1, padding: "13px 0", borderRadius: 14, border: "none", background: "#d4b483", color: "#7a5c2e", fontSize: 15, fontWeight: 700, cursor: "pointer" }, children: s("dreame.zonaConfirmSwitch") })
         ] })
       ] }) })
     ] }),
     /* @__PURE__ */ e(
-      uo,
+      zo,
       {
         open: ye,
-        onClose: () => re(!1),
-        cfg: n,
+        onClose: () => pe(!1),
+        cfg: o,
         t: s,
-        callService: o,
+        callService: n,
         getState: i,
-        suction: Kt,
-        onSuction: ea,
-        route: Ut,
-        onRoute: ta,
-        humidity: $t,
-        onHumidity: ia,
-        rewashFreqSel: Ot,
-        onRewashFreq: aa,
-        deepClean: n.deepCleanEntity ? i(n.deepCleanEntity) === "on" : !1,
-        onDeepClean: () => n.deepCleanEntity && o("switch", "toggle", n.deepCleanEntity)
+        suction: ea,
+        onSuction: na,
+        route: ta,
+        onRoute: oa,
+        humidity: Kt,
+        onHumidity: sa,
+        rewashFreqSel: Qt,
+        onRewashFreq: ra,
+        deepClean: o.deepCleanEntity ? i(o.deepCleanEntity) === "on" : !1,
+        onDeepClean: () => o.deepCleanEntity && n("switch", "toggle", o.deepCleanEntity)
       }
     ),
     /* @__PURE__ */ e(
-      Yn,
+      uo,
       {
-        open: Y,
-        onClose: () => le(!1),
-        onMopExtend: () => j(!0),
-        onBase: () => G(!0),
+        open: fe,
+        onClose: () => se(!1),
+        onMopExtend: () => He(!0),
+        onBase: () => I(!0),
         onBaseSettings: () => {
-          se("settings"), G(!0);
+          V("settings"), I(!0);
         },
-        onCronologia: () => ze(!0),
-        onCarpet: () => fe(!0),
-        onFloor: () => V(!0),
-        cfg: n,
+        onCronologia: () => Me(!0),
+        onCarpet: () => C(!0),
+        onFloor: () => Z(!0),
+        cfg: o,
         t: s,
-        callService: o,
+        callService: n,
+        getState: i
+      }
+    ),
+    /* @__PURE__ */ e(
+      So,
+      {
+        open: re,
+        onClose: () => I(!1),
+        cfg: o,
+        t: s,
+        callService: n,
+        getState: i,
+        svuotOpen: _e,
+        setSvuotOpen: me,
+        svuotSel: K,
+        setSvuotSel: U,
+        lavRipOpen: u,
+        setLavRipOpen: B,
+        lavRipSel: be,
+        setLavRipSel: Te,
+        tempAsciugOpen: Ne,
+        setTempAsciugOpen: Oe,
+        tempAsciugSel: $e,
+        setTempAsciugSel: Ge,
+        startPage: ve
+      }
+    ),
+    /* @__PURE__ */ e(
+      ro,
+      {
+        open: Ae,
+        onClose: () => C(!1),
+        cfg: o,
+        t: s,
+        callService: n,
         getState: i
       }
     ),
     /* @__PURE__ */ e(
       co,
       {
-        open: ve,
-        onClose: () => G(!1),
-        cfg: n,
+        open: te,
+        onClose: () => Z(!1),
+        cfg: o,
         t: s,
-        callService: o,
-        getState: i,
-        svuotOpen: Xe,
-        setSvuotOpen: De,
-        svuotSel: ce,
-        setSvuotSel: Z,
-        lavRipOpen: Q,
-        setLavRipOpen: c,
-        lavRipSel: I,
-        setLavRipSel: be,
-        tempAsciugOpen: Ce,
-        setTempAsciugOpen: Le,
-        tempAsciugSel: We,
-        setTempAsciugSel: Ie,
-        startPage: P
-      }
-    ),
-    /* @__PURE__ */ e(
-      Zn,
-      {
-        open: de,
-        onClose: () => fe(!1),
-        cfg: n,
-        t: s,
-        callService: o,
+        callService: n,
         getState: i
       }
     ),
     /* @__PURE__ */ e(
-      Un,
+      oo,
       {
-        open: A,
-        onClose: () => V(!1),
-        cfg: n,
-        t: s,
-        callService: o,
-        getState: i
-      }
-    ),
-    /* @__PURE__ */ e(
-      Vn,
-      {
-        open: X,
-        onClose: () => j(!1),
-        onFrequenza: () => mt(!0),
-        freqSel: ke,
-        sideReach: qe,
-        setSideReach: Pe,
-        mopExtend: It,
-        setMopExtend: Bt,
-        mopVoid: qt,
-        setMopVoid: Pt,
-        mopLegs: Ht,
-        setMopLegs: Ft,
+        open: Q,
+        onClose: () => He(!1),
+        onFrequenza: () => vt(!0),
+        freqSel: Re,
+        sideReach: Ve,
+        setSideReach: Ft,
+        mopExtend: Nt,
+        setMopExtend: Ot,
+        mopVoid: $t,
+        setMopVoid: Gt,
+        mopLegs: jt,
+        setMopLegs: Vt,
         t: s
       }
     ),
-    /* @__PURE__ */ e(Wt, { open: Nt, onClose: () => mt(!1), selected: ke, onSelect: Be, t: s })
+    /* @__PURE__ */ e(Ht, { open: Zt, onClose: () => vt(!1), selected: Re, onSelect: je, t: s })
   ] });
 }
 export {
-  go as default
+  ko as default
 };

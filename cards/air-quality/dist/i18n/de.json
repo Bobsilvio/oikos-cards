@@ -32,5 +32,13 @@
     "fieldDescription": "Beschreibung",
     "sensorLabelPlaceholder": "z.B. CO2",
     "sensorUnitPlaceholder": "z.B. ppm"
+  },
+  "ss": {
+    "notConfigured": "Kein AQI-Sensor konfiguriert",
+    "zone1": "Ausgezeichnet",
+    "zone2": "Gut",
+    "zone3": "Mäßig",
+    "zone4": "Schlecht",
+    "zone5": "Sehr schlecht"
   }
 }

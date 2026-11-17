@@ -76,5 +76,6 @@
   },
   "chipPreset": "Preset",
   "modeTitle": "Modus",
-  "close": "Schließen"
+  "close": "Schließen",
+  "ssNoEntity": "Klimaanlage nicht konfiguriert"
 }

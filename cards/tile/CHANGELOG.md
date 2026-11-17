@@ -4,6 +4,16 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [1.14.0] - 2026-11-17
+### Added
+- **Versione screensaver.** Messa nello screensaver, la tile perde riquadro,
+  sfondo e azione al tocco e si legge da lontano: il nome in piccolo, l'icona
+  nel colore di stato accanto al valore grande (o allo stato, se il valore non
+  è attivo), sotto lo stato e le righe di dettaglio. Segue la configurazione
+  della tile: entità, nome, icona, colori, conteggio e righe secondarie.
+  Serve Oikos 2.6.98 o successivo; le versioni precedenti continuano a
+  mostrare la card normale.
+
 ## [1.13.0] - 2026-09-20
 ### Fixed
 - **Numero troncato («54…») con due tile affiancate su un telefono.** In mezza

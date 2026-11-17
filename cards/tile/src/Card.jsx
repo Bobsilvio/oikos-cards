@@ -24,7 +24,7 @@
  *   - nessuna stringa visibile hardcoded: tutto da useT
  */
 import { useState, useEffect, useRef } from 'react'
-import { useDashboard, useCardConfig, useStyles, registerCardTranslations, useT, MdiIcon } from '@oikos/sdk'
+import { useDashboard, useCardConfig, useStyles, registerCardTranslations, useT, MdiIcon, useCardSurface } from '@oikos/sdk'
 import it from './i18n/it.json'
 import en from './i18n/en.json'
 import de from './i18n/de.json'
@@ -35,6 +35,13 @@ import {
 } from './tileUtils'
 
 registerCardTranslations('card-tile', { it, en, de, es, fr })
+
+// Oikos < SDK 1.5 non ha useCardSurface: lì la card è sempre "da plancia".
+// Scelto una volta all'avvio, quindi l'ordine degli hook non cambia mai.
+const NO_SURFACE = { isScreensaver: false, theme: 'dark' }
+const useSurface = typeof useCardSurface === 'function' ? useCardSurface : () => NO_SURFACE
+const SS_SHADOW = '0 1px 3px rgba(0,0,0,.45), 0 0 18px rgba(0,0,0,.3)'
+const SS_PULSE = { animation: 'oikos-tile-pulse 1.6s ease-in-out infinite' }
 
 export const DEFAULT = {
   entityId:      '',
@@ -96,6 +103,7 @@ export default function TileCard({ cardId = 'tile' }) {
   // ── Hook: tutti qui sopra, nessuno dopo un return ────────────────────────
   const s = useStyles()
   const { t } = useT('card-tile')
+  const surface = useSurface()
   const { getState, getAttr, callService, openMoreInfo, openPopup } = useDashboard()
   const [cfg] = useCardConfig(cardId, DEFAULT)
   // Prima di qualunque return: gli hook non possono stare dopo (SDK §3d).
@@ -134,6 +142,14 @@ export default function TileCard({ cardId = 'tile' }) {
 
   // ── Stato non configurato ────────────────────────────────────────────────
   if (!cfg.entityId) {
+    // Screensaver: una riga discreta, niente riquadro.
+    if (surface.isScreensaver) {
+      return (
+        <div style={{ padding: '18px 22px', color: 'var(--text-muted)', fontSize: 16, textShadow: surface.theme === 'light' ? 'none' : SS_SHADOW }}>
+          {t('empty.title')}
+        </div>
+      )
+    }
     return (
       <div style={{ ...s.card, display: 'flex', alignItems: 'center', gap: tk.space.md }}>
         <div style={chipStyle(tk, tk.color.muted, false)}>
@@ -256,6 +272,73 @@ export default function TileCard({ cardId = 'tile' }) {
           ? t('state.unavailable')
           : stateLabel(st, { t, activeStates: cfg.activeStates, deviceClass: getAttr(entity, 'device_class') }))
     return label ? `${label}: ${shown}` : shown
+  }
+
+  /*
+   * Versione screensaver: da tre metri, niente riquadro né interazione.
+   * Rispetta la configurazione della tile — nome, icona, colore, valore,
+   * righe di dettaglio — ma la dispone in grande: etichetta piccola, icona e
+   * valore (o stato) grandi, dettagli sotto. Nessun hook da qui in poi.
+   */
+  if (surface.isScreensaver) {
+    const shadow = surface.theme === 'light' ? 'none' : SS_SHADOW
+    const big = unknown
+      ? t('state.unavailable')
+      : value !== null
+        ? value
+        : (statusText || stateLabel(raw, {
+            t, onText: cfg.onText, offText: cfg.offText, activeStates: cfg.activeStates,
+            deviceClass: getAttr(cfg.entityId, 'device_class'),
+          }))
+    const bigStr = String(big ?? '—')
+    const bigSize = bigStr.length <= 6 ? 64 : bigStr.length <= 10 ? 48 : bigStr.length <= 16 ? 36 : 28
+    const showUnit = !unknown && value !== null && counted.length === 0 && unit
+    const dim = unknown || (onOff && !active && !sentAt)
+    const pulse = !unknown && ((onOff && active) || !!sentAt)
+    // Lo stato sotto il valore grande, nel colore di stato (se non è già il grande).
+    const statusLine = !unknown && value !== null && status ? statusText : null
+    return (
+      <div style={{ padding: '18px 22px', color: 'var(--text-primary)', textShadow: shadow }}>
+        <style>{'@keyframes oikos-tile-pulse{0%,100%{opacity:1}50%{opacity:.3}}'}</style>
+        <div style={{
+          display: 'flex', alignItems: 'center', gap: 9, fontSize: title.length <= 18 ? 13 : 12,
+          fontWeight: 600, letterSpacing: '.28em', textTransform: 'uppercase',
+          color: 'var(--text-muted)', overflowWrap: 'anywhere',
+        }}>
+          {pulse && (
+            <span style={{ ...SS_PULSE, width: 8, height: 8, borderRadius: '50%', flexShrink: 0, background: tint, boxShadow: `0 0 12px ${tint}` }}/>
+          )}
+          {title}
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginTop: 10, minWidth: 0 }}>
+          <span style={{ flexShrink: 0, display: 'inline-flex' }}>
+            <MdiIcon name={icon} size={44} color={tint} />
+          </span>
+          <div style={{
+            minWidth: 0, overflowWrap: 'anywhere', lineHeight: 1.05, fontSize: bigSize,
+            fontVariantNumeric: 'tabular-nums',
+            fontFamily: 'var(--ss-display, inherit)', fontWeight: 'var(--ss-display-w, 300)',
+            letterSpacing: 'var(--ss-display-track, -0.03em)',
+            color: dim ? 'var(--text-secondary)' : 'var(--text-primary)',
+          }}>
+            {bigStr}
+            {showUnit && (
+              <span style={{ fontSize: Math.round(bigSize * 0.4), marginLeft: /^[%°]/.test(unit) ? 2 : 6, color: 'var(--text-secondary)' }}>{unit}</span>
+            )}
+          </div>
+        </div>
+        {statusLine && (
+          <div style={{ marginTop: 12, fontSize: 17, fontWeight: 600, color: dim ? 'var(--text-muted)' : tint }}>
+            {statusLine}
+          </div>
+        )}
+        {subs.map((line, i) => (
+          <div key={i} style={{ marginTop: i === 0 && !statusLine ? 12 : 4, fontSize: 15, color: 'var(--text-secondary)', overflowWrap: 'anywhere' }}>
+            {line}
+          </div>
+        ))}
+      </div>
+    )
   }
 
   const clickable = cfg.tapAction !== 'none'

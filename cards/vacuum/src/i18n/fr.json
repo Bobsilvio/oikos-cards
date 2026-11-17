@@ -430,5 +430,8 @@
     "lightlyDry": "Légèrement\nsec",
     "moist": "Humide",
     "wet": "Mouillé"
+  },
+  "ss": {
+    "notConfigured": "Robot non configuré"
   }
 }

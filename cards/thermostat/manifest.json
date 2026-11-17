@@ -1,7 +1,7 @@
 {
   "id": "thermostat",
   "name": "Termostato",
-  "version": "1.0.4",
+  "version": "1.1.0",
   "author": "Oikos",
   "description": "Gauge 270° con gradiente blu→arancione per termostato HA. Slider target, toggle on/off, multi-mode.",
   "description_en": "270° gauge with blue→orange gradient for HA thermostat. Target slider, on/off toggle, multi-mode.",
@@ -19,5 +19,6 @@
   "tier": "free",
   "description_de": "270°-Anzeige mit blau→orange-Verlauf für HA-Thermostat. Ziel-Schieberegler, Ein/Aus-Schalter, Multi-Mode.",
   "description_es": "Indicador de 270° con degradado azul→naranja para termostato HA. Deslizador de consigna, interruptor on/off, multi-modo.",
-  "description_fr": "Jauge 270° avec dégradé bleu→orange pour thermostat HA. Curseur de consigne, interrupteur on/off, multi-mode."
+  "description_fr": "Jauge 270° avec dégradé bleu→orange pour thermostat HA. Curseur de consigne, interrupteur on/off, multi-mode.",
+  "screensaver": true
 }

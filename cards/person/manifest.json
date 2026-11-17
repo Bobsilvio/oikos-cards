@@ -1,7 +1,7 @@
 {
   "id": "person",
   "name": "Persona",
-  "version": "1.3.9",
+  "version": "1.4.0",
   "author": "Oikos",
   "description": "Card persona HA: avatar, zona, batteria, passi/km guidati. Layout split con mappa Google Maps live sul lato destro (sfumatura graduale tra info e mappa), campo dedicato per il device_tracker GPS, badge LIVE animato.",
   "description_en": "HA person card: avatar, zone, battery, steps/driven km. Split layout with live Google Maps on the right (gradient between info and map), dedicated GPS device_tracker field, animated LIVE badge.",
@@ -20,5 +20,6 @@
   "tier": "free",
   "description_de": "HA-Personenkarte: Avatar, Zone, Akku, Schritte/gefahrene km. Geteiltes Layout mit Google Maps live (rechts), dediziertes GPS-device_tracker-Feld, animiertes LIVE-Abzeichen.",
   "description_es": "Tarjeta de persona HA: avatar, zona, batería, pasos/km recorridos. Diseño dividido con Google Maps en vivo (derecha), campo GPS device_tracker dedicado, badge LIVE animado.",
-  "description_fr": "Carte personne HA : avatar, zone, batterie, pas/km parcourus. Mise en page divisée avec Google Maps en direct (droite), champ GPS device_tracker dédié, badge LIVE animé."
+  "description_fr": "Carte personne HA : avatar, zone, batterie, pas/km parcourus. Mise en page divisée avec Google Maps en direct (droite), champ GPS device_tracker dédié, badge LIVE animé.",
+  "screensaver": true
 }

@@ -1,7 +1,7 @@
 {
   "id": "room-sensor",
   "name": "Room Sensor",
-  "version": "1.1.5",
+  "version": "1.2.0",
   "author": "Oikos",
   "description": "Card sensore stanza: gauge multipli, flow chart storico, badge numerici, mini-gauge batteria/segnale.",
   "description_en": "Room sensor card: multiple gauges, history flow chart, numeric badges, mini battery/signal gauges.",
@@ -20,5 +20,6 @@
   "tier": "free",
   "description_de": "Raumsensorkarte: mehrere Anzeigen, historisches Flussdiagramm, numerische Abzeichen, Mini-Akku-/Signalmesser.",
   "description_es": "Tarjeta de sensor de habitación: varios indicadores, gráfico histórico de flujo, badges numéricos, mini-indicadores de batería/señal.",
-  "description_fr": "Carte capteur de pièce : plusieurs jauges, graphique de flux historique, badges numériques, mini-jauges batterie/signal."
+  "description_fr": "Carte capteur de pièce : plusieurs jauges, graphique de flux historique, badges numériques, mini-jauges batterie/signal.",
+  "screensaver": true
 }

@@ -387,8 +387,8 @@
       "mopWashLevelEntity": "Mop wash level",
       "autoRewashingEntity": "Auto rewashing frequency",
       "startAutoEmptyEntity": "Start auto-empty (button)",
-      "startSelfWashEntity":  "Start mop wash (button)",
-      "startDryingEntity":    "Start drying (button)",
+      "startSelfWashEntity": "Start mop wash (button)",
+      "startDryingEntity": "Start drying (button)",
       "autoDetergentEntity": "Auto detergent (water refill)",
       "autoWashEntity": "Auto mop mount",
       "cleanCarpetsFirstEntity": "Clean carpets first (switch)",
@@ -397,7 +397,6 @@
       "floorDirectionEntity": "Floor direction cleaning (switch)",
       "stainAvoidanceEntity": "Stain recognition (switch)",
       "dndEntity": "Do not disturb",
-      "cleanCarpetsFirstEntity": "Clean carpets first (switch)",
       "carpetBoostEntity": "Carpet boost (switch)",
       "selfCleanSwitchEntity": "Auto-clean",
       "autoDryingEntity": "Auto-dry",
@@ -431,5 +430,8 @@
     "lightlyDry": "Slightly\ndry",
     "moist": "Moist",
     "wet": "Wet"
+  },
+  "ss": {
+    "notConfigured": "Robot not configured"
   }
 }

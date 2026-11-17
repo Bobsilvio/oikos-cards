@@ -76,5 +76,6 @@
   },
   "chipPreset": "Preset",
   "modeTitle": "Modo",
-  "close": "Cerrar"
+  "close": "Cerrar",
+  "ssNoEntity": "Climatizador no configurado"
 }

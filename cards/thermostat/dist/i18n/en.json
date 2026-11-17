@@ -1,16 +1,30 @@
 {
   "mode": {
-    "heat":     "Heat",
-    "cool":     "Cool",
-    "auto":     "Auto",
-    "heat_cool":"H+C",
+    "heat": "Heat",
+    "cool": "Cool",
+    "auto": "Auto",
+    "heat_cool": "H+C",
     "fan_only": "Fan",
-    "dry":      "Dry"
+    "dry": "Dry"
   },
   "noEntity": "Configure a climate entity in ⚙",
-
   "settings": {
     "entityLabel": "Climate entity",
     "nameLabel": "Display name (optional)"
+  },
+  "ss": {
+    "noEntity": "Thermostat not configured",
+    "off": "Off",
+    "unavailable": "Unavailable",
+    "target": "Target",
+    "action": {
+      "heating": "Heating",
+      "cooling": "Cooling",
+      "drying": "Drying",
+      "fan": "Fan",
+      "idle": "Idle",
+      "preheating": "Preheating",
+      "defrosting": "Defrosting"
+    }
   }
 }

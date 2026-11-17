@@ -17,5 +17,8 @@
     "consToday": "Daily consumption (kWh)",
     "gridFromToday": "Grid import (kWh)",
     "gridToToday": "Grid export (kWh)"
+  },
+  "ss": {
+    "label": "Produced yesterday"
   }
 }

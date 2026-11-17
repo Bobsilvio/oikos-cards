@@ -1,5 +1,5 @@
 import { useState, useEffect, useId } from 'react'
-import { useDashboard, useCardConfig, registerCardTranslations, useT } from '@oikos/sdk'
+import { useDashboard, useCardConfig, registerCardTranslations, useT, useCardSurface } from '@oikos/sdk'
 import { smoothPath } from './smoothPath'
 import it from './i18n/it.json'
 import en from './i18n/en.json'
@@ -8,6 +8,11 @@ import es from './i18n/es.json'
 import fr from './i18n/fr.json'
 
 registerCardTranslations('card-air-quality', { it, en, de, es, fr })
+
+// Oikos < SDK 1.5 non ha useCardSurface: lì la card è sempre "da plancia".
+// Scelto una volta all'avvio, quindi l'ordine degli hook non cambia mai.
+const NO_SURFACE = { isScreensaver: false, theme: 'dark' }
+const useSurface = typeof useCardSurface === 'function' ? useCardSurface : () => NO_SURFACE
 
 const ZONE_COLORS = ['#16a34a', '#84cc16', '#eab308', '#f97316', '#dc2626']
 
@@ -405,6 +410,7 @@ export default function AirQualityCard({ cardId }) {
   const { dark, getFloat, getState, fetchHistory, connected, openMoreInfo } = useDashboard()
   const [cfg, setCfg] = useCardConfig(cardId, DEFAULT)
   const { t } = useT('card-air-quality')
+  const surface = useSurface()
   const uid   = useId().replace(/:/g, '')
 
   // Migrazione una-tantum: vecchio default aqiMax=500 → 100 (scala %)
@@ -439,6 +445,64 @@ export default function AirQualityCard({ cardId }) {
   const bdr = dark ? 'rgba(255,255,255,.07)' : '#dde3ec'
 
   const aqiHasData = aqiSeries.some(p => p.v != null)
+
+  // ── Versione screensaver: solo AQI grande nel colore della sua zona ──
+  if (surface.isScreensaver) {
+    const shadow = surface.theme === 'light' ? 'none' : '0 1px 3px rgba(0,0,0,.45), 0 0 18px rgba(0,0,0,.3)'
+    const hasVal = aqiVal != null
+    const zone   = hasVal
+      ? getZone(qualityNorm(aqiVal, cfg.aqiMin ?? 0, cfg.aqiMax ?? 100, cfg.aqiInverted ?? true))
+      : null
+    const clsText = classificationVal && classificationVal !== 'unknown' && classificationVal !== 'unavailable'
+      ? classificationVal
+      : (zone ? t(`ss.zone${zone}`) : null)
+    const place = cfg.title || t('title')
+    return (
+      <div style={{ padding: '18px 22px', color: 'var(--text-primary)', textShadow: shadow }}>
+        <div style={{ fontSize: 13, fontWeight: 600, letterSpacing: '.28em', textTransform: 'uppercase', color: 'var(--text-muted)', overflowWrap: 'anywhere' }}>
+          {cfg.label || t('label')}
+        </div>
+        {!hasAqi ? (
+          <div style={{ marginTop: 14, fontSize: 16, color: 'var(--text-muted)' }}>{t('ss.notConfigured')}</div>
+        ) : (
+          <>
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: 16, marginTop: 8 }}>
+              <div style={{
+                fontSize: 64, lineHeight: 1, color: hasVal ? ringColor : 'var(--text-muted)',
+                fontFamily: 'var(--ss-display, inherit)', fontWeight: 'var(--ss-display-w, 300)',
+                letterSpacing: 'var(--ss-display-track, -0.03em)', fontVariantNumeric: 'tabular-nums',
+              }}>
+                {hasVal ? Math.round(aqiVal) : '—'}
+              </div>
+              <div style={{ minWidth: 0 }}>
+                {clsText && (
+                  <div style={{ fontSize: 20, fontWeight: 600, color: hasVal ? ringColor : 'var(--text-secondary)', lineHeight: 1.15, overflowWrap: 'anywhere' }}>
+                    {clsText}
+                  </div>
+                )}
+                <div style={{ fontSize: 15, color: 'var(--text-secondary)', marginTop: 4, overflowWrap: 'anywhere' }}>
+                  {place}
+                </div>
+              </div>
+            </div>
+            {aqiHasData && (
+              <div style={{ marginTop: 14, opacity: 0.7 }}>
+                <AqiSparkline
+                  series={aqiSeries}
+                  min={cfg.aqiMin   ?? 0}
+                  max={cfg.aqiMax   ?? 100}
+                  inverted={cfg.aqiInverted ?? true}
+                  color={ringColor}
+                  dark={surface.theme !== 'light'}
+                  uid={`${uid}ss`}
+                />
+              </div>
+            )}
+          </>
+        )}
+      </div>
+    )
+  }
 
   return (
     <div style={{

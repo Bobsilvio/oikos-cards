@@ -17,5 +17,8 @@
     "consToday": "Consommation journalière (kWh)",
     "gridFromToday": "Soutirage réseau (kWh)",
     "gridToToday": "Injection réseau (kWh)"
+  },
+  "ss": {
+    "label": "Produit hier"
   }
 }
